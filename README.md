@@ -1,0 +1,40 @@
+OpenbizX CubiX
+==============
+
+OpenbizX CubiX is fork of Openbiz Cubi.
+
+This project aimed to increase more better code standard and application design. 
+We can not perform it on original Openbiz Project because hampered by compatibility isue.
+
+This repo initialized from Openbiz Cubi project, version r5369.
+
+**Note:**
+This project not yet have name as brand, "OpenbizX CubiX" is only as "project code". 
+Maybe this project be created as next version of original Openbiz Cubi.
+
+Roadmap
+-------
+
+**Step 1**
+* Perform Name Convention 
+  - Remove "m_" character from variable name
+  - Replace getSeesionVar and setSeesion var with loadSesion and saveSession on MetaObject. 
+    Please read name convension [here] (https://github.com/binexa/openbiz-cubi/blob/master/docs/standards/name-convention.md)  for detail.
+
+**Step 2**
+* GUI Enhancement
+  - Only using JQuery as JS library, Prototype and friends removed.
+  - Initialized using Bootstrap for theme.
+
+**Step 3**
+* Design for PHP 5.3 and using PHP-Fig Standard.
+* use Zend Framework 2 for core libary, replace Zend Framework 1
+
+
+
+We are still looking for more good architecture for Openbizx Cubi.
+
+Of course , contributor welcome.
+
+
+Agus Suhartono (initiator).
