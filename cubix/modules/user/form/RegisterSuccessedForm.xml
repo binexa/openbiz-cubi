@@ -13,7 +13,7 @@
 		<Element Name="fld_lastlogin" Class="LabelText" FieldName="create_time" Label="Creation Time" />
     </DataPanel>
     <ActionPanel>
-		<element Name="lnk_goto" label="" Class="LabelText" CssClass="button_m_highlight" text="Goto Home" link="{APP_INDEX}"/>    		
+		<element Name="lnk_goto" label="" Class="LabelText" CssClass="button_m_highlight" text="Goto Home" link="{OPENBIZ_APP_INDEX_URL}"/>    		
     </ActionPanel> 
     <NavPanel>
     </NavPanel> 

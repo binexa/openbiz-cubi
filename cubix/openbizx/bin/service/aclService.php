@@ -14,9 +14,9 @@
  * @version   $Id: aclService.php 2553 2010-11-21 08:36:48Z mr_a_ton $
  */
 
-define ('DENY', 0);
-define ('ALLOW', 1);
-define ('ALLOW_OWNER', 2);
+define ('OPENBIZ_DENY', 0);
+define ('OPENBIZ_ALLOW', 1);
+define ('OPENBIZ_ALLOW_OWNER', 2);
 
 /**
  * aclService class is the plug-in service to manage ACL
@@ -35,10 +35,10 @@ class aclService
      *
      * @param <type> $resAction
      * @param string $module module name
-     * @return number ALLOW, DENY, ALLOW_OWNER
+     * @return number OPENBIZ_ALLOW, OPENBIZ_DENY, OPENBIZ_ALLOW_OWNER
      */
     public static function allowAccess($resAction, $module="")
     {
-        return ALLOW;
+        return OPENBIZ_ALLOW;
     }
 }

@@ -19,13 +19,13 @@ class PictureForm extends PickerForm
 	public function getSessionVars($sessionContext)
     {
         parent::getSessionVars($sessionContext);
-		$sessionContext->getObjVar($this->m_Name, "CanUpdateRecord", $this->m_CanUpdateRecord);
+		$sessionContext->getObjVar($this->objectName, "CanUpdateRecord", $this->m_CanUpdateRecord);
 	}
 	
 	public function setSessionVars($sessionContext)
     {
         parent::setSessionVars($sessionContext);
-		$sessionContext->setObjVar($this->m_Name, "CanUpdateRecord", $this->m_CanUpdateRecord);
+		$sessionContext->setObjVar($this->objectName, "CanUpdateRecord", $this->m_CanUpdateRecord);
 	}
 	
 	public function uploadFile()
@@ -44,13 +44,13 @@ class PictureForm extends PickerForm
                 $upload_dir = $cond_value;
             }
                                 
-            if(!file_exists(PUBLIC_UPLOAD_PATH.DIRECTORY_SEPARATOR.$this->m_BasePath.DIRECTORY_SEPARATOR.$upload_dir.DIRECTORY_SEPARATOR.$upload_user_dir)) {
-                @mkdir(PUBLIC_UPLOAD_PATH.DIRECTORY_SEPARATOR.$this->m_BasePath.DIRECTORY_SEPARATOR.$upload_dir.DIRECTORY_SEPARATOR.$upload_user_dir,0777,true);
+            if(!file_exists(OPENBIZ_PUBLIC_UPLOAD_PATH.DIRECTORY_SEPARATOR.$this->m_BasePath.DIRECTORY_SEPARATOR.$upload_dir.DIRECTORY_SEPARATOR.$upload_user_dir)) {
+                @mkdir(OPENBIZ_PUBLIC_UPLOAD_PATH.DIRECTORY_SEPARATOR.$this->m_BasePath.DIRECTORY_SEPARATOR.$upload_dir.DIRECTORY_SEPARATOR.$upload_user_dir,0777,true);
             }				
             
-            $targetPath = PUBLIC_UPLOAD_PATH.DIRECTORY_SEPARATOR.$this->m_BasePath.DIRECTORY_SEPARATOR.$upload_dir.DIRECTORY_SEPARATOR.$upload_user_dir.DIRECTORY_SEPARATOR;
+            $targetPath = OPENBIZ_PUBLIC_UPLOAD_PATH.DIRECTORY_SEPARATOR.$this->m_BasePath.DIRECTORY_SEPARATOR.$upload_dir.DIRECTORY_SEPARATOR.$upload_user_dir.DIRECTORY_SEPARATOR;
             
-            $targetURL = PUBLIC_UPLOAD_URL."/".$this->m_BasePath."/".$upload_dir."/".$upload_user_dir."/";
+            $targetURL = OPENBIZ_PUBLIC_UPLOAD_URL."/".$this->m_BasePath."/".$upload_dir."/".$upload_user_dir."/";
             
             $tempFile = $_FILES['Filedata']['tmp_name'];	
             $newFilename = 	date("YmdHis")."_".uniqid().'.jpg';
@@ -59,7 +59,7 @@ class PictureForm extends PickerForm
             move_uploaded_file($tempFile,$targetFile);
             
 		} catch(Exception $e){
-			file_put_contents(APP_HOME.'\out.txt', $e->getMessage());			
+			file_put_contents(OPENBIZ_APP_PATH.'\out.txt', $e->getMessage());			
 		}
 		$output =array();
 		$output['file_path'] = $targetPath.$newFilename;
@@ -181,7 +181,7 @@ class PictureForm extends PickerForm
             
             if(!$this->canDeleteRecord($dataRec))
             {
-            	$this->m_ErrorMessage = $this->getMessage("FORM_OPEATION_NOT_PERMITTED",$this->m_Name);         
+            	$this->m_ErrorMessage = $this->getMessage("FORM_OPEATION_NOT_PERMITTED",$this->objectName);         
         		if (strtoupper($this->m_FormType) == "LIST"){
         			BizSystem::log(LOG_ERR, "DATAOBJ", "DataObj error = ".$errorMsg);
         			BizSystem::clientProxy()->showClientAlert($this->m_ErrorMessage);

@@ -8,7 +8,7 @@
 <EasyForm Name="DetailForm" 
 		Class="LogForm" 
 		jsClass="jbForm" 
-		Icon="{RESOURCE_URL}/payment/images/icon_payment.png"		
+		Icon="{OPENBIZ_RESOURCE_URL}/payment/images/icon_payment.png"		
 		Title="Transcation Log Detail" 
 		Description="Detailed inforamtion of transcation log record." 
 		BizDataObj="payment.log.do.LogDO" 
@@ -30,7 +30,7 @@
        				Class="LabelImage" 
        				FieldName="provider_type" 
        				Label="Payment Provider"        	
-       				Text="{RESOURCE_URL}/payment/images/icon_{@:Elem[fld_platform].Value}.png" 			
+       				Text="{OPENBIZ_RESOURCE_URL}/payment/images/icon_{@:Elem[fld_platform].Value}.png" 			
        				/> 
        				        			
 		<Element Name="fld_trans_id" 

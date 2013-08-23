@@ -78,7 +78,7 @@ class ImageUploader extends FileUploader
     	}
 	    else
     	{
-    		$delete_user_opt=BizSystem::clientProxy()->getFormInputs($this->m_Name."_DELETE"); 
+    		$delete_user_opt=BizSystem::clientProxy()->getFormInputs($this->objectName."_DELETE"); 
     		if($delete_user_opt)
     		{
     			$this->m_Value="";
@@ -96,7 +96,7 @@ class ImageUploader extends FileUploader
     	
    		if(count($_FILES)>0)
 		{
-			if(!$this->m_Uploaded && $_FILES[$this->m_Name]["size"] > 0)
+			if(!$this->m_Uploaded && $_FILES[$this->objectName]["size"] > 0)
 			{
 				$picFileName = parent::setValue($value);
 				if((int)$this->m_PicWidth>0 || (int)$this->m_PicHeight>0)
@@ -119,7 +119,7 @@ class ImageUploader extends FileUploader
 					{
 						mkdir($this->m_UploadRoot.$this->m_ThumbFolder ,0777,true);
 					}
-					$file = $_FILES[$this->m_Name];
+					$file = $_FILES[$this->objectName];
 					$thumbPath = $this->m_ThumbFolder."/thumbs-".date("YmdHis")."-".urlencode($file['name']);
 					$thumbFileName = $this->m_UploadRoot.$thumbPath;
 					$width = $this->m_ThumbWidth;
@@ -231,17 +231,17 @@ class ImageUploader extends FileUploader
         $value = $this->getValue();
         if($this->m_Preview){
 	        if($value){
-	        	$preview = "<img id=\"" . $this->m_Name ."_preview\" src=\"$value\" class=\"image_preview\" />";
+	        	$preview = "<img id=\"" . $this->objectName ."_preview\" src=\"$value\" class=\"image_preview\" />";
 	        }
         }
         if($this->m_Deleteable=="Y"){
-        	$delete_opt="<input type=\"checkbox\" name=\"" . $this->m_Name . "_DELETE\" id=\"" . $this->m_Name ."_DELETE\" >Delete";
+        	$delete_opt="<input type=\"checkbox\" name=\"" . $this->objectName . "_DELETE\" id=\"" . $this->objectName ."_DELETE\" >Delete";
         } else{
         	$delete_opt="";
         }
         $sHTML .= "
         $preview
-        <input type=\"file\" onchange=\"Openbiz.ImageUploader.updatePreview('" . $this->m_Name ."')\" name=\"$this->m_Name\" id=\"" . $this->m_Name ."\" value=\"$this->m_Value\" $disabledStr $this->m_HTMLAttr $style $func>
+        <input type=\"file\" onchange=\"Openbiz.ImageUploader.updatePreview('" . $this->objectName ."')\" name=\"$this->objectName\" id=\"" . $this->objectName ."\" value=\"$this->m_Value\" $disabledStr $this->m_HTMLAttr $style $func>
         $delete_opt
         ";
         return $sHTML;

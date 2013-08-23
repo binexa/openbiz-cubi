@@ -16,7 +16,7 @@
  */
 class preferenceService
 {
-    protected $m_Name = "ProfileService";    
+    protected $name = "ProfileService";    
     protected $m_PreferenceObj ;    
     protected $m_Preference;
 

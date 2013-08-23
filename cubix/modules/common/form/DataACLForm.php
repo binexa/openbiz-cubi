@@ -29,7 +29,7 @@ class DataACLForm extends DataSharingForm
 		$prtForm = $this->m_ParentFormName;
 		$prtFormObj = BizSystem::GetObject($prtForm);
 		
-		$record_table = $prtFormObj->getDataObj()->m_MainTable;
+		$record_table = $prtFormObj->getDataObj()->mainTableName;
 		$record_id = $this->m_ParentRecordId;
 		$this->m_SearchRule = "[record_table]='$record_table' AND [record_id]='$record_id'";
 		$result =  parent::fetchDataSet();
@@ -53,7 +53,7 @@ class DataACLForm extends DataSharingForm
 		$prtForm = $this->m_ParentFormName;
 		$prtFormObj = BizSystem::GetObject($prtForm);
 		$dataObj = $prtFormObj->getDataObj();
-		$parent_record_table = $dataObj->m_MainTable;
+		$parent_record_table = $dataObj->mainTableName;
 		
 		$aclDO = BizSystem::getObject("common.do.DataACLDO");
 		$sql = "

@@ -5,7 +5,7 @@
   Copyright (c) 2005-2011, Openbiz Technology LLC
   Version $Id$
 -->
-<EasyForm Name="AccountBillingAddressDetailForm" Class="EasyForm" FormType="Detail" jsClass="Openbiz.Form" Icon="{RESOURCE_URL}/account/images/icon_mod_account_billing_address_detail.png" Title="Account Billing Address Detail" Description="Account Billing Address" BizDataObj="account.billing.do.AccountBillingDO" TemplateEngine="Smarty" TemplateFile="form_edit.tpl.html" MessageFile="AccountBillingAddress.ini" Access="account.Access">
+<EasyForm Name="AccountBillingAddressDetailForm" Class="EasyForm" FormType="Detail" jsClass="Openbiz.Form" Icon="{OPENBIZ_RESOURCE_URL}/account/images/icon_mod_account_billing_address_detail.png" Title="Account Billing Address Detail" Description="Account Billing Address" BizDataObj="account.billing.do.AccountBillingDO" TemplateEngine="Smarty" TemplateFile="form_edit.tpl.html" MessageFile="AccountBillingAddress.ini" Access="account.Access">
   <DataPanel>
     <Element Name="fld_account" Hidden="{@:Elem[fld_account].Value?'N':'Y'}" ElementSet="General" Class="LabelText" Label="Account" FieldName="account_name"/>
     <Element Name="fld_Id" Class="LabelText" ElementSet="General" Hidden="Y" FieldName="Id" Label="Id" AllowURLParam="Y"/>
@@ -33,7 +33,7 @@
       <EventHandler Name="onclick" Event="onclick" EventLogMsg="" Function="CopyRecord({@:Elem[fld_Id].Value})" RedirectPage="form=account.billing.form.AccountBillingAddressCopyForm&amp;fld:Id={@:Elem[fld_Id].Value}" ShortcutKey="Ctrl+C" ContextMenu="Copy"/>
     </Element>
     <Element Name="btn_delete" Class="Button" Text="Delete" CssClass="button_gray_m" Description="Delete record (Delete)">
-      <EventHandler Name="del_onclick" Event="onclick" EventLogMsg="" Function="DeleteRecord({@:Elem[fld_Id].Value})" RedirectPage="{APP_INDEX}/account/account_billing_address_manage" ShortcutKey="Ctrl+Delete" ContextMenu="Delete"/>
+      <EventHandler Name="del_onclick" Event="onclick" EventLogMsg="" Function="DeleteRecord({@:Elem[fld_Id].Value})" RedirectPage="{OPENBIZ_APP_INDEX_URL}/account/account_billing_address_manage" ShortcutKey="Ctrl+Delete" ContextMenu="Delete"/>
     </Element>
     <Element Name="btn_cancel" Class="LabelBack" Text="Back" CssClass="button_gray_m" Link="account/account_billing_address_manage"/>
   </ActionPanel>

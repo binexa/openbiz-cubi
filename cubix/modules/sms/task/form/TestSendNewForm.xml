@@ -9,7 +9,7 @@
 			Class="TestSendNewForm" 
 			FormType="New" 
 			jsClass="Openbiz.Form" 
-			Icon="{RESOURCE_URL}/sms/images/icon_sms_send.png"
+			Icon="{OPENBIZ_RESOURCE_URL}/sms/images/icon_sms_send.png"
 			Title="Send SMS Message" 
 			Description="You can send a SMS message to a mobile number from selected provider." 
 			BizDataObj="sms.task.do.TaskDO" 
@@ -71,7 +71,7 @@
 	            			EventLogMsg="" 
 	            			Event="onclick" 
 	            			Function="InsertRecord()" 
-	            			RedirectPage="{APP_INDEX}/sms/Intergration_Setting"  
+	            			RedirectPage="{OPENBIZ_APP_INDEX_URL}/sms/Intergration_Setting"  
 	            			ShortcutKey="Ctrl+Enter" 
 	            			ContextMenu="Save" />
 	        </Element>        

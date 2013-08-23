@@ -11,7 +11,7 @@
  * @version   $Id: HelpLoadHandler.php 3783 2012-08-01 12:16:45Z hellojixian@gmail.com $
  */
 
-include_once (MODULE_PATH."/system/lib/ModuleLoadHandler.php");
+include_once (OPENBIZ_APP_MODULE_PATH."/system/lib/ModuleLoadHandler.php");
 
 class HelpLoadHandler implements ModuleLoadHandler
 {

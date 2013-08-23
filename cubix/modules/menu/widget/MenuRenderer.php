@@ -66,8 +66,8 @@ class MenuRenderer
         $attrs = $widgetObj->outputAttrs();      
         $smarty->assign("widget", $attrs);
         $smarty->assign("form", $attrs);
-        $smarty->assign("formname", $widgetObj->m_Name);
-        $smarty->assign("module", $widgetObj->getModuleName($widgetObj->m_Name));
+        $smarty->assign("formname", $widgetObj->objectName);
+        $smarty->assign("module", $widgetObj->getModuleName($widgetObj->objectName));
         $smarty->assign("title", $widgetObj->m_Title);
         $smarty->assign("errors", $widgetObj->m_Errors);
         $smarty->assign("notices", $widgetObj->m_Notices);        
@@ -86,8 +86,8 @@ class MenuRenderer
         $view = BizSystem::getZendTemplate();
         $view->addScriptPath(dirname($tplFile));
         $view->widget = $widgetObj->OutputAttrs();
-        $smarty->assign("formname", $widgetObj->m_Name);
-        $smarty->assign("module", $view->getModuleName($view->m_Name));
+        $smarty->assign("formname", $widgetObj->objectName);
+        $smarty->assign("module", $view->getModuleName($view->objectName));
         $smarty->assign("title", $view->m_Title);
         $smarty->assign("errors", $view->m_Errors);
         $smarty->assign("notices", $view->m_Notices);

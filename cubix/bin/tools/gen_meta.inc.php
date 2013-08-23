@@ -212,7 +212,7 @@ class DashboardGenerator
 	public function generateDashboardWidget($table)
 	{
 		if(CLI){echo "Start generate DashboardForm.xml ." . PHP_EOL;}
-        $targetPath = $moduleDir = MODULE_PATH . "/" . getModuleName($this->module)."/widget";
+        $targetPath = $moduleDir = OPENBIZ_APP_MODULE_PATH . "/" . getModuleName($this->module)."/widget";
 		$targetFile = $targetPath . "/DashboardForm.xml";
 		        
         if (!file_exists($targetPath))
@@ -222,7 +222,7 @@ class DashboardGenerator
         }
 
         if(file_exists($targetFile)){
-			if(CLI){echo "\t".str_replace(MODULE_PATH,"",$targetFile)." exists skipped." . PHP_EOL. PHP_EOL;}
+			if(CLI){echo "\t".str_replace(OPENBIZ_APP_MODULE_PATH,"",$targetFile)." exists skipped." . PHP_EOL. PHP_EOL;}
 			return ; 
         }            
         
@@ -236,14 +236,14 @@ class DashboardGenerator
 
         // target file        
         file_put_contents($targetFile, $content);
-        if(CLI){echo "\t".str_replace(MODULE_PATH,"",$targetFile)." is generated." . PHP_EOL. PHP_EOL;}
+        if(CLI){echo "\t".str_replace(OPENBIZ_APP_MODULE_PATH,"",$targetFile)." is generated." . PHP_EOL. PHP_EOL;}
         return $targetFile;		
 	}
 	
 	public function generateDashboardView($table)
 	{
 		if(CLI){echo "Start generate DashboardView.xml ." . PHP_EOL;}
-        $targetPath = $moduleDir = MODULE_PATH . "/" . getModuleName($this->module)."/view";
+        $targetPath = $moduleDir = OPENBIZ_APP_MODULE_PATH . "/" . getModuleName($this->module)."/view";
         $targetFile = $targetPath . "/DashboardView.xml";
         if (!file_exists($targetPath))
         {
@@ -252,7 +252,7 @@ class DashboardGenerator
         }
 
         if(file_exists($targetFile)){
-			if(CLI){echo "\t".str_replace(MODULE_PATH,"",$targetFile)." exists and skipped." . PHP_EOL. PHP_EOL;}
+			if(CLI){echo "\t".str_replace(OPENBIZ_APP_MODULE_PATH,"",$targetFile)." exists and skipped." . PHP_EOL. PHP_EOL;}
 			return ; 
         }    
                 
@@ -266,7 +266,7 @@ class DashboardGenerator
 
         // target file        
         file_put_contents($targetFile, $content);
-        if(CLI){echo "\t".str_replace(MODULE_PATH,"",$targetFile)." is generated." . PHP_EOL. PHP_EOL;}
+        if(CLI){echo "\t".str_replace(OPENBIZ_APP_MODULE_PATH,"",$targetFile)." is generated." . PHP_EOL. PHP_EOL;}
         return $targetFile;		
 	}
 		
@@ -274,7 +274,7 @@ class DashboardGenerator
 	public function generateLeftmenu($table)
 	{		
 		if(CLI){echo "Start generate LeftMenu.xml ." . PHP_EOL;}
-        $targetPath = $moduleDir = MODULE_PATH . "/" . getModuleName($this->module)."/widget";
+        $targetPath = $moduleDir = OPENBIZ_APP_MODULE_PATH . "/" . getModuleName($this->module)."/widget";
         $targetFile = $targetPath . "/LeftMenu.xml";
         if (!file_exists($targetPath))
         {
@@ -283,7 +283,7 @@ class DashboardGenerator
         }
 
         if(file_exists($targetFile)){
-			if(CLI){echo "\t".str_replace(MODULE_PATH,"",$targetFile)." exists and skipped." . PHP_EOL. PHP_EOL;}
+			if(CLI){echo "\t".str_replace(OPENBIZ_APP_MODULE_PATH,"",$targetFile)." exists and skipped." . PHP_EOL. PHP_EOL;}
 			return ; 
         }        
         
@@ -298,14 +298,14 @@ class DashboardGenerator
         // target file
         
         file_put_contents($targetFile, $content);
-        if(CLI){echo "\t".str_replace(MODULE_PATH,"",$targetFile)." is generated." . PHP_EOL. PHP_EOL;}
+        if(CLI){echo "\t".str_replace(OPENBIZ_APP_MODULE_PATH,"",$targetFile)." is generated." . PHP_EOL. PHP_EOL;}
         return $targetFile;			
 	}
 	
 	public function modifyViewTpl()
 	{
 		if(CLI){echo "Start modify view.tpl to enable module left menu supports ." . PHP_EOL;}
-        $targetPath = $moduleDir = MODULE_PATH . "/" . getModuleName($this->module)."/template";
+        $targetPath = $moduleDir = OPENBIZ_APP_MODULE_PATH . "/" . getModuleName($this->module)."/template";
         $targetFile = $targetPath . "/view.tpl";
 
         $str = '
@@ -317,13 +317,13 @@ $this->assign("left_menu", $left_menu);
         if(!preg_match("/widget\.LeftMenu/si",$content)){
         	$content = str_replace("{php}","{php}".$str,$content);
         }else{        
-			if(CLI){echo "\t".str_replace(MODULE_PATH,"",$targetFile)." was modified and skipped." . PHP_EOL. PHP_EOL;}
+			if(CLI){echo "\t".str_replace(OPENBIZ_APP_MODULE_PATH,"",$targetFile)." was modified and skipped." . PHP_EOL. PHP_EOL;}
 			return ;
         }
         
 
         file_put_contents($targetFile, $content);
-        if(CLI){echo "\t".str_replace(MODULE_PATH,"",$targetFile)." is modified." . PHP_EOL. PHP_EOL;}
+        if(CLI){echo "\t".str_replace(OPENBIZ_APP_MODULE_PATH,"",$targetFile)." is modified." . PHP_EOL. PHP_EOL;}
         return $targetFile;				
 	}
 	
@@ -429,7 +429,7 @@ class DOGenerator
     public function generateDO()
     {
         if(CLI){echo "Start generate dataobject $this->do_short_name." . PHP_EOL;}
-        $targetPath = $moduleDir = MODULE_PATH . "/" . str_replace(".", "/", $this->module) . "/do";
+        $targetPath = $moduleDir = OPENBIZ_APP_MODULE_PATH . "/" . str_replace(".", "/", $this->module) . "/do";
         if (!file_exists($targetPath))
         {
             if(CLI){echo "Create directory $targetPath" . PHP_EOL;}
@@ -456,7 +456,7 @@ class DOGenerator
         $targetFile = $targetPath . "/" . $this->do_short_name . ".xml";
 
         file_put_contents($targetFile, $content);
-        if(CLI){echo "\t".str_replace(MODULE_PATH,"",$targetFile)." is generated." . PHP_EOL;}
+        if(CLI){echo "\t".str_replace(OPENBIZ_APP_MODULE_PATH,"",$targetFile)." is generated." . PHP_EOL;}
         return $targetFile;
     }
 
@@ -732,7 +732,7 @@ class FormGenerator
         $form_short_name = str_replace("form.", "", $form_name);
 
         if(CLI){echo "Start generate form object $form_short_name." . PHP_EOL;}
-        $targetPath = $moduleDir = MODULE_PATH . "/" . str_replace(".", "/", $this->module) . "/form";
+        $targetPath = $moduleDir = OPENBIZ_APP_MODULE_PATH . "/" . str_replace(".", "/", $this->module) . "/form";
         if (!file_exists($targetPath))
         {
             if(CLI){echo "Create directory $targetPath" . PHP_EOL;}
@@ -768,7 +768,7 @@ class FormGenerator
         // target file
         $targetFile = $targetPath . "/" . $form_short_name . ".xml";
         file_put_contents($targetFile, trimEmptyLines($content));
-        if(CLI){echo "\t".str_replace(MODULE_PATH,"",$targetFile)." is generated." . PHP_EOL. PHP_EOL;}
+        if(CLI){echo "\t".str_replace(OPENBIZ_APP_MODULE_PATH,"",$targetFile)." is generated." . PHP_EOL. PHP_EOL;}
         return $targetFile;
     }
 
@@ -838,7 +838,7 @@ class ViewGenerator
 
         $view_short_name = str_replace("view.", "", $this->view_name);
         if(CLI){echo "Start generate form object $view_short_name." . PHP_EOL;}
-        $targetPath = $moduleDir = MODULE_PATH . "/" . getModuleName($this->module) . "/view";
+        $targetPath = $moduleDir = OPENBIZ_APP_MODULE_PATH . "/" . getModuleName($this->module) . "/view";
         if (!file_exists($targetPath))
         {
             if(CLI){echo "Create directory $targetPath" . PHP_EOL;}
@@ -864,7 +864,7 @@ class ViewGenerator
         // target file
         $targetFile = $targetPath . "/" . $view_short_name . ".xml";
         file_put_contents($targetFile, $content);
-        if(CLI){echo "\t".str_replace(MODULE_PATH,"",$targetFile)." is generated." . PHP_EOL;}
+        if(CLI){echo "\t".str_replace(OPENBIZ_APP_MODULE_PATH,"",$targetFile)." is generated." . PHP_EOL;}
         return $targetFile;
     }
 
@@ -918,7 +918,7 @@ class ModGenerator
     {
         if(CLI){echo "Start generate mod.xml." . PHP_EOL;}
         $module_name = getModuleName($this->module);
-        $targetPath = $moduleDir = MODULE_PATH . "/" . $module_name;
+        $targetPath = $moduleDir = OPENBIZ_APP_MODULE_PATH . "/" . $module_name;
         if (!file_exists($targetPath))
         {
             if(CLI){echo "Create directory $targetPath" . PHP_EOL;}
@@ -946,7 +946,7 @@ class ModGenerator
         // target file
         $targetFile = $targetPath . "/mod.xml";
         file_put_contents($targetFile, $content);
-        if(CLI){echo "\t".str_replace(MODULE_PATH,"",$targetFile)." is generated." . PHP_EOL;}
+        if(CLI){echo "\t".str_replace(OPENBIZ_APP_MODULE_PATH,"",$targetFile)." is generated." . PHP_EOL;}
         return $targetFile;
     }
 
@@ -954,7 +954,7 @@ class ModGenerator
     {
         if(CLI){echo "Start modify mod.xml." . PHP_EOL;}
         $module_name = getModuleName($this->module);
-        $targetFile = $moduleDir = MODULE_PATH . "/" . getModuleName($this->module)."/mod.xml";
+        $targetFile = $moduleDir = OPENBIZ_APP_MODULE_PATH . "/" . getModuleName($this->module)."/mod.xml";
        
         $content = file_get_contents($targetFile);
         
@@ -998,7 +998,7 @@ class ModGenerator
         
         //save files
         file_put_contents($targetFile, $content);
-        if(CLI){echo "\t".str_replace(MODULE_PATH,"",$targetFile)." is modified." . PHP_EOL;}
+        if(CLI){echo "\t".str_replace(OPENBIZ_APP_MODULE_PATH,"",$targetFile)." is modified." . PHP_EOL;}
         return $targetFile;
     }    
     
@@ -1034,7 +1034,7 @@ function trimEmptyLines($content)
  */
 function copyTemplateFile($tpl_name, $tpl_file, $module)
 {
-    $targetPath = $moduleDir = MODULE_PATH . "/" . getModuleName($module) . "/template";
+    $targetPath = $moduleDir = OPENBIZ_APP_MODULE_PATH . "/" . getModuleName($module) . "/template";
     if (!file_exists($targetPath))
         mkdir($targetPath, 0777, true);
     $targetFile = $targetPath . "/" . $tpl_name;

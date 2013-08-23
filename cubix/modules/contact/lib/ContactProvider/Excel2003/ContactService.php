@@ -36,7 +36,7 @@ class ContactService{
 		{
 			$this->_data = $credential;
 		}
-		if(is_file(APP_HOME.$this->_data['file']))
+		if(is_file(OPENBIZ_APP_PATH.$this->_data['file']))
 		{
 			return true;
 		}else{
@@ -46,7 +46,7 @@ class ContactService{
 	
 	public function FetchContacts($credential = null)
 	{
-		$filename = APP_HOME.$this->_data['file'];
+		$filename = OPENBIZ_APP_PATH.$this->_data['file'];
 		$data = new Spreadsheet_Excel_Reader($filename);
 		$results = array();		
 		$row_num = $data->rowcount();		

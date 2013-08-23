@@ -37,14 +37,14 @@ class FormHelper
 		$formObj1 = BizSystem::getObject($formName);
 		$formObj1->setRecordId($id);
 		$output = $formObj1->render();
-		if (!empty($output)) BizSystem::clientProxy()->redrawForm($this->formObj->m_Name, $output);
+		if (!empty($output)) BizSystem::clientProxy()->redrawForm($this->formObj->objectName, $output);
     }
 	
 	public function loadDialog($formName=null, $id=null)
     {    	
 		$formObj1 = BizSystem::getObject($formName);
 		$formObj1->setRecordId($id);
-		//$formObj1->setParentForm($this->formObj->m_Name);
+		//$formObj1->setParentForm($this->formObj->objectName);
 		$output = $formObj1->render();
 		if (!empty($output)) BizSystem::clientProxy()->redrawForm("DIALOG", $output);
     }
@@ -90,7 +90,7 @@ class FormHelper
         // get the control that issues the call
         // __this is elementName:eventHandlerName
         list($element, $eventHandler) = $this->getInvokingElement();
-        $eventHandlerName = $eventHandler->m_Name;
+        $eventHandlerName = $eventHandler->objectName;
         $redirectPage = $element->getRedirectPage($eventHandlerName); // need to get postaction of eventhandler
         $functionType = $element->getFunctionType($eventHandlerName);
         switch ($functionType)

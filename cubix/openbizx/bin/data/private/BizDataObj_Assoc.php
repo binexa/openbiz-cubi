@@ -88,7 +88,7 @@ class BizDataObj_Assoc
             $xObj = BizSystem::getObject($xDataObj);
             $newRecArr = $xObj->newRecord();
             // verify the main table of XDataobj is same as the XTable
-            if ($xObj->m_MainTable != $dataObj->m_Association["XTable"])
+            if ($xObj->mainTableName != $dataObj->m_Association["XTable"])
             {
                 throw new BDOException("Unable to create a record in intersection table: XDataObj's main table is not same as XTable.");
                 return false;
@@ -189,7 +189,7 @@ class BizDataObj_Assoc
     		$newRecArr[$cond_field] = $cond_value;
     	}    	
     	
-    	$newDO = BizSystem::getObject($dataObj->m_Name,1);
+    	$newDO = BizSystem::getObject($dataObj->objectName,1);
     	$ok = $newDO->updateRecord($newRecArr,$recArr);
     	
         if ($ok == false)
@@ -346,7 +346,7 @@ class BizDataObj_Assoc
     		$cond_field = $dataObj->getFieldNameByColumn($cond_column);
     		$newRecArr[$cond_field] = $cond_value;
     	}      	
-        $ok = BizSystem::getObject($dataObj->m_Name,1)->updateRecord($newRecArr,$recArr);
+        $ok = BizSystem::getObject($dataObj->objectName,1)->updateRecord($newRecArr,$recArr);
         if ($ok == false)
             return false;
         // requery on this object        

@@ -11,7 +11,7 @@
  * @version   $Id: UserLoadHandler.php 3375 2012-05-31 06:23:11Z rockyswen@gmail.com $
  */
 
-include_once (MODULE_PATH."/system/lib/ModuleLoadHandler.php");
+include_once (OPENBIZ_APP_MODULE_PATH."/system/lib/ModuleLoadHandler.php");
 
 class UserLoadHandler implements ModuleLoadHandler
 {

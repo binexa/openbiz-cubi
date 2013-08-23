@@ -24,7 +24,7 @@
             <EventHandler Name="save_onclick" Event="onclick" function="SaveRecord()"/>
         </Element>
         <Element Name="btn_reset" Class="Button" Text="Reset" CssClass="button_gray_m">
-            <EventHandler Name="reset_onclick" Event="onclick" function="js:$('{@:m_Name}').reset()"/>
+            <EventHandler Name="reset_onclick" Event="onclick" function="js:$('{@:name}').reset()"/>
         </Element>
         <Element Name="html_msg" Class="HTMLBlock" text="" style="color:gray; padding:2"/>
     </ActionPanel> 

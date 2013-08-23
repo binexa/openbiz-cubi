@@ -15,7 +15,7 @@ require_once(OPENBIZ_BIN."easy/element/DropDownList.php");
 class LanguageSelector extends DropDownList{
     function getList(){
     	$list=array();
-   		$lang_dir = APP_HOME.DIRECTORY_SEPARATOR."languages".DIRECTORY_SEPARATOR.$lang;						
+   		$lang_dir = OPENBIZ_APP_PATH.DIRECTORY_SEPARATOR."languages".DIRECTORY_SEPARATOR.$lang;						
 		if(!is_dir($lang_dir))
 		{
 			return 	$result;
@@ -33,7 +33,7 @@ class LanguageSelector extends DropDownList{
     		$lang_name = $code2name[strtolower($locale[0])];
     		array_push($list,array("val"=>$lang_code,
     								"txt"=>$lang_name." ( $lang_code )",
-    								"pic"=>APP_URL."/images/nations/22x14/".strtolower($locale[1]).".png"));
+    								"pic"=>OPENBIZ_APP_URL."/images/nations/22x14/".strtolower($locale[1]).".png"));
     		
     	}
     	return $list;

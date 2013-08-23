@@ -21,7 +21,7 @@ class localeService
 			if($rec){
 				$lang = $rec['value'];
 			}else{
-				$lang = DEFAULT_LANGUAGE;
+				$lang = OPENBIZ_DEFAULT_LANGUAGE;
 			}
 		}
 		
@@ -37,7 +37,7 @@ class localeService
 			if($lang){	
 				return $lang;
 			}else{
-				return DEFAULT_LANGUAGE;
+				return OPENBIZ_DEFAULT_LANGUAGE;
 			}
 		}
 	}

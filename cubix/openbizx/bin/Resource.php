@@ -36,7 +36,7 @@ class Resource
 	private static $_xmlFileList;
 	private static $_xmlArrayList;
 
-    const DEFAULT_THEME = THEME_NAME;
+    const DEFAULT_THEME = OPENBIZ_THEME_NAME;
     /**
      * Load message from file
      *
@@ -49,20 +49,20 @@ class Resource
         {
 
             // message file location order 
-            // 1. MESSAGE_PATH."/".$messageFile
-            // 2. MODULE_PATH . "/$moduleName/message/" . $messageFile;
-            // 3. CORE_MODULE_PATH . "/$moduleName/message/" . $messageFile;
-            // APP_HOME / MESSAGE_PATH : APP_HOME / messages
-            if (is_file(MESSAGE_PATH . "/" . $messageFile)) {
-                return parse_ini_file(MESSAGE_PATH . "/" . $messageFile);
-            } else if (is_file(MODULE_PATH . "/" . $messageFile)) {
-				return parse_ini_file(MODULE_PATH . "/" . $messageFile);
+            // 1. OPENBIZ_APP_MESSAGE_PATH."/".$messageFile
+            // 2. OPENBIZ_APP_MODULE_PATH . "/$moduleName/message/" . $messageFile;
+            // 3. CORE_OPENBIZ_APP_MODULE_PATH . "/$moduleName/message/" . $messageFile;
+            // OPENBIZ_APP_PATH / OPENBIZ_APP_MESSAGE_PATH : OPENBIZ_APP_PATH / messages
+            if (is_file(OPENBIZ_APP_MESSAGE_PATH . "/" . $messageFile)) {
+                return parse_ini_file(OPENBIZ_APP_MESSAGE_PATH . "/" . $messageFile);
+            } else if (is_file(OPENBIZ_APP_MODULE_PATH . "/" . $messageFile)) {
+				return parse_ini_file(OPENBIZ_APP_MODULE_PATH . "/" . $messageFile);
 			} else {
                 if (isset($packageName) && $packageName != "")
                 {
                     $dirs = explode('.', $packageName);
                     $moduleName = $dirs[0];
-                    $msgFile = MODULE_PATH . "/$moduleName/message/" . $messageFile;
+                    $msgFile = OPENBIZ_APP_MODULE_PATH . "/$moduleName/message/" . $messageFile;
                     if (is_file($msgFile))
                     {
                         return parse_ini_file($msgFile);
@@ -73,7 +73,7 @@ class Resource
                     }
                 } else
                 {
-                    $errmsg = self::getMessage("SYS_ERROR_INVALID_MSGFILE", array(MESSAGE_PATH . "/" . $messageFile));
+                    $errmsg = self::getMessage("SYS_ERROR_INVALID_MSGFILE", array(OPENBIZ_APP_MESSAGE_PATH . "/" . $messageFile));
                     trigger_error($errmsg, E_USER_ERROR);
                 }
             }
@@ -106,8 +106,8 @@ class Resource
     {
         if (isset(self::$_imageUrl))
             return self::$_imageUrl;
-        $useTheme = !defined('USE_THEME') ? 0 : USE_THEME;
-        $themeUrl = !defined('THEME_URL') ? "../themes" : THEME_URL;
+        $useTheme = !defined('OPENBIZ_USE_THEME') ? 0 : OPENBIZ_USE_THEME;
+        $themeUrl = !defined('OPENBIZ_THEME_URL') ? "../themes" : OPENBIZ_THEME_URL;
         $themeName = Resource::getCurrentTheme();
         if ($useTheme)
             self::$_imageUrl = "$themeUrl/$themeName/images";
@@ -125,13 +125,13 @@ class Resource
     {
         if (isset(self::$_cssUrl))
             return self::$_cssUrl;
-        $useTheme = !defined('USE_THEME') ? 0 : USE_THEME;
-        $themeUrl = !defined('THEME_URL') ? APP_URL . "/themes" : THEME_URL;
+        $useTheme = !defined('OPENBIZ_USE_THEME') ? 0 : OPENBIZ_USE_THEME;
+        $themeUrl = !defined('OPENBIZ_THEME_URL') ? OPENBIZ_APP_URL . "/themes" : OPENBIZ_THEME_URL;
 		$themeName = Resource::getCurrentTheme();
         if ($useTheme)
             self::$_cssUrl = "$themeUrl/$themeName/css";
         else
-            self::$_cssUrl = APP_URL . "/css";
+            self::$_cssUrl = OPENBIZ_APP_URL . "/css";
         return self::$_cssUrl;
     }
 
@@ -143,7 +143,7 @@ class Resource
     {
         if (isset(self::$_jsUrl))
             return self::$_jsUrl;
-        self::$_jsUrl = !defined('JS_URL') ? APP_URL . "/js" : JS_URL;
+        self::$_jsUrl = !defined('OPENBIZ_JS_URL') ? OPENBIZ_APP_URL . "/js" : OPENBIZ_JS_URL;
         return self::$_jsUrl;
     }
 
@@ -160,20 +160,20 @@ class Resource
     	}
         $smarty = new Smarty;
 
-        $useTheme = !defined('USE_THEME') ? 0 : USE_THEME;
+        $useTheme = !defined('OPENBIZ_USE_THEME') ? 0 : OPENBIZ_USE_THEME;
         if ($useTheme)
         {
             $theme = Resource::getCurrentTheme();
             $themePath = $theme;    // BizSystem::configuration()->GetThemePath($theme);
-            if (is_dir(THEME_PATH . "/" . $themePath . "/template"))
+            if (is_dir(OPENBIZ_THEME_PATH . "/" . $themePath . "/template"))
             {
-                $templateRoot = THEME_PATH . "/" . $themePath . "/template";
+                $templateRoot = OPENBIZ_THEME_PATH . "/" . $themePath . "/template";
             } else
             {
-                $templateRoot = THEME_PATH . "/" . $themePath . "/templates";
+                $templateRoot = OPENBIZ_THEME_PATH . "/" . $themePath . "/templates";
             }
             $smarty->template_dir = $templateRoot;
-            $smarty->compile_dir = defined('SMARTY_CPL_PATH') ? SMARTY_CPL_PATH."/".$themePath : $templateRoot . "/cpl";
+            $smarty->compile_dir = defined('OPENBIZ_SMARTY_CPL_PATH') ? OPENBIZ_SMARTY_CPL_PATH."/".$themePath : $templateRoot . "/cpl";
             $smarty->config_dir = $templateRoot . "/cfg";
 			if (!file_exists($smarty->compile_dir)) {
                 @mkdir($smarty->compile_dir, 0777);
@@ -184,8 +184,8 @@ class Resource
         {
             if (defined('SMARTY_TPL_PATH'))
                 $smarty->template_dir = SMARTY_TPL_PATH;
-            if (defined('SMARTY_CPL_PATH'))
-                $smarty->compile_dir = SMARTY_CPL_PATH."/".$themePath;
+            if (defined('OPENBIZ_SMARTY_CPL_PATH'))
+                $smarty->compile_dir = OPENBIZ_SMARTY_CPL_PATH."/".$themePath;
             if (defined('SMARTY_CFG_PATH'))
                 $smarty->config_dir = SMARTY_CFG_PATH;
         }
@@ -193,15 +193,15 @@ class Resource
         	mkdir($smarty->compile_dir,0777);
         }
         // load the config file which has the images and css url defined
-        $smarty->assign('app_url', APP_URL);
-        $smarty->assign('app_index', APP_INDEX);
-        $smarty->assign('js_url', JS_URL);
-        $smarty->assign('css_url', THEME_URL . "/" . $theme . "/css");
-        $smarty->assign('resource_url', RESOURCE_URL );
-        $smarty->assign('resource_php', RESOURCE_PHP );
-        $smarty->assign('theme_js_url', THEME_URL . "/" . $theme . "/js");
-        $smarty->assign('theme_url', THEME_URL . "/" . $theme);
-        $smarty->assign('image_url', THEME_URL . "/" . $theme . "/images");
+        $smarty->assign('app_url', OPENBIZ_APP_URL);
+        $smarty->assign('app_index', OPENBIZ_APP_INDEX_URL);
+        $smarty->assign('js_url', OPENBIZ_JS_URL);
+        $smarty->assign('css_url', OPENBIZ_THEME_URL . "/" . $theme . "/css");
+        $smarty->assign('resource_url', OPENBIZ_RESOURCE_URL );
+        $smarty->assign('resource_php', OPENBIZ_RESOURCE_PHP );
+        $smarty->assign('theme_js_url', OPENBIZ_THEME_URL . "/" . $theme . "/js");
+        $smarty->assign('theme_url', OPENBIZ_THEME_URL . "/" . $theme);
+        $smarty->assign('image_url', OPENBIZ_THEME_URL . "/" . $theme . "/images");
         $smarty->assign('lang', strtolower(I18n::getCurrentLangCode()));
         $smarty->assign('lang_name', I18n::getCurrentLangCode());
 
@@ -224,14 +224,14 @@ class Resource
         $theme = Resource::getCurrentTheme();            
             
         // load the config file which has the images and css url defined
-        $view->app_url = APP_URL;
-        $view->app_index = APP_INDEX;
-        $view->js_url = JS_URL;
-        $view->css_url = THEME_URL . "/" . $theme . "/css";
-        $view->resource_url = RESOURCE_URL;    
-        $view->theme_js_url = THEME_URL . "/" . $theme . "/js";
-        $view->theme_url = THEME_URL . "/" . $theme;
-        $view->image_url = THEME_URL . "/" . $theme . "/images";
+        $view->app_url = OPENBIZ_APP_URL;
+        $view->app_index = OPENBIZ_APP_INDEX_URL;
+        $view->js_url = OPENBIZ_JS_URL;
+        $view->css_url = OPENBIZ_THEME_URL . "/" . $theme . "/css";
+        $view->resource_url = OPENBIZ_RESOURCE_URL;    
+        $view->theme_js_url = OPENBIZ_THEME_URL . "/" . $theme . "/js";
+        $view->theme_url = OPENBIZ_THEME_URL . "/" . $theme;
+        $view->image_url = OPENBIZ_THEME_URL . "/" . $theme . "/images";
         $view->lang = strtolower(I18n::getCurrentLangCode());            
             
         return $view;
@@ -268,17 +268,17 @@ class Resource
         $xmlFile = "/" . $xmlFile;
 		
 		// find device path first
-        if (defined('CLIENT_DEVICE')) {
+        if (defined('OPENBIZ_CLIENT_DEVICE')) {
             $path = dirname($xmlFile);
             if (strpos($path, 'view')>0 || strpos($path, 'form')>0 || strpos($path, 'widget')>0) {
                 $fname = basename($xmlFile);
-                $xmlFileList[] = MODULE_PATH."/$path/".CLIENT_DEVICE."/$fname";
+                $xmlFileList[] = OPENBIZ_APP_MODULE_PATH."/$path/".OPENBIZ_CLIENT_DEVICE."/$fname";
             }
         }
         
         // search in modules directory first
-        $xmlFileList[] = MODULE_PATH . $xmlFile;
-        $xmlFileList[] = APP_HOME . $xmlFile;
+        $xmlFileList[] = OPENBIZ_APP_MODULE_PATH . $xmlFile;
+        $xmlFileList[] = OPENBIZ_APP_PATH . $xmlFile;
         $xmlFileList[] = OPENBIZ_META . $xmlFile;
         if ($checkExtModule && defined('MODULE_EX_PATH')) array_unshift($xmlFileList, MODULE_EX_PATH . $xmlFile);
 
@@ -306,7 +306,7 @@ class Resource
 		$theme = Resource::getCurrentTheme();
         $themePath = $theme;    // BizSystem::configuration()->GetThemePath($theme);
         if ($themePath)
-            $templateRoot = THEME_PATH . "/" . $themePath . "/template";
+            $templateRoot = OPENBIZ_THEME_PATH . "/" . $themePath . "/template";
         else
             $templateRoot = SMARTY_TPL_PATH;
 
@@ -322,16 +322,16 @@ class Resource
         }
         
         $searchTpls = array(
-            MODULE_PATH . "/$packagePath/template/$templateFile",
-            dirname(MODULE_PATH . "/$packagePath") . "/template/$templateFile",
-            MODULE_PATH . "/$moduleName/template/$templateFile",
-            //MODULE_PATH."/common/template/$templateFile",
+            OPENBIZ_APP_MODULE_PATH . "/$packagePath/template/$templateFile",
+            dirname(OPENBIZ_APP_MODULE_PATH . "/$packagePath") . "/template/$templateFile",
+            OPENBIZ_APP_MODULE_PATH . "/$moduleName/template/$templateFile",
+            //OPENBIZ_APP_MODULE_PATH."/common/template/$templateFile",
             $templateRoot . "/$templateFile"
         );
         if ($checkExtModule && defined('MODULE_EX_PATH')) array_unshift($searchTpls, MODULE_EX_PATH . "/$packagePath/template/$templateFile");
 		
 		// device
-		if (defined('CLIENT_DEVICE')) array_unshift($searchTpls, MODULE_PATH."/$moduleName/template/".CLIENT_DEVICE."/$templateFile");
+		if (defined('OPENBIZ_CLIENT_DEVICE')) array_unshift($searchTpls, OPENBIZ_APP_MODULE_PATH."/$moduleName/template/".OPENBIZ_CLIENT_DEVICE."/$templateFile");
 		
         foreach ($searchTpls as $tplFile)
         {
@@ -388,7 +388,7 @@ class Resource
         //$objCmpFileName = dirname($objXmlFileName) . "/__cmp/" . basename($objXmlFileName, "xml") . ".cmp";
         //$_crc32 = sprintf('%08X', crc32(dirname($objXmlFileName)));
         $_crc32 = strtoupper(md5(dirname($objXmlFileName)));
-        $objCmpFileName = CACHE_METADATA_PATH . '/' . $_crc32 . '_'
+        $objCmpFileName = OPENBIZ_CACHE_METADATA_PATH . '/' . $_crc32 . '_'
                 . basename($objXmlFileName, "xml") . "cmp";
 
         $xmlArr = null;
@@ -459,8 +459,8 @@ class Resource
 		if ($currentTheme == ""){
         	$currentTheme = BizSystem::getUserPreference("theme");
         }
-        if ($currentTheme == "" && defined('THEME_NAME')) {
-			$currentTheme = THEME_NAME;
+        if ($currentTheme == "" && defined('OPENBIZ_THEME_NAME')) {
+			$currentTheme = OPENBIZ_THEME_NAME;
 		}
         if($currentTheme == ""){
             $currentTheme = Resource::DEFAULT_THEME;

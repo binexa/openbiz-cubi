@@ -38,7 +38,7 @@ class SubmitButton extends InputElement
         $disabledStr = ($this->getEnabled() == "N") ? "DISABLED=\"true\"" : "";
         $style = $this->getStyle();
         $func = $this->getFunction();
-        $sHTML .= "<INPUT TYPE=SUBMIT NAME='$this->m_Name' ID=\"" . $this->m_Name ."\" VALUE='$this->m_Text' $disabledStr $this->m_HTMLAttr $style $func />";
+        $sHTML .= "<INPUT TYPE=SUBMIT NAME='$this->objectName' ID=\"" . $this->objectName ."\" VALUE='$this->m_Text' $disabledStr $this->m_HTMLAttr $style $func />";
         return $sHTML;
     }
 }

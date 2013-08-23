@@ -29,20 +29,20 @@ if (isset($_SERVER['SERVER_NAME']))
 /* * **************************************************************************
   openbiz core path
  * ************************************************************************** */
-//define('OPENBIZ_HOME', 'absolute_dir/Openbiz');
-if (!defined('OPENBIZ_HOME'))
-    define('OPENBIZ_HOME', dirname(dirname(__FILE__)));
+//define('OPENBIZ_PATH', 'absolute_dir/Openbiz');
+if (!defined('OPENBIZ_PATH'))
+    define('OPENBIZ_PATH', dirname(dirname(__FILE__)));
 if (!defined('OPENBIZ_BIN'))
-    define('OPENBIZ_BIN', OPENBIZ_HOME . "/bin/");
+    define('OPENBIZ_BIN', OPENBIZ_PATH . "/bin/");
 if (!defined('OPENBIZ_META'))
-    define('OPENBIZ_META', OPENBIZ_HOME . "/metadata/");
+    define('OPENBIZ_META', OPENBIZ_PATH . "/metadata/");
 
 /* * **************************************************************************
   third party library path
  * ************************************************************************** */
 // Smarty package
 if (!defined('SMARTY_DIR'))
-    define('SMARTY_DIR', OPENBIZ_HOME . "/others/Smarty/libs/");
+    define('SMARTY_DIR', OPENBIZ_PATH . "/others/Smarty/libs/");
 
 /* * **************************************************************************
   application services
@@ -59,8 +59,8 @@ if (!defined('LOG_SERVICE'))
     define('LOG_SERVICE', "service.logService");
 if (!defined('EXCEL_SERVICE'))
     define('EXCEL_SERVICE', "service.excelService");
-if (!defined('PDF_SERVICE'))
-    define('PDF_SERVICE', "service.pdfService");
+if (!defined('OPENBIZ_PDF_SERVICE'))
+    define('OPENBIZ_PDF_SERVICE', "service.pdfService");
 if (!defined('IO_SERVICE'))
     define('IO_SERVICE', "service.ioService");
 if (!defined('EMAIL_SERVICE'))
@@ -75,8 +75,8 @@ if (!defined('QUERY_SERVICE'))
     define('QUERY_SERVICE', "service.queryService");
 if (!defined('SECURITY_SERVICE'))
     define('SECURITY_SERVICE', "service.securityService");
-if (!defined('EVENTLOG_SERVICE'))
-    define('EVENTLOG_SERVICE', "service.eventlogService");
+if (!defined('OPENBIZ_EVENTLOG_SERVICE'))
+    define('OPENBIZ_EVENTLOG_SERVICE', "service.eventlogService");
 if (!defined('CACHE_SERVICE'))
     define('CACHE_SERVICE', "service.cacheService");
 if (!defined('CRYPT_SERVICE'))
@@ -85,23 +85,23 @@ if (!defined('LOCALEINFO_SERVICE'))
     define('LOCALEINFO_SERVICE', "service.localeInfoService");
 
 /* whether print debug infomation or not */
-if (!defined('DEBUG'))
-    define("DEBUG", 1);
+if (!defined('OPENBIZ_DEBUG'))
+    define("OPENBIZ_DEBUG", 1);
 if (!defined('PROFILING'))
     define("PROFILING", 1);
 
 /* check whether user logged in */
 //if(!defined('CHECKUSER')) define("CHECKUSER", "N");
 /* session timeout seconds */
-if (!defined('TIMEOUT'))
-    define("TIMEOUT", -1);  // -1 means never timeout.
+if (!defined('OPENBIZ_TIMEOUT'))
+    define("OPENBIZ_TIMEOUT", -1);  // -1 means never timeout.
 
     
 //include system message file
-include_once(OPENBIZ_HOME . "/messages/system.msg");
+include_once(OPENBIZ_PATH . "/messages/system.msg");
 
 // defined Zend framework library home as ZEND_FRWK_HOME
-define('ZEND_FRWK_HOME', OPENBIZ_HOME . "/others/");
+define('ZEND_FRWK_HOME', OPENBIZ_PATH . "/others/");
 
 /* Popup Suffix for Modal or Popup Windows */
 define('Popup_Suffix', "_popupx_");

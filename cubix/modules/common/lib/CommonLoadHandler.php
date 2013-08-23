@@ -11,7 +11,7 @@
  * @version   $Id: CommonLoadHandler.php 3355 2012-05-31 05:43:33Z rockyswen@gmail.com $
  */
 
-include_once (MODULE_PATH."/system/lib/ModuleLoadHandler.php");
+include_once (OPENBIZ_APP_MODULE_PATH."/system/lib/ModuleLoadHandler.php");
 
 class CommonLoadHandler implements ModuleLoadHandler
 {

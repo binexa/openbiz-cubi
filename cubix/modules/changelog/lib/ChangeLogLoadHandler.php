@@ -11,7 +11,7 @@
  * @version   $Id: ChangeLogLoadHandler.php 3354 2012-05-31 05:39:37Z rockyswen@gmail.com $
  */
 
-include_once (MODULE_PATH."/system/lib/ModuleLoadHandler.php");
+include_once (OPENBIZ_APP_MODULE_PATH."/system/lib/ModuleLoadHandler.php");
 
 class ChangelogLoadHandler implements ModuleLoadHandler
 {

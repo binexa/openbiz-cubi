@@ -23,7 +23,7 @@ class RecordFuzzySearchList extends AutoSuggest
 
     public function getSearchRule()
     {
-    	$value = BizSystem::clientProxy()->getFormInputs($this->m_Name); 
+    	$value = BizSystem::clientProxy()->getFormInputs($this->objectName); 
     	$value = addslashes($value); //escape sql strings          
 	    
 	    if ($value!='')
@@ -36,7 +36,7 @@ class RecordFuzzySearchList extends AutoSuggest
 
 	    if($this->m_SearchFields) //process other search fields
 	    {
-	    	$fields = $lovService = BizSystem::getService(LOV_SERVICE)->getList($this->m_SearchFields);
+	    	$fields = $lovService = BizSystem::getService(CUBI_LOV_SERVICE)->getList($this->m_SearchFields);
 	    	foreach($fields as $opt)
 	    	{
 	    		$field = $opt['val'];

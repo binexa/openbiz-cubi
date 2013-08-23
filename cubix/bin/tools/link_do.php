@@ -33,22 +33,22 @@ $do1name = $argv[1];
 $do2name = $argv[2];
 
 include_once (dirname(dirname(__FILE__))."/app_init.php");
-include_once (MODULE_PATH."/tool/lib/DomMeta.php");
+include_once (OPENBIZ_APP_MODULE_PATH."/tool/lib/DomMeta.php");
 if(!defined("CLI")){
 	exit;
 }
 
-$moduleDir = MODULE_PATH.DIRECTORY_SEPARATOR.str_replace(".",DIRECTORY_SEPARATOR,$module);
+$moduleDir = OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR.str_replace(".",DIRECTORY_SEPARATOR,$module);
 
 // read do1 
 $do1 = BizSystem::getObject($do1name);
-$do1Table = $do1->m_MainTable;
+$do1Table = $do1->mainTableName;
 // read do2 
 $do2 = BizSystem::getObject($do2name);
-$do2Table = $do2->m_MainTable;
+$do2Table = $do2->mainTableName;
 
 $fkCol = "";
-foreach ($do1->m_BizRecord as $field) {
+foreach ($do1->bizRecord as $field) {
     if ($field->m_Column == "$do2name"."_id") {
         $fkCol = $field->m_Column;
     }
@@ -60,20 +60,20 @@ if ($fkCol != null) {
 else {
     echo "Select the '$do1Table' foreign key column pointing to '$do2Table':\n";
     $i = 1;
-    foreach ($do1->m_BizRecord as $field) {
-        if (stripos($field->m_Column, "id")!==false && $field->m_Name != "Id") {
-            echo "\t$i. $field->m_Name ($field->m_Column)\n";
+    foreach ($do1->bizRecord as $field) {
+        if (stripos($field->m_Column, "id")!==false && $field->objectName != "Id") {
+            echo "\t$i. $field->objectName ($field->m_Column)\n";
             $i++;
         }
     }
     echo "Please select a number: ";
     $selection = trim(fgets(STDIN));
     $i = 1;
-    foreach ($do1->m_BizRecord as $field) {
-        if (stripos($field->m_Column, "id")!==false && $field->m_Name != "Id") {
+    foreach ($do1->bizRecord as $field) {
+        if (stripos($field->m_Column, "id")!==false && $field->objectName != "Id") {
             if ($i == $selection) {
                 $fkCol = $field->m_Column;
-                $fkName = $field->m_Name;
+                $fkName = $field->objectName;
                 break;
             }
             $i++;
@@ -187,7 +187,7 @@ function getDoForms($doName) {
     global $g_MetaFiles;
     $name_list = explode(".",$doName);
     $moduleName = $name_list[0];
-    $modulePath = MODULE_PATH."/".$moduleName;
+    $modulePath = OPENBIZ_APP_MODULE_PATH."/".$moduleName;
     php_grep(array("<EasyForm","DataObj=\"$doName\""), $modulePath);
     
     $forms = $g_MetaFiles;

@@ -44,7 +44,7 @@ class UpgradeService
     public function upgradePackage($cpkFilePath)
     {
         // tmp folder
-        $tmpFolder = APP_HOME."/files/tmpfiles";
+        $tmpFolder = OPENBIZ_APP_PATH."/files/tmpfiles";
         $toFolder = $tmpFolder."/".time();
         // unzip cpk file
         try {
@@ -71,7 +71,7 @@ class UpgradeService
             $dirs = ob_scandir($tmpFolder."/$dir0");
             foreach ($dirs as $dir) {
                 $srcDir = $tmpFolder."/$dir0/$dir";
-                $dstDir = ($dir == 'modules') ? APP_HOME."/upgrade/modules" : APP_HOME."/$dir";
+                $dstDir = ($dir == 'modules') ? OPENBIZ_APP_PATH."/upgrade/modules" : OPENBIZ_APP_PATH."/$dir";
                 echo "copy $srcDir to $dstDir \n";
                 recurse_copy($srcDir, $dstDir);
                 if ($dir == 'modules')
@@ -84,7 +84,7 @@ class UpgradeService
     protected function unpack($tarfile, $toFolder)
     {
         // include PEAR Tar class
-        include_once(APP_HOME."/bin/phing/classes/Archive/Tar.php");
+        include_once(OPENBIZ_APP_PATH."/bin/phing/classes/Archive/Tar.php");
         if (!class_exists('Archive_Tar')) {
             throw new Exception("You must have installed the PEAR Archive_Tar class in order to use UntarTask.");
         }
@@ -153,7 +153,7 @@ function recurse_copy($src,$dst) {
 } 
 
 /* test code
-define ('APP_HOME', "C:\\xampp\\htdocs\\ob3\\cubi");
+define ('OPENBIZ_APP_PATH', "C:\\xampp\\htdocs\\ob3\\cubi");
 $upgradeSvc = new UpgradeService();
-$upgradeSvc->upgradePackage(APP_HOME."/files/tmpfiles/cubi_help-0.1_T1235_20110330_1414.cpk");
+$upgradeSvc->upgradePackage(OPENBIZ_APP_PATH."/files/tmpfiles/cubi_help-0.1_T1235_20110330_1414.cpk");
 */

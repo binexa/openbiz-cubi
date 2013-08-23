@@ -5,7 +5,7 @@
   Copyright (c) 2005-2011, Openbiz Technology LLC
   Version $Id: WebsvcListForm.xml 3376 2012-05-31 06:23:51Z rockyswen@gmail.com $
 -->
-<EasyForm Name="WebsvcListForm" Class="EasyForm" FormType="List" jsClass="jbForm" Icon="{RESOURCE_URL}/websvc/images/icon_webservices.gif"  Title="Web Service Account Management" Description="This module manages users who have permission to access Webservices" BizDataObj="websvc.do.WebsvcDO" PageSize="10" DefaultForm="Y" TemplateEngine="Smarty" TemplateFile="grid.tpl" EventName="" MessageFile="" Access="websvc.websvc.Access">
+<EasyForm Name="WebsvcListForm" Class="EasyForm" FormType="List" jsClass="jbForm" Icon="{OPENBIZ_RESOURCE_URL}/websvc/images/icon_webservices.gif"  Title="Web Service Account Management" Description="This module manages users who have permission to access Webservices" BizDataObj="websvc.do.WebsvcDO" PageSize="10" DefaultForm="Y" TemplateEngine="Smarty" TemplateFile="grid.tpl" EventName="" MessageFile="" Access="websvc.websvc.Access">
     <DataPanel>
         <Element Name="row_selections" Class="RowCheckbox"  Label="" FieldName="Id"/>
         <Element Name="fld_Id" Class="common.element.ColumnTitle" FieldName="Id" Label="ID" Sortable="Y" AllowURLParam="N" Link="javascript:">         

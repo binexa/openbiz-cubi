@@ -33,7 +33,7 @@ class UserForm extends EasyForm
 	public function GoDetail()
 	{		
         $id = BizSystem::clientProxy()->getFormInputs('_selectedId');
-		$redirectPage = APP_INDEX."/system/user_detail/".$id;
+		$redirectPage = OPENBIZ_APP_INDEX_URL."/system/user_detail/".$id;
 		BizSystem::clientProxy()->ReDirectPage($redirectPage);
 	}
 	

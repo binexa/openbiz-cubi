@@ -27,26 +27,26 @@ class ThemePackCreator
 				echo "Creating new theme : $theme".PHP_EOL;
 				
 		}
-		$theme_dir = THEME_PATH.DIRECTORY_SEPARATOR.$theme;
+		$theme_dir = OPENBIZ_THEME_PATH.DIRECTORY_SEPARATOR.$theme;
     	if(!is_dir($theme_dir)){
 			if(CLI){
 				echo "Create theme directory: $theme".PHP_EOL;
 			}
     		@mkdir($theme_dir);
 		}
-    	$dir = THEME_PATH.DIRECTORY_SEPARATOR."default";
+    	$dir = OPENBIZ_THEME_PATH.DIRECTORY_SEPARATOR."default";
 		$dir_iterator = new RecursiveDirectoryIterator($dir);
 		$iterator = new RecursiveIteratorIterator($dir_iterator, RecursiveIteratorIterator::SELF_FIRST);
 		foreach ($iterator as $file) {
 				if($this->isThemeFile($file)){
 				    $src_path=$file->getRealPath();
-				    $dest_path= THEME_PATH.DIRECTORY_SEPARATOR.$theme.str_replace($dir,"",$src_path);;			    
+				    $dest_path= OPENBIZ_THEME_PATH.DIRECTORY_SEPARATOR.$theme.str_replace($dir,"",$src_path);;			    
 					if(is_dir($src_path))
 					{
 						if(!is_dir($dest_path))
 						{
 							if(CLI){
-								echo "  Create theme dir: ".str_replace(THEME_PATH.DIRECTORY_SEPARATOR,"",$dest_path).PHP_EOL;
+								echo "  Create theme dir: ".str_replace(OPENBIZ_THEME_PATH.DIRECTORY_SEPARATOR,"",$dest_path).PHP_EOL;
 							}							
 							@mkdir($dest_path);
 						}
@@ -63,7 +63,7 @@ class ThemePackCreator
 						else
 						{
 						if(CLI){
-							echo "  Create theme file: ".str_replace(THEME_PATH.DIRECTORY_SEPARATOR,"",$dest_path).PHP_EOL;
+							echo "  Create theme file: ".str_replace(OPENBIZ_THEME_PATH.DIRECTORY_SEPARATOR,"",$dest_path).PHP_EOL;
 						}
 							//just copy and override it
 							@copy($src_path,$dest_path);

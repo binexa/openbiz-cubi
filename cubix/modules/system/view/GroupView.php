@@ -6,11 +6,11 @@ class GroupView extends EasyView
 	
 	protected function isNeedInitialize()
 	{
-		if($this->m_Name=='system.view.InitializeGroupView')
+		if($this->objectName=='system.view.InitializeGroupView')
 		{
 			return false;
 		}
-		$group_init_lock = APP_FILE_PATH.DIRECTORY_SEPARATOR.'initialize_group.lock';
+		$group_init_lock = OPENBIZ_APP_FILE_PATH.DIRECTORY_SEPARATOR.'initialize_group.lock';
 		if(is_file($group_init_lock))
 		{
 			return false;
@@ -29,7 +29,7 @@ class GroupView extends EasyView
 		if($this->isNeedInitialize())
 		{
 			BizSystem::sessionContext()->setVar("_GROUP_INITIALIZE_LASTVIEW", $_SERVER['REQUEST_URI']);
-			BizSystem::clientProxy()->redirectPage(APP_INDEX.'/system/initialize_group');
+			BizSystem::clientProxy()->redirectPage(OPENBIZ_APP_INDEX_URL.'/system/initialize_group');
 		}
 		return parent::allowAccess($access);
 	}

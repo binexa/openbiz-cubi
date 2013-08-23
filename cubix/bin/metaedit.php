@@ -1,6 +1,6 @@
 <?php
 require_once('app_init.php');
-if (!APPBUILDER)
+if (!CUBI_APPBUILDER)
 {
     echo "Sorry, AppBuilder/MetaEdit disable.";
     exit;
@@ -14,11 +14,11 @@ if(!$modsvc->isModuleInstalled('appbuilder'))
 }
 if($_GET['action']=='launch')
 {
-	$url = APP_INDEX."/appbuilder/dashboard";
+	$url = OPENBIZ_APP_INDEX_URL."/appbuilder/dashboard";
 	header("LOCATION: $url");
 	exit;
 }
 $metaobj = $_GET['metaobj'];
-$url = APP_INDEX."/appbuilder/xml_edit/metaobj=".$metaobj;
+$url = OPENBIZ_APP_INDEX_URL."/appbuilder/xml_edit/metaobj=".$metaobj;
 header("LOCATION: $url");
 ?>

@@ -11,9 +11,9 @@
  * @version   $Id: PackageService.php 5038 2013-01-04 08:46:28Z hellojixian@gmail.com $
  */
 
-include_once(MODULE_PATH."/common/lib/fileUtil.php");
-include_once(MODULE_PATH."/common/lib/httpClient.php");
-include_once(MODULE_PATH."/system/lib/ModuleLoader.php");
+include_once(OPENBIZ_APP_MODULE_PATH."/common/lib/fileUtil.php");
+include_once(OPENBIZ_APP_MODULE_PATH."/common/lib/httpClient.php");
+include_once(OPENBIZ_APP_MODULE_PATH."/system/lib/ModuleLoader.php");
 
 class PackageService extends MetaObject
 {
@@ -94,9 +94,9 @@ class PackageService extends MetaObject
 	
 	protected function _remoteCall($uri,$method,$params=null)
     {
-        $cache_id = md5($this->m_Name.$uri. $method .serialize($params));         
+        $cache_id = md5($this->objectName.$uri. $method .serialize($params));         
         $cacheSvc = BizSystem::getService(CACHE_SERVICE,1);
-        $cacheSvc->init($this->m_Name,$this->m_CacheLifeTime);        		
+        $cacheSvc->init($this->objectName,$this->m_CacheLifeTime);        		
     	if(substr($uri,strlen($uri)-1,1)!='/'){
         	$uri .= '/';
         }

@@ -98,7 +98,7 @@ class GeneralSettingForm extends EasyForm
             		"name"	  => $name,
             		"value"   => $value,
 	            	"section" => $element->m_ElementSet,
-	            	"type" 	  => $element->m_Class,	            
+	            	"type" 	  => $element->className,	            
 	            );
 	            //check if its exsit
 	            $record = $settingDo->fetchOne("[name]='$name'");

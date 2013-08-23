@@ -9,7 +9,7 @@
 			Class="PickerForm" 
 			FormType="New" 
 			jsClass="Openbiz.Form" 
-			Icon="{RESOURCE_URL}/product/images/icon_mod_product_add.png"
+			Icon="{OPENBIZ_RESOURCE_URL}/product/images/icon_mod_product_add.png"
 			Title="Quick Add Product Data" 
 			Description="Create a new product data and edit its content later." 
 			BizDataObj="product.do.ProductPickDO" 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * PHPOpenBiz Framework
  *
@@ -23,12 +24,12 @@
  * @access    public
  */
 class cacheService
-{  
-    public 	$m_Cache = "Disbaled";
-    public	$m_CacheEngine = "File";
+{
 
+    public $m_Cache = "Disbaled";
+    public $m_CacheEngine = "File";
     protected $m_CacheOptions = array();
-    protected $m_CacheEngineOptions  = array();
+    protected $m_CacheEngineOptions = array();
     protected $m_CacheObj = null;
 
     /**
@@ -64,40 +65,37 @@ class cacheService
      */
     protected function readMetadata(&$xmlArr)
     {
-        $this->m_Cache 	= isset($xmlArr["PLUGINSERVICE"]["CACHESETTING"]["ATTRIBUTES"]["MODE"]) ? $xmlArr["PLUGINSERVICE"]["CACHESETTING"]["ATTRIBUTES"]["MODE"] : "Enabled";
+        $this->m_Cache = isset($xmlArr["PLUGINSERVICE"]["CACHESETTING"]["ATTRIBUTES"]["MODE"]) ? $xmlArr["PLUGINSERVICE"]["CACHESETTING"]["ATTRIBUTES"]["MODE"] : "Enabled";
         $this->m_CacheEngine = isset($xmlArr["PLUGINSERVICE"]["CACHEENGINE"]["ATTRIBUTES"]["TYPE"]) ? $xmlArr["PLUGINSERVICE"]["CACHEENGINE"]["ATTRIBUTES"]["TYPE"] : "FileCache";
         // process Cache settings
-        if(strtoupper($this->m_Cache)=="ENABLED")
-        {
-            $this->_loadConfig($xmlArr["PLUGINSERVICE"]["CACHESETTING"]["CONFIG"],$this->m_CacheOptions);
+        if (strtoupper($this->m_Cache) == "ENABLED") {
+            $this->_loadConfig($xmlArr["PLUGINSERVICE"]["CACHESETTING"]["CONFIG"], $this->m_CacheOptions);
         }
-        switch(strtoupper($this->m_CacheEngine))
-        {
+        switch (strtoupper($this->m_CacheEngine)) {
             case "FILE":
-                $this->_loadConfig($xmlArr["PLUGINSERVICE"]["CACHEENGINE"]["FILE"]["CONFIG"],$this->m_CacheEngineOptions);
+                $this->_loadConfig($xmlArr["PLUGINSERVICE"]["CACHEENGINE"]["FILE"]["CONFIG"], $this->m_CacheEngineOptions);
                 //no break there , because all other engine is inherit from FileCache
                 break;
 
             case "SQLITE":
-                $this->_loadConfig($xmlArr["PLUGINSERVICE"]["CACHEENGINE"]["SQLITE"]["CONFIG"],$this->m_CacheEngineOptions);
+                $this->_loadConfig($xmlArr["PLUGINSERVICE"]["CACHEENGINE"]["SQLITE"]["CONFIG"], $this->m_CacheEngineOptions);
                 break;
 
             case "MEMCACHED":
-                $this->_loadConfig($xmlArr["PLUGINSERVICE"]["CACHEENGINE"]["MEMCACHED"]["CONFIG"],$this->m_CacheEngineOptions);
+                $this->_loadConfig($xmlArr["PLUGINSERVICE"]["CACHEENGINE"]["MEMCACHED"]["CONFIG"], $this->m_CacheEngineOptions);
                 break;
 
             case "XCACHE":
-                $this->_loadConfig($xmlArr["PLUGINSERVICE"]["CACHEENGINE"]["XCACHE"]["CONFIG"],$this->m_CacheEngineOptions);
+                $this->_loadConfig($xmlArr["PLUGINSERVICE"]["CACHEENGINE"]["XCACHE"]["CONFIG"], $this->m_CacheEngineOptions);
                 break;
 
             case "APC":
-                $this->_loadConfig($xmlArr["PLUGINSERVICE"]["CACHEENGINE"]["APC"]["CONFIG"],$this->m_CacheEngineOptions);
+                $this->_loadConfig($xmlArr["PLUGINSERVICE"]["CACHEENGINE"]["APC"]["CONFIG"], $this->m_CacheEngineOptions);
                 break;
 
             case "ZENDPLATFORM":
-                $this->_loadConfig($xmlArr["PLUGINSERVICE"]["CACHEENGINE"]["ZENDPLATFORM"]["CONFIG"],$this->m_CacheEngineOptions);
+                $this->_loadConfig($xmlArr["PLUGINSERVICE"]["CACHEENGINE"]["ZENDPLATFORM"]["CONFIG"], $this->m_CacheEngineOptions);
                 break;
-
         }
     }
 
@@ -110,20 +108,16 @@ class cacheService
      */
     private function _loadConfig(&$configs, &$options)
     {
-        foreach($configs as $config)
-        {
-			$value_up = strtoupper($config["ATTRIBUTES"]["VALUE"]);
-            if($value_up=="Y")
-            {
-                $config["ATTRIBUTES"]["VALUE"]=true;
-            }elseif($value_up=="N")
-            {
-                $config["ATTRIBUTES"]["VALUE"]=false;
+        foreach ($configs as $config) {
+            $value_up = strtoupper($config["ATTRIBUTES"]["VALUE"]);
+            if ($value_up == "Y") {
+                $config["ATTRIBUTES"]["VALUE"] = true;
+            } elseif ($value_up == "N") {
+                $config["ATTRIBUTES"]["VALUE"] = false;
             }
             $options[$config["ATTRIBUTES"]["NAME"]] = $config["ATTRIBUTES"]["VALUE"];
-            if($config["ATTRIBUTES"]["NAME"]=='cache_dir')
-            {
-                $options[$config["ATTRIBUTES"]["NAME"]] = CACHE_PATH."/".$config["ATTRIBUTES"]["VALUE"];
+            if ($config["ATTRIBUTES"]["NAME"] == 'cache_dir') {
+                $options[$config["ATTRIBUTES"]["NAME"]] = OPENBIZ_CACHE_PATH . "/" . $config["ATTRIBUTES"]["VALUE"];
             }
         }
     }
@@ -137,39 +131,29 @@ class cacheService
      */
     public function init($objName = "", $lifeTime = 0)
     {
-        if(strtoupper($this->m_Cache)=="ENABLED")
-        {
-            if(strtoupper($this->m_CacheEngine)=="FILE" && $objName!="" )
-            {
-                $objfolder=str_replace(".","/",$objName)."/";
-                $objfolder=str_replace(array(':',' '),'_',$objfolder);
-                if(!strpos($this->m_CacheEngineOptions['cache_dir'],$objfolder))
-                {
+        if (strtoupper($this->m_Cache) == "ENABLED") {
+            if (strtoupper($this->m_CacheEngine) == "FILE" && $objName != "") {
+                $objfolder = str_replace(".", "/", $objName) . "/";
+                $objfolder = str_replace(array(':', ' '), '_', $objfolder);
+                if (!strpos($this->m_CacheEngineOptions['cache_dir'], $objfolder)) {
                     $this->m_CacheEngineOptions['cache_dir'].=$objfolder;
                 }
             }
 
-            if (!file_exists($this->m_CacheEngineOptions['cache_dir']))
-            {
+            if (!file_exists($this->m_CacheEngineOptions['cache_dir'])) {
                 //mkdir($this->m_CacheEngineOptions['cache_dir'], 0777, true);
                 $this->_makeDirectory($this->m_CacheEngineOptions['cache_dir'], 0777);
             }
 
-            $this->m_CacheOptions['automatic_serialization']=true;
+            $this->m_CacheOptions['automatic_serialization'] = true;
 
-            if((int)$lifeTime>0)
-            {
-                $this->m_CacheOptions['lifetime']=(int)$lifeTime;
+            if ((int) $lifeTime > 0) {
+                $this->m_CacheOptions['lifetime'] = (int) $lifeTime;
             }
             require_once 'Zend/Cache.php';
-            $this->m_CacheObj = Zend_Cache::factory('Core',
-                    $this->m_CacheEngine,
-                    $this->m_CacheOptions,
-                    $this->m_CacheEngineOptions);
+            $this->m_CacheObj = Zend_Cache::factory('Core', $this->m_CacheEngine, $this->m_CacheOptions, $this->m_CacheEngineOptions);
             return $this->m_CacheObj;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -183,12 +167,9 @@ class cacheService
      */
     public function save($data, $id)
     {
-        if($this->m_CacheObj && strtoupper($this->m_Cache)=="ENABLED" )
-        {
+        if ($this->m_CacheObj && strtoupper($this->m_Cache) == "ENABLED") {
             return $this->m_CacheObj->save($data, $id);
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -201,11 +182,9 @@ class cacheService
      */
     public function load($id)
     {
-        if($this->m_CacheObj && strtoupper($this->m_Cache)=="ENABLED")
-        {
+        if ($this->m_CacheObj && strtoupper($this->m_Cache) == "ENABLED") {
             return $this->m_CacheObj->load($id);
-        }else
-        {
+        } else {
             return false;
         }
     }
@@ -218,11 +197,9 @@ class cacheService
      */
     public function test($id)
     {
-        if($this->m_CacheObj && strtoupper($this->m_Cache)=="ENABLED")
-        {
+        if ($this->m_CacheObj && strtoupper($this->m_Cache) == "ENABLED") {
             return $this->m_CacheObj->test($id);
-        }else
-        {
+        } else {
             return false;
         }
     }
@@ -235,32 +212,26 @@ class cacheService
      */
     public function remove($id)
     {
-        if($this->m_CacheObj && strtoupper($this->m_Cache)=="ENABLED")
-        {
+        if ($this->m_CacheObj && strtoupper($this->m_Cache) == "ENABLED") {
             return $this->m_CacheObj->remove($id);
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
-     
-     /**
+
+    /**
      * get a list of all caches
      *
      * @return array ids
      */
     public function getIds()
     {
-        if($this->m_CacheObj && strtoupper($this->m_Cache)=="ENABLED")
-        {
+        if ($this->m_CacheObj && strtoupper($this->m_Cache) == "ENABLED") {
             return $this->m_CacheObj->getIds();
-        }
-        else
-        {
+        } else {
             return false;
         }
-    }    
+    }
 
     /**
      * clean all cache
@@ -269,12 +240,9 @@ class cacheService
      */
     public function cleanAll()
     {
-        if($this->m_CacheObj && strtoupper($this->m_Cache)=="ENABLED")
-        {
+        if ($this->m_CacheObj && strtoupper($this->m_Cache) == "ENABLED") {
             return $this->m_CacheObj->clean(Zend_Cache::CLEANING_MODE_ALL);
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -286,16 +254,12 @@ class cacheService
      */
     public function cleanExpired()
     {
-        if($this->m_CacheObj && strtoupper($this->m_Cache) == "ENABLED")
-        {
+        if ($this->m_CacheObj && strtoupper($this->m_Cache) == "ENABLED") {
             return $this->m_CacheObj->clean(Zend_Cache::CLEANING_MODE_OLD);
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
-
 
     /**
      * Make directory recursively
@@ -313,6 +277,5 @@ class cacheService
         is_dir(dirname($pathName)) || $this->_makeDirectory(dirname($pathName), $mode);
         return is_dir($pathName) || @mkdir($pathName, $mode);
     }
-}
 
-?>
+}

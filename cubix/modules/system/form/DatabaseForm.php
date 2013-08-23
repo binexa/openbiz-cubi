@@ -54,7 +54,7 @@ class DatabaseForm extends EasyForm
 		if (strtoupper($this->m_FormType) == "NEW")
             return $this->getNewRule();
             
-		$file = APP_HOME.DIRECTORY_SEPARATOR.$this->m_ConfigFile;
+		$file = OPENBIZ_APP_PATH.DIRECTORY_SEPARATOR.$this->m_ConfigFile;
 		if(!is_file($file)){
 			return;
 		}
@@ -112,7 +112,7 @@ class DatabaseForm extends EasyForm
 	}
 	
 	public function fetchDataSet(){
-		$file = APP_HOME.DIRECTORY_SEPARATOR.$this->m_ConfigFile;
+		$file = OPENBIZ_APP_PATH.DIRECTORY_SEPARATOR.$this->m_ConfigFile;
 		if(!is_file($file)){
 			return;
 		}
@@ -143,7 +143,7 @@ class DatabaseForm extends EasyForm
 	
    public function outputAttrs(){
    		$result = parent::outputAttrs();
-   		$file = APP_HOME.DIRECTORY_SEPARATOR.$this->m_ConfigFile;
+   		$file = OPENBIZ_APP_PATH.DIRECTORY_SEPARATOR.$this->m_ConfigFile;
 		if(!is_file($file)){
 			return;
 		}
@@ -311,7 +311,7 @@ class DatabaseForm extends EasyForm
     }
 	
 	private function testConnStatus($name){
-		$file = APP_HOME.DIRECTORY_SEPARATOR.$this->m_ConfigFile;
+		$file = OPENBIZ_APP_PATH.DIRECTORY_SEPARATOR.$this->m_ConfigFile;
 		if(!is_file($file)){
 			return;
 		}
@@ -378,7 +378,7 @@ class DatabaseForm extends EasyForm
 	}
     
 	private function addNode($nodeArr){
-		$file = APP_HOME.DIRECTORY_SEPARATOR.$this->m_ConfigFile;
+		$file = OPENBIZ_APP_PATH.DIRECTORY_SEPARATOR.$this->m_ConfigFile;
 		if(!is_file($file)){
 			return;
 		}
@@ -402,7 +402,7 @@ class DatabaseForm extends EasyForm
 	}
 	
 	private function updateNode($name, $nodeArr){
-		$file = APP_HOME.DIRECTORY_SEPARATOR.$this->m_ConfigFile;
+		$file = OPENBIZ_APP_PATH.DIRECTORY_SEPARATOR.$this->m_ConfigFile;
 		if(!is_file($file)){
 			return;
 		}
@@ -428,7 +428,7 @@ class DatabaseForm extends EasyForm
 	}
 	
 	private function removeNode($name){
-		$file = APP_HOME.DIRECTORY_SEPARATOR.$this->m_ConfigFile;
+		$file = OPENBIZ_APP_PATH.DIRECTORY_SEPARATOR.$this->m_ConfigFile;
 		if(!is_file($file)){
 			return;
 		}
@@ -453,7 +453,7 @@ class DatabaseForm extends EasyForm
 	}
 	
 	private function checkDupNodeName($nodeName){
-		$file = APP_HOME.DIRECTORY_SEPARATOR.$this->m_ConfigFile;
+		$file = OPENBIZ_APP_PATH.DIRECTORY_SEPARATOR.$this->m_ConfigFile;
 		if(!is_file($file)){
 			return;
 		}
@@ -485,7 +485,7 @@ class DatabaseForm extends EasyForm
 		$smarty = BizSystem::getSmartyTemplate();
 		$smarty->assign("data", $data);
 		$xmldata = $smarty->fetch(BizSystem::getTplFileWithPath("applicationTemplate.xml.tpl", $this->m_Package));
-		$service_dir = APP_HOME;
+		$service_dir = OPENBIZ_APP_PATH;
 		$service_file = $service_dir.DIRECTORY_SEPARATOR.$this->m_ConfigFile;
 		file_put_contents($service_file ,$xmldata);		
 		return true;

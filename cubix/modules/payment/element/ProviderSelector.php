@@ -8,7 +8,7 @@ class ProviderSelector extends Radio
 		parent::getFromList($list, $selectFrom);
 		foreach($list as $key=>$value)
 		{
-			$value['pic'] = RESOURCE_URL.'/payment/images/icon_'.$value['pic'].'.png'; 
+			$value['pic'] = OPENBIZ_RESOURCE_URL.'/payment/images/icon_'.$value['pic'].'.png'; 
 			$list[$key] = $value;
 		}
 	}

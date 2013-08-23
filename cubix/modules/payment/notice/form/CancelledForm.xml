@@ -9,7 +9,7 @@
 			Class="CancelledForm" 
 			FormType="New" 
 			jsClass="Openbiz.Form" 
-			Icon="{RESOURCE_URL}/payment/images/icon_cancelled.png"
+			Icon="{OPENBIZ_RESOURCE_URL}/payment/images/icon_cancelled.png"
 			Title="Payment Cancelled" 
 			Description="We are sorry to acknowledge that \n your payment request has been cancelled.\n The specified provider will not charge money from your bank account."
 			BizDataObj="" 
@@ -22,14 +22,14 @@
        				Class="LabelImage" 
        				FieldName="" 
        				Label="Payment Provider"        	
-       				Text="{RESOURCE_URL}/payment/images/icon_{$_GET['type']}.png" 			
+       				Text="{OPENBIZ_RESOURCE_URL}/payment/images/icon_{$_GET['type']}.png" 			
        				/> 
     </DataPanel>
     <ActionPanel>       
       
                 <Element Name="btn_cancel" 
         			Class="LabelText"
-        			Link="{APP_INDEX}" 
+        			Link="{OPENBIZ_APP_INDEX_URL}" 
         			Text="Back" 
         			CssClass="button">
         </Element>      

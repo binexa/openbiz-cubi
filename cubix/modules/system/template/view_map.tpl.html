@@ -9,11 +9,11 @@ $includedScripts .= "
 <script type=\"text/javascript\" src=\"$js_url/cookies.js\"></script>
 <script type=\"text/javascript\" src=\"$js_url/general_ui.js\"></script>
 ";
-if (JSLIB_BASE!='JQUERY') {
+if (OPENBIZ_JSLIB_BASE!='JQUERY') {
 	$includedScripts .= "
-	<script src=\"".JS_URL."/jquery.js\"></script>
+	<script src=\"".OPENBIZ_JS_URL."/jquery.js\"></script>
 	<script>try{var \$j=jQuery.noConflict();}catch(e){}</script>
-	<script src=\"".JS_URL."/jquery-ui-1.8.12.custom.min.js\"></script>
+	<script src=\"".OPENBIZ_JS_URL."/jquery-ui-1.8.12.custom.min.js\"></script>
 	";
 }
 $this->_tpl_vars['scripts'] = $includedScripts;

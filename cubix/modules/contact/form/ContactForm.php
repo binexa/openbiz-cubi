@@ -11,7 +11,7 @@
  * @version   $Id: ContactForm.php 5008 2012-12-31 14:55:34Z hellojixian@gmail.com $
  */
 
-include_once MODULE_PATH.'/changelog/form/ChangeLogNoCommentForm.php';
+include_once OPENBIZ_APP_MODULE_PATH.'/changelog/form/ChangeLogNoCommentForm.php';
 class ContactForm extends ChangeLogForm
 {
  

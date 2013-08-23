@@ -67,7 +67,7 @@ class LabelList extends OptionElement
         $valueArr = explode(',', $this->m_Value);
         $style = $this->getStyle();
         $func = $this->getFunction();
-        $id = $this->m_Name;
+        $id = $this->objectName;
         $selectedStr = '';
 
         $selectedStr = $value;

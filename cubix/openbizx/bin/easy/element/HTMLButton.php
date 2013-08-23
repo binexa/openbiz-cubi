@@ -36,7 +36,7 @@ class HTMLButton extends InputElement
         $disabledStr = ($this->getEnabled() == "N") ? "DISABLED=\"true\"" : "";
         $func = $this->getFunction();
         $style = $this->getStyle();
-        $sHTML .= "<INPUT TYPE=BUTTON NAME='$this->m_Name' ID=\"" . $this->m_Name ."\" VALUE='$this->m_Text' $disabledStr $this->m_HTMLAttr $func $style />";
+        $sHTML .= "<INPUT TYPE=BUTTON NAME='$this->objectName' ID=\"" . $this->objectName ."\" VALUE='$this->m_Text' $disabledStr $this->m_HTMLAttr $func $style />";
         return $sHTML;
     }
 }

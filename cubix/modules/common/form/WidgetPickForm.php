@@ -41,7 +41,7 @@ class WidgetPickForm extends PickerForm
 	{
 		// add widget to user_widget table
 		$userWidgetDo = BizSystem::getObject($this->userWidgetDOName);
-		$userWidgetTable = $userWidgetDo->m_MainTable;
+		$userWidgetTable = $userWidgetDo->mainTableName;
 		$db = $userWidgetDo->getDbConnection();
 		
 		$myProfile = BizSystem::getUserProfile();

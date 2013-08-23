@@ -14,7 +14,7 @@
  * @version   $Id: validateService.php 2553 2010-11-21 08:36:48Z mr_a_ton $
  */
 
-include_once (OPENBIZ_HOME."/messages/validateService.msg");
+include_once (OPENBIZ_PATH."/messages/validateService.msg");
 
 /**
  * validateService class is the plug-in service of handling system validation.

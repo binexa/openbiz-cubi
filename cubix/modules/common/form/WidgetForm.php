@@ -110,7 +110,7 @@ class WidgetForm extends EasyForm
 			}
 			else
 			{
-				$widget = $this->m_Name;
+				$widget = $this->objectName;
 			}
 		}
 		$user_id = BizSystem::GetUserProfile("Id");

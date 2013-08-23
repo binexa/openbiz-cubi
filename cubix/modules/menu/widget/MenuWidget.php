@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Openbiz Cubi Application Platform
  *
@@ -10,36 +11,37 @@
  * @link      http://code.google.com/p/openbiz-cubi/
  * @version   $Id: MenuWidget.php 5327 2013-03-25 05:09:15Z agus.suhartono@gmail.com $
  */
+include_once OPENBIZ_APP_MODULE_PATH . DIRECTORY_SEPARATOR . 'menu' . DIRECTORY_SEPARATOR . 'widget' . DIRECTORY_SEPARATOR . 'MenuRenderer.php';
 
-class MenuWidget extends MetaObject implements iUIControl {
+class MenuWidget extends MetaObject implements iUIControl
+{
 
     public $m_Title;
-    public $m_Description;
-	public $m_StartMenuItem;
+    public $objectDescription;
+    public $m_StartMenuItem;
     public $m_StartMenuID;
     public $m_SearchRule;
     public $m_GlobalSearchRule;
-	public $m_MenuDeep;
-	public $m_TemplateEngine;
-	public $m_TemplateFile;
-	public $m_DataObjName;
-	public $m_CacheLifeTime;
-	public $m_CssClass;
-	
-	protected $m_DataObj;
-    
+    public $m_MenuDeep;
+    public $m_TemplateEngine;
+    public $m_TemplateFile;
+    public $m_DataObjName;
+    public $m_CacheLifeTime;
+    public $m_CssClass;
+    protected $m_DataObj;
+
     function __construct(&$xmlArr)
     {
-    	$this->readMetadata($xmlArr);
+        $this->readMetadata($xmlArr);
         $this->translate();
     }
-    
+
     protected function readMetadata(&$xmlArr)
     {
-    	parent::readMetaData($xmlArr);
-        $this->m_Name = $this->prefixPackage($this->m_Name);
+        parent::readMetaData($xmlArr);
+        $this->objectName = $this->prefixPackage($this->objectName);
         $this->m_Title = isset($xmlArr["MENUWIDGET"]["ATTRIBUTES"]["TITLE"]) ? $xmlArr["MENUWIDGET"]["ATTRIBUTES"]["TITLE"] : null;
-        $this->m_Description = isset($xmlArr["MENUWIDGET"]["ATTRIBUTES"]["DESCRIPTION"]) ? $xmlArr["MENUWIDGET"]["ATTRIBUTES"]["DESCRIPTION"] : null;
+        $this->objectDescription = isset($xmlArr["MENUWIDGET"]["ATTRIBUTES"]["DESCRIPTION"]) ? $xmlArr["MENUWIDGET"]["ATTRIBUTES"]["DESCRIPTION"] : null;
         $this->m_CssClass = isset($xmlArr["MENUWIDGET"]["ATTRIBUTES"]["CSSCLASS"]) ? $xmlArr["MENUWIDGET"]["ATTRIBUTES"]["CSSCLASS"] : null;
         $this->m_TemplateEngine = isset($xmlArr["MENUWIDGET"]["ATTRIBUTES"]["TEMPLATEENGINE"]) ? $xmlArr["MENUWIDGET"]["ATTRIBUTES"]["TEMPLATEENGINE"] : null;
         $this->m_TemplateFile = isset($xmlArr["MENUWIDGET"]["ATTRIBUTES"]["TEMPLATEFILE"]) ? $xmlArr["MENUWIDGET"]["ATTRIBUTES"]["TEMPLATEFILE"] : null;
@@ -52,25 +54,22 @@ class MenuWidget extends MetaObject implements iUIControl {
         $this->m_CacheLifeTime = isset($xmlArr["MENUWIDGET"]["ATTRIBUTES"]["CACHELIFETIME"]) ? $xmlArr["MENUWIDGET"]["ATTRIBUTES"]["CACHELIFETIME"] : "0";
         $this->translate();
     }
-    
+
     public function render()
     {
-    	if (!$this->allowAccess())
+        if (!$this->allowAccess())
             return "";
-        if($this->m_CacheLifeTime>0)
-        {
-            $cache_id = md5($this->m_Name);
+        if ($this->m_CacheLifeTime > 0) {
+            $cache_id = md5($this->objectName);
             //try to process cache service.
-            $cacheSvc = BizSystem::getService(CACHE_SERVICE,1);
-            $cacheSvc->init($this->m_Name,$this->m_CacheLifeTime);
-            if($cacheSvc->test($cache_id))
-            {
-                BizSystem::log(LOG_DEBUG, "MENU", "Cache Hit. menu widget name = ".$this->m_Name);
+            $cacheSvc = BizSystem::getService(CACHE_SERVICE, 1);
+            $cacheSvc->init($this->objectName, $this->m_CacheLifeTime);
+
+            if ($cacheSvc->test($cache_id)) {
+                BizSystem::log(LOG_DEBUG, "MENU", "Cache Hit. menu widget name = " . $this->objectName);
                 $output = $cacheSvc->load($cache_id);
-            }
-            else
-            {
-                BizSystem::log(LOG_DEBUG, "MENU", "Set cache. menu widget = ".$this->m_Name);
+            } else {
+                BizSystem::log(LOG_DEBUG, "MENU", "Set cache. menu widget = " . $this->objectName);
                 $output = $this->renderHTML();
                 $cacheSvc->save($output, $cache_id);
             }
@@ -78,83 +77,87 @@ class MenuWidget extends MetaObject implements iUIControl {
         }
         $renderedHTML = $this->renderHTML();
         return $renderedHTML;
-    }  
+    }
 
     protected function renderHTML()
     {
         //include_once(dirname(__FILE__)."/MenuRenderer.php");   
         $sHTML = MenuRenderer::render($this);
         return $sHTML;
-    }    
-
-    public function fetchMenuTree(){
-    	$dataObj = $this->getDataObj();
-    	if ($this->m_SearchRule!="") {
-    		$tree = $dataObj->fetchTreeBySearchRule($this->m_SearchRule, $this->m_MenuDeep, $this->m_GlobalSearchRule);
-    	}else if($this->m_StartMenuID!=""){
-    		$tree = $dataObj->fetchTree($this->m_StartMenuID, $this->m_MenuDeep);
-    	}else{
-    		$tree = $dataObj->fetchTreeByName($this->m_StartMenuItem, $this->m_MenuDeep);
-    	}
-    	return $tree; 
     }
 
-    public function outputAttrs(){
-    	$attrs = array();
-    	$attrs['name'] = $this->m_Name;
-    	$attrs['title'] = $this->m_Title;
-    	$attrs['css'] = $this->m_CssClass;
-    	$attrs['description'] = $this->m_Description;
-    	$attrs['menu'] = $this->fetchMenuTree();
-    	$attrs['breadcrumb']= $this->getDataObj()->getBreadCrumb();
-    	//if ($this->m_Name=="menu.widget.MainTabMenu") { print_r($attrs['menu']);   print_r($attrs['breadcrumb']);  }
-    	return $attrs;
+    public function fetchMenuTree()
+    {
+        $dataObj = $this->getDataObj();
+        if ($this->m_SearchRule != "") {
+            $tree = $dataObj->fetchTreeBySearchRule($this->m_SearchRule, $this->m_MenuDeep, $this->m_GlobalSearchRule);
+        } else if ($this->m_StartMenuID != "") {
+            $tree = $dataObj->fetchTree($this->m_StartMenuID, $this->m_MenuDeep);
+        } else {
+            $tree = $dataObj->fetchTreeByName($this->m_StartMenuItem, $this->m_MenuDeep);
+        }
+        return $tree;
     }
-    
+
+    public function outputAttrs()
+    {
+        $attrs = array();
+        $attrs['name'] = $this->objectName;
+        $attrs['title'] = $this->m_Title;
+        $attrs['css'] = $this->m_CssClass;
+        $attrs['description'] = $this->objectDescription;
+        $attrs['menu'] = $this->fetchMenuTree();
+        $attrs['breadcrumb'] = $this->getDataObj()->getBreadCrumb();
+        //if ($this->objectName=="menu.widget.MainTabMenu") { print_r($attrs['menu']);   print_r($attrs['breadcrumb']);  }
+        return $attrs;
+    }
+
     protected function prefixPackage($name)
     {
         if ($name && !strpos($name, ".") && ($this->m_Package)) // no package prefix as package.object, add it
-            $name = $this->m_Package.".".$name;
+            $name = $this->m_Package . "." . $name;
 
         return $name;
-    } 
-    
+    }
+
     final public function getDataObj()
     {
-        if (!$this->m_DataObj)
-        {        	
+        if (!$this->m_DataObj) {
             if ($this->m_DataObjName)
-                $this->m_DataObj = BizSystem::getObject($this->m_DataObjName,1);
-            if($this->m_DataObj)
-                $this->m_DataObj->m_BizFormName = $this->m_Name;
-            else
-            {
+                $this->m_DataObj = BizSystem::getObject($this->m_DataObjName, 1);
+            if ($this->m_DataObj)
+                $this->m_DataObj->m_BizFormName = $this->objectName;
+            else {
                 //BizSystem::clientProxy()->showErrorMessage("Cannot get DataObj of ".$this->m_DataObjName.", please check your metadata file.");
                 return null;
             }
         }
         return $this->m_DataObj;
-    }   
-
-    public function setRequestParams(){
-    	
     }
-    
+
+    public function setRequestParams()
+    {
+        
+    }
+
     protected function translate()
     {
-    	$module = $this->getModuleName($this->m_Name);
-    	$this->m_Title = I18n::t($this->m_Title, $this->getTransKey('Title'), $module);
-        $this->m_Description = I18n::t($this->m_Description, $this->getTransKey('Description'), $module);
+        $module = $this->getModuleName($this->objectName);
+        $this->m_Title = I18n::t($this->m_Title, $this->getTransKey('Title'), $module);
+        $this->objectDescription = I18n::t($this->objectDescription, $this->getTransKey('Description'), $module);
     }
-    
+
     protected function getTransKey($name)
     {
-    	$shortFormName = substr($this->m_Name,intval(strrpos($this->m_Name,'.'))+1);
-    	return strtoupper($shortFormName.'_'.$name);
+        $shortFormName = substr($this->objectName, intval(strrpos($this->objectName, '.')) + 1);
+        return strtoupper($shortFormName . '_' . $name);
     }
+
     public function getModuleName($name)
     {
-    	return substr($name,0,intval(strpos($name,'.')));
-    }    
+        return substr($name, 0, intval(strpos($name, '.')));
+    }
+
 }
+
 ?>

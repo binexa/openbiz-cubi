@@ -16,9 +16,9 @@ class ModuleUnloader extends ModuleLoader
 {
 	public function unloadModule()
     {
-		$this->log("Unloading module ".$this->name);
-        $module = $this->name;
-		$modfile = MODULE_PATH."/$module/mod.xml";
+		$this->log("Unloading module ".$this->objectName);
+        $module = $this->objectName;
+		$modfile = OPENBIZ_APP_MODULE_PATH."/$module/mod.xml";
         if (!file_exists($modfile)) {
         	$this->errors = "$module is not unload, mod.xml is not found in $module.";	
         	return false;
@@ -48,7 +48,7 @@ class ModuleUnloader extends ModuleLoader
     protected function uninstallModuleSql()
     {
         $this->log("Uninstall Module Sql.");
-    	$sqlfile = MODULE_PATH."/".$this->name."/mod.uninstall.sql";
+    	$sqlfile = OPENBIZ_APP_MODULE_PATH."/".$this->objectName."/mod.uninstall.sql";
         if (!file_exists($sqlfile))
         	return true;
         
@@ -58,7 +58,7 @@ class ModuleUnloader extends ModuleLoader
         	return true;
 
         $db = $this->DBConnection();
-        include_once (MODULE_PATH."/system/lib/MySQLDumpParser.php");
+        include_once (OPENBIZ_APP_MODULE_PATH."/system/lib/MySQLDumpParser.php");
         
         $queryArr = MySQLDumpParser::parse($query);
         foreach($queryArr as $query){
@@ -76,23 +76,23 @@ class ModuleUnloader extends ModuleLoader
     protected function removeResourceFiles()
     {
         $this->log("Remove resource files from /cubi/resources folder.");
-    	$module = $this->name;
-        $targetFolder = APP_HOME."/resources/$module";        
+    	$module = $this->objectName;
+        $targetFolder = OPENBIZ_APP_PATH."/resources/$module";        
         recurse_delete($targetFolder);
     }    
     
  	protected function removeModuleFiles()
     {
         $this->log("Remove module files to /cubi/modules folder.");
-    	$module = $this->name;
-        $targetFolder = MODULE_PATH.DIRECTORY_SEPARATOR.$module;        
+    	$module = $this->objectName;
+        $targetFolder = OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR.$module;        
         recurse_delete($targetFolder);
     }       
     
     protected function uninstallModule()
     {
-        $this->log("Uninstall Module ".$this->name);
-    	$modfile = MODULE_PATH."/".$this->name."/mod.xml";
+        $this->log("Uninstall Module ".$this->objectName);
+    	$modfile = OPENBIZ_APP_MODULE_PATH."/".$this->objectName."/mod.xml";
         
     	$xml = simplexml_load_file($modfile);
         
@@ -137,7 +137,7 @@ class ModuleUnloader extends ModuleLoader
     protected function uninstallMenu($xml)
     {
     	$this->log("Uninstall Module Menu.");
-    	$module = $this->name;
+    	$module = $this->objectName;
     	if (isset($xml->Menu) && isset($xml->Menu->MenuItem))
     	{
 	    	// delete all menu item first
@@ -166,7 +166,7 @@ class ModuleUnloader extends ModuleLoader
     protected function uninstallACL($xml)
     {
     	$this->log("Uninstall Module ACL.");
-    	$modName = $this->name;
+    	$modName = $this->objectName;
     	if (isset($xml->ACL) && isset($xml->ACL->Resource))
         {
 			$db = $this->DBConnection();

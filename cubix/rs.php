@@ -16,9 +16,9 @@
 // 
 // include app.inc
 //include_once "bin/app_init.php";
-define('APP_HOME',dirname(__FILE__));
-define('RESOURCE_PATH', APP_HOME.DIRECTORY_SEPARATOR."resources");
-define('CACHE_DATA_PATH', APP_HOME.DIRECTORY_SEPARATOR."files".DIRECTORY_SEPARATOR."cache".DIRECTORY_SEPARATOR."data");
+define('OPENBIZ_APP_PATH',dirname(__FILE__));
+define('OPENBIZ_RESOURCE_PATH', OPENBIZ_APP_PATH.DIRECTORY_SEPARATOR."resources");
+define('CUBI_CACHE_DATA_PATH', OPENBIZ_APP_PATH.DIRECTORY_SEPARATOR."files".DIRECTORY_SEPARATOR."cache".DIRECTORY_SEPARATOR."data");
 
 $file = $_GET['f'];
 // get extention of given file

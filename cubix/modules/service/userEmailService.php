@@ -58,8 +58,8 @@ class userEmailService extends MetaObject
         	        
         $userData = $data[0];
         $data 	  = array("userinfo"=>$userData);
-        $data['app_index'] = APP_INDEX;
-		$data['app_url'] = APP_URL;
+        $data['app_index'] = OPENBIZ_APP_INDEX_URL;
+		$data['app_url'] = OPENBIZ_APP_URL;
 		$data['operator_name'] = BizSystem::GetProfileName(BizSystem::getUserProfile("Id"));
 		$data['refer_url'] = SITE_URL;
 		       
@@ -90,8 +90,8 @@ class userEmailService extends MetaObject
         	return false;        
         $userId = $data[0]['user_id'];
 		$data 	 = $data[0];
-		$data['app_index'] = APP_INDEX;
-		$data['app_url'] = APP_URL;
+		$data['app_index'] = OPENBIZ_APP_INDEX_URL;
+		$data['app_url'] = OPENBIZ_APP_URL;
 		$data['operator_name'] = BizSystem::GetProfileName(BizSystem::getUserProfile("Id"));
 		$data['refer_url'] = SITE_URL;
 		
@@ -261,8 +261,8 @@ class userEmailService extends MetaObject
 		$sender   = $this->m_Tempaltes[$template_name]["EMAILACCOUNT"];
 				        
 		//render the email tempalte		
-		$data['app_index'] = APP_INDEX;
-		$data['app_url'] = APP_URL;
+		$data['app_index'] = OPENBIZ_APP_INDEX_URL;
+		$data['app_url'] = OPENBIZ_APP_URL;
 		$data['operator_name'] = BizSystem::GetProfileName(BizSystem::getUserProfile("Id"));
 		$data['refer_url'] = SITE_URL;
 		
@@ -292,8 +292,8 @@ class userEmailService extends MetaObject
 		$sender   = $this->m_Tempaltes[$template_name]["EMAILACCOUNT"];
 				        
 		//render the email tempalte	
-		$data['app_index'] = APP_INDEX;
-		$data['app_url'] = APP_URL;
+		$data['app_index'] = OPENBIZ_APP_INDEX_URL;
+		$data['app_url'] = OPENBIZ_APP_URL;
 
 		
 		$data['operator_name'] = BizSystem::GetProfileName($data['create_by']);

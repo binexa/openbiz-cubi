@@ -5,7 +5,7 @@
   Copyright (c) 2005-2011, Openbiz Technology LLC
   Version $Id: SettingEditForm.xml 3369 2012-05-31 06:13:56Z rockyswen@gmail.com $
 -->
-<EasyForm Name="SettingTranslateForm" Class="SettingTranslateForm" FormType="Edit" Icon="{RESOURCE_URL}/repository/images/icon_repo_setting.png" jsClass="jbForm"  SearchRule="[user_id]='0'" Title="Translate Repository Setting" Description="You can setup yoru repository setting for publish your apps." BizDataObj="myaccount.do.PreferenceDO" TemplateEngine="Smarty" TemplateFile="detail_elementset.tpl"  MessageFile="repository.ini">
+<EasyForm Name="SettingTranslateForm" Class="SettingTranslateForm" FormType="Edit" Icon="{OPENBIZ_RESOURCE_URL}/repository/images/icon_repo_setting.png" jsClass="jbForm"  SearchRule="[user_id]='0'" Title="Translate Repository Setting" Description="You can setup yoru repository setting for publish your apps." BizDataObj="myaccount.do.PreferenceDO" TemplateEngine="Smarty" TemplateFile="detail_elementset.tpl"  MessageFile="repository.ini">
     <DataPanel>
         <Element Name="fld_Id" Hidden="Y" Class="Hidden" ElementSet="General" FieldName="Id" Label="User Id"/>
 		<Element Name="fld_lang" ElementSet="General" DefaultValue="{I18n::getCurrentLangCode()}" ReadOnly="Y"  FieldName="lang" Label="Language" Class="myaccount.form.LanguageSelector"  >

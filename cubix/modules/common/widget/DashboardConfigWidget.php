@@ -22,7 +22,7 @@ class DashboardConfigWidget extends EasyForm
 		$widgetName = str_replace("_widget", "", $widgetName);
 		// add widget to user_widget table
 		$userWidgetDo = BizSystem::getObject($this->userWidgetDOName);
-		$userWidgetTable = $userWidgetDo->m_MainTable;
+		$userWidgetTable = $userWidgetDo->mainTableName;
 		$db = $userWidgetDo->getDbConnection();
 		
 		$myProfile = BizSystem::getUserProfile();
@@ -47,7 +47,7 @@ class DashboardConfigWidget extends EasyForm
 		$widgetName = str_replace("_widget", "", $widgetName);
 		// remove widget from the user_widget table
 		$userWidgetDo = BizSystem::getObject($this->userWidgetDOName);
-		$userWidgetTable = $userWidgetDo->m_MainTable;
+		$userWidgetTable = $userWidgetDo->mainTableName;
 		$db = $userWidgetDo->getDbConnection();
 		
 		$myProfile = BizSystem::getUserProfile();
@@ -86,7 +86,7 @@ class DashboardConfigWidget extends EasyForm
 		
 		// update ordering of all user_widget records
 		$userWidgetDo = BizSystem::getObject($this->userWidgetDOName);
-		$userWidgetTable = $userWidgetDo->m_MainTable;
+		$userWidgetTable = $userWidgetDo->mainTableName;
 		$db = $userWidgetDo->getDbConnection();
 		
 		$myProfile = BizSystem::getUserProfile();

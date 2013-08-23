@@ -9,7 +9,7 @@
     <DataPanel>
         <Element Name="fld_Id" Class="Hidden" Hidden="Y" FieldName="release_id" Label="Id" Sortable="Y" AllowURLParam="Y" Link="javascript:" />              
         <Element Name="fld_icon" Class="ColumnImage" 
-				Text="{RESOURCE_URL}/repository/images/icon_install_log.png" Height="24"
+				Text="{OPENBIZ_RESOURCE_URL}/repository/images/icon_install_log.png" Height="24"
 				FieldName="" Label="Icon"  Sortable="N" AllowURLParam="N" Translatable="N" OnEventLog="N" Link="javascript:;">							
 		</Element>
         <Element Name="app_id" Class="Hidden" Hidden="Y" FieldName="app_id" Label="APPID" Sortable="Y" AllowURLParam="Y" Link="javascript:" />

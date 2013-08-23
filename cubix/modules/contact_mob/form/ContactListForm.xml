@@ -5,7 +5,7 @@
   Copyright (c) 2005-2011, Openbiz Technology LLC
   Version $Id: ContactListForm.xml 3751 2012-07-27 07:50:53Z rockyswen@gmail.com $
 -->
-<EasyForm Name="ContactListForm" Class="contact.form.ContactForm" Icon="{RESOURCE_URL}/contact/images/icon_phonebook.gif" FormType="List" jsClass="jbForm" Title="Contact Phone Book" Description="Telephone directory (also called a telephone book and phone book) is a listing of telephone." BizDataObj="contact.do.ContactDO" PageSize="10" DefaultForm="Y" TemplateEngine="Smarty" TemplateFile="system_content_listform.tpl.html" EventName="CONTACT" Access="contact.access">
+<EasyForm Name="ContactListForm" Class="contact.form.ContactForm" Icon="{OPENBIZ_RESOURCE_URL}/contact/images/icon_phonebook.gif" FormType="List" jsClass="jbForm" Title="Contact Phone Book" Description="Telephone directory (also called a telephone book and phone book) is a listing of telephone." BizDataObj="contact.do.ContactDO" PageSize="10" DefaultForm="Y" TemplateEngine="Smarty" TemplateFile="system_content_listform.tpl.html" EventName="CONTACT" Access="contact.access">
     <DataPanel>
         <!--<Element Name="row_selections" Class="RowCheckbox"  Label="" FieldName="Id" CssClass="ui-li-icon"/> -->
 		<Element Name="fld_Id" Class="LabelText" Hidden="Y" FieldName="Id" Label="ID"/>
@@ -14,7 +14,7 @@
         <Element Name="fld_mobile" Class="LabelText"   FieldName="mobile" Label="Mobile" Text="Cell: {@:Elem[fld_mobile].Value}" Sortable="Y" CssClass="ui-li-desc"/>	
 		<Element Name="fld_type" Class="LabelText"  FieldName="type_name" Label="Type" Text="Type: {@:Elem[fld_type].Value}" CssClass="ui-li-desc"/>
 		<Element Name="fld_Id_side" Class="LabelText" FieldName="Id" Label="ID" Text="Id: {@:Elem[fld_Id_side].Value}" CssClass="ui-li-aside ui-li-desc"/>
-		<Element Name="fld_listlink" Class="LabelText" Label="ListLink" Link="{APP_INDEX}/contact_mob/contact_detail/{@:Elem[fld_Id].Value}" Text=" " Style="white-space:normal;padding-top:0;padding-bottom:0;"/>
+		<Element Name="fld_listlink" Class="LabelText" Label="ListLink" Link="{OPENBIZ_APP_INDEX_URL}/contact_mob/contact_detail/{@:Elem[fld_Id].Value}" Text=" " Style="white-space:normal;padding-top:0;padding-bottom:0;"/>
     </DataPanel>
     <ActionPanel>
 		<!--<Element Name="lnk_new" Class="Button" Text="Add" DataRole="button" HTMLAttr="data-inline='true'" Description="Add a contact" >

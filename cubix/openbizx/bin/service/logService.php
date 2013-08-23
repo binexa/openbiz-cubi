@@ -118,7 +118,7 @@ class logService extends MetaObject
      */
     public function log($priority, $package, $message)
     {
-        if (DEBUG == 0 && $priority == LOG_DEBUG)
+        if (OPENBIZ_DEBUG == 0 && $priority == LOG_DEBUG)
         	return true;
     	//Adapt PHP LOG priority
         switch ($priority)
@@ -365,22 +365,22 @@ class logService extends MetaObject
     {
         $level = $this->_level;
         if ($fileName)
-            return LOG_PATH . '/' . $fileName . $this->_extension;
+            return OPENBIZ_LOG_PATH . '/' . $fileName . $this->_extension;
         switch ($this->_org)
         {
             case 'DATE':
-                return LOG_PATH . '/' . date("Y_m_d") . $this->_extension;
+                return OPENBIZ_LOG_PATH . '/' . date("Y_m_d") . $this->_extension;
                 break;
             case 'LEVEL':
                 $level = $this->_level2filename($level);                
-                return LOG_PATH . '/' . $level . $this->_extension;
+                return OPENBIZ_LOG_PATH . '/' . $level . $this->_extension;
                 break;
             case 'LEVEL-DATE':
                 $level = $this->_level2filename($level);
                 //delete old log files                
                 if($this->_daystolive>0){
-	                if(is_array(glob(LOG_PATH . '/' . $level .'-*' .  $this->_extension))){
-		                foreach (glob(LOG_PATH . '/' . $level .'-*' .  $this->_extension) as $filename) {
+	                if(is_array(glob(OPENBIZ_LOG_PATH . '/' . $level .'-*' .  $this->_extension))){
+		                foreach (glob(OPENBIZ_LOG_PATH . '/' . $level .'-*' .  $this->_extension) as $filename) {
 						    $mtime = filemtime($filename);
 						    if((time() - $mtime) >= $this->_daystolive*86400 ){
 						    	@unlink($filename);
@@ -388,13 +388,13 @@ class logService extends MetaObject
 						}
                 	}
                 }
-                return LOG_PATH . '/' . $level .'-'. date("Y_m_d") .  $this->_extension;
+                return OPENBIZ_LOG_PATH . '/' . $level .'-'. date("Y_m_d") .  $this->_extension;
                 break;
             case 'PROFILE':
                 $profile = BizSystem::getUserProfile('USERID');
                 if (! $profile)
                     $profile = 'Guest';
-                return LOG_PATH . '/' . $profile . $this->_extension;
+                return OPENBIZ_LOG_PATH . '/' . $profile . $this->_extension;
                 break;
             default:
                 ;

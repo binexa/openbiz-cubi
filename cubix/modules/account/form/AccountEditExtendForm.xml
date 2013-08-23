@@ -3,7 +3,7 @@
 			Class="EasyForm" 
 			FormType="Edit" 
 			jsClass="Openbiz.Form" 
-			Icon="{RESOURCE_URL}/account/images/icon_mod_account_extend.png"
+			Icon="{OPENBIZ_RESOURCE_URL}/account/images/icon_mod_account_extend.png"
 			Title="Edit Account Extend Fields" 
 			Description="Here you can edit extend fields for selected type of data" 
 			BizDataObj="account.do.AccountDO" 
@@ -90,7 +90,7 @@
             			EventLogMsg="" 
             			Event="onclick" 
             			Function="UpdateRecord()" 
-            			RedirectPage="{APP_INDEX}/account/account_detail/{@account.do.AccountDO:Field[Id].Value}" 
+            			RedirectPage="{OPENBIZ_APP_INDEX_URL}/account/account_detail/{@account.do.AccountDO:Field[Id].Value}" 
             			ContextMenu="Finish"   />
         </Element>
         <Element Name="btn_cancel" 

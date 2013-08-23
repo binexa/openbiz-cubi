@@ -102,7 +102,7 @@ class HelpWidgetForm extends EasyForm
 	public function render(){		
 		$result = parent::render();				
 		if($result){			
-			$script ="<script>setTimeout(\"Openbiz.CallFunction('".$this->m_Name.".AutoShowTutorial($this->m_EncodedURL)')\",1000);</script>";
+			$script ="<script>setTimeout(\"Openbiz.CallFunction('".$this->objectName.".AutoShowTutorial($this->m_EncodedURL)')\",1000);</script>";
 			$result.= $script;
 		}
 		return $result;

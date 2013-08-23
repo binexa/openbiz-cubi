@@ -17,7 +17,7 @@ class TypeSelector extends DropDownList
 protected function renderList(){
     	
     	if($this->m_FormPrefix){
-    		$formNameStr = str_replace(".","_", $this->getFormObj()->m_Name)."_";
+    		$formNameStr = str_replace(".","_", $this->getFormObj()->objectName)."_";
     	} 
     	$onchange_func = $this->getOnChangeFunction();
     	$list = $this->getList();
@@ -32,10 +32,10 @@ protected function renderList(){
         }    	
     	
     	$value = $this->m_Value ? $this->m_Value : $this->getText();
-    	$sHTML = "<div  class=\"dropdownlist\"  id=\"".$formNameStr.$this->m_Name."_scroll\" style=\"display:none;\">".
-    	$sHTML .= "<ul style=\"display:none;z-index:50\" id=\"".$formNameStr.$this->m_Name."_list\">";
+    	$sHTML = "<div  class=\"dropdownlist\"  id=\"".$formNameStr.$this->objectName."_scroll\" style=\"display:none;\">".
+    	$sHTML .= "<ul style=\"display:none;z-index:50\" id=\"".$formNameStr.$this->objectName."_list\">";
     	$theme = Resource::getCurrentTheme();
-    	$image_url = THEME_URL . "/" . $theme . "/images";
+    	$image_url = OPENBIZ_THEME_URL . "/" . $theme . "/images";
     	
     	foreach($list as $item){
     		$val = $item['val'];
@@ -65,13 +65,13 @@ protected function renderList(){
     	    }
     	    
     		$sHTML .= "<li $option_item_style	
-				onclick=\"$('".$formNameStr.$this->m_Name."_list').hide();
-							$('".$formNameStr.$this->m_Name."_scroll').hide();
-							$('".$formNameStr.$this->m_Name."').setValue('".addslashes($display_value)."');
-							$('".$formNameStr.$this->m_Name."_hidden').setValue('".addslashes($val)."');
-							$('span_".$formNameStr.$this->m_Name."').innerHTML = this.innerHTML;							
+				onclick=\"$('".$formNameStr.$this->objectName."_list').hide();
+							$('".$formNameStr.$this->objectName."_scroll').hide();
+							$('".$formNameStr.$this->objectName."').setValue('".addslashes($display_value)."');
+							$('".$formNameStr.$this->objectName."_hidden').setValue('".addslashes($val)."');
+							$('span_".$formNameStr.$this->objectName."').innerHTML = this.innerHTML;							
 							$onchange_func ;
-							$('".$formNameStr.$this->m_Name."').className='".$this->m_cssClass."'
+							$('".$formNameStr.$this->objectName."').className='".$this->m_cssClass."'
 							\"					
 				>$li_option_value</li>";
     		

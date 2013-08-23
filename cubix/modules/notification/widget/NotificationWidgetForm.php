@@ -70,10 +70,10 @@ class NotificationWidgetForm extends EasyForm
 		
 		if($goto_url)
 		{
-			$goto_url = APP_INDEX.$goto_url;
+			$goto_url = OPENBIZ_APP_INDEX_URL.$goto_url;
 			BizSystem::clientProxy()->redirectPage($goto_url);
 		}else{
-			BizSystem::clientProxy()->updateClientElement($this->m_Name,"" );
+			BizSystem::clientProxy()->updateClientElement($this->objectName,"" );
 		}
 	}
 }

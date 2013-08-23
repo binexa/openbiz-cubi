@@ -115,7 +115,7 @@ class oauthClass extends EasyForm
 		    // $dataRec = new DataRecord($UserOAuthArr, $UserTokenObj);
 			// $dataRec->id =$UserToken['Id'];
 			//$dataRec->save( ); 
-			$eventlog 	= BizSystem::getService(EVENTLOG_SERVICE);
+			$eventlog 	= BizSystem::getService(OPENBIZ_EVENTLOG_SERVICE);
 			$logComment=array(	$userinfo['username'], $_SERVER['REMOTE_ADDR']);
     		$eventlog->log("LOGIN", "MSG_LOGIN_SUCCESSFUL", $logComment);
 			
@@ -132,7 +132,7 @@ class oauthClass extends EasyForm
 			}else{
 				//found a isolate oauth account
 				$UserTokenObj->deleteRecords("[Id]={$UserToken['Id']}");
-				BizSystem::clientProxy()->ReDirectPage(APP_INDEX.'/user/logout');
+				BizSystem::clientProxy()->ReDirectPage(OPENBIZ_APP_INDEX_URL.'/user/logout');
 			}
 		}
 		elseif (method_exists($this,'autoCreateUser'))
@@ -150,7 +150,7 @@ class oauthClass extends EasyForm
 			else
 			{	
 	
-				header("Location: ".APP_INDEX."/oauth/connect_user");
+				header("Location: ".OPENBIZ_APP_INDEX_URL."/oauth/connect_user");
 			}
 		}
 		 	return $profile;
@@ -162,7 +162,7 @@ class oauthClass extends EasyForm
 		//获取当前用户角色的默认页
 		$index=$profile['roles'][0];  
 		$roleStartpage=$rec_info['roleStartpage'][$index];
-		$redirectPage = APP_INDEX.$roleStartpage;
+		$redirectPage = OPENBIZ_APP_INDEX_URL.$roleStartpage;
 		$redirectURL = BizSystem::sessionContext()->getVar("oauth_redirect_url");
 		if($redirectURL){
 			$redirectPage = $redirectURL;
@@ -255,14 +255,14 @@ class oauthClass extends EasyForm
 		$userRoleObj->insertRecord($uesrRoloArr);
 		//record event log   
 		    
-		$eventlog 	= BizSystem::getService(EVENTLOG_SERVICE);
+		$eventlog 	= BizSystem::getService(OPENBIZ_EVENTLOG_SERVICE);
 		$logComment=array($userinfo['username'],$_SERVER['REMOTE_ADDR']);
 		$eventlog->log("USER_MANAGEMENT", "MSG_USER_REGISTERED", $logComment);   
 		//init profile for future use like redirect to my account view
 	
 		//$profile_id = BizSystem::getService(PROFILE_SERVICE)->CreateProfile($userinfo['Id']);
 		 //send user email
-		$emailObj 	= BizSystem::getService(USER_EMAIL_SERVICE);
+		$emailObj 	= BizSystem::getService(CUBI_USER_EMAIL_SERVICE);
 		$emailObj->UserWelcomeEmail($userinfo['Id']);
 	
 		if($userinfo['Id'])

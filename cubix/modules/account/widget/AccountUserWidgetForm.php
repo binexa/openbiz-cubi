@@ -13,7 +13,7 @@ class AccountUserWidgetForm extends EasyForm
         if (method_exists($serviceObj,'SwitchUserProfile')){
             $serviceObj->SwitchUserProfile($username);
         }        
-        $pageURL = APP_INDEX.'/mystore/profile';
+        $pageURL = OPENBIZ_APP_INDEX_URL.'/mystore/profile';
 		BizSystem::clientProxy()->redirectPage($pageURL);   
 	}
 	

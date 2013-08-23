@@ -50,9 +50,9 @@ class HTMLMenus extends MetaObject implements iUIControl
      */
     protected function readMetadata(&$xmlArr)
     {
-        $this->m_Name = $xmlArr["MENU"]["ATTRIBUTES"]["NAME"];
+        $this->objectName = $xmlArr["MENU"]["ATTRIBUTES"]["NAME"];
         $this->m_Package = $xmlArr["MENU"]["ATTRIBUTES"]["PACKAGE"];
-        $this->m_Class = $xmlArr["MENU"]["ATTRIBUTES"]["CLASS"];
+        $this->className = $xmlArr["MENU"]["ATTRIBUTES"]["CLASS"];
         $this->m_MenuItemsXml = $xmlArr["MENU"]["MENUITEM"];
     }
 
@@ -159,13 +159,13 @@ class HTMLMenus extends MetaObject implements iUIControl
     
     protected function translate($caption)
     {
-    	$module = $this->getModuleName($this->m_Name);
+    	$module = $this->getModuleName($this->objectName);
    		return I18n::t($caption, $this->getTransKey(caption), $module);
     }
     
     protected function getTransKey($name)
     {
-    	$shortFormName = substr($this->m_Name,intval(strrpos($this->m_Name,'.'))+1);
+    	$shortFormName = substr($this->objectName,intval(strrpos($this->objectName,'.'))+1);
     	return strtoupper($shortFormName.'_'.$name);
     }
 }

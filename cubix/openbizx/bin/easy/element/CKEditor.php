@@ -50,7 +50,7 @@ class CKEditor extends InputElement
     {
         BizSystem::clientProxy()->includeCKEditorScripts();
 
-        $elementName = $this->m_Name;
+        $elementName = $this->objectName;
 
         $value = $this->getValue();
         $value = htmlentities($value, ENT_QUOTES, "UTF-8");
@@ -62,7 +62,7 @@ class CKEditor extends InputElement
             $value="&nbsp;";
 
         $type = strtolower($this->m_Mode);
-        $fileBrowserPage = APP_URL."/bin/filebrowser/browser.html";
+        $fileBrowserPage = OPENBIZ_APP_URL."/bin/filebrowser/browser.html";
 
         $languageCode = I18n::getCurrentLangCode();
         $languageCode = str_replace("_","-",$languageCode);

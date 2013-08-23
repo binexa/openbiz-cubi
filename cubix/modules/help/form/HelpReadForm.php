@@ -15,7 +15,7 @@ class HelpReadForm extends EasyForm
 {
 	public function fetchData(){
 		$data = parent::fetchData();
-		$data['content'] = str_replace("/cubi/", APP_URL.'/', $data['content']);
+		$data['content'] = str_replace("/cubi/", OPENBIZ_APP_URL.'/', $data['content']);
 		return $data;
 	}
 }

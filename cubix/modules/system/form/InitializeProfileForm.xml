@@ -16,7 +16,7 @@
    </DataPanel>
    <ActionPanel>
         <Element Name="btn_init" Class="Button" Text="Save" CssClass="button_highlight">
-            <EventHandler Name="onclick" Event="onclick" Function="ProfileInit()" RedirectPage="{APP_INDEX}/system/general_default"  ShortcutKey="Ctrl+Enter"/>            
+            <EventHandler Name="onclick" Event="onclick" Function="ProfileInit()" RedirectPage="{OPENBIZ_APP_INDEX_URL}/system/general_default"  ShortcutKey="Ctrl+Enter"/>            
         </Element>         
               
     </ActionPanel> 

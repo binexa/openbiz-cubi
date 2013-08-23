@@ -26,7 +26,7 @@
  * @version   $Id: excelService.php 3371 2012-05-31 06:17:21Z rockyswen@gmail.com $
  */
 
-include_once (OPENBIZ_HOME."/messages/excelService.msg");
+include_once (OPENBIZ_PATH."/messages/excelService.msg");
 
 /**
  * excelService -
@@ -137,7 +137,7 @@ class excelService
             $field = $fields[$i];
             if (!$dataObj->getField($field))
             {
-                $errorMsg = BizSystem::getMessage("EXCELSVC_INVALID_COLUMN",array($field, $dataObj->m_Name));
+                $errorMsg = BizSystem::getMessage("EXCELSVC_INVALID_COLUMN",array($field, $dataObj->objectName));
                 BizSystem::log(LOG_ERR, "EXCEL SERVICE", "Import error = ".$errorMsg);
                 BizSystem::clientProxy()->showClientAlert($errorMsg);
                 return;

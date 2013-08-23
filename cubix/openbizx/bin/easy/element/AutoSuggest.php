@@ -41,8 +41,8 @@ class AutoSuggest extends OptionElement
      */
     public function render ()
     {
-        if (defined('JSLIB_BASE') && JSLIB_BASE == 'JQUERY') {
-			$inputName = $this->m_Name;
+        if (defined('OPENBIZ_JSLIB_BASE') && OPENBIZ_JSLIB_BASE == 'JQUERY') {
+			$inputName = $this->objectName;
 			$style = $this->getStyle();
 			$sHTML = "<input type=\"text\" id=\"$inputName\" name=\"$inputName\" value=\"$this->m_Value\"/ $style>\n";
 			$sHTML .= "<script>Openbiz.AutoSuggest.init('$this->m_FormName','AutoSuggest','$inputName');</script>";
@@ -54,17 +54,17 @@ class AutoSuggest extends OptionElement
         $pos0 = strpos($selFrom, "[");
         $pos1 = strpos($selFrom, "]");
         $first_half = substr($selFrom, 0, $pos1);
-        $inputName = $this->m_Name;
-        $inputChoice = $this->m_Name . '_choices';
+        $inputName = $this->objectName;
+        $inputChoice = $this->objectName . '_choices';
         $style = $this->getStyle();
-        if ($formobj->m_Errors[$this->m_Name]) {
+        if ($formobj->m_Errors[$this->objectName]) {
             $func .= "onchange=\"this.className='$this->m_cssClass'\"";
         } else {
             $func .= "onfocus=\"this.className='$this->m_cssFocusClass'\" onblur=\"this.className='$this->m_cssClass'\"";
         }
         if (strpbrk($first_half, ':')) {
-            $hInputName = $this->m_Name . '_hidden';
-            $inputChoice = $this->m_Name . '_hidden_choices';
+            $hInputName = $this->objectName . '_hidden';
+            $inputChoice = $this->objectName . '_hidden_choices';
             $sHTML = "<input type=\"text\" id=\"$hInputName\" name=\"$hInputName\" value=\"$this->m_Value\" $style $func/>\n";
             $sHTML .= "<div id=\"$inputChoice\" class=\"autocomplete\" style=\"display:none\"></div>\n";
             $sHTML .= "<script>Openbiz.AutoSuggest.init('$this->m_FormName','AutoSuggest','$hInputName','$inputChoice');</script>";

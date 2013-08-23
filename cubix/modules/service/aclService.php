@@ -6,20 +6,20 @@
  * @version    2.3 2009-06-01
  */
 
-define ('DENY', 0);
-define ('ALLOW', 1);
-define ('ALLOW_OWNER', 2);
+define ('OPENBIZ_DENY', 0);
+define ('OPENBIZ_ALLOW', 1);
+define ('OPENBIZ_ALLOW_OWNER', 2);
 
 class aclService
 {
     static protected $role_actionDataObj = "system.do.AclRoleActionDO";
 	static protected $_accessMatrix;
-	static protected $_defaultAccess = DENY;
+	static protected $_defaultAccess = OPENBIZ_DENY;
 
     // TODO: conver it to AclService
     // TODO: save the data $userAccesses in session
 
-    // return ALLOW, DENY, ALLOW_OWNER
+    // return OPENBIZ_ALLOW, OPENBIZ_DENY, OPENBIZ_ALLOW_OWNER
     public static function allowAccess($res_action)
     {
     	if (!aclService::$_accessMatrix)
@@ -60,12 +60,12 @@ class aclService
 
         switch ($accessLevel)
         {
-            case DENY:  // if access level is DENY, return false
+            case OPENBIZ_DENY:  // if access level is OPENBIZ_DENY, return false
                 return false;
-            case ALLOW: // if access level is ALLOW or empty, return true
+            case OPENBIZ_ALLOW: // if access level is OPENBIZ_ALLOW or empty, return true
                 return true;
-            case ALLOW_OWNER:
-                // if access level is ALLOW_OWNER, check the OwnerField and OwnerValue.
+            case OPENBIZ_ALLOW_OWNER:
+                // if access level is OPENBIZ_ALLOW_OWNER, check the OwnerField and OwnerValue.
                 // if ownerField's value == ownerValue, return true.
                 return true;
         }

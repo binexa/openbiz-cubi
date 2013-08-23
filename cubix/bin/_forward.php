@@ -22,12 +22,12 @@
 //($DEFAULT_MODULE="page")
 //http://localhost/?/article/catid_20 	 => http://localhost/bin/controller.php?view=page.view.ArticleView&catid=20
 //($DEFAULT_MODULE="page")
-define("USE_CUSTOM_SESSION_HANDLER",true);        	
+define("OPENBIZ_USE_CUSTOM_SESSION_HANDLER",true);        	
 
 include 'app_init.php';
 
 $DEFAULT_VIEW = "LoginView";
-$DEFAULT_MODULE = CLIENT_DEVICE=='mobile' ? "user_mob" : "user";
+$DEFAULT_MODULE = OPENBIZ_CLIENT_DEVICE=='mobile' ? "user_mob" : "user";
 $DEFAULT_URL = "index.php/$DEFAULT_MODULE/login";
 
 $script = $_SERVER['SCRIPT_NAME'];
@@ -85,7 +85,7 @@ if ($url) {
     $view_name = $DEFAULT_VIEW;
     $profile = BizSystem::getUserProfile();
     if ($profile['roleStartpage'][0]) {
-        $DEFAULT_URL = APP_INDEX . $profile['roleStartpage'][0];
+        $DEFAULT_URL = OPENBIZ_APP_INDEX_URL . $profile['roleStartpage'][0];
     }
     header("Location: $DEFAULT_URL");
 }
@@ -142,9 +142,9 @@ function getViewName($urlArr)
 function gotoDefaultView($module)
 {
     $module = strtolower($module);
-    $modfile = MODULE_PATH . DIRECTORY_SEPARATOR . $module . DIRECTORY_SEPARATOR . 'mod.xml';
+    $modfile = OPENBIZ_APP_MODULE_PATH . DIRECTORY_SEPARATOR . $module . DIRECTORY_SEPARATOR . 'mod.xml';
     $xml = simplexml_load_file($modfile);
-    $defaultURL = APP_INDEX . $xml->Menu->MenuItem['URL'];
+    $defaultURL = OPENBIZ_APP_INDEX_URL . $xml->Menu->MenuItem['URL'];
     header("Location: $defaultURL");
 }
 

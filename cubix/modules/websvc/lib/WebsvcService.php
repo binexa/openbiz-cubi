@@ -129,7 +129,7 @@ class WebsvcService
         $validMethod = false;
         foreach ($this->m_PublicMethods as $pmethod)
         {
-            if (strtolower($method) == strtolower($pmethod->m_Name)) {
+            if (strtolower($method) == strtolower($pmethod->objectName)) {
                 $validMethod = true;
                 break;
             }
@@ -179,7 +179,7 @@ class WebsvcService
 
 class PublicMethod
 {
-    public $m_Name;
+    public $objectName;
     public $m_Access;
 
     /**
@@ -189,7 +189,7 @@ class PublicMethod
      */
     public function __construct($xmlArr)
     {
-        $this->m_Name = $xmlArr["ATTRIBUTES"]["NAME"];
+        $this->objectName = $xmlArr["ATTRIBUTES"]["NAME"];
         $this->m_Access = $xmlArr["ATTRIBUTES"]["ACCESS"];
     }
 }

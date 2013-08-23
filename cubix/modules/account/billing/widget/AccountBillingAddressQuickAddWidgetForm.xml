@@ -9,7 +9,7 @@
 			Class="account.lib.AddressPickerForm" 
 			FormType="New" 
 			jsClass="Openbiz.Form" 
-			Icon="{RESOURCE_URL}/account/images/icon_mod_account_billing_address_add.png"
+			Icon="{OPENBIZ_RESOURCE_URL}/account/images/icon_mod_account_billing_address_add.png"
 			Title="Quick Add Account Billing Address" 
 			Description="Create a new account billing address and edit its content later." 
 			BizDataObj="account.billing.do.AccountBillingPickDO" 

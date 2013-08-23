@@ -14,7 +14,7 @@
 function ioncube_event_handler($err_code, $params)
 {
 	$current_file = $params['current_file'];
-	$current_file = str_replace(MODULE_PATH, "", $current_file);
+	$current_file = str_replace(OPENBIZ_APP_MODULE_PATH, "", $current_file);
 	preg_match("|[\\\/]?(.*?)[\\\/]{1}|si",$current_file,$matches);
 	$moduleName = $matches[1];	
 	
@@ -22,7 +22,7 @@ function ioncube_event_handler($err_code, $params)
 	BizSystem::instance()->getSessionContext()->setVar("LIC_MODULE", $moduleName);
 	
 	
-	$rh_file = MODULE_PATH.DIRECTORY_SEPARATOR.$moduleName.DIRECTORY_SEPARATOR.'register_handler.php';
+	$rh_file = OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR.$moduleName.DIRECTORY_SEPARATOR.'register_handler.php';
 	$rh_func = false;
 	if(is_file($rh_file))
 	{
@@ -32,7 +32,7 @@ function ioncube_event_handler($err_code, $params)
 		}
 	}
 	
-	$lic_file = MODULE_PATH.DIRECTORY_SEPARATOR.$moduleName.DIRECTORY_SEPARATOR.'license.key';
+	$lic_file = OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR.$moduleName.DIRECTORY_SEPARATOR.'license.key';
 	if(!is_file($lic_file) && $rh_func)
 	{
 		$formObj = BizSystem::getObject("common.form.LicenseInitializeForm");

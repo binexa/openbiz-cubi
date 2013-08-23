@@ -28,7 +28,7 @@ class InputDateRangePicker extends InputText {
 
 
 	public function getSearchRule(){
-		$value = BizSystem::clientProxy()->getFormInputs($this->m_Name);
+		$value = BizSystem::clientProxy()->getFormInputs($this->objectName);
 		$field = $this->m_FieldName;
 		
 		$dates = explode("-", $value);
@@ -72,7 +72,7 @@ class InputDateRangePicker extends InputText {
         <a href=\"#\" class=\"ui-daterangepicker-next\" title=\"Next\"><span class=\"ui-daterangepicker-next\"></span></a>
         
         <a class=\"ui-daterangepicker-inputbar\">
-        <INPUT NAME=\"" . $this->m_Name . "\" ID=\"" . $this->m_Name ."\" VALUE=\"" . $value . "\" class=\"ui-rangepicker-input ui-widget-content\" style=\"border:none\"  />
+        <INPUT NAME=\"" . $this->objectName . "\" ID=\"" . $this->objectName ."\" VALUE=\"" . $value . "\" class=\"ui-rangepicker-input ui-widget-content\" style=\"border:none\"  />
         </a>
         </div>
         ";
@@ -81,7 +81,7 @@ class InputDateRangePicker extends InputText {
         </div>
         <script>
         \$j(document).ready(function(){
-	        \$j('#".$this->m_Name."').daterangepicker(
+	        \$j('#".$this->objectName."').daterangepicker(
 	        { arrows:true,
 	          onChange:function(){
 		    		$event_onchange

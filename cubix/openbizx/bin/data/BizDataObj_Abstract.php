@@ -38,49 +38,49 @@ abstract class BizDataObj_Abstract extends MetaObject implements iSessionObject
      *
      * @var string
      */
-    public $m_Database;
+    public $databaseAliasName;
 
     /**
      * Base search rule
      *
      * @var string
      */
-    public $m_BaseSearchRule = null;    // support expression
+    public $baseSearchRule = null;    // support expression
 
     /**
      * Base sort rule
      *
      * @var string
      */
-    public $m_BaseSortRule = null;      // support expression
+    public $baseSortRule = null;      // support expression
 
     /**
      * Base other SQL rule
      *
      * @var string
      */
-    public $m_BaseOtherSQLRule = null;  // support expression
+    public $baseOtherSQLRule = null;  // support expression
 
     /**
      * Name of main table
      * 
      * @var string
      */
-    public $m_MainTable = "";
+    public $mainTableName = "";
 
     /**
      * BizRecord object
      * 
      * @var BizRecord
      */
-    public $m_BizRecord = null;
+    public $bizRecord = null;
 
     /**
      * Name of inherited form (meta-form)
      *
      * @var string
      */
-    public $m_InheritFrom;
+    public $inheritFrom;
     
     /**
      * Access rule (visibility) of the records
@@ -88,47 +88,47 @@ abstract class BizDataObj_Abstract extends MetaObject implements iSessionObject
      * Example: [user_id]={@profile['Id']} or {@vis:self([user_id])} or {@vis:group([group_id])}
      * @var string
      */
-    public $m_AccessRule = null;
+    public $accessRule = null;
     
     /**
      * Condition of user ability to update a record
      * @var string
      */
-    public $m_UpdateCondition = null;   // support expression
+    public $updateCondition = null;   // support expression
     
     /**
      * Condition of user ability to delete a record
      * @var string
      */
-    public $m_DeleteCondition = null;   // support expression
+    public $deleteCondition = null;   // support expression
     
     /**
      * Record id generation option
      *
      * @var string
      */
-    public $m_IdGeneration = null;
+    public $idGeneration = null;
     
     /**
      * MetaIterator of ObjReferences
      *
      * @var MetaIterator
      */
-    public $m_ObjReferences = null;
+    public $objReferences = null;
 
     /**
      * MetaIterator of TableJoin
      *
      * @var MetaIterator
      */
-    public $m_TableJoins = null;
+    public $tableJoins = null;
 
     /**
      *
      * @var MetaIterator
      */
-    public $m_Parameters = null;
-    public $m_Stateless = null;
+    public $parameters = null;
+    public $stateless = null;
     public $m_Uniqueness = null;
 
     /**
@@ -208,39 +208,39 @@ abstract class BizDataObj_Abstract extends MetaObject implements iSessionObject
     protected function readMetadata(&$xmlArr)
     {
         parent::readMetaData($xmlArr);
-        $this->m_InheritFrom = isset($xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["INHERITFROM"]) ? $xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["INHERITFROM"] : null;
+        $this->inheritFrom = isset($xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["INHERITFROM"]) ? $xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["INHERITFROM"] : null;
         $this->m_SearchRule = isset($xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["SEARCHRULE"]) ? $xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["SEARCHRULE"] : null;
-        $this->m_BaseSearchRule = $this->m_SearchRule;
+        $this->baseSearchRule = $this->m_SearchRule;
         $this->m_SortRule = isset($xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["SORTRULE"]) ? $xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["SORTRULE"] : null;
-        $this->m_BaseSortRule = $this->m_SortRule;
+        $this->baseSortRule = $this->m_SortRule;
         $this->m_OtherSQLRule = isset($xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["OTHERSQLRULE"]) ? $xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["OTHERSQLRULE"] : null;
-        $this->m_BaseOtherSQLRule = $this->m_OtherSQLRule;
-        $this->m_AccessRule = isset($xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["ACCESSRULE"]) ? $xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["ACCESSRULE"] : null;
-        $this->m_UpdateCondition = isset($xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["UPDATECONDITION"]) ? $xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["UPDATECONDITION"] : null;
-        $this->m_DeleteCondition = isset($xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["DELETECONDITION"]) ? $xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["DELETECONDITION"] : null;
-        $this->m_Database = isset($xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["DBNAME"]) ? $xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["DBNAME"] : null;
-        if ($this->m_Database == null)
-            $this->m_Database = "Default";
-        $this->m_MainTable = isset($xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["TABLE"]) ? $xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["TABLE"] : null;
-        $this->m_IdGeneration = isset($xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["IDGENERATION"]) ? $xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["IDGENERATION"] : null;
-        $this->m_Stateless = isset($xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["STATELESS"]) ? $xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["STATELESS"] : null;
+        $this->baseOtherSQLRule = $this->m_OtherSQLRule;
+        $this->accessRule = isset($xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["ACCESSRULE"]) ? $xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["ACCESSRULE"] : null;
+        $this->updateCondition = isset($xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["UPDATECONDITION"]) ? $xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["UPDATECONDITION"] : null;
+        $this->deleteCondition = isset($xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["DELETECONDITION"]) ? $xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["DELETECONDITION"] : null;
+        $this->databaseAliasName = isset($xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["DBNAME"]) ? $xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["DBNAME"] : null;
+        if ($this->databaseAliasName == null)
+            $this->databaseAliasName = "Default";
+        $this->mainTableName = isset($xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["TABLE"]) ? $xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["TABLE"] : null;
+        $this->idGeneration = isset($xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["IDGENERATION"]) ? $xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["IDGENERATION"] : null;
+        $this->stateless = isset($xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["STATELESS"]) ? $xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["STATELESS"] : null;
 
         // read in uniqueness attribute
         $this->m_Uniqueness = isset($xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["UNIQUENESS"]) ? $xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["UNIQUENESS"] : null;
 
         $this->m_CacheLifeTime = isset($xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["CACHELIFETIME"]) ? $xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["CACHELIFETIME"] : "0";
-        $this->m_Name = $this->prefixPackage($this->m_Name);
-        if ($this->m_InheritFrom == '@sourceMeta') $this->m_InheritFrom = '@'.$this->m_Name;
-        else $this->m_InheritFrom = $this->prefixPackage($this->m_InheritFrom);
+        $this->objectName = $this->prefixPackage($this->objectName);
+        if ($this->inheritFrom == '@sourceMeta') $this->inheritFrom = '@'.$this->objectName;
+        else $this->inheritFrom = $this->prefixPackage($this->inheritFrom);
 
         // build BizRecord
-        $this->m_BizRecord = new BizRecord($xmlArr["BIZDATAOBJ"]["BIZFIELDLIST"]["BIZFIELD"],"BizField",$this);
+        $this->bizRecord = new BizRecord($xmlArr["BIZDATAOBJ"]["BIZFIELDLIST"]["BIZFIELD"],"BizField",$this);
         // build TableJoins
-        $this->m_TableJoins = new MetaIterator($xmlArr["BIZDATAOBJ"]["TABLEJOINS"]["JOIN"],"TableJoin",$this);
+        $this->tableJoins = new MetaIterator($xmlArr["BIZDATAOBJ"]["TABLEJOINS"]["JOIN"],"TableJoin",$this);
         // build ObjReferences
-        $this->m_ObjReferences = new MetaIterator($xmlArr["BIZDATAOBJ"]["OBJREFERENCES"]["OBJECT"],"ObjReference",$this);
+        $this->objReferences = new MetaIterator($xmlArr["BIZDATAOBJ"]["OBJREFERENCES"]["OBJECT"],"ObjReference",$this);
         // read in parameters
-        $this->m_Parameters = new MetaIterator($xmlArr["BIZDATAOBJ"]["PARAMETERS"]["PARAMETER"],"Parameter");
+        $this->parameters = new MetaIterator($xmlArr["BIZDATAOBJ"]["PARAMETERS"]["PARAMETER"],"Parameter");
 
         $this->m_MessageFile = isset($xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["MESSAGEFILE"]) ? $xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["MESSAGEFILE"] : null;
         $this->m_Messages = Resource::loadMessage($this->m_MessageFile , $this->m_Package);
@@ -257,31 +257,31 @@ abstract class BizDataObj_Abstract extends MetaObject implements iSessionObject
      */
     protected function inheritParentObj()
     {
-        if (!$this->m_InheritFrom) return;
-        $parentObj = BizSystem::getObject($this->m_InheritFrom);
+        if (!$this->inheritFrom) return;
+        $parentObj = BizSystem::getObject($this->inheritFrom);
 
-        $this->m_Description  = $this->m_Description ? $this->m_Description : $parentObj->m_Description;
+        $this->objectDescription  = $this->objectDescription ? $this->objectDescription : $parentObj->objectDescription;
         $this->m_SearchRule   = $this->m_SearchRule ? $this->m_SearchRule : $parentObj->m_SearchRule;
-        $this->m_BaseSearchRule = $this->m_SearchRule;
+        $this->baseSearchRule = $this->m_SearchRule;
         $this->m_SortRule     = $this->m_SortRule ? $this->m_SortRule: $parentObj->m_SortRule;
-        $this->m_BaseSortRule = $this->m_SortRule;
+        $this->baseSortRule = $this->m_SortRule;
         $this->m_OtherSQLRule = $this->m_OtherSQLRule ? $this->m_OtherSQLRule: $parentObj->m_OtherSQLRule;
-        $this->m_AccessRule   = $this->m_AccessRule ? $this->m_AccessRule: $parentObj->m_AccessRule;
-        $this->m_UpdateCondition = $this->m_UpdateCondition ? $this->m_UpdateCondition: $parentObj->m_UpdateCondition;
-        $this->m_DeleteCondition = $this->m_DeleteCondition ? $this->m_DeleteCondition: $parentObj->m_DeleteCondition;
-        $this->m_Database     = $this->m_Database ? $this->m_Database: $parentObj->m_Database;
-        $this->m_MainTable    = $this->m_MainTable ? $this->m_MainTable: $parentObj->m_MainTable;
-        $this->m_IdGeneration = $this->m_IdGeneration ? $this->m_IdGeneration: $parentObj->m_IdGeneration;
-        $this->m_Stateless    = $this->m_Stateless ? $this->m_Stateless: $parentObj->m_Stateless;
+        $this->accessRule   = $this->accessRule ? $this->accessRule: $parentObj->accessRule;
+        $this->updateCondition = $this->updateCondition ? $this->updateCondition: $parentObj->updateCondition;
+        $this->deleteCondition = $this->deleteCondition ? $this->deleteCondition: $parentObj->deleteCondition;
+        $this->databaseAliasName     = $this->databaseAliasName ? $this->databaseAliasName: $parentObj->databaseAliasName;
+        $this->mainTableName    = $this->mainTableName ? $this->mainTableName: $parentObj->mainTableName;
+        $this->idGeneration = $this->idGeneration ? $this->idGeneration: $parentObj->idGeneration;
+        $this->stateless    = $this->stateless ? $this->stateless: $parentObj->stateless;
 	$this->m_DataPermControl = $this->m_DataPermControl ? $this->m_DataPermControl : $parentObj->m_DataPermControl;
-        $this->m_BizRecord->merge($parentObj->m_BizRecord);
+        $this->bizRecord->merge($parentObj->bizRecord);
 
-        foreach ($this->m_BizRecord as $field)
-            $field->adjustBizObjName($this->m_Name);
+        foreach ($this->bizRecord as $field)
+            $field->adjustBizObjName($this->objectName);
         
-        $this->m_TableJoins->merge($parentObj->m_TableJoins);
-        $this->m_ObjReferences->merge($parentObj->m_ObjReferences);
-        $this->m_Parameters->merge($parentObj->m_Parameters);
+        $this->tableJoins->merge($parentObj->tableJoins);
+        $this->objReferences->merge($parentObj->objReferences);
+        $this->parameters->merge($parentObj->parameters);
     }
 
     /**
@@ -295,7 +295,7 @@ abstract class BizDataObj_Abstract extends MetaObject implements iSessionObject
     {
         $message = isset($this->m_Messages[$msgid]) ? $this->m_Messages[$msgid] : constant($msgid);
         //$message = I18n::getInstance()->translate($message);
-        $message = I18n::t($message, $msgid, $this->getModuleName($this->m_Name));
+        $message = I18n::t($message, $msgid, $this->getModuleName($this->objectName));
         return vsprintf($message,$params);
     }
 
@@ -331,9 +331,9 @@ abstract class BizDataObj_Abstract extends MetaObject implements iSessionObject
      */
     public function resetRules()
     {
-        $this->m_SearchRule = $this->m_BaseSearchRule;
-        $this->m_SortRule = $this->m_BaseSortRule;
-        $this->m_OtherSQLRule = $this->m_BaseOtherSQLRule;
+        $this->m_SearchRule = $this->baseSearchRule;
+        $this->m_SortRule = $this->baseSortRule;
+        $this->m_OtherSQLRule = $this->baseOtherSQLRule;
         return $this;
     }
 
@@ -345,7 +345,7 @@ abstract class BizDataObj_Abstract extends MetaObject implements iSessionObject
      */
     public function clearSearchRule()
     {
-        $this->m_SearchRule = $this->m_BaseSearchRule;
+        $this->m_SearchRule = $this->baseSearchRule;
         return $this;
     }
 
@@ -358,7 +358,7 @@ abstract class BizDataObj_Abstract extends MetaObject implements iSessionObject
     public function clearSortRule()  // reset sortrule
 
     {
-        $this->m_SortRule = $this->m_BaseSortRule;
+        $this->m_SortRule = $this->baseSortRule;
         return $this;
     }
 
@@ -371,7 +371,7 @@ abstract class BizDataObj_Abstract extends MetaObject implements iSessionObject
     public function clearOtherSQLRule()
 
     {
-        $this->m_OtherSQLRule = $this->m_BaseOtherSQLRule;
+        $this->m_OtherSQLRule = $this->baseOtherSQLRule;
         return $this;
     }
 
@@ -382,9 +382,9 @@ abstract class BizDataObj_Abstract extends MetaObject implements iSessionObject
      */
     public function clearAllRules()
     {
-        $this->m_SearchRule = $this->m_BaseSearchRule;
-        $this->m_SortRule = $this->m_BaseSortRule;
-        $this->m_OtherSQLRule = $this->m_BaseOtherSQLRule;
+        $this->m_SearchRule = $this->baseSearchRule;
+        $this->m_SortRule = $this->baseSortRule;
+        $this->m_OtherSQLRule = $this->baseOtherSQLRule;
         $this->m_Limit = array();
         return $this;
     }
@@ -483,21 +483,21 @@ abstract class BizDataObj_Abstract extends MetaObject implements iSessionObject
     	{
     		case "default":
     		case "read":
-    			if($this->m_DatabaseforRead){
-    				$dbName = $this->m_DatabaseforRead;	
+    			if($this->databaseAliasNameforRead){
+    				$dbName = $this->databaseAliasNameforRead;	
     			}
     			else
     			{
-    				$dbName = $this->m_Database;
+    				$dbName = $this->databaseAliasName;
     			}
     			break;
     		case "write":
-    			if($this->m_DatabaseforWrite){
-    				$dbName = $this->m_DatabaseforWrite;	
+    			if($this->databaseAliasNameforWrite){
+    				$dbName = $this->databaseAliasNameforWrite;	
     			}
     			else
     			{
-    				$dbName = $this->m_Database;
+    				$dbName = $this->databaseAliasName;
     			}    			
     			break;
     	}
@@ -525,7 +525,7 @@ abstract class BizDataObj_Abstract extends MetaObject implements iSessionObject
             $fieldName = substr($propertyName, $pos1+1,$pos2-$pos1-1);
             if ($propType == "param")
             {   // get parameter
-                return $this->m_Parameters->get($fieldName);
+                return $this->parameters->get($fieldName);
             }
             return $this->getField($fieldName);
         }
@@ -539,7 +539,7 @@ abstract class BizDataObj_Abstract extends MetaObject implements iSessionObject
      */
     public function getParameter($paramName)
     {
-        return $this->m_Parameters[$paramName]->m_Value;
+        return $this->parameters[$paramName]->m_Value;
     }
 
     /**
@@ -551,7 +551,7 @@ abstract class BizDataObj_Abstract extends MetaObject implements iSessionObject
     public function getRefObject($objName)
     {
         // see if there is such object in the ObjReferences
-        $objRef = $this->m_ObjReferences->get($objName);
+        $objRef = $this->objReferences->get($objName);
         if (!$objRef)
             return null;
 
@@ -583,7 +583,7 @@ abstract class BizDataObj_Abstract extends MetaObject implements iSessionObject
      */
     protected function setAssociation($objRef, $asscObj)
     {
-        $this->m_Association["AsscObjName"] = $asscObj->m_Name;
+        $this->m_Association["AsscObjName"] = $asscObj->objectName;
         $this->m_Association["Relationship"] = $objRef->m_Relationship;
         $this->m_Association["Table"] = $objRef->m_Table;
         $this->m_Association["Column"] = $objRef->m_Column;

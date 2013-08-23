@@ -9,7 +9,7 @@
 			Class="ProviderForm"			  
 			FormType="List" 
 			jsClass="Openbiz.TableForm" 
-			Icon="{RESOURCE_URL}/sms/images/icon_sms_provider.png"
+			Icon="{OPENBIZ_RESOURCE_URL}/sms/images/icon_sms_provider.png"
 			Title="SMS Intergration Setting" 
 			Description="SMS Intergration feature could enable Cubi system send messages to users mobile for notification." 
 			BizDataObj="sms.provider.do.ProviderDO" 
@@ -37,7 +37,7 @@
         			 <EventHandler Name="fld_Id_onclick" Event="onclick" Function="SwitchForm(sms.provider.form.DetailForm,{@:Elem[fld_Id].Value})"   />
         </Element>   
 		 -->
-		 <Element Name="fld_platform" Class="ColumnImage" Style="display:block;padding-left:5px;width:100px;" FieldName="type" Text="{RESOURCE_URL}/sms/images/icon_{@:Elem[fld_platform].Value}.png" Label="Provider" DefaultValue="default" Sortable="Y" Link="javascript:">
+		 <Element Name="fld_platform" Class="ColumnImage" Style="display:block;padding-left:5px;width:100px;" FieldName="type" Text="{OPENBIZ_RESOURCE_URL}/sms/images/icon_{@:Elem[fld_platform].Value}.png" Label="Provider" DefaultValue="default" Sortable="Y" Link="javascript:">
               <EventHandler Name="fld_Id_onclick" Event="onclick" Function="SwitchForm(sms.provider.form.DetailForm,{@:Elem[fld_Id].Value})"   />
         </Element>
    		

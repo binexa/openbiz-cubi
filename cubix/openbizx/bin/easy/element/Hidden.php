@@ -51,7 +51,7 @@ class Hidden extends Element
     		$value = $this->getText();
     	} 
         
-    	$sHTML = "<INPUT TYPE=HIDDEN NAME='$this->m_Name' ID=\"" . $this->m_Name ."\" VALUE='$value' $this->m_HTMLAttr />";
+    	$sHTML = "<INPUT TYPE=HIDDEN NAME='$this->objectName' ID=\"" . $this->objectName ."\" VALUE='$value' $this->m_HTMLAttr />";
         return $sHTML;
     }
 

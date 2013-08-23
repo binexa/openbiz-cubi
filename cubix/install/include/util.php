@@ -11,9 +11,9 @@ function getSystemStatus()
 	$status[1]['status'] = version_compare(PHP_VERSION, "5.1.4") >= 0 ? 'OK' : STR_PHP_VERSION_FAIL;
 	
 	$status[2]['item'] = STR_OPENBIZ_PATH;
-	$status[2]['value'] = OPENBIZ_HOME;
+	$status[2]['value'] = OPENBIZ_PATH;
 	$status[2]['status'] = "OK";
-	if (!file_exists(OPENBIZ_HOME))
+	if (!file_exists(OPENBIZ_PATH))
 		$status[2]['status'] = STR_OPENBIZ_PATH_FAIL;
 	
 	$status[3]['item'] = STR_ZEND_PATH;
@@ -50,24 +50,24 @@ function getSystemStatus()
 function getApplicationStatus()
 {
 	$status[0]['item'] = 'Resources path';
-	$status[0]['value'] = RESOURCE_PATH;
-	$status[0]['status'] = is_writable(RESOURCE_PATH) ? 'OK' : 'FAIL - not writable';
+	$status[0]['value'] = OPENBIZ_RESOURCE_PATH;
+	$status[0]['status'] = is_writable(OPENBIZ_RESOURCE_PATH) ? 'OK' : 'FAIL - not writable';
 	
 	$status[2]['item'] = 'Session path';
-	$status[2]['value'] = SESSION_PATH;
-	$status[2]['status'] = is_writable(SESSION_PATH) ? 'OK' : 'FAIL - not writable';
+	$status[2]['value'] = OPENBIZ_SESSION_PATH;
+	$status[2]['status'] = is_writable(OPENBIZ_SESSION_PATH) ? 'OK' : 'FAIL - not writable';
 	
 	//$status[3]['item'] = 'Smarty template path';
-	//$status[3]['value'] = THEME_PATH."/default/template"; // SMARTY_TPL_PATH;
-	//$status[3]['status'] = is_writable(THEME_PATH."/default/template") ? 'OK' : 'FAIL - not writable';
+	//$status[3]['value'] = OPENBIZ_THEME_PATH."/default/template"; // SMARTY_TPL_PATH;
+	//$status[3]['status'] = is_writable(OPENBIZ_THEME_PATH."/default/template") ? 'OK' : 'FAIL - not writable';
 	
 	$status[4]['item'] = 'Log path';
-	$status[4]['value'] = LOG_PATH;
-	$status[4]['status'] = is_writable(LOG_PATH) ? 'OK' : 'FAIL - not writable';
+	$status[4]['value'] = OPENBIZ_LOG_PATH;
+	$status[4]['status'] = is_writable(OPENBIZ_LOG_PATH) ? 'OK' : 'FAIL - not writable';
 	
 	$status[5]['item'] = 'Cache files path';
-	$status[5]['value'] = APP_FILE_PATH;
-	$status[5]['status'] = is_writable(APP_FILE_PATH) ? 'OK' : 'FAIL - not writable';
+	$status[5]['value'] = OPENBIZ_APP_FILE_PATH;
+	$status[5]['status'] = is_writable(OPENBIZ_APP_FILE_PATH) ? 'OK' : 'FAIL - not writable';
 	
 	return $status;
 }
@@ -111,7 +111,7 @@ function connectDB($noDB=false) {
 
 function createDB() {
 	// check if the application.xml is writable
-    $app_xml = APP_HOME.'/application.xml';
+    $app_xml = OPENBIZ_APP_PATH.'/application.xml';
     if (!is_writable($app_xml)) {
         echo "ERROR: please give file $app_xml write permission to web server user. Example of linux command: chmod a+w $app_xml";
         exit;
@@ -140,11 +140,11 @@ function createDB() {
 
 function loadModules()
 {   
-	include_once (MODULE_PATH."/system/lib/ModuleLoader.php");
+	include_once (OPENBIZ_APP_MODULE_PATH."/system/lib/ModuleLoader.php");
 
 	$modules = array ('system','menu','help','contact','cronjob');
-	foreach (glob(MODULE_PATH.DIRECTORY_SEPARATOR."*") as $dir){
-		$modName = str_replace(MODULE_PATH.DIRECTORY_SEPARATOR,"",$dir);
+	foreach (glob(OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR."*") as $dir){
+		$modName = str_replace(OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR,"",$dir);
 		if(!in_array($modName, $modules)) {
 			array_push($modules,$modName);		
 		}
@@ -163,7 +163,7 @@ function loadModules()
 	}
    	giveActionAccess("", 1);	// admin to access all actions
 	//giveActionAccess("module='user'", 2);
-	file_put_contents(APP_FILE_PATH.'/install.log', $logs);
+	file_put_contents(OPENBIZ_APP_FILE_PATH.'/install.log', $logs);
     echo "SUCCESS. Modules are loaded in Cubi. ###\n".$logs;
 }
 
@@ -204,7 +204,7 @@ function replaceDbConfig()
 		echo 'ERROR: Unable to create Database!';
 		return false;
 	}
-   $filename = APP_HOME.'/application.xml';
+   $filename = OPENBIZ_APP_PATH.'/application.xml';
    $xml = simplexml_load_file($filename);
    $xml->DataSource->Database[0]['Driver'] = $_REQUEST['dbtype'];
    $xml->DataSource->Database[0]['Server'] = $_REQUEST['dbHostName'];
@@ -227,7 +227,7 @@ function replaceDbConfig()
 }
 
 function loadDBConfig(){
-   $filename = APP_HOME.'/application.xml';
+   $filename = OPENBIZ_APP_PATH.'/application.xml';
    $xml = simplexml_load_file($filename);
    $_REQUEST['dbtype'] = $xml->DataSource->Database[0]['Driver'];
    $_REQUEST['dbtype'] = $xml->DataSource->Database[0]['Server'];
@@ -241,7 +241,7 @@ function loadDBConfig(){
 
 function getDefaultDB()
 {
-	$filename = APP_HOME.'/application.xml';
+	$filename = OPENBIZ_APP_PATH.'/application.xml';
    	$xml = simplexml_load_file($filename);
    	$db['Name'] = $xml->DataSource->Database[0]['Name'];
    	$db['Driver'] = $xml->DataSource->Database[0]['Driver'];
@@ -255,7 +255,7 @@ function getDefaultDB()
 
 function showDBConfig()
 {
-   $xml = simplexml_load_file(APP_HOME.'/application.xml');
+   $xml = simplexml_load_file(OPENBIZ_APP_PATH.'/application.xml');
    //print_r($xml);
    echo "<b>Current setting of Default Database:</b>";
    echo '<table><tr>';

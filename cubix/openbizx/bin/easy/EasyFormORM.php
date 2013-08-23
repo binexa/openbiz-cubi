@@ -23,7 +23,7 @@ class EasyFormORM extends EasyForm
             $refObj = $formMainDO->getRefObject($objName);
             if($refObj)
             {
-         		$this->m_AssocDOs[$refObj->m_Name] = $refObj;   
+         		$this->m_AssocDOs[$refObj->objectName] = $refObj;   
             }
         }
         return $this->m_AssocDOs;
@@ -40,7 +40,7 @@ class EasyFormORM extends EasyForm
 		foreach ($this->m_DataPanel as $element)
         {           
             if( $element->m_BizDataObj == $doName){
-            	$value = BizSystem::clientProxy()->getFormInputs($element->m_Name);
+            	$value = BizSystem::clientProxy()->getFormInputs($element->objectName);
             	if ($value ===null && (
 	            	   !is_a($element,"FileUploader")
 	            	&& !is_subclass_of($element,"FileUploader")
@@ -50,7 +50,7 @@ class EasyFormORM extends EasyForm
 	            	continue;
 	            }
 	            $element->setValue($value);
-	            $this->m_FormInputs[$element->m_Name] = $value;
+	            $this->m_FormInputs[$element->objectName] = $value;
 	            $value = $element->getValue();
             	if ( $element->m_FieldName)
                 	$recArr[$element->m_FieldName] = $value;
@@ -66,7 +66,7 @@ class EasyFormORM extends EasyForm
     	foreach( $this->getAssocDOs() as $refDO)
     	{
     		
-    		$inputRefRecord = $this->getAssocRec($refDO->m_Name);
+    		$inputRefRecord = $this->getAssocRec($refDO->objectName);
     		$refRecId = $refDO->insertRecord($inputRefRecord);
     		$inputRefRecord['Id'] = $refRecId;
     		$refRec = $inputRefRecord;  

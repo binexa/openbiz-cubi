@@ -20,7 +20,7 @@ class EmailAccountListbox extends Listbox{
 	public function getFromList(&$list)
     {    	
    	    
-    	$file = MODULE_PATH.DIRECTORY_SEPARATOR."service".DIRECTORY_SEPARATOR.$this->m_ConfigFile;
+    	$file = OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR."service".DIRECTORY_SEPARATOR.$this->m_ConfigFile;
 		if(!is_file($file)){
 			return;
 		}

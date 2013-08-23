@@ -18,13 +18,13 @@ class AclRoleActionsForm extends EasyForm
 	public function getSessionVars($sessionContext)
     {
         parent::getSessionVars($sessionContext);
-        $sessionContext->getObjVar($this->m_Name, "_roleId", $this->_roleId);
+        $sessionContext->getObjVar($this->objectName, "_roleId", $this->_roleId);
     }
 
     public function setSessionVars($sessionContext)
     {
         parent::setSessionVars($sessionContext);
-        $sessionContext->setObjVar($this->m_Name, "_roleId", $this->_roleId);
+        $sessionContext->setObjVar($this->objectName, "_roleId", $this->_roleId);
     }
     
 	public function sortRecord($sortCol, $order='asc')

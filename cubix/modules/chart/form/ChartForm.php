@@ -24,24 +24,24 @@ class ChartForm extends EasyForm
 
     public function getSessionVars($sessionContext)
     {    	
-    	$sessionContext->getObjVar($this->m_Name, "CategoryId", $this->m_CategoryId);
-        $sessionContext->getObjVar($this->m_Name, "SubType", $this->m_SubType);
+    	$sessionContext->getObjVar($this->objectName, "CategoryId", $this->m_CategoryId);
+        $sessionContext->getObjVar($this->objectName, "SubType", $this->m_SubType);
         return parent::getSessionVars($sessionContext);
     }
 
 
     public function setSessionVars($sessionContext)
     {
-    	$sessionContext->setObjVar($this->m_Name, "CategoryId", $this->m_CategoryId);
-        $sessionContext->setObjVar($this->m_Name, "SubType", $this->m_SubType);
+    	$sessionContext->setObjVar($this->objectName, "CategoryId", $this->m_CategoryId);
+        $sessionContext->setObjVar($this->objectName, "SubType", $this->m_SubType);
         return parent::setSessionVars($sessionContext);        
     }    
 	
 	public function outputAttrs()
     {        
-    	$output['name'] = $this->m_Name;
+    	$output['name'] = $this->objectName;
         $output['title'] = $this->m_Title;
-        $output['description'] = str_replace('\n', "<br />", $this->m_Description);
+        $output['description'] = str_replace('\n', "<br />", $this->objectDescription);
         $output['data'] = $this->draw();
         $output['height'] = $this->m_Height;
         $output['width'] = $this->m_Width;
@@ -119,7 +119,7 @@ class ChartForm extends EasyForm
             	$value = $element->getValue();            	
             	if ($element->fieldName && isset($value))
             	{	            	            			            		
-            		switch($element->m_Class)
+            		switch($element->className)
             		{
             			case "chart.lib.ChartColor":
             				$this->chartColorset[] = $value;            				
@@ -150,9 +150,9 @@ class ChartForm extends EasyForm
     public function draw()
     {
     	ob_clean();
-		$path = MODULE_PATH.'/chart/lib';
+		$path = OPENBIZ_APP_MODULE_PATH.'/chart/lib';
     	set_include_path(get_include_path() . PATH_SEPARATOR . $path);    	
-        if(strtolower(FusionChartVersion)=="pro"){
+        if(strtolower(CUBI_FUSION_CHART_VERSION)=="pro"){
     		require_once(dirname(dirname(__FILE__)).'/lib/fusionpro/FusionCharts_Gen.php'); 		
     		require_once(dirname(dirname(__FILE__)).'/lib/fusionpro/FusionCharts.php');
     	}
@@ -236,7 +236,7 @@ class ChartForm extends EasyForm
 	            	}
 	            	//select record feature
 	            	if($this->m_SelectRecord){
-	            		$elemConfig .="link=JavaScript:Openbiz.CallFunction(\\\"".$this->m_Name.".SelectRecord(".addslashes($this->chartIdset[$i]).")\\\");";
+	            		$elemConfig .="link=JavaScript:Openbiz.CallFunction(\\\"".$this->objectName.".SelectRecord(".addslashes($this->chartIdset[$i]).")\\\");";
 	            	}
 	            	//desc text feature
 	            	if($this->chartDescset[$i])
@@ -287,7 +287,7 @@ class ChartForm extends EasyForm
             $elemConfig = $color.$this->chartDataAttrset[$key];                        
         	$FC->addDataset($key,$elemConfig);
             for ($i=0; $i<count($ds); $i++){
-            	$setConfig ="link=JavaScript:Openbiz.CallFunction(\\\"".$this->m_Name.".SelectRecord(".addslashes($colorI).",".addslashes($i).")\\\");";
+            	$setConfig ="link=JavaScript:Openbiz.CallFunction(\\\"".$this->objectName.".SelectRecord(".addslashes($colorI).",".addslashes($i).")\\\");";
                 $FC->addChartData($ds[$i],$setConfig);
             }
             $colorI++;
@@ -303,12 +303,12 @@ class ChartForm extends EasyForm
     }
     protected function seChartParams($FC)
     {
-    	if(strtolower(FusionChartVersion)=="pro"){
-    		$FC->setSWFPath(RESOURCE_URL."/chart/js/FusionChartsPro/");    		
+    	if(strtolower(CUBI_FUSION_CHART_VERSION)=="pro"){
+    		$FC->setSWFPath(OPENBIZ_RESOURCE_URL."/chart/js/FusionChartsPro/");    		
     	}
     	else
     	{
-        	$FC->setSWFPath(RESOURCE_URL."/chart/js/FusionCharts/");
+        	$FC->setSWFPath(OPENBIZ_RESOURCE_URL."/chart/js/FusionCharts/");
     	}
         
         # Set chart attributes
@@ -316,13 +316,13 @@ class ChartForm extends EasyForm
         $FC->setChartParam('formatNumberScale',1);
         $FC->setChartParam('decimalPrecision',0);
         
-        if(strtolower(FusionChartVersion)=="pro"){
+        if(strtolower(CUBI_FUSION_CHART_VERSION)=="pro"){
 	        $FC->setChartParam('exportEnabled',1);
 	        $FC->setChartParam('exportAtClient',0);
 	        $FC->setChartParam('exportShowMenuItem',1);
 	        $FC->setChartParam('exportAction',"save");
-	        $FC->setChartParam('exportHandler',APP_URL."/js/FusionChartsPro/FCExporter.php");
-	        $FC->setChartParam('exportFileName',$this->m_Name);
+	        $FC->setChartParam('exportHandler',OPENBIZ_APP_URL."/js/FusionChartsPro/FCExporter.php");
+	        $FC->setChartParam('exportFileName',$this->objectName);
         }
         //$strParam = "caption=".$this->m_Title.";canvasBorderColor=CECECE;baseFontSize=12;".$this->m_Attrs;
         $strParam = "canvasBorderColor=CECECE;baseFontSize=10;".$this->m_Attrs;

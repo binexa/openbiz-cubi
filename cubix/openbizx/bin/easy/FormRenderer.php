@@ -39,10 +39,10 @@ class FormRenderer
         if (isset($formObj->m_jsClass)) {
             $subForms = ($formObj->m_SubForms) ? implode(";", $formObj->m_SubForms) : "";
             if ($formObj->m_StaticOutput != true) {
-                $formScript = "\n<script>Openbiz.newFormObject('$formObj->m_Name','$formObj->m_jsClass','$subForms'); </script>\n";
+                $formScript = "\n<script>Openbiz.newFormObject('$formObj->objectName','$formObj->m_jsClass','$subForms'); </script>\n";
             }
             if ($formObj->m_AutoRefresh > 0) {
-                $formScript .= "\n<script>setTimeout(\"Openbiz.CallFunction('$formObj->m_Name.UpdateForm()');\",\"" . ($formObj->m_AutoRefresh * 1000) . "\") </script>\n";
+                $formScript .= "\n<script>setTimeout(\"Openbiz.CallFunction('$formObj->objectName.UpdateForm()');\",\"" . ($formObj->m_AutoRefresh * 1000) . "\") </script>\n";
             }
         }
         
@@ -67,8 +67,8 @@ class FormRenderer
         $tplAttributes['title'] = $formObj->m_Title;
         $tplAttributes['errors'] = $formObj->m_Errors;
         $tplAttributes['notices'] = $formObj->m_Notices;
-        $tplAttributes['formname'] = $formObj->m_Name;
-        $tplAttributes['module'] = $formObj->getModuleName($formObj->m_Name);
+        $tplAttributes['formname'] = $formObj->objectName;
+        $tplAttributes['module'] = $formObj->getModuleName($formObj->objectName);
         
         // if the $formobj form type is list render table, otherwise render record
         if (strtoupper($formObj->m_FormType) == 'LIST') {
@@ -84,7 +84,7 @@ class FormRenderer
             foreach ($formObj->m_SearchPanel as $elem) {
                 if (! $elem->m_FieldName)
                     continue;
-                $post_value = BizSystem::clientProxy()->getFormInputs($elem->m_Name);
+                $post_value = BizSystem::clientProxy()->getFormInputs($elem->objectName);
                 if ($post_value) {
                     $search_record[$elem->m_FieldName] = $post_value;
                 }

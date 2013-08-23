@@ -54,7 +54,7 @@ class LabelBool extends LabelText{
         $val=$this->m_Value;
         $style = $this->getStyle();
         $text = $this->getText();
-        $id = $this->m_Name;
+        $id = $this->objectName;
         $func = $this->getFunction();
         if($val==='1' || $val==='true' || strtoupper($val) == 'Y' || $val>0 || $val==$this->m_TrueValue)
     	{

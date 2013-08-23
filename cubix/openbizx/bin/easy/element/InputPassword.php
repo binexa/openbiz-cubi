@@ -81,15 +81,15 @@ class InputPassword extends Password
 
         $func = $this->getEnabled() == 'N' ? "" : $this->getFunction();		
         $formobj = $this->GetFormObj();
-        if($formobj->m_Errors[$this->m_Name]){
+        if($formobj->m_Errors[$this->objectName]){
 			$func .= "onchange=\"this.className='$this->m_cssClass'\"";
 		}else{
 			$func .= "onfocus=\"this.className='$this->m_cssFocusClass'\" onblur=\"this.className='$this->m_cssClass'\"";
 		} 
-        $sHTML = "<INPUT TYPE=\"PASSWORD\" NAME='$this->m_Name' ID=\"" . $this->m_Name ."\" VALUE='$value' $disabledStr $this->m_HTMLAttr $style $func />";
+        $sHTML = "<INPUT TYPE=\"PASSWORD\" NAME='$this->objectName' ID=\"" . $this->objectName ."\" VALUE='$value' $disabledStr $this->m_HTMLAttr $style $func />";
     	if($this->m_Hint){
         	$sHTML.="<script>        	
-        	\$j('#" . $this->m_Name . "').tbHinter({
+        	\$j('#" . $this->objectName . "').tbHinter({
 				text: '".$this->m_Hint."',
 			});
         	</script>";
@@ -106,7 +106,7 @@ class InputPassword extends Password
     public function getValue()
     {    	
     	if($this->m_Value==null){
-    		$this->m_Value = BizSystem::clientProxy()->getFormInputs($this->m_Name);
+    		$this->m_Value = BizSystem::clientProxy()->getFormInputs($this->objectName);
     	}
         if($this->m_Value==$this->m_PasswordMask)
         {       	

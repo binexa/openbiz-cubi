@@ -13,7 +13,7 @@
 
 include_once 'bin/app_init.php';
 
-include_once OPENBIZ_HOME."/bin/ErrorHandler.php";
+include_once OPENBIZ_PATH."/bin/ErrorHandler.php";
 
 $type=BizSystem::ClientProxy()->getRequestParam("type");  
 $service=BizSystem::ClientProxy()->getRequestParam("service");
@@ -31,14 +31,14 @@ if($assocURL)
 }
 
 //$whitelist_arr=array('qq','sina','alipay','google','facebook','qzone','twitter');
-$whitelist_arr = BizSystem::getService(LOV_SERVICE)->getDictionary("oauth.lov.ProviderLOV(Provider)");
+$whitelist_arr = BizSystem::getService(CUBI_LOV_SERVICE)->getDictionary("oauth.lov.ProviderLOV(Provider)");
 
 if(!in_array($type,$whitelist_arr)){
 	throw new Exception('Unknown service');
 	return;
 }
  
-$oatuthType=MODULE_PATH."/oauth/libs/{$type}.class.php";
+$oatuthType=OPENBIZ_APP_MODULE_PATH."/oauth/libs/{$type}.class.php";
 if(!file_exists($oatuthType))
 {
 	throw new Exception('Unknown type');

@@ -25,10 +25,10 @@ class  LocationSelector extends DropDownList
     		{
     			default:
     			case "0":
-    				$list[$key]['pic'] = RESOURCE_URL.'/backup/images/icon_type_user.png';
+    				$list[$key]['pic'] = OPENBIZ_RESOURCE_URL.'/backup/images/icon_type_user.png';
     				break;
     			case "1":
-    				$list[$key]['pic'] = RESOURCE_URL.'/backup/images/icon_type_system.png';
+    				$list[$key]['pic'] = OPENBIZ_RESOURCE_URL.'/backup/images/icon_type_system.png';
     				break;    				
     		}
     	}

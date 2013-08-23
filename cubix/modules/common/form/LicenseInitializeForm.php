@@ -1,6 +1,6 @@
 <?php 
-include_once(MODULE_PATH."/common/lib/fileUtil.php");
-include_once(MODULE_PATH."/common/lib/httpClient.php");
+include_once(OPENBIZ_APP_MODULE_PATH."/common/lib/fileUtil.php");
+include_once(OPENBIZ_APP_MODULE_PATH."/common/lib/httpClient.php");
 
 require_once "LicenseForm.php";
 

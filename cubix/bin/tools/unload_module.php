@@ -16,7 +16,7 @@ if(!defined("CLI")){
 }
 
 include_once dirname(__FILE__)."/require_auth.php";
-include_once (MODULE_PATH."/system/lib/ModuleLoader.php");
+include_once (OPENBIZ_APP_MODULE_PATH."/system/lib/ModuleLoader.php");
 
 $moduleName = $argv[1];
 

@@ -41,7 +41,7 @@ class ColumnBar extends ColumnText
         	$value = sprintf("%.2f",$value*100).'%';        
         }
         $style = $this->getStyle();
-        $id = $this->m_Name;
+        $id = $this->objectName;
         $func = $this->getFunction();
         $height = $this->m_Height;
         $width = $this->m_Width;        
@@ -99,7 +99,7 @@ class ColumnBar extends ColumnText
             $style = Expression::evaluateExpression($style, $formobj);
             $style = "STYLE='$style'";
         }
-        if($formobj->m_Errors[$this->m_Name])
+        if($formobj->m_Errors[$this->objectName])
         {
       	    $htmlClass = "CLASS='".$this->m_cssErrorClass."'";
         }

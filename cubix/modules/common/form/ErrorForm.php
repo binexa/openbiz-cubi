@@ -22,15 +22,15 @@ class ErrorForm extends EasyForm
 	    public function getSessionVars($sessionContext)
 	    {
 	        parent::getSessionVars($sessionContext);
-	        $sessionContext->getObjVar($this->m_Name, "Errors", $this->m_Errors);	  
-	        $sessionContext->getObjVar($this->m_Name, "showError", $this->m_ShowError);      	          
+	        $sessionContext->getObjVar($this->objectName, "Errors", $this->m_Errors);	  
+	        $sessionContext->getObjVar($this->objectName, "showError", $this->m_ShowError);      	          
 	    }    
 	    
 	    public function setSessionVars($sessionContext)
 	    {
 	    	parent::setSessionVars($sessionContext);
-	        $sessionContext->setObjVar($this->m_Name, "Errors", $this->m_Errors);   
-	        $sessionContext->setObjVar($this->m_Name, "showError", $this->m_ShowError);   
+	        $sessionContext->setObjVar($this->objectName, "Errors", $this->m_Errors);   
+	        $sessionContext->setObjVar($this->objectName, "showError", $this->m_ShowError);   
 	    }
 	    
 	    public function getViewObject()

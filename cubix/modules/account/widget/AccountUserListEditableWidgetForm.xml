@@ -12,7 +12,7 @@
         			Label="" 
         			FieldName="Id"/>      
         <Element Name="fld_icon" Class="ColumnImage" 
-				Text="{RESOURCE_URL}/contact/images/icon_contact.gif"
+				Text="{OPENBIZ_RESOURCE_URL}/contact/images/icon_contact.gif"
 				FieldName="" Label="Icon"  Sortable="Y" AllowURLParam="N" Translatable="N" OnEventLog="N" >
 		</Element>	 
 		

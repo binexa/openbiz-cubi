@@ -37,7 +37,7 @@
         			Label="Name" 
         			MaxLength="15"        			 
         			Sortable="Y"
-        			Link="{APP_INDEX}/account/account_shipping_address_detail/{@:Elem[fld_Id].Value}"        			
+        			Link="{OPENBIZ_APP_INDEX_URL}/account/account_shipping_address_detail/{@:Elem[fld_Id].Value}"        			
         			
         			 />        			
         	

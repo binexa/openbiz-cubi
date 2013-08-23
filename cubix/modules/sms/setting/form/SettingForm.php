@@ -16,7 +16,7 @@
  *
  * @access public
  */
-include_once(MODULE_PATH."/system/form/UserPreferenceForm.php");
+include_once(OPENBIZ_APP_MODULE_PATH."/system/form/UserPreferenceForm.php");
 class SettingForm extends UserPreferenceForm
 {
     protected $_userId = null;
@@ -66,7 +66,7 @@ class SettingForm extends UserPreferenceForm
             		"name"	  => $name,
             		"value"   => $value,
 	            	"section" => "SMS",
-	            	"type" 	  => $element->m_Class,	            
+	            	"type" 	  => $element->className,	            
 	            );
 	            //check if its exsit
 	            $record = $prefDo->fetchOne("[user_id]='$user_id' and [name]='$name'");

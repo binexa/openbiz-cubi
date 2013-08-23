@@ -1,6 +1,6 @@
 <?php
 
-include_once (MODULE_PATH."/common/lib/Pivot.php");
+include_once (OPENBIZ_APP_MODULE_PATH."/common/lib/Pivot.php");
 
 class PivotTableForm extends EasyForm
 {
@@ -54,9 +54,9 @@ class PivotTableForm extends EasyForm
 	
 	public function outputAttrs()
     { 
-        $output['name'] = $this->m_Name;
+        $output['name'] = $this->objectName;
         $output['title'] = $this->m_Title;
-        $output['description'] = str_replace('\n', "<br />", $this->m_Description);
+        $output['description'] = str_replace('\n', "<br />", $this->objectDescription);
         $output['meta'] = $this->pivotConfig;
 		$data = $this->getPivotData();
 		$output['headers'] = $data['splits'];

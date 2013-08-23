@@ -9,7 +9,7 @@
 			Class="FinishedForm" 
 			FormType="New" 
 			jsClass="Openbiz.Form" 
-			Icon="{RESOURCE_URL}/payment/images/icon_finished.png"
+			Icon="{OPENBIZ_RESOURCE_URL}/payment/images/icon_finished.png"
 			Title="Payment Received" 
 			BizDataObj="" 
 			TemplateEngine="Smarty" 
@@ -22,7 +22,7 @@
        				Class="LabelImage" 
        				FieldName="" 
        				Label="Payment Provider"        	
-       				Text="{RESOURCE_URL}/payment/images/icon_{$_GET['type']}.png" 			
+       				Text="{OPENBIZ_RESOURCE_URL}/payment/images/icon_{$_GET['type']}.png" 			
        				/> 
       				
       	<Element Name="fld_buyer_account" 
@@ -64,7 +64,7 @@
       
                 <Element Name="btn_cancel" 
         			Class="LabelText"
-        			Link="{APP_INDEX}" 
+        			Link="{OPENBIZ_APP_INDEX_URL}" 
         			Text="Back" 
         			CssClass="button">
         </Element>      

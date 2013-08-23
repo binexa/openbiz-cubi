@@ -120,7 +120,7 @@ class LoginForm extends EasyForm
 			
 			global $g_BizSystem;
 			$svcobj 	= BizSystem::getService(AUTH_SERVICE);
-			$eventlog 	= BizSystem::getService(EVENTLOG_SERVICE);
+			$eventlog 	= BizSystem::getService(OPENBIZ_EVENTLOG_SERVICE);
 			if ($svcobj->authenticateUserByCookies($this->username,$this->password)) 
     		{
                 // after authenticate user: 1. init profile
@@ -137,7 +137,7 @@ class LoginForm extends EasyForm
     	   	    
     	   	    if($profile['roleStartpage'][0])
     			{
-    				$redirectPage = APP_INDEX.$profile['roleStartpage'][0];
+    				$redirectPage = OPENBIZ_APP_INDEX_URL.$profile['roleStartpage'][0];
        	        	BizSystem::clientProxy()->ReDirectPage($redirectPage);	
        	        }else{
     		    	parent::processPostAction();
@@ -146,7 +146,7 @@ class LoginForm extends EasyForm
     		}
 		}elseif(BizSystem::getUserProfile("Id")){						
 			$profile= BizSystem::getUserProfile();
-			$redirectPage = APP_INDEX.$profile['roleStartpage'][0];
+			$redirectPage = OPENBIZ_APP_INDEX_URL.$profile['roleStartpage'][0];
 			BizSystem::clientProxy()->ReDirectPage($redirectPage);			
 		}
 	}    
@@ -191,7 +191,7 @@ class LoginForm extends EasyForm
 		}
 		
 		global $g_BizSystem;		
-		$eventlog 	= BizSystem::getService(EVENTLOG_SERVICE);
+		$eventlog 	= BizSystem::getService(OPENBIZ_EVENTLOG_SERVICE);
 		try {
     		if ($this->authUser()) 
     		{
@@ -210,7 +210,7 @@ class LoginForm extends EasyForm
        			$currentLanguage = BizSystem::ClientProxy()->getFormInputs("current_language");
    				if($currentLanguage!=''){
    				   	if($currentLanguage=='user_default'){
-		   				$currentLanguage = DEFAULT_LANGUAGE;
+		   				$currentLanguage = OPENBIZ_DEFAULT_LANGUAGE;
 		   			}else{
        					BizSystem::sessionContext()->setVar("LANG",$currentLanguage );
 		   			}
@@ -219,13 +219,13 @@ class LoginForm extends EasyForm
 				$currentTheme = BizSystem::ClientProxy()->getFormInputs("current_theme");
 				if($currentTheme!=''){
 					if($currentTheme=='user_default'){
-		   				$currentTheme = DEFAULT_THEME_NAME;
+		   				$currentTheme = CUBI_DEFAULT_THEME_NAME;
 		   			}else{
    						BizSystem::sessionContext()->setVar("THEME",$currentTheme );
 		   			}
 				}
     	   	   		
-    	   	    $redirectPage = APP_INDEX.$profile['roleStartpage'][0];
+    	   	    $redirectPage = OPENBIZ_APP_INDEX_URL.$profile['roleStartpage'][0];
     	   	   	if(!$profile['roleStartpage'][0])
     	   	   	{
     	   	   		$errorMessage['password'] = $this->getMessage("PERM_INCORRECT");
@@ -243,19 +243,19 @@ class LoginForm extends EasyForm
     	   	    }
     	   	    
     	   	    //if its admin first time login, then show init system wizard
-    	   	    $initLock = APP_HOME.'/files/initialize.lock';
+    	   	    $initLock = OPENBIZ_APP_PATH.'/files/initialize.lock';
     	   	    if($profile['Id']==1 && !is_file($initLock))
     	   	    {
-    	   	    	$redirectPage = APP_INDEX."/system/initialize";
+    	   	    	$redirectPage = OPENBIZ_APP_INDEX_URL."/system/initialize";
     	   	    	BizSystem::clientProxy()->ReDirectPage($redirectPage);
     	   	    	return true;
     	   	    }
     	   	    
     	   	    //if admin is not init profile yet
-    			$initLock = APP_HOME.'/files/initialize_profile.lock';
+    			$initLock = OPENBIZ_APP_PATH.'/files/initialize_profile.lock';
     	   	    if($profile['Id']==1 && !is_file($initLock))
     	   	    {
-    	   	    	$redirectPage = APP_INDEX."/system/initialize_profile";
+    	   	    	$redirectPage = OPENBIZ_APP_INDEX_URL."/system/initialize_profile";
     	   	    	BizSystem::clientProxy()->ReDirectPage($redirectPage);
     	   	    	return true;
     	   	    }
@@ -356,7 +356,7 @@ class LoginForm extends EasyForm
    		$currentLanguage = BizSystem::ClientProxy()->getFormInputs("current_language");
    		if($currentLanguage!=''){
    		   	if($currentLanguage=='user_default'){
-   				$currentTheme = DEFAULT_LANGUAGE;
+   				$currentTheme = OPENBIZ_DEFAULT_LANGUAGE;
    			}else{
 		   		BizSystem::sessionContext()->setVar("LANG",$currentLanguage );
 				$this->m_Notices[] = "<script>window.location.reload()</script>";
@@ -370,7 +370,7 @@ class LoginForm extends EasyForm
    		$currentTheme = BizSystem::ClientProxy()->getFormInputs("current_theme");
    		if($currentTheme!=''){
    			if($currentTheme=='user_default'){
-   				$currentTheme = DEFAULT_THEME_NAME;
+   				$currentTheme = CUBI_DEFAULT_THEME_NAME;
    			}else{
 		   		BizSystem::sessionContext()->setVar("THEME",$currentTheme );
 		   		$recArr = $this->readInputRecord();

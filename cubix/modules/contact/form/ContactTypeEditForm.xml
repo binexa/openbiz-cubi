@@ -5,7 +5,7 @@
   Copyright (c) 2005-2011, Openbiz Technology LLC
   Version $Id: ContactTypeEditForm.xml 4978 2012-12-29 09:21:35Z hellojixian@gmail.com $
 -->
-<EasyForm Name="ContactTypeEditForm" Class="ContactTypeForm" Icon="{RESOURCE_URL}/contact/images/icon_contact_type.png"  FormType="Edit" jsClass="jbForm" Title="Edit Contact Type" Description="Edit selected contact type item." BizDataObj="contact.do.ContactTypeDO" DefaultForm="Y" TemplateEngine="Smarty" TemplateFile="detail.tpl" EventName="CONTACT" MessageFile="Contact.msg"  Access="contact.access">
+<EasyForm Name="ContactTypeEditForm" Class="ContactTypeForm" Icon="{OPENBIZ_RESOURCE_URL}/contact/images/icon_contact_type.png"  FormType="Edit" jsClass="jbForm" Title="Edit Contact Type" Description="Edit selected contact type item." BizDataObj="contact.do.ContactTypeDO" DefaultForm="Y" TemplateEngine="Smarty" TemplateFile="detail.tpl" EventName="CONTACT" MessageFile="Contact.msg"  Access="contact.access">
     <DataPanel>
 		<Element Name="fld_Id" Class="Hidden" FieldName="Id" Label="Id" AllowURLParam="Y" Translatable="N" OnEventLog="N" CssClass="input" CssErrorClass="input_error"/>
 		<Element Name="fld_name" Class="InputText" FieldName="name" Label="Name"   />	

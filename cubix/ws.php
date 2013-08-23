@@ -25,9 +25,9 @@
         toAddress = abc@mail.com
         emailBody = Hello
 */
-define("USE_CUSTOM_SESSION_HANDLER",true);     
+define("OPENBIZ_USE_CUSTOM_SESSION_HANDLER",true);     
 include_once 'bin/app_init.php';
-include_once OPENBIZ_HOME."/bin/ErrorHandler.php";
+include_once OPENBIZ_PATH."/bin/ErrorHandler.php";
 
 // find the module name and service name
 $script = preg_quote("\\".$_SERVER['SCRIPT_NAME'],'/');

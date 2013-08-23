@@ -31,14 +31,14 @@ abstract class MetaObject
      *
      * @var string
      */
-    public $m_Name;
+    public $objectName;
 
     /**
      * Class name of meta-object
      *
      * @var string
      */
-    public $m_Class;
+    public $className;
 
     /**
      * Package of meta-object
@@ -52,7 +52,7 @@ abstract class MetaObject
      *
      * @var string
      */
-    public $m_Description;
+    public $objectDescription;
     public $m_Access;
 
     function __construct(&$xmlArr)
@@ -74,17 +74,17 @@ abstract class MetaObject
         $rootKey = $rootKeys[0];
         if ($rootKey != "ATTRIBUTES")
         {
-            $this->m_Name = isset($xmlArr[$rootKey]["ATTRIBUTES"]["NAME"]) ? $xmlArr[$rootKey]["ATTRIBUTES"]["NAME"] : null;
-            $this->m_Description = isset($xmlArr[$rootKey]["ATTRIBUTES"]["DESCRIPTION"]) ? $xmlArr[$rootKey]["ATTRIBUTES"]["DESCRIPTION"] : null;
+            $this->objectName = isset($xmlArr[$rootKey]["ATTRIBUTES"]["NAME"]) ? $xmlArr[$rootKey]["ATTRIBUTES"]["NAME"] : null;
+            $this->objectDescription = isset($xmlArr[$rootKey]["ATTRIBUTES"]["DESCRIPTION"]) ? $xmlArr[$rootKey]["ATTRIBUTES"]["DESCRIPTION"] : null;
             $this->m_Package = isset($xmlArr[$rootKey]["ATTRIBUTES"]["PACKAGE"]) ? $xmlArr[$rootKey]["ATTRIBUTES"]["PACKAGE"] : null;
-            $this->m_Class = isset($xmlArr[$rootKey]["ATTRIBUTES"]["CLASS"]) ? $xmlArr[$rootKey]["ATTRIBUTES"]["CLASS"] : null;
+            $this->className = isset($xmlArr[$rootKey]["ATTRIBUTES"]["CLASS"]) ? $xmlArr[$rootKey]["ATTRIBUTES"]["CLASS"] : null;
             $this->m_Access = isset($xmlArr[$rootKey]["ATTRIBUTES"]["ACCESS"]) ? $xmlArr[$rootKey]["ATTRIBUTES"]["ACCESS"] : null;
         } else
         {
-            $this->m_Name = isset($xmlArr["ATTRIBUTES"]["NAME"]) ? $xmlArr["ATTRIBUTES"]["NAME"] : null;
-            $this->m_Description = isset($xmlArr["ATTRIBUTES"]["DESCRIPTION"]) ? $xmlArr["ATTRIBUTES"]["DESCRIPTION"] : null;
+            $this->objectName = isset($xmlArr["ATTRIBUTES"]["NAME"]) ? $xmlArr["ATTRIBUTES"]["NAME"] : null;
+            $this->objectDescription = isset($xmlArr["ATTRIBUTES"]["DESCRIPTION"]) ? $xmlArr["ATTRIBUTES"]["DESCRIPTION"] : null;
             $this->m_Package = isset($xmlArr["ATTRIBUTES"]["PACKAGE"]) ? $xmlArr["ATTRIBUTES"]["PACKAGE"] : null;
-            $this->m_Class = isset($xmlArr["ATTRIBUTES"]["CLASS"]) ? $xmlArr["ATTRIBUTES"]["CLASS"] : null;
+            $this->className = isset($xmlArr["ATTRIBUTES"]["CLASS"]) ? $xmlArr["ATTRIBUTES"]["CLASS"] : null;
             $this->m_Access = isset($xmlArr["ATTRIBUTES"]["ACCESS"]) ? $xmlArr["ATTRIBUTES"]["ACCESS"] : null;
         }
     }
@@ -153,7 +153,7 @@ abstract class MetaObject
     {
         if (CLI)
         {
-            return ALLOW;
+            return OPENBIZ_ALLOW;
         }
         if (!$access)
             $access = $this->m_Access;
@@ -161,7 +161,7 @@ abstract class MetaObject
         {
             return BizSystem::allowUserAccess($access);
         }
-        return ALLOW;
+        return OPENBIZ_ALLOW;
     }
 
     protected function getElementObject(&$xmlArr, $defaultClassName, $parentObj = null)
@@ -235,7 +235,7 @@ class MetaIterator implements Iterator
             }
             //if (!$clsLoaded) trigger_error("Cannot find the load class $className", E_USER_ERROR);
             $obj = new $className($xmlArr, $parentObj);
-            $this->m_var[$obj->m_Name] = $obj;
+            $this->m_var[$obj->objectName] = $obj;
         } else
         {
             foreach ($xmlArr as $child)
@@ -266,7 +266,7 @@ class MetaIterator implements Iterator
                     }
                     //if (!$clsLoaded) trigger_error("Cannot find the load class $className", E_USER_ERROR);
                     $obj = new $className($child, $parentObj);
-                    $this->m_var[$obj->m_Name] = $obj;
+                    $this->m_var[$obj->objectName] = $obj;
                 }
             }
         }
@@ -398,11 +398,11 @@ class MetaIterator implements Iterator
  */
 class Parameter
 {
-    public $m_Name, $m_Value, $m_Required, $m_InOut;
+    public $objectName, $m_Value, $m_Required, $m_InOut;
 
     public function __construct(&$xmlArr)
     {
-        $this->m_Name = isset($xmlArr["ATTRIBUTES"]["NAME"]) ? $xmlArr["ATTRIBUTES"]["NAME"] : null;
+        $this->objectName = isset($xmlArr["ATTRIBUTES"]["NAME"]) ? $xmlArr["ATTRIBUTES"]["NAME"] : null;
         $this->m_Value = isset($xmlArr["ATTRIBUTES"]["VALUE"]) ? $xmlArr["ATTRIBUTES"]["VALUE"] : null;
         $this->m_Required = isset($xmlArr["ATTRIBUTES"]["REQUIRED"]) ? $xmlArr["ATTRIBUTES"]["REQUIRED"] : null;
         $this->m_InOut = isset($xmlArr["ATTRIBUTES"]["INOUT"]) ? $xmlArr["ATTRIBUTES"]["INOUT"] : null;

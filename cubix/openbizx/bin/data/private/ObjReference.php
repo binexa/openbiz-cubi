@@ -73,9 +73,9 @@ class ObjReference extends MetaObject
      */
     function __construct(&$xmlArr, $bizObj)
     {
-        $this->m_Name = isset($xmlArr["ATTRIBUTES"]["NAME"]) ? $xmlArr["ATTRIBUTES"]["NAME"] : null;
+        $this->objectName = isset($xmlArr["ATTRIBUTES"]["NAME"]) ? $xmlArr["ATTRIBUTES"]["NAME"] : null;
         $this->m_Package = $bizObj->m_Package;
-        $this->m_Description= isset($xmlArr["ATTRIBUTES"]["DESCRIPTION"]) ? $xmlArr["ATTRIBUTES"]["DESCRIPTION"] : null;
+        $this->objectDescription= isset($xmlArr["ATTRIBUTES"]["DESCRIPTION"]) ? $xmlArr["ATTRIBUTES"]["DESCRIPTION"] : null;
         $this->m_Relationship = isset($xmlArr["ATTRIBUTES"]["RELATIONSHIP"]) ? $xmlArr["ATTRIBUTES"]["RELATIONSHIP"] : null;
         $this->m_Table = isset($xmlArr["ATTRIBUTES"]["TABLE"]) ? $xmlArr["ATTRIBUTES"]["TABLE"] : null;
         $this->m_Column = isset($xmlArr["ATTRIBUTES"]["COLUMN"]) ? $xmlArr["ATTRIBUTES"]["COLUMN"] : null;
@@ -100,7 +100,7 @@ class ObjReference extends MetaObject
         }
         //$this->m_Association = @$xmlArr["ATTRIBUTES"]["ASSOCIATION"];
 
-        $this->m_Name = $this->prefixPackage($this->m_Name);
+        $this->objectName = $this->prefixPackage($this->objectName);
     }
 }
 

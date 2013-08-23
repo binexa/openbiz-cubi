@@ -23,7 +23,7 @@ $appendStyle = BizSystem::clientProxy()->getAppendedStyles();
 $appendStyle .= "
 <link rel=\"stylesheet\" href=\"$css_url/general.css\" type=\"text/css\" />
 <link rel=\"stylesheet\" href=\"$css_url/system_backend.css\" type=\"text/css\" />
-<link rel=\"stylesheet\" href=\"".RESOURCE_URL."/product/css/product_menu_icons.css\" type=\"text/css\" />
+<link rel=\"stylesheet\" href=\"".OPENBIZ_RESOURCE_URL."/product/css/product_menu_icons.css\" type=\"text/css\" />
 ";
 $this->_tpl_vars['style_sheets'] = $appendStyle;
 

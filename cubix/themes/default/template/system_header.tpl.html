@@ -11,15 +11,15 @@ $menu_width = ($menu_count * $menu_item_width)."px";
 $this->assign('menu_count', $menu_count);
 
 $header_background_image = $this->_tpl_vars['header_background_image'];
-$custom_header_background_image = APP_HOME.'/images/cubi_top_header.png';
+$custom_header_background_image = OPENBIZ_APP_PATH.'/images/cubi_top_header.png';
 if(file_exists($custom_header_background_image))
 {
-	$header_background_image_url = APP_URL.'/images/cubi_top_header.png';
+	$header_background_image_url = OPENBIZ_APP_URL.'/images/cubi_top_header.png';
 	$this->assign('header_background_image_url', $header_background_image_url);
 }
 elseif($header_background_image)
 {
-	$header_background_image_url = RESOURCE_URL.$header_background_image;
+	$header_background_image_url = OPENBIZ_RESOURCE_URL.$header_background_image;
 	$this->assign('header_background_image_url', $header_background_image_url);
 }
 {/php}

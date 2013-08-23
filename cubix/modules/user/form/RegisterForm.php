@@ -11,7 +11,7 @@
  * @version   $Id: RegisterForm.php 4303 2012-09-26 05:48:29Z hellojixian@gmail.com $
  */
 
-include_once(MODULE_PATH."/system/form/UserForm.php");
+include_once(OPENBIZ_APP_MODULE_PATH."/system/form/UserForm.php");
 
 class RegisterForm extends UserForm
 {
@@ -95,12 +95,12 @@ class RegisterForm extends UserForm
         
         //record event log   
         global $g_BizSystem;     
-        $eventlog 	= BizSystem::getService(EVENTLOG_SERVICE);
+        $eventlog 	= BizSystem::getService(OPENBIZ_EVENTLOG_SERVICE);
         $logComment=array($userinfo['username'],$_SERVER['REMOTE_ADDR']);
     	$eventlog->log("USER_MANAGEMENT", "MSG_USER_REGISTERED", $logComment);   
     	     
         //send user email
-        $emailObj 	= BizSystem::getService(USER_EMAIL_SERVICE);
+        $emailObj 	= BizSystem::getService(CUBI_USER_EMAIL_SERVICE);
         $emailObj->UserWelcomeEmail($userinfo['Id']);
         
         //init profile for future use like redirect to my account view

@@ -1,5 +1,5 @@
 <?php
-include_once (MODULE_PATH."/system/lib/ModuleLoadHandler.php");
+include_once (OPENBIZ_APP_MODULE_PATH."/system/lib/ModuleLoadHandler.php");
 
 class ChartLoadHandler implements ModuleLoadHandler
 {

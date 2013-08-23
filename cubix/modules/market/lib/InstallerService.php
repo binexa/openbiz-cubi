@@ -53,7 +53,7 @@ class InstallerService extends PackageService
                 $this->setInstallInfo($package, array("state"=>"ERROR","log"=>"Unable to install from empty url."));
                 return false;
             }
-            $file_dir = APP_FILE_PATH.DIRECTORY_SEPARATOR."tmpFiles".DIRECTORY_SEPARATOR;
+            $file_dir = OPENBIZ_APP_FILE_PATH.DIRECTORY_SEPARATOR."tmpFiles".DIRECTORY_SEPARATOR;
             if(!is_dir($file_dir)){
 	            mkdir($file_dir,0777);
             }
@@ -144,8 +144,8 @@ class InstallerService extends PackageService
     protected function _unpack($tarfile, $toFolder)
     {
         // include PEAR Tar class
-        set_include_path(get_include_path(). PATH_SEPARATOR . APP_HOME."/bin/phing/classes");
-        include_once(APP_HOME."/bin/phing/classes/Archive/Tar.php");
+        set_include_path(get_include_path(). PATH_SEPARATOR . OPENBIZ_APP_PATH."/bin/phing/classes");
+        include_once(OPENBIZ_APP_PATH."/bin/phing/classes/Archive/Tar.php");
         if (!class_exists('Archive_Tar')) {
             throw new Exception("You must have installed the PEAR Archive_Tar class in order to use UntarTask.");
         }
@@ -164,7 +164,7 @@ class InstallerService extends PackageService
             $dirs = ob_scandir($tmpFolder."/$dir0");
             foreach ($dirs as $dir) {
                 $srcDir = $tmpFolder."/$dir0/$dir";
-                $dstDir = ($dir == 'modules') ? APP_HOME."/upgrade/modules" : APP_HOME."/$dir";
+                $dstDir = ($dir == 'modules') ? OPENBIZ_APP_PATH."/upgrade/modules" : OPENBIZ_APP_PATH."/$dir";
                 $this->pkg_log("copy $srcDir to $dstDir \n");
                 recurse_copy($srcDir, $dstDir);
                 if ($dir == 'modules')
@@ -206,7 +206,7 @@ class InstallerService extends PackageService
         $release_id = $package['Id'];
         $this->recordInstallLog($uri,$app_id,$release_id,SITE_URL,$operator);              
         
-        $tmpFolder = APP_FILE_PATH.DIRECTORY_SEPARATOR."tmpfiles".DIRECTORY_SEPARATOR;
+        $tmpFolder = OPENBIZ_APP_FILE_PATH.DIRECTORY_SEPARATOR."tmpfiles".DIRECTORY_SEPARATOR;
         $toFolder = $tmpFolder.time();
  
         try {
@@ -300,7 +300,7 @@ class InstallerService extends PackageService
 	{
 	    if (CLI) echo $text.nl;
 	    //BizSystem::log(LO_ERR, "ECHO", $text);
-	    $logfile = LOG_PATH."/INSTALL_PKG.log";
+	    $logfile = OPENBIZ_LOG_PATH."/INSTALL_PKG.log";
 	    $fp = fopen($logfile, "a+");
 	    fwrite($fp, date('c')." ".$text);
 	    fclose($fp);

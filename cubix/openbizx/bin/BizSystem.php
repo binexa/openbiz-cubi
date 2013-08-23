@@ -389,10 +389,10 @@ class BizSystem
      */
     public static function getUserPreference($attribute=null)
     {
-    	if(!BizSystem::GetXmlFileWithPath (PREFERENCE_SERVICE)){
+    	if(!BizSystem::GetXmlFileWithPath (OPENBIZ_PREFERENCE_SERVICE)){
     		return null;
     	}
-        $preferenceService = BizSystem::getService(PREFERENCE_SERVICE);
+        $preferenceService = BizSystem::getService(OPENBIZ_PREFERENCE_SERVICE);
         if (method_exists($preferenceService,'getPreference'))
             return $preferenceService->getPreference($attribute);
         else
@@ -448,7 +448,7 @@ class BizSystem
     			if($setting!=''){
     				$perm_code = $setting;
     			}else{
-    				$perm_code = DEFAULT_OWNER_PERM;
+    				$perm_code = OPENBIZ_DEFAULT_OWNER_PERM;
     			}
     			break;
     		case 'group':
@@ -456,7 +456,7 @@ class BizSystem
     			if($setting!=''){
     				$perm_code = $setting;
     			}else{
-    				$perm_code = DEFAULT_GROUP_PERM;
+    				$perm_code = OPENBIZ_DEFAULT_GROUP_PERM;
     			}
     			break;
     		case 'other':
@@ -464,7 +464,7 @@ class BizSystem
     			if($setting!=''){
     				$perm_code = $setting;
     			}else{
-    				$perm_code = DEFAULT_OTHER_PERM;
+    				$perm_code = OPENBIZ_DEFAULT_OTHER_PERM;
     			}
     			break;
     	}    

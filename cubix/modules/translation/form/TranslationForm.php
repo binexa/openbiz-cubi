@@ -11,7 +11,7 @@
  * @version   $Id: TranslationForm.php 3374 2012-05-31 06:22:06Z rockyswen@gmail.com $
  */
 
-include_once MODULE_PATH."/translation/lib/LangPackCreator.php";
+include_once OPENBIZ_APP_MODULE_PATH."/translation/lib/LangPackCreator.php";
 
 class TranslationForm extends EasyForm
 {
@@ -43,7 +43,7 @@ class TranslationForm extends EasyForm
 		$lang_code = $this->getLang();
     	$locale = explode('_', $lang_code);
 		$lang = $code2name[$locale[0]];
-    	$image_path = APP_URL."/images/nations/22x14/".strtolower($locale[1]).'.png';
+    	$image_path = OPENBIZ_APP_URL."/images/nations/22x14/".strtolower($locale[1]).'.png';
     	$image = "<image  style=\"float:left;display:block;margin-right:5px;padding-top:2px;\" src=\"$image_path\" />";
 		$record['lang']	=	"<div>".$image." <span style=\"float:left;display:block;\">$lang ( $lang_code )</span></div>";
     	$record['translation'] = file_get_contents($record['path']);
@@ -55,7 +55,7 @@ class TranslationForm extends EasyForm
 		$result = array();
 		$lang = $this->getLang();
 		$this->m_Lang = $this->getLang();
-		$lang_dir = APP_HOME.DIRECTORY_SEPARATOR."languages".DIRECTORY_SEPARATOR.$lang;						
+		$lang_dir = OPENBIZ_APP_PATH.DIRECTORY_SEPARATOR."languages".DIRECTORY_SEPARATOR.$lang;						
 		if(!is_dir($lang_dir))
 		{
 			return 	$result;
@@ -107,7 +107,7 @@ class TranslationForm extends EasyForm
 	
 	public function Delete(){
 		if ($this->m_Resource != "" && !$this->allowAccess($this->m_Resource.".delete"))
-            return BizSystem::clientProxy()->redirectView(ACCESS_DENIED_VIEW);
+            return BizSystem::clientProxy()->redirectView(OPENBIZ_ACCESS_DENIED_VIEW);
 
         if ($id==null || $id=='')
             $id = BizSystem::clientProxy()->getFormInputs('_selectedId');
@@ -148,7 +148,7 @@ class TranslationForm extends EasyForm
 		}
 		else
 		{
-			$lang = DEFAULT_LANGUAGE;	
+			$lang = OPENBIZ_DEFAULT_LANGUAGE;	
 		}
 		return $lang;
 	}

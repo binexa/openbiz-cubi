@@ -91,7 +91,7 @@ class emailService extends MetaObject
         $acct = $this->m_Accounts->current();
         if (! $acct)
             return; //TODO Throw exception
-        $this->useAccount($acct->m_Name);
+        $this->useAccount($acct->objectName);
     }
 
     /**
@@ -379,7 +379,7 @@ class emailService extends MetaObject
  */
 class EmailAccount extends MetaObject
 {
-    public $m_Name;
+    public $objectName;
     public $m_Host;
     public $m_Port;
     public $m_SSL;
@@ -397,7 +397,7 @@ class EmailAccount extends MetaObject
      */
     public function __construct ($xmlArr)
     {
-        $this->m_Name = $xmlArr["ATTRIBUTES"]["NAME"];
+        $this->objectName = $xmlArr["ATTRIBUTES"]["NAME"];
         $this->m_Host = $xmlArr["ATTRIBUTES"]["HOST"];
         $this->m_Port = $xmlArr["ATTRIBUTES"]["PORT"];
         $this->m_SSL = $xmlArr["ATTRIBUTES"]["SSL"];

@@ -5,7 +5,7 @@
   Copyright (c) 2005-2011, Openbiz Technology LLC
   Version $Id: ApplicationEditForm.xml 3369 2012-05-31 06:13:56Z rockyswen@gmail.com $
 -->
-<EasyForm Name="ApplicationEditForm" Class="EasyForm" Icon="{RESOURCE_URL}/repository/images/repo_application_edit.gif"  FormType="Edit" jsClass="jbForm" Title="Edit Application" Description="Publish a new application , Allow other Cubi platfrom user to download it." BizDataObj="repository.application.do.ApplicationDO" DefaultForm="Y" TemplateEngine="Smarty" TemplateFile="detail_elementset.tpl" EventName="" MessageFile="">
+<EasyForm Name="ApplicationEditForm" Class="EasyForm" Icon="{OPENBIZ_RESOURCE_URL}/repository/images/repo_application_edit.gif"  FormType="Edit" jsClass="jbForm" Title="Edit Application" Description="Publish a new application , Allow other Cubi platfrom user to download it." BizDataObj="repository.application.do.ApplicationDO" DefaultForm="Y" TemplateEngine="Smarty" TemplateFile="detail_elementset.tpl" EventName="" MessageFile="">
     <DataPanel>
 		<Element Name="fld_Id" Class="Hidden" FieldName="Id" Label="Id" AllowURLParam="Y" Translatable="N" OnEventLog="N" CssClass="input" CssErrorClass="input_error"/>
         <Element Name="fld_name" Class="InputText" ElementSet="General" FieldName="name" Label="Name"  AllowURLParam="N" CssClass="input_text" CssErrorClass="input_text_error" CssFocusClass="input_text_focus"/>

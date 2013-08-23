@@ -4,7 +4,7 @@ include_once ("../app_init.php");
 
 include_once(OPENBIZ_BIN . "util/xmltoarray.src.php");
 
-$dir = APP_HOME . '/modules';
+$dir = OPENBIZ_APP_PATH . '/modules';
 
 //echo '<pre>';
 //echo $dir . "\n";
@@ -13,8 +13,8 @@ echo "========================================\n";
 echo "========================================\n";
 echo "XML To Php Config (Array) Converter\n";
 echo "========================================\n";
-delArrayConfigFile(APP_HOME, 'application.conf.php');
-delFilesInFolder(APP_HOME . DIRECTORY_SEPARATOR . 'modules');
+delArrayConfigFile(OPENBIZ_APP_PATH, 'application.conf.php');
+delFilesInFolder(OPENBIZ_APP_PATH . DIRECTORY_SEPARATOR . 'modules');
 delFilesInFolder(OPENBIZ_META);
 
 echo "========================================\n";

@@ -58,7 +58,7 @@ class DropDownList extends InputElement
     public function render()
     {
     	if($this->m_FormPrefix){
-    		$formNameStr = str_replace(".","_", $this->getFormObj()->m_Name)."_";
+    		$formNameStr = str_replace(".","_", $this->getFormObj()->objectName)."_";
     	}        
     	if($this->m_Value!=null){
     		$value = $this->m_Value;
@@ -127,17 +127,17 @@ class DropDownList extends InputElement
         $this->setValue($value);
         $display_value = strip_tags($display_value);
 		
-		$elem_id = $formNameStr.$this->m_Name;
-		$elem_scroll_id = $formNameStr.$this->m_Name."_scroll";
-		$elem_list_id = $formNameStr.$this->m_Name."_list";
-		$elem_hidden_id = $formNameStr.$this->m_Name."_hidden";
+		$elem_id = $formNameStr.$this->objectName;
+		$elem_scroll_id = $formNameStr.$this->objectName."_scroll";
+		$elem_list_id = $formNameStr.$this->objectName."_list";
+		$elem_hidden_id = $formNameStr.$this->objectName."_hidden";
         
 		$onchange_func = $this->getOnChangeFunction();
 		$sHTML .= $optionList;
 		$sHTML .= "\n<div $display_span>";
 		// jquery $j('a.maxmin').click(function() {...});
 		// jquery $j('a.maxmin').hover(function() {...}, function() {...});
-		if (defined('JSLIB_BASE') && JSLIB_BASE == 'JQUERY') {
+		if (defined('OPENBIZ_JSLIB_BASE') && OPENBIZ_JSLIB_BASE == 'JQUERY') {
 			$sHTML .= "\n<span ID=\"span_$elem_id\"  $this->m_HTMLAttr $style>$display_value</span>\n";
 		}
 		else {
@@ -149,7 +149,7 @@ class DropDownList extends InputElement
 		}
 		$sHTML .= "</div>";
 		$sHTML .= "<div $display_input>";
-		if (defined('JSLIB_BASE') && JSLIB_BASE == 'JQUERY') {
+		if (defined('OPENBIZ_JSLIB_BASE') && OPENBIZ_JSLIB_BASE == 'JQUERY') {
 			$sHTML .= "<INPUT NAME=\"$elem_id\" ID=\"$elem_id\" VALUE=\"" . $display_value . "\" $disabledStr $this->m_HTMLAttr $style />\n";
 		}
 		else {
@@ -164,7 +164,7 @@ class DropDownList extends InputElement
         	
         $sHTML .= "</div>";
         
-if (defined('JSLIB_BASE') && JSLIB_BASE == 'JQUERY') {
+if (defined('OPENBIZ_JSLIB_BASE') && OPENBIZ_JSLIB_BASE == 'JQUERY') {
 	$sHTML .= "<script>$('#$elem_list_id').hide();
 	$('#span_$elem_id, #$elem_id').click(
 		function() {
@@ -244,7 +244,7 @@ else {
     protected function renderList(){
     	
     	if($this->m_FormPrefix){
-    		$formNameStr = str_replace(".","_", $this->getFormObj()->m_Name)."_";
+    		$formNameStr = str_replace(".","_", $this->getFormObj()->objectName)."_";
     	} 
     	$onchange_func = $this->getOnChangeFunction();
     	$list = $this->getList();
@@ -259,10 +259,10 @@ else {
         }    	
     	
     	$value = $this->m_Value!==null ? $this->m_Value : $this->getText();
-		$elem_id = $formNameStr.$this->m_Name;
-		$elem_scroll_id = $formNameStr.$this->m_Name."_scroll";
-		$elem_list_id = $formNameStr.$this->m_Name."_list";
-		$elem_hidden_id = $formNameStr.$this->m_Name."_hidden";
+		$elem_id = $formNameStr.$this->objectName;
+		$elem_scroll_id = $formNameStr.$this->objectName."_scroll";
+		$elem_list_id = $formNameStr.$this->objectName."_list";
+		$elem_hidden_id = $formNameStr.$this->objectName."_hidden";
     	$sHTML = "\n<div  class=\"dropdownlist\"  id=\"$elem_scroll_id\" style=\"display:none;\">".
     	$sHTML .= "\n<ul style=\"display:none;z-index:50\" id=\"$elem_list_id\">\n";
     	if(!$list){$list=array();}
@@ -300,7 +300,7 @@ else {
     	    	$option_item_style=" onmouseover=\"this.className='hover'\" onmouseout=\"this.className=''\" ";
     	    }
     	    // jquery $j('a.maxmin').click( function () {...} );
-			if (defined('JSLIB_BASE') && JSLIB_BASE == 'JQUERY') {
+			if (defined('OPENBIZ_JSLIB_BASE') && OPENBIZ_JSLIB_BASE == 'JQUERY') {
 				$sHTML .= "<li $option_item_style disp_value='$display_value' real_value='$val'>$li_option_value</li>\n";
 			}
 			else {
@@ -510,7 +510,7 @@ else {
     
     protected function getOnChangeFunction()
     {
-        $name = $this->m_Name;
+        $name = $this->objectName;
         // loop through the event handlers
         $func = "";
 
@@ -519,7 +519,7 @@ else {
         $formobj = $this->getFormObj();
         foreach ($this->m_EventHandlers as $eventHandler)
         {
-            $ehName = $eventHandler->m_Name;
+            $ehName = $eventHandler->objectName;
             $event = $eventHandler->m_Event;
             $type = $eventHandler->m_FunctionType;
             if (!$event) continue;

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<EasyForm Name="AccountDetailForm" Class="EasyForm" FormType="Detail" jsClass="Openbiz.Form" Icon="{RESOURCE_URL}/account/images/icon_mod_account_detail.png" Title="Account Detail" Description="Account Description" BizDataObj="account.do.AccountDO" TemplateEngine="Smarty" TemplateFile="form_detail_adv_custom.tpl.html" MessageFile="Account.ini" Access="account.Access">
+<EasyForm Name="AccountDetailForm" Class="EasyForm" FormType="Detail" jsClass="Openbiz.Form" Icon="{OPENBIZ_RESOURCE_URL}/account/images/icon_mod_account_detail.png" Title="Account Detail" Description="Account Description" BizDataObj="account.do.AccountDO" TemplateEngine="Smarty" TemplateFile="form_detail_adv_custom.tpl.html" MessageFile="Account.ini" Access="account.Access">
   <DataPanel>
     <Element Name="fld_form_title" Class="LabelText" FieldName="name" Label="" Width="500" style="font-size:24px;color:#333333;line-height:24px;" AllowURLParam="N"/>
     <Element Name="fld_color" Class="Hidden" Hidden="Y" FieldName="type_color" Label="Type" Sortable="Y" AllowURLParam="N" Translatable="N" OnEventLog="N"/>
-    <Element Name="fld_form_description" style="color:#666666;text-decoration:none;" Link="{APP_INDEX}/account/account_type_detail/{@:Elem[fld_account_type_id].Value}" BackgroundColor="{@:Elem[fld_color].Value}" Width="648" Class="LabelText" FieldName="type_name" Label="" KeepCookie="Y" SelectFrom="account.do.AccountTypeDO[name:Id:color]" AllowURLParam="N"/>
+    <Element Name="fld_form_description" style="color:#666666;text-decoration:none;" Link="{OPENBIZ_APP_INDEX_URL}/account/account_type_detail/{@:Elem[fld_account_type_id].Value}" BackgroundColor="{@:Elem[fld_color].Value}" Width="648" Class="LabelText" FieldName="type_name" Label="" KeepCookie="Y" SelectFrom="account.do.AccountTypeDO[name:Id:color]" AllowURLParam="N"/>
     <Element Name="fld_Id" Class="LabelText" ElementSet="General" Hidden="Y" FieldName="Id" Label="Id" AllowURLParam="Y"/>
     <Element Name="fld_account_type_id" Class="LabelText" ElementSet="General" Hidden="Y" FieldName="account_type_id" Label="Id" AllowURLParam="N"/>
     <Element Name="fld_type_id" Class="LabelText" ElementSet="General" Hidden="Y" FieldName="type_id" Label="Type" AllowURLParam="N"/>
@@ -66,7 +66,7 @@
       <EventHandler Name="btn_new_onclick" Event="onclick" Function="SwitchForm(account.form.AccountEditForm,{@:Elem[fld_Id].Value})" ShortcutKey="Ctrl+E" ContextMenu="Edit"/>
     </Element>
     <Element Name="btn_delete" Class="Button" Text="Delete" CssClass="button_gray_m" Description="Delete record (Delete)">
-      <EventHandler Name="del_onclick" Event="onclick" EventLogMsg="" Function="DeleteRecord({@:Elem[fld_Id].Value})" RedirectPage="{APP_INDEX}/account/account_manage" ShortcutKey="Ctrl+Delete" ContextMenu="Delete"/>
+      <EventHandler Name="del_onclick" Event="onclick" EventLogMsg="" Function="DeleteRecord({@:Elem[fld_Id].Value})" RedirectPage="{OPENBIZ_APP_INDEX_URL}/account/account_manage" ShortcutKey="Ctrl+Delete" ContextMenu="Delete"/>
     </Element>
     <Element Name="btn_cancel" Class="LabelBack" Text="Back" CssClass="button_gray_m" Link="account/account_manage"/>
   </ActionPanel>

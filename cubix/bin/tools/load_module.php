@@ -17,7 +17,7 @@ if(!defined("CLI")){
 
 //include_once dirname(__FILE__)."/require_auth.php";
 
-include_once (MODULE_PATH."/system/lib/ModuleLoader.php");
+include_once (OPENBIZ_APP_MODULE_PATH."/system/lib/ModuleLoader.php");
 
 $moduleName = $argv[1];
 $opt1 = isset($argv[2]) ? $argv[2] : '';
@@ -29,7 +29,7 @@ if($moduleName!="all" && $moduleName!=""){
 }
 else
 {
-	$_moduleArr = glob(MODULE_PATH."/*");
+	$_moduleArr = glob(OPENBIZ_APP_MODULE_PATH."/*");
     $moduleArr[0] = "system";
     $moduleArr[1] = "menu";
 	foreach ($_moduleArr as $_module)

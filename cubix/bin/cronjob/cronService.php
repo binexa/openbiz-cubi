@@ -130,9 +130,9 @@ class CronService
 		//$time_exec = date("Y-m-d H:i:s",time());
 		$time_exec = time();
 		if ($inc)
-			$sql = "UPDATE ".$this->cronjobDo->m_MainTable." SET last_exec=$time_exec, num_run=num_run+1 WHERE id=$jobId";
+			$sql = "UPDATE ".$this->cronjobDo->mainTableName." SET last_exec=$time_exec, num_run=num_run+1 WHERE id=$jobId";
 		else
-			$sql = "UPDATE ".$this->cronjobDo->m_MainTable." SET num_run=num_run-1 WHERE id=$jobId";
+			$sql = "UPDATE ".$this->cronjobDo->mainTableName." SET num_run=num_run-1 WHERE id=$jobId";
         try
         {
         	$this->log($cronRecord, "Run $sql");
@@ -151,7 +151,7 @@ class CronService
 		if (empty($message))
 			return;
 		// log file
-		$logFile = LOG_PATH."/cron_".$cronRecord['Id'].".log";
+		$logFile = OPENBIZ_LOG_PATH."/cron_".$cronRecord['Id'].".log";
 		$curTime = date("m/d/Y H:i:s");
 		$fp = fopen($logFile, 'a');
 		if (!$fp) 

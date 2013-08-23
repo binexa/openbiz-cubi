@@ -5,7 +5,7 @@
   Copyright (c) 2005-2011, Openbiz Technology LLC
   Version $Id: WebsvcNewForm.xml 3376 2012-05-31 06:23:51Z rockyswen@gmail.com $
 -->
-<EasyForm Name="WebsvcNewForm" Class="WebsvcForm" FormType="New" jsClass="jbForm" Icon="{RESOURCE_URL}/websvc/images/icon_webservices_add.gif" Title="New Web Service Account" Description="This module manages users who have permission to access Webservices"  BizDataObj="websvc.do.WebsvcDO" TemplateEngine="Smarty" TemplateFile="detail.tpl" EventName="" MessageFile="">
+<EasyForm Name="WebsvcNewForm" Class="WebsvcForm" FormType="New" jsClass="jbForm" Icon="{OPENBIZ_RESOURCE_URL}/websvc/images/icon_webservices_add.gif" Title="New Web Service Account" Description="This module manages users who have permission to access Webservices"  BizDataObj="websvc.do.WebsvcDO" TemplateEngine="Smarty" TemplateFile="detail.tpl" EventName="" MessageFile="">
     <DataPanel>
         <Element Name="fld_user_id" Class="Hidden" Enabled="N" FieldName="user_id" Label="user Id"/>
 		<Element Name="fld_username" Class="InputPicker" FieldName="username" Label="Username" Enabled="N" UpdateForm="Y" ValuePicker="system.form.UserPickForm" PickerMap="fld_user_id:fld_Id,fld_username:fld_username"/>

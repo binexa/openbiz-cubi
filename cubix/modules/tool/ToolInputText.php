@@ -31,7 +31,7 @@ class ToolInputText extends InputText
         $disabledStr = ($this->getEnabled() == "N") ? "DISABLED=\"true\"" : "";
         $style = $this->getStyle();
         $func = $this->getFunction();
-        $sHTML = "<INPUT NAME=\"" . $this->m_Name . "\" ID=\"" . $this->m_Name ."\" VALUE=\"" . $val . "\" $disabledStr $this->m_HTMLAttr $style $func>";
+        $sHTML = "<INPUT NAME=\"" . $this->objectName . "\" ID=\"" . $this->objectName ."\" VALUE=\"" . $val . "\" $disabledStr $this->m_HTMLAttr $style $func>";
         
         return $sHTML;
     }

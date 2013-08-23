@@ -5,7 +5,7 @@
   Copyright (c) 2005-2011, Openbiz Technology LLC
   Version $Id: SettingDetailForm.xml 5043 2013-01-04 11:31:38Z hellojixian@gmail.com $
 -->
-<EasyForm Name="SettingDetailForm" Class="SettingForm" FormType="" Icon="{RESOURCE_URL}/repository/images/icon_repo_setting.png" jsClass="jbForm" SearchRule="[user_id]='0'" Title="Repository Setting" Description="You can setup yoru repository setting for publish your apps." BizDataObj="myaccount.do.PreferenceDO" TemplateEngine="Smarty" TemplateFile="detail_elementset.tpl">
+<EasyForm Name="SettingDetailForm" Class="SettingForm" FormType="" Icon="{OPENBIZ_RESOURCE_URL}/repository/images/icon_repo_setting.png" jsClass="jbForm" SearchRule="[user_id]='0'" Title="Repository Setting" Description="You can setup yoru repository setting for publish your apps." BizDataObj="myaccount.do.PreferenceDO" TemplateEngine="Smarty" TemplateFile="detail_elementset.tpl">
     <DataPanel>
         <Element Name="fld_Id" Hidden="Y" Class="Hidden" ElementSet="General" FieldName="Id" Label="User Id"/>
         <Element Name="fld_name"  Class="LabelText" ElementSet="General" FieldName="_repo_name" Label="Name"  CssClass=""/>        

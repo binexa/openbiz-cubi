@@ -42,8 +42,8 @@ class EasyFormWizard extends EasyForm
     public function getSessionVars($sessionContext)
     {
     	parent::getSessionVars($sessionContext);
-        $sessionContext->getObjVar($this->m_Name, "ActiveRecord", $this->m_ActiveRecord, true);
-        $sessionContext->getObjVar($this->m_Name, "FormInputs", $this->m_FormInputs, true);
+        $sessionContext->getObjVar($this->objectName, "ActiveRecord", $this->m_ActiveRecord, true);
+        $sessionContext->getObjVar($this->objectName, "FormInputs", $this->m_FormInputs, true);
         $this->setActiveRecord($this->m_ActiveRecord);
     }
 
@@ -62,11 +62,11 @@ class EasyFormWizard extends EasyForm
     public function setSessionVars($sessionContext)
     {    	
         if ($this->m_DropSession)
-            $sessionContext->cleanObj($this->m_Name, true);
+            $sessionContext->cleanObj($this->objectName, true);
         else {
         	parent::setSessionVars($sessionContext);
-            $sessionContext->setObjVar($this->m_Name, "ActiveRecord", $this->m_ActiveRecord, true);
-            $sessionContext->setObjVar($this->m_Name, "FormInputs", $this->m_FormInputs, true);
+            $sessionContext->setObjVar($this->objectName, "ActiveRecord", $this->m_ActiveRecord, true);
+            $sessionContext->setObjVar($this->objectName, "FormInputs", $this->m_FormInputs, true);
         }
     }
 
@@ -262,7 +262,7 @@ class EasyFormWizard extends EasyForm
     {
         // clean the session record
         $this->m_DropSession = true;
-        BizSystem::sessionContext()->cleanObj($this->m_Name, true);
+        BizSystem::sessionContext()->cleanObj($this->objectName, true);
     }
 
     /**
@@ -273,7 +273,7 @@ class EasyFormWizard extends EasyForm
     public function render()
     {
         $viewobj = $this->getViewObject();
-        $viewobj->setFormState($this->m_Name, 'visited', 1);
+        $viewobj->setFormState($this->objectName, 'visited', 1);
 
         return parent::render();
     }
@@ -285,7 +285,7 @@ class EasyFormWizard extends EasyForm
         $viewobj->m_FormRefs->rewind();
         while($viewobj->m_FormRefs->valid()){
         	$form=$viewobj->m_FormRefs->current();
-        	$forms[$form->m_Name] = $form;
+        	$forms[$form->objectName] = $form;
         	$viewobj->m_FormRefs->next();
         }        
         $output['forms'] = $forms;                

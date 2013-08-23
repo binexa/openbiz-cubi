@@ -19,7 +19,7 @@ $includedScripts .= "
 <script type='text/javascript' src='$js_url/uploadify/swfobject.js'></script>
 <script type='text/javascript' src='$js_url/uploadify/jquery.uploadify.v2.1.4.js'></script>
 ";
-if (JSLIB_BASE!='JQUERY') :
+if (OPENBIZ_JSLIB_BASE!='JQUERY') :
 $includedScripts.="
 <script type='text/javascript' src='$js_url/jquery-ui-1.8.12.custom.min.js'></script>
 <script>try{var \$j=jQuery.noConflict();}catch(e){}</script>
@@ -38,7 +38,7 @@ $appendStyle = BizSystem::clientProxy()->getAppendedStyles();
 $appendStyle .= "
 <link rel=\"stylesheet\" href=\"$css_url/general.css\" type=\"text/css\" />
 <link rel=\"stylesheet\" href=\"$css_url/system_backend.css\" type=\"text/css\" />
-<link rel='stylesheet' href='".RESOURCE_URL."/contact/css/contact.css' type='text/css'>
+<link rel='stylesheet' href='".OPENBIZ_RESOURCE_URL."/contact/css/contact.css' type='text/css'>
 <style>
 .action_panel{
 width:292px;

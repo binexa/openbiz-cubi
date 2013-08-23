@@ -17,7 +17,7 @@ if(!defined("CLI")){
 	exit;
 }
 // check if the /modules/table is already there
-$moduleDir = MODULE_PATH."/".str_replace(".","/",$module);
+$moduleDir = OPENBIZ_APP_MODULE_PATH."/".str_replace(".","/",$module);
 
 echo "Warning: Rename tool will rename all related metadata files, do you want to continue? [y/n] ";
 // Read the input

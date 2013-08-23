@@ -4,11 +4,11 @@ $theme_js_url = $this->_tpl_vars['theme_js_url'];
 $css_url = $this->_tpl_vars['css_url'];
 
 $includedScripts = BizSystem::clientProxy()->getAppendedScripts();
-if (JSLIB_BASE!='JQUERY') {
+if (OPENBIZ_JSLIB_BASE!='JQUERY') {
 	$includedScripts .= "
-	<script src=\"".JS_URL."/jquery.js\"></script>
+	<script src=\"".OPENBIZ_JS_URL."/jquery.js\"></script>
 	<script>try{var \$j=jQuery.noConflict();}catch(e){}</script>
-	<script src=\"".JS_URL."/jquery-ui-1.8.12.custom.min.js\"></script>
+	<script src=\"".OPENBIZ_JS_URL."/jquery-ui-1.8.12.custom.min.js\"></script>
 	";
 }
 $includedScripts .= "

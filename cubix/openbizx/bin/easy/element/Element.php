@@ -67,7 +67,7 @@ class Element extends MetaObject implements iUIControl
     function __construct(&$xmlArr, $formObj)
     {
     	$this->m_XMLMeta = $xmlArr;
-        $this->m_FormName = $formObj->m_Name;
+        $this->m_FormName = $formObj->objectName;
         $this->m_Package = $formObj->m_Package;
 
         $this->readMetaData($xmlArr);
@@ -83,11 +83,11 @@ class Element extends MetaObject implements iUIControl
      */
     protected function readMetaData(&$xmlArr)
     {
-        $this->m_Name = isset($xmlArr["ATTRIBUTES"]["NAME"]) ? $xmlArr["ATTRIBUTES"]["NAME"] : null;
+        $this->objectName = isset($xmlArr["ATTRIBUTES"]["NAME"]) ? $xmlArr["ATTRIBUTES"]["NAME"] : null;
         $this->m_BizDataObj = isset($xmlArr["ATTRIBUTES"]["BIZDATAOBJ"]) ? $xmlArr["ATTRIBUTES"]["BIZDATAOBJ"] : null;
 		$this->m_BackgroundColor = isset($xmlArr["ATTRIBUTES"]["BACKGROUNDCOLOR"]) ? $xmlArr["ATTRIBUTES"]["BACKGROUNDCOLOR"] : null;        
-        $this->m_Class = isset($xmlArr["ATTRIBUTES"]["CLASS"]) ? $xmlArr["ATTRIBUTES"]["CLASS"] : null;
-        $this->m_Description = isset($xmlArr["ATTRIBUTES"]["DESCRIPTION"]) ? $xmlArr["ATTRIBUTES"]["DESCRIPTION"] : null;
+        $this->className = isset($xmlArr["ATTRIBUTES"]["CLASS"]) ? $xmlArr["ATTRIBUTES"]["CLASS"] : null;
+        $this->objectDescription = isset($xmlArr["ATTRIBUTES"]["DESCRIPTION"]) ? $xmlArr["ATTRIBUTES"]["DESCRIPTION"] : null;
         $this->m_Access = isset($xmlArr["ATTRIBUTES"]["ACCESS"]) ? $xmlArr["ATTRIBUTES"]["ACCESS"] : null;
         $this->m_DefaultValue = isset($xmlArr["ATTRIBUTES"]["DEFAULTVALUE"]) ? $xmlArr["ATTRIBUTES"]["DEFAULTVALUE"] : null;
         $this->m_cssClass = isset($xmlArr["ATTRIBUTES"]["CSSCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSCLASS"] : null;
@@ -121,12 +121,12 @@ class Element extends MetaObject implements iUIControl
         if ($this->m_EventHandlers != null)
         {
             foreach ($this->m_EventHandlers as $eventHandler)
-                $eventHandler->setFormName($this->m_FormName, $this->m_Name);
+                $eventHandler->setFormName($this->m_FormName, $this->objectName);
         }
 
         // additional data in HTMLAttr
 		$this->m_HTMLAttr .= ($this->m_DataRole) ? " data-role='".$this->m_DataRole."'" : "";
-        $this->m_HTMLAttr .= " title='".$this->m_Description."'"." clientValidator='".$this->m_ClientValidator."'";
+        $this->m_HTMLAttr .= " title='".$this->objectDescription."'"." clientValidator='".$this->m_ClientValidator."'";
     }
 
     /**
@@ -179,8 +179,8 @@ class Element extends MetaObject implements iUIControl
         $this->m_Value = $value;        
         if($this->m_KeepCookie=='Y'){
         	if($value!=""){
-        		$formName = $this->getFormObj()->m_Name;       
-        		setcookie($formName."-".$this->m_Name,$value,time()+(int)$this->m_CookieLifetime,"/");
+        		$formName = $this->getFormObj()->objectName;       
+        		setcookie($formName."-".$this->objectName,$value,time()+(int)$this->m_CookieLifetime,"/");
         	}
         }
     }
@@ -234,7 +234,7 @@ class Element extends MetaObject implements iUIControl
             return "";
         $formObj = $this->getFormObj();
         if($this->m_KeepCookie=='Y'){
-        	$cookieName = $formObj->m_Name."-".$this->m_Name;      
+        	$cookieName = $formObj->objectName."-".$this->objectName;      
         	$cookieName = str_replace(".","_",$cookieName);
         	$defValue = $_COOKIE[$cookieName];         	       
         }                
@@ -314,7 +314,7 @@ class Element extends MetaObject implements iUIControl
             $style = Expression::evaluateExpression($style, $formobj);
             $style = "STYLE='$style'";
         }
-        if($formobj->m_Errors[$this->m_Name])
+        if($formobj->m_Errors[$this->objectName])
         {
       	    $htmlClass = "CLASS='".$this->m_cssErrorClass."'";
         }
@@ -346,10 +346,10 @@ class Element extends MetaObject implements iUIControl
     
     public function getDescription()
     {
-        if ($this->m_Description == null)
+        if ($this->objectDescription == null)
             return null;
         $formobj = $this->getFormObj();
-        $text =  Expression::evaluateExpression($this->m_Description, $formobj);
+        $text =  Expression::evaluateExpression($this->objectDescription, $formobj);
         $text = str_replace("[b]","<strong>",$text);
         $text = str_replace("[/b]","</strong>",$text);
         return $text;
@@ -430,7 +430,7 @@ class Element extends MetaObject implements iUIControl
     }
     
     public function getEvents(){
-    	$name = $this->m_Name;
+    	$name = $this->objectName;
         // loop through the event handlers
         $func = "";
 
@@ -442,7 +442,7 @@ class Element extends MetaObject implements iUIControl
        
         foreach ($this->m_EventHandlers as $eventHandler)
         {
-            $ehName = $eventHandler->m_Name;
+            $ehName = $eventHandler->objectName;
             $event = $eventHandler->m_Event;
             $type = $eventHandler->m_FunctionType;
             if (!$event) continue;
@@ -577,8 +577,8 @@ class Element extends MetaObject implements iUIControl
     		$this->m_Text = I18n::t($this->m_Text, $this->getTransKey('Text'), $module, $this->getTransPrefix());
     	if (!empty($this->m_Label))
     		$this->m_Label = I18n::t($this->m_Label, $this->getTransKey('Label'), $module, $this->getTransPrefix());
-    	if (!empty($this->m_Description))
-    		$this->m_Description = I18n::t($this->m_Description, $this->getTransKey('Description'), $module, $this->getTransPrefix());
+    	if (!empty($this->objectDescription))
+    		$this->objectDescription = I18n::t($this->objectDescription, $this->getTransKey('Description'), $module, $this->getTransPrefix());
         if (!empty($this->m_DefaultValue) && !preg_match("/\{/si",$this->m_DefaultValue))
     		$this->m_DefaultValue = I18n::t($this->m_DefaultValue, $this->getTransKey('DefaultValue'), $module, $this->getTransPrefix());
 		if (!empty($this->m_ElementSet))
@@ -604,7 +604,7 @@ class Element extends MetaObject implements iUIControl
     protected function getTransKey($name)
     {
     	$shortFormName = substr($this->m_FormName,intval(strrpos($this->m_FormName,'.')+1));
-    	return strtoupper($shortFormName.'_'.$this->m_Name.'_'.$name);
+    	return strtoupper($shortFormName.'_'.$this->objectName.'_'.$name);
     }
     
     protected function translateString($value)
@@ -634,7 +634,7 @@ class Element extends MetaObject implements iUIControl
  */
 class EventHandler
 {
-    public $m_Name;
+    public $objectName;
     public $m_Event;
     public $m_Function;     // support expression
     public $m_FunctionType;
@@ -659,7 +659,7 @@ class EventHandler
      */
     function __construct(&$xmlArr)
     {
-        $this->m_Name = isset($xmlArr["ATTRIBUTES"]["NAME"]) ? $xmlArr["ATTRIBUTES"]["NAME"] : null;
+        $this->objectName = isset($xmlArr["ATTRIBUTES"]["NAME"]) ? $xmlArr["ATTRIBUTES"]["NAME"] : null;
         $this->m_Event = isset($xmlArr["ATTRIBUTES"]["EVENT"]) ? $xmlArr["ATTRIBUTES"]["EVENT"] : null;
         $this->m_Function = isset($xmlArr["ATTRIBUTES"]["FUNCTION"]) ? $xmlArr["ATTRIBUTES"]["FUNCTION"] : null;
         $this->m_OrigFunction = $this->m_Function;
@@ -731,7 +731,7 @@ class EventHandler
     {
         //return $this->getInvokeAction();
         $name = $this->_elemName;
-        $ehName = $this->m_Name;
+        $ehName = $this->objectName;
         $formobj = BizSystem::objectFactory()->getObject($this->_formName);
         if ($this->m_FormedFunction)
         {
@@ -769,7 +769,7 @@ class EventHandler
         if ($this->m_FormedFunction)
             return $this->m_FormedFunction;
     	$name = $this->_elemName;
-        $ehName = $this->m_Name;
+        $ehName = $this->objectName;
         $formobj = BizSystem::objectFactory()->getObject($this->_formName);
      
         if (!$this->m_FormedFunction)
@@ -819,7 +819,7 @@ class EventHandler
     protected function getTransKey($name)
     {
     	$shortFormName = substr($this->m_FormName,intval(strrpos($this->m_FormName,'.'))+1);
-    	return strtoupper($shortFormName.'_'.$this->m_Name.'_'.$name);
+    	return strtoupper($shortFormName.'_'.$this->objectName.'_'.$name);
     }
     
 }

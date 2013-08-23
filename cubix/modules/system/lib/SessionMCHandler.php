@@ -22,7 +22,7 @@ class SessionMCHandler {
 
     function __construct()
     {
-        $this->lifeTime = TIMEOUT;
+        $this->lifeTime = OPENBIZ_TIMEOUT;
         $arr = explode(":",SESSION_MEMCACHE);
         $this->memcacheHost = $arr[0];
         $this->memcachePort = $arr[1];

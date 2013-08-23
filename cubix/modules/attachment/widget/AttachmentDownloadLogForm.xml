@@ -5,11 +5,11 @@
   Copyright (c) 2005-2011, Openbiz Technology LLC
   Version $Id: AttachmentDownloadLogForm.xml 3350 2012-05-31 05:29:38Z rockyswen@gmail.com $
 -->
-<EasyForm Name="AttachmentDownloadLogForm" Class="AttachmentForm" Icon="{RESOURCE_URL}/attachment/images/icon_attachment.png" Title="Attachment Download Log" Description="You can view current attachment downlaod logs." FormType="List" jsClass="jbForm" BizDataObj="attachment.do.AttachmentDownloadLogDO"   PageSize="5" DefaultForm="Y" TemplateEngine="Smarty" TemplateFile="form_attachment_download_log.tpl.html"  Access="attachment.access">
+<EasyForm Name="AttachmentDownloadLogForm" Class="AttachmentForm" Icon="{OPENBIZ_RESOURCE_URL}/attachment/images/icon_attachment.png" Title="Attachment Download Log" Description="You can view current attachment downlaod logs." FormType="List" jsClass="jbForm" BizDataObj="attachment.do.AttachmentDownloadLogDO"   PageSize="5" DefaultForm="Y" TemplateEngine="Smarty" TemplateFile="form_attachment_download_log.tpl.html"  Access="attachment.access">
     <DataPanel>
         <Element Name="fld_Id" Class="Hidden" Hidden="Y" FieldName="attachment_id" Label="Id" Sortable="Y" AllowURLParam="Y" Link="javascript:" />
         <Element Name="fld_icon" Class="ColumnImage" 
-				Text="{RESOURCE_URL}/contact/images/icon_contact.gif"
+				Text="{OPENBIZ_RESOURCE_URL}/contact/images/icon_contact.gif"
 				FieldName="" Label="Type"  Sortable="N" AllowURLParam="N" Translatable="N" OnEventLog="N" Link="javascript:;">							
 		</Element>        
         <Element Name="fld_user_id" Class="ColumnText" FieldName="user_id" Text="{BizSystem::GetProfileName(@:Elem[fld_user_id].Value)}"  Label="Name" Sortable="Y" AllowURLParam="N" Translatable="N" OnEventLog="N" ></Element>		

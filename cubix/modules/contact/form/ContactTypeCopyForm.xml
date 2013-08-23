@@ -5,7 +5,7 @@
   Copyright (c) 2005-2011, Openbiz Technology LLC
   Version $Id: ContactTypeCopyForm.xml 4978 2012-12-29 09:21:35Z hellojixian@gmail.com $
 -->
-<EasyForm Name="ContactTypeCopyForm" Class="ContactTypeForm" Icon="{RESOURCE_URL}/contact/images/icon_contact_type.png"  FormType="Copy" jsClass="jbForm" Title="Copy Contact Type" Description="Copy contact type from an existing item." BizDataObj="contact.do.ContactTypeDO" PageSize="10" DefaultForm="Y" TemplateEngine="Smarty" TemplateFile="detail.tpl" EventName="CONTACT" MessageFile="Contact.msg"  Access="contact.access">
+<EasyForm Name="ContactTypeCopyForm" Class="ContactTypeForm" Icon="{OPENBIZ_RESOURCE_URL}/contact/images/icon_contact_type.png"  FormType="Copy" jsClass="jbForm" Title="Copy Contact Type" Description="Copy contact type from an existing item." BizDataObj="contact.do.ContactTypeDO" PageSize="10" DefaultForm="Y" TemplateEngine="Smarty" TemplateFile="detail.tpl" EventName="CONTACT" MessageFile="Contact.msg"  Access="contact.access">
     <DataPanel>        
         <Element Name="fld_Id" Class="Hidden" FieldName="Id" Label="Id" AllowURLParam="Y"/>	
 	    <Element Name="fld_name" Class="InputText" FieldName="name" Label="Name"   />	

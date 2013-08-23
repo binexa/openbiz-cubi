@@ -30,7 +30,7 @@ class InputForm extends BaseForm
         $recArr = array();
         foreach ($this->m_DataPanel as $element)
         {
-            $value = BizSystem::clientProxy()->getFormInputs($element->m_Name);
+            $value = BizSystem::clientProxy()->getFormInputs($element->objectName);
             if ($value ===null && (
             	   !is_a($element,"FileUploader")
             	&& !is_subclass_of($element,"FileUploader")
@@ -40,7 +40,7 @@ class InputForm extends BaseForm
             	continue;
             }
             $element->setValue($value);
-            $this->m_FormInputs[$element->m_Name] = $value;
+            $this->m_FormInputs[$element->objectName] = $value;
             $value = $element->getValue();
             if ( $element->m_FieldName)
                 $recArr[$element->m_FieldName] = $value;
@@ -59,16 +59,16 @@ class InputForm extends BaseForm
         $inputArr = array();
         foreach ($this->m_DataPanel as $element)
         {
-            $value = BizSystem::clientProxy()->getFormInputs($element->m_Name);
+            $value = BizSystem::clientProxy()->getFormInputs($element->objectName);
             $element->setValue($value);
-            $inputArr[$element->m_Name] = $value;
+            $inputArr[$element->objectName] = $value;
         }
 
         foreach ($this->m_SearchPanel as $element)
         {
-            $value = BizSystem::clientProxy()->getFormInputs($element->m_Name);
+            $value = BizSystem::clientProxy()->getFormInputs($element->objectName);
             $element->setValue($value);
-            $inputArr[$element->m_Name] = $value;
+            $inputArr[$element->objectName] = $value;
         }
         return $inputArr;
     }
@@ -103,7 +103,7 @@ class InputForm extends BaseForm
                     ($element->m_Value==null || $element->m_Value == ""))
             {
                 $errorMessage = $this->getMessage("FORM_ELEMENT_REQUIRED",array($elementName));
-                $this->m_ValidateErrors[$element->m_Name] = $errorMessage;
+                $this->m_ValidateErrors[$element->objectName] = $errorMessage;
                 //return false;
             }
             elseif ($element->m_Value!==null && $element->Validate() == false)
@@ -114,7 +114,7 @@ class InputForm extends BaseForm
                 { //Couldn't get a clear error message so let's try this
                     $errorMessage = $validateService->getErrorMessage($element->m_Validator, $elementName);
                 }
-                $this->m_ValidateErrors[$element->m_Name] = $errorMessage;
+                $this->m_ValidateErrors[$element->objectName] = $errorMessage;
                 //return false;
             }
             $this->m_DataPanel->next() ;

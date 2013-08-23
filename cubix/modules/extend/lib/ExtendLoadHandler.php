@@ -11,7 +11,7 @@
  * @version   $Id: ExtendLoadHandler.php 3360 2012-05-31 06:00:17Z rockyswen@gmail.com $
  */
 
-include_once (MODULE_PATH."/system/lib/ModuleLoadHandler.php");
+include_once (OPENBIZ_APP_MODULE_PATH."/system/lib/ModuleLoadHandler.php");
 
 class ExtendLoadHandler implements ModuleLoadHandler
 {

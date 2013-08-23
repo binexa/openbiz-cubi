@@ -20,8 +20,8 @@ class MetaObjExport
     {
         if ($this->m_Doc) 
             return $this->m_Doc;
-        $this->m_XmlFile = MODULE_PATH."/".str_replace(".","/",$this->m_Object->m_Name).".xml";
-		$this->m_RelXmlFile = "cubi/modules/".str_replace(".","/",$this->m_Object->m_Name).".xml";
+        $this->m_XmlFile = OPENBIZ_APP_MODULE_PATH."/".str_replace(".","/",$this->m_Object->objectName).".xml";
+		$this->m_RelXmlFile = "cubi/modules/".str_replace(".","/",$this->m_Object->objectName).".xml";
 
         //if (!file_exists($this->m_XmlFile)) 
         //   return null;
@@ -119,7 +119,7 @@ class MetaObjExport
 		$doc = $this->GetDocDocument();
 		$docElem = $this->FormObj2XMLElement($this->m_Object);
 		$doc->appendChild($docElem);
-		//$xmlStr = str_replace(array('#object_type#','#object_name#','#object_file#'),array($this->m_ObjType,$this->m_Object->m_Name,$this->m_RelXmlFile),$this->comments);
+		//$xmlStr = str_replace(array('#object_type#','#object_name#','#object_file#'),array($this->m_ObjType,$this->m_Object->objectName,$this->m_RelXmlFile),$this->comments);
 		$xmlStr = xmlpp($doc->saveXML());
 		return $xmlStr;
 	}
@@ -219,7 +219,7 @@ class MetaObjExport
 		$doc = $this->GetDocDocument();
 		$docElem = $this->ViewObj2XMLElement($this->m_Object);
 		$doc->appendChild($docElem);
-		//$xmlStr = str_replace(array('#object_type#','#object_name#','#object_file#'),array($this->m_ObjType,$this->m_Object->m_Name,$this->m_RelXmlFile),$this->comments);
+		//$xmlStr = str_replace(array('#object_type#','#object_name#','#object_file#'),array($this->m_ObjType,$this->m_Object->objectName,$this->m_RelXmlFile),$this->comments);
 		$xmlStr = xmlpp($doc->saveXML());
 		return $xmlStr;
 	}

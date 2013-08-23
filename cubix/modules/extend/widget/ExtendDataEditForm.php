@@ -23,7 +23,7 @@ class ExtendDataEditForm extends EasyForm
 	{
 		$prtRec = BizSystem::getObject($this->m_ParentFormName)->getActiveRecord();		
 		$record_id = (int)$prtRec['Id'];		
-		$do = BizSystem::getObject($this->getDataObj()->m_Name,1);
+		$do = BizSystem::getObject($this->getDataObj()->objectName,1);
 		$searchRule = $this->getSettingSearchRule();
 		$do->clearSearchRule();
 		if(!$searchRule){
@@ -57,7 +57,7 @@ class ExtendDataEditForm extends EasyForm
 		}
 		
 		$prtFormObj = BizSystem::getObject($this->m_ParentFormName);
-		$elem_name = $prtFormObj->m_DataPanel->getByField($column_name)->m_Name;		
+		$elem_name = $prtFormObj->m_DataPanel->getByField($column_name)->objectName;		
 		$type_id = BizSystem::ClientProxy()->getFormInputs($elem_name);
 		if (!$type_id && $elem_name) {
 			$type_id = $prtFormObj->getElement($elem_name)->getValue();
@@ -196,7 +196,7 @@ class ExtendDataEditForm extends EasyForm
 		$column_name	= $do->m_Association['Column'];
 		$column_value	= $do->m_Association['FieldRefVal']; 
 				
-		$elem_name = BizSystem::getObject($this->m_ParentFormName)->m_DataPanel->getByField($column_name)->m_Name;
+		$elem_name = BizSystem::getObject($this->m_ParentFormName)->m_DataPanel->getByField($column_name)->objectName;
 		if($elem_name){
 			$column_value = BizSystem::ClientProxy()->getFormInputs($elem_name);
 		}
@@ -206,7 +206,7 @@ class ExtendDataEditForm extends EasyForm
 		$recArr[$column_name] = $column_value;
 		$recArr['record_id'] = $record_id;				
 		
-		$oldRec = BizSystem::getObject($do->m_Name,1)->fetchOne($this->m_SearchRule." AND [record_id]='$record_id'" );
+		$oldRec = BizSystem::getObject($do->objectName,1)->fetchOne($this->m_SearchRule." AND [record_id]='$record_id'" );
 		if($oldRec){
 			$oldRec = $oldRec->toArray();						
 			$recArr['Id'] = $oldRec['Id'];

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<EasyForm Name="AccountEditForm" Class="changelog.form.ChangeLogForm" FormType="Edit" jsClass="Openbiz.Form" Icon="{RESOURCE_URL}/account/images/icon_mod_account_edit.png" Title="Edit Account" Description="Account Description" BizDataObj="account.do.AccountDO" TemplateEngine="Smarty" TemplateFile="form_edit.tpl.html" MessageFile="Account.ini" Access="account.Manage">
+<EasyForm Name="AccountEditForm" Class="changelog.form.ChangeLogForm" FormType="Edit" jsClass="Openbiz.Form" Icon="{OPENBIZ_RESOURCE_URL}/account/images/icon_mod_account_edit.png" Title="Edit Account" Description="Account Description" BizDataObj="account.do.AccountDO" TemplateEngine="Smarty" TemplateFile="form_edit.tpl.html" MessageFile="Account.ini" Access="account.Manage">
   <DataPanel>
     <Element Name="fld_type_id" ElementSet="General" Class="common.lib.TypeSelector" FieldName="type_id" Label="Type" KeepCookie="Y" SelectFrom="account.do.AccountTypeDO[name:Id:color]" AllowURLParam="N">
       <EventHandler Name="fld_type_id_onchange" Event="onchange" Function="UpdateForm()"/>
@@ -17,7 +17,7 @@
   </DataPanel>
   <ActionPanel>
     <Element Name="btn_save" Class="Button" Text="Save" CssClass="button_gray_m">
-      <EventHandler Name="save_onclick" EventLogMsg="" Event="onclick" Function="UpdateRecord()" RedirectPage="{APP_INDEX}/account/account_detail/{@account.do.AccountDO:Field[Id].Value}" ShortcutKey="Ctrl+Enter" ContextMenu="Save"/>
+      <EventHandler Name="save_onclick" EventLogMsg="" Event="onclick" Function="UpdateRecord()" RedirectPage="{OPENBIZ_APP_INDEX_URL}/account/account_detail/{@account.do.AccountDO:Field[Id].Value}" ShortcutKey="Ctrl+Enter" ContextMenu="Save"/>
     </Element>
     <Element Name="btn_cancel" Class="Button" Text="Cancel" CssClass="button_gray_m">
       <EventHandler Name="cancel_onclick" Event="onclick" Function="SwitchForm()" ShortcutKey="Escape" ContextMenu="Cancel"/>

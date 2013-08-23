@@ -16,7 +16,7 @@ class ShareDataFilter extends DropDownList
 {
 	public function getSearchRule()
 	{
-		$value = BizSystem::clientProxy()->getFormInputs($this->m_Name);
+		$value = BizSystem::clientProxy()->getFormInputs($this->objectName);
 		$searchRule = "";
 		$my_user_id = BizSystem::getUserProfile("Id");
 		$user_groups = BizSystem::GetUserProfile('groups');

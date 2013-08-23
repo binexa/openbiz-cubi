@@ -49,9 +49,9 @@ class HTMLTabs extends MetaObject implements iUIControl
      */
     protected function readMetadata(&$xmlArr)
     {
-        $this->m_Name = $xmlArr["TABS"]["ATTRIBUTES"]["NAME"];
+        $this->objectName = $xmlArr["TABS"]["ATTRIBUTES"]["NAME"];
         $this->m_Package = $xmlArr["TABS"]["ATTRIBUTES"]["PACKAGE"];
-        $this->m_Class = $xmlArr["TABS"]["ATTRIBUTES"]["CLASS"];
+        $this->className = $xmlArr["TABS"]["ATTRIBUTES"]["CLASS"];
         $this->m_TemplateFile = $xmlArr["TABS"]["ATTRIBUTES"]["TEMPLATEFILE"];
         $this->m_TabViews = new MetaIterator($xmlArr["TABS"]["TABVIEWS"]["VIEW"],"TabView");
         $this->m_ActiveCssClassName = "'{$xmlArr["TABS"]["ATTRIBUTES"]["ACTIVECSSCLASSNAME"]}'";
@@ -99,7 +99,7 @@ class HTMLTabs extends MetaObject implements iUIControl
     {
         if($tabView->hasForms())
         {
-            $url = "javascript:ChangeTab(this, {$tabView->m_Name}_config)";
+            $url = "javascript:ChangeTab(this, {$tabView->objectName}_config)";
         }
         else if($tabView->m_URL)
         {
@@ -137,7 +137,7 @@ class HTMLTabs extends MetaObject implements iUIControl
         $currentTab = false; //this variable save 'true' if is the current tab and 'false' in otherwise --jmmz
         if ($this->m_CurrentTab)
         {
-            $currentTab = ($this->m_CurrentTab == $tabView->m_Name || $this->m_CurrentTab == $tabView->m_Tab)
+            $currentTab = ($this->m_CurrentTab == $tabView->objectName || $this->m_CurrentTab == $tabView->m_Tab)
                     ? TRUE
                     : FALSE;
         }
@@ -149,7 +149,7 @@ class HTMLTabs extends MetaObject implements iUIControl
         }
         else
         {
-            $currentTab = ($curViewName == $tabView->m_View || $curViewObj->m_Tab == $tabView->m_Name) ? true : false;
+            $currentTab = ($curViewName == $tabView->m_View || $curViewObj->m_Tab == $tabView->objectName) ? true : false;
         }
 
         return $currentTab;
@@ -167,11 +167,11 @@ class HTMLTabs extends MetaObject implements iUIControl
     {
         $sessionContext = BizSystem::sessionContext();
 
-        if (!$sessionContext->varExists('CURRENT_TAB_'.$this->m_Name))
+        if (!$sessionContext->varExists('CURRENT_TAB_'.$this->objectName))
         {
             if ($this->isCurrentTab($tview,$curViewObj, $curViewName))
             {
-                $sessionContext->setVar('CURRENT_TAB_'.$this->m_Name,$tview->m_Name);
+                $sessionContext->setVar('CURRENT_TAB_'.$this->objectName,$tview->objectName);
             }
             else
             {
@@ -180,7 +180,7 @@ class HTMLTabs extends MetaObject implements iUIControl
         }
         else
         {
-            $this->setCurrentTab($sessionContext->getVar('CURRENT_TAB_'.$this->m_Name));
+            $this->setCurrentTab($sessionContext->getVar('CURRENT_TAB_'.$this->objectName));
         }
     }
 
@@ -213,7 +213,7 @@ class HTMLTabs extends MetaObject implements iUIControl
             if ($svcobj->allowViewAccess($tview->m_View, $role))
             {
 
-                $tabs[$i]['name']=$tview->m_Name; //Name of each tab--jmmz
+                $tabs[$i]['name']=$tview->objectName; //Name of each tab--jmmz
                 $tabs[$i]['forms']=$this->_renderJSCodeForForms($tview->m_Forms);//Configuration of the forms to hide or show--jmmz
                 $tabs[$i]['caption'] = $tview->m_Caption;
 
@@ -236,7 +236,7 @@ class HTMLTabs extends MetaObject implements iUIControl
         }
         $this->setClientScripts($tabs, $hasForms);
         $smarty->assign("tabs", $tabs);
-        $smarty->assign("tabs_Name",$this->m_Name);
+        $smarty->assign("tabs_Name",$this->objectName);
 
         return $smarty->fetch(BizSystem::getTplFileWithPath($this->m_TemplateFile, $this->m_Package));
     }
@@ -272,10 +272,10 @@ class HTMLTabs extends MetaObject implements iUIControl
             {
                 $tab_script .=   'var '.$tab['name'].'_config = '.$tab['forms'].';'.PHP_EOL;
             }
-            $tab_script .=   'var '.$this->m_Name.'_active = '.$this->m_ActiveCssClassName.';'.PHP_EOL;
-            $tab_script .=   'var '.$this->m_Name.'_inactive = '.$this->m_InactiveCssClassName.';'.PHP_EOL;
+            $tab_script .=   'var '.$this->objectName.'_active = '.$this->m_ActiveCssClassName.';'.PHP_EOL;
+            $tab_script .=   'var '.$this->objectName.'_inactive = '.$this->m_InactiveCssClassName.';'.PHP_EOL;
             $tab_script .= '</script>';
-            BizSystem::clientProxy()->appendScripts("tab_forms_$this->m_Name", $tab_script, FALSE);
+            BizSystem::clientProxy()->appendScripts("tab_forms_$this->objectName", $tab_script, FALSE);
         }
     }
 
@@ -292,7 +292,7 @@ class HTMLTabs extends MetaObject implements iUIControl
  */
 class TabView
 {
-    public $m_Name;
+    public $objectName;
     public $m_View;
     public $m_ViewSet;
     public $m_Caption;
@@ -332,7 +332,7 @@ class TabView
      */
     function __construct(&$xmlArr)
     {
-        $this->m_Name = $xmlArr["ATTRIBUTES"]["NAME"];
+        $this->objectName = $xmlArr["ATTRIBUTES"]["NAME"];
         $this->m_View = $xmlArr["ATTRIBUTES"]["VIEW"];
         if(array_key_exists("VIEWSET", $xmlArr["ATTRIBUTES"]))
             $this->m_ViewSet = $xmlArr["ATTRIBUTES"]["VIEWSET"];
@@ -364,13 +364,13 @@ class TabView
 
     protected function translate($caption)
     {
-    	$module = $this->getModuleName($this->m_Name);
+    	$module = $this->getModuleName($this->objectName);
    		return I18n::t($caption, $this->getTransKey(caption), $module);
     }
     
     protected function getTransKey($name)
     {
-    	$shortFormName = substr($this->m_Name,intval(strrpos($this->m_Name,'.'))+1);
+    	$shortFormName = substr($this->objectName,intval(strrpos($this->objectName,'.'))+1);
     	return strtoupper($shortFormName.'_'.$name);
     }
 }

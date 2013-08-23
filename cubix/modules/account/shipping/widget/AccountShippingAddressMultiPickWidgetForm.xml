@@ -8,7 +8,7 @@
 <EasyForm Name="AccountShippingAddressMultiPickWidgetForm" 
 			Class="PickerForm"			  
 			FormType="List" 
-			Icon="{RESOURCE_URL}/account/images/icon_mod_account_shipping_address_list.png"
+			Icon="{OPENBIZ_RESOURCE_URL}/account/images/icon_mod_account_shipping_address_list.png"
 			Title="Please select a Account Shipping Address" 
 			Description="To select a account shipping address click on a row and click to Select button" 
 			jsClass="Openbiz.TableForm" 
@@ -41,7 +41,7 @@
         			Label="Name" 
         			MaxLength="15"        			 
         			Sortable="Y"
-        			Link="{APP_INDEX}/account/account_shipping_address_detail/{@:Elem[fld_Id].Value}"        			
+        			Link="{OPENBIZ_APP_INDEX_URL}/account/account_shipping_address_detail/{@:Elem[fld_Id].Value}"        			
         			
         			 />        			
         	

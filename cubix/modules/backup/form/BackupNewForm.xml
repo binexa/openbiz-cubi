@@ -5,7 +5,7 @@
   Copyright (c) 2005-2011, Openbiz Technology LLC
   Version $Id: BackupNewForm.xml 3351 2012-05-31 05:33:35Z rockyswen@gmail.com $
 -->
-<EasyForm Name="BackupNewForm" Class="BackupForm" Icon="{RESOURCE_URL}/backup/images/icon_backup_add.gif" FormType="New" jsClass="jbForm" Title="New Backup" Description="Database backup management could help you backup or restore your system database with simply one click. \n It could prevent your data lost by any mistake." BizDataObj="" TemplateEngine="Smarty" TemplateFile="detail.tpl" EventName="" MessageFile="" Access="backup.Access_Backup">
+<EasyForm Name="BackupNewForm" Class="BackupForm" Icon="{OPENBIZ_RESOURCE_URL}/backup/images/icon_backup_add.gif" FormType="New" jsClass="jbForm" Title="New Backup" Description="Database backup management could help you backup or restore your system database with simply one click. \n It could prevent your data lost by any mistake." BizDataObj="" TemplateEngine="Smarty" TemplateFile="detail.tpl" EventName="" MessageFile="" Access="backup.Access_Backup">
     <DataPanel>                        
 		<Element Name="fld_location"  Class="LabelText" FieldName="" Label="Location" Text="{@:m_LocationName}" AllowURLParam="N"/>
 		<Element Name="fld_name" DefaultValue="New Backup" Class="InputText" FieldName="filename" Label="Filename" AllowURLParam="N" CssClass="input_text" CssErrorClass="input_text_error" CssFocusClass="input_text_focus"/>

@@ -45,7 +45,7 @@ class CubiEventManager implements iEventManager
 			// look up the event_observer table
 			$evtobsDOName = "eventmgr.do.EventObserverDO";
 			$evtobsDo = Bizsystem::getObject($evtobsDOName);
-			$event_target = $target->m_Name;
+			$event_target = $target->objectName;
 			$event_name = $event_key;
 			$rs = $evtobsDo->directFetch("[event_target]='$event_target' AND [event_name]='$event_name'");
 			$observers = array();

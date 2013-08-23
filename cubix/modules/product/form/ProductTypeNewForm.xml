@@ -9,7 +9,7 @@
 			Class="EasyForm"			  
 			FormType="New" 
 			jsClass="Openbiz.Form" 
-			Icon="{RESOURCE_URL}/product/images/icon_mod_product_type_add.png"
+			Icon="{OPENBIZ_RESOURCE_URL}/product/images/icon_mod_product_type_add.png"
 			Title="New Product Type" 
 			Description="Please fill in below field to create a new product type."
 			BizDataObj="product.do.ProductTypeDO" 

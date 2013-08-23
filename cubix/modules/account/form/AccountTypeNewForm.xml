@@ -3,7 +3,7 @@
 			Class="EasyForm"			  
 			FormType="New" 
 			jsClass="Openbiz.Form" 
-			Icon="{RESOURCE_URL}/account/images/icon_mod_account_type_add.png"
+			Icon="{OPENBIZ_RESOURCE_URL}/account/images/icon_mod_account_type_add.png"
 			Title="New CRM Account Type" 
 			Description="Please fill in below field to create a new data type."
 			BizDataObj="account.do.AccountTypeDO" 

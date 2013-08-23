@@ -9,7 +9,7 @@
 			Class="EasyForm"			  
 			FormType="List" 
 			jsClass="Openbiz.TableForm" 
-			Icon="{RESOURCE_URL}/account/images/icon_mod_account_billing_address_list.png"
+			Icon="{OPENBIZ_RESOURCE_URL}/account/images/icon_mod_account_billing_address_list.png"
 			Title="Account Billing Address Management" 
 			Description="Account Billing Address" 
 			BizDataObj="account.billing.do.AccountBillingDO" 
@@ -42,7 +42,7 @@
         			Label="Name" 
         			MaxLength="15"        			 
         			Sortable="Y"
-        			Link="{APP_INDEX}/account/account_billing_address_detail/{@:Elem[fld_Id].Value}"
+        			Link="{OPENBIZ_APP_INDEX_URL}/account/account_billing_address_detail/{@:Elem[fld_Id].Value}"
         			
         			 />    
         	

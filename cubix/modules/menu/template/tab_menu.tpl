@@ -1,4 +1,4 @@
-<ul>	
+<ul>
 	{foreach item=item from=$widget.menu}
 		{assign var='current' value='0'}
 		{foreach item=bc from=$widget.breadcrumb}
@@ -7,9 +7,9 @@
 			{/if}
 	    {/foreach}
 	    {if $current==1}
-	    	<li><a class="current"  href="{$item->m_URL}" >{$item->m_Name}</a></li>
+	    	<li><a class="current"  href="{$item->m_URL}" >{$item->objectName}</a></li>
 	    {else}
-	    	<li><a href="{$item->m_URL}" >{$item->m_Name}</a></li>
+	    	<li><a href="{$item->m_URL}" >{$item->objectName}</a></li>
 	    {/if}
 	{/foreach}
 </ul>

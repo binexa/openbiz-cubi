@@ -11,7 +11,7 @@
  * @version   $Id: DataPublishingForm.php 3355 2012-05-31 05:43:33Z rockyswen@gmail.com $
  */
 
-include_once (MODULE_PATH.'/common/form/DataSharingForm.php');
+include_once (OPENBIZ_APP_MODULE_PATH.'/common/form/DataSharingForm.php');
 class DataPublishingForm extends  DataSharingForm
 {
 	public function ShareRecord()
@@ -29,11 +29,11 @@ class DataPublishingForm extends  DataSharingForm
 		//test if changed a new owner
 		if($recArr['notify_user'] && $recArr['group_perm']){
 			$data = $this->fetchData();			
-			$data['app_index'] = APP_INDEX;
-			$data['app_url'] = APP_URL;
+			$data['app_index'] = OPENBIZ_APP_INDEX_URL;
+			$data['app_url'] = OPENBIZ_APP_URL;
 			$data['operator_name'] = BizSystem::GetProfileName(BizSystem::getUserProfile("Id"));
 			
-			$emailSvc = BizSystem::getService(USER_EMAIL_SERVICE);
+			$emailSvc = BizSystem::getService(CUBI_USER_EMAIL_SERVICE);
 			
 			//test if changes for group level visiable
 			if($recArr['group_perm']>=1)
@@ -88,7 +88,7 @@ class DataPublishingForm extends  DataSharingForm
 		
 		
 		if($recArr['update_ref_data']){
-			if($dataObj->m_ObjReferences->count()){
+			if($dataObj->objReferences->count()){
 				$this->_casacadeUpdate($dataObj, $recArr);
 			}			
 		}

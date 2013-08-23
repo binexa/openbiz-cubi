@@ -32,7 +32,7 @@ if($argv[2]){
 if(defined("CLI")){
 	echo "Loading ETL core classes: \n";
 } 
-$lib_path = MODULE_PATH.DIRECTORY_SEPARATOR."report".DIRECTORY_SEPARATOR."etl".DIRECTORY_SEPARATOR."lib";
+$lib_path = OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR."report".DIRECTORY_SEPARATOR."etl".DIRECTORY_SEPARATOR."lib";
 foreach(glob($lib_path.DIRECTORY_SEPARATOR."*.php") as $filename){
 	include_once($filename);
 	if(defined("CLI")){
@@ -46,7 +46,7 @@ foreach(glob($lib_path.DIRECTORY_SEPARATOR."*.php") as $filename){
 if(defined("CLI")){
 	echo "\nLoading user defined functions: \n";
 } 
-$lib_path = MODULE_PATH.DIRECTORY_SEPARATOR."report".DIRECTORY_SEPARATOR."etl".DIRECTORY_SEPARATOR."func";
+$lib_path = OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR."report".DIRECTORY_SEPARATOR."etl".DIRECTORY_SEPARATOR."func";
 foreach(glob($lib_path.DIRECTORY_SEPARATOR."*.php") as $filename){
 	include_once($filename);
 	if(defined("CLI")){
@@ -60,7 +60,7 @@ foreach(glob($lib_path.DIRECTORY_SEPARATOR."*.php") as $filename){
 if(defined("CLI")){
 	echo "\nLoading ETL config file $config_file : \n";
 } 
-$conf_path = MODULE_PATH.DIRECTORY_SEPARATOR."report".DIRECTORY_SEPARATOR."etl".DIRECTORY_SEPARATOR."conf";
+$conf_path = OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR."report".DIRECTORY_SEPARATOR."etl".DIRECTORY_SEPARATOR."conf";
 $conf_file = $conf_path.DIRECTORY_SEPARATOR.$config_file;
 
 if(!is_file($conf_file)){

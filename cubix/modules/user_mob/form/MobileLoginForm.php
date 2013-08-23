@@ -19,7 +19,7 @@
  * @copyright Copyright (c) 2005-2009
  * @access public
  */
-include_once (MODULE_PATH."/user/form/LoginForm.php");
+include_once (OPENBIZ_APP_MODULE_PATH."/user/form/LoginForm.php");
  
 class MobileLoginForm extends LoginForm
 {
@@ -31,7 +31,7 @@ class MobileLoginForm extends LoginForm
      */
     public function Login()
     {
-	  	$this->MOBILE_STARTPAGE = APP_INDEX.$this->MOBILE_STARTPAGE;
+	  	$this->MOBILE_STARTPAGE = OPENBIZ_APP_INDEX_URL.$this->MOBILE_STARTPAGE;
 		$recArr = $this->readInputRecord();	  	
 	  	try
         {
@@ -56,7 +56,7 @@ class MobileLoginForm extends LoginForm
 		}
 		
 		global $g_BizSystem;		
-		$eventlog 	= BizSystem::getService(EVENTLOG_SERVICE);
+		$eventlog 	= BizSystem::getService(OPENBIZ_EVENTLOG_SERVICE);
 		try {
     		if ($this->authUser()) 
     		{
@@ -75,7 +75,7 @@ class MobileLoginForm extends LoginForm
        			$currentLanguage = BizSystem::ClientProxy()->getFormInputs("current_language");
    				if($currentLanguage!=''){
    				   	if($currentLanguage=='user_default'){
-		   				$currentTheme = DEFAULT_LANGUAGE;
+		   				$currentTheme = OPENBIZ_DEFAULT_LANGUAGE;
 		   			}else{
        					BizSystem::sessionContext()->setVar("LANG",$currentLanguage );
 		   			}
@@ -84,13 +84,13 @@ class MobileLoginForm extends LoginForm
 				$currentTheme = BizSystem::ClientProxy()->getFormInputs("current_theme");
 				if($currentTheme!=''){
 					if($currentTheme=='user_default'){
-		   				$currentTheme = DEFAULT_THEME_NAME;
+		   				$currentTheme = CUBI_DEFAULT_THEME_NAME;
 		   			}else{
    						BizSystem::sessionContext()->setVar("THEME",$currentTheme );
 		   			}
 				}
     	   	   		
-    	   	    $redirectPage = APP_INDEX.$profile['roleStartpage'][0];
+    	   	    $redirectPage = OPENBIZ_APP_INDEX_URL.$profile['roleStartpage'][0];
     	   	   	if(!$profile['roleStartpage'][0])
     	   	   	{
     	   	   		$errorMessage['password'] = $this->getMessage("PERM_INCORRECT");

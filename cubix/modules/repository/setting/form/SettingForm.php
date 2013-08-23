@@ -134,7 +134,7 @@ class SettingForm extends EasyForm
             		"name"	  => $name,
             		"value"   => $value,
 	            	"section" => $element->m_ElementSetCode,
-	            	"type" 	  => $element->m_Class,	            
+	            	"type" 	  => $element->className,	            
 	            );
 	            //check if its exsit
 	            $record = $prefDo->fetchOne("[user_id]='$user_id' and [name]='$name'");

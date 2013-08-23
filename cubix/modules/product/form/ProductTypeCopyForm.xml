@@ -9,7 +9,7 @@
 			Class="EasyForm"			  
 			FormType="Copy" 
 			jsClass="Openbiz.Form" 
-			Icon="{RESOURCE_URL}/product/images/icon_mod_product_type_copy.png"
+			Icon="{OPENBIZ_RESOURCE_URL}/product/images/icon_mod_product_type_copy.png"
 			Title="Copy Product Type" 
 			Description="Copy product type from an existing item."
 			BizDataObj="product.do.ProductTypeDO" 

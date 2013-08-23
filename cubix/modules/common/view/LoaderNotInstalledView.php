@@ -8,7 +8,7 @@ class LoaderNotInstalledView extends EasyView
 			$result = parent::render();
 			return $result;
 		}else{
-			header("Location: ".APP_INDEX);
+			header("Location: ".OPENBIZ_APP_INDEX_URL);
 			exit;
 		}
 	}

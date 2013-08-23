@@ -23,7 +23,7 @@ class BackupService
         if(!$this->m_LocationId){
         	$this->getLocationInfo(1);
         }
-		$this->m_Folder = APP_FILE_PATH.DIRECTORY_SEPARATOR."backup";		
+		$this->m_Folder = OPENBIZ_APP_FILE_PATH.DIRECTORY_SEPARATOR."backup";		
 	}
 
     public function getLocationInfo($id)
@@ -104,9 +104,9 @@ class BackupService
 	private function _dumpUserFiles($filename,$db_backup){
 		$filename.=".tar.gz";
         $filename = $this->m_Folder.DIRECTORY_SEPARATOR.$filename;
-        $db_tmpfile = APP_HOME.DIRECTORY_SEPARATOR."database.sql";   
+        $db_tmpfile = OPENBIZ_APP_PATH.DIRECTORY_SEPARATOR."database.sql";   
         copy($db_backup,$db_tmpfile);
-		$cmd = "tar czf $filename -C '".APP_HOME."' --exclude '.svn' --exclude 'files/cache' --exclude 'files/backup' ./files ./database.sql";
+		$cmd = "tar czf $filename -C '".OPENBIZ_APP_PATH."' --exclude '.svn' --exclude 'files/cache' --exclude 'files/backup' ./files ./database.sql";
 		@exec($cmd,$output);
 		@unlink($db_tmpfile);
 		@unlink($db_backup);
@@ -117,9 +117,9 @@ class BackupService
 	private function _dumpAllFiles($filename,$db_backup){
 		$filename.=".tar.gz";
         $filename = $this->m_Folder.DIRECTORY_SEPARATOR.$filename;
-        $db_tmpfile = APP_HOME.DIRECTORY_SEPARATOR."database.sql";        
+        $db_tmpfile = OPENBIZ_APP_PATH.DIRECTORY_SEPARATOR."database.sql";        
         copy($db_backup,$db_tmpfile);
-		$cmd = "tar czf $filename -C '".APP_HOME."' --exclude '.svn' --exclude './log' --exclude './session' --exclude 'template/cpl' --exclude 'files/cache' --exclude 'files/backup' ./";
+		$cmd = "tar czf $filename -C '".OPENBIZ_APP_PATH."' --exclude '.svn' --exclude './log' --exclude './session' --exclude 'template/cpl' --exclude 'files/cache' --exclude 'files/backup' ./";
 		@exec($cmd,$output);
 		@unlink($db_tmpfile);
 		@unlink($db_backup);

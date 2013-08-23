@@ -4,16 +4,16 @@ include_once dirname(dirname(__FILE__)).'/app_init.php';
 
 if($argv[1]){
 	$modulename= $argv[1];
-	$dir_iterator = new RecursiveDirectoryIterator(MODULE_PATH.'/'.$modulename);
+	$dir_iterator = new RecursiveDirectoryIterator(OPENBIZ_APP_MODULE_PATH.'/'.$modulename);
 }else{
-	$dir_iterator = new RecursiveDirectoryIterator(MODULE_PATH);
+	$dir_iterator = new RecursiveDirectoryIterator(OPENBIZ_APP_MODULE_PATH);
 }
 
 $iterator = new RecursiveIteratorIterator($dir_iterator, RecursiveIteratorIterator::SELF_FIRST);
 
 foreach ($iterator as $file) {
     if(preg_match("/.*?List.*?\.xml$/si",$file)){		    	
-    	echo "Testing file: " .str_replace(MODULE_PATH."/","",$file)." ";
+    	echo "Testing file: " .str_replace(OPENBIZ_APP_MODULE_PATH."/","",$file)." ";
     	if(test_xml_file($file)){    		
     		echo " [ Found ]"."\n";
     		echo str_repeat("-",70)."\n";

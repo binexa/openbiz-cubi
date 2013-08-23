@@ -30,9 +30,9 @@ class MenuRecord
  	public $m_Id;
  	public $m_PId; 
  	public $m_Key;  
-    public $m_Name;
+    public $objectName;
     public $m_Module;
-    public $m_Description;
+    public $objectDescription;
     public $m_URL;
     public $m_URL_Match;
 	public $m_Target;
@@ -53,17 +53,17 @@ class MenuRecord
     {
         $this->m_Id = $rec['Id'];
         $this->m_PId = $rec['PId'];
-        $this->m_Name = $rec['title'];
+        $this->objectName = $rec['title'];
         $this->m_Module = $rec['module'];
-        $this->m_Description = $rec['description'];
+        $this->objectDescription = $rec['description'];
         $this->m_URL = $rec['link'];
         if (strpos($this->m_URL,'{')===0)
         	$this->m_URL = Expression::evaluateExpression($this->m_URL, $this);
         else if (!empty($this->m_URL)) {
         	if (strpos($this->m_URL,'/')===0)
-        		$this->m_URL = APP_INDEX.$this->m_URL;
+        		$this->m_URL = OPENBIZ_APP_INDEX_URL.$this->m_URL;
         	else
-        		$this->m_URL = APP_INDEX.'/'.$this->m_URL;
+        		$this->m_URL = OPENBIZ_APP_INDEX_URL.'/'.$this->m_URL;
         }
         $this->m_URL_Match = $rec['alias'];
         //$this->m_CssClass = $rec['Id'];
@@ -80,16 +80,16 @@ class MenuRecord
         if (!$access) $access = $this->m_Access;
         if ($access)
         	return BizSystem::allowUserAccess($access);
-        return ALLOW;
+        return OPENBIZ_ALLOW;
     }
     
     protected function translate()
     {
     	$module = $this->m_Module;
-    	if (!empty($this->m_Name))
-    		$this->m_Name = I18n::t($this->m_Name, $this->getTransKey('Title'), $module);
-    	if (!empty($this->m_Description))
-    		$this->m_Description = I18n::t($this->m_Description, $this->getTransKey('Description'), $module);
+    	if (!empty($this->objectName))
+    		$this->objectName = I18n::t($this->objectName, $this->getTransKey('Title'), $module);
+    	if (!empty($this->objectDescription))
+    		$this->objectDescription = I18n::t($this->objectDescription, $this->getTransKey('Description'), $module);
     }
 
     protected function getTransKey($name)

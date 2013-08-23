@@ -38,13 +38,13 @@ class SwitchUserWidget extends EasyForm
 	
 	public function processUserInit()
 	{
-		$prefService = BizSystem::getService(PREFERENCE_SERVICE);
+		$prefService = BizSystem::getService(OPENBIZ_PREFERENCE_SERVICE);
 		$userId = BizSystem::getUserProfile("Id");
-		$currentView = $this->getViewObject()->m_Name;
+		$currentView = $this->getViewObject()->objectName;
 		if($currentView!= 'myaccount.view.ResetPasswordView' && !isset($_GET['force']) && (int)$prefService->getPreference("force_change_passwd")==1)
 		{
 			
-				BizSystem::clientProxy()->redirectPage(APP_INDEX.'/myaccount/reset_password/force');
+				BizSystem::clientProxy()->redirectPage(OPENBIZ_APP_INDEX_URL.'/myaccount/reset_password/force');
 				return true;
 			
 		}
@@ -52,7 +52,7 @@ class SwitchUserWidget extends EasyForm
 		if($currentView!= 'myaccount.view.MyProfileView' && !isset($_GET['force']) && (int)$prefService->getPreference("force_complete_profile")==1)
 		{			
 			{				
-				BizSystem::clientProxy()->redirectPage(APP_INDEX.'/myaccount/my_profile/force');
+				BizSystem::clientProxy()->redirectPage(OPENBIZ_APP_INDEX_URL.'/myaccount/my_profile/force');
 				return true;
 			}
 		}

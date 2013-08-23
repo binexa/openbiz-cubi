@@ -20,8 +20,8 @@ class OauthConnectUserFinishedForm extends EasyForm
 		}
 		else
 		{
-			//$this->m_BackURL = APP_INDEX.'/myaccount/my_social_account';
-			$this->m_BackURL = APP_INDEX;
+			//$this->m_BackURL = OPENBIZ_APP_INDEX_URL.'/myaccount/my_social_account';
+			$this->m_BackURL = OPENBIZ_APP_INDEX_URL;
 		}
 		return $record;
 	}

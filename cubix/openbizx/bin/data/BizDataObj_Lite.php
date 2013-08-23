@@ -70,13 +70,13 @@ class BizDataObj_Lite extends BizDataObj_Abstract
      */
     public function getSessionVars($sessionContext)
     {
-        if ($this->m_Stateless == "Y")
+        if ($this->stateless == "Y")
             return;
-        $sessionContext->getObjVar($this->m_Name, "RecordId", $this->m_RecordId);
-        $sessionContext->getObjVar($this->m_Name, "SearchRule", $this->m_SearchRule);
-        $sessionContext->getObjVar($this->m_Name, "SortRule", $this->m_SortRule);
-        $sessionContext->getObjVar($this->m_Name, "OtherSqlRule", $this->m_OtherSQLRule);
-        $sessionContext->getObjVar($this->m_Name, "Association", $this->m_Association);
+        $sessionContext->getObjVar($this->objectName, "RecordId", $this->m_RecordId);
+        $sessionContext->getObjVar($this->objectName, "SearchRule", $this->m_SearchRule);
+        $sessionContext->getObjVar($this->objectName, "SortRule", $this->m_SortRule);
+        $sessionContext->getObjVar($this->objectName, "OtherSqlRule", $this->m_OtherSQLRule);
+        $sessionContext->getObjVar($this->objectName, "Association", $this->m_Association);
     }
 
     /**
@@ -87,14 +87,14 @@ class BizDataObj_Lite extends BizDataObj_Abstract
      */
     public function setSessionVars($sessionContext)
     {
-        if ($this->m_Stateless == "Y")
+        if ($this->stateless == "Y")
             return;
-        $sessionContext->setObjVar($this->m_Name, "RecordId", $this->m_RecordId);
-        $sessionContext->setObjVar($this->m_Name, "SearchRule", $this->m_SearchRule);
-        $sessionContext->setObjVar($this->m_Name, "SortRule", $this->m_SortRule);
-        $sessionContext->setObjVar($this->m_Name, "OtherSqlRule", $this->m_OtherSQLRule);
+        $sessionContext->setObjVar($this->objectName, "RecordId", $this->m_RecordId);
+        $sessionContext->setObjVar($this->objectName, "SearchRule", $this->m_SearchRule);
+        $sessionContext->setObjVar($this->objectName, "SortRule", $this->m_SortRule);
+        $sessionContext->setObjVar($this->objectName, "OtherSqlRule", $this->m_OtherSQLRule);
         if(is_array($this->m_Association)){
-        	$sessionContext->setObjVar($this->m_Name, "Association", $this->m_Association);
+        	$sessionContext->setObjVar($this->objectName, "Association", $this->m_Association);
         }
     }
 
@@ -126,7 +126,7 @@ class BizDataObj_Lite extends BizDataObj_Abstract
      */
     public function getField($fieldName)
     {
-        return $this->m_BizRecord->get($fieldName);
+        return $this->bizRecord->get($fieldName);
     }
 
     /**
@@ -161,7 +161,7 @@ class BizDataObj_Lite extends BizDataObj_Abstract
             $propType = substr($propertyName, 0, $pos1);
             $fieldName = substr($propertyName, $pos1+1,$pos2-$pos1-1);
             /*if ($propType == "param") {   // get parameter
-                return $this->m_Parameters->get($ctrlname);
+                return $this->parameters->get($ctrlname);
             }*/
             return $this->getField($fieldName);
         }
@@ -177,7 +177,7 @@ class BizDataObj_Lite extends BizDataObj_Abstract
     {
         // Todo_Maynotuse: since column and join column can have the same name
         // TODO: ??? get field name but return BizField object ???
-        return $this->m_BizRecord->getFieldByColumn($column); // main table column
+        return $this->bizRecord->getFieldByColumn($column); // main table column
     }
 
     /**
@@ -471,10 +471,10 @@ class BizDataObj_Lite extends BizDataObj_Abstract
         {
             if($this->m_CacheLifeTime>0)
             {
-                $cache_id = md5($this->m_Name . $sql . serialize($bindValues));
+                $cache_id = md5($this->objectName . $sql . serialize($bindValues));
                 //try to process cache service.
                 $cacheSvc = BizSystem::getService(CACHE_SERVICE,1);
-                $cacheSvc->init($this->m_Name,$this->m_CacheLifeTime);
+                $cacheSvc->init($this->objectName,$this->m_CacheLifeTime);
                 if($cacheSvc->test($cache_id))
                 {
                     //BizSystem::log(LOG_DEBUG, "DATAOBJ", "Cache Hit. Query Sql = ".$sql);
@@ -539,10 +539,10 @@ class BizDataObj_Lite extends BizDataObj_Abstract
         {
             if($this->m_CacheLifeTime>0)
             {
-                $cache_id = md5($this->m_Name . $rewritesql . serialize($bindValues));
+                $cache_id = md5($this->objectName . $rewritesql . serialize($bindValues));
                 //try to process cache service.
                 $cacheSvc = BizSystem::getService(CACHE_SERVICE);
-                $cacheSvc->init($this->m_Name,$this->m_CacheLifeTime);
+                $cacheSvc->init($this->objectName,$this->m_CacheLifeTime);
                 if($cacheSvc->test($cache_id))
                 {
                     //BizSystem::log(LOG_DEBUG, "DATAOBJ", ". Query Sql = ".$rewritesql);
@@ -592,8 +592,8 @@ class BizDataObj_Lite extends BizDataObj_Abstract
     	}
         if ($sqlArr = current($resultSet))
         {
-            $this->m_CurrentRecord = $this->m_BizRecord->convertSqlArrToRecArr($sqlArr);
-            $this->m_CurrentRecord = $this->m_BizRecord->getRecordArr($sqlArr);
+            $this->m_CurrentRecord = $this->bizRecord->convertSqlArrToRecArr($sqlArr);
+            $this->m_CurrentRecord = $this->bizRecord->getRecordArr($sqlArr);
             $this->m_RecordId = $this->m_CurrentRecord["Id"];
             next($resultSet);
         }

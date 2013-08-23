@@ -63,7 +63,7 @@ class CacheForm extends EasyFormGrouping
 
    public function outputAttrs(){
    		$result = parent::outputAttrs();
-   		$file = MODULE_PATH.DIRECTORY_SEPARATOR."service".DIRECTORY_SEPARATOR."cacheService.xml";
+   		$file = OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR."service".DIRECTORY_SEPARATOR."cacheService.xml";
 		if(!is_file($file)){
 			return;
 		}
@@ -81,7 +81,7 @@ class CacheForm extends EasyFormGrouping
    }	
 	
    public function switchMode(){	   	   	 
-   		$file = MODULE_PATH.DIRECTORY_SEPARATOR."service".DIRECTORY_SEPARATOR."cacheService.xml";
+   		$file = OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR."service".DIRECTORY_SEPARATOR."cacheService.xml";
 		if(!is_file($file)){
 			return;
 		}
@@ -120,8 +120,8 @@ class CacheForm extends EasyFormGrouping
     	//Application data
     	$appdata = array();
     	$i=0;
-    	if(is_array(glob(CACHE_DATA_PATH.DIRECTORY_SEPARATOR."*",GLOB_ONLYDIR))){
-	    	foreach ( glob(CACHE_DATA_PATH.DIRECTORY_SEPARATOR."*",GLOB_ONLYDIR) as $dir){
+    	if(is_array(glob(CUBI_CACHE_DATA_PATH.DIRECTORY_SEPARATOR."*",GLOB_ONLYDIR))){
+	    	foreach ( glob(CUBI_CACHE_DATA_PATH.DIRECTORY_SEPARATOR."*",GLOB_ONLYDIR) as $dir){
 	    		$appdata[$i]['Id'] = "APPDATA_".$i;
 	    		$appdata[$i]['name'] = ucwords(basename($dir));
 	    		if(!$lite){
@@ -146,10 +146,10 @@ class CacheForm extends EasyFormGrouping
     	$metadata[0]["name"] = "Metadata";
     	if(!$lite)
     	{
-	    	$metadata[0]["space"] = $this->GetSpaceUsage(CACHE_METADATA_PATH);
-	    	$metadata[0]["items"] = $this->GetChildItems(CACHE_METADATA_PATH);
+	    	$metadata[0]["space"] = $this->GetSpaceUsage(OPENBIZ_CACHE_METADATA_PATH);
+	    	$metadata[0]["items"] = $this->GetChildItems(OPENBIZ_CACHE_METADATA_PATH);
     	}
-    	$metadata[0]['path'] = CACHE_METADATA_PATH;
+    	$metadata[0]['path'] = OPENBIZ_CACHE_METADATA_PATH;
     	if(!$lite)
     	{
     		$results["System Metadata"]= $this->m_DataPanel->renderTable($metadata);
@@ -162,7 +162,7 @@ class CacheForm extends EasyFormGrouping
     	$tempdata = array();
     	
     	$i=0;
-    	foreach ( glob(SMARTY_CPL_PATH.DIRECTORY_SEPARATOR."*",GLOB_ONLYDIR) as $dir){
+    	foreach ( glob(OPENBIZ_SMARTY_CPL_PATH.DIRECTORY_SEPARATOR."*",GLOB_ONLYDIR) as $dir){
     		$tempdata[$i]['Id'] = "TEMPDATA_".$i;
     		$tempdata[$i]['name'] = ucwords(basename($dir));
     		 	

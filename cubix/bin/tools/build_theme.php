@@ -23,7 +23,7 @@ execPhing("theme_build.xml", "\"-DbuildName=$themeName\" \"-DbuildNumber=$buildN
 
 function execPhing($buildFile, $options)
 {
-    $phingHome = APP_HOME.DIRECTORY_SEPARATOR."bin".DIRECTORY_SEPARATOR."phing";
+    $phingHome = OPENBIZ_APP_PATH.DIRECTORY_SEPARATOR."bin".DIRECTORY_SEPARATOR."phing";
     putenv("PHING_HOME=$phingHome");
     $phpClasses = $phingHome.DIRECTORY_SEPARATOR."classes";
     putenv("PHP_CLASSPATH=$phpClasses");
@@ -31,14 +31,14 @@ function execPhing($buildFile, $options)
     //putenv("PATH=$phingBin");
     $cmd = $phingBin.DIRECTORY_SEPARATOR."phing"." -buildfile $buildFile $options";
     echo "Executing $cmd\n";
-    chdir(APP_HOME.DIRECTORY_SEPARATOR."build");
+    chdir(OPENBIZ_APP_PATH.DIRECTORY_SEPARATOR."build");
     system($cmd);
 }
 
 function getModuleVersion($moduleName)
 {
     // read mod.xml, get its version as its release name
-    $modfile = THEME_PATH."/".$moduleName."/theme.xml";
+    $modfile = OPENBIZ_THEME_PATH."/".$moduleName."/theme.xml";
         
     $xml = simplexml_load_file($modfile);
     $modVersion = $xml['Version'];

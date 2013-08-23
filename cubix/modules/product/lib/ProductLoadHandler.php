@@ -5,7 +5,7 @@
  * Copyright (c) 2005-2011, Openbiz Technology LLC
  * Version $Id: ProductLoadHandler.php 3480 2012-06-17 02:51:42Z hellojixian@gmail.com $
  */
-include_once (MODULE_PATH."/system/lib/ModuleLoadHandler.php");
+include_once (OPENBIZ_APP_MODULE_PATH."/system/lib/ModuleLoadHandler.php");
 
 class ProductLoadHandler implements ModuleLoadHandler
 {

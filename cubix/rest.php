@@ -19,7 +19,7 @@
 */
 
 include_once 'bin/app_init.php';
-include_once OPENBIZ_HOME."/bin/ErrorHandler.php";
+include_once OPENBIZ_PATH."/bin/ErrorHandler.php";
 
 require 'bin/Slim/Slim.php';
 \Slim\Slim::registerAutoloader();

@@ -5,7 +5,7 @@
   Copyright (c) 2005-2011, Openbiz Technology LLC
   Version $Id: ReleaseInstallLogForm.xml 3369 2012-05-31 06:13:56Z rockyswen@gmail.com $
 -->
-<EasyForm Name="ReleaseInstallLogForm" Class="ReleaseForm" Icon="{RESOURCE_URL}/repository/images/repo_application.gif" Title="Release Install Log" Description="You can view current release downlaod logs." FormType="List" jsClass="jbForm" BizDataObj="repository.install.do.InstallLogDO"   PageSize="5" DefaultForm="Y" TemplateEngine="Smarty" TemplateFile="form_release_install_log.tpl.html"  Access="Repository.Manage">
+<EasyForm Name="ReleaseInstallLogForm" Class="ReleaseForm" Icon="{OPENBIZ_RESOURCE_URL}/repository/images/repo_application.gif" Title="Release Install Log" Description="You can view current release downlaod logs." FormType="List" jsClass="jbForm" BizDataObj="repository.install.do.InstallLogDO"   PageSize="5" DefaultForm="Y" TemplateEngine="Smarty" TemplateFile="form_release_install_log.tpl.html"  Access="Repository.Manage">
     <DataPanel>
         <Element Name="fld_Id" Class="Hidden" Hidden="Y" FieldName="release_id" Label="Id" Sortable="Y" AllowURLParam="Y" Link="javascript:" />              
         <Element Name="app_id" Class="Hidden" Hidden="Y" FieldName="app_id" Label="APPID" Sortable="Y" AllowURLParam="Y" Link="javascript:" />

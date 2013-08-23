@@ -11,7 +11,7 @@
  * @version   $Id: dataPermService.php 3371 2012-05-31 06:17:21Z rockyswen@gmail.com $
  */
 
-if(!defined('GROUP_DATA_SHARE')){ define('GROUP_DATA_SHARE','0'); }
+if(!defined('CUBI_GROUP_DATA_SHARE')){ define('CUBI_GROUP_DATA_SHARE','0'); }
 
 class dataPermService
 {
@@ -62,7 +62,7 @@ class dataPermService
 		{
 			return true;
 		}else{
-			if(GROUP_DATA_SHARE==0)
+			if(CUBI_GROUP_DATA_SHARE==0)
 			{
 				return false;
 			}
@@ -89,9 +89,9 @@ class dataPermService
 		
 		//merge acl user list into this list
 		$aclDO = BizSystem::getObject("common.do.DataACLDO");
-		if($aclDO && $dataObj  && DATA_ACL){
-			$acl_table = $aclDO->m_MainTable;
-			$record_table = $dataObj->m_MainTable;
+		if($aclDO && $dataObj  && CUBI_DATA_ACL){
+			$acl_table = $aclDO->mainTableName;
+			$record_table = $dataObj->mainTableName;
 			$record_id = $rec['Id'];
 			$permCode = (int)$permCode;
 			$searchRule = "
@@ -124,7 +124,7 @@ class dataPermService
 			$sql_where = " ( [create_by]='$user_id' ";
 		}
 		
-		if(GROUP_DATA_SHARE==0)
+		if(CUBI_GROUP_DATA_SHARE==0)
 		{
 			return $sql_where." ) ";
 		}
@@ -155,17 +155,17 @@ class dataPermService
 
 		
 		$aclDO = BizSystem::getObject("common.do.DataACLDO");
-		if($aclDO && DATA_ACL){			
-			$acl_table = $aclDO->m_MainTable;
+		if($aclDO && CUBI_DATA_ACL){			
+			$acl_table = $aclDO->mainTableName;
 			if($type=='select' || $alias==true)
 			{
 				$record_table = "T0";
 			}
 			else
 			{
-				$record_table = $dataObj->m_MainTable;	
+				$record_table = $dataObj->mainTableName;	
 			}
-			$record_main_table =$dataObj->m_MainTable;	
+			$record_main_table =$dataObj->mainTableName;	
 			$record_id_field = $dataObj->getField("Id")->m_Column;
 			$sql_where .=" OR (
 								SELECT COUNT(*) FROM `$acl_table` WHERE 							 
@@ -227,9 +227,9 @@ class dataPermService
 		
 		//merge acl user list into this list
 		$aclDO = BizSystem::getObject("common.do.DataACLDO");
-		if($aclDO && $dataObj  && DATA_ACL){
-			$acl_table = $aclDO->m_MainTable;
-			$record_table = $dataObj->m_MainTable;
+		if($aclDO && $dataObj  && CUBI_DATA_ACL){
+			$acl_table = $aclDO->mainTableName;
+			$record_table = $dataObj->mainTableName;
 			$record_id = $recId;
 			$searchRule = "
 				[record_table]='$record_table' AND
@@ -296,9 +296,9 @@ class dataPermService
 		
 		//merge acl user list into this list
 		$aclDO = BizSystem::getObject("common.do.DataACLDO");
-		if($aclDO && $dataObj  && DATA_ACL){
-			$acl_table = $aclDO->m_MainTable;
-			$record_table = $dataObj->m_MainTable;
+		if($aclDO && $dataObj  && CUBI_DATA_ACL){
+			$acl_table = $aclDO->mainTableName;
+			$record_table = $dataObj->mainTableName;
 			$record_id = $recId;
 			$searchRule = "
 				[record_table]='$record_table' AND

@@ -48,16 +48,16 @@ class SessionContext
     function __construct()
     {        
         // get session save handler MC or DB
-        if (defined("SESSION_HANDLER") && SESSION_HANDLER != "" && defined('USE_CUSTOM_SESSION_HANDLER') && USE_CUSTOM_SESSION_HANDLER ==true) {
-            include_once SESSION_HANDLER.".php";
+        if (defined("OPENBIZ_SESSION_HANDLER") && OPENBIZ_SESSION_HANDLER != "" && defined('OPENBIZ_USE_CUSTOM_SESSION_HANDLER') && OPENBIZ_USE_CUSTOM_SESSION_HANDLER ==true) {
+            include_once OPENBIZ_SESSION_HANDLER.".php";
         }
         else {
-        	if(!file_exists(SESSION_PATH)){        		
-        		@mkdir(SESSION_PATH,0777,true);
+        	if(!file_exists(OPENBIZ_SESSION_PATH)){        		
+        		@mkdir(OPENBIZ_SESSION_PATH,0777,true);
         	}
             // default is file session
-            if (defined('SESSION_PATH') && is_writable(SESSION_PATH))
-                session_save_path(SESSION_PATH);
+            if (defined('OPENBIZ_SESSION_PATH') && is_writable(OPENBIZ_SESSION_PATH))
+                session_save_path(OPENBIZ_SESSION_PATH);
             // we cannot write in the session save path; aborting
             if(!is_writable(session_save_path())) 
                 trigger_error("Unable to write in the session save path [".session_save_path()."]", E_USER_ERROR);
@@ -65,8 +65,8 @@ class SessionContext
         
         ini_set('session.gc_probability', 1);   // force gc 
         ini_set('session.gc_divisor', 100);
-        if (defined('TIMEOUT') && TIMEOUT > 0)
-            ini_set("session.gc_maxlifetime", TIMEOUT);
+        if (defined('OPENBIZ_TIMEOUT') && OPENBIZ_TIMEOUT > 0)
+            ini_set("session.gc_maxlifetime", OPENBIZ_TIMEOUT);
         else
             ini_set("session.gc_maxlifetime", 21600); // 6 hours
         
@@ -88,7 +88,7 @@ class SessionContext
 
         // see if timeout
         $this->_timeOut = false;
-        if ((TIMEOUT > 0) && (($curTime - $this->_lastAccessTime) > TIMEOUT))
+        if ((OPENBIZ_TIMEOUT > 0) && (($curTime - $this->_lastAccessTime) > OPENBIZ_TIMEOUT))
             $this->_timeOut = true;
     }
 
@@ -248,9 +248,9 @@ class SessionContext
                 $obj->setSessionVars($this);
             }
             // if previous view's object is used in current view, don't discard its session data
-            if (isset($obj->m_Name) && key_exists($obj->m_Name, $this->_prevViewObjNames)) {
-                unset($this->_prevViewObjNames[$obj->m_Name]);
-                BizSystem::log(LOG_ERR, "SESSION", "unset ".$obj->m_Name);
+            if (isset($obj->objectName) && key_exists($obj->objectName, $this->_prevViewObjNames)) {
+                unset($this->_prevViewObjNames[$obj->objectName]);
+                BizSystem::log(LOG_ERR, "SESSION", "unset ".$obj->objectName);
             }
         }
 

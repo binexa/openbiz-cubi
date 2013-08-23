@@ -119,7 +119,7 @@ class NotificationService extends MetaObject
 			$msg['type']='new_app_update';
 			$msg['subject']="Found $update_count Applications Updated !";
 			$msg['message']='Please notice your system administrator to update installed applications by using Openbiz Market.';
-			$msg['goto_url']=APP_INDEX.'/market/app_updates';
+			$msg['goto_url']=OPENBIZ_APP_INDEX_URL.'/market/app_updates';
 			$msg['read_access']="";			
 			$msg['update_access']="Market.Manage";			
 			return array($msg);
@@ -151,7 +151,7 @@ class NotificationService extends MetaObject
 				$msg['type']='new_app_release';
 				$msg['subject']="Found $update_count New Applications Released !";
 				$msg['message']='Please notice your system administrator to install applications by using Openbiz Market.';
-				$msg['goto_url']=APP_INDEX.'/market/applications/repo_'.$repo_id;
+				$msg['goto_url']=OPENBIZ_APP_INDEX_URL.'/market/applications/repo_'.$repo_id;
 				$msg['read_access']="";
 				$msg['update_access']="Market.Manage";			
 				$msgList[] = $msg;

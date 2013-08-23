@@ -19,9 +19,9 @@ class EventLogger
 		$triggerEvent = $event->getName();
 		$params = $event->getParams();
 		// get eventlog service
-		$eventLog = BizSystem::getService(EVENTLOG_SERVICE);
+		$eventLog = BizSystem::getService(OPENBIZ_EVENTLOG_SERVICE);
 		// log message
-		$eventLog->Log($triggerEvent,"triggered by ".$triggerObj->m_Name);
+		$eventLog->Log($triggerEvent,"triggered by ".$triggerObj->objectName);
 	}
 }
 

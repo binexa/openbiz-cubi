@@ -5,10 +5,10 @@
   Copyright (c) 2005-2011, Openbiz Technology LLC
   Version $Id: DefaultLocationEditForm.xml 3362 2012-05-31 06:03:29Z rockyswen@gmail.com $
 -->
-<EasyForm Name="DefaultLocationEditForm" Class="PreferenceForm" Icon="{RESOURCE_URL}/location/images/icon_location.png" FormType="Detail" jsClass="jbForm" Title="System Default Location" Description="You can change and review default system location. This feature will be used in collaboration event and announcement. If there is no related location information, the default location will be used." BizDataObj="location.do.LocationPickDO" PageSize="10" DefaultForm="Y" TemplateEngine="Smarty" TemplateFile="default_location_edit.tpl.html"  Access="location.setting">
+<EasyForm Name="DefaultLocationEditForm" Class="PreferenceForm" Icon="{OPENBIZ_RESOURCE_URL}/location/images/icon_location.png" FormType="Detail" jsClass="jbForm" Title="System Default Location" Description="You can change and review default system location. This feature will be used in collaboration event and announcement. If there is no related location information, the default location will be used." BizDataObj="location.do.LocationPickDO" PageSize="10" DefaultForm="Y" TemplateEngine="Smarty" TemplateFile="default_location_edit.tpl.html"  Access="location.setting">
     <DataPanel>        
-    	<Element Name="fld_longtitude" DefaultValue="{DEFAULT_LONGTITUDE}"  Class="InputText" FieldName="_longtitude" Label="Longtitude"   />
-		<Element Name="fld_latitude" DefaultValue="{DEFAULT_LATITUDE}" Class="InputText" FieldName="_latitude" Label="Latitude"   />
+    	<Element Name="fld_longtitude" DefaultValue="{CUBI_DEFAULT_LONGTITUDE}"  Class="InputText" FieldName="_longtitude" Label="Longtitude"   />
+		<Element Name="fld_latitude" DefaultValue="{CUBI_DEFAULT_LATITUDE}" Class="InputText" FieldName="_latitude" Label="Latitude"   />
     </DataPanel>
     <ActionPanel>
 	 

@@ -83,7 +83,7 @@ class Dictionary
 	
 	protected function getDictFile()
 	{
-		$dictionaryPath = LANGUAGE_PATH.DIRECTORY_SEPARATOR.'dictionary';
+		$dictionaryPath = OPENBIZ_LANGUAGE_PATH.DIRECTORY_SEPARATOR.'dictionary';
 		$dictFile = $dictionaryPath.DIRECTORY_SEPARATOR.$this->from.'2'.$this->to.'.php';
 		return $dictFile;
 	}

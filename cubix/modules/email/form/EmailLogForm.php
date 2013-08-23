@@ -67,7 +67,7 @@ class EmailLogForm extends EasyForm
 	public function ExportCSV()
 	{
 		$excelSvc = BizSystem::getService(EXCEL_SERVICE);	
-		$excelSvc->renderCSV($this->m_Name);
+		$excelSvc->renderCSV($this->objectName);
 		$this->runEventLog();
 		return true;
 	}
@@ -75,7 +75,7 @@ class EmailLogForm extends EasyForm
     public function ClearLog()	
 	{
        if ($this->m_Resource != "" && !$this->allowAccess($this->m_Resource.".delete"))
-            return BizSystem::clientProxy()->redirectView(ACCESS_DENIED_VIEW);
+            return BizSystem::clientProxy()->redirectView(OPENBIZ_ACCESS_DENIED_VIEW);
 
         try
         {

@@ -9,7 +9,7 @@
 			Class="EasyForm"			  
 			FormType="Edit" 
 			jsClass="Openbiz.Form" 
-			Icon="{RESOURCE_URL}/product/images/icon_mod_product_type_edit.png"
+			Icon="{OPENBIZ_RESOURCE_URL}/product/images/icon_mod_product_type_edit.png"
 			Title="Edit Product Type" 
 			Description="Edit selected product type item."
 			BizDataObj="product.do.ProductTypeDO" 

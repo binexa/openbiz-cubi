@@ -8,7 +8,7 @@
 		 {
 		 
 		 $do=BizSystem::getObject('oauth.do.OauthProviderDO');
-		 $sql="SELECT `type` ,  `key` ,  `value`  FROM  `{$do->m_MainTable}` where status=1   LIMIT 0 , 15 ";
+		 $sql="SELECT `type` ,  `key` ,  `value`  FROM  `{$do->mainTableName}` where status=1   LIMIT 0 , 15 ";
 		 $db=$do->getDBConnection();
 		 $recArr=$db->fetchAssoc($sql);
 		 BizSystem::sessionContext()->setVar("_OAUTH_{$this->m_Type}",$recArr);
@@ -61,7 +61,7 @@ class OauthLogin extends InputElement
 				 $sHTML.= "<span class=\"oauth_bar\" $style>";
 				 foreach($recArr as $oauthProvider)
 				 {
-				 	$url = APP_URL."/ws.php/oauth/callback/login/type_".$oauthProvider['type'].'/';
+				 	$url = OPENBIZ_APP_URL."/ws.php/oauth/callback/login/type_".$oauthProvider['type'].'/';
 				 	if($url_append){
 				 		$url.= '?'.$url_append;
 				 	}

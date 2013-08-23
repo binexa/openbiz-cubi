@@ -5,7 +5,7 @@
   Copyright (c) 2005-2011, Openbiz Technology LLC
   Version $Id: DataPublishingForm.xml 3355 2012-05-31 05:43:33Z rockyswen@gmail.com $
 -->
-<EasyForm Name="DataPublishingForm" Icon="{RESOURCE_URL}/common/images/icon_data_publishing.gif" Class="DataPublishingForm" FormType="Edit" jsClass="jbForm" Title="Data Publishing" Description="Publish your data to specified group or global groups." BizDataObj="" TemplateEngine="Smarty" TemplateFile="data_publishing_form.tpl.html" >
+<EasyForm Name="DataPublishingForm" Icon="{OPENBIZ_RESOURCE_URL}/common/images/icon_data_publishing.gif" Class="DataPublishingForm" FormType="Edit" jsClass="jbForm" Title="Data Publishing" Description="Publish your data to specified group or global groups." BizDataObj="" TemplateEngine="Smarty" TemplateFile="data_publishing_form.tpl.html" >
     <DataPanel>
     	
     	<Element Name="fld_data_record"  Class="LabelText"  ElementSet="Data Sharing"  FieldName="data_record" Label="" Width="400" style="font-size:20px;color:#333333;line-height:24px;" />

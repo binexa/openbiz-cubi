@@ -42,8 +42,8 @@ class EasyViewWizard extends EasyView
      */
     public function getSessionVars($sessionContext)
     {
-        $sessionContext->getObjVar($this->m_Name, "FormStates", $this->m_FormStates, true);
-        $sessionContext->getObjVar($this->m_Name, "CurrentStep", $this->m_CurrentStep, true);
+        $sessionContext->getObjVar($this->objectName, "FormStates", $this->m_FormStates, true);
+        $sessionContext->getObjVar($this->objectName, "CurrentStep", $this->m_CurrentStep, true);
     }
 
     /**
@@ -55,10 +55,10 @@ class EasyViewWizard extends EasyView
     public function setSessionVars($sessionContext)
     {
         if ($this->m_DropSession){
-            $sessionContext->cleanObj($this->m_Name, true);
+            $sessionContext->cleanObj($this->objectName, true);
         }else{
-            $sessionContext->setObjVar($this->m_Name, "FormStates", $this->m_FormStates, true);
-            $sessionContext->setObjVar($this->m_Name, "CurrentStep", $this->m_CurrentStep, true);
+            $sessionContext->setObjVar($this->objectName, "FormStates", $this->m_FormStates, true);
+            $sessionContext->setObjVar($this->objectName, "CurrentStep", $this->m_CurrentStep, true);
         }
         
     }
@@ -101,7 +101,7 @@ class EasyViewWizard extends EasyView
 		$i = 1;
         foreach ($this->m_FormRefs as $formRef){
             if($i == $step){            	
-            	return $formRef->m_Name;
+            	return $formRef->objectName;
             }        	
             $i++;
         }
@@ -169,8 +169,8 @@ class EasyViewWizard extends EasyView
 				
 			case "SWITCHPAGE":
 			default:
-				$currentURL = BizSystem::getService(UTIL_SERVICE)->getViewURL($this->m_Name);
-		        $url = APP_INDEX.'/'.$currentURL.'/step_'.$step;
+				$currentURL = BizSystem::getService(OPENBIZ_UTIL_SERVICE)->getViewURL($this->objectName);
+		        $url = OPENBIZ_APP_INDEX_URL.'/'.$currentURL.'/step_'.$step;
 				BizSystem::clientProxy()->ReDirectPage($url);
 				break;
 			

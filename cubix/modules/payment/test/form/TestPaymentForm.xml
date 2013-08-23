@@ -9,7 +9,7 @@
 			Class="TestPaymentForm" 
 			FormType="New" 
 			jsClass="Openbiz.Form" 
-			Icon="{RESOURCE_URL}/payment/images/icon_payment.png"
+			Icon="{OPENBIZ_RESOURCE_URL}/payment/images/icon_payment.png"
 			Title="Test Payment" 
 			Description="Try to make a payment by using selected provider." 
 			BizDataObj="" 

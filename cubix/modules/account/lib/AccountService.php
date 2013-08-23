@@ -34,7 +34,7 @@ class AccountService {
 		{
 			return "-- Not available --";
 		}
-		$name =  BizSystem::getObject($this->m_AccountDO)->fetchById($accountId)->name;
+		$name =  BizSystem::getObject($this->m_AccountDO)->fetchById($accountId)->objectName;
 		if($name)
 		{
 			return $name;

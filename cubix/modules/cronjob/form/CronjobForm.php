@@ -15,7 +15,7 @@ class CronjobForm extends EasyForm
 {
 	public function runCron()
 	{
-		include_once (APP_HOME."/bin/cronjob/cronService.php");
+		include_once (OPENBIZ_APP_PATH."/bin/cronjob/cronService.php");
 
 		$cronSvc = new CronService();
 		print date("m/d/Y H:i:s")." START cron processor".nl;
@@ -25,7 +25,7 @@ class CronjobForm extends EasyForm
 	
 	public function runJob($jobId)
 	{
-		include_once (APP_HOME."/bin/cronjob/cronService.php");
+		include_once (OPENBIZ_APP_PATH."/bin/cronjob/cronService.php");
 
 		$cronSvc = new CronService();
 		$cronSvc->outputLog = true;

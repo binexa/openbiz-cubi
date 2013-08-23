@@ -17,11 +17,11 @@ if(!defined("CLI")){
 	exit;
 }
 
-include_once (MODULE_PATH."/service/UpgradeService.php");
+include_once (OPENBIZ_APP_MODULE_PATH."/service/UpgradeService.php");
 
 // locate the package file
 if (!file_exists($package_file)) {
-    $tmpPackageFolder = APP_HOME."/files/packages";
+    $tmpPackageFolder = OPENBIZ_APP_PATH."/files/packages";
     $package_file = $tmpPackageFolder."/$package_file";
     if (!file_exists($package_file)) {
         echo "Cannot locate the package at $package_file\n";

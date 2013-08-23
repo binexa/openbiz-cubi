@@ -5,7 +5,7 @@
   Copyright (c) 2005-2011, Openbiz Technology LLC
   Version $Id: SessionListForm.xml 3372 2012-05-31 06:19:06Z rockyswen@gmail.com $
 -->
-<EasyForm Name="SessionListForm" Icon="{RESOURCE_URL}/system/images/icon_session.gif" Class="SessionListForm" FormType="List" jsClass="jbForm" Title="Session Management" Description="You can view and manage user sessions in below form." BizDataObj="system.do.SessionDO" PageSize="10" DefaultForm="Y" TemplateEngine="Smarty" TemplateFile="system_right_listform.tpl.html" access="Session.Administer_Session">
+<EasyForm Name="SessionListForm" Icon="{OPENBIZ_RESOURCE_URL}/system/images/icon_session.gif" Class="SessionListForm" FormType="List" jsClass="jbForm" Title="Session Management" Description="You can view and manage user sessions in below form." BizDataObj="system.do.SessionDO" PageSize="10" DefaultForm="Y" TemplateEngine="Smarty" TemplateFile="system_right_listform.tpl.html" access="Session.Administer_Session">
     <DataPanel>
     	<Element Name="row_selections" Class="RowCheckbox"  Label="" FieldName="Id"/>
         <Element Name="fld_Id" Class="common.element.ColumnTitle" Hidden="Y" FieldName="Id" Label="Session Id" Sortable="Y"/>

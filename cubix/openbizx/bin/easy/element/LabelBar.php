@@ -24,7 +24,7 @@ class LabelBar extends ColumnBar {
         	$value = sprintf("%.2f",$value*100).'%';        
         }
         $style = $this->getStyle();
-        $id = $this->m_Name;
+        $id = $this->objectName;
         $func = $this->getFunction();
         $height = $this->m_Height;
         $width = $this->m_Width - 80;        

@@ -46,10 +46,10 @@
 		
         
         
-        <Element Name="fld_data_share"  Class="DropDownList" DefaultValue="{GROUP_DATA_SHARE}" SelectFrom="common.lov.CommLOV(EnableStatus)" ElementSet="Group Data Sharing" Description="" FieldName="_group_data_share" Label="Data Sharing"  >
+        <Element Name="fld_data_share"  Class="DropDownList" DefaultValue="{CUBI_GROUP_DATA_SHARE}" SelectFrom="common.lov.CommLOV(EnableStatus)" ElementSet="Group Data Sharing" Description="" FieldName="_group_data_share" Label="Data Sharing"  >
         	<EventHandler Name="fld_data_share_onupdate" Event="onchange" Function="UpdateForm()"  />
         </Element>
-        <Element Name="fld_data_acl" Hidden="{@:Elem[fld_data_share].Value=='1'?'N':'Y'}"   Class="DropDownList" DefaultValue="{DATA_ACL}" SelectFrom="common.lov.CommLOV(EnableStatus)" ElementSet="Group Data Sharing" Description="" FieldName="_data_acl" Label="Data ACL"  >
+        <Element Name="fld_data_acl" Hidden="{@:Elem[fld_data_share].Value=='1'?'N':'Y'}"   Class="DropDownList" DefaultValue="{CUBI_DATA_ACL}" SelectFrom="common.lov.CommLOV(EnableStatus)" ElementSet="Group Data Sharing" Description="" FieldName="_data_acl" Label="Data ACL"  >
         </Element>        
     </DataPanel>
     <ActionPanel>

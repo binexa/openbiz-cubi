@@ -43,7 +43,7 @@ $min_allowDebugFlag = false;
  * For best performance, specify your temp directory here. Otherwise Minify
  * will have to load extra code to guess. Some examples below:
  */
-//$min_cachePath = APP_FILE_PATH.DIRECTORY_SEPARATOR.'min';
+//$min_cachePath = OPENBIZ_APP_FILE_PATH.DIRECTORY_SEPARATOR.'min';
 //$min_cachePath = '/tmp';
 //$min_cachePath = preg_replace('/^\\d+;/', '', session_save_path());
 /**
@@ -54,7 +54,7 @@ if(extension_loaded('apc')){
 	require dirname(__FILE__) . '/lib/Minify/Cache/APC.php';
 	$min_cachePath = new Minify_Cache_APC();
 }else{
-	$min_cachePath = APP_FILE_PATH.DIRECTORY_SEPARATOR.'min';
+	$min_cachePath = OPENBIZ_APP_FILE_PATH.DIRECTORY_SEPARATOR.'min';
 	if(!is_dir($min_cachePath)){
 		mkdir($min_cachePath,0777);
 	}

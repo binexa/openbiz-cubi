@@ -19,19 +19,19 @@ class PictureUploader extends InputText
     	$this->m_cssHoverClass = null;   
     	
         $sHTML = "
-        <INPUT NAME=\"" . $this->m_Name . "\" ID=\"" . $this->m_Name ."\" VALUE=\"" . $value . "\"  />
+        <INPUT NAME=\"" . $this->objectName . "\" ID=\"" . $this->objectName ."\" VALUE=\"" . $value . "\"  />
         
         ";
         
         $formObj = $this->getFormObj();
-        $formName = $formObj->m_Name;
+        $formName = $formObj->objectName;
         
         $sHTML .= "
         <script>
-		  \$j('#".$this->m_Name."').uploadify({
-		    'uploader'  : '".JS_URL."/uploadify/uploadify.swf',		    
-		    'cancelImg' : '".JS_URL."/uploadify/cancel.png',
-		    'script'    : '".APP_URL."/bin/controller.php',
+		  \$j('#".$this->objectName."').uploadify({
+		    'uploader'  : '".OPENBIZ_JS_URL."/uploadify/uploadify.swf',		    
+		    'cancelImg' : '".OPENBIZ_JS_URL."/uploadify/cancel.png',
+		    'script'    : '".OPENBIZ_APP_URL."/bin/controller.php',
 		    'scriptData': { 'F':'RPCInvoke',
  							'P0':'[picture.widget.PictureNewForm]',
  							'P1':'[uploadFile]',
@@ -40,7 +40,7 @@ class PictureUploader extends InputText
  							'session_id':'".session_id()."',
  							'cubi_sess_id':'".session_id()."'
  							},
-		    'folder'    : '".JS_URL."/uploadify/test',
+		    'folder'    : '".OPENBIZ_JS_URL."/uploadify/test',
 		    'displayData' : true,
 		    'multi'      : true,
 		   

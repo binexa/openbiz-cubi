@@ -67,7 +67,7 @@ class pdfService
     public function output($domPdf)
     {
         //$tmpfile = getcwd()."/tmpfiles";
-        $tmpDir = APP_HOME."/tmpfiles";
+        $tmpDir = OPENBIZ_APP_PATH."/tmpfiles";
         //echo $tmpfile;
         $this->cleanFiles($tmpDir, 100);
         //Determine a temporary file name in the current directory

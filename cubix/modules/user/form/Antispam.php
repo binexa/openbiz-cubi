@@ -24,7 +24,7 @@ class Antispam extends InputElement{
     		return true;
     	}
     	$formobj = $this->GetFormObj();       	     
-        BizSystem::sessionContext()->getObjVar($formobj->m_Name, $this->m_Name,$orgValue);
+        BizSystem::sessionContext()->getObjVar($formobj->objectName, $this->objectName,$orgValue);
         $inputValue = strtoupper($this->getValue());
 		if($inputValue==$orgValue) {
 			return true;
@@ -52,7 +52,7 @@ class Antispam extends InputElement{
         $func = $this->getFunction();
         
         $formobj = $this->GetFormObj();
-    	if($formobj->m_Errors[$this->m_Name]){
+    	if($formobj->m_Errors[$this->objectName]){
 			$func .= "onchange=\"this.className='$this->m_cssClass'\"";
 		}else{
 			$func .= "onfocus=\"this.className='$this->m_cssFocusClass'\" onblur=\"this.className='$this->m_cssClass'\"";
@@ -60,8 +60,8 @@ class Antispam extends InputElement{
         $formObj = $this->getFormObj();       
         $this->m_AntiSpamImage = Expression::evaluateExpression($this->m_AntiSpamImage, $formObj);
         
-        $sHTML = "<INPUT maxlength='".$this->m_Lenght."' NAME=\"" . $this->m_Name . "\" ID=\"" . $this->m_Name ."\" VALUE=\"" . $value . "\" $disabledStr $this->m_HTMLAttr $style $func>";
-        $sHTML .= "<IMG style='margin-left:10px;' BRODER='0' SRC=\"". $this->m_AntiSpamImage."?form=".$formobj->m_Name."&name=".$this->m_Name."&length=".$this->m_Length."&level=".$this->m_SpamLevel."&rand=".rand()."\" />"; 
+        $sHTML = "<INPUT maxlength='".$this->m_Lenght."' NAME=\"" . $this->objectName . "\" ID=\"" . $this->objectName ."\" VALUE=\"" . $value . "\" $disabledStr $this->m_HTMLAttr $style $func>";
+        $sHTML .= "<IMG style='margin-left:10px;' BRODER='0' SRC=\"". $this->m_AntiSpamImage."?form=".$formobj->objectName."&name=".$this->objectName."&length=".$this->m_Length."&level=".$this->m_SpamLevel."&rand=".rand()."\" />"; 
         return $sHTML;
     }
 }

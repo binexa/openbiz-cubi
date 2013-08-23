@@ -11,7 +11,7 @@
  * @version   $Id: ModuleForm.php 4677 2012-11-12 08:39:42Z hellojixian@gmail.com $
  */
 
-include_once MODULE_PATH."/system/lib/ModuleLoader.php";
+include_once OPENBIZ_APP_MODULE_PATH."/system/lib/ModuleLoader.php";
 
 /**
  * ModuleForm class - implement the logic for manage modules
@@ -29,7 +29,7 @@ class ModuleForm extends EasyForm
     {        
 		BizSystem::getService(ACL_SERVICE)->clearACLCache();
        	$mods = array();
-        $dir = MODULE_PATH;
+        $dir = OPENBIZ_APP_MODULE_PATH;
         if ($dh = opendir($dir)) {
             while (($file = readdir($dh)) !== false) {
                 $filepath = $dir.'/'.$file;
@@ -133,7 +133,7 @@ class ModuleForm extends EasyForm
     public function DeleteRecord($id=null, $deleteFiles=false){
     	//delete menu items
         if ($this->m_Resource != "" && !$this->allowAccess($this->m_Resource.".delete"))
-            return BizSystem::clientProxy()->redirectView(ACCESS_DENIED_VIEW);
+            return BizSystem::clientProxy()->redirectView(OPENBIZ_ACCESS_DENIED_VIEW);
 
         if ($id==null || $id=='')
             $id = BizSystem::clientProxy()->getFormInputs('_selectedId');
@@ -148,7 +148,7 @@ class ModuleForm extends EasyForm
             try
             {
                 //also delete menu items                
-                BizSystem::getObject("menu.do.MenuDO",1)->deleteRecords("[module]='".$dataRec->name."'");
+                BizSystem::getObject("menu.do.MenuDO",1)->deleteRecords("[module]='".$dataRec->objectName."'");
                 $dataRec->delete();
                 
                 //unload module      	                
@@ -157,7 +157,7 @@ class ModuleForm extends EasyForm
                 
 	        	if($deleteFiles)
 	        	{
-	        		$modPath = MODULE_PATH.DIRECTORY_SEPARATOR.$dataRec['name']; 
+	        		$modPath = OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR.$dataRec['name']; 
 	        		$this->rrmdir($modPath);
 	        	}
                 

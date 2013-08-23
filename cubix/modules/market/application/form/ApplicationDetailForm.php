@@ -20,7 +20,7 @@ class ApplicationDetailForm extends AppListForm
 		$repo_uri = $this->getDefaultRepoURI();
 		
 		$svc = BizSystem::getService("market.lib.PackageService");
-		$util = BizSystem::getService(UTIL_SERVICE);
+		$util = BizSystem::getService(OPENBIZ_UTIL_SERVICE);
 		
 		$appInfo = $svc->discoverAppInfo($repo_uri,$app_id);
 		$this->m_RecordId = $appInfo['Id'];
@@ -62,7 +62,7 @@ class ApplicationDetailForm extends AppListForm
    		if(preg_match("/com.application/si",strtolower($app_uid))){
    			$moduleName = str_replace("com.application.", "", strtolower($app_uid));	   		
 	   		//unload module
-	   		include_once MODULE_PATH."/system/lib/ModuleUnloader.php";
+	   		include_once OPENBIZ_APP_MODULE_PATH."/system/lib/ModuleUnloader.php";
 	   		$loader = new ModuleUnloader($moduleName);
 	        $loader->debug = false;
 	        $loader->unLoadModule();   		   		

@@ -70,7 +70,7 @@ class LicenseForm extends EasyForm
 		}
 		if($this->m_ModuleName)
 		{
-			$filename = MODULE_PATH.DIRECTORY_SEPARATOR.$this->m_ModuleName.DIRECTORY_SEPARATOR.'register_handler.php';
+			$filename = OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR.$this->m_ModuleName.DIRECTORY_SEPARATOR.'register_handler.php';
 			if(file_exists($filename))
 			{
 				require_once($filename);
@@ -93,7 +93,7 @@ class LicenseForm extends EasyForm
 	public function getAppModuleName()
 	{
 		$current_file = $this->m_ErrorParams['current_file'];
-		$current_file = str_replace(MODULE_PATH, "", $current_file);
+		$current_file = str_replace(OPENBIZ_APP_MODULE_PATH, "", $current_file);
 		preg_match("|[\\\/]?(.*?)[\\\/]{1}|si",$current_file,$matches);
 		$this->m_ModuleName = $matches[1];
 		return $this->m_ModuleName;

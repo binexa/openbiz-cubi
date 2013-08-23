@@ -26,7 +26,7 @@
  * @version   $Id: AccountEditForm.php 3375 2012-05-31 06:23:11Z rockyswen@gmail.com $
  */
 
-include_once MODULE_PATH."/system/form/UserForm.php";
+include_once OPENBIZ_APP_MODULE_PATH."/system/form/UserForm.php";
 
 /**
  * AccountEditForm class - implement the logic of edit my account form
@@ -55,7 +55,7 @@ class AccountEditForm extends UserForm
     {
         // set fix search rule
         if (!$this->_userId)
-            return BizSystem::clientProxy()->redirectView(ACCESS_DENIED_VIEW);
+            return BizSystem::clientProxy()->redirectView(OPENBIZ_ACCESS_DENIED_VIEW);
         $this->m_FixSearchRule = "[Id]=".$this->_userId;
         return parent::render();
     }
@@ -66,7 +66,7 @@ class AccountEditForm extends UserForm
         $this->m_ActiveRecord = null;
         // set fix search rule
         if (!$this->_userId)
-            return BizSystem::clientProxy()->redirectView(ACCESS_DENIED_VIEW);
+            return BizSystem::clientProxy()->redirectView(OPENBIZ_ACCESS_DENIED_VIEW);
         $this->m_FixSearchRule = "[Id]=".$this->_userId;
         return parent::rerender();
     }
@@ -103,7 +103,7 @@ class AccountEditForm extends UserForm
         $this->m_Notices[] = $this->GetMessage("USER_DATA_UPDATED");
 
        	//run eventlog        
-        $eventlog 	= BizSystem::getService(EVENTLOG_SERVICE);        
+        $eventlog 	= BizSystem::getService(OPENBIZ_EVENTLOG_SERVICE);        
     	$eventlog->log("USER_MANAGEMENT", "MSG_USER_RESET_PASSWORD");        
         
         $this->rerender();

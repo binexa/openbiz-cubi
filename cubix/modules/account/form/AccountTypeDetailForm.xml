@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<EasyForm Name="AccountTypeDetailForm" Class="EasyForm" FormType="Detail" jsClass="Openbiz.Form" Icon="{RESOURCE_URL}/account/images/icon_mod_account_type_detail.png" Title=" Account Type Detail" Description="Please fill in below field to create a new data type." BizDataObj="account.do.AccountTypeDO" PageSize="10" DefaultForm="Y" TemplateEngine="Smarty" TemplateFile="form_detail_adv_custom.tpl.html" EventName="Account" MessageFile="Account.ini" Access="account.Access">
+<EasyForm Name="AccountTypeDetailForm" Class="EasyForm" FormType="Detail" jsClass="Openbiz.Form" Icon="{OPENBIZ_RESOURCE_URL}/account/images/icon_mod_account_type_detail.png" Title=" Account Type Detail" Description="Please fill in below field to create a new data type." BizDataObj="account.do.AccountTypeDO" PageSize="10" DefaultForm="Y" TemplateEngine="Smarty" TemplateFile="form_detail_adv_custom.tpl.html" EventName="Account" MessageFile="Account.ini" Access="account.Access">
   <DataPanel>
     <Element Name="fld_Id" ElementSet="General" Hidden="Y" Class="LabelText" FieldName="Id" Label="Id" AllowURLParam="Y"/>
     
@@ -16,9 +16,9 @@
     <Element Name="btn_manage_price" Tabset="Extra Information" Hidden="{@:m_CanUpdateRecord=='1'?'N':'Y'}" TabSet="Extra Information" ElementSet="Price Book" Class="Button" CssClass="button_gray_w" Text="Manage" Style="color:#666666;margin-left:5px;margin-top:2px;" Access="store.Access">
       <EventHandler Name="btn_manage_price_onclick" Event="onclick" Function="SwitchForm(account.form.AccountTypeEditPriceForm,{@:Elem[fld_Id].Value})"/>
     </Element>
-    <Element Name="fld_create_by" Tabset="Extra Information" ElementSet="Miscellaneous" Class="LabelText" FieldName="create_by" Label="Create By" Text="{BizSystem::GetProfileName(@:Elem[fld_create_by].Value)}" Link="{APP_INDEX}/collab/contact_detail/{BizSystem::GetProfileId(@:Elem[fld_create_by].Value)}" AllowURLParam="N"/>
+    <Element Name="fld_create_by" Tabset="Extra Information" ElementSet="Miscellaneous" Class="LabelText" FieldName="create_by" Label="Create By" Text="{BizSystem::GetProfileName(@:Elem[fld_create_by].Value)}" Link="{OPENBIZ_APP_INDEX_URL}/collab/contact_detail/{BizSystem::GetProfileId(@:Elem[fld_create_by].Value)}" AllowURLParam="N"/>
     <Element Name="fld_create_time" Tabset="Extra Information" ElementSet="Miscellaneous" Class="LabelText" FieldName="create_time" Label="Create Time" AllowURLParam="N"/>
-    <Element Name="fld_update_by" Tabset="Extra Information" ElementSet="Miscellaneous" Class="LabelText" FieldName="update_by" Label="Update By" Text="{BizSystem::GetProfileName(@:Elem[fld_update_by].Value)}" Link="{APP_INDEX}/collab/contact_detail/{BizSystem::GetProfileId(@:Elem[fld_update_by].Value)}" AllowURLParam="N"/>
+    <Element Name="fld_update_by" Tabset="Extra Information" ElementSet="Miscellaneous" Class="LabelText" FieldName="update_by" Label="Update By" Text="{BizSystem::GetProfileName(@:Elem[fld_update_by].Value)}" Link="{OPENBIZ_APP_INDEX_URL}/collab/contact_detail/{BizSystem::GetProfileId(@:Elem[fld_update_by].Value)}" AllowURLParam="N"/>
     <Element Name="fld_update_time" Tabset="Extra Information" ElementSet="Miscellaneous" Class="LabelText" FieldName="update_time" Label="Update Time" AllowURLParam="N"/>
   </DataPanel>
   <ActionPanel>

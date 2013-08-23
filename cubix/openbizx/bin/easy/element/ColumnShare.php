@@ -57,13 +57,13 @@ class ColumnShare extends ColumnText
     protected function readMetaData(&$xmlArr)
     {
         parent::readMetaData($xmlArr);
-        $this->m_MyPrivateImg = isset($xmlArr["ATTRIBUTES"]["MYPRIVATEIMG"])	? $xmlArr["ATTRIBUTES"]["MYPRIVATEIMG"]	: "{RESOURCE_URL}/common/images/icon_data_private.gif";
-        $this->m_MySharedImg  = isset($xmlArr["ATTRIBUTES"]["MYSHAREDIMG"])		? $xmlArr["ATTRIBUTES"]["MYSHAREDIMG"]	: "{RESOURCE_URL}/common/images/icon_data_shared.gif";
-        $this->m_MyAssignedImg  = isset($xmlArr["ATTRIBUTES"]["MYASSIGNEDIMG"])		? $xmlArr["ATTRIBUTES"]["MYASSIGNEDIMG"]	: "{RESOURCE_URL}/common/images/icon_data_assigned.gif";
-        $this->m_MyDistributedImg  = isset($xmlArr["ATTRIBUTES"]["MYDISTRIBUTEDIMG"])		? $xmlArr["ATTRIBUTES"]["MYDISTRIBUTEDIMG"]	: "{RESOURCE_URL}/common/images/icon_data_distributed.gif";
-        $this->m_GroupSharedImg = isset($xmlArr["ATTRIBUTES"]["GROUPSHAREDIMG"])? $xmlArr["ATTRIBUTES"]["GROUPSHAREDIMG"]: "{RESOURCE_URL}/common/images/icon_data_shared_group.gif";
-        $this->m_OtherSharedImg = isset($xmlArr["ATTRIBUTES"]["OTHERSHAREDIMG"])? $xmlArr["ATTRIBUTES"]["OTHERSHAREDIMG"]: "{RESOURCE_URL}/common/images/icon_data_shared_other.gif";
-        $this->m_DefaultImg = isset($xmlArr["ATTRIBUTES"]["DEFAULTIMG"])? $xmlArr["ATTRIBUTES"]["DEFAULTIMG"]: "{RESOURCE_URL}/common/images/icon_data_shared_other.gif";
+        $this->m_MyPrivateImg = isset($xmlArr["ATTRIBUTES"]["MYPRIVATEIMG"])	? $xmlArr["ATTRIBUTES"]["MYPRIVATEIMG"]	: "{OPENBIZ_RESOURCE_URL}/common/images/icon_data_private.gif";
+        $this->m_MySharedImg  = isset($xmlArr["ATTRIBUTES"]["MYSHAREDIMG"])		? $xmlArr["ATTRIBUTES"]["MYSHAREDIMG"]	: "{OPENBIZ_RESOURCE_URL}/common/images/icon_data_shared.gif";
+        $this->m_MyAssignedImg  = isset($xmlArr["ATTRIBUTES"]["MYASSIGNEDIMG"])		? $xmlArr["ATTRIBUTES"]["MYASSIGNEDIMG"]	: "{OPENBIZ_RESOURCE_URL}/common/images/icon_data_assigned.gif";
+        $this->m_MyDistributedImg  = isset($xmlArr["ATTRIBUTES"]["MYDISTRIBUTEDIMG"])		? $xmlArr["ATTRIBUTES"]["MYDISTRIBUTEDIMG"]	: "{OPENBIZ_RESOURCE_URL}/common/images/icon_data_distributed.gif";
+        $this->m_GroupSharedImg = isset($xmlArr["ATTRIBUTES"]["GROUPSHAREDIMG"])? $xmlArr["ATTRIBUTES"]["GROUPSHAREDIMG"]: "{OPENBIZ_RESOURCE_URL}/common/images/icon_data_shared_group.gif";
+        $this->m_OtherSharedImg = isset($xmlArr["ATTRIBUTES"]["OTHERSHAREDIMG"])? $xmlArr["ATTRIBUTES"]["OTHERSHAREDIMG"]: "{OPENBIZ_RESOURCE_URL}/common/images/icon_data_shared_other.gif";
+        $this->m_DefaultImg = isset($xmlArr["ATTRIBUTES"]["DEFAULTIMG"])? $xmlArr["ATTRIBUTES"]["DEFAULTIMG"]: "{OPENBIZ_RESOURCE_URL}/common/images/icon_data_shared_other.gif";
         
         $this->m_RecordCreatorId	=	isset($xmlArr["ATTRIBUTES"]["CREATORID"])		? $xmlArr["ATTRIBUTES"]["CREATORID"]	: null;
         $this->m_RecordOwnerId	=	isset($xmlArr["ATTRIBUTES"]["OWNERID"])		? $xmlArr["ATTRIBUTES"]["OWNERID"]	: null;
@@ -175,7 +175,7 @@ class ColumnShare extends ColumnText
     {
 		$style = $this->getStyle();
         $text = $this->getText();
-        $id = $this->m_Name;
+        $id = $this->objectName;
         $func = $this->getFunction();        
         
        switch($this->getValue()){
@@ -198,7 +198,7 @@ class ColumnShare extends ColumnText
 	       		$image_url = $this->m_MyDistributedImg;
 	       		break;	    
 	       	default:
-	       		if($this->m_DefaultImg=='{RESOURCE_URL}/common/images/icon_data_shared_other.gif'){
+	       		if($this->m_DefaultImg=='{OPENBIZ_RESOURCE_URL}/common/images/icon_data_shared_other.gif'){
 	       			$this->m_DefaultImg = $this->m_OtherSharedImg;
 	       		}
 	       		$image_url = $this->m_DefaultImg;

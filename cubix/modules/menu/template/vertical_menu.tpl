@@ -1,7 +1,7 @@
 <div class="menu_title">
 <h2>{$widget.title}</h2>
 <p style="float:right;display:block;padding-top:4px;">
-<span style="display: block;float: left;"><a class="menu_index_link" href="{$app_index}/system/general_default">{t}Index{/t}</a></span> 
+<span style="display: block;float: left;"><a class="menu_index_link" href="{$app_index}/system/general_default">{t}Index{/t}</a></span>
 <a href="{$app_index}/system/general_default"><img id="system_dashboard" class="btn_dashboard"  src="{$image_url}/spacer.gif" border="0" /></a></p>
 </div>
 <ul class="toplevel {$widget.css} left_menu">
@@ -14,13 +14,13 @@
 			{/if}
 	    {/foreach}
 		{if $current == 1 }
-			{assign var=menu_class value="current" }	
+			{assign var=menu_class value="current" }
 		{else}
 			{assign var=menu_class value="" }
-	    {/if}	
+	    {/if}
 		<a onclick="show_submenu(this)" class="{$menu_class}" href="{if $item->m_URL}{$item->m_URL}{else}javascript:{/if}">
-			<img class="{$item->m_IconCSSClass}" src="{$image_url}/{if $item->m_IconImage!=''}{$item->m_IconImage}{else}spacer.gif{/if}" />{$item->m_Name}
-		</a>	
+			<img class="{$item->m_IconCSSClass}" src="{$image_url}/{if $item->m_IconImage!=''}{$item->m_IconImage}{else}spacer.gif{/if}" />{$item->objectName}
+		</a>
 		{if $item->m_ChildNodes|@count > 0}
 		<ul class="secondlevel module" {if $menu_class eq 'current'}style="display:block;"{/if}>
 		{foreach item=subitem from=$item->m_ChildNodes}
@@ -31,15 +31,15 @@
     			{/if}
     	    {/foreach}
 			{if $current == 1 }
-				{assign var=submenu_class value="current" }	
+				{assign var=submenu_class value="current" }
 			{else}
 				{assign var=submenu_class value="" }
-		    {/if}					
-				<li><a class="{$submenu_class}" href="{if $subitem->m_URL}{$subitem->m_URL}{else}javascript:{/if}">{$subitem->m_Name}</a></li>						
-		{/foreach}	
+		    {/if}
+				<li><a class="{$submenu_class}" href="{if $subitem->m_URL}{$subitem->m_URL}{else}javascript:{/if}">{$subitem->objectName}</a></li>
+		{/foreach}
 		</ul>
 		{/if}
 	</li>
-	{/foreach}	
+	{/foreach}
 </ul>
 <div class="v_spacer"></div>

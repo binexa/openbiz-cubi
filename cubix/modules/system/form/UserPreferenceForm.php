@@ -66,11 +66,11 @@ class UserPreferenceForm extends EasyForm
         {
         	if($_SERVER["HTTPS"])
         	{
-        		$prefRecord["_siteurl"]="https://".$_SERVER["SERVER_NAME"].APP_URL;
+        		$prefRecord["_siteurl"]="https://".$_SERVER["SERVER_NAME"].OPENBIZ_APP_URL;
         	}
         	else
         	{
-        		$prefRecord["_siteurl"]="http://".$_SERVER["SERVER_NAME"].APP_URL;	
+        		$prefRecord["_siteurl"]="http://".$_SERVER["SERVER_NAME"].OPENBIZ_APP_URL;	
         	}        	
         }
         
@@ -117,7 +117,7 @@ class UserPreferenceForm extends EasyForm
             		"name"	  => $name,
             		"value"   => $value,
 	            	"section" => $element->m_ElementSetCode,
-	            	"type" 	  => $element->m_Class,	            
+	            	"type" 	  => $element->className,	            
 	            );
 	            //check if its exsit
 	            $record = $prefDo->fetchOne("[user_id]='$user_id' and [name]='$name'");
@@ -131,21 +131,21 @@ class UserPreferenceForm extends EasyForm
 	            }
 	            
 	            //update default app_init setting
-	            $config_file = APP_HOME.'/bin/app_init.php';
+	            $config_file = OPENBIZ_APP_PATH.'/bin/app_init.php';
 	            switch($name){
 	            	case "theme":
-	            		if($value!=DEFAULT_THEME_NAME){
-	            			//update default theme DEFAULT_THEME_NAME
+	            		if($value!=CUBI_DEFAULT_THEME_NAME){
+	            			//update default theme CUBI_DEFAULT_THEME_NAME
 	            			$data = file_get_contents($config_file);	            			
-	            			$data = preg_replace("/define\([\'\\\"]{1}DEFAULT_THEME_NAME[\'\\\"]{1}.*?\)\;/i","define('DEFAULT_THEME_NAME','$value');",$data);	            			
+	            			$data = preg_replace("/define\([\'\\\"]{1}CUBI_DEFAULT_THEME_NAME[\'\\\"]{1}.*?\)\;/i","define('CUBI_DEFAULT_THEME_NAME','$value');",$data);	            			
 	            			@file_put_contents($config_file,$data);
 	            		}
 	            		break;
 	            	case "system_name":
-	            		if($value!=DEFAULT_SYSTEM_NAME){
-	            			//update default theme DEFAULT_THEME_NAME
+	            		if($value!=OPENBIZ_DEFAULT_SYSTEM_NAME){
+	            			//update default theme CUBI_DEFAULT_THEME_NAME
 	            			$data = file_get_contents($config_file);	            			
-	            			$data = preg_replace("/define\([\'\\\"]{1}DEFAULT_SYSTEM_NAME[\'\\\"]{1}.*?\)\;/i","define('DEFAULT_SYSTEM_NAME','$value');",$data);	            			
+	            			$data = preg_replace("/define\([\'\\\"]{1}OPENBIZ_DEFAULT_SYSTEM_NAME[\'\\\"]{1}.*?\)\;/i","define('OPENBIZ_DEFAULT_SYSTEM_NAME','$value');",$data);	            			
 	            			@file_put_contents($config_file,$data);
 	            		}
 	            		break;
@@ -156,34 +156,34 @@ class UserPreferenceForm extends EasyForm
             			@file_put_contents($config_file,$data);
 	            		break;	   	            		    
 	            	case "sessionstrict":
-						//update default theme SESSION_STRICT
-	            		if($value!=SESSION_STRICT){
+						//update default theme CUBI_SESSION_STRICT
+	            		if($value!=CUBI_SESSION_STRICT){
 	            			$data = file_get_contents($config_file);	            			
-	            			$data = preg_replace("/define\([\'\\\"]{1}SESSION_STRICT[\'\\\"]{1}.*?\)\;/i","define('SESSION_STRICT','$value');",$data);	            			
+	            			$data = preg_replace("/define\([\'\\\"]{1}CUBI_SESSION_STRICT[\'\\\"]{1}.*?\)\;/i","define('CUBI_SESSION_STRICT','$value');",$data);	            			
 	            			@file_put_contents($config_file,$data);
 	            		}
 	            		break;	
 	            	case "sessiontimeout":
 						//update default theme TIMEOUT
-	            		if($value!=TIMEOUT){
+	            		if($value!=OPENBIZ_TIMEOUT){
 	            			$data = file_get_contents($config_file);	            			
-	            			$data = preg_replace("/define\([\'\\\"]{1}TIMEOUT[\'\\\"]{1}.*?\)\;/i","define('TIMEOUT','$value');",$data);	            			
+	            			$data = preg_replace("/define\([\'\\\"]{1}OPENBIZ_TIMEOUT[\'\\\"]{1}.*?\)\;/i","define('OPENBIZ_TIMEOUT','$value');",$data);	            			
 	            			@file_put_contents($config_file,$data);
 	            		}
 	            		break;	
 	            	case "data_acl":
-						//update default theme DATA_ACL
-	            		if($value!=DATA_ACL){
+						//update default theme CUBI_DATA_ACL
+	            		if($value!=CUBI_DATA_ACL){
 	            			$data = file_get_contents($config_file);	            			
-	            			$data = preg_replace("/define\([\'\\\"]{1}DATA_ACL[\'\\\"]{1}.*?\)\;/i","define('DATA_ACL','$value');",$data);	            			
+	            			$data = preg_replace("/define\([\'\\\"]{1}CUBI_DATA_ACL[\'\\\"]{1}.*?\)\;/i","define('CUBI_DATA_ACL','$value');",$data);	            			
 	            			@file_put_contents($config_file,$data);
 	            		}
 	            		break;	     		
 	            	case "language":
-	            	    if($value!=DEFAULT_LANGUAGE){
-	            			//update default theme DEFAULT_LANGUAGE
+	            	    if($value!=OPENBIZ_DEFAULT_LANGUAGE){
+	            			//update default theme OPENBIZ_DEFAULT_LANGUAGE
 	            			$data = file_get_contents($config_file);	            			
-	            			$data = preg_replace("/define\([\'\\\"]{1}DEFAULT_LANGUAGE[\'\\\"]{1}.*?\)\;/i","define('DEFAULT_LANGUAGE','$value');",$data);	            			
+	            			$data = preg_replace("/define\([\'\\\"]{1}OPENBIZ_DEFAULT_LANGUAGE[\'\\\"]{1}.*?\)\;/i","define('OPENBIZ_DEFAULT_LANGUAGE','$value');",$data);	            			
 	            			@file_put_contents($config_file,$data);	   
 
 	            			//make changes now
@@ -191,60 +191,60 @@ class UserPreferenceForm extends EasyForm
 	            		}
 	            		break;
 	            	case "currency":
-	            	    if($value!=DEFAULT_CURRENCY){
-	            			//update default theme DEFAULT_DEFAULT_CURRENCY
+	            	    if($value!=CUBI_DEFAULT_CURRENCY){
+	            			//update default theme CUBI_DEFAULT_CURRENCY
 	            			$data = file_get_contents($config_file);	            			
-	            			$data = preg_replace("/define\([\'\\\"]{1}DEFAULT_CURRENCY[\'\\\"]{1}.*?\)\;/i","define('DEFAULT_CURRENCY','$value');",$data);	            			
+	            			$data = preg_replace("/define\([\'\\\"]{1}CUBI_DEFAULT_CURRENCY[\'\\\"]{1}.*?\)\;/i","define('CUBI_DEFAULT_CURRENCY','$value');",$data);	            			
 	            			@file_put_contents($config_file,$data);	            			
 	            		}
 	            		break;	
 	            	case "appbuilder":
-	            	    if($value!=APPBUILDER){	            			
+	            	    if($value!=CUBI_APPBUILDER){	            			
 	            			$data = file_get_contents($config_file);	            			
-	            			$data = preg_replace("/define\([\'\\\"]{1}APPBUILDER[\'\\\"]{1}.*?\)\;/i","define('APPBUILDER','$value');",$data);	            			
+	            			$data = preg_replace("/define\([\'\\\"]{1}CUBI_APPBUILDER[\'\\\"]{1}.*?\)\;/i","define('CUBI_APPBUILDER','$value');",$data);	            			
 	            			@file_put_contents($config_file,$data);	            			
 	            		}
 	            		break;
 	            	case "debug":
-	            	    if($value!=DEBUG){	            			
+	            	    if($value!=OPENBIZ_DEBUG){	            			
 	            			$data = file_get_contents($config_file);	            			
-	            			$data = preg_replace("/define\([\'\\\"]{1}DEBUG[\'\\\"]{1}.*?\)\;/i","define('DEBUG','$value');",$data);	            			
+	            			$data = preg_replace("/define\([\'\\\"]{1}OPENBIZ_DEBUG[\'\\\"]{1}.*?\)\;/i","define('OPENBIZ_DEBUG','$value');",$data);	            			
 	            			@file_put_contents($config_file,$data);	            			
 	            		}
 	            		break;
 	            	case "timezone":
-	            	    if($value!=DEFAULT_TIMEZONE){
-	            			//update default theme DEFAULT_THEME_NAME
+	            	    if($value!=CUBI_DEFAULT_TIMEZONE){
+	            			//update default theme CUBI_DEFAULT_THEME_NAME
 	            			$data = file_get_contents($config_file);	            			
-	            			$data = preg_replace("/define\([\'\\\"]{1}DEFAULT_TIMEZONE[\'\\\"]{1}.*?\)\;/i","define('DEFAULT_TIMEZONE','$value');",$data);	            			
+	            			$data = preg_replace("/define\([\'\\\"]{1}CUBI_DEFAULT_TIMEZONE[\'\\\"]{1}.*?\)\;/i","define('CUBI_DEFAULT_TIMEZONE','$value');",$data);	            			
 	            			@file_put_contents($config_file,$data);	            			
 	            		}
 	            		break;
 	            	case "group_data_share":
-	            	    if($value!=GROUP_DATA_SHARE){
+	            	    if($value!=CUBI_GROUP_DATA_SHARE){
 	            			$data = file_get_contents($config_file);	            			
-	            			$data = preg_replace("/define\([\'\\\"]{1}GROUP_DATA_SHARE[\'\\\"]{1}.*?\)\;/i","define('GROUP_DATA_SHARE','$value');",$data);	            			
+	            			$data = preg_replace("/define\([\'\\\"]{1}CUBI_GROUP_DATA_SHARE[\'\\\"]{1}.*?\)\;/i","define('CUBI_GROUP_DATA_SHARE','$value');",$data);	            			
 	            			@file_put_contents($config_file,$data);	            			
 	            		}
 	            		break;	    
 	            	case "owner_perm":
-	            	    if($value!=DEFAULT_OWNER_PERM){
+	            	    if($value!=OPENBIZ_DEFAULT_OWNER_PERM){
 	            			$data = file_get_contents($config_file);	            			
-	            			$data = preg_replace("/define\([\'\\\"]{1}DEFAULT_OWNER_PERM[\'\\\"]{1}.*?\)\;/i","define('DEFAULT_OWNER_PERM','$value');",$data);	            			
+	            			$data = preg_replace("/define\([\'\\\"]{1}OPENBIZ_DEFAULT_OWNER_PERM[\'\\\"]{1}.*?\)\;/i","define('OPENBIZ_DEFAULT_OWNER_PERM','$value');",$data);	            			
 	            			@file_put_contents($config_file,$data);	            			
 	            		}
 	            		break;	
 	            	case "group_perm":
-	            	    if($value!=DEFAULT_GROUP_PERM){
+	            	    if($value!=OPENBIZ_DEFAULT_GROUP_PERM){
 	            			$data = file_get_contents($config_file);	            			
-	            			$data = preg_replace("/define\([\'\\\"]{1}DEFAULT_GROUP_PERM[\'\\\"]{1}.*?\)\;/i","define('DEFAULT_GROUP_PERM','$value');",$data);	            			
+	            			$data = preg_replace("/define\([\'\\\"]{1}OPENBIZ_DEFAULT_GROUP_PERM[\'\\\"]{1}.*?\)\;/i","define('OPENBIZ_DEFAULT_GROUP_PERM','$value');",$data);	            			
 	            			@file_put_contents($config_file,$data);	            			
 	            		}
 	            		break;	
 	            	case "other_perm":
-	            	    if($value!=DEFAULT_OTHER_PERM){
+	            	    if($value!=OPENBIZ_DEFAULT_OTHER_PERM){
 	            			$data = file_get_contents($config_file);	            			
-	            			$data = preg_replace("/define\([\'\\\"]{1}DEFAULT_OTHER_PERM[\'\\\"]{1}.*?\)\;/i","define('DEFAULT_OTHER_PERM','$value');",$data);	            			
+	            			$data = preg_replace("/define\([\'\\\"]{1}OPENBIZ_DEFAULT_OTHER_PERM[\'\\\"]{1}.*?\)\;/i","define('OPENBIZ_DEFAULT_OTHER_PERM','$value');",$data);	            			
 	            			@file_put_contents($config_file,$data);	            			
 	            		}
 	            		break;		            			            			            		        		

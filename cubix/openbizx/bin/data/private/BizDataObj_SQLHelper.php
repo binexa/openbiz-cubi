@@ -71,7 +71,7 @@ class BizDataObj_SQLHelper
     protected function getNewDataSqlObj($dataObj=null)
     {
 		if ($dataObj) {
-			$doName = $dataObj->m_Name;
+			$doName = $dataObj->objectName;
 			if (!isset($this->_dataSqlObjList[$doName])) {
 				$this->_dataSqlObjList[$doName] = new BizDataSql();
 			}
@@ -92,24 +92,24 @@ class BizDataObj_SQLHelper
      */
     public function buildQuerySQL($dataObj)
     {
-        //echo "buildQuerySQL ".$dataObj->m_Name."\n";
+        //echo "buildQuerySQL ".$dataObj->objectName."\n";
 		// TODO: the same dataobj re-uses the same datasqlobj ...
         // build the SQL statement based on the fields and search rule
         $dataSqlObj = $this->getNewDataSqlObj($dataObj);
 		
 		if ($dataSqlObj->isfresh()) {
 			// add table
-			$dataSqlObj->addMainTable($dataObj->m_MainTable);
+			$dataSqlObj->addMainTable($dataObj->mainTableName);
 			// add join table
-			if ($dataObj->m_TableJoins)
+			if ($dataObj->tableJoins)
 			{
-				foreach($dataObj->m_TableJoins as $tableJoin)
+				foreach($dataObj->tableJoins as $tableJoin)
 				{
 					$tbl_col = $dataSqlObj->addJoinTable($tableJoin, $this);
 				}
 			}
 			// add columns
-			foreach($dataObj->m_BizRecord as $bizFld)
+			foreach($dataObj->bizRecord as $bizFld)
 			{
 				if ($bizFld->m_IgnoreInQuery) // field to be ignore in query - save memory
 					continue;
@@ -128,7 +128,7 @@ class BizDataObj_SQLHelper
         // append DataPerm in the WHERE clause
         if($dataObj->m_DataPermControl=='Y')
         {
-	        $svcObj = BizSystem::GetService(DATAPERM_SERVICE);
+	        $svcObj = BizSystem::GetService(OPENBIZ_DATAPERM_SERVICE);
 	        $hasOwnerField = $this->_hasOwnerField($dataObj);
 	        $dataPermSQLRule = $svcObj->buildSqlRule($dataObj,'select',$hasOwnerField);
 	        $sqlSearchRule = $this->_ruleToSql($dataObj, $dataPermSQLRule);
@@ -155,7 +155,7 @@ class BizDataObj_SQLHelper
         $dataSqlObj->addOtherSQL($sqlOtherSQLRule);
 
         // append SearchRule in the AccessRule clause
-        $sqlAccessSQLRule = $this->_ruleToSql($dataObj, $dataObj->m_AccessRule);
+        $sqlAccessSQLRule = $this->_ruleToSql($dataObj, $dataObj->accessRule);
         $dataSqlObj->addSqlWhere($sqlAccessSQLRule);
 
         // add association to SQL
@@ -202,7 +202,7 @@ class BizDataObj_SQLHelper
     public function buildUpdateSQL($dataObj)
     {
         // generate column value pairs. ignore those whose inputValue=fieldValue
-        $sqlFlds = $dataObj->m_BizRecord->getToSaveFields('UPDATE');
+        $sqlFlds = $dataObj->bizRecord->getToSaveFields('UPDATE');
         $colval_pairs = null;
         foreach($sqlFlds as $fldobj)
         {
@@ -249,15 +249,15 @@ class BizDataObj_SQLHelper
             else $sql .= $queryString;
         }
 
-        $sql = "UPDATE `" . $dataObj->m_MainTable . "` SET " . $sql;
+        $sql = "UPDATE `" . $dataObj->mainTableName . "` SET " . $sql;
 
-        $whereStr = $dataObj->m_BizRecord->getKeySearchRule(true, true);  // use old value and column name
+        $whereStr = $dataObj->bizRecord->getKeySearchRule(true, true);  // use old value and column name
         $sql .= " WHERE " . $whereStr;
     	
         // append DataPerm in the WHERE clause
         if($dataObj->m_DataPermControl=='Y')
         {
-	        $svcObj = BizSystem::GetService(DATAPERM_SERVICE);
+	        $svcObj = BizSystem::GetService(OPENBIZ_DATAPERM_SERVICE);
 	        $hasOwnerField = $this->_hasOwnerField($dataObj);
 	        $dataPermSQLRule = $svcObj->buildSqlRule($dataObj,'update',$hasOwnerField);
 	        $sqlSearchRule = $this->_convertSqlExpressionWithoutPrefix($dataObj, $dataPermSQLRule);
@@ -276,7 +276,7 @@ class BizDataObj_SQLHelper
     {   
     	     
         $setValueStr = $this->_convertSqlExpressionWithoutPrefix($dataObj, $setValue);                 
-        $sql = "UPDATE `" . $dataObj->m_MainTable ."` SET ".$setValueStr;
+        $sql = "UPDATE `" . $dataObj->mainTableName ."` SET ".$setValueStr;
     	if($condition)
         {
         	$whereStr = $this->_convertSqlExpressionWithoutPrefix($dataObj, $condition); 
@@ -286,7 +286,7 @@ class BizDataObj_SQLHelper
     	// append DataPerm in the WHERE clause
         if($dataObj->m_DataPermControl=='Y')
         {
-	        $svcObj = BizSystem::GetService(DATAPERM_SERVICE);
+	        $svcObj = BizSystem::GetService(OPENBIZ_DATAPERM_SERVICE);
 	        $hasOwnerField = $this->_hasOwnerField($dataObj);
 	        $dataPermSQLRule = $svcObj->buildSqlRule($dataObj,'update',$hasOwnerField);
 	        $sqlSearchRule = $this->_convertSqlExpressionWithoutPrefix($dataObj, $dataPermSQLRule);
@@ -309,13 +309,13 @@ class BizDataObj_SQLHelper
      */
     public function buildDeleteSQL($dataObj)
     {
-        $sql = "DELETE FROM `" . $dataObj->m_MainTable ."`";
-        $whereStr = $dataObj->m_BizRecord->getKeySearchRule(false, true);  // use cur value and column name
+        $sql = "DELETE FROM `" . $dataObj->mainTableName ."`";
+        $whereStr = $dataObj->bizRecord->getKeySearchRule(false, true);  // use cur value and column name
         $sql .= " WHERE " . $whereStr;
     	// append DataPerm in the WHERE clause
         if($dataObj->m_DataPermControl=='Y')
         {
-	        $svcObj = BizSystem::GetService(DATAPERM_SERVICE);
+	        $svcObj = BizSystem::GetService(OPENBIZ_DATAPERM_SERVICE);
 	        $hasOwnerField = $this->_hasOwnerField($dataObj);
 	        $dataPermSQLRule = $svcObj->buildSqlRule($dataObj,'delete',$hasOwnerField);
 	        $sqlSearchRule = $this->_convertSqlExpressionWithoutPrefix($dataObj, $dataPermSQLRule);
@@ -333,7 +333,7 @@ class BizDataObj_SQLHelper
     public function buildDeleteSQLwithCondition($dataObj, $condition = null)
     {
     	
-        $sql = "DELETE FROM `" . $dataObj->m_MainTable . "`";  
+        $sql = "DELETE FROM `" . $dataObj->mainTableName . "`";  
         if($condition)
         {
         	$whereStr = $this->_convertSqlExpressionWithoutPrefix($dataObj, $condition); 
@@ -342,7 +342,7 @@ class BizDataObj_SQLHelper
    		// append DataPerm in the WHERE clause
         if($dataObj->m_DataPermControl=='Y')
         {
-	        $svcObj = BizSystem::GetService(DATAPERM_SERVICE);
+	        $svcObj = BizSystem::GetService(OPENBIZ_DATAPERM_SERVICE);
 	        $hasOwnerField = $this->_hasOwnerField($dataObj);
 	        $dataPermSQLRule = $svcObj->buildSqlRule($dataObj,'delete',$hasOwnerField);
 	        $sqlSearchRule = $this->_convertSqlExpressionWithoutPrefix($dataObj, $dataPermSQLRule);
@@ -368,9 +368,9 @@ class BizDataObj_SQLHelper
     public function buildInsertSQL($dataObj, $joinValues=null)
     {
         // generate column value pairs.
-        $sqlFlds = $dataObj->m_BizRecord->getToSaveFields('CREATE');
+        $sqlFlds = $dataObj->bizRecord->getToSaveFields('CREATE');
 
-        $dbInfo = BizSystem::configuration()->getDatabaseInfo($dataObj->m_Database);
+        $dbInfo = BizSystem::configuration()->getDatabaseInfo($dataObj->databaseAliasName);
         $dbType = $dbInfo["Driver"];
 
         $sql_col = "";
@@ -381,7 +381,7 @@ class BizDataObj_SQLHelper
             $col = $fldobj->m_Column;
 
             // if Field Id has null value and Id is an identity type, remove the Id's column from the array
-            if ($fldobj->m_Name == "Id" && $dataObj->m_IdGeneration == "Identity")
+            if ($fldobj->objectName == "Id" && $dataObj->idGeneration == "Identity")
                 continue;
 
             if ($fldobj->isLobField())  // special value for blob/clob type
@@ -415,7 +415,7 @@ class BizDataObj_SQLHelper
         $sql_col = substr($sql_col, 0, -2);
         $sql_val = substr($sql_val, 0, -2);
 
-        $sql = "INSERT INTO  `" . $dataObj->m_MainTable . "` (" . $sql_col . ") VALUES (" . $sql_val.")";
+        $sql = "INSERT INTO  `" . $dataObj->mainTableName . "` (" . $sql_col . ") VALUES (" . $sql_val.")";
         return $sql;
     }
 	
@@ -435,11 +435,11 @@ class BizDataObj_SQLHelper
      **/
     private function _ruleToSql($dataObj, $rule)
     {
-        $cacheKey = $dataObj->m_Name."-".$rule;
+        $cacheKey = $dataObj->objectName."-".$rule;
 		if (isset($this->_doRuleCache[$cacheKey])) {
 			return $this->_doRuleCache[$cacheKey];
 		}
-		//echo " _ruleToSql ".$dataObj->m_Name." ". $rule."\n";
+		//echo " _ruleToSql ".$dataObj->objectName." ". $rule."\n";
 		$dataSqlObj = $this->getDataSqlObj();
 
         $rule = Expression::evaluateExpression($rule,$dataObj);
@@ -453,10 +453,10 @@ class BizDataObj_SQLHelper
 		foreach ($m[1] as $fld) {
 			$bizFld = $dataObj->getField($fld);
 			if (!$bizFld) continue;
-			$fld_pattern = "[".$bizFld->m_Name."]";
+			$fld_pattern = "[".$bizFld->objectName."]";
 			if ($bizFld->m_Column && (strpos($bizFld->m_Column,',') != 0))
 			{  // handle composite key.
-				if (!preg_match('/\['.$bizFld->m_Name.'\].*=.*\'(.+)\'/', $rule, $matches)) continue; //print_r($matches);
+				if (!preg_match('/\['.$bizFld->objectName.'\].*=.*\'(.+)\'/', $rule, $matches)) continue; //print_r($matches);
 				$keyval = $matches[1];
 				// replace the matching part [compkey field]='value' 
 				$compkey_value = $this->_compKeyRuleToSql($bizFld->m_Column,$keyval);
@@ -526,7 +526,7 @@ class BizDataObj_SQLHelper
             if ($fieldname == "") break;
             else
             {
-                $bizFld = $dataObj->m_BizRecord->get($fieldname);
+                $bizFld = $dataObj->bizRecord->get($fieldname);
                 $tableColumn = $dataSqlObj->getTableColumn($bizFld->m_Join, $bizFld->m_Column);
                 $sqlstr = str_replace("[$fieldname]", $tableColumn, $sqlstr);
                 $startpos = strpos($sqlstr, '['); // Move startpos to the first [ (if it exists) in order to be detect by next itteration
@@ -546,7 +546,7 @@ class BizDataObj_SQLHelper
             if ($fieldname == "") break;
             else
             {
-                $bizFld = $dataObj->m_BizRecord->get($fieldname);
+                $bizFld = $dataObj->bizRecord->get($fieldname);
                 $tableColumn = "`".$bizFld->m_Column."`";
                 $sqlstr = str_replace("[$fieldname]", $tableColumn, $sqlstr);
                 $startpos = strpos($sqlstr, '['); // Move startpos to the first [ (if it exists) in order to be detect by next itteration

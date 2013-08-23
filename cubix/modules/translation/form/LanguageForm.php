@@ -11,7 +11,7 @@
  * @version   $Id: LanguageForm.php 3374 2012-05-31 06:22:06Z rockyswen@gmail.com $
  */
 
-include_once MODULE_PATH."/translation/lib/LangPackCreator.php";
+include_once OPENBIZ_APP_MODULE_PATH."/translation/lib/LangPackCreator.php";
 
 
 class LanguageForm extends EasyForm
@@ -53,7 +53,7 @@ class LanguageForm extends EasyForm
         {
 	        $lang = $recArr['lang'];
 	        $this->m_ValidateErrors = array();
-	        if(is_dir(APP_HOME.DIRECTORY_SEPARATOR."languages".DIRECTORY_SEPARATOR.$lang)){	        			       	
+	        if(is_dir(OPENBIZ_APP_PATH.DIRECTORY_SEPARATOR."languages".DIRECTORY_SEPARATOR.$lang)){	        			       	
 	        		$errorMessage = $this->getMessage("FORM_LANG_EXIST",array("fld_lang"));
 	                $this->m_ValidateErrors["fld_lang"] = $errorMessage;
 	        }
@@ -92,7 +92,7 @@ class LanguageForm extends EasyForm
    public function deleteRecord($id=null)
     {
         if ($this->m_Resource != "" && !$this->allowAccess($this->m_Resource.".delete"))
-            return BizSystem::clientProxy()->redirectView(ACCESS_DENIED_VIEW);
+            return BizSystem::clientProxy()->redirectView(OPENBIZ_ACCESS_DENIED_VIEW);
 
         if ($id==null || $id=='')
             $id = BizSystem::clientProxy()->getFormInputs('_selectedId');
@@ -117,7 +117,7 @@ class LanguageForm extends EasyForm
                         
 		preg_match("/\[(.*?)\]=\'(.*?)\'/si",$this->m_FixSearchRule,$match);
 		$lang = $match[2];
-		$dir = APP_HOME.DIRECTORY_SEPARATOR."languages".DIRECTORY_SEPARATOR.$lang;
+		$dir = OPENBIZ_APP_PATH.DIRECTORY_SEPARATOR."languages".DIRECTORY_SEPARATOR.$lang;
 		$locale = explode('_', $lang);
 		$result['Id']	=	$lang;
 		$result['name']	=	$lang;	
@@ -131,14 +131,14 @@ class LanguageForm extends EasyForm
 		if($locale[1]){
 			$result['language']	=	$this->Code2Language($locale[0]);
 			$result['region']	=	$this->Code2Region($locale[1]);
-			$result['icon']	=	APP_URL."/images/nations/22x14/".strtolower($locale[1]).'.png';
+			$result['icon']	=	OPENBIZ_APP_URL."/images/nations/22x14/".strtolower($locale[1]).'.png';
 			
 		}
 		else
 		{
 			$result['language']	=	$this->Code2Language($locale[0]);
 			$result['region']	=	$this->Code2Region($locale[0]);
-			$result['icon']	=	APP_URL."/images/nations/22x14/".strtolower($locale[0]).'.png';
+			$result['icon']	=	OPENBIZ_APP_URL."/images/nations/22x14/".strtolower($locale[0]).'.png';
 			
 		}		
 		$this->m_RecordId = $lang;
@@ -148,7 +148,7 @@ class LanguageForm extends EasyForm
 	public function fetchDataSet(){
 		$result = array();
 		$i = 0;
-		foreach (glob(APP_HOME.DIRECTORY_SEPARATOR."languages".DIRECTORY_SEPARATOR."*",GLOB_ONLYDIR) as $dir){
+		foreach (glob(OPENBIZ_APP_PATH.DIRECTORY_SEPARATOR."languages".DIRECTORY_SEPARATOR."*",GLOB_ONLYDIR) as $dir){
 			if(basename($dir)!='tmp' && basename($dir)!='dictionary'){
 				$locale = explode('_', basename($dir));
 
@@ -163,14 +163,14 @@ class LanguageForm extends EasyForm
 				if($locale[1]){
 					$result[$i]['lang']	=	$this->Code2Language($locale[0]);
 					$result[$i]['region']	=	$this->Code2Region($locale[1]);
-					$result[$i]['icon']	=	APP_URL."/images/nations/22x14/".strtolower($locale[1]).'.png';
+					$result[$i]['icon']	=	OPENBIZ_APP_URL."/images/nations/22x14/".strtolower($locale[1]).'.png';
 					
 				}
 				else
 				{
 					$result[$i]['lang']	=	$this->Code2Language($locale[0]);
 					$result[$i]['region']	=	$this->Code2Region($locale[0]);
-					$result[$i]['icon']	=	APP_URL."/images/nations/22x14/".strtolower($locale[0]).'.png';
+					$result[$i]['icon']	=	OPENBIZ_APP_URL."/images/nations/22x14/".strtolower($locale[0]).'.png';
 				}
 				$i++;	
 			}
@@ -187,7 +187,7 @@ class LanguageForm extends EasyForm
 	}
 	
 	public function isDefaultLang($lang){
-		if($lang == DEFAULT_LANGUAGE){
+		if($lang == OPENBIZ_DEFAULT_LANGUAGE){
 			return true;
 		}
 		else
@@ -252,11 +252,11 @@ class LanguageForm extends EasyForm
         }
         $locale = explode('_', $selected_lang);
     	if($locale[1]){
-			$recArr['icon']	=	APP_URL."/images/nations/22x14/".strtolower($locale[1]).'.png';
+			$recArr['icon']	=	OPENBIZ_APP_URL."/images/nations/22x14/".strtolower($locale[1]).'.png';
     	}
 		else
 		{
-			$recArr['icon']	=	APP_URL."/images/nations/22x14/".strtolower($locale[0]).'.png';
+			$recArr['icon']	=	OPENBIZ_APP_URL."/images/nations/22x14/".strtolower($locale[0]).'.png';
 		}
 		
 		
@@ -293,7 +293,7 @@ class LanguageForm extends EasyForm
 	    $lang_code = strtolower($locale[0]);
 		
 		//mkdir
-		$lang_dir = APP_HOME.DIRECTORY_SEPARATOR."languages".DIRECTORY_SEPARATOR.$lang;
+		$lang_dir = OPENBIZ_APP_PATH.DIRECTORY_SEPARATOR."languages".DIRECTORY_SEPARATOR.$lang;
 		@mkdir($lang_dir);
 		
 		//clean up array
@@ -344,7 +344,7 @@ public function UpdateLangPack($lang,$recArr){
 		$smarty->assign("author_url", 		$recArr['authorUrl']);
 		$smarty->assign("description",	 	$recArr['description']);
 		$data = $smarty->fetch(BizSystem::getTplFileWithPath("lang.xml.tpl", $this->m_Package));
-		$lang_dir = APP_HOME.DIRECTORY_SEPARATOR."languages".DIRECTORY_SEPARATOR.$lang;
+		$lang_dir = OPENBIZ_APP_PATH.DIRECTORY_SEPARATOR."languages".DIRECTORY_SEPARATOR.$lang;
 		$lang_file = $lang_dir.DIRECTORY_SEPARATOR.$lang.".xml";
 		@unlink($lang_file);
 		file_put_contents($lang_file ,$data);
@@ -356,7 +356,7 @@ public function UpdateLangPack($lang,$recArr){
 	}
 	
 	public function ReadLangPack($lang,&$recArr=array()){		
-		$lang_dir = APP_HOME.DIRECTORY_SEPARATOR."languages".DIRECTORY_SEPARATOR.$lang;
+		$lang_dir = OPENBIZ_APP_PATH.DIRECTORY_SEPARATOR."languages".DIRECTORY_SEPARATOR.$lang;
 		$lang_metafile = $lang_dir.DIRECTORY_SEPARATOR.$lang.".xml";
 		if(is_file($lang_metafile)){
 			$metadata = file_get_contents($lang_metafile);
@@ -375,7 +375,7 @@ public function UpdateLangPack($lang,$recArr){
 	}
 
 	public function DeleteLangPack($lang){		
-		$dir = APP_HOME.DIRECTORY_SEPARATOR."languages".DIRECTORY_SEPARATOR.$lang;
+		$dir = OPENBIZ_APP_PATH.DIRECTORY_SEPARATOR."languages".DIRECTORY_SEPARATOR.$lang;
 		$iterator = new RecursiveDirectoryIterator($dir);
 		   foreach (new RecursiveIteratorIterator($iterator, RecursiveIteratorIterator::CHILD_FIRST) as $file)
 		   {

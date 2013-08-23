@@ -1,6 +1,6 @@
 <?PHP
 
-include_once(OPENBIZ_HOME."/bin/easy/element/ColumnText.php");
+include_once(OPENBIZ_PATH."/bin/easy/element/ColumnText.php");
 
 /**
  * PivotColumnText class is element for pivot column,

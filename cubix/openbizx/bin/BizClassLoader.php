@@ -204,8 +204,8 @@ class BizClassLoader
             }
 
             // search in apphome/modules directory first, search in apphome/bin directory then
-            $classFiles[0] = MODULE_PATH . "/" . $path . "/" . $classFile;
-            $classFiles[1] = APP_HOME . "/bin/" . $path . "/" . $classFile;
+            $classFiles[0] = OPENBIZ_APP_MODULE_PATH . "/" . $path . "/" . $classFile;
+            $classFiles[1] = OPENBIZ_APP_PATH . "/bin/" . $path . "/" . $classFile;
             if ($checkExtModule && defined('MODULE_EX_PATH'))
                 array_unshift($classFiles, MODULE_EX_PATH . "/" . $path . "/" . $classFile);
             foreach ($classFiles as $classFile)

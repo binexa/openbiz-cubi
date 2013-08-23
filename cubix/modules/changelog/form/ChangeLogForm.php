@@ -100,7 +100,7 @@ class ChangeLogForm extends EasyForm
 			return true;
 			
 		$formMetaLite = array(
-			"name" 		=> $this->m_Name,
+			"name" 		=> $this->objectName,
 			"package" 	=> $this->m_Package,
 			"message_file" 	=> $this->m_MessageFile,		
 		);

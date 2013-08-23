@@ -26,7 +26,7 @@ class ArrayListForm extends EasyForm {
                 if (!$element->m_FieldName)
                     continue;
 
-                $value = BizSystem::clientProxy()->getFormInputs($element->m_Name);
+                $value = BizSystem::clientProxy()->getFormInputs($element->objectName);
                 if ($element->m_FuzzySearch == "Y") {
                     $value = "*$value*";
                 }
@@ -49,7 +49,7 @@ class ArrayListForm extends EasyForm {
 
         $this->m_CurrentPage = 1;
 
-        BizSystem::log(LOG_DEBUG, "FORMOBJ", $this->m_Name . "::runSearch(), SearchRule=" . $this->m_SearchRule);
+        BizSystem::log(LOG_DEBUG, "FORMOBJ", $this->objectName . "::runSearch(), SearchRule=" . $this->m_SearchRule);
 
         $recArr = $this->readInputRecord();
 

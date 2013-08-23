@@ -5,11 +5,11 @@
   Copyright (c) 2005-2011, Openbiz Technology LLC
   Version $Id: BackupDeviceListForm.xml 3351 2012-05-31 05:33:35Z rockyswen@gmail.com $
 -->
-<EasyForm Name="BackupDeviceListForm" Class="DeviceForm" Icon="{RESOURCE_URL}/backup/images/icon_backup_list.gif" FormType="List" jsClass="jbForm" Title="Devices and Locations" Description="You can mamange backup files storage device and system locations in this module. " BizDataObj="backup.do.BackupDeviceDO" PageSize="10" DefaultForm="Y" TemplateEngine="Smarty" TemplateFile="grid.tpl" EventName="" MessageFile="backup_device_msg.ini" Access="backup.Access_Backup">
+<EasyForm Name="BackupDeviceListForm" Class="DeviceForm" Icon="{OPENBIZ_RESOURCE_URL}/backup/images/icon_backup_list.gif" FormType="List" jsClass="jbForm" Title="Devices and Locations" Description="You can mamange backup files storage device and system locations in this module. " BizDataObj="backup.do.BackupDeviceDO" PageSize="10" DefaultForm="Y" TemplateEngine="Smarty" TemplateFile="grid.tpl" EventName="" MessageFile="backup_device_msg.ini" Access="backup.Access_Backup">
     <DataPanel>        
         <Element Name="row_selections" Class="RowCheckbox"  Label="" FieldName="Id"/>        
         <Element Name="fld_Id" Class="Hidden" Hidden="Y" FieldName="Id" Label="ID" Sortable="Y" AllowURLParam="N" />
-        <Element Name="fld_system"   Class="ColumnBool" TrueImg="{RESOURCE_URL}/backup/images/icon_type_system.png" FalseImg="{RESOURCE_URL}/backup/images/icon_type_user.png" FieldName="system" Label="Type"  Sortable="Y" AllowURLParam="N" Translatable="N" OnEventLog="N" />
+        <Element Name="fld_system"   Class="ColumnBool" TrueImg="{OPENBIZ_RESOURCE_URL}/backup/images/icon_type_system.png" FalseImg="{OPENBIZ_RESOURCE_URL}/backup/images/icon_type_user.png" FieldName="system" Label="Type"  Sortable="Y" AllowURLParam="N" Translatable="N" OnEventLog="N" />
         
         <Element Name="fld_name" Class="ColumnText" FieldName="name" Label="Name"  Sortable="Y" AllowURLParam="N" Translatable="N" OnEventLog="N" Link="javascript:">         
          	<EventHandler Name="fld_Id_onclick" Event="onclick" Function="SwitchForm(backup.form.BackupDeviceDetailForm,{@:Elem[fld_Id].Value})"   />

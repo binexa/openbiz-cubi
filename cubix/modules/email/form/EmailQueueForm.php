@@ -17,9 +17,9 @@ class EmailQueueForm extends EasyForm
 	public function SendAllPendingEmails()
 	{
 //       if ($this->m_Resource != "" && !$this->allowAccess($this->m_Resource.".sendemail"))
-//            return BizSystem::clientProxy()->redirectView(ACCESS_DENIED_VIEW);		
+//            return BizSystem::clientProxy()->redirectView(OPENBIZ_ACCESS_DENIED_VIEW);		
             
-		$emailSvc = BizSystem::getService(USER_EMAIL_SERVICE);
+		$emailSvc = BizSystem::getService(CUBI_USER_EMAIL_SERVICE);
 		$emailSvc->sendEmailFromQueue();
 		$this->runEventLog();
 		$this->rerender();
@@ -29,7 +29,7 @@ class EmailQueueForm extends EasyForm
 	public function sendEmails()
 	{
 //       if ($this->m_Resource != "" && !$this->allowAccess($this->m_Resource.".sendemail"))
-//            return BizSystem::clientProxy()->redirectView(ACCESS_DENIED_VIEW);
+//            return BizSystem::clientProxy()->redirectView(OPENBIZ_ACCESS_DENIED_VIEW);
 
         if ($id==null || $id=='')
             $id = BizSystem::clientProxy()->getFormInputs('_selectedId');
@@ -38,7 +38,7 @@ class EmailQueueForm extends EasyForm
         if ($selIds == null)
             $selIds[] = $id;
 
-        $emailSvc = BizSystem::getService(USER_EMAIL_SERVICE);
+        $emailSvc = BizSystem::getService(CUBI_USER_EMAIL_SERVICE);
 
         foreach ($selIds as $id)
         {            
@@ -63,7 +63,7 @@ class EmailQueueForm extends EasyForm
 	public function deleteAllEmails()
 	{
        if ($this->m_Resource != "" && !$this->allowAccess($this->m_Resource.".delete"))
-            return BizSystem::clientProxy()->redirectView(ACCESS_DENIED_VIEW);
+            return BizSystem::clientProxy()->redirectView(OPENBIZ_ACCESS_DENIED_VIEW);
 
         try
         {
@@ -87,7 +87,7 @@ class EmailQueueForm extends EasyForm
 	public function deleteSentEmails()
 	{
        if ($this->m_Resource != "" && !$this->allowAccess($this->m_Resource.".delete"))
-            return BizSystem::clientProxy()->redirectView(ACCESS_DENIED_VIEW);
+            return BizSystem::clientProxy()->redirectView(OPENBIZ_ACCESS_DENIED_VIEW);
 
         try
         {

@@ -120,7 +120,7 @@ class HTMLPreview extends Element
             return "";
 
         $style = $this->getStyle();
-        $id = $this->m_Name;
+        $id = $this->objectName;
         $func = $this->getFunction();
 
         if ($this->m_Translatable == 'Y')
@@ -144,7 +144,7 @@ class HTMLPreview extends Element
         if ($value!=null)
         {
         	$header = "
-        	<head><link href=\"".JS_URL."/ckeditor/contents.css\" rel=\"stylesheet\" type=\"text/css\"></head>
+        	<head><link href=\"".OPENBIZ_JS_URL."/ckeditor/contents.css\" rel=\"stylesheet\" type=\"text/css\"></head>
         	";
            $sHTML = "
            			<script>".$id."_data=".json_encode($header.$value)."</script>

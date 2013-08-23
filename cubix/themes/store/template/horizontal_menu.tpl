@@ -13,7 +13,7 @@
 			{assign var=menu_class value="" }
 	    {/if}	
 		<a class="{$menu_class}" href="{if $item->m_URL and false}{$item->m_URL}{else}#{/if}">
-			<img class="{$item->m_IconCSSClass}" src="{$image_url}/{if $item->m_IconImage!=''}{$item->m_IconImage}{else}spacer.gif{/if}" />{$item->m_Name}
+			<img class="{$item->m_IconCSSClass}" src="{$image_url}/{if $item->m_IconImage!=''}{$item->m_IconImage}{else}spacer.gif{/if}" />{$item->objectName}
 		</a>	
 		{if $item->m_ChildNodes|@count > 0}
 		<ul class="secondlevel module" {if $menu_class eq 'current'}style="display:block;"{/if}>
@@ -29,7 +29,7 @@
 			{else}
 				{assign var=submenu_class value="" }
 		    {/if}					
-				<li><a class="{$submenu_class}" href="{$subitem->m_URL}">{$subitem->m_Name}</a></li>						
+				<li><a class="{$submenu_class}" href="{$subitem->m_URL}">{$subitem->objectName}</a></li>						
 		{/foreach}	
 		</ul>
 		{/if}

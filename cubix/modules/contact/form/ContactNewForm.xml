@@ -46,7 +46,7 @@
 	</DataPanel>
     <ActionPanel>
         <Element Name="btn_save" Class="Button" Text="Save" CssClass="button_gray_m">
-            <EventHandler Name="save_onclick" EventLogMsg="" Event="onclick" Function="InsertRecord()" RedirectPage="{APP_INDEX}/contact/contact_detail/{@contact.do.ContactDO:Field[Id].Value}"  ShortcutKey="Enter" ContextMenu="Save" />
+            <EventHandler Name="save_onclick" EventLogMsg="" Event="onclick" Function="InsertRecord()" RedirectPage="{OPENBIZ_APP_INDEX_URL}/contact/contact_detail/{@contact.do.ContactDO:Field[Id].Value}"  ShortcutKey="Enter" ContextMenu="Save" />
         </Element>
         <Element Name="btn_cancel" Class="Button" Text="Cancel" CssClass="button_gray_m">
             <EventHandler Name="cancel_onclick" Event="onclick" Function="js:history.go(-1)"  ShortcutKey="Escape" ContextMenu="Cancel"/>

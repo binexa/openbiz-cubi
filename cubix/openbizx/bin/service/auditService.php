@@ -81,7 +81,7 @@ class auditService
             $profile = BizSystem::getUserProfile();
             $recArr['DataObjName'] = $dataObjName;
             $recArr['ObjectId'] = $srcDataObj->getFieldValue("Id");
-            $recArr['FieldName'] = $field->m_Name;
+            $recArr['FieldName'] = $field->objectName;
             $recArr['OldValue'] = $field->m_OldValue;
             $recArr['NewValue'] = $field->m_Value;
             $recArr['ChangeTime'] = date("Y-m-d H:i:s");

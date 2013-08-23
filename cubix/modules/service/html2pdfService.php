@@ -51,7 +51,7 @@ class html2pdfService
         $dompdf = new DOMPDF();
         $this->pdfObj->set_protocol("http://");
         $this->pdfObj->set_host("localhost");
-		$this->pdfObj->set_base_path(APP_HOME);
+		$this->pdfObj->set_base_path(OPENBIZ_APP_PATH);
         $this->pdfObj->load_html($html);
         //$dompdf->set_paper($_POST["paper"], $_POST["orientation"]);
         $this->pdfObj->render();
@@ -62,7 +62,7 @@ class html2pdfService
     function Output($dompdf)
     {
         //$tmpfile = getcwd()."/tmpfiles";
-        $tmpfile = APP_HOME."/tmpfiles";
+        $tmpfile = OPENBIZ_APP_PATH."/tmpfiles";
         //echo $tmpfile;
         $this->CleanFiles($tmpfile, 100);
         //Determine a temporary file name in the current directory

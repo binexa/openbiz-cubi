@@ -28,7 +28,7 @@ class PaymentService
 	{
 		$providerRec = BizSystem::getObject($this->m_ProviderDO)->fetchOne("[type]='$type'");
 		$driver = $providerRec['driver'];
-		$driverFile = MODULE_PATH.'/'.str_replace(".", "/", $driver).'.php';
+		$driverFile = OPENBIZ_APP_MODULE_PATH.'/'.str_replace(".", "/", $driver).'.php';
 		$driverName = explode(".", $driver);
 		$driverName = $driverName[count($driverName)-1];
 		

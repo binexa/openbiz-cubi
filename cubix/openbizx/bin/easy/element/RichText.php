@@ -36,7 +36,7 @@ class RichText extends InputElement
     {
         BizSystem::clientProxy()->includeRTEScripts();
         
-        $elementName = $this->m_Name;
+        $elementName = $this->objectName;
         $elementNameAndContainer = $elementName."_container";
         $value = $this->getValue();
         $style = $this->getStyle();

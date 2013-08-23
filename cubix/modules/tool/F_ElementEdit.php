@@ -12,18 +12,18 @@ class F_ElementEdit extends EasyForm
         parent::getSessionVars($sessCtxt);
         
         if (!$_GET['metaName']) 
-            $sessCtxt->getObjVar($this->m_Name, "MetaFile", $this->m_MetaFile);
+            $sessCtxt->getObjVar($this->objectName, "MetaFile", $this->m_MetaFile);
         else {
-        	$metaFile = MODULE_PATH."/".str_replace(".","/",$_GET['metaName']).".xml";
+        	$metaFile = OPENBIZ_APP_MODULE_PATH."/".str_replace(".","/",$_GET['metaName']).".xml";
         	$this->m_MetaFile = $metaFile;
         }
         if (!$_GET['elemPath']) 
-            $sessCtxt->getObjVar($this->m_Name, "ElemPath", $this->m_ElemPath);
+            $sessCtxt->getObjVar($this->objectName, "ElemPath", $this->m_ElemPath);
         else
             $this->m_ElemPath = $this->adjustElemPath($_GET['elemPath']);
         //echo $_GET['elemPath'].','.$this->m_ElemPath; exit;
         if (!$_GET['attrName']) 
-            $sessCtxt->getObjVar($this->m_Name, "AttrName", $this->m_AttrName);
+            $sessCtxt->getObjVar($this->objectName, "AttrName", $this->m_AttrName);
         else
             $this->m_AttrName = $_GET['attrName'];
     }
@@ -44,9 +44,9 @@ class F_ElementEdit extends EasyForm
     public function setSessionVars($sessCtxt) 
     {
         parent::setSessionVars($sessCtxt);
-        $sessCtxt->setObjVar($this->m_Name, "MetaFile", $this->m_MetaFile);
-        $sessCtxt->setObjVar($this->m_Name, "ElemPath", $this->m_ElemPath);
-        $sessCtxt->setObjVar($this->m_Name, "AttrName", $this->m_AttrName);
+        $sessCtxt->setObjVar($this->objectName, "MetaFile", $this->m_MetaFile);
+        $sessCtxt->setObjVar($this->objectName, "ElemPath", $this->m_ElemPath);
+        $sessCtxt->setObjVar($this->objectName, "AttrName", $this->m_AttrName);
     }
     
     public function getCurrentElement()
@@ -109,7 +109,7 @@ class F_ElementEdit extends EasyForm
         }
                     
         // get the xml element with xpath xpath('//element[@Name="fld_Id"]')
-        //$this->m_XmlFile = MODULE_PATH."/".str_replace(".","/",$this->m_MetaName).".xml";
+        //$this->m_XmlFile = OPENBIZ_APP_MODULE_PATH."/".str_replace(".","/",$this->m_MetaName).".xml";
         $this->m_XmlFile = $this->m_MetaFile;
         if (!file_exists($this->m_XmlFile)) 
             return null;
@@ -161,7 +161,7 @@ class F_ElementEdit extends EasyForm
     {
         if ($this->m_Doc) 
             return $this->m_Doc;
-        //$this->m_XmlFile = MODULE_PATH."/".str_replace(".","/",$this->m_MetaName).".xml";
+        //$this->m_XmlFile = OPENBIZ_APP_MODULE_PATH."/".str_replace(".","/",$this->m_MetaName).".xml";
         $this->m_XmlFile = $this->m_MetaFile;
         
         if (!file_exists($this->m_XmlFile)) 

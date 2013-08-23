@@ -11,7 +11,7 @@
  * @version   $Id: SystemLoadHandler.php 3372 2012-05-31 06:19:06Z rockyswen@gmail.com $
  */
 
-include_once (MODULE_PATH."/system/lib/ModuleLoadHandler.php");
+include_once (OPENBIZ_APP_MODULE_PATH."/system/lib/ModuleLoadHandler.php");
 
 class SystemLoadHandler implements ModuleLoadHandler
 {

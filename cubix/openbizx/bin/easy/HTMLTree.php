@@ -45,9 +45,9 @@ class HTMLTree extends MetaObject implements iUIControl
      */
     protected function readMetadata(&$xmlArr)
     {
-        $this->m_Name = $xmlArr["TREE"]["ATTRIBUTES"]["NAME"];
+        $this->objectName = $xmlArr["TREE"]["ATTRIBUTES"]["NAME"];
         $this->m_Package = $xmlArr["TREE"]["ATTRIBUTES"]["PACKAGE"];
-        $this->m_Class = $xmlArr["TREE"]["ATTRIBUTES"]["CLASS"];
+        $this->className = $xmlArr["TREE"]["ATTRIBUTES"]["CLASS"];
 
         $this->m_NodesXml = $xmlArr["TREE"]["NODE"];
     }
@@ -143,13 +143,13 @@ class HTMLTree extends MetaObject implements iUIControl
     
     protected function translate($caption)
     {
-    	$module = $this->getModuleName($this->m_Name);
+    	$module = $this->getModuleName($this->objectName);
    		return I18n::t($caption, $this->getTransKey(caption), $module);
     }
     
     protected function getTransKey($name)
     {
-    	$shortFormName = substr($this->m_Name,intval(strrpos($this->m_Name,'.'))+1);
+    	$shortFormName = substr($this->objectName,intval(strrpos($this->objectName,'.'))+1);
     	return strtoupper($shortFormName.'_'.$name);
     }
 }

@@ -29,7 +29,7 @@ class LangPackCreator
     {
     	$result = array();
     	
-    	$lang_dir = APP_HOME.DIRECTORY_SEPARATOR."languages".DIRECTORY_SEPARATOR.$this->lang;
+    	$lang_dir = OPENBIZ_APP_PATH.DIRECTORY_SEPARATOR."languages".DIRECTORY_SEPARATOR.$this->lang;
 		if(!is_dir($lang_dir)){
 			if(CLI){
 				echo "Create language directory: $lang".PHP_EOL;
@@ -42,7 +42,7 @@ class LangPackCreator
 			if (strpos($this->module, 'themes/') === 0) {
 				$parts = explode("/", $this->module);
 				$theme_name = $parts[1];
-				$dir = APP_HOME.DIRECTORY_SEPARATOR."themes/$theme_name";
+				$dir = OPENBIZ_APP_PATH.DIRECTORY_SEPARATOR."themes/$theme_name";
 				$strings = $this->getStringsFromTemplate("$theme_name",$dir);
 				$theme_strings[strtoupper($theme_name)]["TEMPLATE"]=$strings;  
 			}
@@ -50,9 +50,9 @@ class LangPackCreator
 		if ($this->systemOnly == false && strpos($this->module, 'themes/') === false) {
 	    	//load modules strings
 	    	$module_strings= array();
-	    	foreach (glob(MODULE_PATH.DIRECTORY_SEPARATOR.$this->module,GLOB_ONLYDIR) as $dir)
+	    	foreach (glob(OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR.$this->module,GLOB_ONLYDIR) as $dir)
 	    	{
-	    		$module_name = str_replace(MODULE_PATH.DIRECTORY_SEPARATOR,"",$dir);
+	    		$module_name = str_replace(OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR,"",$dir);
 	    		array_push($result,"Module: ".ucfirst($module_name));
 	    		if(CLI){
 					echo "Module: ".ucfirst($module_name).PHP_EOL;
@@ -143,7 +143,7 @@ class LangPackCreator
 		if ($this->systemOnly == false && isset($arr["Module"])) {	
 			foreach($arr["Module"] as $key=>$value){  
 				$module_name = strtolower($key);
-				$module_filename =  APP_HOME.DIRECTORY_SEPARATOR."languages".DIRECTORY_SEPARATOR.$this->lang.DIRECTORY_SEPARATOR."mod.".$module_name.".ini";
+				$module_filename =  OPENBIZ_APP_PATH.DIRECTORY_SEPARATOR."languages".DIRECTORY_SEPARATOR.$this->lang.DIRECTORY_SEPARATOR."mod.".$module_name.".ini";
 				 
 				if(is_file($module_filename)){
 					$strArr = parse_ini_file($module_filename,true);
@@ -164,7 +164,7 @@ class LangPackCreator
 		if ($this->systemOnly == false && isset($arr["Theme"])) {	
 			foreach($arr["Theme"] as $key=>$value){  
 				$theme_name = strtolower($key);
-				$theme_filename =  APP_HOME.DIRECTORY_SEPARATOR."languages".DIRECTORY_SEPARATOR.$this->lang.DIRECTORY_SEPARATOR."theme.".$theme_name.".ini";
+				$theme_filename =  OPENBIZ_APP_PATH.DIRECTORY_SEPARATOR."languages".DIRECTORY_SEPARATOR.$this->lang.DIRECTORY_SEPARATOR."theme.".$theme_name.".ini";
 				 
 				if(is_file($theme_name)){
 					$strArr = parse_ini_file($theme_name,true);
@@ -187,7 +187,7 @@ class LangPackCreator
 		if ($this->systemOnly) {
 			//load menu.ini
 			$module_name = "SYSTEM_MENU";
-			$module_filename =  APP_HOME.DIRECTORY_SEPARATOR."languages".DIRECTORY_SEPARATOR.$this->lang.DIRECTORY_SEPARATOR."menu.ini";		
+			$module_filename =  OPENBIZ_APP_PATH.DIRECTORY_SEPARATOR."languages".DIRECTORY_SEPARATOR.$this->lang.DIRECTORY_SEPARATOR."menu.ini";		
 			if(is_file($module_filename)){
 				$strArr = parse_ini_file($module_filename);
 				if(is_array($arr["Menu"])){
@@ -201,7 +201,7 @@ class LangPackCreator
 	
 	    	//load acl.ini
 			$module_name = "SYSTEM_ACL";
-			$module_filename =  APP_HOME.DIRECTORY_SEPARATOR."languages".DIRECTORY_SEPARATOR.$this->lang.DIRECTORY_SEPARATOR."acl.ini";		
+			$module_filename =  OPENBIZ_APP_PATH.DIRECTORY_SEPARATOR."languages".DIRECTORY_SEPARATOR.$this->lang.DIRECTORY_SEPARATOR."acl.ini";		
 			if(is_file($module_filename)){
 				$strArr = parse_ini_file($module_filename);
 				if(is_array($arr["Menu"])){
@@ -215,7 +215,7 @@ class LangPackCreator
 			
 			//load system.ini
 			$module_name = "SYSTEM";
-			$module_filename =  APP_HOME.DIRECTORY_SEPARATOR."languages".DIRECTORY_SEPARATOR.$this->lang.DIRECTORY_SEPARATOR."system.ini";		
+			$module_filename =  OPENBIZ_APP_PATH.DIRECTORY_SEPARATOR."languages".DIRECTORY_SEPARATOR.$this->lang.DIRECTORY_SEPARATOR."system.ini";		
 			if(is_file($module_filename)){
 			$strArr = parse_ini_file($module_filename,1);
 				foreach($strArr as $key=>$value){
@@ -242,7 +242,7 @@ class LangPackCreator
     	if ($this->systemOnly == false && isset($arr["Module"])) {	
 	    	foreach($arr["Module"] as $key=>$value){    		
 	    		$module_name = strtolower($key);
-	    		$module_filename =  APP_HOME.DIRECTORY_SEPARATOR."languages".DIRECTORY_SEPARATOR.$this->lang.DIRECTORY_SEPARATOR."mod.".$module_name.".ini";
+	    		$module_filename =  OPENBIZ_APP_PATH.DIRECTORY_SEPARATOR."languages".DIRECTORY_SEPARATOR.$this->lang.DIRECTORY_SEPARATOR."mod.".$module_name.".ini";
 	    		$file_data="";
 	    		foreach ($value as $section=>$data){
 	    			$file_data .= "[$section]\n";
@@ -263,7 +263,7 @@ class LangPackCreator
 		if ($this->systemOnly == false && isset($arr["Theme"])) {	
 			foreach($arr["Theme"] as $key=>$value){    		
 	    		$theme_name = strtolower($key);
-	    		$theme_filename =  APP_HOME.DIRECTORY_SEPARATOR."languages".DIRECTORY_SEPARATOR.$this->lang.DIRECTORY_SEPARATOR."theme.".$theme_name.".ini";
+	    		$theme_filename =  OPENBIZ_APP_PATH.DIRECTORY_SEPARATOR."languages".DIRECTORY_SEPARATOR.$this->lang.DIRECTORY_SEPARATOR."theme.".$theme_name.".ini";
 	    		$file_data="";
 	    		foreach ($value as $section=>$data){
 	    			$file_data .= "[$section]\n";
@@ -286,7 +286,7 @@ class LangPackCreator
 		if ($this->systemOnly) {
 	    	//generate menu.ini
 	    	$module_name = "SYSTEM_MENU";
-	    	$module_filename =  APP_HOME.DIRECTORY_SEPARATOR."languages".DIRECTORY_SEPARATOR.$this->lang.DIRECTORY_SEPARATOR."menu.ini";
+	    	$module_filename =  OPENBIZ_APP_PATH.DIRECTORY_SEPARATOR."languages".DIRECTORY_SEPARATOR.$this->lang.DIRECTORY_SEPARATOR."menu.ini";
 	    	$file_data="[MENU]\n";
 	    	if(is_array($arr["Menu"])){
 		    	foreach ($arr["Menu"] as $string_name=>$string_value){
@@ -304,7 +304,7 @@ class LangPackCreator
 	    	
 	    	//generate acl.ini
 	    	$module_name = "SYSTEM_ACL";
-	    	$module_filename =  APP_HOME.DIRECTORY_SEPARATOR."languages".DIRECTORY_SEPARATOR.$this->lang.DIRECTORY_SEPARATOR."acl.ini";
+	    	$module_filename =  OPENBIZ_APP_PATH.DIRECTORY_SEPARATOR."languages".DIRECTORY_SEPARATOR.$this->lang.DIRECTORY_SEPARATOR."acl.ini";
 	    	$file_data="[ACL]\n";
 	    	if(is_array($arr["ACL"])){
 		    	foreach ($arr["ACL"] as $string_name=>$string_value){
@@ -321,7 +321,7 @@ class LangPackCreator
 	    	
 	    	//generate system.ini
 	    	$module_name = "SYSTEM";
-	    	$module_filename =  APP_HOME.DIRECTORY_SEPARATOR."languages".DIRECTORY_SEPARATOR.$this->lang.DIRECTORY_SEPARATOR."system.ini";
+	    	$module_filename =  OPENBIZ_APP_PATH.DIRECTORY_SEPARATOR."languages".DIRECTORY_SEPARATOR.$this->lang.DIRECTORY_SEPARATOR."system.ini";
 	    	$file_data="";
 	    	foreach($arr['System'] as $section=>$strArr)
 	    	{
@@ -394,7 +394,7 @@ class LangPackCreator
 				echo "Translation System strings:".PHP_EOL;
 			}
 			$module_name = "SYSTEM";
-			$module_filename =  APP_HOME.DIRECTORY_SEPARATOR."languages".DIRECTORY_SEPARATOR.$this->lang.DIRECTORY_SEPARATOR."system.ini";		
+			$module_filename =  OPENBIZ_APP_PATH.DIRECTORY_SEPARATOR."languages".DIRECTORY_SEPARATOR.$this->lang.DIRECTORY_SEPARATOR."system.ini";		
 			if(is_file($module_filename)){
 				//$strArr = parse_ini_file($module_filename,1);
 				//foreach($strArr as $key=>$value){
@@ -570,11 +570,11 @@ class LangPackCreator
     private function getStringsFromXml($module)
     {
     	$strings = array();
-    	$dir = MODULE_PATH.DIRECTORY_SEPARATOR.$module;
+    	$dir = OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR.$module;
     	$filelist = $this->getFileList($dir,".xml");
     	libxml_use_internal_errors(true);
     	foreach($filelist as $file){
-    		$fileArr = explode(DIRECTORY_SEPARATOR,str_replace(MODULE_PATH.DIRECTORY_SEPARATOR,"",$file));
+    		$fileArr = explode(DIRECTORY_SEPARATOR,str_replace(OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR,"",$file));
     		$prefix = "";
     		for($i=1;$i<count($fileArr)-1; $i++)
     		{
@@ -583,7 +583,7 @@ class LangPackCreator
     		
     		$shortFileName = str_replace($dir.DIRECTORY_SEPARATOR,"",$file);
     		if(CLI){
-				echo "   Analyst XML File : ".str_replace(MODULE_PATH.DIRECTORY_SEPARATOR,"",$file)." ".PHP_EOL;
+				echo "   Analyst XML File : ".str_replace(OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR,"",$file)." ".PHP_EOL;
 			}
 			
     		$xml = simplexml_load_file($file);
@@ -679,13 +679,13 @@ class LangPackCreator
     private function getStringsFromMsg($module,$dir=null)
     {
     	if(!$dir){
-    		$dir = MODULE_PATH.DIRECTORY_SEPARATOR.$module;
+    		$dir = OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR.$module;
     	}
     	$filelist = $this->getFileList($dir,"((.msg)|(.ini))"); 
     	$strings=array(); 
     	foreach($filelist as $file){
     		if(CLI){
-				echo "   Analyst Message File: ".str_replace(APP_HOME.DIRECTORY_SEPARATOR,"",str_replace(MODULE_PATH.DIRECTORY_SEPARATOR,"",$file))." ".PHP_EOL;
+				echo "   Analyst Message File: ".str_replace(OPENBIZ_APP_PATH.DIRECTORY_SEPARATOR,"",str_replace(OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR,"",$file))." ".PHP_EOL;
 			}			
 			$iniArr = parse_ini_file($file);	    		
     		$strings = array_merge($strings,$iniArr);
@@ -704,13 +704,13 @@ class LangPackCreator
 		// smarty command
 		$cmd = preg_quote('t');
 		if(!$dir){
-     		$dir = MODULE_PATH.DIRECTORY_SEPARATOR.$module;
+     		$dir = OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR.$module;
 		}
     	$filelist = $this->getFileList($dir,"((tpl)|(html)|(htm))");   	
     	$strings=array(); 
     	foreach($filelist as $file){
     		if(CLI){
-				echo "   Analyst Template File: ".str_replace(APP_HOME.DIRECTORY_SEPARATOR,"",str_replace(MODULE_PATH.DIRECTORY_SEPARATOR,"",$file))." ".PHP_EOL;
+				echo "   Analyst Template File: ".str_replace(OPENBIZ_APP_PATH.DIRECTORY_SEPARATOR,"",str_replace(OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR,"",$file))." ".PHP_EOL;
 			}			
     			$content = @file_get_contents($file);
 				if (empty($content)) {
@@ -772,26 +772,26 @@ class LangPackCreator
     private function getStringsFromSystem()
     {
     	$strings = array();
-    	$dir = APP_HOME.DIRECTORY_SEPARATOR."messages";
+    	$dir = OPENBIZ_APP_PATH.DIRECTORY_SEPARATOR."messages";
     	$strings["MESSAGE"] = $this->getStringsFromMsg("SYSTEM",$dir);
     	
     	// scan message from openbiz message folder
     	$obStrings = $this->getMsgsFromOpenbiz();
     	$strings["MESSAGE"] = array_merge($strings["MESSAGE"],$obStrings);
     	
-    	$dir = APP_HOME.DIRECTORY_SEPARATOR."themes";
+    	$dir = OPENBIZ_APP_PATH.DIRECTORY_SEPARATOR."themes";
     	$strings["TEMPLATES"] = $this->getStringsFromTemplate("SYSTEM",$dir);
     	return $strings;
     }
     
 	private function getMsgsFromOpenbiz()
 	{
-		$messageDir = OPENBIZ_HOME.DIRECTORY_SEPARATOR."messages";
+		$messageDir = OPENBIZ_PATH.DIRECTORY_SEPARATOR."messages";
 		$filelist = $this->getFileList($messageDir,".msg"); 
     	$strings=array(); 
     	foreach($filelist as $file){
     		if(CLI){
-				echo "   Analyst Message File: ".str_replace(OPENBIZ_HOME.DIRECTORY_SEPARATOR,"",$file)." ".PHP_EOL;
+				echo "   Analyst Message File: ".str_replace(OPENBIZ_PATH.DIRECTORY_SEPARATOR,"",$file)." ".PHP_EOL;
 			}
 			$content = @file_get_contents($file);	
     		if (empty($content)) {			

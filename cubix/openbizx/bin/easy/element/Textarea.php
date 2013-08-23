@@ -47,18 +47,18 @@ class Textarea extends OptionElement
         $disabledStr = ($this->getEnabled() == "N") ? "DISABLED=\"true\"" : "";
         $style = $this->getStyle();
         $func = $this->getFunction(); 
-    	if($formobj->m_Errors[$this->m_Name]){
+    	if($formobj->m_Errors[$this->objectName]){
 			$func .= "onchange=\"this.className='$this->m_cssClass'\"";
 		}else{
 			$func .= "onfocus=\"this.className='$this->m_cssFocusClass'\" onblur=\"this.className='$this->m_cssClass'\"";
 		}        
-        $sHTML .= "<TEXTAREA NAME=\"" . $this->m_Name . "\" ID=\"" . $this->m_Name ."\" $disabledStr $this->m_HTMLAttr $style $func>".$this->m_Value."</TEXTAREA>";        
+        $sHTML .= "<TEXTAREA NAME=\"" . $this->objectName . "\" ID=\"" . $this->objectName ."\" $disabledStr $this->m_HTMLAttr $style $func>".$this->m_Value."</TEXTAREA>";        
     	
         if($this->m_SelectFrom){
         	$fromList = array();
 	        $this->getFromList($fromList);
 	        $valueArray = explode(',', $this->m_Value);
-	        $sHTML .= "<UL ID=\"" . $this->m_Name ."_suggestion\" class=\"input_textarea_suggestion\" >";
+	        $sHTML .= "<UL ID=\"" . $this->objectName ."_suggestion\" class=\"input_textarea_suggestion\" >";
 	        if ($this->m_BlankOption) // ADD a blank option
 	        {
 	            $entry = explode(",",$this->m_BlankOption);
@@ -70,7 +70,7 @@ class Textarea extends OptionElement
 	        
 	        foreach ($fromList as $option)
 	        {            
-	            $sHTML .= "<LI><A href=\"javascript:;\" onclick=\"$('".$this->m_Name."').value+='".$option['val']."'\" >".$option['txt']."</A></LI>";        	
+	            $sHTML .= "<LI><A href=\"javascript:;\" onclick=\"$('".$this->objectName."').value+='".$option['val']."'\" >".$option['txt']."</A></LI>";        	
 	        }
 	        $sHTML .= "</UL>";
         }

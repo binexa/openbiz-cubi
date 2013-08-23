@@ -19,7 +19,7 @@
         	<EventHandler Name="fld_sortorder_up" Event="onclick" EventLogMsg="" Function="UpdateFieldValue({@:Elem[fld_Id].Value},fld_sortorder,{@:Elem[fld_sortorder].Value-5})" />
         	<EventHandler Name="fld_sortorder_down" Event="onclick" EventLogMsg="" Function="UpdateFieldValue({@:Elem[fld_Id].Value},fld_sortorder,{@:Elem[fld_sortorder].Value+5})" />
         </Element>  
-        <Element Name="fld_config" Class="ColumnBool" FieldName="configable" link="javascript:;" TrueImg="{RESOURCE_URL}/myaccount/images/icon_config_enable.gif" FalseImg="{RESOURCE_URL}/myaccount/images/icon_config_disable.gif" Sortable="Y" Label="Config">
+        <Element Name="fld_config" Class="ColumnBool" FieldName="configable" link="javascript:;" TrueImg="{OPENBIZ_RESOURCE_URL}/myaccount/images/icon_config_enable.gif" FalseImg="{OPENBIZ_RESOURCE_URL}/myaccount/images/icon_config_disable.gif" Sortable="Y" Label="Config">
         	<EventHandler Name="fld_config_onclick" Event="onclick" EventLogMsg="" Function="ConfigWidget({@:Elem[fld_Id].Value})" />
         </Element>
     </DataPanel>

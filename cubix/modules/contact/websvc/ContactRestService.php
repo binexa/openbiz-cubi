@@ -1,6 +1,6 @@
 <?php
 
-include_once MODULE_PATH.'/websvc/lib/RestService.php';
+include_once OPENBIZ_APP_MODULE_PATH.'/websvc/lib/RestService.php';
 
 class ContactRestService extends RestService
 {

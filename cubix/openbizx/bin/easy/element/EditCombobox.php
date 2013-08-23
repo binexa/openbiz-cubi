@@ -84,9 +84,9 @@ class EditCombobox extends OptionElement
         $disabledStr = ($this->getEnabled() == "N") ? "disabled=\"true\"" : "";
         $style = $this->getStyle();
         $func = $this->getFunction();
-        $selName = $this->m_Name . "_sel";
+        $selName = $this->objectName . "_sel";
         //$onchange = "onchange=\"$('$inputName').value=this.value;".$this->m_Onchange."\"";
-        $onChange = "onchange=\"$('$this->m_Name').value=this.value; $('$this->m_Name').triggerEvent('change');\" $func";
+        $onChange = "onchange=\"$('$this->objectName').value=this.value; $('$this->objectName').triggerEvent('change');\" $func";
 
         $sHTML = "<div $style>\n";
         $sHTML .= "<select name=\"" . $selName . "\" id=\"" . $selName ."\" $disabledStr $this->m_HTMLAttr $onChange>\n";
@@ -120,7 +120,7 @@ class EditCombobox extends OptionElement
             $selVal = $this->m_Value?$this->m_Value:$this->getDefaultValue();
 
         $sHTML .= "</select>\n";
-        $sHTML .= "<div><input id=\"$this->m_Name\" name=\"$this->m_Name\" type=\"text\" value=\"$selVal\" $func/></div>\n";
+        $sHTML .= "<div><input id=\"$this->objectName\" name=\"$this->objectName\" type=\"text\" value=\"$selVal\" $func/></div>\n";
         $sHTML .= "</div>\n";
 
         return $sHTML;

@@ -16,7 +16,7 @@ class ColumnSorting extends ColumnText
             return "";
 
         $style = $this->getStyle();
-        $id = $this->m_Name;
+        $id = $this->objectName;
 
         if ($this->m_Translatable == 'Y')
             $value = $this->translateString($value);
@@ -65,7 +65,7 @@ class ColumnSorting extends ColumnText
 	}
 	
 	public function getBtnFunction($event_name){
-        $name = $this->m_Name;
+        $name = $this->objectName;
         // loop through the event handlers
         $func = "";
 
@@ -75,7 +75,7 @@ class ColumnSorting extends ColumnText
         
         $eventHandler = $this->m_EventHandlers->get($event_name);
                 
-        $ehName = $eventHandler->m_Name;
+        $ehName = $eventHandler->objectName;
         $event = $eventHandler->m_Event;
         $type = $eventHandler->m_FunctionType;
         if (!$event) return;

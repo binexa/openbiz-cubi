@@ -53,18 +53,18 @@ class BarcodeScanner extends InputElement
         $func = $this->getFunction();
         
         $formobj = $this->GetFormObj();
-    	if($formobj->m_Errors[$this->m_Name]){
+    	if($formobj->m_Errors[$this->objectName]){
 			$func .= "onchange=\"this.className='$this->m_cssClass'\"";
 		}else{
 			$func .= "onfocus=\"this.className='$this->m_cssFocusClass'\" onblur=\"this.className='$this->m_cssClass'\"";
 		}        
         
-		$sHTML = " <div id=\"" . $this->m_Name . "_reader\" $disabledStr $this->m_HTMLAttr $style $func >
-        				<span class=\"barcode\" ID=\"" . $this->m_Name ."_code\" >$value</span>
-        				<div style=\"display:none;\" ><input ReadOnly=\"Enabled\" type=\"hidden\" NAME=\"" . $this->m_Name . "\" ID=\"" . $this->m_Name ."\" VALUE=\"\" /></div>
+		$sHTML = " <div id=\"" . $this->objectName . "_reader\" $disabledStr $this->m_HTMLAttr $style $func >
+        				<span class=\"barcode\" ID=\"" . $this->objectName ."_code\" >$value</span>
+        				<div style=\"display:none;\" ><input ReadOnly=\"Enabled\" type=\"hidden\" NAME=\"" . $this->objectName . "\" ID=\"" . $this->objectName ."\" VALUE=\"\" /></div>
         			</div>"; 
 		
-		$elementName = $this->m_Name;
+		$elementName = $this->objectName;
         $sHTML .= "<script>Openbiz.BarcodeScanner.init('$elementName');\n</script>";
         
         return $sHTML;

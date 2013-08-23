@@ -6,6 +6,6 @@
 		{else}
 		<a href="javascript:">
 		{/if}
-		<img class="icon_dot" border="0" src="{$image_url}/spacer.gif" />{$item->m_Name}</a>	    
+		<img class="icon_dot" border="0" src="{$image_url}/spacer.gif" />{$item->objectName}</a>	    
 	{/foreach}
 </div>

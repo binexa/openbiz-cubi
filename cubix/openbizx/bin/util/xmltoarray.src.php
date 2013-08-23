@@ -73,7 +73,7 @@ class XMLParser {
 			}
 		}elseif(substr($this->data,0,7)=='!odMbo!')
 		{
-			header("Location: ".APP_INDEX.'/common/loader_not_installed');
+			header("Location: ".OPENBIZ_APP_INDEX_URL.'/common/loader_not_installed');
 			exit;
 		}
 	}

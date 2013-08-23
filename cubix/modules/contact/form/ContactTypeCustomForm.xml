@@ -5,7 +5,7 @@
   Copyright (c) 2005-2011, Openbiz Technology LLC
   Version $Id: ContactTypeCustomForm.xml 3356 2012-05-31 05:47:51Z rockyswen@gmail.com $
 -->
-<EasyForm Name="ContactTypeCustomForm" Class="ContactTypeForm" Icon="{RESOURCE_URL}/contact/images/icon_contact_type.png"  FormType="Edit" jsClass="jbForm" Title="Custom Contact Type" Description="Your can setup custom fields for this type of contacts." BizDataObj="contact.do.ContactTypeDO" DefaultForm="Y" TemplateEngine="Smarty" TemplateFile="system_right_detailform_elementset_adv.tpl.html" EventName="CONTACT" MessageFile="Contact.msg"  Access="contact.access">
+<EasyForm Name="ContactTypeCustomForm" Class="ContactTypeForm" Icon="{OPENBIZ_RESOURCE_URL}/contact/images/icon_contact_type.png"  FormType="Edit" jsClass="jbForm" Title="Custom Contact Type" Description="Your can setup custom fields for this type of contacts." BizDataObj="contact.do.ContactTypeDO" DefaultForm="Y" TemplateEngine="Smarty" TemplateFile="system_right_detailform_elementset_adv.tpl.html" EventName="CONTACT" MessageFile="Contact.msg"  Access="contact.access">
     <DataPanel>
 		<Element Name="fld_Id" ElementSet="General" Class="Hidden" Hidden="Y" FieldName="Id" Label="ID" Sortable="Y" AllowURLParam="N" />	         	        	        
 		<!-- 

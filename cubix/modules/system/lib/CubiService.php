@@ -11,8 +11,8 @@
  * @version   $Id: ModuleService.php 4449 2012-10-22 06:21:42Z hellojixian@gmail.com $
  */
 
-include_once(MODULE_PATH."/common/lib/fileUtil.php");
-include_once(MODULE_PATH."/common/lib/httpClient.php");
+include_once(OPENBIZ_APP_MODULE_PATH."/common/lib/fileUtil.php");
+include_once(OPENBIZ_APP_MODULE_PATH."/common/lib/httpClient.php");
 
 class CubiService extends  MetaObject
 {
@@ -67,8 +67,8 @@ class CubiService extends  MetaObject
 	        $contactRec['phone'] 		= $recArr['phone'];
 		}
 		$system_uuid 	= $this->getSystemUUID();
-		$system_name 	= DEFAULT_SYSTEM_NAME;
-		$system_language = DEFAULT_LANGUAGE;
+		$system_name 	= OPENBIZ_DEFAULT_SYSTEM_NAME;
+		$system_language = OPENBIZ_DEFAULT_LANGUAGE;
 		$system_url		= SITE_URL;		
 		$system_cubi_ver	= $this->getVersion();
 		$system_openbiz_ver	= BizSystem::getVersion();		
@@ -128,7 +128,7 @@ class CubiService extends  MetaObject
 		$result = $cats['data'];
 		if($result)
 		{
-			$dataFile = APP_HOME.'/files/system_uuid.data';
+			$dataFile = OPENBIZ_APP_PATH.'/files/system_uuid.data';
 			file_put_contents($dataFile,$result);
 		}
 		return $result;
@@ -142,7 +142,7 @@ class CubiService extends  MetaObject
 			return $uuid;
 		}
 		
-		$dataFile = APP_HOME.'/files/system_uuid.data';
+		$dataFile = OPENBIZ_APP_PATH.'/files/system_uuid.data';
 		if(is_file($dataFile))
 		{
 			$uuid = file_get_contents($dataFile);

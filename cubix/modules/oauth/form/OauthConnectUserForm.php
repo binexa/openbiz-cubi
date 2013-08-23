@@ -1,5 +1,5 @@
 <?php 
-include_once(MODULE_PATH."/user/form/RegisterForm.php");
+include_once(OPENBIZ_APP_MODULE_PATH."/user/form/RegisterForm.php");
 class OauthConnectUserForm extends RegisterForm
 {
 	protected $username;
@@ -23,7 +23,7 @@ class OauthConnectUserForm extends RegisterForm
 			//第三方登录用户关联帐号
 			if($userinfo['Id'])
 			{	
-				include_once(MODULE_PATH."/oauth/libs/oauth.class.php");
+				include_once(OPENBIZ_APP_MODULE_PATH."/oauth/libs/oauth.class.php");
 				$OauthObj=new oauthClass();
 				if(!$OauthObj->saveUserOAuth($userinfo['Id'],$OauthUserInfo))
 				{
@@ -41,7 +41,7 @@ class OauthConnectUserForm extends RegisterForm
 	  	// get the username and password	
 		$this->username = BizSystem::ClientProxy()->getFormInputs("fld_username");
 		$this->password = BizSystem::ClientProxy()->getFormInputs("fld_password");				
-		$eventlog 	= BizSystem::getService(EVENTLOG_SERVICE);
+		$eventlog 	= BizSystem::getService(OPENBIZ_EVENTLOG_SERVICE);
 		
 		try {
     		if ($this->authUser()) 
@@ -56,7 +56,7 @@ class OauthConnectUserForm extends RegisterForm
 					return false;		
 				}
 			
-				include_once(MODULE_PATH."/oauth/libs/oauth.class.php");
+				include_once(OPENBIZ_APP_MODULE_PATH."/oauth/libs/oauth.class.php");
 				$OauthObj=new oauthClass();
 				if(!$OauthObj->saveUserOAuth($profile['Id'],$OauthUserInfo))
 				{
@@ -70,7 +70,7 @@ class OauthConnectUserForm extends RegisterForm
 				}
 				$this->switchForm("oauth.form.OauthConnectUserFinishedForm");
 /*
-    	   	    $redirectPage = APP_INDEX.$profile['roleStartpage'][0];
+    	   	    $redirectPage = OPENBIZ_APP_INDEX_URL.$profile['roleStartpage'][0];
     	   	   	if(!$profile['roleStartpage'][0])
     	   	   	{
     	   	   		BizSystem::ClientProxy()->showClientAlert($this->getMessage("TEST_FAILURE"));
@@ -109,7 +109,7 @@ class OauthConnectUserForm extends RegisterForm
 		
 		if(!$oauth_data)
 		{
-			header("Location: ".APP_INDEX."/user/login");
+			header("Location: ".OPENBIZ_APP_INDEX_URL."/user/login");
 			exit;
 		}
 		

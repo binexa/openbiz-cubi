@@ -12,7 +12,7 @@ class Spacer extends LabelText
  	public function render()
     {
         $style = $this->getStyle();
-        $id = $this->m_Name;
+        $id = $this->objectName;
         $sHTML = "<span id=\"$id\" $style $func></span>";            
         return $sHTML;
     }

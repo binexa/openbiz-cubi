@@ -53,17 +53,17 @@ class InputText extends InputElement
         $func = $this->getFunction();
         
         $formobj = $this->GetFormObj();
-		if (CLIENT_DEVICE != 'mobile') { 
-			if($formobj->m_Errors[$this->m_Name]){
+		if (OPENBIZ_CLIENT_DEVICE != 'mobile') { 
+			if($formobj->m_Errors[$this->objectName]){
 				$func .= "onchange=\"this.className='$this->m_cssClass'\"";
 			}else{
 				$func .= "onfocus=\"this.className='$this->m_cssFocusClass'\" onblur=\"this.className='$this->m_cssClass'\"";
 			}        
         }
-        $sHTML = "<INPUT NAME=\"" . $this->m_Name . "\" ID=\"" . $this->m_Name ."\" VALUE=\"" . $value . "\" $disabledStr $this->m_HTMLAttr $style $func />";
+        $sHTML = "<INPUT NAME=\"" . $this->objectName . "\" ID=\"" . $this->objectName ."\" VALUE=\"" . $value . "\" $disabledStr $this->m_HTMLAttr $style $func />";
         if($this->m_Hint){
         	$sHTML.="<script>        	
-        	\$j('#" . $this->m_Name . "').tbHinter({
+        	\$j('#" . $this->objectName . "').tbHinter({
 				text: '".$this->m_Hint."'
 			});
         	</script>";

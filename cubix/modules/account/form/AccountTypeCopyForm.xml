@@ -3,7 +3,7 @@
 			Class="EasyForm"			  
 			FormType="Copy" 
 			jsClass="Openbiz.Form" 
-			Icon="{RESOURCE_URL}/account/images/icon_mod_account_type_copy.png"
+			Icon="{OPENBIZ_RESOURCE_URL}/account/images/icon_mod_account_type_copy.png"
 			Title="Copy CRM Account Type" 
 			Description="Copy data type from an existing item."
 			BizDataObj="account.do.AccountTypeDO" 

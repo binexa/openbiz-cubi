@@ -68,7 +68,7 @@ class ChangeLogService
 			return true;
 			
 		$formMetaLite = array(
-			"name" 		=> $formObj->m_Name,
+			"name" 		=> $formObj->objectName,
 			"package" 	=> $formObj->m_Package,
 			"message_file" 	=> $formObj->m_MessageFile,		
 		);

@@ -3,7 +3,7 @@
 			Class="EasyForm"			  
 			FormType="List" 
 			jsClass="Openbiz.TableForm" 
-			Icon="{RESOURCE_URL}/account/images/icon_mod_account_list.png"
+			Icon="{OPENBIZ_RESOURCE_URL}/account/images/icon_mod_account_list.png"
 			Title="Account Management" 
 			Description="Typically account means a client company. Each account can be managed by multiple users." 
 			BizDataObj="account.do.AccountDO" 
@@ -28,12 +28,12 @@
         			AllowURLParam="N" 
         			Link="javascript:;" />   
 		<Element Name="fld_share" Class="ColumnShare" 
-				MyPrivateImg="{RESOURCE_URL}/account/images/icon_account_private.gif"
-				MySharedImg="{RESOURCE_URL}/account/images/icon_account_shared.gif" 
-				MyAssignedImg="{RESOURCE_URL}/account/images/icon_account_assigned.gif"
-				MyDistributedImg="{RESOURCE_URL}/account/images/icon_account_distributed.gif" 
-				GroupSharedImg="{RESOURCE_URL}/account/images/icon_account_shared_group.gif"
-				OtherSharedImg="{RESOURCE_URL}/account/images/icon_account_shared_other.gif"
+				MyPrivateImg="{OPENBIZ_RESOURCE_URL}/account/images/icon_account_private.gif"
+				MySharedImg="{OPENBIZ_RESOURCE_URL}/account/images/icon_account_shared.gif" 
+				MyAssignedImg="{OPENBIZ_RESOURCE_URL}/account/images/icon_account_assigned.gif"
+				MyDistributedImg="{OPENBIZ_RESOURCE_URL}/account/images/icon_account_distributed.gif" 
+				GroupSharedImg="{OPENBIZ_RESOURCE_URL}/account/images/icon_account_shared_group.gif"
+				OtherSharedImg="{OPENBIZ_RESOURCE_URL}/account/images/icon_account_shared_other.gif"
 				FieldName="create_by" 
 				Label="Share"  
 				Sortable="Y" 
@@ -56,7 +56,7 @@
         			Label="Name"         			 
         			Sortable="Y" 
         			MaxLength="15"
-        			Link="{APP_INDEX}/account/account_detail/{@:Elem[fld_Id].Value}"        			
+        			Link="{OPENBIZ_APP_INDEX_URL}/account/account_detail/{@:Elem[fld_Id].Value}"        			
         			 
 					/> 
         	

@@ -1,5 +1,5 @@
 <?php 
-include_once(MODULE_PATH."/common/lib/httpClient.php");
+include_once(OPENBIZ_APP_MODULE_PATH."/common/lib/httpClient.php");
 
 class ErrorReportService
 {
@@ -24,9 +24,9 @@ class ErrorReportService
 	protected function _remoteCall($method,$params=null)
     {
     	$uri = $this->m_ReportServer;
-        $cache_id = md5($this->m_Name.$uri. $method .serialize($params));         
+        $cache_id = md5($this->objectName.$uri. $method .serialize($params));         
         $cacheSvc = BizSystem::getService(CACHE_SERVICE,1);
-        $cacheSvc->init($this->m_Name,$this->m_CacheLifeTime);        		
+        $cacheSvc->init($this->objectName,$this->m_CacheLifeTime);        		
     	if(substr($uri,strlen($uri)-1,1)!='/'){
         	$uri .= '/';
         }

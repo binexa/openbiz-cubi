@@ -1,5 +1,5 @@
 <?php 
-require_once MODULE_PATH.'/websvc/lib/WebsvcService.php';
+require_once OPENBIZ_APP_MODULE_PATH.'/websvc/lib/WebsvcService.php';
 class callbackService extends  WebsvcService
 {
 	protected $m_oauthProviderDo='oauth.do.OauthProviderDO';
@@ -19,7 +19,7 @@ class callbackService extends  WebsvcService
 			BizSystem::sessionContext()->setVar("oauth_assoc_url", $assocURL);
 		}
 		
-		// $whitelist_arr = BizSystem::getService(LOV_SERVICE)->getDictionary("oauth.lov.ProviderLOV(Provider)");
+		// $whitelist_arr = BizSystem::getService(CUBI_LOV_SERVICE)->getDictionary("oauth.lov.ProviderLOV(Provider)");
 		$whitelist_arr=BizSystem::getObject($this->m_oauthProviderDo)->fetchOne("[status]=1 and [type]='{$type}'",1);
 		if($whitelist_arr)
 		{
@@ -30,7 +30,7 @@ class callbackService extends  WebsvcService
 			return;
 		}
 		 
-		$oatuthType=MODULE_PATH."/oauth/libs/{$type}.class.php";
+		$oatuthType=OPENBIZ_APP_MODULE_PATH."/oauth/libs/{$type}.class.php";
 		if(!file_exists($oatuthType))
 		{
 			throw new Exception('Unknown type');

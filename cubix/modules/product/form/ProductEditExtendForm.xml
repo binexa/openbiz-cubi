@@ -9,7 +9,7 @@
 			Class="EasyForm" 
 			FormType="Edit" 
 			jsClass="Openbiz.Form" 
-			Icon="{RESOURCE_URL}/product/images/icon_mod_product_extend.png"
+			Icon="{OPENBIZ_RESOURCE_URL}/product/images/icon_mod_product_extend.png"
 			Title="Edit Product Data Extend Fields" 
 			Description="Here you can edit extend fields for selected type of data" 
 			BizDataObj="product.do.ProductDO" 
@@ -101,7 +101,7 @@
             			EventLogMsg="" 
             			Event="onclick" 
             			Function="UpdateRecord()" 
-            			RedirectPage="{APP_INDEX}/product/product_detail/{@product.do.ProductDO:Field[Id].Value}" 
+            			RedirectPage="{OPENBIZ_APP_INDEX_URL}/product/product_detail/{@product.do.ProductDO:Field[Id].Value}" 
             			ContextMenu="Finish"   />
         </Element>
         <Element Name="btn_cancel" 

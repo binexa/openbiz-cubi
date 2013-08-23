@@ -7,9 +7,9 @@
 			{/if}
 	    {/foreach}
 	    {if $current==1}
-	    	<li><a class="current"  href="#app_menus_page" >{$item->m_Name}</a></li>
+	    	<li><a class="current"  href="#app_menus_page" >{$item->objectName}</a></li>
 	    {else}
-	    	<li><a href="{$item->m_URL}" >{$item->m_Name}</a></li>
+	    	<li><a href="{$item->m_URL}" >{$item->objectName}</a></li>
 	    {/if}
 	{/foreach}
 </ul>

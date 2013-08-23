@@ -5,22 +5,22 @@
   Copyright (c) 2005-2011, Openbiz Technology LLC
   Version $Id: ContactListTypeForm.xml 4076 2012-09-01 08:11:35Z rockyswen@gmail.com $
 -->
-<EasyForm Name="ContactListTypeForm" Class="ContactFormGrouping" Icon="{RESOURCE_URL}/contact/images/icon_type_list.gif" GroupBy="[type_name:type_id]" FormType="List" jsClass="jbForm" Title="Group by Contact Type" Description="The view displays your contacts  as types you had defined" BizDataObj="contact.do.ContactDO" PageSize="5" DefaultForm="Y" TemplateEngine="Smarty" TemplateFile="form_contact_list_grouping.tpl.html" EventName="CONTACT" MessageFile="Contact.msg"  Access="contact.access">
+<EasyForm Name="ContactListTypeForm" Class="ContactFormGrouping" Icon="{OPENBIZ_RESOURCE_URL}/contact/images/icon_type_list.gif" GroupBy="[type_name:type_id]" FormType="List" jsClass="jbForm" Title="Group by Contact Type" Description="The view displays your contacts  as types you had defined" BizDataObj="contact.do.ContactDO" PageSize="5" DefaultForm="Y" TemplateEngine="Smarty" TemplateFile="form_contact_list_grouping.tpl.html" EventName="CONTACT" MessageFile="Contact.msg"  Access="contact.access">
     <DataPanel>
         
         <Element Name="row_selections" Class="RowCheckbox"  Label="" FieldName="ID"/>
          <Element Name="fld_share" Class="ColumnShare" 
-				MyPrivateImg="{RESOURCE_URL}/contact/images/icon_contact.gif"
-				MySharedImg="{RESOURCE_URL}/contact/images/icon_contact_shared.gif"
-				MyAssignedImg="{RESOURCE_URL}/contact/images/icon_contact_assigned.gif"
-				MyDistributedImg="{RESOURCE_URL}/contact/images/icon_contact_distributed.gif" 
-				GroupSharedImg="{RESOURCE_URL}/contact/images/icon_contact_shared_group.gif"
-				OtherSharedImg="{RESOURCE_URL}/contact/images/icon_contact_shared_other.gif"
+				MyPrivateImg="{OPENBIZ_RESOURCE_URL}/contact/images/icon_contact.gif"
+				MySharedImg="{OPENBIZ_RESOURCE_URL}/contact/images/icon_contact_shared.gif"
+				MyAssignedImg="{OPENBIZ_RESOURCE_URL}/contact/images/icon_contact_assigned.gif"
+				MyDistributedImg="{OPENBIZ_RESOURCE_URL}/contact/images/icon_contact_distributed.gif" 
+				GroupSharedImg="{OPENBIZ_RESOURCE_URL}/contact/images/icon_contact_shared_group.gif"
+				OtherSharedImg="{OPENBIZ_RESOURCE_URL}/contact/images/icon_contact_shared_other.gif"
 				FieldName="create_by" Label="Share"  Sortable="Y" AllowURLParam="N" Translatable="N" OnEventLog="N" Link="javascript:;">
 			<EventHandler Name="fld_share_onclick" Event="onclick" Function="LoadDialog(common.form.DataSharingForm,{@:Elem[fld_Id].Value})"/>		
 		</Element>
 		<Element Name="fld_Id" Class="common.element.ColumnTitle" Hidden="N" FieldName="Id" Label="ID" Sortable="Y" AllowURLParam="N" Link="javascript:" />
-        <Element Name="fld_display_name" Class="ColumnText" FieldName="display_name" Label="Contact Name"  Sortable="Y" AllowURLParam="N" Translatable="N" OnEventLog="N" Link="{APP_INDEX}/contact/contact_detail/{@:Elem[fld_Id].Value}">         
+        <Element Name="fld_display_name" Class="ColumnText" FieldName="display_name" Label="Contact Name"  Sortable="Y" AllowURLParam="N" Translatable="N" OnEventLog="N" Link="{OPENBIZ_APP_INDEX_URL}/contact/contact_detail/{@:Elem[fld_Id].Value}">         
          	<!--  <EventHandler Name="fld_Id_onclick" Event="onclick" Function="SwitchForm(contact.form.ContactDetailForm,{@:Elem[fld_Id].Value})"   />-->
         </Element>		
         <Element Name="fld_company" Class="ColumnText" FieldName="company" Label="Company"  Sortable="Y" AllowURLParam="N" Translatable="N" OnEventLog="N" />	        	

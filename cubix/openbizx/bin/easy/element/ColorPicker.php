@@ -47,12 +47,12 @@ class ColorPicker extends InputText {
         $func = $this->getFunction();
         $func_org = $func;
         $formobj = $this->GetFormObj();
-    	if($formobj->m_Errors[$this->m_Name]){
+    	if($formobj->m_Errors[$this->objectName]){
 			$func .= "onchange=\"this.className='$this->m_cssClass'\"";
 		}else{
 			$func .= "onfocus=\"this.className='$this->m_cssFocusClass'\" onblur=\"this.className='$this->m_cssClass'\"";
 		}        
-        $elementName = $this->m_Name;   
+        $elementName = $this->objectName;   
         $elementTrigger=array();
         
 		if($value){
@@ -79,33 +79,33 @@ class ColorPicker extends InputText {
 								return false;
 							},													
 							onSubmit: function(hsb, hex, rgb, el) {
-								$('$this->m_Name').value=hex;
-								\$j('#colorpreview_$this->m_Name').css('backgroundColor', '#' + hex);
+								$('$this->objectName').value=hex;
+								\$j('#colorpreview_$this->objectName').css('backgroundColor', '#' + hex);
 							},
 							onChange: function (hsb, hex, rgb) {
-								$('$this->m_Name').value=hex;
-								\$j('#colorpreview_$this->m_Name').css('backgroundColor', '#' + hex);
+								$('$this->objectName').value=hex;
+								\$j('#colorpreview_$this->objectName').css('backgroundColor', '#' + hex);
 							}
 							";
 				$sHTML .= "<span id=\"colorpreview_$elementName\" class=\"colorpicker_preview\" style=\"background-color:#$value;\" $func ></span>";
-				$sHTML .= "<INPUT NAME=\"" . $this->m_Name . "\" ID=\"" . $this->m_Name ."\" VALUE=\"" . $value . "\" type=\"hidden\" />";
+				$sHTML .= "<INPUT NAME=\"" . $this->objectName . "\" ID=\"" . $this->objectName ."\" VALUE=\"" . $value . "\" type=\"hidden\" />";
 				$elementTrigger = array("colorpreview_$elementName");
 				break;
 				
 			case "flat":
 				$config = "flat: true,
 							onSubmit: function(hsb, hex, rgb, el) {
-								$('$this->m_Name').value=hex;
-								\$j('#colorpreview_$this->m_Name').css('backgroundColor', '#' + hex);								
+								$('$this->objectName').value=hex;
+								\$j('#colorpreview_$this->objectName').css('backgroundColor', '#' + hex);								
 							},
 							onChange: function (hsb, hex, rgb) {
-								$('$this->m_Name').value=hex;
-								\$j('#colorpreview_$this->m_Name').css('backgroundColor', '#' + hex);
+								$('$this->objectName').value=hex;
+								\$j('#colorpreview_$this->objectName').css('backgroundColor', '#' + hex);
 								
 							}
 				";
 				$sHTML .= "<span id=\"colorpreview_$elementName\" class=\"colorpicker_preview\" style=\"background-color:#$value;\" ></span>";						
-				$sHTML .= "<INPUT NAME=\"" . $this->m_Name . "\" ID=\"" . $this->m_Name ."\" VALUE=\"" . $value . "\" $disabledStr $this->m_HTMLAttr $style $func />";
+				$sHTML .= "<INPUT NAME=\"" . $this->objectName . "\" ID=\"" . $this->objectName ."\" VALUE=\"" . $value . "\" $disabledStr $this->m_HTMLAttr $style $func />";
 				$sHTML .= "<div id=\"colorpicker_$elementName\" style=\"float:left\"></div>";
 				$elementTrigger = array("colorpicker_".$elementName);
 				break;
@@ -123,16 +123,16 @@ class ColorPicker extends InputText {
 								return false;
 							},													
 							onSubmit: function(hsb, hex, rgb, el) {
-								$('$this->m_Name').value=hex;
-								\$j('#colorpreview_$this->m_Name').css('backgroundColor', '#' + hex);
+								$('$this->objectName').value=hex;
+								\$j('#colorpreview_$this->objectName').css('backgroundColor', '#' + hex);
 							},
 							onChange: function (hsb, hex, rgb) {
-								$('$this->m_Name').value=hex;
-								\$j('#colorpreview_$this->m_Name').css('backgroundColor', '#' + hex);
+								$('$this->objectName').value=hex;
+								\$j('#colorpreview_$this->objectName').css('backgroundColor', '#' + hex);
 							}
 							";
 				$sHTML .= "<span id=\"colorpreview_$elementName\" class=\"colorpicker_preview\" style=\"background-color:#$value;\" ></span>";
-				$sHTML .= "<INPUT NAME=\"" . $this->m_Name . "\" ID=\"" . $this->m_Name ."\" VALUE=\"" . $value . "\" $disabledStr $this->m_HTMLAttr $style $func />";								
+				$sHTML .= "<INPUT NAME=\"" . $this->objectName . "\" ID=\"" . $this->objectName ."\" VALUE=\"" . $value . "\" $disabledStr $this->m_HTMLAttr $style $func />";								
 				$elementTrigger = array($elementName,"colorpreview_$elementName");
 				break;
 		}
@@ -149,7 +149,7 @@ class ColorPicker extends InputText {
 	}
 	
 	public function getFunctionByEvent($event_name){
-        $name = $this->m_Name;
+        $name = $this->objectName;
         // loop through the event handlers
         $func = "";
 
@@ -163,7 +163,7 @@ class ColorPicker extends InputText {
         	}
         }
                 
-        $ehName = $eventHandler->m_Name;
+        $ehName = $eventHandler->objectName;
         $event = $eventHandler->m_Event;
         $type = $eventHandler->m_FunctionType;
         if (!$event) return;

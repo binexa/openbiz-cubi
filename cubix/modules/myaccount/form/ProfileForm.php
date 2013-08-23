@@ -11,7 +11,7 @@
  * @version   $Id: ProfileForm.php 5075 2013-01-07 09:20:55Z hellojixian@gmail.com $
  */
 
-include_once(MODULE_PATH."/contact/form/ContactForm.php");
+include_once(OPENBIZ_APP_MODULE_PATH."/contact/form/ContactForm.php");
 
 class ProfileForm extends ContactForm
 {
@@ -35,7 +35,7 @@ class ProfileForm extends ContactForm
     	$result = parent::_doUpdate($inputRecord, $currentRecord);
     	if( $this->getViewObject()->isForceCompeleteProfile() )
         {
-        	BizSystem::getService(PREFERENCE_SERVICE)->setPreference('force_complete_profile',0);
+        	BizSystem::getService(OPENBIZ_PREFERENCE_SERVICE)->setPreference('force_complete_profile',0);
         }
     	return $result;
     }
@@ -45,7 +45,7 @@ class ProfileForm extends ContactForm
     	if( $this->getViewObject()->isForceCompeleteProfile() )
     	{
     	    $profileDefaultPageArr = BizSystem::getUserProfile('roleStartpage');
-        	$pageURL = APP_INDEX.$profileDefaultPageArr[0];
+        	$pageURL = OPENBIZ_APP_INDEX_URL.$profileDefaultPageArr[0];
         	BizSystem::clientProxy()->redirectPage($pageURL);
         	return ;
     	}

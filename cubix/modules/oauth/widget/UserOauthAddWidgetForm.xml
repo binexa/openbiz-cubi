@@ -3,7 +3,7 @@
 			Class="EasyForm" 
 			FormType="New" 
 			jsClass="Openbiz.Form" 
-			Icon="{RESOURCE_URL}/oauth/images/icon_oauth.png"
+			Icon="{OPENBIZ_RESOURCE_URL}/oauth/images/icon_oauth.png"
 			Title="Associate New Social Account" 
 			Description="You can assoicate your social network account with current Cubi Account by click the icon below." 
 			BizDataObj="" 

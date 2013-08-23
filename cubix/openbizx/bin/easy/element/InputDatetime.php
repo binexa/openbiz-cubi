@@ -52,7 +52,7 @@ class InputDatetime extends InputText {
 
         $showTime = "'24'";
         //$image = "<img src=\"".Resource::getImageUrl()."/calendar.gif\" border=0 title=\"Select date...\" align='top' hspace='2'>";
-        $sHTML .= "<a title=\"Select date...\"  class=\"date_picker\" href=\"javascript: void(0);\" onclick=\"return showCalendar('".$this->m_Name."', '".$format."', ".$showTime.", true); return false;\"  onmousemove='window.status=\"Select a datetime\"' onmouseout='window.status=\"\"'></a>";
+        $sHTML .= "<a title=\"Select date...\"  class=\"date_picker\" href=\"javascript: void(0);\" onclick=\"return showCalendar('".$this->objectName."', '".$format."', ".$showTime.", true); return false;\"  onmousemove='window.status=\"Select a datetime\"' onmouseout='window.status=\"\"'></a>";
         return $sHTML;
     }
 }

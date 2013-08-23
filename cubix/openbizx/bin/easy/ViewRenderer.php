@@ -37,7 +37,7 @@ class ViewRenderer
         $tplEngine = $viewObj->m_TemplateEngine;
         $tplAttributes = ViewRenderer::buildTemplateAttributes($viewObj);
         
-        if(defined("PAGE_MINIFY") && PAGE_MINIFY==1)
+        if(defined("OPENBIZ_PAGE_MINIFY") && OPENBIZ_PAGE_MINIFY==1)
         {
         	//if(!ob_start("ob_gzhandler")) ob_start();
         	ob_start();
@@ -48,7 +48,7 @@ class ViewRenderer
         else
             $result = ViewRenderer::renderPHP($viewObj, $tplAttributes);
        
-        if(defined("PAGE_MINIFY") && PAGE_MINIFY==1)
+        if(defined("OPENBIZ_PAGE_MINIFY") && OPENBIZ_PAGE_MINIFY==1)
         {        	
         	$html = ob_get_contents();
         	ob_end_clean();
@@ -68,7 +68,7 @@ class ViewRenderer
     static public function MinifyOutput($html)
     {    	
     	
-    	$minifyURL = APP_URL."/bin/min/index.php";
+    	$minifyURL = OPENBIZ_APP_URL."/bin/min/index.php";
     	$headEnd="</head>"; 
 
     	//fetch js requests
@@ -91,7 +91,7 @@ class ViewRenderer
     	$html = preg_replace("/\<link.*?href\s?\=\s?\"(.*?\.css)\".*?\>/i","",$html);
     	$html = str_replace($headEnd,$cssCode."\n".$headEnd,$html);  
 		
-    	require_once APP_HOME.'/bin/min/lib/Minify/HTML.php';
+    	require_once OPENBIZ_APP_PATH.'/bin/min/lib/Minify/HTML.php';
     	$html = Minify_HTML::minify($html);
     	return $html;
     } 
@@ -112,24 +112,24 @@ class ViewRenderer
         $newClntObjs = '';
         
         //Fill other direct view variables
-        $tplAttributes["module"] = $viewObj->getModuleName($viewObj->m_Name);
-        $tplAttributes["description"] = $viewObj->m_Description;
+        $tplAttributes["module"] = $viewObj->getModuleName($viewObj->objectName);
+        $tplAttributes["description"] = $viewObj->objectDescription;
         $tplAttributes["keywords"] = $viewObj->m_Keywords;
         if ($viewObj->m_Tiles) {
             foreach ($viewObj->m_Tiles as $tname => $tile) {
                 foreach ($tile as $formRef) {
                     if ($formRef->m_Display == false)
                         continue;
-                    $tiles[$tname][$formRef->m_Name] = BizSystem::getObject($formRef->m_Name)->render();
-                    $tiletabs[$tname][$formRef->m_Name] = $formRef->m_Description;
+                    $tiles[$tname][$formRef->objectName] = BizSystem::getObject($formRef->objectName)->render();
+                    $tiletabs[$tname][$formRef->objectName] = $formRef->objectDescription;
                 }
             }
         } else {
             foreach ($viewObj->m_FormRefs as $formRef) {
                 if ($formRef->m_Display == false)
                     continue;
-                $forms[$formRef->m_Name] = BizSystem::getObject($formRef->m_Name)->render();
-                $formtabs[$formRef->m_Name] = $formRef->m_Description;
+                $forms[$formRef->objectName] = BizSystem::getObject($formRef->objectName)->render();
+                $formtabs[$formRef->objectName] = $formRef->objectDescription;
             }
         }
         
@@ -137,7 +137,7 @@ class ViewRenderer
     		foreach ($viewObj->m_Widgets as $formRef) {
                 if ($formRef->m_Display == false)
                     continue;
-                $widgets[$formRef->m_Name] = BizSystem::getObject($formRef->m_Name)->render();
+                $widgets[$formRef->objectName] = BizSystem::getObject($formRef->objectName)->render();
             }
         }
         
@@ -160,10 +160,10 @@ class ViewRenderer
         if ($viewObj->m_Title)
             $tplAttributes["title"] = Expression::evaluateExpression($viewObj->m_Title, $viewObj);
         else
-            $tplAttributes["title"] = $viewObj->m_Description;
+            $tplAttributes["title"] = $viewObj->objectDescription;
             
-    	if(DEFAULT_SYSTEM_NAME){
-        	$tplAttributes["title"] = $tplAttributes["title"].' - '.DEFAULT_SYSTEM_NAME;
+    	if(OPENBIZ_DEFAULT_SYSTEM_NAME){
+        	$tplAttributes["title"] = $tplAttributes["title"].' - '.OPENBIZ_DEFAULT_SYSTEM_NAME;
         }
         return $tplAttributes;
     }

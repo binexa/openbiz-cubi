@@ -174,10 +174,10 @@ class Expression
                 switch ($propExpr)
                 {
                     case "url":
-                        $value = "'" . APP_INDEX . "'";
+                        $value = "'" . OPENBIZ_APP_INDEX_URL . "'";
                         break;
                     case "base_url":
-                        $value = "'" . APP_URL . "'";
+                        $value = "'" . OPENBIZ_APP_URL . "'";
                         break;
                 }
                 $expression = str_replace($macro, $value, $expression);

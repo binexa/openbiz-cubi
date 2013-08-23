@@ -51,7 +51,7 @@ class SecurityRuleForm extends EasyForm
 		if (strtoupper($this->m_FormType) == "NEW")
             return $this->getNewRule();
             
-		$file = MODULE_PATH.DIRECTORY_SEPARATOR."service".DIRECTORY_SEPARATOR.$this->m_ConfigFile;
+		$file = OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR."service".DIRECTORY_SEPARATOR.$this->m_ConfigFile;
 		if(!is_file($file)){
 			return;
 		}
@@ -109,7 +109,7 @@ class SecurityRuleForm extends EasyForm
 	}
 	
 	public function fetchDataSet(){
-		$file = MODULE_PATH.DIRECTORY_SEPARATOR."service".DIRECTORY_SEPARATOR.$this->m_ConfigFile;
+		$file = OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR."service".DIRECTORY_SEPARATOR.$this->m_ConfigFile;
 		if(!is_file($file)){
 			return;
 		}
@@ -142,7 +142,7 @@ class SecurityRuleForm extends EasyForm
 	
    public function outputAttrs(){
    		$result = parent::outputAttrs();
-   		$file = MODULE_PATH.DIRECTORY_SEPARATOR."service".DIRECTORY_SEPARATOR.$this->m_ConfigFile;
+   		$file = OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR."service".DIRECTORY_SEPARATOR.$this->m_ConfigFile;
 		if(!is_file($file)){
 			return;
 		}
@@ -255,7 +255,7 @@ class SecurityRuleForm extends EasyForm
 	
 	
    public function switchMode(){	   	   	 
-   		$file = MODULE_PATH.DIRECTORY_SEPARATOR."service".DIRECTORY_SEPARATOR.$this->m_ConfigFile;
+   		$file = OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR."service".DIRECTORY_SEPARATOR.$this->m_ConfigFile;
 		if(!is_file($file)){
 			return;
 		}
@@ -281,7 +281,7 @@ class SecurityRuleForm extends EasyForm
    public function deleteRecord($id=null)
     {
         if ($this->m_Resource != "" && !$this->allowAccess($this->m_Resource.".delete"))
-            return BizSystem::clientProxy()->redirectView(ACCESS_DENIED_VIEW);
+            return BizSystem::clientProxy()->redirectView(OPENBIZ_ACCESS_DENIED_VIEW);
 
         if ($id==null || $id=='')
             $id = BizSystem::clientProxy()->getFormInputs('_selectedId');
@@ -303,7 +303,7 @@ class SecurityRuleForm extends EasyForm
     }	
 	
 	private function addNode($nodeArr){
-		$file = MODULE_PATH.DIRECTORY_SEPARATOR."service".DIRECTORY_SEPARATOR.$this->m_ConfigFile;
+		$file = OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR."service".DIRECTORY_SEPARATOR.$this->m_ConfigFile;
 		if(!is_file($file)){
 			return;
 		}
@@ -326,7 +326,7 @@ class SecurityRuleForm extends EasyForm
 	}
 	
 	private function updateNode($name, $nodeArr){
-		$file = MODULE_PATH.DIRECTORY_SEPARATOR."service".DIRECTORY_SEPARATOR.$this->m_ConfigFile;
+		$file = OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR."service".DIRECTORY_SEPARATOR.$this->m_ConfigFile;
 		if(!is_file($file)){
 			return;
 		}
@@ -351,7 +351,7 @@ class SecurityRuleForm extends EasyForm
 	}
 	
 	private function removeNode($name){
-		$file = MODULE_PATH.DIRECTORY_SEPARATOR."service".DIRECTORY_SEPARATOR.$this->m_ConfigFile;
+		$file = OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR."service".DIRECTORY_SEPARATOR.$this->m_ConfigFile;
 		if(!is_file($file)){
 			return;
 		}
@@ -376,7 +376,7 @@ class SecurityRuleForm extends EasyForm
 	}
 	
 	private function checkDupNodeName($nodeName){
-		$file = MODULE_PATH.DIRECTORY_SEPARATOR."service".DIRECTORY_SEPARATOR.$this->m_ConfigFile;
+		$file = OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR."service".DIRECTORY_SEPARATOR.$this->m_ConfigFile;
 		if(!is_file($file)){
 			return;
 		}
@@ -408,7 +408,7 @@ class SecurityRuleForm extends EasyForm
 		$smarty = BizSystem::getSmartyTemplate();
 		$smarty->assign("data", $data);
 		$xmldata = $smarty->fetch(BizSystem::getTplFileWithPath("serviceTemplate.xml.tpl", $this->m_Package));
-		$service_dir = MODULE_PATH.DIRECTORY_SEPARATOR."service";
+		$service_dir = OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR."service";
 		$service_file = $service_dir.DIRECTORY_SEPARATOR.$this->m_ConfigFile;
 		file_put_contents($service_file ,$xmldata);		
 		return true;

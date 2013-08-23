@@ -5,7 +5,7 @@
   Copyright (c) 2005-2011, Openbiz Technology LLC
   Version $Id: BackupRestoreForm.xml 3351 2012-05-31 05:33:35Z rockyswen@gmail.com $
 -->
-<EasyForm Name="BackupRestoreForm" Class="BackupForm" Icon="{RESOURCE_URL}/backup/images/icon_backup_restore.gif" FormType="Edit" jsClass="jbForm" Title="Restore Backup" Description="Database backup management could help you backup or restore your system database with simply one click. \n It could prevent your data lost by any mistake." BizDataObj="" TemplateEngine="Smarty" TemplateFile="detail_elementset.tpl" EventName="" MessageFile="backup_msg.ini" Access="backup.Access_Backup">
+<EasyForm Name="BackupRestoreForm" Class="BackupForm" Icon="{OPENBIZ_RESOURCE_URL}/backup/images/icon_backup_restore.gif" FormType="Edit" jsClass="jbForm" Title="Restore Backup" Description="Database backup management could help you backup or restore your system database with simply one click. \n It could prevent your data lost by any mistake." BizDataObj="" TemplateEngine="Smarty" TemplateFile="detail_elementset.tpl" EventName="" MessageFile="backup_msg.ini" Access="backup.Access_Backup">
     <DataPanel>                       
 		<Element Name="fld_Id" ElementSet="Restore" Hidden="Y" Class="LabelText" FieldName="Id" Label="Id" AllowURLParam="Y"/> 
 		<Element Name="fld_mode"  Class="Listbox" ElementSet="Restore"  SelectFrom="backup.lov.BackupOption(RestoreMode_{@:Field[fld_filetype].Value})" FieldName="mode" Label="Restore Mode" AllowURLParam="N" >

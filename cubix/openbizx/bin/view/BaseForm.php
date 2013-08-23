@@ -29,7 +29,7 @@ class BaseForm extends MetaObject implements iSessionObject
      * Name of inherited form (meta-form)
      * @var string
      */
-    public $m_InheritFrom;
+    public $inheritFrom;
     
 	public $m_Panels; 
     /**
@@ -97,10 +97,10 @@ class BaseForm extends MetaObject implements iSessionObject
     protected function readMetadata(&$xmlArr)
     {
         parent::readMetaData($xmlArr);
-        $this->m_InheritFrom = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["INHERITFROM"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["INHERITFROM"] : null;        
+        $this->inheritFrom = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["INHERITFROM"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["INHERITFROM"] : null;        
         $this->m_Title = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["TITLE"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["TITLE"] : null;
         $this->m_Icon = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["ICON"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["ICON"] : null;        
-        $this->m_Description = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["DESCRIPTION"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["DESCRIPTION"] : null;
+        $this->objectDescription = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["DESCRIPTION"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["DESCRIPTION"] : null;
         $this->m_jsClass = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["JSCLASS"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["JSCLASS"] : null;
         $this->m_Height = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["HEIGHT"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["HEIGHT"] : null;
         $this->m_Width = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["WIDTH"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["WIDTH"] : null;
@@ -108,9 +108,9 @@ class BaseForm extends MetaObject implements iSessionObject
         $this->m_TemplateFile = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["TEMPLATEFILE"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["TEMPLATEFILE"] : null;
 		$this->m_FormType = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["FORMTYPE"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["FORMTYPE"] : null;
         
-        $this->m_Name = $this->prefixPackage($this->m_Name);
-        if ($this->m_InheritFrom == '@sourceMeta') $this->m_InheritFrom = '@'.$this->m_Name;
-        else $this->m_InheritFrom = $this->prefixPackage($this->m_InheritFrom);
+        $this->objectName = $this->prefixPackage($this->objectName);
+        if ($this->inheritFrom == '@sourceMeta') $this->inheritFrom = '@'.$this->objectName;
+        else $this->inheritFrom = $this->prefixPackage($this->inheritFrom);
         $this->m_DataObjName = $this->prefixPackage($xmlArr["EASYFORM"]["ATTRIBUTES"]["BIZDATAOBJ"]);
 
         $this->m_DataPanel = new Panel($xmlArr["EASYFORM"]["DATAPANEL"]["ELEMENT"],"",$this);
@@ -145,12 +145,12 @@ class BaseForm extends MetaObject implements iSessionObject
      */
     protected function inheritParentObj()
     {
-        if (!$this->m_InheritFrom) return;
-        $parentObj = BizSystem::getObject($this->m_InheritFrom);
+        if (!$this->inheritFrom) return;
+        $parentObj = BizSystem::getObject($this->inheritFrom);
 
         $this->m_Title = $this->m_Title ? $this->m_Title : $parentObj->m_Title;
         $this->m_Icon = $this->m_Icon ? $this->m_Icon : $parentObj->m_Icon;        
-        $this->m_Description  = $this->m_Description ? $this->m_Description : $parentObj->m_Description;
+        $this->objectDescription  = $this->objectDescription ? $this->objectDescription : $parentObj->objectDescription;
         $this->m_jsClass   = $this->m_jsClass ? $this->m_jsClass : $parentObj->m_jsClass;
         $this->m_Height   = $this->m_Height ? $this->m_Height : $parentObj->m_Height;
         $this->m_Width   = $this->m_Width ? $this->m_Width : $parentObj->m_Width;
@@ -173,19 +173,19 @@ class BaseForm extends MetaObject implements iSessionObject
 
         if($this->m_DataPanel->current()){
 	        foreach ($this->m_DataPanel as $elem)
-	            $elem->adjustFormName($this->m_Name);
+	            $elem->adjustFormName($this->objectName);
         }
         if($this->m_ActionPanel->current()){
 	        foreach ($this->m_ActionPanel as $elem)
-	            $elem->adjustFormName($this->m_Name);
+	            $elem->adjustFormName($this->objectName);
         }
         if($this->m_NavPanel->current()){                
 	        foreach ($this->m_NavPanel as $elem)
-	            $elem->adjustFormName($this->m_Name);
+	            $elem->adjustFormName($this->objectName);
         }
         if($this->m_SearchPanel->current()){
 	        foreach ($this->m_SearchPanel as $elem)
-	            $elem->adjustFormName($this->m_Name);            
+	            $elem->adjustFormName($this->objectName);            
         }   
 		$this->m_Panels = array($this->m_DataPanel, $this->m_ActionPanel, $this->m_NavPanel, $this->m_SearchPanel);            
     } 
@@ -208,7 +208,7 @@ class BaseForm extends MetaObject implements iSessionObject
     {
         $message = isset($this->m_Messages[$messageId]) ? $this->m_Messages[$messageId] : constant($messageId);
         //$message = I18n::getInstance()->translate($message);
-        $message = I18n::t($message, $messageId, $this->getModuleName($this->m_Name));        
+        $message = I18n::t($message, $messageId, $this->getModuleName($this->objectName));        
         $msg = @vsprintf($message,$params);
         if(!$msg){ //maybe in translation missing some %s can cause it returns null
         	$msg = $message;
@@ -251,7 +251,7 @@ class BaseForm extends MetaObject implements iSessionObject
             if ($this->m_DataObjName)
                 $this->m_DataObj = BizSystem::objectFactory()->getObject($this->m_DataObjName);
             if($this->m_DataObj)
-                $this->m_DataObj->m_BizFormName = $this->m_Name;
+                $this->m_DataObj->m_BizFormName = $this->objectName;
             else
             {
                 //BizSystem::clientProxy()->showErrorMessage("Cannot get DataObj of ".$this->m_DataObjName.", please check your metadata file.");
@@ -328,7 +328,7 @@ class BaseForm extends MetaObject implements iSessionObject
         foreach ($fields as $field=>$error)
         {
             $element = $this->m_DataPanel->getByField($field);
-            $errElements[$element->m_Name]=$error;
+            $errElements[$element->objectName]=$error;
         }
         return $errElements;
     }
@@ -347,17 +347,17 @@ class BaseForm extends MetaObject implements iSessionObject
         }        
         foreach ($this->m_DataPanel as $element)
         {
-            if (isset($inputArr[$element->m_Name]))
+            if (isset($inputArr[$element->objectName]))
             {             
-            	$element->setValue($inputArr[$element->m_Name]);             	           
+            	$element->setValue($inputArr[$element->objectName]);             	           
             }
         }
 
         foreach ($this->m_SearchPanel as $element)
         {
-            if (isset($inputArr[$element->m_Name]))
+            if (isset($inputArr[$element->objectName]))
             {
-            	$element->setValue($inputArr[$element->m_Name]);
+            	$element->setValue($inputArr[$element->objectName]);
             }
         }
         return $inputArr;
@@ -380,18 +380,18 @@ class BaseForm extends MetaObject implements iSessionObject
 
         if($this->m_CacheLifeTime>0 && $this->m_SubForms == null)
         {
-            $cache_id = md5($this->m_Name);
+            $cache_id = md5($this->objectName);
             //try to process cache service.
             $cacheSvc = BizSystem::getService(CACHE_SERVICE,1);
-            $cacheSvc->init($this->m_Name,$this->m_CacheLifeTime);
+            $cacheSvc->init($this->objectName,$this->m_CacheLifeTime);
             if($cacheSvc->test($cache_id))
             {
-                BizSystem::log(LOG_DEBUG, "FORM", "Cache Hit. form name = ".$this->m_Name);
+                BizSystem::log(LOG_DEBUG, "FORM", "Cache Hit. form name = ".$this->objectName);
                 $output = $cacheSvc->load($cache_id);
             }
             else
             {
-                BizSystem::log(LOG_DEBUG, "FORM", "Set cache. form name = ".$this->m_Name);
+                BizSystem::log(LOG_DEBUG, "FORM", "Set cache. form name = ".$this->objectName);
                 $output = FormRenderer::render($this);
                 $cacheSvc->save($output, $cache_id);
             }
@@ -418,7 +418,7 @@ class BaseForm extends MetaObject implements iSessionObject
     {
         if ($redrawForm)
         {
-            BizSystem::clientProxy()->redrawForm($this->m_Name, FormRenderer::render($this));
+            BizSystem::clientProxy()->redrawForm($this->objectName, FormRenderer::render($this));
         }
 
         if ($hasRecordChange)
@@ -468,7 +468,7 @@ class BaseForm extends MetaObject implements iSessionObject
      */
     public function outputAttrs()
     {
-        $output['name'] = $this->m_Name;
+        $output['name'] = $this->objectName;
         $output['title'] = Expression::evaluateExpression($this->m_Title, $this);
         $output['icon'] = $this->m_Icon; 
         return $output;
@@ -567,7 +567,7 @@ class BaseForm extends MetaObject implements iSessionObject
 
     protected function translate()
     {
-    	$module = $this->getModuleName($this->m_Name);
+    	$module = $this->getModuleName($this->objectName);
     	if (!empty($this->m_Title))
     	{
     		$trans_string = I18n::t($this->m_Title, $this->getTransKey('Title'), $module, $this->getTransPrefix());
@@ -582,18 +582,18 @@ class BaseForm extends MetaObject implements iSessionObject
     			$this->m_Icon = $trans_string;
     		}
     	}
-    	if (!empty($this->m_Description))
+    	if (!empty($this->objectDescription))
     	{
-    		$trans_string = I18n::t($this->m_Description, $this->getTransKey('Description'), $module, $this->getTransPrefix());
+    		$trans_string = I18n::t($this->objectDescription, $this->getTransKey('Description'), $module, $this->getTransPrefix());
     		if($trans_string){
-    			$this->m_Description = $trans_string;
+    			$this->objectDescription = $trans_string;
     		}
     	}
     }
     
 	protected function getTransPrefix()
     {    	
-    	$nameArr = explode(".",$this->m_Name);
+    	$nameArr = explode(".",$this->objectName);
     	for($i=1;$i<count($nameArr)-1;$i++)
     	{
     		$prefix .= strtoupper($nameArr[$i])."_";
@@ -603,7 +603,7 @@ class BaseForm extends MetaObject implements iSessionObject
     
     protected function getTransKey($name)
     {
-    	$shortFormName = substr($this->m_Name,intval(strrpos($this->m_Name,'.'))+1);
+    	$shortFormName = substr($this->objectName,intval(strrpos($this->objectName,'.'))+1);
     	return strtoupper($shortFormName.'_'.$name);
     }
 	

@@ -26,8 +26,8 @@ class PaymentAdapter implements iPayment
 	public function __construct()
 	{
 		$this->m_NotifyURL  = SITE_URL.'ws.php/payment/callback/verify/type_'.$this->m_Type.'/';
-		$this->m_ReturnURL  = SITE_URL.APP_INDEX.'/payment/payment_finished/type_'.$this->m_Type.'/';
-		$this->m_CancelURL  = SITE_URL.APP_INDEX.'/payment/payment_cancelled/type_'.$this->m_Type.'/';
+		$this->m_ReturnURL  = SITE_URL.OPENBIZ_APP_INDEX_URL.'/payment/payment_finished/type_'.$this->m_Type.'/';
+		$this->m_CancelURL  = SITE_URL.OPENBIZ_APP_INDEX_URL.'/payment/payment_cancelled/type_'.$this->m_Type.'/';
 	}
 	
     public function GetPaymentURL($orderId, $amount,  $title=null,$customData=null){}

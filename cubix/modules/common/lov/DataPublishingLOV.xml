@@ -14,7 +14,7 @@
 	<PublishLevel Value="1" text="Global Groups" />
    
    
-   <DataFilter Value="2" text="My Group Published" PICTURE="{RESOURCE_URL}/common/images/icon_filter_groups.gif"/>
-   <DataFilter Value="3" text="Others Group Published" PICTURE="{RESOURCE_URL}/common/images/icon_filter_others.gif"/>
+   <DataFilter Value="2" text="My Group Published" PICTURE="{OPENBIZ_RESOURCE_URL}/common/images/icon_filter_groups.gif"/>
+   <DataFilter Value="3" text="Others Group Published" PICTURE="{OPENBIZ_RESOURCE_URL}/common/images/icon_filter_others.gif"/>
       
 </Selection>

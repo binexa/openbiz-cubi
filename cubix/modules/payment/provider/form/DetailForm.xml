@@ -9,7 +9,7 @@
 			Class="ProviderForm" 
 			FormType="Detail" 
 			jsClass="Openbiz.Form" 
-			Icon="{RESOURCE_URL}/payment/images/icon_payment.png"
+			Icon="{OPENBIZ_RESOURCE_URL}/payment/images/icon_payment.png"
 			Title="Edit Payment Payment Setting" 
 			Description="Payment Intergration feature could enable Cubi system to receive payment from users"
 			BizDataObj="payment.provider.do.ProviderDO" 
@@ -22,10 +22,10 @@
   		<Element Name="fld_Id" ElementSet="General" Hidden="Y" Class="LabelText" FieldName="Id" Label="Id" AllowURLParam="Y"/>       	
   		<Element Name="fld_require_auth" ElementSet="General" Hidden="Y" Class="RawData" FieldName="require_auth" Label="Id" AllowURLParam="Y"/>
   
-          <Element Name="fld_instructions_img" Class="LabelImage" ElementSet="Instruction" FieldName="type" Text="{RESOURCE_URL}/payment/images/instruction_{@:Elem[fld_platform].Value}.png" Label=""    AllowURLParam="N"  SelectFrom="payment.enum.Enum(paymentType)"/>
+          <Element Name="fld_instructions_img" Class="LabelImage" ElementSet="Instruction" FieldName="type" Text="{OPENBIZ_RESOURCE_URL}/payment/images/instruction_{@:Elem[fld_platform].Value}.png" Label=""    AllowURLParam="N"  SelectFrom="payment.enum.Enum(paymentType)"/>
     
 		<Element Name="fld_Id" ElementSet="General" Hidden="Y" Class="LabelText" FieldName="Id" Label="Id" AllowURLParam="Y"/>       	
-       	<Element Name="fld_platform" ElementSet="General" Class="LabelImage" FieldName="type" Label="Platform" Text="{RESOURCE_URL}/payment/images/icon_{@:Elem[fld_platform].Value}.png" AllowURLParam="N"/>       	
+       	<Element Name="fld_platform" ElementSet="General" Class="LabelImage" FieldName="type" Label="Platform" Text="{OPENBIZ_RESOURCE_URL}/payment/images/icon_{@:Elem[fld_platform].Value}.png" AllowURLParam="N"/>       	
 		<Element Name="fld_site_url" 
 					ElementSet="General" 
         			Class="LabelText" 

@@ -11,7 +11,7 @@
  * @version   $Id: RepositoryService.php 5076 2013-01-07 09:27:31Z hellojixian@gmail.com $
  */
 
-include_once MODULE_PATH.'/websvc/lib/WebsvcService.php';
+include_once OPENBIZ_APP_MODULE_PATH.'/websvc/lib/WebsvcService.php';
 class RepositoryService extends WebsvcService
 {
 	protected $m_CategoryDO 		= "repository.category.do.CategoryDO";

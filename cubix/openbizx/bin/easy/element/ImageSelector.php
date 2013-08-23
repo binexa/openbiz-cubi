@@ -31,14 +31,14 @@ class ImageSelector extends OptionElement
         $func = $this->getFunction();
 		
         $formobj = $this->GetFormObj();
-        if($formobj->m_Errors[$this->m_Name]){
+        if($formobj->m_Errors[$this->objectName]){
 			$func .= "onclick=\"this.className='$this->m_cssClass'\"";
 		}else{
 			$func .= "onmouseover=\"this.className='$this->m_cssFocusClass'\" onmouseout=\"this.className='$this->m_cssClass'\"";
 		} 
 		
-        $sHTML = "<input type=\"hidden\" NAME=\"" . $this->m_Name . "\" ID=\"" . $this->m_Name ."\" value=\"".$value."\" $disabledStr $this->m_HTMLAttr />";
-		$sHTML .= "<ul id=\"image_list_" . $this->m_Name ."\" $style $func >";
+        $sHTML = "<input type=\"hidden\" NAME=\"" . $this->objectName . "\" ID=\"" . $this->objectName ."\" value=\"".$value."\" $disabledStr $this->m_HTMLAttr />";
+		$sHTML .= "<ul id=\"image_list_" . $this->objectName ."\" $style $func >";
         if ($this->m_BlankOption) // ADD a blank option
         {
             $entry = explode(",",$this->m_BlankOption);
@@ -76,8 +76,8 @@ class ImageSelector extends OptionElement
             $sHTML .= "<a title=\"" . $option['txt'] . "\" 
             				href=\"javascript:;\"
             				class=\"$selectedStr\"
-            				onclick =\"$('".$this->m_Name."').value='". $option['val']."';            							
-            							Openbiz.ImageSelector.reset('image_list_".$this->m_Name."');
+            				onclick =\"$('".$this->objectName."').value='". $option['val']."';            							
+            							Openbiz.ImageSelector.reset('image_list_".$this->objectName."');
             							this.className='current';
             							\"	
             			>

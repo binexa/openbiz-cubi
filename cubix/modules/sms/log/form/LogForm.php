@@ -17,7 +17,7 @@ class LogForm extends EasyForm
 	 public function ClearLog()	
 	{
        if ($this->m_Resource != "" && !$this->allowAccess("sms.Manage"))
-            return BizSystem::clientProxy()->redirectView(ACCESS_DENIED_VIEW);
+            return BizSystem::clientProxy()->redirectView(OPENBIZ_ACCESS_DENIED_VIEW);
 
         try
         {
@@ -40,7 +40,7 @@ class LogForm extends EasyForm
 	public function ExportCSV()
 	{
 		$excelSvc = BizSystem::getService(EXCEL_SERVICE);	
-		$excelSvc->renderCSV($this->m_Name);
+		$excelSvc->renderCSV($this->objectName);
 		$this->runEventLog();
 		return true;
 	}	

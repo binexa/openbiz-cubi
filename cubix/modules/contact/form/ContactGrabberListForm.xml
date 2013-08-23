@@ -5,7 +5,7 @@
   Copyright (c) 2005-2011, Openbiz Technology LLC
   Version $Id: ContactGrabberListForm.xml 3356 2012-05-31 05:47:51Z rockyswen@gmail.com $
 -->
-<EasyForm Name="ContactGrabberListForm" Class="ContactGrabberListForm" Icon="{RESOURCE_URL}/contact/images/icon_contact_grabber.gif"  FormType="List" jsClass="jbForm" Title="Select Contact to Import" Description="Below contacts is loaded from specified Contact Provider, Please select contacts to importd." PageSize="10" DefaultForm="Y" BizDataObj="contact.do.ContactImportDO" TemplateEngine="Smarty" TemplateFile="form_contact_grabber_list.tpl.html" EventName="CONTACT" MessageFile="Contact.msg"  Access="contact.access">
+<EasyForm Name="ContactGrabberListForm" Class="ContactGrabberListForm" Icon="{OPENBIZ_RESOURCE_URL}/contact/images/icon_contact_grabber.gif"  FormType="List" jsClass="jbForm" Title="Select Contact to Import" Description="Below contacts is loaded from specified Contact Provider, Please select contacts to importd." PageSize="10" DefaultForm="Y" BizDataObj="contact.do.ContactImportDO" TemplateEngine="Smarty" TemplateFile="form_contact_grabber_list.tpl.html" EventName="CONTACT" MessageFile="Contact.msg"  Access="contact.access">
     <DataPanel>
         <Element Name="fld_Id" Class="Hidden" Hidden="Y" FieldName="Id" Label="Id"  Sortable="Y" AllowURLParam="N" Translatable="N" OnEventLog="N" ></Element>
         <Element Name="row_selections" Class="ColumnBool" SelectFrom="1" Label="Sel" FieldName="selected" Sortable="Y">

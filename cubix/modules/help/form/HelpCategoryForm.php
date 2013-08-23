@@ -35,20 +35,20 @@ class HelpCategoryForm extends EasyFormTree
 		    if ($parentId == $currentId && strtoupper($this->m_FormType)=='EDIT')
 	        {
 	            $errorMessage = $this->getMessage("FORM_PARENT_SHOULD_NOT_SAME_AS_ITSELF");                                
-	            $this->m_ValidateErrors[$element->m_Name] = $errorMessage;
+	            $this->m_ValidateErrors[$element->objectName] = $errorMessage;
 	        }           
 			
 	        if (!$this->hasRootExcept($currentId) && strtoupper($this->m_FormType)=='EDIT')
 	        {
 	        	$errorMessage = $this->getMessage("FORM_ITS_LAST_ROOT_CATEGORY");                                
-	            $this->m_ValidateErrors[$element->m_Name] = $errorMessage;
+	            $this->m_ValidateErrors[$element->objectName] = $errorMessage;
 	        }
 	        
 	        /* todo:
         	if ($this->isMovedToChild($parentId,$currentId) && strtoupper($this->m_FormType)=='EDIT')
 	        {
 	        	$errorMessage = $this->getMessage("FORM_CANNOT_MOVE_ITS_CHILD");                                
-	            $this->m_ValidateErrors[$element->m_Name] = $errorMessage;
+	            $this->m_ValidateErrors[$element->objectName] = $errorMessage;
 	        }
 	        */
 	        

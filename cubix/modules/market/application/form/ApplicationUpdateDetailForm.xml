@@ -15,7 +15,7 @@
     	<Element Name="btn_install" Class="LabelText" Text="Upgrade" CssClass="button_install" Link="javascript:;">
               <EventHandler Name="btn_install_onclick" Event="onclick" EventLogMsg="" Function="LoadDialog(market.application.form.ApplicationUpgradeForm,{(int)$_GET['fld:Id']}:{@:m_RepoID})"  />        
         </Element> 
-        <Element Name="btn_cancel" Class="LabelText" Link="{APP_INDEX}/market/app_updates" Text="Back" CssClass="button_gray_w" />
+        <Element Name="btn_cancel" Class="LabelText" Link="{OPENBIZ_APP_INDEX_URL}/market/app_updates" Text="Back" CssClass="button_gray_w" />
     </ActionPanel> 
     <NavPanel>
     </NavPanel> 

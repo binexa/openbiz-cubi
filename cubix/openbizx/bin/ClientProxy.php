@@ -27,9 +27,9 @@
  */
 class ClientProxy
 {
-    protected $m_RequestArgs;
-    protected $m_FormInputArray = null;
-    protected $m_bRPCFlag = false;
+    protected $requestArguments;
+    protected $formInputArray = null;
+    protected $isRPC = false;
 
     /**
      * Associate array of HTML content to be printed
@@ -106,7 +106,7 @@ class ClientProxy
      */
     public function printOutput()
     {
-        if ($this->m_bRPCFlag == true)
+        if ($this->isRPC == true)
             return $this->printJSONOuput();
 
         foreach ($this->_otherOutput as $output)
@@ -140,7 +140,7 @@ class ClientProxy
      */
     public function setRPCFlag($flag)
     {
-        $this->m_bRPCFlag = $flag;
+        $this->isRPC = $flag;
     }
 
     /**
@@ -220,7 +220,7 @@ class ClientProxy
      */
     public function updateFormElements($formName, $recArr, $rawData=false)
     {
-        if ($this->m_bRPCFlag)
+        if ($this->isRPC)
         {
             if ($rawData)
             {
@@ -247,7 +247,7 @@ class ClientProxy
      */
     public function redrawForm($formName, $sHTML)
     {
-        if ($this->m_bRPCFlag)
+        if ($this->isRPC)
             $this->_formsOutput[$formName] = $this->_buildTargetContent($formName, $sHTML);
         else
             $this->_formsOutput[$formName] = $sHTML;
@@ -263,7 +263,7 @@ class ClientProxy
     public function showClientAlert($alertText)
     {
         $msg = addslashes($alertText);
-        if ($this->m_bRPCFlag)
+        if ($this->isRPC)
             $this->_otherOutput[] = $this->_callClientFunction("alert('" . $msg . "')");
     }
 
@@ -281,7 +281,7 @@ class ClientProxy
         if(!$errMsg){    		
     		return;
     	}
-        if ($this->m_bRPCFlag)
+        if ($this->isRPC)
         {
             /*
         	$this->_otherOutput[] = $this->_buildTargetContent("ERROR", $errMsg);
@@ -312,7 +312,7 @@ class ClientProxy
      */
     public function showPopup($baseForm, $popupForm, $ctrlName = "")
     {
-        if ($this->m_bRPCFlag)
+        if ($this->isRPC)
         {
             $function = $baseForm . ".ShowPopup(" . $popupForm . "," . $ctrlName . ")";
             $this->_otherOutput[] = $this->_callClientFunction("CallFunction('$function','Popup')");
@@ -322,7 +322,7 @@ class ClientProxy
     /*
     public function runClientScript($script, $type = 'Form')
     {
-        if ($this->m_bRPCFlag) {
+        if ($this->isRPC) {
             if ($type == 'Form') {
                 $this->m_FormsOutput[] = $this->_callClientFunction($script);
             } elseif ($type == 'Other') {
@@ -344,11 +344,11 @@ class ClientProxy
     private function _errorOutput ($errMsg)
     {
         //ob_clean();
-        if(defined('INTERNAL_ERROR_VIEW')){
+        if(defined('OPENBIZ_INTERNAL_ERROR_VIEW')){
         	//render the view
         	$_GET['ob_err_msg']=$errMsg; 
         	ob_end_clean();
-        	BizSystem::getObject(INTERNAL_ERROR_VIEW)->render();         	     	      
+        	BizSystem::getObject(OPENBIZ_INTERNAL_ERROR_VIEW)->render();         	     	      
         	exit;
         }
         else
@@ -365,7 +365,7 @@ class ClientProxy
      */
     public function closePopup()
     {
-        if ($this->m_bRPCFlag){
+        if ($this->isRPC){
             $this->_formsOutput[] = $this->_callClientFunction("Openbiz.Window.closePopup()");
             $this->_otherOutput[] = $this->_callClientFunction("Openbiz.Window.closePopup()");
         }
@@ -381,7 +381,7 @@ class ClientProxy
      */
     public function showPopupWindow ($content, $w, $h)
     {
-        if ($this->m_bRPCFlag)
+        if ($this->isRPC)
             $this->_formsOutput[] = $this->_callClientFunction("popupWindow(\"$content\", $w, $h)");
     }
 
@@ -406,7 +406,7 @@ class ClientProxy
      */
     public function runClientScript($scriptStr)
     {
-        if ($this->m_bRPCFlag)
+        if ($this->isRPC)
             $this->_otherOutput[] = $this->_buildTargetContent("SCRIPT", $scriptStr);
         else
         {
@@ -417,7 +417,7 @@ class ClientProxy
 	public function runClientFunction($scriptStr)
     {
         $msg = addslashes($alertText);
-        if ($this->m_bRPCFlag)
+        if ($this->isRPC)
             $this->_otherOutput[] = $this->_callClientFunction($scriptStr);
     }    
     
@@ -429,7 +429,7 @@ class ClientProxy
      */
     private function _callClientFunction ($funcStr)
     {
-        if ($this->m_bRPCFlag)
+        if ($this->isRPC)
             return $this->_buildTargetContent("FUNCTION", $funcStr);
     }
 
@@ -456,12 +456,12 @@ class ClientProxy
      */
     public function redirectPage($pageURL)
     {
-        if (!$this->m_bRPCFlag) {
+        if (!$this->isRPC) {
             $func = (isset($_REQUEST['F']) ? $_REQUEST['F'] : "");
             if ($func == "RPCInvoke") 
-                $this->m_bRPCFlag = true;
+                $this->isRPC = true;
         }
-		if (!$this->m_bRPCFlag)
+		if (!$this->isRPC)
         {
             ob_clean();
             header("Location: $pageURL");
@@ -491,8 +491,8 @@ class ClientProxy
         $viewMod = $viewParts[0];
         $viewName = $viewParts[count($viewParts)-1];
         $viewName = strtolower(str_replace("View","",$viewName));
-        $url = APP_INDEX."/$viewMod/$viewName";
-        //echo "$view page url is $url. $this->m_bRPCFlag";
+        $url = OPENBIZ_APP_INDEX_URL."/$viewMod/$viewName";
+        //echo "$view page url is $url. $this->isRPC";
         $this->redirectPage($url);
         BizSystem::clientProxy()->printOutput();
     }
@@ -527,12 +527,12 @@ class ClientProxy
     public function getAppendedScripts()
     {
         $currentView = BizSystem::instance()->getCurrentViewName();
-        $initScripts = "<script>var APP_URL='".APP_URL."'; var APP_CONTROLLER='".APP_URL."/bin/controller.php';</script>\n";
+        $initScripts = "<script>var OPENBIZ_APP_URL='".OPENBIZ_APP_URL."'; var APP_CONTROLLER='".OPENBIZ_APP_URL."/bin/controller.php';</script>\n";
         $initScripts .= "<script>var APP_VIEWNAME='".$currentView."';</script>\n";
         $extraScripts = implode("", $this->_extraScripts);
         $extraScript_array = explode("</script>", $extraScripts);
-        /*if (defined("RESOURCE_PHP")) {
-            $js_scripts = RESOURCE_PHP."?f=";
+        /*if (defined("OPENBIZ_RESOURCE_PHP")) {
+            $js_scripts = OPENBIZ_RESOURCE_PHP."?f=";
             foreach ($extraScript_array as $script)
             {
                 // extract src part from each line
@@ -584,8 +584,8 @@ class ClientProxy
     {
         $extraStyles = implode("", $this->_extraStyles);
         $extraStyle_array = explode("type=\"text/css\">", $extraStyles);
-        if (defined("RESOURCE_PHP") && $comb) {
-            $css_scripts = RESOURCE_PHP."?f=";
+        if (defined("OPENBIZ_RESOURCE_PHP") && $comb) {
+            $css_scripts = OPENBIZ_RESOURCE_PHP."?f=";
             foreach ($extraStyle_array as $style)
             {
                 // extract href part from each line
@@ -605,9 +605,9 @@ class ClientProxy
         //added by Jixian for supports localization display styles 
         // eg.: override button width for specified languages
         $lang = I18n::getCurrentLangCode();
-        $localization_css_file = APP_HOME.DIRECTORY_SEPARATOR."languages".DIRECTORY_SEPARATOR.$lang.DIRECTORY_SEPARATOR."localization.css";
+        $localization_css_file = OPENBIZ_APP_PATH.DIRECTORY_SEPARATOR."languages".DIRECTORY_SEPARATOR.$lang.DIRECTORY_SEPARATOR."localization.css";
         if(is_file($localization_css_file)){
-        	$cleanStyle_array[] = "<link rel=\"stylesheet\" href=\"".APP_URL."/languages/$lang/localization.css\" type=\"text/css\">";
+        	$cleanStyle_array[] = "<link rel=\"stylesheet\" href=\"".OPENBIZ_APP_URL."/languages/$lang/localization.css\" type=\"text/css\">";
         }
         return implode("\n", $cleanStyle_array);
     }
@@ -619,7 +619,7 @@ class ClientProxy
      */
     public function includeBaseClientScripts()
     {
-        if (defined('JSLIB_BASE') && JSLIB_BASE == 'JQUERY') {
+        if (defined('OPENBIZ_JSLIB_BASE') && OPENBIZ_JSLIB_BASE == 'JQUERY') {
 			BizSystem::clientProxy()->appendScripts("jquery", "jquery.js");
 			BizSystem::clientProxy()->appendScripts("jquery_class", "jquery.class.js");
 			BizSystem::clientProxy()->appendScripts("jquery_dollarj", "<script>try{var \$j=\$;}catch(e){}</script>", false); 
@@ -682,7 +682,7 @@ class ClientProxy
         if (isset($this->_extraScripts['colorpicker']))
             return;
         $style = "<link rel=\"stylesheet\" href=\"".Resource::getJsUrl()."/colorpicker/css/colorpicker.css\" type=\"text/css\">";
-        if(JSLIB_BASE != 'JQUERY'){
+        if(OPENBIZ_JSLIB_BASE != 'JQUERY'){
         	$script = "<script type=\"text/javascript\" src=\"".Resource::getJsUrl()."/jquery.js\"></script>";
         }
         $script .= "<script type=\"text/javascript\" src=\"".Resource::getJsUrl()."/colorpicker/js/eye.js\"></script>";

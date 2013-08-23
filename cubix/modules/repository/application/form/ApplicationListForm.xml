@@ -5,7 +5,7 @@
   Copyright (c) 2005-2011, Openbiz Technology LLC
   Version $Id: ApplicationListForm.xml 4698 2012-11-13 03:28:39Z hellojixian@gmail.com $
 -->
-<EasyForm Name="ApplicationListForm" Icon="{RESOURCE_URL}/repository/images/repo_application.gif" Class="EasyForm" FormType="List" jsClass="jbForm" Title="Repository Applications" Description="This module can manage repositroy applications " BizDataObj="repository.application.do.ApplicationDO" PageSize="10" DefaultForm="Y" TemplateEngine="Smarty" TemplateFile="grid.tpl" EventName="" MessageFile="" Access="Repository.Manage">
+<EasyForm Name="ApplicationListForm" Icon="{OPENBIZ_RESOURCE_URL}/repository/images/repo_application.gif" Class="EasyForm" FormType="List" jsClass="jbForm" Title="Repository Applications" Description="This module can manage repositroy applications " BizDataObj="repository.application.do.ApplicationDO" PageSize="10" DefaultForm="Y" TemplateEngine="Smarty" TemplateFile="grid.tpl" EventName="" MessageFile="" Access="Repository.Manage">
     <DataPanel>
         <Element Name="row_selections" Class="RowCheckbox"  Label="" FieldName="Id"/>
         <Element Name="fld_Id" Class="common.element.ColumnTitle" FieldName="Id" Label="ID" Sortable="Y" AllowURLParam="N">         
@@ -13,7 +13,7 @@
         </Element>
          <Element Name="fld_icon" Class="ColumnImage" FieldName="icon" Label="Icon"  Sortable="Y"  Height="22" >
         </Element>     
-        <Element Name="fld_name" Class="ColumnText" FieldName="name" Label="Name" DefaultValue="New Package" Sortable="Y"  Link="{APP_INDEX}/repository/repository_application_detail/{@:Elem[fld_Id].Value}" >
+        <Element Name="fld_name" Class="ColumnText" FieldName="name" Label="Name" DefaultValue="New Package" Sortable="Y"  Link="{OPENBIZ_APP_INDEX_URL}/repository/repository_application_detail/{@:Elem[fld_Id].Value}" >
         	<!--  <EventHandler Name="fld_package_id_onclick" Event="onclick" Function="SwitchForm(repository.application.form.ApplicationDetailForm,{@:Elem[fld_Id].Value})"  />-->
         </Element>
         <Element Name="fld_type" Class="ColumnText" FieldName="type" Label="Type"  Sortable="Y"/>

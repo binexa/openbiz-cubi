@@ -14,8 +14,8 @@
 /**
  * @package PluginService
  */
-require_once(MODULE_PATH . "/pdf/lib/mpdf50/mpdf.php");
-define('_MPDF_PATH', MODULE_PATH . "/pdf/lib/mpdf50/");
+require_once(OPENBIZ_APP_MODULE_PATH . "/pdf/lib/mpdf50/mpdf.php");
+define('_MPDF_PATH', OPENBIZ_APP_MODULE_PATH . "/pdf/lib/mpdf50/");
 
 /**
  * pdfService - 
@@ -185,7 +185,7 @@ class pdfService
             touch($file);
         } else
         {
-            $tmpfile = APP_FILE_PATH . "/tmpfiles";
+            $tmpfile = OPENBIZ_APP_FILE_PATH . "/tmpfiles";
             if (!is_dir($tmpfile))
             {
                 mkdir($tmpfile);
@@ -199,7 +199,7 @@ class pdfService
         }
         $this->pdfObj->Output($file);
         $path_parts = pathinfo($file);
-        $file_download = APP_FILE_URL . "/tmpfiles/" . $path_parts['basename'];
+        $file_download = OPENBIZ_APP_FILE_URL . "/tmpfiles/" . $path_parts['basename'];
 
         return $file_download;
     }
@@ -263,7 +263,7 @@ class pdfService
             switch ($config['watermark_type'])
             {
                 case "Picture":
-                    $this->pdfObj->SetWatermarkImage("file://" . APP_HOME . $config['watermark_picture'], $alpha, $config['watermark_size'], $config['watermark_position']);
+                    $this->pdfObj->SetWatermarkImage("file://" . OPENBIZ_APP_PATH . $config['watermark_picture'], $alpha, $config['watermark_size'], $config['watermark_position']);
                     $this->pdfObj->showWatermarkImage = true;
                     break;
                 case "Text":

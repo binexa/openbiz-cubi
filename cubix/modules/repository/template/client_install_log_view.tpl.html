@@ -22,10 +22,10 @@ width:686px;
 }
 </style>
 ";
-if (JSLIB_BASE!='JQUERY') {
+if (OPENBIZ_JSLIB_BASE!='JQUERY') {
 	$includedScripts .= "
 	<script>try{var \$j=jQuery.noConflict();}catch(e){}</script>
-	<script src=\"".JS_URL."/jquery-ui-1.8.12.custom.min.js\"></script>
+	<script src=\"".OPENBIZ_JS_URL."/jquery-ui-1.8.12.custom.min.js\"></script>
 	";
 }
 $this->_tpl_vars['scripts'] = $includedScripts;

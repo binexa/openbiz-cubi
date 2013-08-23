@@ -27,7 +27,7 @@ class DashboardView extends EasyView
 	{
 		// get user widgets of this view
 		$user_id = BizSystem::GetUserProfile("Id");
-		$viewName = $this->m_Name;
+		$viewName = $this->objectName;
 		$searchRule="[user_id]='$user_id' AND [view]='$viewName'";
 		$do = BizSystem::GetObject($this->m_UserWidgetDO);
 		$formRecs = $do->directfetch($searchRule);

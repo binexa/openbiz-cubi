@@ -15,7 +15,7 @@ require_once(OPENBIZ_BIN."easy/element/DropDownList.php");
 class ThemeSelector extends DropDownList{
     function getList(){
     	$list=array();
-   		$theme_dir = APP_HOME.DIRECTORY_SEPARATOR."themes".DIRECTORY_SEPARATOR;						
+   		$theme_dir = OPENBIZ_APP_PATH.DIRECTORY_SEPARATOR."themes".DIRECTORY_SEPARATOR;						
 		if(!is_dir($theme_dir))
 		{
 			return 	array();
@@ -34,7 +34,7 @@ class ThemeSelector extends DropDownList{
     }
     
 	public function ReadThemePack($theme,&$recArr=array()){		
-		$theme_dir = THEME_PATH.DIRECTORY_SEPARATOR.$theme;
+		$theme_dir = OPENBIZ_THEME_PATH.DIRECTORY_SEPARATOR.$theme;
 		$theme_metafile = $theme_dir.DIRECTORY_SEPARATOR."theme.xml";
 		if(is_file($theme_metafile)){
 			$metadata = file_get_contents($theme_metafile);
@@ -49,22 +49,22 @@ class ThemeSelector extends DropDownList{
 				}
 			}
 		}
-		if(is_file(THEME_PATH.DIRECTORY_SEPARATOR.$theme.DIRECTORY_SEPARATOR."images".DIRECTORY_SEPARATOR.$recArr['icon']))
+		if(is_file(OPENBIZ_THEME_PATH.DIRECTORY_SEPARATOR.$theme.DIRECTORY_SEPARATOR."images".DIRECTORY_SEPARATOR.$recArr['icon']))
 		{
-			$recArr['icon_url'] = THEME_URL."/$theme/images/".$recArr['icon'];
+			$recArr['icon_url'] = OPENBIZ_THEME_URL."/$theme/images/".$recArr['icon'];
 		}
 		else
 		{
-			$recArr['icon_url'] =THEME_URL."/$theme/images/spacer.gif";
+			$recArr['icon_url'] =OPENBIZ_THEME_URL."/$theme/images/spacer.gif";
 		}
-		if(is_file(THEME_PATH.DIRECTORY_SEPARATOR.$theme.DIRECTORY_SEPARATOR."images".DIRECTORY_SEPARATOR.$recArr['preview']))
+		if(is_file(OPENBIZ_THEME_PATH.DIRECTORY_SEPARATOR.$theme.DIRECTORY_SEPARATOR."images".DIRECTORY_SEPARATOR.$recArr['preview']))
 		{
-			$recArr['preview_url'] = THEME_URL."/$theme/images/".$recArr['preview'];
+			$recArr['preview_url'] = OPENBIZ_THEME_URL."/$theme/images/".$recArr['preview'];
 			return $recArr;		
 		}
 		else
 		{
-			$recArr['preview_url'] =THEME_URL."/$theme/images/spacer.gif";
+			$recArr['preview_url'] =OPENBIZ_THEME_URL."/$theme/images/spacer.gif";
 		}
 	}    
 }

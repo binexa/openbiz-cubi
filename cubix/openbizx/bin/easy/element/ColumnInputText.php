@@ -41,8 +41,8 @@ class ColumnInputText extends InputElement
 	
 	public function setValue($value)
 	{
-		BizSystem::sessionContext()->getObjVar($this->getFormObj()->m_Name, $this->m_Name, $this->m_Value);
-		$valueArr = $_POST[$this->m_Name];
+		BizSystem::sessionContext()->getObjVar($this->getFormObj()->objectName, $this->objectName, $this->m_Value);
+		$valueArr = $_POST[$this->objectName];
 		if(is_array($valueArr))
 		{
 			foreach($valueArr as $key=>$value)
@@ -50,14 +50,14 @@ class ColumnInputText extends InputElement
 				$this->m_Value[$key] = $value;
 			}
 		}
-		BizSystem::sessionContext()->setObjVar($this->getFormObj()->m_Name, $this->m_Name, $this->m_Value);
+		BizSystem::sessionContext()->setObjVar($this->getFormObj()->objectName, $this->objectName, $this->m_Value);
 	}
 	
 	public function renderLabel()
     {
         if ($this->m_Sortable == "Y")
         {
-            $rule = $this->m_Name;
+            $rule = $this->objectName;
 
             $function = $this->m_FormName . ".SortRecord($rule,$this->m_SortFlag)";
             if($this->m_SortFlag == "ASC" || $this->m_SortFlag == "DESC"){
@@ -103,17 +103,17 @@ class ColumnInputText extends InputElement
         $func = $this->getFunction();
         
         $formobj = $this->GetFormObj();
-    	if($formobj->m_Errors[$this->m_Name]){
+    	if($formobj->m_Errors[$this->objectName]){
 			$func .= "onchange=\"this.className='$this->m_cssClass'\"";
 		}else{
 			$func .= "onfocus=\"this.className='$this->m_cssFocusClass'\" onblur=\"this.className='$this->m_cssClass'\"";
 		}        
         
 		
-        $sHTML = "<INPUT NAME=\"" . $this->m_Name . "[".$recId."]\" ID=\"" . $this->m_Name ."\" VALUE=\"" . $value . "\" $disabledStr $this->m_HTMLAttr $style $func />";
+        $sHTML = "<INPUT NAME=\"" . $this->objectName . "[".$recId."]\" ID=\"" . $this->objectName ."\" VALUE=\"" . $value . "\" $disabledStr $this->m_HTMLAttr $style $func />";
         if($this->m_Hint){
         	$sHTML.="<script>        	
-        	\$j('#" . $this->m_Name . "').tbHinter({
+        	\$j('#" . $this->objectName . "').tbHinter({
 				text: '".$this->m_Hint."'
 			});
         	</script>";

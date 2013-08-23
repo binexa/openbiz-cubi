@@ -5,7 +5,7 @@
   Copyright (c) 2005-2011, Openbiz Technology LLC
   Version $Id: ProductDetailForm.xml 3915 2012-08-11 11:02:39Z hellojixian@gmail.com $
 -->
-<EasyForm Name="ProductDetailForm" Class="EasyForm" FormType="Detail" jsClass="Openbiz.Form" Icon="{RESOURCE_URL}/product/images/icon_mod_product_detail.png" Title="Product Data Detail" Description="Product Description" BizDataObj="product.do.ProductDO" TemplateEngine="Smarty" TemplateFile="form_detail_adv_custom.tpl.html" MessageFile="Product.ini" Access="product.Access">
+<EasyForm Name="ProductDetailForm" Class="EasyForm" FormType="Detail" jsClass="Openbiz.Form" Icon="{OPENBIZ_RESOURCE_URL}/product/images/icon_mod_product_detail.png" Title="Product Data Detail" Description="Product Description" BizDataObj="product.do.ProductDO" TemplateEngine="Smarty" TemplateFile="form_detail_adv_custom.tpl.html" MessageFile="Product.ini" Access="product.Access">
   <DataPanel>
     <Element Name="fld_form_title" Class="LabelText" FieldName="name" Label="" Width="500" style="font-size:24px;color:#333333;line-height:24px;" AllowURLParam="N"/>
     <Element Name="fld_color" Class="Hidden" Hidden="Y" FieldName="type_color" Label="Type" Sortable="Y" AllowURLParam="N" Translatable="N" OnEventLog="N"/>
@@ -57,7 +57,7 @@
       <EventHandler Name="onclick" Event="onclick" EventLogMsg="" Function="CopyRecord({@:Elem[fld_Id].Value})" RedirectPage="form=product.form.ProductCopyForm&amp;fld:Id={@:Elem[fld_Id].Value}" ShortcutKey="Ctrl+C" ContextMenu="Copy"/>
     </Element>
     <Element Name="btn_delete" Class="Button" Text="Delete" CssClass="button_gray_m" Description="Delete record (Delete)">
-      <EventHandler Name="del_onclick" Event="onclick" EventLogMsg="" Function="DeleteRecord({@:Elem[fld_Id].Value})" RedirectPage="{APP_INDEX}/product/product_manage" ShortcutKey="Ctrl+Delete" ContextMenu="Delete"/>
+      <EventHandler Name="del_onclick" Event="onclick" EventLogMsg="" Function="DeleteRecord({@:Elem[fld_Id].Value})" RedirectPage="{OPENBIZ_APP_INDEX_URL}/product/product_manage" ShortcutKey="Ctrl+Delete" ContextMenu="Delete"/>
     </Element>
     <Element Name="btn_cancel" Class="LabelBack" Text="Back" CssClass="button_gray_m" Link="product/product_manage"/>
   </ActionPanel>

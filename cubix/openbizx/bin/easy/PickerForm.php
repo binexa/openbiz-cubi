@@ -46,9 +46,9 @@ class PickerForm extends EasyForm
     public function getSessionVars($sessionContext)
     {
         parent::getSessionVars($sessionContext);
-        $sessionContext->getObjVar($this->m_Name, "ParentFormElemName", $this->m_ParentFormElemName);
-        $sessionContext->getObjVar($this->m_Name, "PickerMap", $this->m_PickerMap);
-        $sessionContext->getObjVar($this->m_Name, "ParentFormRecord", $this->m_ParentFormRecord);
+        $sessionContext->getObjVar($this->objectName, "ParentFormElemName", $this->m_ParentFormElemName);
+        $sessionContext->getObjVar($this->objectName, "PickerMap", $this->m_PickerMap);
+        $sessionContext->getObjVar($this->objectName, "ParentFormRecord", $this->m_ParentFormRecord);
     }
 
     /**
@@ -60,9 +60,9 @@ class PickerForm extends EasyForm
     public function setSessionVars($sessionContext)
     {
         parent::setSessionVars($sessionContext);
-        $sessionContext->setObjVar($this->m_Name, "ParentFormElemName", $this->m_ParentFormElemName);
-        $sessionContext->setObjVar($this->m_Name, "PickerMap", $this->m_PickerMap);
-        $sessionContext->setObjVar($this->m_Name, "ParentFormRecord", $this->m_ParentFormRecord);
+        $sessionContext->setObjVar($this->objectName, "ParentFormElemName", $this->m_ParentFormElemName);
+        $sessionContext->setObjVar($this->objectName, "PickerMap", $this->m_PickerMap);
+        $sessionContext->setObjVar($this->objectName, "ParentFormRecord", $this->m_ParentFormRecord);
     }
 
     /**
@@ -213,11 +213,11 @@ class PickerForm extends EasyForm
 	                $other_ctrl = $parentForm->getElement($ctrlPair[0]);
 	                if ($other_ctrl)
 	                {
-	                	if(!$updArray[$other_ctrl->m_Name]){
-	                		$updArray[$other_ctrl->m_Name] = $this_ctrl_val;
+	                	if(!$updArray[$other_ctrl->objectName]){
+	                		$updArray[$other_ctrl->objectName] = $this_ctrl_val;
 	                		$updRec[$other_ctrl->m_FieldName] = $this_ctrl_val;	
 	                	}else{
-	                		$updArray[$other_ctrl->m_Name] .= ';'.$this_ctrl_val;
+	                		$updArray[$other_ctrl->objectName] .= ';'.$this_ctrl_val;
 	                		$updRec[$other_ctrl->m_FieldName] .= ';'.$this_ctrl_val;
 	                	}
 	                }
@@ -233,7 +233,7 @@ class PickerForm extends EasyForm
         	$parentForm->setActiveRecord($updRec);        	
         	$parentForm->rerender();
         }else{
-        	BizSystem::clientProxy()->updateFormElements($parentForm->m_Name, $updArray);
+        	BizSystem::clientProxy()->updateFormElements($parentForm->objectName, $updArray);
         	foreach($updArray as $elemName=>$value)
         	{
         		$elem = $parentForm->getElement($elemName);
@@ -282,14 +282,14 @@ class PickerForm extends EasyForm
 	        $parentForm->getDataObj()->clearSearchRule();
 	        
 	        $do = $this->getDataObj();
-	        $baseSearchRule = $do->m_BaseSearchRule;
-	        $do->m_BaseSearchRule = "";
+	        $baseSearchRule = $do->baseSearchRule;
+	        $do->baseSearchRule = "";
 	        $do->clearSearchRule();	        	        
 	        $rec = $do->fetchById($recId);	
-			$do->m_BaseSearchRule = $baseSearchRule;
+			$do->baseSearchRule = $baseSearchRule;
 			
 			if(!$rec){
-				$rec=BizSystem::getObject($do->m_Name,1)->fetchById($recId);
+				$rec=BizSystem::getObject($do->objectName,1)->fetchById($recId);
 			}
 			
 	        // add record to parent form's dataObj who is M-M or M-1/1-1 to its parent dataobj

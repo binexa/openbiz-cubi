@@ -9,7 +9,7 @@
 			Class="PickerForm" 
 			FormType="Edit" 
 			jsClass="Openbiz.Form" 
-			Icon="{RESOURCE_URL}/product/images/icon_mod_product_related.png"
+			Icon="{OPENBIZ_RESOURCE_URL}/product/images/icon_mod_product_related.png"
 			Title="Edit Product Data Related Record" 
 			Description="This form could help you manage product related data record." 
 			BizDataObj="product.do.ProductDO" 

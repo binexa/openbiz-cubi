@@ -10,7 +10,7 @@
 {$scripts}
 <link rel="stylesheet" href="{$css_url}/general.css" type="text/css" />
 <link rel="stylesheet" href="{$css_url}/login.css" type="text/css" />
-{php} if (JSLIB_BASE=='JQUERY') : {/php}
+{php} if (OPENBIZ_JSLIB_BASE=='JQUERY') : {/php}
 <script src="{$js_url}/jquery.textbox.hinter.js"></script>
 {php} else : {/php}
 <script src="{$js_url}/jquery.js"></script>
@@ -75,7 +75,7 @@ background-image:url({/literal}{$theme_url}{literal}/images/loading_bg.gif);
 <script>
 window.onload=fade_loader;
 window.onunload=fadeout_loader;
-{php} if (JSLIB_BASE=='JQUERY') : {/php}
+{php} if (OPENBIZ_JSLIB_BASE=='JQUERY') : {/php}
 {literal}
 function fade_loader(){
 	$('#loader').fadeOut('slow');

@@ -388,7 +388,7 @@ class DOTrigger
  */
 class TriggerAction extends MetaObject
 {
-    public $m_Name;
+    public $objectName;
     public $m_Action;
     public $m_Immediate;
     public $m_DelayMinutes;
@@ -403,7 +403,7 @@ class TriggerAction extends MetaObject
      */
     public function __construct ($xmlArr)
     {
-        $this->m_Name = $xmlArr["ATTRIBUTES"]["NAME"];
+        $this->objectName = $xmlArr["ATTRIBUTES"]["NAME"];
         $this->m_Action = $xmlArr["ATTRIBUTES"]["ACTION"];
         $this->m_Immediate = $xmlArr["ATTRIBUTES"]["IMMEDIATE"];
         $this->m_DelayMinutes = $xmlArr["ATTRIBUTES"]["DELAYMINUTES"];

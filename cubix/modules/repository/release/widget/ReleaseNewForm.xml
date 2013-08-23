@@ -5,7 +5,7 @@
   Copyright (c) 2005-2011, Openbiz Technology LLC
   Version $Id: ReleaseNewForm.xml 3369 2012-05-31 06:13:56Z rockyswen@gmail.com $
 -->
-<EasyForm Name="ReleaseNewForm" Class="ReleaseForm" Icon="{RESOURCE_URL}/repository/images/repo_application.gif" FormType="New" jsClass="jbForm" Title="New Release" Description="Please select a package from your computer to upload" BizDataObj="repository.release.do.ReleaseDO" PageSize="10" DefaultForm="Y" TemplateEngine="Smarty" TemplateFile="form_release_quick_add.tpl.html"  Access="Repository.Manage">
+<EasyForm Name="ReleaseNewForm" Class="ReleaseForm" Icon="{OPENBIZ_RESOURCE_URL}/repository/images/repo_application.gif" FormType="New" jsClass="jbForm" Title="New Release" Description="Please select a package from your computer to upload" BizDataObj="repository.release.do.ReleaseDO" PageSize="10" DefaultForm="Y" TemplateEngine="Smarty" TemplateFile="form_release_quick_add.tpl.html"  Access="Repository.Manage">
     <DataPanel>        
         <Element Name="fld_version"  Class="InputText" FieldName="version" Label="Version"   />	
         <Element Name="fld_desc"  Class="Textarea" FieldName="description" Label="Description"   />

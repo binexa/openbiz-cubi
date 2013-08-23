@@ -31,7 +31,7 @@ class I18n
 {
     const LANGUAGE_PATH_1 = "languages";
     const LANGUAGE_PATH_2 = "LC_MESSAGES";
-    const DEFAULT_LANGUAGE = DEFAULT_LANGUAGE;
+    const DEFAULT_LANGUAGE = OPENBIZ_DEFAULT_LANGUAGE;
     
     protected static $_langData;
     protected static $_langCode;
@@ -54,7 +54,7 @@ class I18n
     	if ($key && isset(I18n::$_langData[$module][$key]))
     		return I18n::$_langData[$module][$key];	
     		
-		// try to load theme.THEME_NAME.ini
+		// try to load theme.OPENBIZ_THEME_NAME.ini
 		$module = '_theme';
 		if (!I18n::loadLangData($module))
 			return $text;
@@ -84,9 +84,9 @@ class I18n
     	
     	// load language file
     	if ($module == '_system') $filename = 'system.ini';
-		else if ($module == '_theme') { $filename = 'theme.'.THEME_NAME.'.ini'; }
+		else if ($module == '_theme') { $filename = 'theme.'.OPENBIZ_THEME_NAME.'.ini'; }
     	else $filename = "mod.$module.ini";
-    	$langFile = LANGUAGE_PATH."/$langCode/$filename";
+    	$langFile = OPENBIZ_LANGUAGE_PATH."/$langCode/$filename";
     	//echo "check ini file $langFile".nl;
     	if (!file_exists($langFile)) {
 			I18n::$_langData[$module] = array();
@@ -108,7 +108,7 @@ class I18n
     	}
     	$langCode = I18n::getCurrentLangCode();    	    	    
     	$filename = "mod.$from_module.ini";
-    	$langFile = LANGUAGE_PATH."/$langCode/$filename";    	
+    	$langFile = OPENBIZ_LANGUAGE_PATH."/$langCode/$filename";    	
     	if (!file_exists($langFile)) return false;    	    	
     	$inidata = parse_ini_file($langFile, false);
     	if(is_array(I18n::$_langData[$to_module])){

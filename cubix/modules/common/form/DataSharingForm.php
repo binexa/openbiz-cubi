@@ -59,7 +59,7 @@ class DataSharingForm extends EasyForm
 		$result['editable'] = 0;
 		$result['has_ref_data'] = 0;
 		
-		if($dataObj->m_ObjReferences->count()){						
+		if($dataObj->objReferences->count()){						
 			$result['has_ref_data'] = 1;			
 		}
 		
@@ -145,7 +145,7 @@ class DataSharingForm extends EasyForm
 		$result['refer_url'] = SITE_URL;
 		
 		if($result['editable']==0){
-			$svcObj = BizSystem::GetService(DATAPERM_SERVICE);
+			$svcObj = BizSystem::GetService(OPENBIZ_DATAPERM_SERVICE);
 	        $result['editable'] = (int)$svcObj->checkDataPerm($dataRec,3,$dataObj);
 		}
 		
@@ -197,11 +197,11 @@ class DataSharingForm extends EasyForm
 		//test if changed a new owner
 		if($recArr['notify_user']){
 			$data = $this->fetchData();			
-			$data['app_index'] = APP_INDEX;
-			$data['app_url'] = APP_URL;
+			$data['app_index'] = OPENBIZ_APP_INDEX_URL;
+			$data['app_url'] = OPENBIZ_APP_URL;
 			$data['operator_name'] = BizSystem::GetProfileName(BizSystem::getUserProfile("Id"));
 			
-			$emailSvc = BizSystem::getService(USER_EMAIL_SERVICE);
+			$emailSvc = BizSystem::getService(CUBI_USER_EMAIL_SERVICE);
 			if($DataRec['owner_id']	!= $recArr['owner_id'])
 			{
 				$emailSvc->DataAssignedEmail($recArr['owner_id'], $data);
@@ -305,7 +305,7 @@ class DataSharingForm extends EasyForm
 				$logRecord[$fldName] = array('old'=>$oldVal, 'new'=>$fldVal, 'element'=>$elem);
 			}
 			$formMetaLite = array(
-				"name" 		=> $this->m_Name,
+				"name" 		=> $this->objectName,
 				"package" 	=> $this->m_Package,
 				"message_file" 	=> $this->m_MessageFile,		
 			);
@@ -322,7 +322,7 @@ class DataSharingForm extends EasyForm
    		//end save change log
 		
 		if($recArr['update_ref_data']){
-			if($dataObj->m_ObjReferences->count()){
+			if($dataObj->objReferences->count()){
 				$this->_casacadeUpdate($dataObj, $recArr);
 			}			
 		}
@@ -355,9 +355,9 @@ class DataSharingForm extends EasyForm
 	}	
 	
 	private function _casacadeUpdate($obj,$setting){
-		$dataShareSvc = BizSystem::getService(DATAPERM_SERVICE);
-		foreach($obj->m_ObjReferences as $doRef){			
-				$do = BizSystem::getObject($doRef->m_Name);				
+		$dataShareSvc = BizSystem::getService(OPENBIZ_DATAPERM_SERVICE);
+		foreach($obj->objReferences as $doRef){			
+				$do = BizSystem::getObject($doRef->objectName);				
 				$rs = $do->fetch();
 				foreach($rs as $rec){
 					if($dataShareSvc->checkDataOwner($rec)){
@@ -371,7 +371,7 @@ class DataSharingForm extends EasyForm
 						$ok = $do->updateRecord($newRec,$rec);
 					}
 				}				
-				if($do->m_ObjReferences->count())
+				if($do->objReferences->count())
 				{
 					//$this->_casacadeUpdate($do, $setting);					
 				}

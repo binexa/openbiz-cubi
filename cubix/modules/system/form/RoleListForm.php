@@ -16,7 +16,7 @@ class RoleListForm extends  EasyForm
 	public function SetPermission()
 	{		
         $id = BizSystem::clientProxy()->getFormInputs('_selectedId');
-		$redirectPage = APP_INDEX."/system/role_detail/".$id;
+		$redirectPage = OPENBIZ_APP_INDEX_URL."/system/role_detail/".$id;
 		BizSystem::clientProxy()->ReDirectPage($redirectPage);
 	}
 	

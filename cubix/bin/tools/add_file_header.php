@@ -8,7 +8,7 @@ if ($argc<2) {
 include_once ("../app_init.php");
 
 $module = $argv[1];
-$moduleDir = MODULE_PATH.DIRECTORY_SEPARATOR.$module;
+$moduleDir = OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR.$module;
 
 $php_header = "/**
  * Openbiz Cubi Application Platform
@@ -36,7 +36,7 @@ foreach ($files as $file) {
 	$content = file_get_contents($file);
 	if (strpos($content, " * Openbiz Cubi Application Platform") === false) {
 		$path_parts = pathinfo($file);
-		$packageName = str_replace("/",".",str_replace(MODULE_PATH.DIRECTORY_SEPARATOR,"",$path_parts['dirname']));
+		$packageName = str_replace("/",".",str_replace(OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR,"",$path_parts['dirname']));
 		$right_php_header = str_replace("%PACKAGE%", $packageName, $php_header);
 		$new_content = preg_replace("/<\?php[ ]*(\r?\n)/", "<?php"."\n".$right_php_header, $content);
 		file_put_contents($file, $new_content);

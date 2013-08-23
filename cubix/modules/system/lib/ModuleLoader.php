@@ -11,13 +11,13 @@
  * @version   $Id: ModuleLoader.php 5328 2013-03-27 06:59:19Z rockyswen@gmail.com $
  */
 
-include_once(MODULE_PATH."/common/lib/fileUtil.php");
+include_once(OPENBIZ_APP_MODULE_PATH."/common/lib/fileUtil.php");
 
 // install openbiz modules
 
 class ModuleLoader
 {
-    public $name;
+    public $objectName;
     public $dbName;
 	public $errors;
     public $logs;
@@ -25,7 +25,7 @@ class ModuleLoader
     
     public function __construct($name, $dbName=null)
     {
-    	$this->name = $name;
+    	$this->objectName = $name;
     	$this->dbName = $dbName;
     }
     
@@ -36,9 +36,9 @@ class ModuleLoader
     
     public function loadModule($installSql=false)
     {
-		$this->log("Loading module ".$this->name);
-        $module = $this->name;
-		$modfile = MODULE_PATH."/$module/mod.xml";
+		$this->log("Loading module ".$this->objectName);
+        $module = $this->objectName;
+		$modfile = OPENBIZ_APP_MODULE_PATH."/$module/mod.xml";
         if (!file_exists($modfile)) {
         	$this->errors = "$module is not loaded, mod.xml is not found in $module.";	
         	return false;
@@ -101,7 +101,7 @@ class ModuleLoader
     
     protected function invokeLoadHandler($event)
     {
-        $modfile = MODULE_PATH."/".$this->name."/mod.xml";
+        $modfile = OPENBIZ_APP_MODULE_PATH."/".$this->objectName."/mod.xml";
         $xml = simplexml_load_file($modfile);
         if (!isset($xml['LoadHandler']) && !empty($xml['LoadHandler'])) return;
         $modLoadHandler = $xml['LoadHandler'];
@@ -127,7 +127,7 @@ class ModuleLoader
 		
 		$db = BizSystem::dbConnection();
 		try {
-			$where = "module='".$this->name."'"; 
+			$where = "module='".$this->objectName."'"; 
 			$sql = "SELECT * FROM acl_action WHERE $where";
 		    BizSystem::log(LOG_DEBUG, "DATAOBJ", $sql);
 		    $rs = $db->fetchAll($sql);
@@ -150,8 +150,8 @@ class ModuleLoader
     
 	public function loadChangeLog()
     {
-		$module = $this->name;
-		$modfile = MODULE_PATH."/$module/mod.xml";
+		$module = $this->objectName;
+		$modfile = OPENBIZ_APP_MODULE_PATH."/$module/mod.xml";
         if (!file_exists($modfile)) {
         	$this->errors = "$module is not loaded, mod.xml is not found in $module.";	
         	return false;
@@ -161,7 +161,7 @@ class ModuleLoader
         	return false;
     	}
 
-    	$modfile = MODULE_PATH."/".$this->name."/mod.xml";        
+    	$modfile = OPENBIZ_APP_MODULE_PATH."/".$this->objectName."/mod.xml";        
     	$xml = simplexml_load_file($modfile);
     	
         if (!$this->installChangeLog($xml))
@@ -172,7 +172,7 @@ class ModuleLoader
     
     public function unLoadModule()
     {
-		$module = $this->name;
+		$module = $this->objectName;
     	$db = $this->DBConnection();
 		$this->invokeLoadHandler("beforeUnloadModule");
 		
@@ -211,7 +211,7 @@ class ModuleLoader
     	
     	// uninstall Sql
     	$this->log("Install Module Sql.");
-    	$sqlfile = MODULE_PATH."/".$this->name."/mod.uninstall.sql";
+    	$sqlfile = OPENBIZ_APP_MODULE_PATH."/".$this->objectName."/mod.uninstall.sql";
         if (!file_exists($sqlfile))
         	return true;
         
@@ -229,12 +229,12 @@ class ModuleLoader
     
     public function upgradeModule($forceUpgrade=false)
     {
-        $module = $this->name;
+        $module = $this->objectName;
     	$db = $this->DBConnection();
         
-        $modFolder = MODULE_PATH."/".$this->name;
-        $upgradeFolder = APP_HOME."/upgrade/modules/".$this->name;
-        $backupFolder = APP_HOME."/backup/modules/".$this->name;
+        $modFolder = OPENBIZ_APP_MODULE_PATH."/".$this->objectName;
+        $upgradeFolder = OPENBIZ_APP_PATH."/upgrade/modules/".$this->objectName;
+        $backupFolder = OPENBIZ_APP_PATH."/backup/modules/".$this->objectName;
         
         // read in mod.xml
         $modfile = $modFolder."/mod.xml";
@@ -328,7 +328,7 @@ class ModuleLoader
         }
         
         
-        $modFolder = MODULE_PATH."/".$module;
+        $modFolder = OPENBIZ_APP_MODULE_PATH."/".$module;
         $modfile = $modFolder."/mod.xml";
     	$xml = simplexml_load_file($modfile);        
         $mod_ver = $xml['Version'];
@@ -341,12 +341,12 @@ class ModuleLoader
     
     protected function upgradeSQLs($baseVersion, $targetVersion)
     {
-        include_once (MODULE_PATH."/system/lib/MySQLDumpParser.php");
+        include_once (OPENBIZ_APP_MODULE_PATH."/system/lib/MySQLDumpParser.php");
         $db = $this->DBConnection();
         
-        //$upgradeFolder = APP_HOME."/upgrade/modules/".$this->name;
+        //$upgradeFolder = OPENBIZ_APP_PATH."/upgrade/modules/".$this->objectName;
         //$upgradeFile = $upgradeFolder."/upgrade.xml";
-        $upgradeFile = MODULE_PATH."/".$this->name."/upgrade.xml";
+        $upgradeFile = OPENBIZ_APP_MODULE_PATH."/".$this->objectName."/upgrade.xml";
         if(!is_file($upgradeFile))
         {
         	return;
@@ -383,7 +383,7 @@ class ModuleLoader
     
     protected function checkDependency()
     {
-    	$modfile = MODULE_PATH."/".$this->name."/mod.xml";
+    	$modfile = OPENBIZ_APP_MODULE_PATH."/".$this->objectName."/mod.xml";
         
     	$xml = simplexml_load_file($modfile);
     	
@@ -406,7 +406,7 @@ class ModuleLoader
     protected function installModuleSql()
     {
         $this->log("Install Module Sql.");
-    	$sqlfile = MODULE_PATH."/".$this->name."/mod.install.sql";
+    	$sqlfile = OPENBIZ_APP_MODULE_PATH."/".$this->objectName."/mod.install.sql";
         if (!file_exists($sqlfile))
         	return true;
         
@@ -416,7 +416,7 @@ class ModuleLoader
         	return true;
 
         $db = $this->DBConnection();
-        include_once (MODULE_PATH."/system/lib/MySQLDumpParser.php");
+        include_once (OPENBIZ_APP_MODULE_PATH."/system/lib/MySQLDumpParser.php");
         
         $queryArr = MySQLDumpParser::parse($query);
         foreach($queryArr as $query){
@@ -433,8 +433,8 @@ class ModuleLoader
         
     protected function installModule($forceInstall=true)
     {
-        $this->log("Install Module ".$this->name);
-    	$modfile = MODULE_PATH."/".$this->name."/mod.xml";
+        $this->log("Install Module ".$this->objectName);
+    	$modfile = OPENBIZ_APP_MODULE_PATH."/".$this->objectName."/mod.xml";
         
     	$xml = simplexml_load_file($modfile);
         
@@ -562,14 +562,14 @@ class ModuleLoader
     protected function installResource($xml)
     {
     	$this->log("Install Module Resource.");
-    	$module = $this->name;
+    	$module = $this->objectName;
         
         if (isset($xml->Files) && isset($xml->Files->Copy)) {
             foreach ($xml->Files->Copy as $copy) {
-                // echo "Copy ".MODULE_PATH.'/'.$this->name.'/'.$copy['From'].' > '.APP_HOME.'/'.$copy['ToDir'].PHP_EOL;
-                $toDirs = glob(APP_HOME.'/'.$copy['ToDir']);
+                // echo "Copy ".OPENBIZ_APP_MODULE_PATH.'/'.$this->objectName.'/'.$copy['From'].' > '.OPENBIZ_APP_PATH.'/'.$copy['ToDir'].PHP_EOL;
+                $toDirs = glob(OPENBIZ_APP_PATH.'/'.$copy['ToDir']);
                 //print_r($toDirs);
-                $fromFiles = glob(MODULE_PATH.'/'.$this->name.'/'.$copy['From']);
+                $fromFiles = glob(OPENBIZ_APP_MODULE_PATH.'/'.$this->objectName.'/'.$copy['From']);
                 //print_r($fromFiles);
                 foreach ($toDirs as $dir) {
                     foreach ($fromFiles as $file) {
@@ -634,7 +634,7 @@ class ModuleLoader
     protected function installMenu($xml)
     {
     	$this->log("Install Module Menu.");
-    	$module = $this->name;
+    	$module = $this->objectName;
     	if (isset($xml->Menu) && isset($xml->Menu->MenuItem))
     	{
 	    	// delete all menu item first
@@ -667,7 +667,7 @@ class ModuleLoader
     
     protected function loadMenuItem($menuItem, $parentMenuName='')
     {
-    	$module = $this->name;
+    	$module = $this->objectName;
     	$db = $this->DBConnection();
     	$name = $menuItem['Name'];
     	$title = $menuItem['Title'];
@@ -706,7 +706,7 @@ class ModuleLoader
     protected function installWidgets($xml)
     {
     	$this->log("Install Module Widget.");
-    	$module = $this->name;
+    	$module = $this->objectName;
     	if (isset($xml->Widgets) && isset($xml->Widgets->Widget))
     	{
 	    	// delete all menu item first
@@ -734,7 +734,7 @@ class ModuleLoader
 
     protected function loadWidget($widget,$moduleName='')
     {
-		$module 	= $this->name;
+		$module 	= $this->objectName;
     	$db 		= $this->DBConnection();
     	$name 		= (string)$widget['Name'];
     	$title 		= (string)$widget['Title'];
@@ -768,7 +768,7 @@ class ModuleLoader
 	protected function installEventObservers($xml)
 	{
 		$this->log("Install Module EventObservers.");
-    	$module = $this->name;
+    	$module = $this->objectName;
     	if (isset($xml->EventObservers) && isset($xml->EventObservers->Observer))
     	{
 	    	// delete all menu item first
@@ -797,7 +797,7 @@ class ModuleLoader
 	
 	protected function loadObserver($observer,$moduleName='')
 	{
-		$module 	= $this->name;
+		$module 	= $this->objectName;
     	$db 		= $this->DBConnection();
     	$name 		= (string)$observer['Name'];
 		$observer_name = (string)$observer['ObserverName'];
@@ -828,7 +828,7 @@ class ModuleLoader
     protected function installACL($xml)
     {
     	$this->log("Install Module ACL.");
-    	$modName = $this->name;
+    	$modName = $this->objectName;
     	if (isset($xml->ACL) && isset($xml->ACL->Resource))
         {
 			$db = $this->DBConnection();
@@ -905,10 +905,10 @@ class ModuleLoader
     protected function copyResourceFiles()
     {
         $this->log("Copy resource files to /cubi/resources folder.");
-    	$module = $this->name;
-    	$modulePath = MODULE_PATH."/$module";
+    	$module = $this->objectName;
+    	$modulePath = OPENBIZ_APP_MODULE_PATH."/$module";
         $resourceFolder = $modulePath."/resource";
-        $targetFolder = APP_HOME."/resources/$module";
+        $targetFolder = OPENBIZ_APP_PATH."/resources/$module";
         
         // copy resource/* to /cubi/resources/module_name/
         recurse_copy($resourceFolder, $targetFolder);
@@ -917,8 +917,8 @@ class ModuleLoader
     protected function installMetaDo()
     {
     	$this->log("Install Module DO metadata.");
-    	$module = $this->name;
-    	$modulePath = MODULE_PATH."/$module";
+    	$module = $this->objectName;
+    	$modulePath = OPENBIZ_APP_MODULE_PATH."/$module";
     	global $g_MetaFiles;
     	$g_MetaFiles = array();
         php_grep("<BizDataObj", $modulePath);
@@ -938,7 +938,7 @@ class ModuleLoader
         }
         foreach ($g_MetaFiles as $metaFile)
         {
-            $metaName = str_replace('/','.',str_replace(array(MODULE_PATH.'/','.xml'),'', $metaFile));
+            $metaName = str_replace('/','.',str_replace(array(OPENBIZ_APP_MODULE_PATH.'/','.xml'),'', $metaFile));
 	    	// load do
 	    	$xml = simplexml_load_file($metaFile);
 
@@ -971,8 +971,8 @@ class ModuleLoader
 	protected function installMetaForm()
     {
     	$this->log("Install Module Form metadata.");
-    	$module = $this->name;
-    	$modulePath = MODULE_PATH."/$module";
+    	$module = $this->objectName;
+    	$modulePath = OPENBIZ_APP_MODULE_PATH."/$module";
     	global $g_MetaFiles;
     	$g_MetaFiles = array();
         php_grep("<EasyForm", $modulePath);
@@ -992,7 +992,7 @@ class ModuleLoader
         }
         foreach ($g_MetaFiles as $metaFile)
         {
-            $metaName = str_replace('/','.',str_replace(array(MODULE_PATH.'/','.xml'),'', $metaFile));
+            $metaName = str_replace('/','.',str_replace(array(OPENBIZ_APP_MODULE_PATH.'/','.xml'),'', $metaFile));
 	    	// load do
 	    	$xml = simplexml_load_file($metaFile);
 
@@ -1027,8 +1027,8 @@ class ModuleLoader
 	protected function installMetaView()
     {
     	$this->log("Install Module View metadata.");
-    	$module = $this->name;
-    	$modulePath = MODULE_PATH."/$module";
+    	$module = $this->objectName;
+    	$modulePath = OPENBIZ_APP_MODULE_PATH."/$module";
     	global $g_MetaFiles;
     	$g_MetaFiles = array();
         php_grep("<EasyView", $modulePath);
@@ -1048,7 +1048,7 @@ class ModuleLoader
         }
         foreach ($g_MetaFiles as $metaFile)
         {
-            $metaName = str_replace('/','.',str_replace(array(MODULE_PATH.'/','.xml'),'', $metaFile));
+            $metaName = str_replace('/','.',str_replace(array(OPENBIZ_APP_MODULE_PATH.'/','.xml'),'', $metaFile));
 	    	// load do
 	    	$xml = simplexml_load_file($metaFile);
 

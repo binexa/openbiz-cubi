@@ -71,20 +71,20 @@ class PreferenceForm extends EasyForm
             if(substr($element->m_FieldName,0,1)=='_'){
 	           	$name = substr($element->m_FieldName,1);
 	            //update default app_init setting
-	            $config_file = APP_HOME.'/bin/app_init.php';
+	            $config_file = OPENBIZ_APP_PATH.'/bin/app_init.php';
 	            switch($name){
 	            	case "latitude":	            		
-	            		if($value!=DEFAULT_LATITUDE){
+	            		if($value!=CUBI_DEFAULT_LATITUDE){
 	            			
 	            			$data = file_get_contents($config_file);	            			
-	            			$data = preg_replace("/define\([\'\\\"]{1}DEFAULT_LATITUDE[\'\\\"]{1}.*?\)\;/i","define('DEFAULT_LATITUDE','$value');",$data);	            			
+	            			$data = preg_replace("/define\([\'\\\"]{1}CUBI_DEFAULT_LATITUDE[\'\\\"]{1}.*?\)\;/i","define('CUBI_DEFAULT_LATITUDE','$value');",$data);	            			
 	            			@file_put_contents($config_file,$data);
 	            		}
 	            		break;
 					case "longtitude":
-						if($value!=DEFAULT_LONGTITUDE){
+						if($value!=CUBI_DEFAULT_LONGTITUDE){
             				$data = file_get_contents($config_file);	            			
-            				$data = preg_replace("/define\([\'\\\"]{1}DEFAULT_LONGTITUDE[\'\\\"]{1}.*?\)\;/i","define('DEFAULT_LONGTITUDE','$value');",$data);	            			
+            				$data = preg_replace("/define\([\'\\\"]{1}CUBI_DEFAULT_LONGTITUDE[\'\\\"]{1}.*?\)\;/i","define('CUBI_DEFAULT_LONGTITUDE','$value');",$data);	            			
             				@file_put_contents($config_file,$data);
 						}
 	            		break;	         		            			            		        		

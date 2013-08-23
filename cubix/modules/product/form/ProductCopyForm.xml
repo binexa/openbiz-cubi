@@ -9,7 +9,7 @@
 			Class="EasyForm" 
 			FormType="Copy" 
 			jsClass="Openbiz.Form" 
-			Icon="{RESOURCE_URL}/product/images/icon_mod_product_copy.png"
+			Icon="{OPENBIZ_RESOURCE_URL}/product/images/icon_mod_product_copy.png"
 			Title="Copy Product Data" 
 			Description="Product Description" 
 			BizDataObj="product.do.ProductDO" 
@@ -138,7 +138,7 @@
             			EventLogMsg="" 
             			Event="onclick" 
             			Function="InsertRecord()" 
-            			RedirectPage="{APP_INDEX}/product/product_detail/{@product.do.ProductDO:Field[Id].Value}"  
+            			RedirectPage="{OPENBIZ_APP_INDEX_URL}/product/product_detail/{@product.do.ProductDO:Field[Id].Value}"  
             			ShortcutKey="Ctrl+Enter" 
             			ContextMenu="Save" />
         </Element>

@@ -95,7 +95,7 @@ class ColumnImage extends ColumnText
     	{
     		$val = ($this->m_ImgUrl) ? $this->m_ImgUrl.$this->m_Value : $this->m_Value;
     	}else{
-    		if(preg_match("/\{RESOURCE_URL\}/si",$this->m_Text)){
+    		if(preg_match("/\{OPENBIZ_RESOURCE_URL\}/si",$this->m_Text)){
     			$val = $this->getText();
     		}else{
     			$val = Resource::getImageUrl()."/".$this->getText();

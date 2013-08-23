@@ -34,7 +34,7 @@
  * @copyright Copyright (c) 2005-2009
  * @access public
  */
-include_once(MODULE_PATH."/system/form/UserForm.php");
+include_once(OPENBIZ_APP_MODULE_PATH."/system/form/UserForm.php");
 
 class ResetPasswordForm extends UserForm
 {
@@ -89,7 +89,7 @@ class ResetPasswordForm extends UserForm
 	    $profile = $g_BizSystem->InitUserProfile($currentRec['username']);
     				       	
        	//run eventlog
-        $eventlog 	= BizSystem::getService(EVENTLOG_SERVICE);
+        $eventlog 	= BizSystem::getService(OPENBIZ_EVENTLOG_SERVICE);
         $logComment=array($currentRec['username']);
     	$eventlog->log("USER_MANAGEMENT", "MSG_RESET_PASSWORD_BY_TOKEN", $logComment);       	
 	    

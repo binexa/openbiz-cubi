@@ -52,7 +52,7 @@ class InputDate extends InputText {
 
         $showTime = 'false';
         //$image = "<img src=\"".Resource::getImageUrl()."/calendar.gif\" border=0 title=\"Select date...\" align='top' hspace='2'>";
-        $sHTML .= "<a class=\"date_picker\" href=\"javascript: void(0);\" onclick=\"return showCalendar('$this->m_Name','$format',$showTime,true);\"></a>";
+        $sHTML .= "<a class=\"date_picker\" href=\"javascript: void(0);\" onclick=\"return showCalendar('$this->objectName','$format',$showTime,true);\"></a>";
         return $sHTML;
     }
 

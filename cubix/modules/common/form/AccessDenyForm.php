@@ -26,7 +26,7 @@ class AccessDenyForm extends EasyForm
     {
 		$url = $_SERVER['REQUEST_URI'];
 		$roleStartpages = BizSystem::getUserProfile("roleStartpage");
-		$default_url = APP_INDEX.$roleStartpages[0];		
+		$default_url = OPENBIZ_APP_INDEX_URL.$roleStartpages[0];		
 		if($url == $default_url)
 		{
 			$this->m_isDefaultPage = 1;

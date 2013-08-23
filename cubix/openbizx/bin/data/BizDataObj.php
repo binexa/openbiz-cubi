@@ -47,17 +47,17 @@ class BizDataObj extends BizDataObj_Lite
     public function validateInput()
     {
         $this->m_ErrorFields = array();
-        foreach($this->m_BizRecord->m_InputFields as $fld)
+        foreach($this->bizRecord->m_InputFields as $fld)
         {
 
             /* @var $bizField BizField */
-            $bizField = $this->m_BizRecord->get($fld);
+            $bizField = $this->bizRecord->get($fld);
             if($bizField->m_Encrypted=="Y"){
 	            if ($bizField->checkRequired() == true &&
 	                    ($bizField->m_Value===null || $bizField->m_Value === ""))
 	            {
 	                $this->m_ErrorMessage = $this->getMessage("DATA_FIELD_REQUIRED",array($fld));
-	                $this->m_ErrorFields[$bizField->m_Name] = $this->m_ErrorMessage;
+	                $this->m_ErrorFields[$bizField->objectName] = $this->m_ErrorMessage;
 	            }
             	continue;
             }
@@ -65,24 +65,24 @@ class BizDataObj extends BizDataObj_Lite
                     ($bizField->m_Value===null || $bizField->m_Value === ""))
             {
                 $this->m_ErrorMessage = $this->getMessage("DATA_FIELD_REQUIRED",array($fld));
-                $this->m_ErrorFields[$bizField->m_Name] = $this->m_ErrorMessage;
+                $this->m_ErrorFields[$bizField->objectName] = $this->m_ErrorMessage;
             }
             elseif ($bizField->m_Value!==null && $bizField->checkValueType() == false)
             {
                 $this->m_ErrorMessage = $this->getMessage("DATA_FIELD_INCORRECT_TYPE", array($fld, $bizField->m_Type));
-                $this->m_ErrorFields[$bizField->m_Name] = $this->m_ErrorMessage;
+                $this->m_ErrorFields[$bizField->objectName] = $this->m_ErrorMessage;
             }
             elseif ($bizField->m_Value!==null && $bizField->Validate() == false)
             {
 
                 /* @var $validateService validateService */
                 $validateService = BizSystem::getService(VALIDATE_SERVICE);
-                $this->m_ErrorMessage = $validateService->getErrorMessage($bizField->m_Validator, $bizField->m_Name);
+                $this->m_ErrorMessage = $validateService->getErrorMessage($bizField->m_Validator, $bizField->objectName);
                 if ($this->m_ErrorMessage == false)
                 { //Couldn't get a clear error message so let's try this
                     $this->m_ErrorMessage = $this->getMessage("DATA_FIELD_INVALID_INPUT",array($fld,$value,$bizField->m_Validator));                //
                 }
-                $this->m_ErrorFields[$bizField->m_Name] = $this->m_ErrorMessage;
+                $this->m_ErrorFields[$bizField->objectName] = $this->m_ErrorMessage;
             }
         }
         if (count($this->m_ErrorFields)>0)
@@ -117,16 +117,16 @@ class BizDataObj extends BizDataObj_Lite
             $fields = explode(",",$group);
             foreach ($fields as $fld)
             {
-                $bizField = $this->m_BizRecord->get($fld);
+                $bizField = $this->bizRecord->get($fld);
                 if ($bizField->m_Value===null || $bizField->m_Value === "" || $bizField->m_Value==$bizField->m_OldValue)
                 {
                     $needCheck = false;
                     break;
                 }
                 if ($searchRule == "")
-                    $searchRule = "[".$bizField->m_Name."]='".addslashes($bizField->m_Value)."'";
+                    $searchRule = "[".$bizField->objectName."]='".addslashes($bizField->m_Value)."'";
                 else
-                    $searchRule .= " AND [".$bizField->m_Name."]='".addslashes($bizField->m_Value)."'";
+                    $searchRule .= " AND [".$bizField->objectName."]='".addslashes($bizField->m_Value)."'";
             }
             if ($needCheck)
             {
@@ -159,7 +159,7 @@ class BizDataObj extends BizDataObj_Lite
     	
     	if($this->m_DataPermControl=='Y')
         {
-	        $svcObj = BizSystem::GetService(DATAPERM_SERVICE);
+	        $svcObj = BizSystem::GetService(OPENBIZ_DATAPERM_SERVICE);
 	        if(!$record)
 	        {
 	        	$record = $this->getActiveRecord();
@@ -177,10 +177,10 @@ class BizDataObj extends BizDataObj_Lite
     
     public function canUpdateRecordCondition()
     {    	
-        if ($this->m_UpdateCondition)
+        if ($this->updateCondition)
         {
-            //return Expression::evaluateExpression($this->m_UpdateCondition,$this);
-            return $this->allowAccess($this->m_UpdateCondition);
+            //return Expression::evaluateExpression($this->updateCondition,$this);
+            return $this->allowAccess($this->updateCondition);
         }
         return true;
     }
@@ -193,7 +193,7 @@ class BizDataObj extends BizDataObj_Lite
     {
     	if($this->m_DataPermControl=='Y')
         {
-	        $svcObj = BizSystem::GetService(DATAPERM_SERVICE);
+	        $svcObj = BizSystem::GetService(OPENBIZ_DATAPERM_SERVICE);
 	        if(!$record)
 	        {
 	        	$record = $this->getActiveRecord();
@@ -211,10 +211,10 @@ class BizDataObj extends BizDataObj_Lite
 
     public function canDeleteRecordCondition()
     {    	
-        if ($this->m_DeleteCondition)
+        if ($this->deleteCondition)
         {
-            // return Expression::evaluateExpression($this->m_DeleteCondition,$this);
-            return $this->allowAccess($this->m_DeleteCondition);
+            // return Expression::evaluateExpression($this->deleteCondition,$this);
+            return $this->allowAccess($this->deleteCondition);
         }
         return true;
     }    
@@ -230,7 +230,7 @@ class BizDataObj extends BizDataObj_Lite
         $this->events()->trigger(__FUNCTION__ . '.pre', $this, array('record'=>$recArr,'old_record'=>$oldRecord));
 		if (!$this->canUpdateRecord($oldRecord))
         {
-            $this->m_ErrorMessage = BizSystem::getMessage("DATA_NO_PERMISSION_UPDATE",$this->m_Name);
+            $this->m_ErrorMessage = BizSystem::getMessage("DATA_NO_PERMISSION_UPDATE",$this->objectName);
             throw new BDOException($this->m_ErrorMessage);
             return false;
         }
@@ -242,9 +242,9 @@ class BizDataObj extends BizDataObj_Lite
             $recArr["Id"] = $this->getFieldValue("Id");
 
         // save the old values
-        $this->m_BizRecord->saveOldRecord($oldRecord);
+        $this->bizRecord->saveOldRecord($oldRecord);
         // set the new values
-        $this->m_BizRecord->setInputRecord($recArr);
+        $this->bizRecord->setInputRecord($recArr);
 
         if (!$this->validateInput()) return false;
 
@@ -294,7 +294,7 @@ class BizDataObj extends BizDataObj_Lite
     {
         if (!$this->canUpdateRecordCondition())
         {
-            $this->m_ErrorMessage = BizSystem::getMessage("DATA_NO_PERMISSION_UPDATE",$this->m_Name);
+            $this->m_ErrorMessage = BizSystem::getMessage("DATA_NO_PERMISSION_UPDATE",$this->objectName);
             return false;
         }
 		/*当$setValue是数组时转成[field]=value格式*/
@@ -339,17 +339,17 @@ class BizDataObj extends BizDataObj_Lite
      */
     private function _postUpdateLobFields(&$recArr)
     {
-        $searchRule = $this->m_BizRecord->getKeySearchRule(false, true);
-        foreach ($this->m_BizRecord as $field)
+        $searchRule = $this->bizRecord->getKeySearchRule(false, true);
+        foreach ($this->bizRecord as $field)
         {
-            if (isset($recArr[$field->m_Name]) && $field->isLobField() && $field->m_Column != "")
+            if (isset($recArr[$field->objectName]) && $field->isLobField() && $field->m_Column != "")
             {
                 $db = $this->getDBConnection("WRITE");
-                $sql = "UPDATE " . $this->m_MainTable . " SET " . $field->m_Column . "=? WHERE $searchRule";
+                $sql = "UPDATE " . $this->mainTableName . " SET " . $field->m_Column . "=? WHERE $searchRule";
                 BizSystem::log(LOG_DEBUG, "DATAOBJ", "Update lob Sql = $sql");
                 $stmt = $db->prepare($sql);
 
-                $fp = fopen($recArr[$field->m_Name], 'rb');
+                $fp = fopen($recArr[$field->objectName], 'rb');
                 $stmt->bindParam(1, $fp, PDO::PARAM_LOB);
 
                 try
@@ -391,16 +391,16 @@ class BizDataObj extends BizDataObj_Lite
      **/
     public function newRecord()
     {
-        $recArr = $this->m_BizRecord->getEmptyRecordArr();
+        $recArr = $this->bizRecord->getEmptyRecordArr();
 
         // if association is 1-M, set the field (pointing to the column) value as the FieldRefVal
         if ($this->m_Association["Relationship"] == "1-M")
         {
-            foreach ($this->m_BizRecord as $field)
+            foreach ($this->bizRecord as $field)
             {
                 if ($field->m_Column == $this->m_Association["Column"] && !$field->m_Join)
                 {
-                    $recArr[$field->m_Name] = $this->m_Association["FieldRefVal"];
+                    $recArr[$field->objectName] = $this->m_Association["FieldRefVal"];
                     break;
                 }
             }
@@ -421,12 +421,12 @@ class BizDataObj extends BizDataObj_Lite
     {
         // Identity type id is generated after insert is done.
         // If this method is called before insert, return null.
-        if ($isBeforeInsert && $this->m_IdGeneration == 'Identity')
+        if ($isBeforeInsert && $this->idGeneration == 'Identity')
             return null;
 
-        if (!$isBeforeInsert && $this->m_IdGeneration != 'Identity')
+        if (!$isBeforeInsert && $this->idGeneration != 'Identity')
         {
-            $this->m_ErrorMessage = BizSystem::getMessage( "DATA_UNABLE_GET_ID",$this->m_Name);
+            $this->m_ErrorMessage = BizSystem::getMessage( "DATA_UNABLE_GET_ID",$this->objectName);
             return false;
         }
 
@@ -437,14 +437,14 @@ class BizDataObj extends BizDataObj_Lite
         }else{
         	$db = $this->getDBConnection("READ");
         }
-        $dbInfo = BizSystem::Configuration()->getDatabaseInfo($this->m_Database);
+        $dbInfo = BizSystem::Configuration()->getDatabaseInfo($this->databaseAliasName);
         $dbType = $dbInfo["Driver"];
-        $table = $tableName ? $tableName : $this->m_MainTable;
+        $table = $tableName ? $tableName : $this->mainTableName;
         $column = $idCloumnName ? $idCloumnName : $this->getField("Id")->m_Column;
 
         try
         {
-            $newId = $genIdService->getNewID($this->m_IdGeneration, $db, $dbType, $table, $column);
+            $newId = $genIdService->getNewID($this->idGeneration, $db, $dbType, $table, $column);
         }
         catch (Exception $e)
         {
@@ -466,7 +466,7 @@ class BizDataObj extends BizDataObj_Lite
 		if ( $this->_isNeedGenerateId($recArr) )
             $recArr["Id"] = $this->generateId();    // for certain cases, id is generated before insert
 
-        $this->m_BizRecord->setInputRecord($recArr);
+        $this->bizRecord->setInputRecord($recArr);
 
         if (!$this->validateInput()) return false;
 
@@ -497,7 +497,7 @@ class BizDataObj extends BizDataObj_Lite
             return null;
         }
 
-        $this->m_BizRecord->setInputRecord($recArr);
+        $this->bizRecord->setInputRecord($recArr);
 
         if ($this->_postUpdateLobFields($recArr) === false)
         {
@@ -537,7 +537,7 @@ class BizDataObj extends BizDataObj_Lite
         $this->events()->trigger(__FUNCTION__ . '.pre', $this, array('record',$recArr));
 		if (!$this->canDeleteRecord())
         {            
-            $this->m_ErrorMessage = BizSystem::getMessage("DATA_NO_PERMISSION_DELETE",$this->m_Name);
+            $this->m_ErrorMessage = BizSystem::getMessage("DATA_NO_PERMISSION_DELETE",$this->objectName);
             throw new BDOException($this->m_ErrorMessage);
             return false;
         }
@@ -548,7 +548,7 @@ class BizDataObj extends BizDataObj_Lite
             $delrec = $this->getActiveRecord();
         }
         
-        $this->m_BizRecord->setInputRecord($delrec);
+        $this->bizRecord->setInputRecord($delrec);
         
         $sql = $this->getSQLHelper()->buildDeleteSQL($this);
         if ($sql)
@@ -561,7 +561,7 @@ class BizDataObj extends BizDataObj_Lite
                 BizSystem::log(LOG_DEBUG, "DATAOBJ", "Delete Sql = $sql");
                 $db->query($sql);
                 $db->commit();
-                $this->m_BizRecord->saveOldRecord($delrec); // save old record only if delete success
+                $this->bizRecord->saveOldRecord($delrec); // save old record only if delete success
             }
             catch (Exception $e)
             {
@@ -580,7 +580,7 @@ class BizDataObj extends BizDataObj_Lite
         //clean cached data
         $this->cleanCache();
 
-        $this->_postDeleteRecord($this->m_BizRecord->getKeyValue());
+        $this->_postDeleteRecord($this->bizRecord->getKeyValue());
 		$this->events()->trigger(__FUNCTION__ . '.pre', $this, array('record',$recArr));
         return true;
     }
@@ -589,7 +589,7 @@ class BizDataObj extends BizDataObj_Lite
     {
         if (!$this->canDeleteRecordCondition())
         {
-            throw new BDOException( BizSystem::getMessage("DATA_NO_PERMISSION_DELETE",$this->m_Name) );
+            throw new BDOException( BizSystem::getMessage("DATA_NO_PERMISSION_DELETE",$this->objectName) );
             return false;
         }
 
@@ -670,13 +670,13 @@ class BizDataObj extends BizDataObj_Lite
                 }
                 else if ($objRef->m_OnDelete == "Restrict") {
                     // check if objRef has records
-                    $refObj = $this->getRefObject($objRef->m_Name);  
+                    $refObj = $this->getRefObject($objRef->objectName);  
                 	$sql = "`$column`='".$refField->m_Value."'";
                     if($column2 && $fieldVal2){
                     	$sql .= " AND ".$column2."='".$fieldVal2."'"; 	
                     }                  
                     if (count($refObj->directFetch($sql,1)) == 1) {
-                        throw new BDOException($this->getMessage("DATA_UNABLE_DEL_REC_CASCADE",array($objRef->m_Name)));
+                        throw new BDOException($this->getMessage("DATA_UNABLE_DEL_REC_CASCADE",array($objRef->objectName)));
                     }
                     return;
                 }
@@ -699,13 +699,13 @@ class BizDataObj extends BizDataObj_Lite
                 }
                 else if ($objRef->m_OnUpdate == "Restrict") {
                     // check if objRef has records
-                    $refObj = BizSystem::getObject($objRef->m_Name);
+                    $refObj = BizSystem::getObject($objRef->objectName);
 					$sql = "[".$objRef->m_FieldRef."]='".$refField->m_OldValue."'";
                     if($column2 && $fieldVal2){
                     	$sql .= " AND ".$column2."='".$fieldVal2."'"; 	
                     }
                     if (count($refObj->directFetch($sql,1)) == 1) {
-                        throw new BDOException($this->getMessage("DATA_UNABLE_UPD_REC_CASCADE",array($objRef->m_Name)));
+                        throw new BDOException($this->getMessage("DATA_UNABLE_UPD_REC_CASCADE",array($objRef->objectName)));
                     }
                     return;
                 }
@@ -728,7 +728,7 @@ class BizDataObj extends BizDataObj_Lite
      */
     protected function cascadeDelete()
     {
-        foreach ($this->m_ObjReferences as $objRef) {
+        foreach ($this->objReferences as $objRef) {
             $this->processCascadeAction($objRef, "Delete");
         }
     }
@@ -739,7 +739,7 @@ class BizDataObj extends BizDataObj_Lite
      */
     protected function cascadeUpdate()
     {
-        foreach ($this->m_ObjReferences as $objRef) {
+        foreach ($this->objReferences as $objRef) {
             $this->processCascadeAction($objRef, "Update");
         }
     }
@@ -752,7 +752,7 @@ class BizDataObj extends BizDataObj_Lite
     public function getOnAuditFields()
     {
         $fieldList = array();
-        foreach ($this->m_BizRecord as $field)
+        foreach ($this->bizRecord as $field)
         {
             if ($field->m_OnAudit)
                 $fieldList[] = $field;
@@ -768,7 +768,7 @@ class BizDataObj extends BizDataObj_Lite
     private function _runDOTrigger($triggerType)
     {
         // locate the trigger metadata file BOName_Trigger.xml
-        $triggerServiceName = $this->m_Name."_Trigger";
+        $triggerServiceName = $this->objectName."_Trigger";
         $xmlFile = BizSystem::GetXmlFileWithPath ($triggerServiceName);
         if (!$xmlFile) return;
 
@@ -790,31 +790,31 @@ class BizDataObj extends BizDataObj_Lite
     public function getJoinFields($joinDataObj)
     {
         // get the maintable of the joindataobj
-        $joinTable = $joinDataObj->m_MainTable;
+        $joinTable = $joinDataObj->mainTableName;
         $returnRecord = array();
 
         // find the proper join according to the maintable
-        foreach ($this->m_TableJoins as $tableJoin)
+        foreach ($this->tableJoins as $tableJoin)
         {
             if ($tableJoin->m_Table == $joinTable)
             {
                 // populate the column-fieldvalue to columnRef-fieldvalue
                 // get the field mapping to the column, then get the field value
-                $joinFieldName = $joinDataObj->m_BizRecord->getFieldByColumn($tableJoin->m_Column); // joined-main table
+                $joinFieldName = $joinDataObj->bizRecord->getFieldByColumn($tableJoin->m_Column); // joined-main table
 
                 if (!$joinFieldName) continue;
 
-                $refFieldName = $this->m_BizRecord->getFieldByColumn($tableJoin->m_ColumnRef); // join table
+                $refFieldName = $this->bizRecord->getFieldByColumn($tableJoin->m_ColumnRef); // join table
                 $returnRecord[$refFieldName] = $joinFieldName;
 
                 // populate joinRecord's field to current record
-                foreach ($this->m_BizRecord as $field)
+                foreach ($this->bizRecord as $field)
                 {
-                    if ($field->m_Join == $tableJoin->m_Name)
+                    if ($field->m_Join == $tableJoin->objectName)
                     {
                         // use join column to match joinRecord field's column
-                        $jFieldName = $joinDataObj->m_BizRecord->getFieldByColumn($field->m_Column); // joined-main table
-                        $returnRecord[$field->m_Name] = $jFieldName;
+                        $jFieldName = $joinDataObj->bizRecord->getFieldByColumn($field->m_Column); // joined-main table
+                        $returnRecord[$field->objectName] = $jFieldName;
                     }
                 }
                 break;
@@ -833,32 +833,32 @@ class BizDataObj extends BizDataObj_Lite
     public function joinRecord($joinDataObj, $joinName="")
     {
         // get the maintable of the joindataobj
-        $joinTable = $joinDataObj->m_MainTable;
+        $joinTable = $joinDataObj->mainTableName;
         $joinRecord = null;
         $returnRecord = array();
 
         // find the proper join according to join name and the maintable
-        foreach ($this->m_TableJoins as $tableJoin)
+        foreach ($this->tableJoins as $tableJoin)
         {
-            if (($joinName == $tableJoin->m_Name || $joinName == "")
+            if (($joinName == $tableJoin->objectName || $joinName == "")
                     && $tableJoin->m_Table == $joinTable)
             {
                 // populate the column-fieldvalue to columnRef-fieldvalue
                 // get the field mapping to the column, then get the field value
-                $joinFieldName = $joinDataObj->m_BizRecord->getFieldByColumn($tableJoin->m_Column); // joined-main table
+                $joinFieldName = $joinDataObj->bizRecord->getFieldByColumn($tableJoin->m_Column); // joined-main table
                 if (!$joinFieldName) continue;
                 if (!$joinRecord)
                     $joinRecord = $joinDataObj->getActiveRecord();
-                $refFieldName = $this->m_BizRecord->getFieldByColumn($tableJoin->m_ColumnRef); // join table
+                $refFieldName = $this->bizRecord->getFieldByColumn($tableJoin->m_ColumnRef); // join table
                 $returnRecord[$refFieldName] = $joinRecord[$joinFieldName];
                 // populate joinRecord's field to current record
-                foreach ($this->m_BizRecord as $fld)
+                foreach ($this->bizRecord as $fld)
                 {
-                    if ($fld->m_Join == $tableJoin->m_Name)
+                    if ($fld->m_Join == $tableJoin->objectName)
                     {
                         // use join column to match joinRecord field's column
-                        $jfldname = $joinDataObj->m_BizRecord->getFieldByColumn($fld->m_Column); // joined-main table
-                        $returnRecord[$fld->m_Name] = $joinRecord[$jfldname];
+                        $jfldname = $joinDataObj->bizRecord->getFieldByColumn($fld->m_Column); // joined-main table
+                        $returnRecord[$fld->objectName] = $joinRecord[$jfldname];
                     }
                 }
                 break;
@@ -877,10 +877,10 @@ class BizDataObj extends BizDataObj_Lite
      */
     public function addRecord($recArr, &$isParentObjUpdated)
     {
-    	$oldBaseSearchRule=$this->m_BaseSearchRule;
-    	$this->m_BaseSearchRule="";
+    	$oldBaseSearchRule = $this->baseSearchRule;
+    	$this->baseSearchRule="";
         $result = BizDataObj_Assoc::addRecord($this, $recArr, $isParentObjUpdated);
-        //$this->m_BaseSearchRule=$oldBaseSearchRule;
+        //$this->baseSearchRule=$oldBaseSearchRule;
         return $result;
     }
 
@@ -907,7 +907,7 @@ class BizDataObj extends BizDataObj_Lite
         if($this->m_CacheLifeTime > 0)
         {
             $cacheSvc = BizSystem::getService(CACHE_SERVICE,1);
-            $cacheSvc->init($this->m_Name, $this->m_CacheLifeTime);
+            $cacheSvc->init($this->objectName, $this->m_CacheLifeTime);
             $cacheSvc->cleanAll();
             
         }
@@ -921,8 +921,8 @@ class BizDataObj extends BizDataObj_Lite
      */
     private function _isNeedGenerateId($recArr)
     {
-        if ($this->m_IdGeneration != 'None' && (!$recArr["Id"] || $recArr["Id"] == "")) return true;
-        if ($this->m_IdGeneration == 'Identity') return true;
+        if ($this->idGeneration != 'None' && (!$recArr["Id"] || $recArr["Id"] == "")) return true;
+        if ($this->idGeneration == 'Identity') return true;
     }
 
 }

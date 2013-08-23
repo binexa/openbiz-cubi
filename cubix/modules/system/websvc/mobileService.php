@@ -1,11 +1,11 @@
 <?php 
-require_once MODULE_PATH.'/websvc/lib/WebsvcService.php';
+require_once OPENBIZ_APP_MODULE_PATH.'/websvc/lib/WebsvcService.php';
 class mobileService extends  WebsvcService
 {
 	public function getServerInfo()
 	{
 		$result = array(
-			'system_name' => DEFAULT_SYSTEM_NAME,
+			'system_name' => OPENBIZ_DEFAULT_SYSTEM_NAME,
 			'system_icon' => SITE_URL.'/images/cubi_logo_large.png'
 		);
 		return $result;
@@ -23,7 +23,7 @@ class mobileService extends  WebsvcService
     			$profile = BizSystem::instance()->InitUserProfile($username);
     			
     			// after authenticate user: 2. insert login event
-    			$eventlog 	= BizSystem::getService(EVENTLOG_SERVICE);
+    			$eventlog 	= BizSystem::getService(OPENBIZ_EVENTLOG_SERVICE);
     			$logComment=array(	$username, $_SERVER['REMOTE_ADDR']);
     			$eventlog->log("LOGIN", "MSG_LOGIN_SUCCESSFUL", $logComment);
     			

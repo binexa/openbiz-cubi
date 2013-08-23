@@ -18,7 +18,7 @@ if(!defined("CLI")){
 
 include_once dirname(__FILE__)."/require_auth.php";
 
-include_once (MODULE_PATH."/system/lib/ModuleLoader.php");
+include_once (OPENBIZ_APP_MODULE_PATH."/system/lib/ModuleLoader.php");
 
 $moduleName = $argv[1];
 $version = isset($argv[2]) ? $argv[2] : 'latest';
@@ -28,7 +28,7 @@ if($moduleName!="all" && $moduleName!=""){
 }
 else
 {
-	$moduleArr = glob(MODULE_PATH."/*");			
+	$moduleArr = glob(OPENBIZ_APP_MODULE_PATH."/*");			
 	for($i=0;$i<count($moduleArr);$i++)
 	{
 		$moduleArr[$i]=basename($moduleArr[$i]);	

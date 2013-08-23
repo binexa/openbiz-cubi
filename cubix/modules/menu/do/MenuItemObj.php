@@ -15,8 +15,8 @@ class MenuItemObj
 {
  	public $m_Id;
  	public $m_PId;   
-    public $m_Name;   
-    public $m_Description;
+    public $objectName;   
+    public $objectDescription;
     public $m_URL;
     public $m_URL_Match;
 	public $m_Target;
@@ -33,8 +33,8 @@ class MenuItemObj
     
     function readMetadata($xmlArr){
         $this->m_Id		 	 = $xmlArr["ATTRIBUTES"]["ID"];        
-    	$this->m_Name		 = $xmlArr["ATTRIBUTES"]["NAME"];
-        $this->m_Description = $xmlArr["ATTRIBUTES"]["DESCRIPTION"];
+    	$this->objectName         = $xmlArr["ATTRIBUTES"]["NAME"];
+        $this->objectDescription = $xmlArr["ATTRIBUTES"]["DESCRIPTION"];
         $this->m_URL		 = $xmlArr["ATTRIBUTES"]["URL"];
         $this->m_URL		 = Expression::evaluateExpression($this->m_URL, $this);
         $this->m_URL_Match	 = $xmlArr["ATTRIBUTES"]["URLMATCH"];

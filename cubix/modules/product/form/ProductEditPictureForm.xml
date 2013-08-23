@@ -9,7 +9,7 @@
 			Class="EasyForm" 
 			FormType="Edit" 
 			jsClass="Openbiz.Form" 
-			Icon="{RESOURCE_URL}/product/images/icon_mod_product_picture.png"
+			Icon="{OPENBIZ_RESOURCE_URL}/product/images/icon_mod_product_picture.png"
 			Title="Edit Product Data Pictures" 
 			Description="This form could help you manage product pictures." 
 			BizDataObj="product.do.ProductDO" 

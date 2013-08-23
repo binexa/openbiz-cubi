@@ -71,7 +71,7 @@ class RestService
 		$sorder = $request->params('sorder');
 		
 		$dataObj = BizSystem::getObject($DOName);
-		//$dataObj->m_Stateless = 'N';
+		//$dataObj->stateless = 'N';
 		$dataObj->setQueryParameters($queryParams);
 		$dataObj->setLimit($rows, $page*$rows);
 		if ($sort && $sorder) {

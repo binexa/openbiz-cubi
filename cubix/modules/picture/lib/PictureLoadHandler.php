@@ -11,7 +11,7 @@
  * @version   $Id: PictureLoadHandler.php 3367 2012-05-31 06:10:21Z rockyswen@gmail.com $
  */
 
-include_once (MODULE_PATH."/system/lib/ModuleLoadHandler.php");
+include_once (OPENBIZ_APP_MODULE_PATH."/system/lib/ModuleLoadHandler.php");
 
 class PictureLoadHandler implements ModuleLoadHandler
 {

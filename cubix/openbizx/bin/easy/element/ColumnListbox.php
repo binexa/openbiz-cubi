@@ -36,8 +36,8 @@ class ColumnListbox extends OptionElement
 	
 	public function setValue($value)
 	{
-		BizSystem::sessionContext()->getObjVar($this->getFormObj()->m_Name, $this->m_Name, $this->m_Value);
-		$valueArr = $_POST[$this->m_Name];
+		BizSystem::sessionContext()->getObjVar($this->getFormObj()->objectName, $this->objectName, $this->m_Value);
+		$valueArr = $_POST[$this->objectName];
 		if(is_array($valueArr))
 		{
 			foreach($valueArr as $key=>$value)
@@ -45,7 +45,7 @@ class ColumnListbox extends OptionElement
 				$this->m_Value[$key] = $value;
 			}
 		}
-		BizSystem::sessionContext()->setObjVar($this->getFormObj()->m_Name, $this->m_Name, $this->m_Value);
+		BizSystem::sessionContext()->setObjVar($this->getFormObj()->objectName, $this->objectName, $this->m_Value);
 	}    
     
     /**
@@ -57,7 +57,7 @@ class ColumnListbox extends OptionElement
     {
         if ($this->m_Sortable == "Y")
         {
-            $rule = $this->m_Name;
+            $rule = $this->objectName;
 
             $function = $this->m_FormName . ".SortRecord($rule,$this->m_SortFlag)";
             if($this->m_SortFlag == "ASC" || $this->m_SortFlag == "DESC"){
@@ -109,8 +109,8 @@ class ColumnListbox extends OptionElement
         $style = $this->getStyle();
         $func = $this->getFunction();
 
-        //$sHTML = "<SELECT NAME=\"" . $this->m_Name . "[]\" ID=\"" . $this->m_Name ."\" $disabledStr $this->m_HTMLAttr $style $func>";
-        $sHTML = "<SELECT NAME=\"" . $this->m_Name . "[$recId]\" ID=\"" . $this->m_Name ."\" $disabledStr $this->m_HTMLAttr $style $func>";
+        //$sHTML = "<SELECT NAME=\"" . $this->objectName . "[]\" ID=\"" . $this->objectName ."\" $disabledStr $this->m_HTMLAttr $style $func>";
+        $sHTML = "<SELECT NAME=\"" . $this->objectName . "[$recId]\" ID=\"" . $this->objectName ."\" $disabledStr $this->m_HTMLAttr $style $func>";
 
         if ($this->m_BlankOption) // ADD a blank option
         {

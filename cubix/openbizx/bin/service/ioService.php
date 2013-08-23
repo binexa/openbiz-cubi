@@ -51,7 +51,7 @@ class ioService
         $bizObj->fetchRecords("", $recList, -1, -1, false);
 
         $xmlString = "<?xml version='1.0' standalone='yes'?>\n";
-        $xmlString .= "<BizDataObj Name=\"".$bizObj->m_Name."\">\n";
+        $xmlString .= "<BizDataObj Name=\"".$bizObj->objectName."\">\n";
         foreach ($recList as $rec)
         {
             $xmlRecord = "\t<Record>\n";
@@ -65,7 +65,7 @@ class ioService
         $xmlString .= "</BizDataObj>";
 
         // output variables
-        $name = str_replace(".","_",$bizObj->m_Name).".xml";
+        $name = str_replace(".","_",$bizObj->objectName).".xml";
         $size = strlen($xmlString);
         $type = "text/plain";
 
@@ -126,7 +126,7 @@ class ioService
 
         // check if BizDataObj name matches
         $dataObjName = $xml['Name'];
-        if ($dataObj->m_Name != $$dataObjName)
+        if ($dataObj->objectName != $$dataObjName)
         {
             $errorMsg = "Invalid input data. Input data object is not same as the current data object.";
             BizSystem::clientProxy()->showErrorMessage($errorMsg);

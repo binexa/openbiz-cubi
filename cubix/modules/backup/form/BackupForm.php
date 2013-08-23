@@ -23,7 +23,7 @@ class BackupForm extends EasyForm
         if(!$this->m_LocationId){
         	$this->getLocationInfo(1);
         }
-		$this->m_Folder = APP_FILE_PATH.DIRECTORY_SEPARATOR."backup";
+		$this->m_Folder = OPENBIZ_APP_FILE_PATH.DIRECTORY_SEPARATOR."backup";
 	}
 	
 	public function getSessionVars($sessionContext)
@@ -60,7 +60,7 @@ class BackupForm extends EasyForm
             if (!$element->m_FieldName)
                 continue;
 
-            $value = BizSystem::clientProxy()->getFormInputs($element->m_Name);                                    
+            $value = BizSystem::clientProxy()->getFormInputs($element->objectName);                                    
             $this->getLocationInfo($value);
         }
 
@@ -314,9 +314,9 @@ class BackupForm extends EasyForm
 	private function _dumpUserFiles($filename,$db_backup){
 		$filename.=".tar.gz";
         $filename = $this->m_Folder.DIRECTORY_SEPARATOR.$filename;
-        $db_tmpfile = APP_HOME.DIRECTORY_SEPARATOR."database.sql";   
+        $db_tmpfile = OPENBIZ_APP_PATH.DIRECTORY_SEPARATOR."database.sql";   
         copy($db_backup,$db_tmpfile);
-		$cmd = "tar czf $filename -C '".APP_HOME."' --exclude '.svn' --exclude 'files/cache' --exclude 'files/backup' ./files ./database.sql";
+		$cmd = "tar czf $filename -C '".OPENBIZ_APP_PATH."' --exclude '.svn' --exclude 'files/cache' --exclude 'files/backup' ./files ./database.sql";
 		@exec($cmd,$output);
 		@unlink($db_tmpfile);
 		@unlink($db_backup);
@@ -326,9 +326,9 @@ class BackupForm extends EasyForm
 	private function _dumpAllFiles($filename,$db_backup){
 		$filename.=".tar.gz";
         $filename = $this->m_Folder.DIRECTORY_SEPARATOR.$filename;
-        $db_tmpfile = APP_HOME.DIRECTORY_SEPARATOR."database.sql";        
+        $db_tmpfile = OPENBIZ_APP_PATH.DIRECTORY_SEPARATOR."database.sql";        
         copy($db_backup,$db_tmpfile);
-		$cmd = "tar czf $filename -C '".APP_HOME."' --exclude '.svn' --exclude './log' --exclude './session' --exclude 'template/cpl' --exclude 'files/cache' --exclude 'files/backup' ./";
+		$cmd = "tar czf $filename -C '".OPENBIZ_APP_PATH."' --exclude '.svn' --exclude './log' --exclude './session' --exclude 'template/cpl' --exclude 'files/cache' --exclude 'files/backup' ./";
 		@exec($cmd,$output);
 		@unlink($db_tmpfile);
 		@unlink($db_backup);
@@ -454,7 +454,7 @@ class BackupForm extends EasyForm
 			$db->exec("SET NAMES '$charset';");
 		}
 
-        include_once MODULE_PATH."/system/lib/MySQLDumpParser.php";
+        include_once OPENBIZ_APP_MODULE_PATH."/system/lib/MySQLDumpParser.php";
 	    $queryArr = MySQLDumpParser::parse($query);
         foreach($queryArr as $query){
 			try {
@@ -468,12 +468,12 @@ class BackupForm extends EasyForm
 	
 	private function _restoreDBFile($filename)
 	{
-		if(!is_dir(TEMPFILE_PATH)){
-			@mkdir(TEMPFILE_PATH);
-			@chmod(TEMPFILE_PATH,0777);
+		if(!is_dir(CUBI_TEMPFILE_PATH)){
+			@mkdir(CUBI_TEMPFILE_PATH);
+			@chmod(CUBI_TEMPFILE_PATH,0777);
 		}
-		$db_tmpfile = TEMPFILE_PATH.DIRECTORY_SEPARATOR."database.sql";
-		$cmd = "tar xzf $filename -C '".TEMPFILE_PATH."' ./database.sql";
+		$db_tmpfile = CUBI_TEMPFILE_PATH.DIRECTORY_SEPARATOR."database.sql";
+		$cmd = "tar xzf $filename -C '".CUBI_TEMPFILE_PATH."' ./database.sql";
 		@exec($cmd,$output);
 		if(is_file($db_tmpfile))
 		{
@@ -483,7 +483,7 @@ class BackupForm extends EasyForm
 	
 	private function _RestoreUserFiles($filename)
 	{
-		$cmd = "tar xzf $filename -C '".APP_HOME."' --exclude './database.sql'";
+		$cmd = "tar xzf $filename -C '".OPENBIZ_APP_PATH."' --exclude './database.sql'";
 		@exec($cmd,$output);
 	}
 	

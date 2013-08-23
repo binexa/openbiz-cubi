@@ -5,7 +5,7 @@
   Copyright (c) 2005-2011, Openbiz Technology LLC
   Version $Id: BackupDeviceEditForm.xml 3351 2012-05-31 05:33:35Z rockyswen@gmail.com $
 -->
-<EasyForm Name="BackupDeviceEditForm" Class="DeviceForm" Icon="{RESOURCE_URL}/backup/images/icon_backup_list.gif"  FormType="Edit" jsClass="jbForm" Title="Edit Backup Device" Description="Edit selected backup device and storage location." BizDataObj="backup.do.BackupDeviceDO" PageSize="10" DefaultForm="Y" TemplateEngine="Smarty" TemplateFile="detail.tpl" EventName="" MessageFile="backup_device_msg.ini" Access="backup.Access_Backup">
+<EasyForm Name="BackupDeviceEditForm" Class="DeviceForm" Icon="{OPENBIZ_RESOURCE_URL}/backup/images/icon_backup_list.gif"  FormType="Edit" jsClass="jbForm" Title="Edit Backup Device" Description="Edit selected backup device and storage location." BizDataObj="backup.do.BackupDeviceDO" PageSize="10" DefaultForm="Y" TemplateEngine="Smarty" TemplateFile="detail.tpl" EventName="" MessageFile="backup_device_msg.ini" Access="backup.Access_Backup">
     <DataPanel>
         <Element Name="fld_name"  Class="InputText" FieldName="name" Label="Name"   />	
         <Element Name="fld_location"  Class="InputText" FieldName="location" Label="Location"   />	

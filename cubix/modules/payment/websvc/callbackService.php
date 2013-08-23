@@ -1,5 +1,5 @@
 <?php 
-require_once MODULE_PATH.'/websvc/lib/WebsvcService.php';
+require_once OPENBIZ_APP_MODULE_PATH.'/websvc/lib/WebsvcService.php';
 class callbackService extends  WebsvcService
 {
 	protected  $svc = "payment.lib.PaymentService";
@@ -12,7 +12,7 @@ class callbackService extends  WebsvcService
 	
 	protected function _logRequest()
 	{
-		$logfile = LOG_PATH.DIRECTORY_SEPARATOR.'PaymentWebSvc.log';
+		$logfile = OPENBIZ_LOG_PATH.DIRECTORY_SEPARATOR.'PaymentWebSvc.log';
 		foreach($_REQUEST as $key=>$value)
 		{
 			$logStr .= "$key => $value \n";

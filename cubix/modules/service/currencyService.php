@@ -20,7 +20,7 @@ class currencyService
 		$locale = new Zend_Locale($current_locale);
 		require_once('Zend/Currency.php');
 		
-		$current_currency = DEFAULT_CURRENCY;		
+		$current_currency = CUBI_DEFAULT_CURRENCY;		
 		if(!$current_currency){
 			$current_currency = "USD";
 		}
@@ -39,7 +39,7 @@ class currencyService
 	
 	public function getDefaultCurrency()
 	{
-		$display_name = $this->getName(DEFAULT_CURRENCY,'short');
+		$display_name = $this->getName(CUBI_DEFAULT_CURRENCY,'short');
 		return $display_name;
 	}	
 
@@ -47,7 +47,7 @@ class currencyService
 	{
 		$current_locale = I18n::getCurrentLangCode();		
 		require_once('Zend/Currency.php');
-		$current_currency = DEFAULT_CURRENCY;		
+		$current_currency = CUBI_DEFAULT_CURRENCY;		
 		if(!$current_currency){
 			$current_currency = "USD";
 		}
@@ -97,7 +97,7 @@ class currencyService
 		/*
 		//Zend Currency is crazy slow
 		require_once('Zend/Currency.php');
-		$current_currency = DEFAULT_CURRENCY;		
+		$current_currency = CUBI_DEFAULT_CURRENCY;		
 		if(!$current_currency){
 			$current_currency = "USD";
 		}				

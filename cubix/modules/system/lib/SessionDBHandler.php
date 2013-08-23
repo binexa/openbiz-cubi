@@ -21,7 +21,7 @@ class SessionDBHandler {
 
     function __construct()
     {
-        $this->lifeTime = TIMEOUT;
+        $this->lifeTime = OPENBIZ_TIMEOUT;
         $this->sessionDO = SESSION_DATAOBJ;
     }
 
@@ -65,7 +65,7 @@ class SessionDBHandler {
         
         
         try {
-        	if(SESSION_STRICT==1){
+        	if(CUBI_SESSION_STRICT==1){
 		      	//limited to single session delete prev sessions
 		      	$sql = "DELETE FROM `session` WHERE `id`!='$sessionID' AND `user_id`='$user_id' ;";
 		       	$this->sessionDb->query($sql);

@@ -78,7 +78,7 @@ class BizDataSql
 		$joinCondition = $tableJoin->m_JoinCondition;
 
         $alias = "T".(count($this->_joinAliasList)+1);   // start with T1, T2
-        $this->_joinAliasList[$tableJoin->m_Name] = $alias;
+        $this->_joinAliasList[$tableJoin->objectName] = $alias;
         $this->_tableAliasList[$table] = $alias;
         $aliasRef = $this->getJoinAlias($joinRef);
         $this->_tableJoins .= " $joinType `$table` $alias ON $alias.$column = $aliasRef.$columnRef ";
@@ -270,7 +270,7 @@ class BizDataSql
                 $xalias = $this->_tableAliasList[$xtable];
 
             // add a table join for the xtable if such join of the table is not there before (note: may report error if has same join).
-            //if (strpos($this->m_TableJoins, "JOIN $xtable") === false)
+            //if (strpos($this->tableJoins, "JOIN $xtable") === false)
             if (!isset($this->_tableAliasList[$xtable]))
             {
                 $this->_tableJoins .= " INNER JOIN `$xtable` $xalias ON $xalias.$column2 = $mytable_col ";

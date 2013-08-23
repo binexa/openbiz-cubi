@@ -305,7 +305,7 @@ class SmsService extends MetaObject
 			$driver=$ProvidersInfo['driver'];
 		}
 		
-		$driverrFile=MODULE_PATH.'/'.$FileName.'.php';
+		$driverrFile=OPENBIZ_APP_MODULE_PATH.'/'.$FileName.'.php';
 		if(!file_exists($driverrFile))
 		{
 			BizSystem::getService(LOG_SERVICE)->log(LOG_ERR,"SMS","Cannot load provider driver :".$ProvidersInfo['driver']);			

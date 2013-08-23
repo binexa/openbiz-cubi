@@ -67,12 +67,12 @@ class ForgetPassForm extends EasyForm
 	        if($token){
 	        	//event log	        		        	
 	        	
-	        	$eventlog 	= BizSystem::getService(EVENTLOG_SERVICE);
+	        	$eventlog 	= BizSystem::getService(OPENBIZ_EVENTLOG_SERVICE);
 	        	$logComment=array($username,$_SERVER['REMOTE_ADDR']);
 	    		$eventlog->log("USER_MANAGEMENT", "MSG_GET_PASSWORD_TOKEN", $logComment);
 					    		
 	        	//send user email
-	        	$emailObj 	= BizSystem::getService(USER_EMAIL_SERVICE);
+	        	$emailObj 	= BizSystem::getService(CUBI_USER_EMAIL_SERVICE);
 	        	$emailObj->UserResetPassword($token['Id']);
 
 	        	BizSystem::SessionContext()->destroy();

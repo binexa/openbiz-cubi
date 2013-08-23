@@ -25,7 +25,7 @@ class LabelTextPaging extends LabelText
         $this->m_CurrentPage 	= Expression::evaluateExpression($this->m_CurrentPage, $formobj);
     	
         $style = $this->getStyle();
-        $id = $this->m_Name;
+        $id = $this->objectName;
         $func = $this->getFunction();
 		$sHTML="";
 		$link = $this->getLink();

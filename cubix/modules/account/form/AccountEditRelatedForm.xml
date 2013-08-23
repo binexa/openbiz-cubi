@@ -3,7 +3,7 @@
 			Class="PickerForm" 
 			FormType="Edit" 
 			jsClass="Openbiz.Form" 
-			Icon="{RESOURCE_URL}/account/images/icon_mod_account_related.png"
+			Icon="{OPENBIZ_RESOURCE_URL}/account/images/icon_mod_account_related.png"
 			Title="Edit Account Related Record" 
 			Description="This form could help you manage account related data record." 
 			BizDataObj="account.do.AccountDO" 

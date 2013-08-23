@@ -17,7 +17,7 @@ if(!defined("CLI")){
 include_once dirname(__FILE__)."/require_auth.php";
 
 // check if the /modules/table is already there
-$moduleDir = MODULE_PATH."/".str_replace(".","/",$module);
+$moduleDir = OPENBIZ_APP_MODULE_PATH."/".str_replace(".","/",$module);
 
 echo "---------------------------------------".PHP_EOL;
 echo "Defined resource actions:".PHP_EOL;

@@ -24,7 +24,7 @@
 class profileService
 {
 
-    protected $m_Name = "ProfileService";
+    protected $name = "ProfileService";
     protected $m_Profile;
     protected $m_profileObj = "contact.do.ContactSystemDO";
     protected $m_contactObj = "contact.do.ContactSystemDO";
@@ -58,7 +58,7 @@ class profileService
         BizSystem::sessionContext()->setVar("_USER_PROFILE", $this->m_Profile);
 
         //load preference
-        $preferenceService = BizSystem::getService(PREFERENCE_SERVICE);
+        $preferenceService = BizSystem::getService(OPENBIZ_PREFERENCE_SERVICE);
         $preferenceService->initPreference($this->m_Profile["Id"]);
 
         return $this->m_Profile;
@@ -256,7 +256,7 @@ class profileService
 
     public function GetGroupName($group_id, $type = 'full')
     {
-        $groupName = BizSystem::getObject($this->m_groupDataObj)->fetchById($group_id)->name;
+        $groupName = BizSystem::getObject($this->m_groupDataObj)->fetchById($group_id)->objectName;
         if($groupName)
         {
         	return $groupName;

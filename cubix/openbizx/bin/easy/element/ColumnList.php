@@ -77,7 +77,7 @@ class ColumnList extends OptionElement
     {
         if ($this->m_Sortable == "Y")
         {
-            $rule = $this->m_Name;
+            $rule = $this->objectName;
 
             $function = $this->m_FormName . ".SortRecord($rule,$this->m_SortFlag)";
             if($this->m_SortFlag == "ASC" || $this->m_SortFlag == "DESC"){

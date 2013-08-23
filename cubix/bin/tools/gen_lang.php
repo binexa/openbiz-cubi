@@ -21,7 +21,7 @@ if(!defined("CLI")){
 
 include_once dirname(__FILE__)."/require_auth.php";
 
-include_once MODULE_PATH."/translation/lib/LangPackCreator.php";
+include_once OPENBIZ_APP_MODULE_PATH."/translation/lib/LangPackCreator.php";
 if ($module == '!') {
 	genLangSystemOnly($lang,$tranlsate);
 }
@@ -32,9 +32,9 @@ else {
 }
 
 if ($module == 'all') {
-	foreach (glob(MODULE_PATH.DIRECTORY_SEPARATOR.'*',GLOB_ONLYDIR) as $dir)
+	foreach (glob(OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR.'*',GLOB_ONLYDIR) as $dir)
     {
-    	$module_name = str_replace(MODULE_PATH.DIRECTORY_SEPARATOR,"",$dir);
+    	$module_name = str_replace(OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR,"",$dir);
     	genLangModule($module_name,$lang,$tranlsate);   	
     }
 }

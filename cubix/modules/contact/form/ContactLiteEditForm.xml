@@ -14,9 +14,9 @@
            <!-- 
             <EventHandler Name="save_onclick" Event="onclick" EventLogMsg=""  Function="UpdateRecord()" RedirectPage="form=contact.form.ContactLiteDetailForm&amp;fld:Id={@contact.do.ContactDO:Field[Id].Value}" ShortcutKey="Ctrl+Enter" ContextMenu="Save" />
             -->
-            <EventHandler Name="save_onclick" Event="onclick" Function="UpdateRecord()" ShortcutKey="Ctrl+Enter" RedirectPage="{APP_INDEX}/system/user_detail/{@:Elem[fld_user_id].Value}"/>
+            <EventHandler Name="save_onclick" Event="onclick" Function="UpdateRecord()" ShortcutKey="Ctrl+Enter" RedirectPage="{OPENBIZ_APP_INDEX_URL}/system/user_detail/{@:Elem[fld_user_id].Value}"/>
         </Element>
-         <Element Name="btn_cancel" Class="LabelText" Text="Back" CssClass="button_gray_m" Link="{APP_INDEX}/system/user_list">
+         <Element Name="btn_cancel" Class="LabelText" Text="Back" CssClass="button_gray_m" Link="{OPENBIZ_APP_INDEX_URL}/system/user_list">
         </Element>          
     </ActionPanel> 
     <NavPanel>

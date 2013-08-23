@@ -43,8 +43,8 @@ class ListForm extends BaseForm
 	
 	protected function inheritParentObj()
     {
-        if (!$this->m_InheritFrom) return;
-        $parentObj = BizSystem::getObject($this->m_InheritFrom);
+        if (!$this->inheritFrom) return;
+        $parentObj = BizSystem::getObject($this->inheritFrom);
 		parent::inheritParentObj();
 		$this->m_Range = $this->m_Range ? $this->m_Range : $parentObj->m_Range;
         $this->m_FixSearchRule = $this->m_FixSearchRule ? $this->m_FixSearchRule : $parentObj->m_FixSearchRule;
@@ -59,14 +59,14 @@ class ListForm extends BaseForm
      */
     public function getSessionVars($sessionContext)
     {
-        $sessionContext->getObjVar($this->m_Name, "RecordId", $this->m_RecordId);
-        $sessionContext->getObjVar($this->m_Name, "FixSearchRule", $this->m_FixSearchRule);
-        $sessionContext->getObjVar($this->m_Name, "SearchRule", $this->m_SearchRule);
-        $sessionContext->getObjVar($this->m_Name, "SearchRuleBindValues", $this->m_SearchRuleBindValues);
-        $sessionContext->getObjVar($this->m_Name, "SubForms", $this->m_SubForms);
-        $sessionContext->getObjVar($this->m_Name, "CurrentPage", $this->m_CurrentPage);
-        $sessionContext->getObjVar($this->m_Name, "PageSize", $this->m_Range);
-        $sessionContext->getObjVar($this->m_Name, "SearchPanelValues", $this->m_SearchPanelValues);
+        $sessionContext->getObjVar($this->objectName, "RecordId", $this->m_RecordId);
+        $sessionContext->getObjVar($this->objectName, "FixSearchRule", $this->m_FixSearchRule);
+        $sessionContext->getObjVar($this->objectName, "SearchRule", $this->m_SearchRule);
+        $sessionContext->getObjVar($this->objectName, "SearchRuleBindValues", $this->m_SearchRuleBindValues);
+        $sessionContext->getObjVar($this->objectName, "SubForms", $this->m_SubForms);
+        $sessionContext->getObjVar($this->objectName, "CurrentPage", $this->m_CurrentPage);
+        $sessionContext->getObjVar($this->objectName, "PageSize", $this->m_Range);
+        $sessionContext->getObjVar($this->objectName, "SearchPanelValues", $this->m_SearchPanelValues);
     }
 
     /**
@@ -77,14 +77,14 @@ class ListForm extends BaseForm
      */
     public function setSessionVars($sessionContext)
     {
-        $sessionContext->setObjVar($this->m_Name, "RecordId", $this->m_RecordId);
-        $sessionContext->setObjVar($this->m_Name, "FixSearchRule", $this->m_FixSearchRule);
-        $sessionContext->setObjVar($this->m_Name, "SearchRule", $this->m_SearchRule);        
-        $sessionContext->setObjVar($this->m_Name, "SearchRuleBindValues", $this->m_SearchRuleBindValues);
-        $sessionContext->setObjVar($this->m_Name, "SubForms", $this->m_SubForms);
-        $sessionContext->setObjVar($this->m_Name, "CurrentPage", $this->m_CurrentPage);
-        $sessionContext->setObjVar($this->m_Name, "PageSize", $this->m_Range);
-        $sessionContext->setObjVar($this->m_Name, "SearchPanelValues", $this->m_SearchPanelValues);        
+        $sessionContext->setObjVar($this->objectName, "RecordId", $this->m_RecordId);
+        $sessionContext->setObjVar($this->objectName, "FixSearchRule", $this->m_FixSearchRule);
+        $sessionContext->setObjVar($this->objectName, "SearchRule", $this->m_SearchRule);        
+        $sessionContext->setObjVar($this->objectName, "SearchRuleBindValues", $this->m_SearchRuleBindValues);
+        $sessionContext->setObjVar($this->objectName, "SubForms", $this->m_SubForms);
+        $sessionContext->setObjVar($this->objectName, "CurrentPage", $this->m_CurrentPage);
+        $sessionContext->setObjVar($this->objectName, "PageSize", $this->m_Range);
+        $sessionContext->setObjVar($this->objectName, "SearchPanelValues", $this->m_SearchPanelValues);        
     }
 	
 	/**
@@ -310,12 +310,12 @@ class ListForm extends BaseForm
     }
     public function gotoSelectedPage($elemName)
     {
-        $page = BizSystem::clientProxy()->getFormInputs(str_replace(".","_", $this->m_Name).'_'.$elemName);
+        $page = BizSystem::clientProxy()->getFormInputs(str_replace(".","_", $this->objectName).'_'.$elemName);
     	$this->gotoPage($page);
     }
     public function setPageSize($elemName)
     {
-        $pagesize = BizSystem::clientProxy()->getFormInputs(str_replace(".","_", $this->m_Name).'_'.$elemName);
+        $pagesize = BizSystem::clientProxy()->getFormInputs(str_replace(".","_", $this->objectName).'_'.$elemName);
     	$this->m_Range=$pagesize;
     	$this->rerender();
     }  
@@ -369,7 +369,7 @@ class ListForm extends BaseForm
 			if (!$element->m_FieldName)
 				continue;
 
-			$value = BizSystem::clientProxy()->getFormInputs($element->m_Name);  
+			$value = BizSystem::clientProxy()->getFormInputs($element->objectName);  
 			$this->m_SearchPanelValues[$element->m_FieldName] = $value;	// ??? neede
 			if($element->m_FuzzySearch=="Y")
 			{
@@ -385,7 +385,7 @@ class ListForm extends BaseForm
 
         $this->m_CurrentPage = 1;
 
-        BizSystem::log(LOG_DEBUG,"FORMOBJ",$this->m_Name."::runSearch(), SearchRule=".$this->m_SearchRule);
+        BizSystem::log(LOG_DEBUG,"FORMOBJ",$this->objectName."::runSearch(), SearchRule=".$this->m_SearchRule);
 
 		//$recArr = $this->readInputRecord();
 		//$this->m_SearchPanelValues = $recArr;

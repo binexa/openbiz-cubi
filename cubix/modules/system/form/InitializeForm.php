@@ -47,7 +47,7 @@ class InitializeForm extends EasyForm
             		"name"	  => $name,
             		"value"   => $value,
 	            	"section" => $element->m_ElementSetCode,
-	            	"type" 	  => $element->m_Class,	            
+	            	"type" 	  => $element->className,	            
 	            );
 	            //check if its exsit
 	            $record = $prefDo->fetchOne("[user_id]='$user_id' and [name]='$name'");
@@ -61,13 +61,13 @@ class InitializeForm extends EasyForm
 	            }
 	            
 	            //update default app_init setting
-	            $config_file = APP_HOME.'/bin/app_init.php';
+	            $config_file = OPENBIZ_APP_PATH.'/bin/app_init.php';
 	            switch($name){	            	
 	            	case "system_name":
-	            		if($value!=DEFAULT_SYSTEM_NAME){
-	            			//update default theme DEFAULT_THEME_NAME
+	            		if($value!=OPENBIZ_DEFAULT_SYSTEM_NAME){
+	            			//update default theme CUBI_DEFAULT_THEME_NAME
 	            			$data = file_get_contents($config_file);	            			
-	            			$data = preg_replace("/define\([\'\\\"]{1}DEFAULT_SYSTEM_NAME[\'\\\"]{1}.*?\)\;/i","define('DEFAULT_SYSTEM_NAME','$value');",$data);	            			
+	            			$data = preg_replace("/define\([\'\\\"]{1}OPENBIZ_DEFAULT_SYSTEM_NAME[\'\\\"]{1}.*?\)\;/i","define('OPENBIZ_DEFAULT_SYSTEM_NAME','$value');",$data);	            			
 	            			@file_put_contents($config_file,$data);
 	            		}
 	            		break;
@@ -78,19 +78,19 @@ class InitializeForm extends EasyForm
             			@file_put_contents($config_file,$data);
 	            		break;	   	            		    
 	            	case "sessionstrict":
-						//update default theme SESSION_STRICT
-	            		if($value!=SESSION_STRICT){
+						//update default theme CUBI_SESSION_STRICT
+	            		if($value!=CUBI_SESSION_STRICT){
 	            			$data = file_get_contents($config_file);	            			
-	            			$data = preg_replace("/define\([\'\\\"]{1}SESSION_STRICT[\'\\\"]{1}.*?\)\;/i","define('SESSION_STRICT','$value');",$data);	            			
+	            			$data = preg_replace("/define\([\'\\\"]{1}CUBI_SESSION_STRICT[\'\\\"]{1}.*?\)\;/i","define('CUBI_SESSION_STRICT','$value');",$data);	            			
 	            			@file_put_contents($config_file,$data);
 	            		}
 	            		break;	
 	            	     		
 	            	case "language":
-	            	    if($value!=DEFAULT_LANGUAGE){
-	            			//update default theme DEFAULT_LANGUAGE
+	            	    if($value!=OPENBIZ_DEFAULT_LANGUAGE){
+	            			//update default theme OPENBIZ_DEFAULT_LANGUAGE
 	            			$data = file_get_contents($config_file);	            			
-	            			$data = preg_replace("/define\([\'\\\"]{1}DEFAULT_LANGUAGE[\'\\\"]{1}.*?\)\;/i","define('DEFAULT_LANGUAGE','$value');",$data);	            			
+	            			$data = preg_replace("/define\([\'\\\"]{1}OPENBIZ_DEFAULT_LANGUAGE[\'\\\"]{1}.*?\)\;/i","define('OPENBIZ_DEFAULT_LANGUAGE','$value');",$data);	            			
 	            			@file_put_contents($config_file,$data);	    
 
 	            			//make changes now
@@ -102,7 +102,7 @@ class InitializeForm extends EasyForm
             }
         }
         //set initialized.lock 
-        $initLock = APP_HOME.'/files/initialize.lock';
+        $initLock = OPENBIZ_APP_PATH.'/files/initialize.lock';
         $data = '1';
         file_put_contents($initLock, $data);
         
@@ -111,10 +111,10 @@ class InitializeForm extends EasyForm
 	
 	public function allowAccess($access=null)
 	{
-		$initLock = APP_HOME.'/files/initialize.lock';
+		$initLock = OPENBIZ_APP_PATH.'/files/initialize.lock';
 		if(is_file($initLock))
 		{
-			$pageURL = APP_INDEX."/system/general_default";
+			$pageURL = OPENBIZ_APP_INDEX_URL."/system/general_default";
 			BizSystem::clientProxy()->redirectPage($pageURL);
 			return;
 		}
@@ -155,7 +155,7 @@ class InitializeForm extends EasyForm
         	$prefRecord["_".$record['name']] = $record["value"];
         }
         $prefRecord["_siteurl"] = SITE_URL;
-        $prefRecord["_system_name"] = DEFAULT_SYSTEM_NAME;
+        $prefRecord["_system_name"] = OPENBIZ_DEFAULT_SYSTEM_NAME;
         
         $this->m_RecordId = $resultRecords[0]['Id'];
         $this->setActiveRecord($prefRecord);

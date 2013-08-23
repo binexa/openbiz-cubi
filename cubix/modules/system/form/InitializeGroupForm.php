@@ -50,12 +50,12 @@ class InitializeGroupForm extends EasyForm
 	        
 	        //default data sharing setting
 	        $prefDo = BizSystem::getObject("myaccount.do.PreferenceDO");
-	        $config_file = APP_HOME.'/bin/app_init.php';
+	        $config_file = OPENBIZ_APP_PATH.'/bin/app_init.php';
         	$value = $recArr['_data_acl'];
-			//update default theme DATA_ACL
-            if($value!=DATA_ACL){
+			//update default theme CUBI_DATA_ACL
+            if($value!=CUBI_DATA_ACL){
           		$data = file_get_contents($config_file);	            			
-           		$data = preg_replace("/define\([\'\\\"]{1}DATA_ACL[\'\\\"]{1}.*?\)\;/i","define('DATA_ACL','$value');",$data);	            			
+           		$data = preg_replace("/define\([\'\\\"]{1}CUBI_DATA_ACL[\'\\\"]{1}.*?\)\;/i","define('CUBI_DATA_ACL','$value');",$data);	            			
         		@file_put_contents($config_file,$data);
             }            	
             $recArrParam = array(
@@ -78,9 +78,9 @@ class InitializeGroupForm extends EasyForm
             
             
 			$value = $recArr['_group_data_share'];
-            if($value!=GROUP_DATA_SHARE){
+            if($value!=CUBI_GROUP_DATA_SHARE){
             	$data = file_get_contents($config_file);	            			
-            	$data = preg_replace("/define\([\'\\\"]{1}GROUP_DATA_SHARE[\'\\\"]{1}.*?\)\;/i","define('GROUP_DATA_SHARE','$value');",$data);	            			
+            	$data = preg_replace("/define\([\'\\\"]{1}CUBI_GROUP_DATA_SHARE[\'\\\"]{1}.*?\)\;/i","define('CUBI_GROUP_DATA_SHARE','$value');",$data);	            			
             	@file_put_contents($config_file,$data);	            			
             }
             $recArrParam = array(
@@ -103,7 +103,7 @@ class InitializeGroupForm extends EasyForm
             
 	            		
 	        //put init lock
-	        $group_init_lock = APP_FILE_PATH.DIRECTORY_SEPARATOR.'initialize_group.lock';
+	        $group_init_lock = OPENBIZ_APP_FILE_PATH.DIRECTORY_SEPARATOR.'initialize_group.lock';
 	        file_put_contents($group_init_lock, '1');
 	        
 			//redirect back to last view
@@ -113,4 +113,3 @@ class InitializeGroupForm extends EasyForm
         }		
 	}
 }
-?>

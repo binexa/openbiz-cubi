@@ -59,7 +59,7 @@ class EventLogForm extends EasyForm
     }    
     public function ExportCSV()
     {
-		$eventlogSvc = BizSystem::getService(EVENTLOG_SERVICE);	
+		$eventlogSvc = BizSystem::getService(OPENBIZ_EVENTLOG_SERVICE);	
 		$eventlogSvc->ExportCSV();
 		$this->runEventLog();
 		return true;    	
@@ -93,7 +93,7 @@ class EventLogForm extends EasyForm
         }
         else {
             //$message = I18n::getInstance()->translate($message);
-            $message = I18n::t($message, $messageId, $this->getModuleName($this->m_Name));
+            $message = I18n::t($message, $messageId, $this->getModuleName($this->objectName));
         }
         return @vsprintf($message,$params);
     }

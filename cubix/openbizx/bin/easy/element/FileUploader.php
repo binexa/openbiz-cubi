@@ -44,13 +44,13 @@ class FileUploader extends FileInput
     {
         parent::__construct($xmlArr, $formObj);
         $this->readMetaData($xmlArr);
-        if(defined("PUBLIC_UPLOAD_PATH")){
-        	$this->m_UploadRoot= constant("PUBLIC_UPLOAD_PATH");
+        if(defined("OPENBIZ_PUBLIC_UPLOAD_PATH")){
+        	$this->m_UploadRoot= constant("OPENBIZ_PUBLIC_UPLOAD_PATH");
         }else{
-        	$this->m_UploadRoot= APP_HOME."/files/upload";
+        	$this->m_UploadRoot= OPENBIZ_APP_PATH."/files/upload";
         }
-        if(defined("PUBLIC_UPLOAD_URL")){
-        	$this->m_UploadRootURL = str_replace(APP_URL,"",constant("PUBLIC_UPLOAD_URL"));
+        if(defined("OPENBIZ_PUBLIC_UPLOAD_URL")){
+        	$this->m_UploadRootURL = str_replace(OPENBIZ_APP_URL,"",constant("OPENBIZ_PUBLIC_UPLOAD_URL"));
         }else{
         	$this->m_UploadRootURL = "/files/upload";
         }
@@ -85,7 +85,7 @@ class FileUploader extends FileInput
     	}
     	else
     	{
-    		$delete_user_opt=BizSystem::clientProxy()->getFormInputs($this->m_Name."_DELETE");
+    		$delete_user_opt=BizSystem::clientProxy()->getFormInputs($this->objectName."_DELETE");
     		if($delete_user_opt)
     		{
     			$this->m_Value="";
@@ -102,9 +102,9 @@ class FileUploader extends FileInput
     	}
     	if(count($_FILES)>0)
 		{
-			if(!$this->m_Uploaded && $_FILES[$this->m_Name]["size"] > 0)
+			if(!$this->m_Uploaded && $_FILES[$this->objectName]["size"] > 0)
 			{
-				$file = $_FILES[$this->m_Name];
+				$file = $_FILES[$this->objectName];
 
 				if(!is_dir($this->m_UploadRoot.$this->m_UploadFolder))
 				{
@@ -134,14 +134,14 @@ class FileUploader extends FileInput
     public function render()
     {
     	if($this->m_Deleteable=="Y"){
-        	$delete_opt="<input type=\"checkbox\" name=\"" . $this->m_Name . "_DELETE\" id=\"" . $this->m_Name ."_DELETE\" >Delete";
+        	$delete_opt="<input type=\"checkbox\" name=\"" . $this->objectName . "_DELETE\" id=\"" . $this->objectName ."_DELETE\" >Delete";
         } else{
         	$delete_opt="";
         }
         $disabledStr = ($this->getEnabled() == "N") ? "disabled=\"true\"" : "";
         $style = $this->getStyle();
         $func = $this->getFunction();
-        $sHTML .= "<input type=\"file\" name='$this->m_Name' id=\"" . $this->m_Name ."\" value='$this->m_Value' $disabledStr $this->m_HTMLAttr $style $func />        
+        $sHTML .= "<input type=\"file\" name='$this->objectName' id=\"" . $this->objectName ."\" value='$this->m_Value' $disabledStr $this->m_HTMLAttr $style $func />        
         			$delete_opt";
         return $sHTML;
     }    

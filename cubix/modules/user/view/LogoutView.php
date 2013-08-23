@@ -21,7 +21,7 @@ class LogoutView extends EasyView
     public function Logout()
     {
 		global $g_BizSystem;
-		$eventlog 	= $g_BizSystem->GetService(EVENTLOG_SERVICE);
+		$eventlog 	= $g_BizSystem->GetService(OPENBIZ_EVENTLOG_SERVICE);
 		$profile = $g_BizSystem->getUserProfile();  
 		$logComment=array($profile["username"], $_SERVER['REMOTE_ADDR']);
 		

@@ -15,9 +15,9 @@ define('STR_OPERATION_SYSTEM',		'操作系统');
 define('STR_PHP_VERSION',			'PHP 版本');
 define('STR_PHP_VERSION_FAIL',		'FAIL - Zend Framework 需要 PHP5.1.4 或更高');
 define('STR_OPENBIZ_PATH',			'Openbiz 路径');
-define('STR_OPENBIZ_PATH_FAIL',		'FAIL - OPENBIZ_HOME 没有正确指向到 Openbiz 的安装路径');
+define('STR_OPENBIZ_PATH_FAIL',		'FAIL - OPENBIZ_PATH 没有正确指向到 Openbiz 的安装路径');
 define('STR_ZEND_PATH',				'Zend Framework 路径');
-define('STR_ZEND_PATH_FAIL',		"FAIL - ZEND_FRWK_HOME 没有正确指向指向到 Zend Framework 的安装路径. 请修改 ZEND_FRWK_HOME 在 ".OPENBIZ_HOME."/bin/sysheader_inc.php 文件中");
+define('STR_ZEND_PATH_FAIL',		"FAIL - ZEND_FRWK_HOME 没有正确指向指向到 Zend Framework 的安装路径. 请修改 ZEND_FRWK_HOME 在 ".OPENBIZ_PATH."/bin/sysheader_inc.php 文件中");
 define('STR_PDO_EXTENSION',			'PDO 扩展');
 define('STR_PDO_EXTENSION_FAIL',	'FAIL - PDO 扩展和 pdo_mysql 驱动是必须的.');
 
@@ -35,7 +35,7 @@ define('STR_DATABASE_NOT_EMPTY',	'您所选择的数据库中已经存在数据�
 
 define('STR_APPLICATION_CONFIGURATION',		'应用程序配置检测');
 define('STR_CHECK_WRITABLE_DIR',			'检查目录是否具有可写入权限');
-define('STR_DEFAULT_DATABASE_FILE',			'默认数据库连接 将被写入 '.APP_HOME.DIRECTORY_SEPARATOR.'<strong >application.xml</strong>');
+define('STR_DEFAULT_DATABASE_FILE',			'默认数据库连接 将被写入 '.OPENBIZ_APP_PATH.DIRECTORY_SEPARATOR.'<strong >application.xml</strong>');
 define('STR_NAME',				'名称');
 define('STR_DRIVER',			'驱动');
 define('STR_SERVER',			'主机');

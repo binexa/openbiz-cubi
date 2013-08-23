@@ -67,7 +67,7 @@ class InitializeProfileForm extends EasyForm
         BizSystem::getService("system.lib.CubiService")->collectUserData($recArr['subscribe']);
        
         //set initialized.lock 
-        $initLock = APP_HOME.'/files/initialize_profile.lock';
+        $initLock = OPENBIZ_APP_PATH.'/files/initialize_profile.lock';
         $data = '1';
         file_put_contents($initLock, $data);
         
@@ -91,10 +91,10 @@ class InitializeProfileForm extends EasyForm
 
 	public function allowAccess($access=null)
 	{
-		$initLock = APP_HOME.'/files/initialize_profile.lock';
+		$initLock = OPENBIZ_APP_PATH.'/files/initialize_profile.lock';
 		if(is_file($initLock))
 		{
-			$pageURL = APP_INDEX."/system/general_default";
+			$pageURL = OPENBIZ_APP_INDEX_URL."/system/general_default";
 			BizSystem::clientProxy()->redirectPage($pageURL);
 			return;
 		}

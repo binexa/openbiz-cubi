@@ -41,7 +41,7 @@ class RowCheckbox extends InputElement
     public function renderLabel()
     {
         $formName = $this->m_FormName;
-        $name = $this->m_Name.'[]';        
+        $name = $this->objectName.'[]';        
         $sHTML = "<INPUT TYPE=\"CHECKBOX\"  onclick=\"Openbiz.Util.checkAll(this, $('$formName').select('input[name=\'$name\']'));\"/>";
         return $sHTML;
     }
@@ -54,7 +54,7 @@ class RowCheckbox extends InputElement
     public function render()
     {
         $value = $this->m_Value;
-        $name = $this->m_Name.'[]';
+        $name = $this->objectName.'[]';
         $style = $this->getStyle();
         if($this->m_CheckStatus)
         {

@@ -10,7 +10,7 @@
         <Element Name="row_selections" Class="RowCheckbox" width="20"  Label="" FieldName="Id"/>                
         <Element Name="fld_Id" Class="Hidden" Hidden="Y" FieldName="Id" Label="Id" Sortable="Y" AllowURLParam="N" Link="javascript:" />
         <Element Name="fld_icon" Class="ColumnImage" 
-				Text="{RESOURCE_URL}/extend/images/icon_field_private.png"
+				Text="{OPENBIZ_RESOURCE_URL}/extend/images/icon_field_private.png"
 				FieldName="" Label="Icon"  Sortable="N" AllowURLParam="N" Translatable="N" OnEventLog="N" Link="javascript:;">							
 		</Element>
         <Element Name="fld_label" Class="ColumnText" FieldName="label" Label="Label"  Sortable="Y" AllowURLParam="N" Translatable="N" OnEventLog="N" Link="javascript:">         

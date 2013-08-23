@@ -13,8 +13,8 @@ var Openbiz =
 
     init: function()
     {
-        if (APP_URL!=null && APP_CONTROLLER!=null) {
-            Openbiz.appUrl = APP_URL;
+        if (OPENBIZ_APP_URL!=null && APP_CONTROLLER!=null) {
+            Openbiz.appUrl = OPENBIZ_APP_URL;
             Openbiz.appHome = APP_CONTROLLER;
             Openbiz.currentView = APP_VIEWNAME;
             return;

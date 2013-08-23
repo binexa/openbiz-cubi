@@ -5,7 +5,7 @@
   Copyright (c) 2005-2011, Openbiz Technology LLC
   Version $Id: ApplicationNewForm.xml 3369 2012-05-31 06:13:56Z rockyswen@gmail.com $
 -->
-<EasyForm Name="ApplicationNewForm" Class="EasyForm"  Icon="{RESOURCE_URL}/repository/images/repo_application_add.gif" FormType="New" jsClass="jbForm" Title="New Application" Description="Publish a new application , Allow other Cubi platfrom user to download it." BizDataObj="repository.application.do.ApplicationDO" TemplateEngine="Smarty" TemplateFile="detail_elementset.tpl" EventName="" MessageFile="">
+<EasyForm Name="ApplicationNewForm" Class="EasyForm"  Icon="{OPENBIZ_RESOURCE_URL}/repository/images/repo_application_add.gif" FormType="New" jsClass="jbForm" Title="New Application" Description="Publish a new application , Allow other Cubi platfrom user to download it." BizDataObj="repository.application.do.ApplicationDO" TemplateEngine="Smarty" TemplateFile="detail_elementset.tpl" EventName="" MessageFile="">
     <DataPanel>
         <Element Name="fld_name" ElementSet="General" DefaultValueRename="N" Class="InputText" FieldName="name" Label="Name" DefaultValue="New Package"  AllowURLParam="N" CssClass="input_text" CssErrorClass="input_text_error" CssFocusClass="input_text_focus"/>
         <Element Name="fld_icon" Class="ImageUploader"  ElementSet="General"  UploadFolder="/application" FieldName="icon" Label="App Icon"  AllowURLParam="N" ></Element>

@@ -154,7 +154,7 @@ class RestrictedView
      *
      * @var string
      */
-    public $m_Name;
+    public $objectName;
 
     /**
      * List of role
@@ -171,7 +171,7 @@ class RestrictedView
      */
     public function __construct($xmlArr)
     {
-        $this->m_Name = $xmlArr["ATTRIBUTES"]["NAME"];
+        $this->objectName = $xmlArr["ATTRIBUTES"]["NAME"];
         $this->_roleList = new MetaIterator($xmlArr["ROLE"],"RestrictedRole");
     }
 
@@ -182,7 +182,7 @@ class RestrictedView
      */
     public function getViewName()
     {
-        return $this->m_Name;
+        return $this->objectName;
     }
 
     /**
@@ -211,7 +211,7 @@ class RestrictedRole
      *
      * @var string
      */
-    public $m_Name;
+    public $objectName;
 
     /**
      * Initialize RestrictedView with xml array metadata
@@ -221,7 +221,7 @@ class RestrictedRole
      */
     public function __construct($xmlArr)
     {
-        $this->m_Name = $xmlArr["ATTRIBUTES"]["NAME"];
+        $this->objectName = $xmlArr["ATTRIBUTES"]["NAME"];
     }
 
     /**
@@ -231,7 +231,7 @@ class RestrictedRole
      */
     public function getRoleName()
     {
-        return $this->m_Name;
+        return $this->objectName;
     }
 }
 ?>

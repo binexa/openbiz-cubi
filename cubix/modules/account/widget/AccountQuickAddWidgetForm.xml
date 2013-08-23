@@ -3,7 +3,7 @@
 			Class="PickerForm" 
 			FormType="New" 
 			jsClass="Openbiz.Form" 
-			Icon="{RESOURCE_URL}/account/images/icon_mod_account_add.png"
+			Icon="{OPENBIZ_RESOURCE_URL}/account/images/icon_mod_account_add.png"
 			Title="Quick Add CRM Account" 
 			Description="Create a new crm account and edit its content later." 
 			BizDataObj="account.do.AccountPickDO" 

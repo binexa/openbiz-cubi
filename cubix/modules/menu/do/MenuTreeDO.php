@@ -118,7 +118,7 @@ class MenuTreeDO extends BizDataObj
 		if (empty($uri))
 			return array();
     	$matchUri = $this->_getMatchUri($uri);
-    	$uri = str_replace("//","/",str_replace(APP_INDEX,'',$uri));
+    	$uri = str_replace("//","/",str_replace(OPENBIZ_APP_INDEX_URL,'',$uri));
     	
     	$pathArray = array();
     	//global $g_BizSystem;
@@ -147,7 +147,7 @@ class MenuTreeDO extends BizDataObj
     
     private function _getMatchUri($uri)
     {
-    	$matchUri = str_replace(APP_INDEX,'',$uri);
+    	$matchUri = str_replace(OPENBIZ_APP_INDEX_URL,'',$uri);
     	// only count first 2 parts
     	$_matchUris = explode('/',$matchUri);
     	if (count($_matchUris)>=2) {
@@ -263,7 +263,7 @@ class MenuTreeDO extends BizDataObj
 		if (self::$fullMenuTree != null) return;
 		$cache_id = 'FULL_MENU_LIST';
 		$cacheSvc = BizSystem::getService(CACHE_SERVICE,1);
-		$cacheSvc->init($this->m_Name, 600);	// cache for 10 mins
+		$cacheSvc->init($this->objectName, 600);	// cache for 10 mins
 		if($cacheSvc->test($cache_id))
 		{
 			self::$fullMenuTree = $cacheSvc->load($cache_id);

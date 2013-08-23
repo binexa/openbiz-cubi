@@ -5,14 +5,14 @@
   Copyright (c) 2005-2011, Openbiz Technology LLC
   Version $Id: RepositoryListForm.xml 5078 2013-01-07 09:47:00Z hellojixian@gmail.com $
 -->
-<EasyForm Name="RepositoryListForm" Icon="{RESOURCE_URL}/market/images/icon_repo_server.png" Class="RepositoryForm" FormType="List" jsClass="jbForm" Title="Application Repositories" Description="This module can manage application repositories " BizDataObj="market.repository.do.RepositoryDO" PageSize="10" DefaultForm="Y" TemplateEngine="Smarty" TemplateFile="grid.tpl" EventName="" MessageFile="repository.ini" Access="Market.Manage">
+<EasyForm Name="RepositoryListForm" Icon="{OPENBIZ_RESOURCE_URL}/market/images/icon_repo_server.png" Class="RepositoryForm" FormType="List" jsClass="jbForm" Title="Application Repositories" Description="This module can manage application repositories " BizDataObj="market.repository.do.RepositoryDO" PageSize="10" DefaultForm="Y" TemplateEngine="Smarty" TemplateFile="grid.tpl" EventName="" MessageFile="repository.ini" Access="Market.Manage">
     <DataPanel>
         <Element Name="row_selections" Class="RowCheckbox"  Label="" FieldName="Id"/>
         <Element Name="fld_Id" Class="common.element.ColumnTitle" FieldName="Id" Label="ID" Sortable="Y" AllowURLParam="N">         
          	
         </Element>
         <Element Name="fld_icon" Class="ColumnImage" 
-				Text="{RESOURCE_URL}/market/images/icon_repo_server.png" Height="24"
+				Text="{OPENBIZ_RESOURCE_URL}/market/images/icon_repo_server.png" Height="24"
 				FieldName="" Label="Icon"  Sortable="N" AllowURLParam="N" Translatable="N" OnEventLog="N" Link="javascript:;">							
 		</Element>   
         <Element Name="fld_uri" Class="ColumnText" FieldName="repository_uri" Label="Repository" Sortable="Y" Link="javascript:;">

@@ -11,7 +11,7 @@
  * @version   $Id: ThemeForm.php 3373 2012-05-31 06:21:21Z rockyswen@gmail.com $
  */
 
-include_once MODULE_PATH."/theme/lib/ThemeCreator.php";
+include_once OPENBIZ_APP_MODULE_PATH."/theme/lib/ThemeCreator.php";
 
 
 class ThemeForm extends EasyForm
@@ -53,7 +53,7 @@ class ThemeForm extends EasyForm
         {
 	        $theme = $recArr['theme'];
 	        $this->m_ValidateErrors = array();
-	        if(is_dir(THEME_PATH.DIRECTORY_SEPARATOR.$theme)){	        			       	
+	        if(is_dir(OPENBIZ_THEME_PATH.DIRECTORY_SEPARATOR.$theme)){	        			       	
 	        		$errorMessage = $this->getMessage("FORM_THEME_EXIST",array("fld_theme"));
 	                $this->m_ValidateErrors["fld_theme"] = $errorMessage;
 	        }
@@ -101,7 +101,7 @@ class ThemeForm extends EasyForm
    public function deleteRecord($id=null)
     {
         if ($this->m_Resource != "" && !$this->allowAccess($this->m_Resource.".delete"))
-            return BizSystem::clientProxy()->redirectView(ACCESS_DENIED_VIEW);
+            return BizSystem::clientProxy()->redirectView(OPENBIZ_ACCESS_DENIED_VIEW);
 
         if ($id==null || $id=='')
             $id = BizSystem::clientProxy()->getFormInputs('_selectedId');
@@ -136,7 +136,7 @@ class ThemeForm extends EasyForm
                         
 		preg_match("/\[(.*?)\]=\'(.*?)\'/si",$this->m_FixSearchRule,$match);
 		$theme = $match[2];
-		$dir = THEME_PATH.DIRECTORY_SEPARATOR.$theme;
+		$dir = OPENBIZ_THEME_PATH.DIRECTORY_SEPARATOR.$theme;
 		$result['Id']	=	$theme;
 		$result['name']	=	$theme;	
 		$result['path']	=	$dir;				
@@ -152,7 +152,7 @@ class ThemeForm extends EasyForm
 	public function fetchDataSet(){
 		$result = array();
 		$i = 0;
-		foreach (glob(THEME_PATH.DIRECTORY_SEPARATOR."*",GLOB_ONLYDIR) as $dir){
+		foreach (glob(OPENBIZ_THEME_PATH.DIRECTORY_SEPARATOR."*",GLOB_ONLYDIR) as $dir){
 			if(basename($dir)!='tmp'){
 				$locale = explode('_', basename($dir));
 
@@ -174,7 +174,7 @@ class ThemeForm extends EasyForm
 
 	
 	public function isDefaultTheme($theme){
-		if($theme == DEFAULT_THEME_NAME){
+		if($theme == CUBI_DEFAULT_THEME_NAME){
 			return true;
 		}
 		else
@@ -184,7 +184,7 @@ class ThemeForm extends EasyForm
 	}
 
 	public function isCurrentTheme($theme){
-		if($theme == THEME_NAME){
+		if($theme == OPENBIZ_THEME_NAME){
 			return true;
 		}
 		else
@@ -228,7 +228,7 @@ class ThemeForm extends EasyForm
 		$this->m_RecordID=$theme;
 		
 		//mkdir
-		$theme_dir = THEME_PATH.DIRECTORY_SEPARATOR.$theme;
+		$theme_dir = OPENBIZ_THEME_PATH.DIRECTORY_SEPARATOR.$theme;
 		@mkdir($theme_dir);
 		
 		//clean up array
@@ -249,7 +249,7 @@ class ThemeForm extends EasyForm
 		$smarty->assign("author_url", 		$recArr['authorUrl']);
 		$smarty->assign("description",	 	$recArr['description']);
 		$data = $smarty->fetch(BizSystem::getTplFileWithPath("theme.xml.tpl", $this->m_Package));
-		$theme_dir = THEME_PATH.DIRECTORY_SEPARATOR.$theme;
+		$theme_dir = OPENBIZ_THEME_PATH.DIRECTORY_SEPARATOR.$theme;
 		$theme_file = $theme_dir.DIRECTORY_SEPARATOR."theme.xml";
 		file_put_contents($theme_file ,$data);
 				
@@ -283,7 +283,7 @@ public function UpdateThemePack($theme,$recArr){
 		$smarty->assign("author_url", 		$recArr['authorUrl']);
 		$smarty->assign("description",	 	$recArr['description']);
 		$data = $smarty->fetch(BizSystem::getTplFileWithPath("theme.xml.tpl", $this->m_Package));
-		$theme_dir = THEME_PATH.DIRECTORY_SEPARATOR.$theme;
+		$theme_dir = OPENBIZ_THEME_PATH.DIRECTORY_SEPARATOR.$theme;
 		$theme_file = $theme_dir.DIRECTORY_SEPARATOR."theme.xml";
 		@unlink($theme_file);
 		file_put_contents($theme_file ,$data);
@@ -295,7 +295,7 @@ public function UpdateThemePack($theme,$recArr){
 	}
 	
 	public function ReadThemePack($theme,&$recArr=array()){		
-		$theme_dir = THEME_PATH.DIRECTORY_SEPARATOR.$theme;
+		$theme_dir = OPENBIZ_THEME_PATH.DIRECTORY_SEPARATOR.$theme;
 		$theme_metafile = $theme_dir.DIRECTORY_SEPARATOR."theme.xml";
 		if(is_file($theme_metafile)){
 			$metadata = file_get_contents($theme_metafile);
@@ -310,27 +310,27 @@ public function UpdateThemePack($theme,$recArr){
 				}
 			}
 		}
-		if(is_file(THEME_PATH.DIRECTORY_SEPARATOR.$theme.DIRECTORY_SEPARATOR."images".DIRECTORY_SEPARATOR.$recArr['icon']))
+		if(is_file(OPENBIZ_THEME_PATH.DIRECTORY_SEPARATOR.$theme.DIRECTORY_SEPARATOR."images".DIRECTORY_SEPARATOR.$recArr['icon']))
 		{
-			$recArr['icon_url'] = THEME_URL."/$theme/images/".$recArr['icon'];
+			$recArr['icon_url'] = OPENBIZ_THEME_URL."/$theme/images/".$recArr['icon'];
 		}
 		else
 		{
-			$recArr['icon_url'] =THEME_URL."/$theme/images/spacer.gif";
+			$recArr['icon_url'] =OPENBIZ_THEME_URL."/$theme/images/spacer.gif";
 		}
-		if(is_file(THEME_PATH.DIRECTORY_SEPARATOR.$theme.DIRECTORY_SEPARATOR."images".DIRECTORY_SEPARATOR.$recArr['preview']))
+		if(is_file(OPENBIZ_THEME_PATH.DIRECTORY_SEPARATOR.$theme.DIRECTORY_SEPARATOR."images".DIRECTORY_SEPARATOR.$recArr['preview']))
 		{
-			$recArr['preview_url'] = THEME_URL."/$theme/images/".$recArr['preview'];
+			$recArr['preview_url'] = OPENBIZ_THEME_URL."/$theme/images/".$recArr['preview'];
 			return $recArr;		
 		}
 		else
 		{
-			$recArr['preview_url'] =THEME_URL."/$theme/images/spacer.gif";
+			$recArr['preview_url'] =OPENBIZ_THEME_URL."/$theme/images/spacer.gif";
 		}
 	}
 
 	public function DeleteThemePack($theme){		
-		$dir = THEME_PATH.DIRECTORY_SEPARATOR.$theme;
+		$dir = OPENBIZ_THEME_PATH.DIRECTORY_SEPARATOR.$theme;
 		$iterator = new RecursiveDirectoryIterator($dir);
 		   foreach (new RecursiveIteratorIterator($iterator, RecursiveIteratorIterator::CHILD_FIRST) as $file)
 		   {

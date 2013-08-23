@@ -5,13 +5,13 @@
   Copyright (c) 2005-2011, Openbiz Technology LLC
   Version $Id: ContactMapForm.xml 4617 2012-11-08 08:37:09Z rockyswen@gmail.com $
 -->
-<EasyForm Name="ContactMapForm" Class="ContactForm" Icon="{RESOURCE_URL}/location/images/icon_location.png" FormType="List" jsClass="jbForm" Title="Contact Map" Description="This view will show your contacts location in the map." BizDataObj="contact.do.ContactLocationDO" PageSize="10" DefaultForm="Y" TemplateEngine="Smarty" TemplateFile="form_contact_map.tpl.html" EventName="CONTACT" MessageFile="Contact.msg"  Access="contact.access">
+<EasyForm Name="ContactMapForm" Class="ContactForm" Icon="{OPENBIZ_RESOURCE_URL}/location/images/icon_location.png" FormType="List" jsClass="jbForm" Title="Contact Map" Description="This view will show your contacts location in the map." BizDataObj="contact.do.ContactLocationDO" PageSize="10" DefaultForm="Y" TemplateEngine="Smarty" TemplateFile="form_contact_map.tpl.html" EventName="CONTACT" MessageFile="Contact.msg"  Access="contact.access">
     <DataPanel>
        
  
         <Element Name="fld_Id" Class="RawData" FieldName="Id" Label="ID" Sortable="Y" AllowURLParam="N" />
         <Element Name="fld_location_id" Class="RawData"  FieldName="location_id" Label="ID" Sortable="Y" AllowURLParam="N" />
-		<Element Name="fld_display_name" Class="ColumnText" FieldName="display_name" Label="Contact Name"  Sortable="Y" AllowURLParam="N" Translatable="N" OnEventLog="N" Link="{APP_INDEX}/contact/contact_detail/{@:Elem[fld_Id].Value}">         
+		<Element Name="fld_display_name" Class="ColumnText" FieldName="display_name" Label="Contact Name"  Sortable="Y" AllowURLParam="N" Translatable="N" OnEventLog="N" Link="{OPENBIZ_APP_INDEX_URL}/contact/contact_detail/{@:Elem[fld_Id].Value}">         
          	<!-- <EventHandler Name="fld_Id_onclick" Event="onclick" Function="SwitchForm(contact.form.ContactDetailForm,{@:Elem[fld_Id].Value})"   />-->
         </Element>	
 	    <Element Name="fld_photo" Class="RawData"  FieldName="photo" Label="Select Photo"  AllowURLParam="N" CssClass="input_file"/>	        
@@ -21,9 +21,9 @@
 		<Element Name="fld_title" Class="LabelText" FieldName="location_title" Label="Title"   />
 		<Element Name="fld_title_raw" Class="RawData" FieldName="location_title" Label="Title"   />	        
         <Element Name="fld_description" Class="LabelTextarea" FieldName="location_description" Label="Description"   />
-        <Element Name="fld_longtitude" DefaultValue="{DEFAULT_LONGTITUDE}"  Class="RawData" FieldName="longtitude" Label="Longtitude"   />
-		<Element Name="fld_latitude" DefaultValue="{DEFAULT_LATITUDE}" Class="RawData" FieldName="latitude" Label="Latitude"   />
-		<Element Name="fld_more" Class="ColumnText" FieldName="" Text="More"  Sortable="Y" AllowURLParam="N" Translatable="N" OnEventLog="N" Link="{APP_INDEX}/contact/contact_detail/{@:Elem[fld_Id].Value}">         
+        <Element Name="fld_longtitude" DefaultValue="{CUBI_DEFAULT_LONGTITUDE}"  Class="RawData" FieldName="longtitude" Label="Longtitude"   />
+		<Element Name="fld_latitude" DefaultValue="{CUBI_DEFAULT_LATITUDE}" Class="RawData" FieldName="latitude" Label="Latitude"   />
+		<Element Name="fld_more" Class="ColumnText" FieldName="" Text="More"  Sortable="Y" AllowURLParam="N" Translatable="N" OnEventLog="N" Link="{OPENBIZ_APP_INDEX_URL}/contact/contact_detail/{@:Elem[fld_Id].Value}">         
          	<!-- <EventHandler Name="fld_more_onclick" Event="onclick" Function="SwitchForm(contact.form.ContactDetailForm,{@:Elem[fld_Id].Value})"   />-->
         </Element>						        
     </DataPanel>

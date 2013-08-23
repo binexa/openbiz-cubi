@@ -45,7 +45,7 @@ class ProviderForm extends EasyForm
 			//call drivers active method
 			$rec = $this->getDataObj()->fetchById($id);
 			$driver = $rec['driver'];
-			$driverFile = MODULE_PATH.'/'.str_replace(".", '/', $driver).'.php';
+			$driverFile = OPENBIZ_APP_MODULE_PATH.'/'.str_replace(".", '/', $driver).'.php';
 			require_once($driverFile);
 			$driverName = explode(".",$driver);			
 			$driverName = $driverName[count($driverName)-1];			

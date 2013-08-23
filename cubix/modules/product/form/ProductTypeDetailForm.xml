@@ -9,7 +9,7 @@
 			Class="EasyForm"			  
 			FormType="Detail" 
 			jsClass="Openbiz.Form" 
-			Icon="{RESOURCE_URL}/product/images/icon_mod_product_type_detail.png"
+			Icon="{OPENBIZ_RESOURCE_URL}/product/images/icon_mod_product_type_detail.png"
 			Title="Product Type Detail" 
 			Description="Please fill in below field to create a new project type."
 			BizDataObj="product.do.ProductTypeDO" 
@@ -102,7 +102,7 @@
 		    		FieldName="create_by" 
 		    		Label="Create By" 
 		    		Text="{BizSystem::GetProfileName(@:Elem[fld_create_by].Value)}"  
-		    		Link="{APP_INDEX}/collab/contact_detail/{BizSystem::GetProfileId(@:Elem[fld_create_by].Value)}" 
+		    		Link="{OPENBIZ_APP_INDEX_URL}/collab/contact_detail/{BizSystem::GetProfileId(@:Elem[fld_create_by].Value)}" 
 		    		AllowURLParam="N"/>
 		    <Element Name="fld_create_time" 
 		    		ElementSet="Miscellaneous" 
@@ -116,7 +116,7 @@
 		    		FieldName="update_by" 
 		    		Label="Update By"  
 		    		Text="{BizSystem::GetProfileName(@:Elem[fld_update_by].Value)}"  
-		    		Link="{APP_INDEX}/collab/contact_detail/{BizSystem::GetProfileId(@:Elem[fld_update_by].Value)}" 
+		    		Link="{OPENBIZ_APP_INDEX_URL}/collab/contact_detail/{BizSystem::GetProfileId(@:Elem[fld_update_by].Value)}" 
 		    		AllowURLParam="N"/>
 		    <Element Name="fld_update_time" 
 		    		ElementSet="Miscellaneous" 

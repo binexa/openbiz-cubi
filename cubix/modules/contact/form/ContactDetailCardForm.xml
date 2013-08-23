@@ -9,12 +9,12 @@
     <DataPanel>
         <Element Name="fld_Id" Class="Hidden" Hidden="Y" FieldName="Id" Label="ID" Sortable="Y" AllowURLParam="N" />
         <Element Name="fld_share" Class="ColumnShare" 
-				MyPrivateImg="{RESOURCE_URL}/contact/images/icon_contact.gif"
-				MySharedImg="{RESOURCE_URL}/contact/images/icon_contact_shared.gif"
-				MyAssignedImg="{RESOURCE_URL}/contact/images/icon_contact_assigned.gif"
-				MyDistributedImg="{RESOURCE_URL}/contact/images/icon_contact_distributed.gif" 
-				GroupSharedImg="{RESOURCE_URL}/contact/images/icon_contact_shared_group.gif"
-				OtherSharedImg="{RESOURCE_URL}/contact/images/icon_contact_shared_other.gif"
+				MyPrivateImg="{OPENBIZ_RESOURCE_URL}/contact/images/icon_contact.gif"
+				MySharedImg="{OPENBIZ_RESOURCE_URL}/contact/images/icon_contact_shared.gif"
+				MyAssignedImg="{OPENBIZ_RESOURCE_URL}/contact/images/icon_contact_assigned.gif"
+				MyDistributedImg="{OPENBIZ_RESOURCE_URL}/contact/images/icon_contact_distributed.gif" 
+				GroupSharedImg="{OPENBIZ_RESOURCE_URL}/contact/images/icon_contact_shared_group.gif"
+				OtherSharedImg="{OPENBIZ_RESOURCE_URL}/contact/images/icon_contact_shared_other.gif"
 				FieldName="create_by" Label="Share"  Sortable="Y" AllowURLParam="N" Translatable="N" OnEventLog="N" Link="javascript:;">
 			<EventHandler Name="fld_share2_onclick" Event="onclick" Function="LoadDialog(common.form.DataSharingForm,{@:Elem[fld_Id].Value})"/>		
 		</Element>

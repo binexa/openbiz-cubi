@@ -9,11 +9,11 @@
     <DataPanel>
         <Element Name="fld_Id" Class="Hidden" Hidden="Y" FieldName="Id" Label="Id" Sortable="Y" AllowURLParam="N" Link="javascript:" />
         <Element Name="fld_icon" Class="ColumnImage" 
-				Text="{RESOURCE_URL}/attachment/images/icon_attachment_private.png"
+				Text="{OPENBIZ_RESOURCE_URL}/attachment/images/icon_attachment_private.png"
 				FieldName="" Label="Type"  Sortable="N" AllowURLParam="N" Translatable="N" Link="javascript:;">
 		</Element>
 		 <Element Name="fld_download_file" Class="LabelImage" 
-				Text="{RESOURCE_URL}/attachment/images/icon_download.png"
+				Text="{OPENBIZ_RESOURCE_URL}/attachment/images/icon_download.png"
 				FieldName="" Label=""  Sortable="N" Link="javascript:;">
 			<EventHandler Name="btn_download_onclick" Event="onclick" FunctionType="Page" Function="FileDownload({@:Elem[fld_Id].Value})"/>
 		</Element>

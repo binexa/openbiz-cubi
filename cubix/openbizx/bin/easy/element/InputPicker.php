@@ -59,7 +59,7 @@ class InputPicker extends InputText
         // sample picker call CallFunction('easy.f_AttendeeListChild.LoadPicker(view,form,elem)','Prop_Window');
         if ($this->m_ValuePicker != null)
         {
-            $function = $this->m_FormName . ".LoadPicker($this->m_ValuePicker,$this->m_Name)";
+            $function = $this->m_FormName . ".LoadPicker($this->m_ValuePicker,$this->objectName)";
             $sHTML .= " <input type=button onClick=\"Openbiz.CallFunction('$function');\" value=\"...\" style='width:20px;' />";
         }
 
@@ -68,7 +68,7 @@ class InputPicker extends InputText
 	
     public function getEvents(){
     	$events = parent::getEvents();
-    	$events['onclick'] .= "Openbiz.CallFunction('".$this->m_FormName . ".LoadPicker($this->m_ValuePicker,$this->m_Name)')";
+    	$events['onclick'] .= "Openbiz.CallFunction('".$this->m_FormName . ".LoadPicker($this->m_ValuePicker,$this->objectName)')";
         return $events;
     }
     

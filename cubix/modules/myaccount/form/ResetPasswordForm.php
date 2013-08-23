@@ -34,7 +34,7 @@
  * @copyright Copyright (c) 2005-2009
  * @access public
  */
-include_once(MODULE_PATH."/system/form/UserForm.php");
+include_once(OPENBIZ_APP_MODULE_PATH."/system/form/UserForm.php");
 
 class ResetPasswordForm extends UserForm
 {
@@ -104,7 +104,7 @@ class ResetPasswordForm extends UserForm
 	    $profile = $g_BizSystem->InitUserProfile($currentRec['username']);
     				       	
        	//run eventlog
-        $eventlog 	= BizSystem::getService(EVENTLOG_SERVICE);
+        $eventlog 	= BizSystem::getService(OPENBIZ_EVENTLOG_SERVICE);
         $logComment=array($currentRec['username']);
     	$eventlog->log("USER_MANAGEMENT", "MSG_RESET_PASSWORD_BY_TOKEN", $logComment);       	
 	    
@@ -113,15 +113,15 @@ class ResetPasswordForm extends UserForm
  
         if( $this->getViewObject()->isForceResetPassword() )
         {
-        	BizSystem::getService(PREFERENCE_SERVICE)->setPreference('force_change_passwd',0);
+        	BizSystem::getService(OPENBIZ_PREFERENCE_SERVICE)->setPreference('force_change_passwd',0);
         	$profileDefaultPageArr = BizSystem::getUserProfile('roleStartpage');
-        	$pageURL = APP_INDEX.$profileDefaultPageArr[0];
+        	$pageURL = OPENBIZ_APP_INDEX_URL.$profileDefaultPageArr[0];
         	BizSystem::clientProxy()->redirectPage($pageURL);
         }        
         
         if($recArr['_logoff']==1)
         {        	
-			$url = APP_INDEX."/user/logout";
+			$url = OPENBIZ_APP_INDEX_URL."/user/logout";
 			BizSystem::clientProxy()->redirectPage($url);	
         }
     }

@@ -45,9 +45,9 @@ if ($bizController->processSecurityFilters() === true)
 class BizController
 {
 
-    private $_userTimeoutView = USER_TIMEOUT_VIEW;
-    private $_accessDeniedView = ACCESS_DENIED_VIEW;
-    private $_securityDeniedView = SECURITY_DENIED_VIEW;
+    private $_userTimeoutView = OPENBIZ_USER_TIMEOUT_VIEW;
+    private $_accessDeniedView = OPENBIZ_ACCESS_DENIED_VIEW;
+    private $_securityDeniedView = OPENBIZ_SECURITY_DENIED_VIEW;
 
     /**
      * Process Security Filters
@@ -293,7 +293,7 @@ class BizController
                 {
                     if (!$this->validateRequest($obj, $methodName))
                     {
-                        $errmsg = BizSystem::getMessage("SYS_ERROR_REQUEST_REJECT", array($obj->m_Name, $methodName));
+                        $errmsg = BizSystem::getMessage("SYS_ERROR_REQUEST_REJECT", array($obj->objectName, $methodName));
                         trigger_error($errmsg, E_USER_ERROR);
                     }
                     switch (count($arg_list))
@@ -385,11 +385,11 @@ class BizController
         $viewName = $_GET['view'];
         $params = $this->_getParameters();
 
-        if (defined('NOTFOUND_VIEW'))
+        if (defined('OPENBIZ_NOTFOUND_VIEW'))
         {
             if (!Resource::getXmlFileWithPath($viewName))
             {
-                $this->renderView(NOTFOUND_VIEW, $form, $rule, $params, $hist);
+                $this->renderView(OPENBIZ_NOTFOUND_VIEW, $form, $rule, $params, $hist);
                 exit;
             }
         }

@@ -9,8 +9,8 @@ header('Content-Type: text/html; charset=utf-8');
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title>Openbiz Design Center</title>
-	<link rel="stylesheet" href="<?php echo THEME_URL.'/'.DEFAULT_THEME_NAME;?>/css/general.css" type="text/css">
-	<link rel="stylesheet" href="<?php echo THEME_URL.'/'.DEFAULT_THEME_NAME;?>/css/openbiz.css" type="text/css">
+	<link rel="stylesheet" href="<?php echo OPENBIZ_THEME_URL.'/'.CUBI_DEFAULT_THEME_NAME;?>/css/general.css" type="text/css">
+	<link rel="stylesheet" href="<?php echo OPENBIZ_THEME_URL.'/'.CUBI_DEFAULT_THEME_NAME;?>/css/openbiz.css" type="text/css">
 </head>
 <body style="padding-left:20px; width:90%;background-color:#ffffff;">
 

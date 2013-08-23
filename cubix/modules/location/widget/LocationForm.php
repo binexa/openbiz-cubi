@@ -19,13 +19,13 @@ class LocationForm extends EasyForm
 	public function getSessionVars($sessionContext)
     {
         parent::getSessionVars($sessionContext);
-		$sessionContext->getObjVar($this->m_Name, "CanUpdateRecord", $this->m_CanUpdateRecord);
+		$sessionContext->getObjVar($this->objectName, "CanUpdateRecord", $this->m_CanUpdateRecord);
 	}
 	
 	public function setSessionVars($sessionContext)
     {
         parent::setSessionVars($sessionContext);
-		$sessionContext->setObjVar($this->m_Name, "CanUpdateRecord", $this->m_CanUpdateRecord);
+		$sessionContext->setObjVar($this->objectName, "CanUpdateRecord", $this->m_CanUpdateRecord);
 	}
 	
 	public function close(){

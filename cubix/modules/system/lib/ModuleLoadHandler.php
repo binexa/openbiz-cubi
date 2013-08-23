@@ -11,7 +11,7 @@
  * @version   $Id: ModuleLoadHandler.php 4963 2012-12-28 08:35:35Z hellojixian@gmail.com $
  */
 
-include_once (MODULE_PATH."/system/lib/ModuleLoader.php");
+include_once (OPENBIZ_APP_MODULE_PATH."/system/lib/ModuleLoader.php");
 
 interface ModuleLoadHandler
 {

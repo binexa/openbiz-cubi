@@ -110,7 +110,7 @@ class OauthProviderForm extends EasyForm
 	
 	public function GetTestOauth(){
 
-		$oatuthType=MODULE_PATH."/oauth/libs/{$this->m_type}.class.php";
+		$oatuthType=OPENBIZ_APP_MODULE_PATH."/oauth/libs/{$this->m_type}.class.php";
 		if(!file_exists($oatuthType))
 		{
 			return false;
@@ -118,7 +118,7 @@ class OauthProviderForm extends EasyForm
 		
 		
 		//$whitelist_arr=array('qq','sina','alipay','google','facebook');
-		$whitelist_arr = BizSystem::getService(LOV_SERVICE)->getDictionary("oauth.lov.ProviderLOV(Provider)");
+		$whitelist_arr = BizSystem::getService(CUBI_LOV_SERVICE)->getDictionary("oauth.lov.ProviderLOV(Provider)");
 		
 		if(!in_array($this->m_type,$whitelist_arr)){
 			throw new Exception('Unknown service');

@@ -41,7 +41,7 @@ class LabelTextarea extends LabelText
             return "";
 
         $style = $this->getStyle();
-        $id = $this->m_Name;
+        $id = $this->objectName;
         $func = $this->getFunction();
 
         if ($this->m_Translatable == 'Y')

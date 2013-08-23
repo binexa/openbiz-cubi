@@ -44,7 +44,7 @@ class CheckListbox extends OptionElement
             $valueArray[] = $vl['val'];
         }
 
-        $sHTML = "<div name=\"" . $this->m_Name . "\" ID=\"" . $this->m_Name ."\" $this->m_HTMLAttr $style>";
+        $sHTML = "<div name=\"" . $this->objectName . "\" ID=\"" . $this->objectName ."\" $this->m_HTMLAttr $style>";
 
         foreach ($fromList as $option)
         {
@@ -57,7 +57,7 @@ class CheckListbox extends OptionElement
             {
                 $selectedStr = "CHECKED";
             }
-            $sHTML .= "<input type=\"checkbox\" name=\"".$this->m_Name."[]\" VALUE=\"" . $option['val'] . "\" $selectedStr></input>" . $option['txt'] . "<br/>";
+            $sHTML .= "<input type=\"checkbox\" name=\"".$this->objectName."[]\" VALUE=\"" . $option['val'] . "\" $selectedStr></input>" . $option['txt'] . "<br/>";
         }
         $sHTML .= "</div>";
         return $sHTML;
