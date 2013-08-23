@@ -16,6 +16,6 @@
     <DataSource>
         <Database Name="Default" Driver="Pdo_Mysql" Server="127.0.0.1" Port="3306" DBName="cubi" User="root" Password="jixian" Charset="utf8"/>
         <Database Name="Session" Driver="Pdo_Mysql" Server="127.0.0.1" Port="3306" DBName="cubi" User="root" Password="jixian" Charset="utf8"/>
-        <Database Name="Sample" Driver="Pdo_Mysql" Server="localhost" Port="3306" DBName="cubi" User="root" Password="root" Charset="utf8" Options="unix_port=/usr/local/mysql.socket;a=x"/>
+        <Database Name="Sample"  Driver="Pdo_Mysql" Server="localhost" Port="3306" DBName="cubi" User="root" Password="root" Charset="utf8" Options="unix_port=/usr/local/mysql.socket;a=x"/>
     </DataSource>
 </Application>

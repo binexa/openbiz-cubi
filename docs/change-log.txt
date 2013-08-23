@@ -1,0 +1,125 @@
+x change OPENBIZ_HOME to OPENBIZ_PATH
+      - HOME has multiple mean, can file system path or website home
+      - PATH only has one mean, file system path.
+
+x change APP_HOME to OPENBIZ_APP_PATH
+x change PAGE_MINIFY to OPENBIZ_PAGE_MINIFY
+x change DEFAULT_SYSTEM_NAME to OPENBIZ_DEFAULT_SYSTEM_NAME
+x change APP_URL to OPENBIZ_APP_URL
+x change APP_INDEX to OPENBIZ_APP_INDEX_URL, give URL for more specific
+x change MODULE_PATH to OPENBIZ_APP_MODULE_PATH
+x change MESSAGE_PATH to OPENBIZ_APP_MESSAGE_PATH
+x change CLIENT_DEVICE to OPENBIZ_CLIENT_DEVICE
+x change DEFAULT_THEME_NAME to OPENBIZ_CLIENT_DEVICE
+x change FORCE_DEFAULT_THEME to CUBI_FORCE_DEFAULT_THEME
+x change USE_THEME to OPENBIZ_USE_THEME
+x change THEME_URL to OPENBIZ_THEME_URL
+x change THEME_PATH to OPENBIZ_THEME_PATH
+x change SMARTY_CPL_PATH to OPENBIZ_SMARTY_CPL_PATH
+x change JSLIB_BASE to OPENBIZ_JSLIB_BASE
+x change JS_URL to OPENBIZ_JS_URL
+x remark define('OTHERS_URL', OPENBIZ_APP_URL . "/others");
+x change LOG_PATH to OPENBIZ_LOG_PATH
+
+xxx change APP_FILE_PATH to OPENBIZ_APP_FILE_PATH // not used on openbiz framework, but derived from OPENBIZ_APP_PATH
+xxx change APP_FILE_URL to OPENBIZ_APP_FILE_URL // not used on openbiz framework, but derived from OPENBIZ_APP_URL
+
+x change SESSION_HANDLER to OPENBIZ_SESSION_HANDLER
+x change USE_CUSTOM_SESSION_HANDLER to OPENBIZ_USE_CUSTOM_SESSION_HANDLER
+x change SESSION_PATH to OPENBIZ_SESSION_PATH
+
+x change RESOURCE_PATH to OPENBIZ_RESOURCE_PATH
+x change RESOURCE_URL  to OPENBIZ_RESOURCE_URL
+x change RESOURCE_PHP  to OPENBIZ_RESOURCE_PHP
+
+xxx remark define('SECURE_UPLOAD_PATH', OPENBIZ_APP_PATH . DIRECTORY_SEPARATOR . "files" . DIRECTORY_SEPARATOR . "sec_upload");
+
+x change PUBLIC_UPLOAD_PATH to OPENBIZ_PUBLIC_UPLOAD_PATH
+x change PUBLIC_UPLOAD_URL to OPENBIZ_PUBLIC_UPLOAD_URL
+
+x change CACHE_PATH to OPENBIZ_CACHE_PATH
+
+xxx change TEMPFILE_PATH to CUBI_TEMPFILE_PATH (after core init)
+
+x change CACHE_METADATA_PATH to OPENBIZ_CACHE_METADATA_PATH
+
+x change CACHE_DATA_PATH to CUBI_CACHE_DATA_PATH
+
+x change DEBUG to OPENBIZ_DEBUG
+x change TIMEOUT to OPENBIZ_TIMEOUT
+
+xxx change DEFAULT_CURRENCY to CUBI_DEFAULT_CURRENCY
+
+x change DEFAULT_LANGUAGE to OPENBIZ_DEFAULT_LANGUAGE
+x change LANGUAGE_PATH to OPENBIZ_LANGUAGE_PATH
+
+x change DEFAULT_LATITUDE to CUBI_DEFAULT_LATITUDE
+x change DEFAULT_LONGTITUDE to CUBI_DEFAULT_LONGTITUDE
+
+x change SESSION_STRICT to CUBI_SESSION_STRICT
+
+x change USER_LOGIN_VIEW to CUBI_USER_LOGIN_VIEW
+xx remark define('CUBI_USER_LOGIN_VIEW', "user.view.LoginView");
+
+x change USER_TIMEOUT_VIEW to OPENBIZ_USER_TIMEOUT_VIEW
+x change ACCESS_DENIED_VIEW to OPENBIZ_ACCESS_DENIED_VIEW
+x change SECURITY_DENIED_VIEW to OPENBIZ_SECURITY_DENIED_VIEW
+x change NOTFOUND_VIEW to OPENBIZ_NOTFOUND_VIEW
+x change INTERNAL_ERROR_VIEW to OPENBIZ_INTERNAL_ERROR_VIEW
+
+x change EVENTLOG_SERVICE to OPENBIZ_EVENTLOG_SERVICE
+
+x change USER_EMAIL_SERVICE to CUBI_USER_EMAIL_SERVICE
+x change VISIBILITY_SERVICE to CUBI_VISIBILITY_SERVICE
+
+x change PDF_SERVICE to OPENBIZ_PDF_SERVICE
+x change PREFERENCE_SERVICE to OPENBIZ_PREFERENCE_SERVICE
+x change DATAPERM_SERVICE to OPENBIZ_DATAPERM_SERVICE
+
+x change UTIL_SERVICE to OPENBIZ_UTIL_SERVICE
+
+x change DENY to OPENBIZ_DENY
+x change ALLOW to OPENBIZ_ALLOW
+x change ALLOW_OWNER to OPENBIZ_ALLOW_OWNER
+
+x change APPBUILDER to CUBI_APPBUILDER
+x change THEME_NAME to OPENBIZ_THEME_NAME
+x change DEFAULT_TIMEZONE to CUBI_DEFAULT_TIMEZONE
+x change GROUP_DATA_SHARE to CUBI_GROUP_DATA_SHARE
+x change DATA_ACL to CUBI_DATA_ACL
+x change DEFAULT_OWNER_PERM to OPENBIZ_DEFAULT_OWNER_PERM
+x change DEFAULT_GROUP_PERM to OPENBIZ_DEFAULT_GROUP_PERM
+x change DEFAULT_OTHER_PERM to OPENBIZ_DEFAULT_OTHER_PERM
+
+x change FusionChartVersion to CUBI_FUSION_CHART_VERSION
+
+
+//==================================
+
+// ClientProxy::
+m_RequestArgs       => requestArguments
+m_FormInputArray    => formInputArray
+m_bRPCFlag          => isRPC
+
+// BizDataObj cs :
+m_Database          => databaseAliasName
+m_BaseSearchRule    => baseSearchRule
+m_BaseSorthRule     => baseSorthRule
+m_BaseOtherSQLRule  => baseOtherSQLRule
+m_MainTable         => mainTableName
+
+m_BizRecord         => bizRecord
+m_InheritFrom       => inheritFrom
+m_AccessRule        => accessRule
+m_UpdateCondition   => updateCondition
+
+m_DeleteCondition   => deleteCondition
+m_IdGeneration      => idGeneration
+m_ObjReferences     => objReferences
+m_TableJoins        => tableJoins
+m_Parameters        => parameters
+m_Stateless         => stateless
+
+m_Name              => objectName
+$m_Class            => $className
+m_Description       => objectDescription
