@@ -50,17 +50,17 @@ class EasyFormGrouping extends EasyForm
         $dataObj->setOtherSQLRule($GroupSQLRule);
         
     	//within each group, search records like before
-        QueryStringParam::setBindValues($this->m_SearchRuleBindValues);       
+        QueryStringParam::setBindValues($this->searchRuleBindValues);       
 
         if ($this->m_FixSearchRule)
         {
-            if ($this->m_SearchRule)
-                $searchRule = $this->m_SearchRule . " AND " . $this->m_FixSearchRule;
+            if ($this->searchRule)
+                $searchRule = $this->searchRule . " AND " . $this->m_FixSearchRule;
             else
                 $searchRule = $this->m_FixSearchRule;
         }
         else
-            $searchRule = $this->m_SearchRule;
+            $searchRule = $this->searchRule;
 
         $dataObj->setSearchRule($searchRule);
         
@@ -79,17 +79,17 @@ class EasyFormGrouping extends EasyForm
 	            $dataObj->resetRules();
 	        else
 	            $dataObj->clearSearchRule();
-        	QueryStringParam::setBindValues($this->m_SearchRuleBindValues);
+        	QueryStringParam::setBindValues($this->searchRuleBindValues);
         	$group_val = $record[$GroupField];
 	        if ($this->m_FixSearchRule)
 	        {
-	            if ($this->m_SearchRule)
-	                $searchRule = $this->m_SearchRule . " AND " . $this->m_FixSearchRule;
+	            if ($this->searchRule)
+	                $searchRule = $this->searchRule . " AND " . $this->m_FixSearchRule;
 	            else
 	                $searchRule = $this->m_FixSearchRule;
 	        }
 	        else
-	            $searchRule = $this->m_SearchRule;
+	            $searchRule = $this->searchRule;
 			if($group_val){
 		        if($searchRule!=""){
 					$searchRule = $searchRule." AND [$GroupField]='$group_val'";	

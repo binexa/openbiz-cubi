@@ -61,13 +61,13 @@ class AppListForm extends EasyForm
 	{
         if ($this->m_FixSearchRule)
         {
-            if ($this->m_SearchRule)
-                $searchRule = $this->m_SearchRule . " AND " . $this->m_FixSearchRule;
+            if ($this->searchRule)
+                $searchRule = $this->searchRule . " AND " . $this->m_FixSearchRule;
             else
                 $searchRule = $this->m_FixSearchRule;
         }
         else
-            $searchRule = $this->m_SearchRule;        
+            $searchRule = $this->searchRule;        
 
         if($_POST['fld_cat_id']){
         	$cat_id = (int)$_POST['fld_cat_id'];
@@ -101,11 +101,11 @@ class AppListForm extends EasyForm
         $element->setSortFlag($order);
 
         // change the sort rule and issue the query
-        $this->m_SortRule="[" . $element->m_FieldName . "] $order";
+        $this->sortRule="[" . $element->m_FieldName . "] $order";
 
         // move to 1st page
         $this->m_CurrentPage = 1;
-        //$this->m_SortRule = "";
+        //$this->sortRule = "";
 
         $this->rerender();
     }	

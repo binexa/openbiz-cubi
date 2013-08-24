@@ -70,7 +70,7 @@ class ChangeLogService
 		$formMetaLite = array(
 			"name" 		=> $formObj->objectName,
 			"package" 	=> $formObj->m_Package,
-			"message_file" 	=> $formObj->m_MessageFile,		
+			"message_file" 	=> $formObj->messageFile,		
 		);
 		
    		// save to comment do

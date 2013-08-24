@@ -66,10 +66,10 @@ class PreferenceForm extends EasyForm
         if ($dataObj == null) return;
 
 		
-        if (!$this->m_FixSearchRule && !$this->m_SearchRule)
+        if (!$this->m_FixSearchRule && !$this->searchRule)
         	return array();
         
-    	QueryStringParam::setBindValues($this->m_SearchRuleBindValues);
+    	QueryStringParam::setBindValues($this->searchRuleBindValues);
         
         	
         if ($this->m_RefreshData)   $dataObj->resetRules();
@@ -77,14 +77,14 @@ class PreferenceForm extends EasyForm
 
         if ($this->m_FixSearchRule)
         {
-            if ($this->m_SearchRule)
-                $searchRule = $this->m_SearchRule . " AND " . $this->m_FixSearchRule;
+            if ($this->searchRule)
+                $searchRule = $this->searchRule . " AND " . $this->m_FixSearchRule;
             else
                 $searchRule = $this->m_FixSearchRule;
         }
 
         $dataObj->setSearchRule($searchRule);
-        QueryStringParam::setBindValues($this->m_SearchRuleBindValues);        
+        QueryStringParam::setBindValues($this->searchRuleBindValues);        
 
         $resultRecords = $dataObj->fetch();
         foreach($resultRecords as $record){

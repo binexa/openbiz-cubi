@@ -16,7 +16,7 @@ include_once (dirname(__FILE__).'/MenuItemObj.php');
 class MenuDataObj extends MetaObject implements iSessionObject{
 	public $objectName;
 	public $m_MenuTreeObj;
-	public $m_CacheLifeTime;	
+	public $cacheLifeTime;	
 	public $m_BreadCrumb=array();
 
 	private $m_RootMenuItem;
@@ -31,18 +31,18 @@ class MenuDataObj extends MetaObject implements iSessionObject{
     {
     	parent::readMetaData($xmlArr);
     	$this->objectName = $this->prefixPackage($this->objectName);
-    	$this->m_CacheLifeTime = isset($xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["CACHELIFETIME"]) ? $xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["CACHELIFETIME"] : "0";    	   
+    	$this->cacheLifeTime = isset($xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["CACHELIFETIME"]) ? $xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["CACHELIFETIME"] : "0";    	   
     	$this->m_RootMenuItem =  $xmlArr["BIZDATAOBJ"]["MENUITEM"];
     	$this->fetchEntireTree();
     }
     
     public function fetchEntireTree(){
-        if($this->m_CacheLifeTime>0)
+        if($this->cacheLifeTime>0)
         {
             $cache_id = md5($this->objectName);
             //try to process cache service.
             $cacheSvc = BizSystem::getService(CACHE_SERVICE,1);
-            $cacheSvc->init($this->objectName,$this->m_CacheLifeTime);
+            $cacheSvc->init($this->objectName,$this->cacheLifeTime);
             if($cacheSvc->test($cache_id))
             {
                 BizSystem::log(LOG_DEBUG, "MENU", "Cache Hit. menu dataobj name = ".$this->objectName);
@@ -98,12 +98,12 @@ class MenuDataObj extends MetaObject implements iSessionObject{
 
     
     public function fetchTree($start_id, $deep){
-        if($this->m_CacheLifeTime>0)
+        if($this->cacheLifeTime>0)
         {
             $cache_id = md5($this->objectName."-".$start_id."-".$deep);
             //try to process cache service.
             $cacheSvc = BizSystem::getService(CACHE_SERVICE,1);
-            $cacheSvc->init($this->objectName,$this->m_CacheLifeTime);
+            $cacheSvc->init($this->objectName,$this->cacheLifeTime);
             if($cacheSvc->test($cache_id))
             {
                 BizSystem::log(LOG_DEBUG, "MENU", "Cache Hit. menu fetch tree, name = ".$this->objectName);
@@ -132,12 +132,12 @@ class MenuDataObj extends MetaObject implements iSessionObject{
     }
 
     public function fetchTreeByName($start_item, $deep){
-		if($this->m_CacheLifeTime>0)
+		if($this->cacheLifeTime>0)
         {
             $cache_id = md5($this->objectName."-".$start_item."-".$deep);
             //try to process cache service.
             $cacheSvc = BizSystem::getService(CACHE_SERVICE,1);
-            $cacheSvc->init($this->objectName,$this->m_CacheLifeTime);
+            $cacheSvc->init($this->objectName,$this->cacheLifeTime);
             if($cacheSvc->test($cache_id))
             {
                 BizSystem::log(LOG_DEBUG, "MENU", "Cache Hit. menu fetch tree, name = ".$this->objectName);

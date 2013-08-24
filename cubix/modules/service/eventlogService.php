@@ -17,8 +17,8 @@ class eventlogService
 {
    
    public $m_logDataObj;
-   public $m_MessageFile;
-   public $m_Messages;
+   public $messageFile;
+   public $objectMessages;
    
    function __construct(&$xmlArr)
    {      
@@ -28,8 +28,8 @@ class eventlogService
    protected function readMetadata(&$xmlArr)
    {      
       $this->m_logDataObj 	= $xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["BIZDATAOBJ"];      
-      $this->m_MessageFile = isset($xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["MESSAGEFILE"]) ? $xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["MESSAGEFILE"] : null;
-      $this->m_Messages = Resource::loadMessage($this->m_MessageFile , "eventlog.");
+      $this->messageFile = isset($xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["MESSAGEFILE"]) ? $xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["MESSAGEFILE"] : null;
+      $this->objectMessages = Resource::loadMessage($this->messageFile , "eventlog.");
    }
    
    
@@ -57,7 +57,7 @@ class eventlogService
 	
 	public function GetLogMessage($msgId, $params="")
 	{	
-		$message = isset($this->m_Messages[$msgId]) ? $this->m_Messages[$msgId] : constant($msgId);
+		$message = isset($this->objectMessages[$msgId]) ? $this->objectMessages[$msgId] : constant($msgId);
         $message = I18n::t($message, $msgId, 'eventlog');
         $params  =  unserialize($params);
         $result  = vsprintf($message,$params);

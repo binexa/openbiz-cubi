@@ -26,14 +26,14 @@ class ErrorReportService
     	$uri = $this->m_ReportServer;
         $cache_id = md5($this->objectName.$uri. $method .serialize($params));         
         $cacheSvc = BizSystem::getService(CACHE_SERVICE,1);
-        $cacheSvc->init($this->objectName,$this->m_CacheLifeTime);        		
+        $cacheSvc->init($this->objectName,$this->cacheLifeTime);        		
     	if(substr($uri,strlen($uri)-1,1)!='/'){
         	$uri .= '/';
         }
         
         $uri .= "ws.php/udc/CollectService";            
            
-        if($cacheSvc->test($cache_id) && (int) $this->m_CacheLifeTime>0)
+        if($cacheSvc->test($cache_id) && (int) $this->cacheLifeTime>0)
         {
             $resultSetArray = $cacheSvc->load($cache_id);
         }else{

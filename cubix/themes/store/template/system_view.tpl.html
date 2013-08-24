@@ -20,10 +20,10 @@
 
 {php}
 $widget = Bizsystem::GetObject('menu.widget.MainTabMenu');
-if($widget->m_GlobalSearchRule && $widget->m_SearchRule){
-	$searchRule = $widget->m_GlobalSearchRule ." and ". $widget->m_SearchRule;
+if($widget->m_GlobalSearchRule && $widget->searchRule){
+	$searchRule = $widget->m_GlobalSearchRule ." and ". $widget->searchRule;
 }else{
-	$searchRule = $widget->m_SearchRule;
+	$searchRule = $widget->searchRule;
 }
 $menu_count = $widget->getDataObj()->recordCount($searchRule);
 $menu_item_width = 115;

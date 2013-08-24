@@ -307,7 +307,7 @@ class DataSharingForm extends EasyForm
 			$formMetaLite = array(
 				"name" 		=> $this->objectName,
 				"package" 	=> $this->m_Package,
-				"message_file" 	=> $this->m_MessageFile,		
+				"message_file" 	=> $this->messageFile,		
 			);
 			
 	   		// save to comment do

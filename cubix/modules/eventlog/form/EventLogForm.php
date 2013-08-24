@@ -87,7 +87,7 @@ class EventLogForm extends EasyForm
 	
     public function getMessage($messageId, $params=array())
     {
-        $message = isset($this->m_Messages[$messageId]) ? $this->m_Messages[$messageId] : @constant($messageId);
+        $message = isset($this->objectMessages[$messageId]) ? $this->objectMessages[$messageId] : @constant($messageId);
         if (!$message) {
             $message = $messageId;
         }

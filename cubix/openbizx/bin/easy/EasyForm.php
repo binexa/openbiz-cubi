@@ -80,7 +80,7 @@ class EasyForm extends MetaObject implements iSessionObject
     public $m_SubForms = null;
     public $m_EventName;
     public $m_Range = 10;
-    public $m_CacheLifeTime = 0;
+    public $cacheLifeTime = 0;
     public $m_FormParams;
 
     // parent form is the form that trigger the popup. "this" form is a popup form
@@ -96,14 +96,14 @@ class EasyForm extends MetaObject implements iSessionObject
     protected $m_RecordId = null;
     public $m_ActiveRecord = null;
     public $m_FormInputs = null;
-    public $m_SearchRule = null;
+    public $searchRule = null;
     public $m_FixSearchRule = null; // FixSearchRule is the search rule always applying on the search
     
-    public $m_SortRule = null;
+    public $sortRule = null;
     
     protected $m_DefaultFixSearchRule = null;
     protected $m_Referer = "";
-    public $m_MessageFile = null;
+    public $messageFile = null;
     protected $m_hasError = false;
     protected $m_ValidateErrors = array();
 	protected $queryParams = array();
@@ -117,7 +117,7 @@ class EasyForm extends MetaObject implements iSessionObject
     protected $m_RefreshData = false;
     protected $m_Resource = "";
 
-    protected $m_Messages;
+    protected $objectMessages;
     protected $m_InvokingElement = null;
     
     public $m_AutoRefresh=0;
@@ -174,7 +174,7 @@ class EasyForm extends MetaObject implements iSessionObject
         $this->m_FormType = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["FORMTYPE"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["FORMTYPE"] : null;
         $this->m_Range = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["PAGESIZE"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["PAGESIZE"] : $this->m_Range;
         $this->m_FixSearchRule = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["SEARCHRULE"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["SEARCHRULE"] : null;
-        $this->m_SortRule = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["SORTRULE"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["SORTRULE"] : null;
+        $this->sortRule = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["SORTRULE"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["SORTRULE"] : null;
 		$this->m_DefaultFixSearchRule = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["SEARCHRULE"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["SEARCHRULE"] : null;
         
         $this->objectName = $this->prefixPackage($this->objectName);
@@ -195,10 +195,10 @@ class EasyForm extends MetaObject implements iSessionObject
 
         $this->m_EventName = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["EVENTNAME"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["EVENTNAME"] : null;
 
-        $this->m_MessageFile = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["MESSAGEFILE"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["MESSAGEFILE"] : null;
-        $this->m_Messages = Resource::loadMessage($this->m_MessageFile , $this->m_Package);
+        $this->messageFile = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["MESSAGEFILE"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["MESSAGEFILE"] : null;
+        $this->objectMessages = Resource::loadMessage($this->messageFile , $this->m_Package);
 
-        $this->m_CacheLifeTime = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["CACHELIFETIME"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["CACHELIFETIME"] : "0";
+        $this->cacheLifeTime = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["CACHELIFETIME"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["CACHELIFETIME"] : "0";
 
         $this->m_CurrentPage = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["STARTPAGE"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["STARTPAGE"] : 1;
         $this->m_StartItem = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["STARTITEM"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["STARTITEM"] : 1;
@@ -243,9 +243,9 @@ class EasyForm extends MetaObject implements iSessionObject
         $this->m_DataObjName   = $this->m_DataObjName ? $this->m_DataObjName : $parentObj->m_DataObjName;
         $this->m_DirectMethodList   = $this->m_DirectMethodList ? $this->m_DirectMethodList : $parentObj->m_DirectMethodList;
         $this->m_EventName   = $this->m_EventName ? $this->m_EventName : $parentObj->m_EventName;
-        $this->m_MessageFile   = $this->m_MessageFile ? $this->m_MessageFile : $parentObj->m_MessageFile;
-        $this->m_Messages = Resource::loadMessage($this->m_MessageFile , $this->m_Package);
-		$this->m_CacheLifeTime   = $this->m_CacheLifeTime ? $this->m_CacheLifeTime : $parentObj->m_CacheLifeTime;
+        $this->messageFile   = $this->messageFile ? $this->messageFile : $parentObj->messageFile;
+        $this->objectMessages = Resource::loadMessage($this->messageFile , $this->m_Package);
+		$this->cacheLifeTime   = $this->cacheLifeTime ? $this->cacheLifeTime : $parentObj->cacheLifeTime;
 		$this->m_CurrentPage   = $this->m_CurrentPage ? $this->m_CurrentPage : $parentObj->m_CurrentPage;
 		$this->m_StartItem   = $this->m_StartItem ? $this->m_StartItem : $parentObj->m_StartItem;        
         
@@ -282,7 +282,7 @@ class EasyForm extends MetaObject implements iSessionObject
      */
     public function getMessage($messageId, $params=array())
     {
-        $message = isset($this->m_Messages[$messageId]) ? $this->m_Messages[$messageId] : constant($messageId);
+        $message = isset($this->objectMessages[$messageId]) ? $this->objectMessages[$messageId] : constant($messageId);
         //$message = I18n::getInstance()->translate($message);
         $message = I18n::t($message, $messageId, $this->getModuleName($this->objectName));        
         $msg = @vsprintf($message,$params);
@@ -295,7 +295,7 @@ class EasyForm extends MetaObject implements iSessionObject
     public function canDisplayForm()
     {
     	
-    	if($this->getDataObj()->m_DataPermControl=='Y')
+    	if($this->getDataObj()->dataPermControl=='Y')
         {
         	switch(strtolower($this->m_FormType))
         	{
@@ -324,7 +324,7 @@ class EasyForm extends MetaObject implements iSessionObject
     public function canDeleteRecord($rec)
     {
     	
-    	if($this->getDataObj()->m_DataPermControl=='Y')
+    	if($this->getDataObj()->dataPermControl=='Y')
         {        	        	
 	        $svcObj = BizSystem::GetService(OPENBIZ_DATAPERM_SERVICE);
 	        $result = $svcObj->checkDataPerm($rec,3,$this->getDataObj());
@@ -347,7 +347,7 @@ class EasyForm extends MetaObject implements iSessionObject
     {
         $sessionContext->getObjVar($this->objectName, "RecordId", $this->m_RecordId);
         $sessionContext->getObjVar($this->objectName, "FixSearchRule", $this->m_FixSearchRule);
-        $sessionContext->getObjVar($this->objectName, "SearchRule", $this->m_SearchRule);
+        $sessionContext->getObjVar($this->objectName, "SearchRule", $this->searchRule);
         $sessionContext->getObjVar($this->objectName, "QueryParams", $this->queryParams);
         $sessionContext->getObjVar($this->objectName, "SubForms", $this->m_SubForms);
         $sessionContext->getObjVar($this->objectName, "ParentFormName", $this->m_ParentFormName);
@@ -368,7 +368,7 @@ class EasyForm extends MetaObject implements iSessionObject
     {
         $sessionContext->setObjVar($this->objectName, "RecordId", $this->m_RecordId);
         $sessionContext->setObjVar($this->objectName, "FixSearchRule", $this->m_FixSearchRule);
-        $sessionContext->setObjVar($this->objectName, "SearchRule", $this->m_SearchRule);        
+        $sessionContext->setObjVar($this->objectName, "SearchRule", $this->searchRule);        
         $sessionContext->setObjVar($this->objectName, "QueryParams", $this->queryParams);
         $sessionContext->setObjVar($this->objectName, "SubForms", $this->m_SubForms);
         $sessionContext->setObjVar($this->objectName, "ParentFormName", $this->m_ParentFormName);
@@ -889,13 +889,13 @@ class EasyForm extends MetaObject implements iSessionObject
 
         if ($this->m_FixSearchRule)
         {
-            if ($this->m_SearchRule)
-                $searchRule = $this->m_SearchRule . " AND " . $this->m_FixSearchRule;
+            if ($this->searchRule)
+                $searchRule = $this->searchRule . " AND " . $this->m_FixSearchRule;
             else
                 $searchRule = $this->m_FixSearchRule;
         }
         else
-            $searchRule = $this->m_SearchRule;
+            $searchRule = $this->searchRule;
 
 		$dataObj->setQueryParameters($this->queryParams);
         $dataObj->setSearchRule($searchRule);        
@@ -907,9 +907,9 @@ class EasyForm extends MetaObject implements iSessionObject
         {
             $dataObj->setLimit($this->m_Range, ($this->m_CurrentPage-1)*$this->m_Range);
         }      
-        if($this->m_SortRule && $this->m_SortRule != $this->getDataObj()->m_SortRule)
+        if($this->sortRule && $this->sortRule != $this->getDataObj()->sortRule)
         {
-        		$dataObj->setSortRule($this->m_SortRule);
+        		$dataObj->setSortRule($this->sortRule);
         }          
         $resultRecords = $dataObj->fetch();
         $this->m_TotalRecords = $dataObj->count();
@@ -965,7 +965,7 @@ class EasyForm extends MetaObject implements iSessionObject
         if (strtoupper($this->m_FormType) == "NEW")
             return $this->getNewRecord();
 		
-        if (!$this->m_FixSearchRule && !$this->m_SearchRule){ 
+        if (!$this->m_FixSearchRule && !$this->searchRule){ 
         	//if its a default sub form,even no search rule, but can still fetch a default record 
         	if(!is_array($this->getDataObj()->m_Association)){
         		//only if its a default sub form and without any association then return emply array
@@ -977,8 +977,8 @@ class EasyForm extends MetaObject implements iSessionObject
 	
 	        if ($this->m_FixSearchRule)
 	        {
-	            if ($this->m_SearchRule)
-	                $searchRule = $this->m_SearchRule . " AND " . $this->m_FixSearchRule;
+	            if ($this->searchRule)
+	                $searchRule = $this->searchRule . " AND " . $this->m_FixSearchRule;
 	            else
 	                $searchRule = $this->m_FixSearchRule;
 	        }
@@ -1050,7 +1050,7 @@ class EasyForm extends MetaObject implements iSessionObject
 
         // move to 1st page
         $this->m_CurrentPage = 1;
-        $this->m_SortRule = "";
+        $this->sortRule = "";
 
         $this->rerender();
     }
@@ -1096,13 +1096,13 @@ class EasyForm extends MetaObject implements iSessionObject
                     $searchRule .= " AND " . $searchStr;
         	}
         }
-        $this->m_SearchRule = $searchRule;
+        $this->searchRule = $searchRule;
 
         $this->m_RefreshData = true;
 
         $this->m_CurrentPage = 1;
 
-        BizSystem::log(LOG_DEBUG,"FORMOBJ",$this->objectName."::runSearch(), SearchRule=".$this->m_SearchRule);
+        BizSystem::log(LOG_DEBUG,"FORMOBJ",$this->objectName."::runSearch(), SearchRule=".$this->searchRule);
 
 		$recArr = $this->readInputRecord();		
 		
@@ -1119,7 +1119,7 @@ class EasyForm extends MetaObject implements iSessionObject
      */
     public function resetSearch()
     {
-        $this->m_SearchRule = "";
+        $this->searchRule = "";
         $this->m_RefreshData = true;
         $this->m_CurrentPage = 1;
         $this->runEventLog();
@@ -1128,7 +1128,7 @@ class EasyForm extends MetaObject implements iSessionObject
     
     public function setSearchRule($searchRule, $queryParams=null)
     {
-    	$this->m_SearchRule = $searchRule;
+    	$this->searchRule = $searchRule;
     	$this->queryParams = $queryParams;
     	$this->m_RefreshData = true;
         $this->m_CurrentPage = 1;
@@ -1909,12 +1909,12 @@ class EasyForm extends MetaObject implements iSessionObject
             return "";
         $this->setClientScripts();
 
-        if($this->m_CacheLifeTime>0 && $this->m_SubForms == null)
+        if($this->cacheLifeTime>0 && $this->m_SubForms == null)
         {
             $cache_id = md5($this->objectName);
             //try to process cache service.
             $cacheSvc = BizSystem::getService(CACHE_SERVICE,1);
-            $cacheSvc->init($this->objectName,$this->m_CacheLifeTime);
+            $cacheSvc->init($this->objectName,$this->cacheLifeTime);
             if($cacheSvc->test($cache_id))
             {
                 BizSystem::log(LOG_DEBUG, "FORM", "Cache Hit. form name = ".$this->objectName);

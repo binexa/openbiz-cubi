@@ -20,13 +20,13 @@ class MenuWidget extends MetaObject implements iUIControl
     public $objectDescription;
     public $m_StartMenuItem;
     public $m_StartMenuID;
-    public $m_SearchRule;
+    public $searchRule;
     public $m_GlobalSearchRule;
     public $m_MenuDeep;
     public $m_TemplateEngine;
     public $m_TemplateFile;
     public $m_DataObjName;
-    public $m_CacheLifeTime;
+    public $cacheLifeTime;
     public $m_CssClass;
     protected $m_DataObj;
 
@@ -47,11 +47,11 @@ class MenuWidget extends MetaObject implements iUIControl
         $this->m_TemplateFile = isset($xmlArr["MENUWIDGET"]["ATTRIBUTES"]["TEMPLATEFILE"]) ? $xmlArr["MENUWIDGET"]["ATTRIBUTES"]["TEMPLATEFILE"] : null;
         $this->m_StartMenuItem = isset($xmlArr["MENUWIDGET"]["ATTRIBUTES"]["STARTMENUITEM"]) ? $xmlArr["MENUWIDGET"]["ATTRIBUTES"]["STARTMENUITEM"] : null;
         $this->m_StartMenuID = isset($xmlArr["MENUWIDGET"]["ATTRIBUTES"]["STARTMENUID"]) ? $xmlArr["MENUWIDGET"]["ATTRIBUTES"]["STARTMENUID"] : null;
-        $this->m_SearchRule = isset($xmlArr["MENUWIDGET"]["ATTRIBUTES"]["SEARCHRULE"]) ? $xmlArr["MENUWIDGET"]["ATTRIBUTES"]["SEARCHRULE"] : null;
+        $this->searchRule = isset($xmlArr["MENUWIDGET"]["ATTRIBUTES"]["SEARCHRULE"]) ? $xmlArr["MENUWIDGET"]["ATTRIBUTES"]["SEARCHRULE"] : null;
         $this->m_GlobalSearchRule = isset($xmlArr["MENUWIDGET"]["ATTRIBUTES"]["GLOBALSEARCHRULE"]) ? $xmlArr["MENUWIDGET"]["ATTRIBUTES"]["GLOBALSEARCHRULE"] : null;
         $this->m_MenuDeep = isset($xmlArr["MENUWIDGET"]["ATTRIBUTES"]["MENUDEEP"]) ? $xmlArr["MENUWIDGET"]["ATTRIBUTES"]["MENUDEEP"] : null;
         $this->m_DataObjName = $this->prefixPackage($xmlArr["MENUWIDGET"]["ATTRIBUTES"]["BIZDATAOBJ"]);
-        $this->m_CacheLifeTime = isset($xmlArr["MENUWIDGET"]["ATTRIBUTES"]["CACHELIFETIME"]) ? $xmlArr["MENUWIDGET"]["ATTRIBUTES"]["CACHELIFETIME"] : "0";
+        $this->cacheLifeTime = isset($xmlArr["MENUWIDGET"]["ATTRIBUTES"]["CACHELIFETIME"]) ? $xmlArr["MENUWIDGET"]["ATTRIBUTES"]["CACHELIFETIME"] : "0";
         $this->translate();
     }
 
@@ -59,11 +59,11 @@ class MenuWidget extends MetaObject implements iUIControl
     {
         if (!$this->allowAccess())
             return "";
-        if ($this->m_CacheLifeTime > 0) {
+        if ($this->cacheLifeTime > 0) {
             $cache_id = md5($this->objectName);
             //try to process cache service.
             $cacheSvc = BizSystem::getService(CACHE_SERVICE, 1);
-            $cacheSvc->init($this->objectName, $this->m_CacheLifeTime);
+            $cacheSvc->init($this->objectName, $this->cacheLifeTime);
 
             if ($cacheSvc->test($cache_id)) {
                 BizSystem::log(LOG_DEBUG, "MENU", "Cache Hit. menu widget name = " . $this->objectName);
@@ -89,8 +89,8 @@ class MenuWidget extends MetaObject implements iUIControl
     public function fetchMenuTree()
     {
         $dataObj = $this->getDataObj();
-        if ($this->m_SearchRule != "") {
-            $tree = $dataObj->fetchTreeBySearchRule($this->m_SearchRule, $this->m_MenuDeep, $this->m_GlobalSearchRule);
+        if ($this->searchRule != "") {
+            $tree = $dataObj->fetchTreeBySearchRule($this->searchRule, $this->m_MenuDeep, $this->m_GlobalSearchRule);
         } else if ($this->m_StartMenuID != "") {
             $tree = $dataObj->fetchTree($this->m_StartMenuID, $this->m_MenuDeep);
         } else {

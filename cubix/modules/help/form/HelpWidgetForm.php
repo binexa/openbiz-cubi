@@ -91,7 +91,7 @@ class HelpWidgetForm extends EasyForm
 			}
     	}
     	
-    	$this->m_SearchRule="[category_id]='$cat_id'";
+    	$this->searchRule="[category_id]='$cat_id'";
 	}
 	
 	public function fetchDataSet(){

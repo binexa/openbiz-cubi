@@ -24,7 +24,7 @@ class FeaturedAppsListForm extends AppListForm
 				
 		$repo_uri = $this->getDefaultRepoURI();	
 		$params=array(
-			"sortRule" => $this->m_SortRule,
+			"sortRule" => $this->sortRule,
 			"searchRule" => $this->m_RemoteSearchRule,
 			"range" => $this->m_Range,
 			"startItem" => ($this->m_CurrentPage-1)*$this->m_Range

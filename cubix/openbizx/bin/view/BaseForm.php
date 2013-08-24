@@ -58,12 +58,12 @@ class BaseForm extends MetaObject implements iSessionObject
     public $m_TemplateEngine;
     public $m_TemplateFile;
     public $m_SubForms = null;
-    public $m_CacheLifeTime = 0;
+    public $cacheLifeTime = 0;
 
     // basic form vars
     protected $m_DataObj;
-    public $m_MessageFile = null;
-    protected $m_Messages;
+    public $messageFile = null;
+    protected $objectMessages;
 	
 	protected $m_DirectMethodList = array(); //list of method that can directly from browser
 	
@@ -121,10 +121,10 @@ class BaseForm extends MetaObject implements iSessionObject
 
         $this->m_EventName = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["EVENTNAME"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["EVENTNAME"] : null;
 
-        $this->m_MessageFile = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["MESSAGEFILE"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["MESSAGEFILE"] : null;
-        $this->m_Messages = Resource::loadMessage($this->m_MessageFile , $this->m_Package);
+        $this->messageFile = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["MESSAGEFILE"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["MESSAGEFILE"] : null;
+        $this->objectMessages = Resource::loadMessage($this->messageFile , $this->m_Package);
 
-        $this->m_CacheLifeTime = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["CACHELIFETIME"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["CACHELIFETIME"] : "0";
+        $this->cacheLifeTime = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["CACHELIFETIME"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["CACHELIFETIME"] : "0";
 
         // parse access
         if ($this->m_Access)
@@ -162,9 +162,9 @@ class BaseForm extends MetaObject implements iSessionObject
         $this->m_DefaultFixSearchRule   = $this->m_DefaultFixSearchRule ? $this->m_DefaultFixSearchRule : $parentObj->m_DefaultFixSearchRule;		        
         $this->m_DataObjName   = $this->m_DataObjName ? $this->m_DataObjName : $parentObj->m_DataObjName;
         $this->m_EventName   = $this->m_EventName ? $this->m_EventName : $parentObj->m_EventName;
-        $this->m_MessageFile   = $this->m_MessageFile ? $this->m_MessageFile : $parentObj->m_MessageFile;
-        $this->m_Messages = Resource::loadMessage($this->m_MessageFile , $this->m_Package);
-		$this->m_CacheLifeTime   = $this->m_CacheLifeTime ? $this->m_CacheLifeTime : $parentObj->m_CacheLifeTime;
+        $this->messageFile   = $this->messageFile ? $this->messageFile : $parentObj->messageFile;
+        $this->objectMessages = Resource::loadMessage($this->messageFile , $this->m_Package);
+		$this->cacheLifeTime   = $this->cacheLifeTime ? $this->cacheLifeTime : $parentObj->cacheLifeTime;
         
         $this->m_DataPanel->merge($parentObj->m_DataPanel);
         $this->m_ActionPanel->merge($parentObj->m_ActionPanel);
@@ -206,7 +206,7 @@ class BaseForm extends MetaObject implements iSessionObject
      */
     public function getMessage($messageId, $params=array())
     {
-        $message = isset($this->m_Messages[$messageId]) ? $this->m_Messages[$messageId] : constant($messageId);
+        $message = isset($this->objectMessages[$messageId]) ? $this->objectMessages[$messageId] : constant($messageId);
         //$message = I18n::getInstance()->translate($message);
         $message = I18n::t($message, $messageId, $this->getModuleName($this->objectName));        
         $msg = @vsprintf($message,$params);
@@ -378,12 +378,12 @@ class BaseForm extends MetaObject implements iSessionObject
             return "";
         //$this->setClientScripts();
 
-        if($this->m_CacheLifeTime>0 && $this->m_SubForms == null)
+        if($this->cacheLifeTime>0 && $this->m_SubForms == null)
         {
             $cache_id = md5($this->objectName);
             //try to process cache service.
             $cacheSvc = BizSystem::getService(CACHE_SERVICE,1);
-            $cacheSvc->init($this->objectName,$this->m_CacheLifeTime);
+            $cacheSvc->init($this->objectName,$this->cacheLifeTime);
             if($cacheSvc->test($cache_id))
             {
                 BizSystem::log(LOG_DEBUG, "FORM", "Cache Hit. form name = ".$this->objectName);

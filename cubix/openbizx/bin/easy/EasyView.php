@@ -39,9 +39,9 @@ class EasyView extends MetaObject implements iSessionObject
     public $m_Width;
     public $m_ConsoleOutput = true;
 
-    public $m_MessageFile = null;        // message file path
-    protected $m_Messages;
-    public $m_CacheLifeTime = 0;
+    public $messageFile = null;        // message file path
+    protected $objectMessages;
+    public $cacheLifeTime = 0;
     
     public $m_LastRenderedForm;
 
@@ -82,9 +82,9 @@ class EasyView extends MetaObject implements iSessionObject
         {
         	$this->m_Widgets = new MetaIterator($xmlArr["EASYVIEW"]["WIDGETS"]["REFERENCE"],"FormReference",$this);
         }
-        $this->m_MessageFile = isset($xmlArr["EASYVIEW"]["ATTRIBUTES"]["MESSAGEFILE"]) ? $xmlArr["EASYVIEW"]["ATTRIBUTES"]["MESSAGEFILE"] : null;
-        $this->m_Messages = Resource::loadMessage($this->m_MessageFile, $this->m_Package);        
-        $this->m_CacheLifeTime = isset($xmlArr["EASYVIEW"]["ATTRIBUTES"]["CACHELIFETIME"]) ? $xmlArr["EASYVIEW"]["ATTRIBUTES"]["CACHELIFETIME"] : "0";
+        $this->messageFile = isset($xmlArr["EASYVIEW"]["ATTRIBUTES"]["MESSAGEFILE"]) ? $xmlArr["EASYVIEW"]["ATTRIBUTES"]["MESSAGEFILE"] : null;
+        $this->objectMessages = Resource::loadMessage($this->messageFile, $this->m_Package);        
+        $this->cacheLifeTime = isset($xmlArr["EASYVIEW"]["ATTRIBUTES"]["CACHELIFETIME"]) ? $xmlArr["EASYVIEW"]["ATTRIBUTES"]["CACHELIFETIME"] : "0";
 		
         $this->readTile($xmlArr);	// TODO: is this needed as title supports expression?
         
@@ -159,7 +159,7 @@ class EasyView extends MetaObject implements iSessionObject
      */
     protected function getMessage($msgId, $params=array())
     {
-        $message = isset($this->m_Messages[$msgId]) ? $this->m_Messages[$msgId] : constant($msgId);
+        $message = isset($this->objectMessages[$msgId]) ? $this->objectMessages[$msgId] : constant($msgId);
         //$message = I18n::getInstance()->translate($message);
         $message = I18n::t($message, $msgId, $this->getModuleName($this->objectName));
         return vsprintf($message,$params);
@@ -255,13 +255,13 @@ class EasyView extends MetaObject implements iSessionObject
     {
         $this->setClientScripts();
 
-        if($this->m_CacheLifeTime>0)
+        if($this->cacheLifeTime>0)
         {
             $pageUrl = $this->curPageURL();
             $cache_id = md5($pageUrl);
             //try to process cache service.
             $cacheSvc = BizSystem::getService(CACHE_SERVICE,1);
-            $cacheSvc->init($this->objectName,$this->m_CacheLifeTime);
+            $cacheSvc->init($this->objectName,$this->cacheLifeTime);
             if($cacheSvc->test($cache_id))
             {
                 BizSystem::log(LOG_DEBUG, "VIEW", "Cache Hit. url = ".$pageUrl);

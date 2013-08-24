@@ -26,7 +26,7 @@ class ApplicationsListForm extends AppListForm
 				
 		$params=array(
 			"searchRule" => $this->m_RemoteSearchRule,	
-			"sortRule" => $this->m_SortRule,			
+			"sortRule" => $this->sortRule,			
 			"startItem" => ($this->m_CurrentPage-1)*$this->m_Range,
 			"range" => $this->m_Range,
 		);

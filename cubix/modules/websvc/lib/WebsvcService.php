@@ -20,8 +20,8 @@ class WebsvcService
     public $errorCode = 0;
     public $m_WebsvcDO = "websvc.do.WebsvcDO";
     public $m_PublicMethods;
-    public $m_MessageFile;
-    public $m_Messages;
+    public $messageFile;
+    public $objectMessages;
     public $m_RequireAuth = "N";
 
     function __construct(&$xmlArr)
@@ -34,8 +34,8 @@ class WebsvcService
         $this->m_RequireAuth = isset($xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["REQUIREAUTH"]) ? $xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["REQUIREAUTH"] : 'N';
         $this->m_RequireAuth = strtoupper($this->m_RequireAuth);
         $this->m_PublicMethods = new MetaIterator($xmlArr["PLUGINSERVICE"]["PUBLICMETHOD"],"PublicMethod",$this);
-        $this->m_MessageFile = isset($xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["MESSAGEFILE"]) ? $xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["MESSAGEFILE"] : null;
-        $this->m_Messages = Resource::loadMessage($this->m_MessageFile);
+        $this->messageFile = isset($xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["MESSAGEFILE"]) ? $xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["MESSAGEFILE"] : null;
+        $this->objectMessages = Resource::loadMessage($this->messageFile);
     }
 /*
       - authenticate($api_key, $secret)

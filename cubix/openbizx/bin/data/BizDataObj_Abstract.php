@@ -129,63 +129,65 @@ abstract class BizDataObj_Abstract extends MetaObject implements iSessionObject
      */
     public $parameters = null;
     public $stateless = null;
-    public $m_Uniqueness = null;
+    public $uniqueness = null;
 
     /**
      * Search rule
      *
      * @var string
      */
-    public $m_SearchRule = null;        // support expression
+    public $searchRule = null;        // support expression
 
     /**
      * Sort rule
      * @var string
      */
-    public $m_SortRule = null;          // support expression
+    public $sortRule = null;          // support expression
 
     /**
      * Other SQL rule
      *
      * @var string
      */
-    public $m_OtherSQLRule = null;      // support expression
+    public $otherSQLRule = null;      // support expression
 
     /**
      * Life time o cache
      *
      * @var number
      */
-    public $m_CacheLifeTime = null;	    // set 0 to disbale cache function
+    public $cacheLifeTime = null;	    // set 0 to disbale cache function
 
     /**
      * Message file path
      *
      * @var string
      */
-    public $m_MessageFile = null;        // 
+    public $messageFile = null;        // 
 
     /**
      * Limitation of query
-     *   $this->m_Limit['count'] - count of record that loaded from database (per page)
-     *   $this->m_Limit['offset'] - offset of record (for paging)
+     *   $this->queryLimit['count'] - count of record that loaded from database (per page)
+     *   $this->queryLimit['offset'] - offset of record (for paging)
      * 
      * @var array
      */
-    protected $m_Limit = array();
+    protected $queryLimit = array();
 
     /**
-     * Array messages that loaded from {@link $m_MessageFile}
+     * Array messages that loaded from {@link $messageFile}
      *
      * @var array
      */
-    protected $m_Messages;
+    protected $objectMessages;
 	
-	protected $m_QueryParams = array();
+	protected $queryParams = array();
     
-    public $m_DataPermControl;
+    public $dataPermControl;
 	
-	public $m_EvtMgrName, $m_EventManager;
+	public $eventManagerName;
+
+    public $eventManager;
     
     /**
      * Initialize BizDataObj_Abstract with xml array
@@ -209,12 +211,12 @@ abstract class BizDataObj_Abstract extends MetaObject implements iSessionObject
     {
         parent::readMetaData($xmlArr);
         $this->inheritFrom = isset($xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["INHERITFROM"]) ? $xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["INHERITFROM"] : null;
-        $this->m_SearchRule = isset($xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["SEARCHRULE"]) ? $xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["SEARCHRULE"] : null;
-        $this->baseSearchRule = $this->m_SearchRule;
-        $this->m_SortRule = isset($xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["SORTRULE"]) ? $xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["SORTRULE"] : null;
-        $this->baseSortRule = $this->m_SortRule;
-        $this->m_OtherSQLRule = isset($xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["OTHERSQLRULE"]) ? $xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["OTHERSQLRULE"] : null;
-        $this->baseOtherSQLRule = $this->m_OtherSQLRule;
+        $this->searchRule = isset($xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["SEARCHRULE"]) ? $xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["SEARCHRULE"] : null;
+        $this->baseSearchRule = $this->searchRule;
+        $this->sortRule = isset($xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["SORTRULE"]) ? $xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["SORTRULE"] : null;
+        $this->baseSortRule = $this->sortRule;
+        $this->otherSQLRule = isset($xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["OTHERSQLRULE"]) ? $xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["OTHERSQLRULE"] : null;
+        $this->baseOtherSQLRule = $this->otherSQLRule;
         $this->accessRule = isset($xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["ACCESSRULE"]) ? $xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["ACCESSRULE"] : null;
         $this->updateCondition = isset($xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["UPDATECONDITION"]) ? $xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["UPDATECONDITION"] : null;
         $this->deleteCondition = isset($xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["DELETECONDITION"]) ? $xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["DELETECONDITION"] : null;
@@ -226,9 +228,9 @@ abstract class BizDataObj_Abstract extends MetaObject implements iSessionObject
         $this->stateless = isset($xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["STATELESS"]) ? $xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["STATELESS"] : null;
 
         // read in uniqueness attribute
-        $this->m_Uniqueness = isset($xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["UNIQUENESS"]) ? $xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["UNIQUENESS"] : null;
+        $this->uniqueness = isset($xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["UNIQUENESS"]) ? $xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["UNIQUENESS"] : null;
 
-        $this->m_CacheLifeTime = isset($xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["CACHELIFETIME"]) ? $xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["CACHELIFETIME"] : "0";
+        $this->cacheLifeTime = isset($xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["CACHELIFETIME"]) ? $xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["CACHELIFETIME"] : "0";
         $this->objectName = $this->prefixPackage($this->objectName);
         if ($this->inheritFrom == '@sourceMeta') $this->inheritFrom = '@'.$this->objectName;
         else $this->inheritFrom = $this->prefixPackage($this->inheritFrom);
@@ -242,12 +244,12 @@ abstract class BizDataObj_Abstract extends MetaObject implements iSessionObject
         // read in parameters
         $this->parameters = new MetaIterator($xmlArr["BIZDATAOBJ"]["PARAMETERS"]["PARAMETER"],"Parameter");
 
-        $this->m_MessageFile = isset($xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["MESSAGEFILE"]) ? $xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["MESSAGEFILE"] : null;
-        $this->m_Messages = Resource::loadMessage($this->m_MessageFile , $this->m_Package);
+        $this->messageFile = isset($xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["MESSAGEFILE"]) ? $xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["MESSAGEFILE"] : null;
+        $this->objectMessages = Resource::loadMessage($this->messageFile , $this->m_Package);
 		
-		$this->m_EvtMgrName = isset($xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["EVENTMANAGER"]) ? $xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["EVENTMANAGER"] : null;
+		$this->eventManagerName = isset($xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["EVENTMANAGER"]) ? $xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["EVENTMANAGER"] : null;
         
-        $this->m_DataPermControl = isset($xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["DATAPERMCONTROL"]) ? strtoupper($xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["DATAPERMCONTROL"]) : 'N';
+        $this->dataPermControl = isset($xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["DATAPERMCONTROL"]) ? strtoupper($xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["DATAPERMCONTROL"]) : 'N';
     }
 
     /**
@@ -261,11 +263,11 @@ abstract class BizDataObj_Abstract extends MetaObject implements iSessionObject
         $parentObj = BizSystem::getObject($this->inheritFrom);
 
         $this->objectDescription  = $this->objectDescription ? $this->objectDescription : $parentObj->objectDescription;
-        $this->m_SearchRule   = $this->m_SearchRule ? $this->m_SearchRule : $parentObj->m_SearchRule;
-        $this->baseSearchRule = $this->m_SearchRule;
-        $this->m_SortRule     = $this->m_SortRule ? $this->m_SortRule: $parentObj->m_SortRule;
-        $this->baseSortRule = $this->m_SortRule;
-        $this->m_OtherSQLRule = $this->m_OtherSQLRule ? $this->m_OtherSQLRule: $parentObj->m_OtherSQLRule;
+        $this->searchRule   = $this->searchRule ? $this->searchRule : $parentObj->searchRule;
+        $this->baseSearchRule = $this->searchRule;
+        $this->sortRule     = $this->sortRule ? $this->sortRule: $parentObj->sortRule;
+        $this->baseSortRule = $this->sortRule;
+        $this->otherSQLRule = $this->otherSQLRule ? $this->otherSQLRule: $parentObj->otherSQLRule;
         $this->accessRule   = $this->accessRule ? $this->accessRule: $parentObj->accessRule;
         $this->updateCondition = $this->updateCondition ? $this->updateCondition: $parentObj->updateCondition;
         $this->deleteCondition = $this->deleteCondition ? $this->deleteCondition: $parentObj->deleteCondition;
@@ -273,7 +275,7 @@ abstract class BizDataObj_Abstract extends MetaObject implements iSessionObject
         $this->mainTableName    = $this->mainTableName ? $this->mainTableName: $parentObj->mainTableName;
         $this->idGeneration = $this->idGeneration ? $this->idGeneration: $parentObj->idGeneration;
         $this->stateless    = $this->stateless ? $this->stateless: $parentObj->stateless;
-	$this->m_DataPermControl = $this->m_DataPermControl ? $this->m_DataPermControl : $parentObj->m_DataPermControl;
+	$this->dataPermControl = $this->dataPermControl ? $this->dataPermControl : $parentObj->dataPermControl;
         $this->bizRecord->merge($parentObj->bizRecord);
 
         foreach ($this->bizRecord as $field)
@@ -293,7 +295,7 @@ abstract class BizDataObj_Abstract extends MetaObject implements iSessionObject
      */
     protected function getMessage($msgid, $params=array())
     {
-        $message = isset($this->m_Messages[$msgid]) ? $this->m_Messages[$msgid] : constant($msgid);
+        $message = isset($this->objectMessages[$msgid]) ? $this->objectMessages[$msgid] : constant($msgid);
         //$message = I18n::getInstance()->translate($message);
         $message = I18n::t($message, $msgid, $this->getModuleName($this->objectName));
         return vsprintf($message,$params);
@@ -318,10 +320,10 @@ abstract class BizDataObj_Abstract extends MetaObject implements iSessionObject
 	
 	public function events() 
 	{
-		if (!$this->m_EvtMgrName && defined('EVENT_MANAGER')) $this->m_EvtMgrName = EVENT_MANAGER;
-		else $this->m_EventManager = new EventManager();
-		if (!$this->m_EventManager) $this->m_EventManager = BizSystem::getObject($this->m_EvtMgrName);
-		return $this->m_EventManager;
+		if (!$this->eventManagerName && defined('EVENT_MANAGER')) $this->eventManagerName = EVENT_MANAGER;
+		else $this->eventManager = new EventManager();
+		if (!$this->eventManager) $this->eventManager = BizSystem::getObject($this->eventManagerName);
+		return $this->eventManager;
 	}
 
     /**
@@ -331,9 +333,9 @@ abstract class BizDataObj_Abstract extends MetaObject implements iSessionObject
      */
     public function resetRules()
     {
-        $this->m_SearchRule = $this->baseSearchRule;
-        $this->m_SortRule = $this->baseSortRule;
-        $this->m_OtherSQLRule = $this->baseOtherSQLRule;
+        $this->searchRule = $this->baseSearchRule;
+        $this->sortRule = $this->baseSortRule;
+        $this->otherSQLRule = $this->baseOtherSQLRule;
         return $this;
     }
 
@@ -345,7 +347,7 @@ abstract class BizDataObj_Abstract extends MetaObject implements iSessionObject
      */
     public function clearSearchRule()
     {
-        $this->m_SearchRule = $this->baseSearchRule;
+        $this->searchRule = $this->baseSearchRule;
         return $this;
     }
 
@@ -358,7 +360,7 @@ abstract class BizDataObj_Abstract extends MetaObject implements iSessionObject
     public function clearSortRule()  // reset sortrule
 
     {
-        $this->m_SortRule = $this->baseSortRule;
+        $this->sortRule = $this->baseSortRule;
         return $this;
     }
 
@@ -371,7 +373,7 @@ abstract class BizDataObj_Abstract extends MetaObject implements iSessionObject
     public function clearOtherSQLRule()
 
     {
-        $this->m_OtherSQLRule = $this->baseOtherSQLRule;
+        $this->otherSQLRule = $this->baseOtherSQLRule;
         return $this;
     }
 
@@ -382,10 +384,10 @@ abstract class BizDataObj_Abstract extends MetaObject implements iSessionObject
      */
     public function clearAllRules()
     {
-        $this->m_SearchRule = $this->baseSearchRule;
-        $this->m_SortRule = $this->baseSortRule;
-        $this->m_OtherSQLRule = $this->baseOtherSQLRule;
-        $this->m_Limit = array();
+        $this->searchRule = $this->baseSearchRule;
+        $this->sortRule = $this->baseSortRule;
+        $this->otherSQLRule = $this->baseOtherSQLRule;
+        $this->queryLimit = array();
         return $this;
     }
 
@@ -400,13 +402,13 @@ abstract class BizDataObj_Abstract extends MetaObject implements iSessionObject
     {
         if (!$rule || $rule == "")
             return;
-        if (!$this->m_SearchRule || $overWrite == true)
+        if (!$this->searchRule || $overWrite == true)
         {
-            $this->m_SearchRule = $rule;
+            $this->searchRule = $rule;
         }
-        elseif (strpos($this->m_SearchRule, $rule) === false)
+        elseif (strpos($this->searchRule, $rule) === false)
         {
-            $this->m_SearchRule .= " AND " . $rule;
+            $this->searchRule .= " AND " . $rule;
         }
     }
 
@@ -419,12 +421,12 @@ abstract class BizDataObj_Abstract extends MetaObject implements iSessionObject
     public function setQueryParameters($paramValues)
     {
         foreach ($paramValues as $param=>$value)
-            $this->m_QueryParams[$param] = $value;
+            $this->queryParams[$param] = $value;
     }
 	
 	public function getQueryParameters()
     {
-        return $this->m_QueryParams;
+        return $this->queryParams;
     }
 
     /**
@@ -436,7 +438,7 @@ abstract class BizDataObj_Abstract extends MetaObject implements iSessionObject
     public function setSortRule($rule)
     {
         // sort rule has format "[fieldName] DESC|ASC", replace [fieldName] with table.column
-        $this->m_SortRule = $rule;
+        $this->sortRule = $rule;
     }
 
     /**
@@ -448,7 +450,7 @@ abstract class BizDataObj_Abstract extends MetaObject implements iSessionObject
     public function setOtherSQLRule($rule)
     {
         // $rule has SQL format "GROUP BY [fieldName] HAVING ...". replace [fieldName] with table.column
-        $this->m_OtherSQLRule = $rule;
+        $this->otherSQLRule = $rule;
     }
 
     /**
@@ -468,8 +470,8 @@ abstract class BizDataObj_Abstract extends MetaObject implements iSessionObject
     	{
     		$offset = 0;
     	}    	
-        $this->m_Limit['count'] = $count;
-        $this->m_Limit['offset'] = $offset;
+        $this->queryLimit['count'] = $count;
+        $this->queryLimit['offset'] = $offset;
     }
 
     /**
@@ -515,7 +517,7 @@ abstract class BizDataObj_Abstract extends MetaObject implements iSessionObject
         $ret = parent::getProperty($propertyName);
         if ($ret) return $ret;
         if ($propertyName == "Table") return $this->m_Table;
-        if ($propertyName == "SearchRule") return $this->m_SearchRule;
+        if ($propertyName == "SearchRule") return $this->searchRule;
         // get control object if propertyName is "Field[fldname]"
         $pos1 = strpos($propertyName, "[");
         $pos2 = strpos($propertyName, "]");

@@ -31,7 +31,7 @@ class DataACLForm extends DataSharingForm
 		
 		$record_table = $prtFormObj->getDataObj()->mainTableName;
 		$record_id = $this->m_ParentRecordId;
-		$this->m_SearchRule = "[record_table]='$record_table' AND [record_id]='$record_id'";
+		$this->searchRule = "[record_table]='$record_table' AND [record_id]='$record_id'";
 		$result =  parent::fetchDataSet();
 		return $result;
 	}

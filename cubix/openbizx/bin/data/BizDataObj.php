@@ -107,9 +107,9 @@ class BizDataObj extends BizDataObj_Lite
      */
     protected function validateUniqueness()
     {
-        if (!$this->m_Uniqueness)
+        if (!$this->uniqueness)
             return true;
-        $groupList = explode(";",$this->m_Uniqueness);
+        $groupList = explode(";",$this->uniqueness);
         foreach ($groupList as $group)
         {
             $searchRule = "";
@@ -157,7 +157,7 @@ class BizDataObj extends BizDataObj_Lite
     public function canUpdateRecord($record = null)
     {
     	
-    	if($this->m_DataPermControl=='Y')
+    	if($this->dataPermControl=='Y')
         {
 	        $svcObj = BizSystem::GetService(OPENBIZ_DATAPERM_SERVICE);
 	        if(!$record)
@@ -191,7 +191,7 @@ class BizDataObj extends BizDataObj_Lite
      */
     public function canDeleteRecord($record = null)
     {
-    	if($this->m_DataPermControl=='Y')
+    	if($this->dataPermControl=='Y')
         {
 	        $svcObj = BizSystem::GetService(OPENBIZ_DATAPERM_SERVICE);
 	        if(!$record)
@@ -904,10 +904,10 @@ class BizDataObj extends BizDataObj_Lite
      */
     public function cleanCache()
     {
-        if($this->m_CacheLifeTime > 0)
+        if($this->cacheLifeTime > 0)
         {
             $cacheSvc = BizSystem::getService(CACHE_SERVICE,1);
-            $cacheSvc->init($this->objectName, $this->m_CacheLifeTime);
+            $cacheSvc->init($this->objectName, $this->cacheLifeTime);
             $cacheSvc->cleanAll();
             
         }

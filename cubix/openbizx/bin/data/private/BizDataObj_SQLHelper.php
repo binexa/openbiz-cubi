@@ -126,7 +126,7 @@ class BizDataObj_SQLHelper
         $dataSqlObj->resetSQL();
 
         // append DataPerm in the WHERE clause
-        if($dataObj->m_DataPermControl=='Y')
+        if($dataObj->dataPermControl=='Y')
         {
 	        $svcObj = BizSystem::GetService(OPENBIZ_DATAPERM_SERVICE);
 	        $hasOwnerField = $this->_hasOwnerField($dataObj);
@@ -143,15 +143,15 @@ class BizDataObj_SQLHelper
 		}
 		
         // append SearchRule in the WHERE clause
-        $sqlSearchRule = $this->_ruleToSql($dataObj, $dataObj->m_SearchRule);
+        $sqlSearchRule = $this->_ruleToSql($dataObj, $dataObj->searchRule);
         $dataSqlObj->addSqlWhere($sqlSearchRule);
 
         // append SearchRule in the ORDER BY clause
-        $sqlSortRule = $this->_ruleToSql($dataObj, $dataObj->m_SortRule);
+        $sqlSortRule = $this->_ruleToSql($dataObj, $dataObj->sortRule);
         $dataSqlObj->addOrderBy($sqlSortRule);
 
         // append SearchRule in the other SQL clause
-        $sqlOtherSQLRule = $this->_ruleToSql($dataObj, $dataObj->m_OtherSQLRule);
+        $sqlOtherSQLRule = $this->_ruleToSql($dataObj, $dataObj->otherSQLRule);
         $dataSqlObj->addOtherSQL($sqlOtherSQLRule);
 
         // append SearchRule in the AccessRule clause
@@ -255,7 +255,7 @@ class BizDataObj_SQLHelper
         $sql .= " WHERE " . $whereStr;
     	
         // append DataPerm in the WHERE clause
-        if($dataObj->m_DataPermControl=='Y')
+        if($dataObj->dataPermControl=='Y')
         {
 	        $svcObj = BizSystem::GetService(OPENBIZ_DATAPERM_SERVICE);
 	        $hasOwnerField = $this->_hasOwnerField($dataObj);
@@ -284,7 +284,7 @@ class BizDataObj_SQLHelper
         }
         
     	// append DataPerm in the WHERE clause
-        if($dataObj->m_DataPermControl=='Y')
+        if($dataObj->dataPermControl=='Y')
         {
 	        $svcObj = BizSystem::GetService(OPENBIZ_DATAPERM_SERVICE);
 	        $hasOwnerField = $this->_hasOwnerField($dataObj);
@@ -313,7 +313,7 @@ class BizDataObj_SQLHelper
         $whereStr = $dataObj->bizRecord->getKeySearchRule(false, true);  // use cur value and column name
         $sql .= " WHERE " . $whereStr;
     	// append DataPerm in the WHERE clause
-        if($dataObj->m_DataPermControl=='Y')
+        if($dataObj->dataPermControl=='Y')
         {
 	        $svcObj = BizSystem::GetService(OPENBIZ_DATAPERM_SERVICE);
 	        $hasOwnerField = $this->_hasOwnerField($dataObj);
@@ -340,7 +340,7 @@ class BizDataObj_SQLHelper
         	$sql .= " WHERE " . $whereStr;
         }
    		// append DataPerm in the WHERE clause
-        if($dataObj->m_DataPermControl=='Y')
+        if($dataObj->dataPermControl=='Y')
         {
 	        $svcObj = BizSystem::GetService(OPENBIZ_DATAPERM_SERVICE);
 	        $hasOwnerField = $this->_hasOwnerField($dataObj);

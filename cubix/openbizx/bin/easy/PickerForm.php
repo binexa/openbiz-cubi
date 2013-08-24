@@ -278,7 +278,7 @@ class PickerForm extends EasyForm
     	{
 	               	        	
 	        //clear parent form search rules
-	        $this->m_SearchRule="";
+	        $this->searchRule="";
 	        $parentForm->getDataObj()->clearSearchRule();
 	        
 	        $do = $this->getDataObj();

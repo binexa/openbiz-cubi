@@ -73,9 +73,9 @@ class BizDataObj_Lite extends BizDataObj_Abstract
         if ($this->stateless == "Y")
             return;
         $sessionContext->getObjVar($this->objectName, "RecordId", $this->m_RecordId);
-        $sessionContext->getObjVar($this->objectName, "SearchRule", $this->m_SearchRule);
-        $sessionContext->getObjVar($this->objectName, "SortRule", $this->m_SortRule);
-        $sessionContext->getObjVar($this->objectName, "OtherSqlRule", $this->m_OtherSQLRule);
+        $sessionContext->getObjVar($this->objectName, "SearchRule", $this->searchRule);
+        $sessionContext->getObjVar($this->objectName, "SortRule", $this->sortRule);
+        $sessionContext->getObjVar($this->objectName, "OtherSqlRule", $this->otherSQLRule);
         $sessionContext->getObjVar($this->objectName, "Association", $this->m_Association);
     }
 
@@ -90,9 +90,9 @@ class BizDataObj_Lite extends BizDataObj_Abstract
         if ($this->stateless == "Y")
             return;
         $sessionContext->setObjVar($this->objectName, "RecordId", $this->m_RecordId);
-        $sessionContext->setObjVar($this->objectName, "SearchRule", $this->m_SearchRule);
-        $sessionContext->setObjVar($this->objectName, "SortRule", $this->m_SortRule);
-        $sessionContext->setObjVar($this->objectName, "OtherSqlRule", $this->m_OtherSQLRule);
+        $sessionContext->setObjVar($this->objectName, "SearchRule", $this->searchRule);
+        $sessionContext->setObjVar($this->objectName, "SortRule", $this->sortRule);
+        $sessionContext->setObjVar($this->objectName, "OtherSqlRule", $this->otherSQLRule);
         if(is_array($this->m_Association)){
         	$sessionContext->setObjVar($this->objectName, "Association", $this->m_Association);
         }
@@ -257,7 +257,7 @@ class BizDataObj_Lite extends BizDataObj_Abstract
     {
         $dataSet = new DataSet($this);
         $this->_fetch4countQuery = null;
-        $resultSet = $this->_run_search($this->m_Limit);  // regular search or page search
+        $resultSet = $this->_run_search($this->queryLimit);  // regular search or page search
         if ($resultSet !== null)
         {
             $i = 0;
@@ -286,16 +286,16 @@ class BizDataObj_Lite extends BizDataObj_Abstract
         $recId = $this->m_RecordId;
         $this->m_CurrentRecord = null;
 
-        $oldSearchRule = $this->m_SearchRule;
+        $oldSearchRule = $this->searchRule;
         $this->clearSearchRule();
         $this->setSearchRule($searchRule);
 
-        $oldSortRule = $this->m_SortRule;
+        $oldSortRule = $this->sortRule;
         $this->clearSortRule();        
         if($sortRule){        	
         	$this->setSortRule($sortRule);
         }else{        	
-        	$this->setSortRule($this->m_SortRule);
+        	$this->setSortRule($this->sortRule);
         }        
 
         $limit = ($count == -1) ? null : array('count'=>$count, 'offset'=>$offset);
@@ -311,8 +311,8 @@ class BizDataObj_Lite extends BizDataObj_Abstract
             }
         }
 
-        $this->m_SortRule = $oldSortRule;
-        $this->m_SearchRule = $oldSearchRule;
+        $this->sortRule = $oldSortRule;
+        $this->searchRule = $oldSearchRule;
         $this->m_CurrentRecord = $curRecord;
         $this->m_RecordId = $recId;
 
@@ -382,7 +382,7 @@ class BizDataObj_Lite extends BizDataObj_Abstract
         if ($count == 0) return;
         $curRecord = $this->m_CurrentRecord;
         $recId = $this->m_RecordId;
-        $oldSearchRule = $this->m_SearchRule;
+        $oldSearchRule = $this->searchRule;
         $this->m_CurrentRecord = null;
         if ($clearSearchRule)
             $this->clearSearchRule();
@@ -406,7 +406,7 @@ class BizDataObj_Lite extends BizDataObj_Abstract
         }
         if ($noAssociation)
             $this->m_Association = $oldAssociation;
-        $this->m_SearchRule = $oldSearchRule;
+        $this->searchRule = $oldSearchRule;
         $this->m_CurrentRecord = $curRecord;
         $this->m_RecordId = $recId;
         return true;
@@ -419,7 +419,7 @@ class BizDataObj_Lite extends BizDataObj_Abstract
      */
     public function find()
     {
-        return $this->_run_search($this->m_Limit);
+        return $this->_run_search($this->queryLimit);
     }
 
     /**
@@ -469,12 +469,12 @@ class BizDataObj_Lite extends BizDataObj_Abstract
 
         try
         {
-            if($this->m_CacheLifeTime>0)
+            if($this->cacheLifeTime>0)
             {
                 $cache_id = md5($this->objectName . $sql . serialize($bindValues));
                 //try to process cache service.
                 $cacheSvc = BizSystem::getService(CACHE_SERVICE,1);
-                $cacheSvc->init($this->objectName,$this->m_CacheLifeTime);
+                $cacheSvc->init($this->objectName,$this->cacheLifeTime);
                 if($cacheSvc->test($cache_id))
                 {
                     //BizSystem::log(LOG_DEBUG, "DATAOBJ", "Cache Hit. Query Sql = ".$sql);
@@ -537,12 +537,12 @@ class BizDataObj_Lite extends BizDataObj_Abstract
 
         try
         {
-            if($this->m_CacheLifeTime>0)
+            if($this->cacheLifeTime>0)
             {
                 $cache_id = md5($this->objectName . $rewritesql . serialize($bindValues));
                 //try to process cache service.
                 $cacheSvc = BizSystem::getService(CACHE_SERVICE);
-                $cacheSvc->init($this->objectName,$this->m_CacheLifeTime);
+                $cacheSvc->init($this->objectName,$this->cacheLifeTime);
                 if($cacheSvc->test($cache_id))
                 {
                     //BizSystem::log(LOG_DEBUG, "DATAOBJ", ". Query Sql = ".$rewritesql);

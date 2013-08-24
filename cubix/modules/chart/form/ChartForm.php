@@ -76,23 +76,23 @@ class ChartForm extends EasyForm
     	// query recordset first
 		$dataObj = $this->getDataObj();
 
-        QueryStringParam::setBindValues($this->m_SearchRuleBindValues);
+        QueryStringParam::setBindValues($this->searchRuleBindValues);
 
         if ($this->m_RefreshData)
             $dataObj->resetRules();
         else
             $dataObj->clearSearchRule();
          		
-		//echo "search rule is $this->m_SearchRule"; exit;
+		//echo "search rule is $this->searchRule"; exit;
 		if ($this->m_FixSearchRule)
         {
-            if ($this->m_SearchRule)
-                $searchRule = $this->m_SearchRule . " AND " . $this->m_FixSearchRule;
+            if ($this->searchRule)
+                $searchRule = $this->searchRule . " AND " . $this->m_FixSearchRule;
             else
                 $searchRule = $this->m_FixSearchRule;
         }
         else
-        $searchRule = $this->m_SearchRule;
+        $searchRule = $this->searchRule;
         $dataObj->setSearchRule($searchRule);
         if($this->m_StartItem>1)
         {
@@ -102,7 +102,7 @@ class ChartForm extends EasyForm
         {
             $dataObj->setLimit($this->m_Range, ($this->m_CurrentPage-1)*$this->m_Range);
         }
-        QueryStringParam::setBindValues($this->m_SearchRuleBindValues);
+        QueryStringParam::setBindValues($this->searchRuleBindValues);
         $resultRecords = $dataObj->fetch();
         $this->m_TotalRecords = $dataObj->count();
         if ($this->m_Range && $this->m_Range > 0)

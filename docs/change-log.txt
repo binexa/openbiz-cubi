@@ -119,6 +119,21 @@ m_ObjReferences     => objReferences
 m_TableJoins        => tableJoins
 m_Parameters        => parameters
 m_Stateless         => stateless
+m_Uniqueness        => uniqueness
+m_SearchRule        => searchRule
+m_SortRule          => sortRule
+m_OtherSQLRule      => otherSQLRule
+m_CacheLifeTime     => cacheLifeTime
+m_MessageFile       => messageFile
+m_Limit             => queryLimit
+m_Messages          => objectMessages
+    give object prefix for unix, maybe rename again to other
+    or handled by other object that attach to object.
+m_QueryParams       => queryParams
+    maybe rename to queryParameters
+m_DataPermControl   => dataPermControl
+m_EvtMgrName        => eventManagerName
+m_EventManager      => eventManager
 
 m_Name              => objectName
 $m_Class            => $className

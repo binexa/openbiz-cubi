@@ -19,7 +19,7 @@ class LicenseClient extends MetaObject
     protected $_installPackage = "";
     protected $_installModules = array();
     
-    public $m_CacheLifeTime = null;	
+    public $cacheLifeTime = null;	
     
     public $repositoryUrl; // repository url
     

@@ -53,7 +53,7 @@ class ExtendDataEditForm extends EasyForm
 		$column_value	= $do->m_Association['FieldRefVal']; 
 		
 		if(!$column_name){
-			return $this->m_SearchRule;
+			return $this->searchRule;
 		}
 		
 		$prtFormObj = BizSystem::getObject($this->m_ParentFormName);
@@ -67,7 +67,7 @@ class ExtendDataEditForm extends EasyForm
 			$column_value = $type_id;
 		}
 		$searchRule = "[$cond_column] = '$cond_value' AND [$column_name]='$column_value'";
-		$this->m_SearchRule = $searchRule;
+		$this->searchRule = $searchRule;
 		return $searchRule;	
 	}
 	
@@ -153,7 +153,7 @@ class ExtendDataEditForm extends EasyForm
 	public function readInputExtendRecord()
 	{		
 		
-		$searchRule = $this->m_SearchRule;
+		$searchRule = $this->searchRule;
 		$fieldsDO = BizSystem::getObject($this->m_ExtendSettingDO,1);
 		$fieldRecs = $fieldsDO->directfetch($searchRule);
 		
@@ -206,7 +206,7 @@ class ExtendDataEditForm extends EasyForm
 		$recArr[$column_name] = $column_value;
 		$recArr['record_id'] = $record_id;				
 		
-		$oldRec = BizSystem::getObject($do->objectName,1)->fetchOne($this->m_SearchRule." AND [record_id]='$record_id'" );
+		$oldRec = BizSystem::getObject($do->objectName,1)->fetchOne($this->searchRule." AND [record_id]='$record_id'" );
 		if($oldRec){
 			$oldRec = $oldRec->toArray();						
 			$recArr['Id'] = $oldRec['Id'];

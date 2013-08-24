@@ -42,14 +42,14 @@ class ArrayListForm extends EasyForm {
                     $searchRule .= " AND " . $searchStr;
             }
         }
-        $this->m_SearchRule = $searchRule;
-        $this->m_SearchRuleBindValues = $values;
+        $this->searchRule = $searchRule;
+        $this->searchRuleBindValues = $values;
 
         $this->m_RefreshData = true;
 
         $this->m_CurrentPage = 1;
 
-        BizSystem::log(LOG_DEBUG, "FORMOBJ", $this->objectName . "::runSearch(), SearchRule=" . $this->m_SearchRule);
+        BizSystem::log(LOG_DEBUG, "FORMOBJ", $this->objectName . "::runSearch(), SearchRule=" . $this->searchRule);
 
         $recArr = $this->readInputRecord();
 
@@ -67,13 +67,13 @@ class ArrayListForm extends EasyForm {
         }
 
 
-        $searchRule = $this->m_SearchRule;
+        $searchRule = $this->searchRule;
 
         preg_match_all("/\[(.*?)\]/si", $searchRule, $match);
         $i = 0;
         $searchFilter = array();
-        if (is_array($this->m_SearchRuleBindValues)) {
-            foreach ($this->m_SearchRuleBindValues as $key => $value) {
+        if (is_array($this->searchRuleBindValues)) {
+            foreach ($this->searchRuleBindValues as $key => $value) {
                 $fieldName = $match[1][$i];
                 $fieldValue = $value;
                 $i++;
