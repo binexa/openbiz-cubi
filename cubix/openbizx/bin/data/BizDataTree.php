@@ -26,18 +26,18 @@
  */
 class BizDataTree extends BizDataObj
 {
-    protected $m_RootNodes;
+    protected $rootNodes;
     /**
      * Deep of tree
      * @var int
      */
-    protected $m_Depth;
+    protected $depth;
 
     /**
      * Global search rule
      * @var string
      */
-    protected $m_globalSearchRule;
+    protected $globalSearchRule;
 
     /**
      * Fetch records in tree structure
@@ -46,8 +46,8 @@ class BizDataTree extends BizDataObj
      */
     public function fetchTree($rootSearchRule, $depth, $globalSearchRule="")
     {
-        $this->m_Depth = $depth;
-        $this->m_globalSearchRule = $globalSearchRule;
+        $this->depth = $depth;
+        $this->globalSearchRule = $globalSearchRule;
 
         // query on given search rule
         $searchRule = "(" . $rootSearchRule . ")";
@@ -56,22 +56,22 @@ class BizDataTree extends BizDataObj
         $recordList = $this->directFetch($searchRule);
         if (!$recordList)
         {
-            $this->m_RootNodes = array();
+            $this->rootNodes = array();
             return;
         }
         foreach ($recordList as $rec)
         {
-            $this->m_RootNodes[] = new NodeRecord($rec);
+            $this->rootNodes[] = new NodeRecord($rec);
         }
-        if ($this->m_Depth <= 1)
-            return $this->m_RootNodes;
-        if(is_array($this->m_RootNodes)){
-	        foreach ($this->m_RootNodes as $node)
+        if ($this->depth <= 1)
+            return $this->rootNodes;
+        if(is_array($this->rootNodes)){
+	        foreach ($this->rootNodes as $node)
 	        {
 	            $this->_getChildrenNodes($node, 1);
 	        }
         }
-        return $this->m_RootNodes;
+        return $this->rootNodes;
     }
 
     /**
@@ -105,29 +105,29 @@ class BizDataTree extends BizDataObj
      */
     private function _getChildrenNodes(&$node, $depth)
     {
-        $pid = $node->m_Id;
+        $pid = $node->recordId;
 
         $searchRule = "[PId]='$pid'";
-        if ($this->m_globalSearchRule!="")
-                $searchRule .= " AND " . $this->m_globalSearchRule;
+        if ($this->globalSearchRule!="")
+                $searchRule .= " AND " . $this->globalSearchRule;
         $recordList = $this->directFetch($searchRule);
         
         foreach ($recordList as $rec)
         {
-            $node->m_ChildNodes[] = new NodeRecord($rec);
+            $node->childNodes[] = new NodeRecord($rec);
         }
         
         // reach leave node
-        if ($node->m_ChildNodes == null)
+        if ($node->childNodes == null)
             return;
 
         $depth++;
         // reach given depth
-        if ($depth >= $this->m_Depth)
+        if ($depth >= $this->depth)
             return;
         else
         {
-            foreach ($node->m_ChildNodes as $node_c)
+            foreach ($node->childNodes as $node_c)
             {
                 $this->_getChildrenNodes($node_c, $depth);
             }
@@ -148,10 +148,10 @@ class BizDataTree extends BizDataObj
  */
 class NodeRecord
 {
-    public $m_Id = "";
-    public $m_PId = "";
-    public $m_ChildNodes = null;
-    public $m_Record;
+    public $recordId = "";
+    public $recordParentId = "";
+    public $childNodes = null;
+    public $record;
 
     /**
      * Initialize Node
@@ -161,9 +161,9 @@ class NodeRecord
      */
     function __construct($rec)
     {
-        $this->m_Id = $rec['Id'];
-        $this->m_PId = $rec['PId'];
-        $this->m_Record = $rec;
+        $this->recordId = $rec['Id'];
+        $this->recordParentId = $rec['PId'];
+        $this->record = $rec;
     }
 }
 

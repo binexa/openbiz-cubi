@@ -69,7 +69,7 @@ class ToolListbox extends Listbox
             if (strpos($dbStr,'$') === 0)
             {
                 $db_fld = substr($dbStr, 1);
-                $dbName = $this->getFormObj()->getElement($db_fld)->m_Value;
+                $dbName = $this->getFormObj()->getElement($db_fld)->value;
             }
             else
             {
@@ -98,7 +98,7 @@ class ToolListbox extends Listbox
         if ($joinFld)
         {
             $joinFld = substr($joinFld, 1);
-            $fld_joinVal = $this->getFormObj()->getElement($joinFld)->m_Value;
+            $fld_joinVal = $this->getFormObj()->getElement($joinFld)->value;
             if ($fld_joinVal)
             {
                 $xpathStr = "/BizDataObj/TableJoins/Join[@Name='".$fld_joinVal."']";
@@ -115,7 +115,7 @@ class ToolListbox extends Listbox
             if (strpos($tableStr,'$') === 0)
             {
                 $table_fld = substr($tableStr, 1);
-                $table = $this->getFormObj()->getElement($table_fld)->m_Value;
+                $table = $this->getFormObj()->getElement($table_fld)->value;
                 //print_r($this->getFormObj()->getElement($table_fld));
             }
             else

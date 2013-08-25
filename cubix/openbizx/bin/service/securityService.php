@@ -29,7 +29,7 @@ class securityService
     public $m_Mode = 'DISABLED';
     private $_securityFilters = array();
     private $_messageFile;
-    protected $m_ErrorMessage = null;
+    protected $errorMessage = null;
 
     /**
      * Initialize securityService with xml array metadata
@@ -69,7 +69,7 @@ class securityService
      */
     public function getErrorMessage()
     {
-        return $this->m_ErrorMessage;
+        return $this->errorMessage;
     }
 
     /**
@@ -84,7 +84,7 @@ class securityService
             $filter->processRules();
             if($filter->getErrorMessage())
             {
-                $this->m_ErrorMessage = $filter->getErrorMessage();
+                $this->errorMessage = $filter->getErrorMessage();
                 return false;
             }
         }
@@ -106,7 +106,7 @@ class securityFilter extends MetaIterator
     protected $name = null;
     protected $m_Mode = 'DISABLED';
     protected $m_Rules = null;
-    protected $m_ErrorMessage = null;
+    protected $errorMessage = null;
 
 
     /**
@@ -147,7 +147,7 @@ class securityFilter extends MetaIterator
      */
     public function getErrorMessage()
     {
-        return $this->m_ErrorMessage;
+        return $this->errorMessage;
     }
 
     /**
@@ -164,7 +164,7 @@ class securityFilter extends MetaIterator
                 $obj->process();
                 if($obj->getErrorMessage())
                 {
-                    $this->m_ErrorMessage = $obj->getErrorMessage();
+                    $this->errorMessage = $obj->getErrorMessage();
                     return false;
                 }
             }
@@ -203,7 +203,7 @@ class securityRule_Abstract implements iSecurityRule
     public $m_Match     =	null;
     public $m_Status     =	null;
     public $m_EffectiveTime =	null;
-    public $m_ErrorMessage = null;
+    public $errorMessage = null;
 
     /**
      * Initialize reportService with xml array metadata
@@ -248,7 +248,7 @@ class securityRule_Abstract implements iSecurityRule
      */
     public function getErrorMessage()
     {
-        return $this->m_ErrorMessage;
+        return $this->errorMessage;
     }
 
     /**
@@ -325,7 +325,7 @@ class URLFilterRule extends securityRule_Abstract
 	            {
 	                if(strtoupper($this->m_Action)=='OPENBIZ_DENY')
 	                {
-	                    $this->m_ErrorMessage=BizSystem::getMessage('SECURITYSVC_URL_DENIED');
+	                    $this->errorMessage=BizSystem::getMessage('SECURITYSVC_URL_DENIED');
 	                    return false;
 	                }elseif(strtoupper($this->m_Action)=='OPENBIZ_ALLOW')
 	                {
@@ -372,7 +372,7 @@ class DomainFilterRule extends securityRule_Abstract
 	            {
 	                if(strtoupper($this->m_Action)=='OPENBIZ_DENY')
 	                {
-	                    $this->m_ErrorMessage=BizSystem::getMessage('SECURITYSVC_DOMAIN_DENIED');
+	                    $this->errorMessage=BizSystem::getMessage('SECURITYSVC_DOMAIN_DENIED');
 	                    return false;
 	                }
 	                elseif(strtoupper($this->m_Action)=='OPENBIZ_ALLOW')
@@ -419,7 +419,7 @@ class AgentFilterRule extends securityRule_Abstract
 	            {
 	                if(strtoupper($this->m_Action)=='OPENBIZ_DENY')
 	                {
-	                    $this->m_ErrorMessage=BizSystem::getMessage('SECURITYSVC_AGENT_DENIED');
+	                    $this->errorMessage=BizSystem::getMessage('SECURITYSVC_AGENT_DENIED');
 	                    return false;
 	                }
 	                elseif(strtoupper($this->m_Action)=='OPENBIZ_ALLOW')
@@ -466,7 +466,7 @@ class IPFilterRule extends securityRule_Abstract
 	            {
 	                if(strtoupper($this->m_Action)=='OPENBIZ_DENY')
 	                {
-	                    $this->m_ErrorMessage = BizSystem::getMessage('SECURITYSVC_IPADDR_DENIED');
+	                    $this->errorMessage = BizSystem::getMessage('SECURITYSVC_IPADDR_DENIED');
 	                    return false;
 	                }
 	                elseif(strtoupper($this->m_Action)=='OPENBIZ_ALLOW')
@@ -516,7 +516,7 @@ class PostFilterRule extends securityRule_Abstract
 	                {
 	                    if(strtoupper($this->m_Action)=='OPENBIZ_DENY')
 	                    {
-	                        $this->m_ErrorMessage=BizSystem::getMessage('SECURITYSVC_POST_DENIED');
+	                        $this->errorMessage=BizSystem::getMessage('SECURITYSVC_POST_DENIED');
 	                        return false;
 	                    }
 	                    elseif(strtoupper($this->m_Action)=='OPENBIZ_ALLOW')
@@ -569,7 +569,7 @@ class GetFilterRule extends securityRule_Abstract
 	            {
 	                if(strtoupper($this->m_Action)=='OPENBIZ_DENY')
 	                {
-	                    $this->m_ErrorMessage=BizSystem::getMessage('SECURITYSVC_GET_DENIED');
+	                    $this->errorMessage=BizSystem::getMessage('SECURITYSVC_GET_DENIED');
 	                    return false;
 	                }
 	                elseif(strtoupper($this->m_Action)=='OPENBIZ_ALLOW')

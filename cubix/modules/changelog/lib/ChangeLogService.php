@@ -13,7 +13,7 @@
 
 class ChangeLogService
 {
-	protected  $m_LogDO = "changelog.do.ChangeLogDO";
+	protected  $logDO = "changelog.do.ChangeLogDO";
 	
 	public function LogDataChanges( $formObj,
 									$inputRecord,
@@ -36,7 +36,7 @@ class ChangeLogService
    				$elem_mapping[$fld_name] = $elem;
    			}
    		}
-   		$logDO = $formObj->getDataObj()->getRefObject($this->m_LogDO);
+   		$logDO = $formObj->getDataObj()->getRefObject($this->logDO);
 		if (!$logDO) {
 			return true;
 		}

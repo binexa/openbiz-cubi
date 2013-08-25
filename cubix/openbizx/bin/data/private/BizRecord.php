@@ -145,7 +145,7 @@ class BizRecord extends MetaIterator
         $keyValue = "";
         foreach($this->m_KeyFldColMap as $fieldName=>$colName)
         {
-            $val = $isUseOldValue ? $this->m_var[$fieldName]->m_OldValue : $this->m_var[$fieldName]->m_Value;
+            $val = $isUseOldValue ? $this->m_var[$fieldName]->m_OldValue : $this->m_var[$fieldName]->value;
             if ($keyValue == "")
                 $keyValue .= $val;
             else
@@ -186,7 +186,7 @@ class BizRecord extends MetaIterator
         {
             if ($retStr != "") $retStr .= " AND ";
             $lhs = $isUseColumnName ? $fieldObj->m_Column : "[$fieldName]";
-            $rhs = $isUseOldValue ? $fieldObj->m_OldValue : $fieldObj->m_Value;
+            $rhs = $isUseOldValue ? $fieldObj->m_OldValue : $fieldObj->value;
             if ($rhs == "")
                 $retStr .= "(".$lhs."='".$rhs."' or ".$lhs." is null)";
             else
@@ -368,7 +368,7 @@ class BizRecord extends MetaIterator
     {
         $joinFieldName = $this->getFieldByColumn($tableJoin->m_ColumnRef, $tableJoin->m_Table);
         $joinField=$this->m_var[$joinFieldName];
-        $rhs = $isUseOldValue ? $joinField->m_OldValue : $joinField->m_Value;
+        $rhs = $isUseOldValue ? $joinField->m_OldValue : $joinField->value;
         $retStr = $tableJoin->m_Column . "='" . $rhs . "'";
         return $retStr;
     }
@@ -388,8 +388,8 @@ class BizRecord extends MetaIterator
         $inputFields = $this->m_InputFields;
         foreach ($this->m_var as $key=>$field)
         {
-            if (($type=='UPDATE' && $field->m_ValueOnUpdate != null)
-                || ($type=='CREATE' && $field->m_ValueOnCreate != null))
+            if (($type=='UPDATE' && $field->valueOnUpdate != null)
+                || ($type=='CREATE' && $field->valueOnCreate != null))
             {
                 if (!in_array($key, $this->m_InputFields))
                     $inputFields[] = $key;

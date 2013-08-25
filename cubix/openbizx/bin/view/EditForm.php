@@ -15,20 +15,20 @@ include_once "InputForm.php";
 class EditForm extends InputForm
 {
 	//list of method that can directly from browser
-	protected $m_DirectMethodList = array('updaterecord','switchform'); 
+	protected $directMethodList = array('updaterecord','switchform'); 
 
 	// get request parameters from the url
 	protected function getUrlParameters()
 	{
 		if (isset($_REQUEST['fld:Id'])) {
-			$this->m_RecordId = $_REQUEST['fld:Id'];
+			$this->recordId = $_REQUEST['fld:Id'];
 		}
 	}
 	
 	public function render()
 	{
 		$this->getUrlParameters();
-		if (empty($this->m_RecordId))
+		if (empty($this->recordId))
         {
             BizSystem::clientProxy()->showClientAlert($this->getMessage("PLEASE_EDIT_A_RECORD"));
             return;
@@ -51,7 +51,7 @@ class EditForm extends InputForm
         if ($dataObj == null) return;
 		
         // TODO: use getDataById to fetch one record
-		$dataRec = $dataObj->fetchById($this->m_RecordId);
+		$dataRec = $dataObj->fetchById($this->recordId);
 		return $dataRec->toArray();
     }
 
@@ -64,8 +64,8 @@ class EditForm extends InputForm
     {
 		$recArr = $this->readInputRecord();
 		
-		$this->m_RecordId = $recArr['Id'];
-        $currentRec = $this->getDataObj()->fetchById($this->m_RecordId);
+		$this->recordId = $recArr['Id'];
+        $currentRec = $this->getDataObj()->fetchById($this->recordId);
 		
         //$this->setActiveRecord($recArr);
         if (count($recArr) == 0)

@@ -18,13 +18,16 @@ Roadmap
 **Step 1**
 * Perform Name Convention
   - change Constants:
-    * give prefix OPENBIZ if use in framework directory (openbizx)
-    * give prefix CUBI if only used in CUBI (out side of openbiz directory)
-    * give PATH for file system and URL for web system.
+        + give prefix OPENBIZ if use in framework directory (openbizx)
+        + give prefix CUBI if only used in CUBI (out side of openbiz directory)
+        + give PATH for file system and URL for web system.
   - Remove "m_" character from variable name
+        + $varName
+        + ->varName
+        + :varName
   - Reformating source code
-  - Replace getSeesionVar and setSeesion var with loadSesion and saveSession on MetaObject. 
-    Please read name convension [here] (https://github.com/binexa/openbizx-cubix/blob/master/docs/standards/name-convention.md)  for detail.
+  - Replace getSessionVar and setSession var with loadSession and saveSession on MetaObject.
+    Please read name convension [here] (https://github.com/binexa/openbizx-cubix/blob/master/docs/name-convention.md)  for detail.
 
 **Step 2**
 * GUI Enhancement

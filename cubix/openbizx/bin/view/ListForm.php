@@ -15,7 +15,7 @@ include_once "BaseForm.php";
 class ListForm extends BaseForm
 {
 	//list of method that can directly from browser
-	protected $m_DirectMethodList = array('selectrecord','sortrecord','editrecord','copyrecord','deleterecord','removerecord','runsearch','gotopage','setpagesize','gotoselectedpage','switchform','loaddialog'); 
+	protected $directMethodList = array('selectrecord','sortrecord','editrecord','copyrecord','deleterecord','removerecord','runsearch','gotopage','setpagesize','gotoselectedpage','switchform','loaddialog'); 
 	
 	public $m_Range = 10;
 	public $searchRule = null;
@@ -29,7 +29,7 @@ class ListForm extends BaseForm
     protected $m_StartItem = 1;
     public $m_TotalPages = 1;
     protected $m_TotalRecords = 0;
-    protected $m_RecordSet = null;
+    protected $recordSet = null;
     protected $m_RefreshData = false;
 
 	protected function readMetadata($xmlArr)
@@ -59,7 +59,7 @@ class ListForm extends BaseForm
      */
     public function getSessionVars($sessionContext)
     {
-        $sessionContext->getObjVar($this->objectName, "RecordId", $this->m_RecordId);
+        $sessionContext->getObjVar($this->objectName, "RecordId", $this->recordId);
         $sessionContext->getObjVar($this->objectName, "FixSearchRule", $this->m_FixSearchRule);
         $sessionContext->getObjVar($this->objectName, "SearchRule", $this->searchRule);
         $sessionContext->getObjVar($this->objectName, "SearchRuleBindValues", $this->searchRuleBindValues);
@@ -77,7 +77,7 @@ class ListForm extends BaseForm
      */
     public function setSessionVars($sessionContext)
     {
-        $sessionContext->setObjVar($this->objectName, "RecordId", $this->m_RecordId);
+        $sessionContext->setObjVar($this->objectName, "RecordId", $this->recordId);
         $sessionContext->setObjVar($this->objectName, "FixSearchRule", $this->m_FixSearchRule);
         $sessionContext->setObjVar($this->objectName, "SearchRule", $this->searchRule);        
         $sessionContext->setObjVar($this->objectName, "SearchRuleBindValues", $this->searchRuleBindValues);
@@ -144,21 +144,21 @@ class ListForm extends BaseForm
         
         $this->getDataObj()->setActiveRecord($resultRecords[$selectedIndex]);
 
-		if(!$this->m_RecordId)
+		if(!$this->recordId)
 		{
-			$this->m_RecordId = $resultRecords[0]["Id"];
+			$this->recordId = $resultRecords[0]["Id"];
 		}else{
 			$foundRecordId = false;
 			foreach($resultRecords as $record)
 			{
-				if($this->m_RecordId==$record['Id'])
+				if($this->recordId==$record['Id'])
 				{
 					$foundRecordId = true;
 				}
 			}
 			if($foundRecordId == false)
 			{
-				$this->m_RecordId=$result[0]['Id'];
+				$this->recordId=$result[0]['Id'];
 			}			
 		}
 		
@@ -223,9 +223,9 @@ class ListForm extends BaseForm
     {
         if ($recId==null || $recId=='')
             $recId = BizSystem::clientProxy()->getFormInputs('_selectedId');
-        $this->m_RecordId = $recId;
+        $this->recordId = $recId;
         if($this->getDataObj()){
-        	$this->getDataObj()->setActiveRecordId($this->m_RecordId);
+        	$this->getDataObj()->setActiveRecordId($this->recordId);
         }
         $this->rerender(false); // not redraw the this form, but draw the subforms
         //$this->rerender(); 

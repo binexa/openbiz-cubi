@@ -23,7 +23,7 @@ class ApplicationDetailForm extends AppListForm
 		$util = BizSystem::getService(OPENBIZ_UTIL_SERVICE);
 		
 		$appInfo = $svc->discoverAppInfo($repo_uri,$app_id);
-		$this->m_RecordId = $appInfo['Id'];
+		$this->recordId = $appInfo['Id'];
 		$appInfo['icon'] = $repo_uri.$appInfo['icon'];
 		
 		$releaseInfo = $svc->discoverAppLatestRelease($repo_uri,$app_id);

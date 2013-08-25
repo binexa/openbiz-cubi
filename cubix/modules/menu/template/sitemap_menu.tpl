@@ -24,9 +24,9 @@
 	  		<div class="{$item->m_IconCSSClass}">
 				<h3>{$item->objectName}</h3>
 				<p>{$item->objectDescription}</p>	
-				{if $item->m_ChildNodes|@count > 0}
+				{if $item->childNodes|@count > 0}
 				<ul>
-				{foreach item=subitem from=$item->m_ChildNodes}													
+				{foreach item=subitem from=$item->childNodes}													
 					<li><a href="{if $subitem->m_URL}{$subitem->m_URL}{else}javascript:{/if}">{$subitem->objectName}</a></li>					
 				{/foreach}	
 				</ul>

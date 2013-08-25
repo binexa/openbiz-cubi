@@ -268,7 +268,7 @@ class genIdService
         }
         catch (Exception $e)
         {
-            $this->m_ErrorMessage = "Error in query: " . $sql . ". " . $e->getMessage();
+            $this->errorMessage = "Error in query: " . $sql . ". " . $e->getMessage();
             return false;
         }
 

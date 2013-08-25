@@ -50,12 +50,12 @@ class ChangeLogWidgetForm extends EasyForm
 				$data[$key]['label'] = $elemObj->renderLabel(); 
 				
 				$elemObj->setValue($data[$key]['old']);
-				$elemObj->m_Text = str_replace("{@:Elem[".$elemObj->objectName."].Value}",$data[$key]['old'],$elemObj->m_Text);
+				$elemObj->text = str_replace("{@:Elem[".$elemObj->objectName."].Value}",$data[$key]['old'],$elemObj->text);
 				$data[$key]['old'] = $elemObj->render();
 				
 				$elemObj = new $objName($elemObjMeta,$formObj);
 				$elemObj->setValue($data[$key]['new']);
-				$elemObj->m_Text = str_replace("{@:Elem[".$elemObj->objectName."].Value}",$data[$key]['new'],$elemObj->m_Text);
+				$elemObj->text = str_replace("{@:Elem[".$elemObj->objectName."].Value}",$data[$key]['new'],$elemObj->text);
 				$data[$key]['new'] = $elemObj->render();
 				
 				unset($data[$key]['element']);

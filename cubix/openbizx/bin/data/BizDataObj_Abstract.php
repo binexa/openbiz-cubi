@@ -541,7 +541,7 @@ abstract class BizDataObj_Abstract extends MetaObject implements iSessionObject
      */
     public function getParameter($paramName)
     {
-        return $this->parameters[$paramName]->m_Value;
+        return $this->parameters[$paramName]->value;
     }
 
     /**

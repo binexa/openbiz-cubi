@@ -11,7 +11,7 @@ class TreeLabelText extends TreeListbox
     {
         $fromList = array();
         $this->getFromList($fromList);
-        $valueArray = explode(',', $this->m_Value);
+        $valueArray = explode(',', $this->value);
 
         $sHTML = "";
         if ($this->m_BlankOption) // ADD a blank option

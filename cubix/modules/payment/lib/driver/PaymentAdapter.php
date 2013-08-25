@@ -9,7 +9,7 @@ class PaymentAdapter implements iPayment
 	protected $m_Type = '';
 		
 	protected $m_ProviderDO = "payment.provider.do.ProviderDO";
-	protected $m_LogDO = "payment.log.do.LogDO";
+	protected $logDO = "payment.log.do.LogDO";
 	
 	protected function _getProviderInfo()
 	{
@@ -73,7 +73,7 @@ class PaymentAdapter implements iPayment
 	protected function _MarkLogProcessed($txn_id)
 	{
 		$searchRule = "[txn_id]='$txn_id' AND [provider_id]='".$this->m_ProviderId."' ";
-		$record = BizSystem::getObject($this->m_LogDO)->fetchOne($searchRule);
+		$record = BizSystem::getObject($this->logDO)->fetchOne($searchRule);
 		if($record)
 		{
 			$record['processed']=1;
@@ -87,7 +87,7 @@ class PaymentAdapter implements iPayment
 	public function CheckLogProcessed($txn_id)
 	{
 		$searchRule = "[txn_id]='$txn_id' AND [provider_id]='".$this->m_ProviderId."' AND [processed]=1";
-		$record = BizSystem::getObject($this->m_LogDO)->fetchOne($searchRule);
+		$record = BizSystem::getObject($this->logDO)->fetchOne($searchRule);
 		if($record)
 		{
 			return $record['Id'];
@@ -101,7 +101,7 @@ class PaymentAdapter implements iPayment
 	public function CheckLogExists($txn_id)
 	{
 		$searchRule = "[txn_id]='$txn_id' AND [provider_id]='".$this->m_ProviderId."' ";
-		$record = BizSystem::getObject($this->m_LogDO)->fetchOne($searchRule);
+		$record = BizSystem::getObject($this->logDO)->fetchOne($searchRule);
 		if($record)
 		{
 			return $record['Id'];
@@ -125,7 +125,7 @@ class PaymentAdapter implements iPayment
     	
     	if(!$this->CheckLogExists($logArr['txn_id']))
     	{
-    		BizSystem::getObject($this->m_LogDO)->insertRecord($logArr);
+    		BizSystem::getObject($this->logDO)->insertRecord($logArr);
     	} 
     	
     	if($logArr['custom'])

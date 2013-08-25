@@ -9,10 +9,10 @@ class ActiveLogicRadio extends Radio
     	$trailDays = $appInfo['APP_TRAIL_DAYS'];
     	if((int)$trailDays){
     		unset($list[3]);
-    		$this->m_Value = 'FREETRIAL';
+    		$this->value = 'FREETRIAL';
     	}else{
     		unset($list[1]);
-    		$this->m_Value = 'PURCHASE';
+    		$this->value = 'PURCHASE';
     	}
     	foreach($list as $key=>$value)
     	{

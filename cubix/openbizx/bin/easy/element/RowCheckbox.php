@@ -53,7 +53,7 @@ class RowCheckbox extends InputElement
      */
     public function render()
     {
-        $value = $this->m_Value;
+        $value = $this->value;
         $name = $this->objectName.'[]';
         $style = $this->getStyle();
         if($this->m_CheckStatus)

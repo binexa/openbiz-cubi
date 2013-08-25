@@ -77,7 +77,7 @@ class reportService extends MetaObject
         //echo "csv file is at $tmpfname.<br>";
         $fp = fopen($tmpfname, 'w');
 
-        $keyList = $bizform->m_RecordRow->GetSortControlKeys();
+        $keyList = $bizform->recordRow->GetSortControlKeys();
         $fieldNames = array();
         foreach($keyList as $key)
         {

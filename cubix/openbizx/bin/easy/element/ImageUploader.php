@@ -81,7 +81,7 @@ class ImageUploader extends FileUploader
     		$delete_user_opt=BizSystem::clientProxy()->getFormInputs($this->objectName."_DELETE"); 
     		if($delete_user_opt)
     		{
-    			$this->m_Value="";
+    			$this->value="";
     			return;
     		}
     		else
@@ -89,7 +89,7 @@ class ImageUploader extends FileUploader
     			if(count($_FILES)>0){
     				
     			}else{
-    				$this->m_Value = $value;
+    				$this->value = $value;
     			}  
     		} 
     	}
@@ -129,13 +129,13 @@ class ImageUploader extends FileUploader
 					$this->resizeImage($fileName, $thumbFileName, $width, $height, $quality);
 
 					$result=array('picture'=>$this->m_UploadRootURL.$picFileName,'thumbpic'=>$this->m_UploadRootURL.$thumbPath);	                    
-					$this->m_Value=serialize($result);
+					$this->value=serialize($result);
 				}
 			}
 		}
 		else
 		{
-			$this->m_Value = $value;        	
+			$this->value = $value;        	
 		}    	 
     }
 
@@ -241,7 +241,7 @@ class ImageUploader extends FileUploader
         }
         $sHTML .= "
         $preview
-        <input type=\"file\" onchange=\"Openbiz.ImageUploader.updatePreview('" . $this->objectName ."')\" name=\"$this->objectName\" id=\"" . $this->objectName ."\" value=\"$this->m_Value\" $disabledStr $this->m_HTMLAttr $style $func>
+        <input type=\"file\" onchange=\"Openbiz.ImageUploader.updatePreview('" . $this->objectName ."')\" name=\"$this->objectName\" id=\"" . $this->objectName ."\" value=\"$this->value\" $disabledStr $this->m_HTMLAttr $style $func>
         $delete_opt
         ";
         return $sHTML;

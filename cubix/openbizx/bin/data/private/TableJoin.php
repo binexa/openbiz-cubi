@@ -95,7 +95,7 @@ class TableJoin extends MetaObject
 		$this->m_JoinCondition = isset($xmlArr["ATTRIBUTES"]["JOINCONDITION"]) ? $xmlArr["ATTRIBUTES"]["JOINCONDITION"] : null;
         $this->m_OnSaveDataObj = isset($xmlArr["ATTRIBUTES"]["ONSAVEDATAOBJ"]) ? $xmlArr["ATTRIBUTES"]["ONSAVEDATAOBJ"] : null;
 
-        $this->m_BizObjName = $this->prefixPackage($this->m_BizObjName);
+        $this->bizDataObjName = $this->prefixPackage($this->bizDataObjName);
     }
 }
 

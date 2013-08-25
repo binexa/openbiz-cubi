@@ -42,7 +42,7 @@ class doTriggerService extends MetaObject
      *
      * @var string
      */
-    public $m_DataObjName;
+    public $dataObjName;
 
     /**
      * List of DOTrigger object
@@ -73,8 +73,8 @@ class doTriggerService extends MetaObject
     {
         parent::readMetaData($xmlArr);
         
-        $this->m_DataObjName = $xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["DATAOBJECTNAME"];
-        $this->m_DataObjName = $this->prefixPackage($this->m_DataObjName);
+        $this->dataObjName = $xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["DATAOBJECTNAME"];
+        $this->dataObjName = $this->prefixPackage($this->dataObjName);
         $this->readMetaCollection($xmlArr["PLUGINSERVICE"]["DOTRIGGER"], $tmpList);
         if (!$tmpList)
             return;

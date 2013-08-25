@@ -15,9 +15,9 @@ include_once "BaseForm.php";
 class InputForm extends BaseForm
 {
 	//list of method that can directly from browser
-	protected $m_DirectMethodList = array('saverecord','switchform'); 
+	protected $directMethodList = array('saverecord','switchform'); 
 	
-	public $m_RecordId;
+	public $recordId;
 	public $m_ActiveRecord;
 	
     /**
@@ -97,16 +97,16 @@ class InputForm extends BaseForm
             }
             else
             {
-                $elementName = $element->m_Text;
+                $elementName = $element->text;
             }
             if ($element->checkRequired() === true &&
-                    ($element->m_Value==null || $element->m_Value == ""))
+                    ($element->value==null || $element->value == ""))
             {
                 $errorMessage = $this->getMessage("FORM_ELEMENT_REQUIRED",array($elementName));
                 $this->m_ValidateErrors[$element->objectName] = $errorMessage;
                 //return false;
             }
-            elseif ($element->m_Value!==null && $element->Validate() == false)
+            elseif ($element->value!==null && $element->Validate() == false)
             {
                 $validateService = BizSystem::getService(VALIDATE_SERVICE);
                 $errorMessage = $this->getMessage("FORM_ELEMENT_INVALID_INPUT",array($elementName,$value,$element->m_Validator));                

@@ -83,10 +83,10 @@ class MenuDataObj extends MetaObject implements iSessionObject{
     		}
     	}
     	else{
-    		if(is_array($node->m_ChildNodes)){
-    			foreach ($node->m_ChildNodes as $name=>$node){
+    		if(is_array($node->childNodes)){
+    			foreach ($node->childNodes as $name=>$node){
     				if($this->getBreadCrumb($node) == 'current'){
-    					//$node->m_ChildNodes=null;
+    					//$node->childNodes=null;
     					array_unshift($this->m_BreadCrumb,$node);    					
     					return "current";
     				}
@@ -128,7 +128,7 @@ class MenuDataObj extends MetaObject implements iSessionObject{
 	    	//$tree = $this->cutTree($tree,$deep);
         }    	
 
-    	return $tree->m_ChildNodes;
+    	return $tree->childNodes;
     }
 
     public function fetchTreeByName($start_item, $deep){
@@ -162,7 +162,7 @@ class MenuDataObj extends MetaObject implements iSessionObject{
 	    	$tree = $this->cutTree($tree,$deep);
         }    	
 
-    	return $tree->m_ChildNodes;
+    	return $tree->childNodes;
     }
         
     protected function getTreeByStartItem($name, $tree = null){
@@ -173,9 +173,9 @@ class MenuDataObj extends MetaObject implements iSessionObject{
     	if($tree->objectName==$name){
     		return $tree;
     	}else{
-    		if(is_array($tree->m_ChildNodes))
+    		if(is_array($tree->childNodes))
     		{
-    			foreach($tree->m_ChildNodes as $tree){
+    			foreach($tree->childNodes as $tree){
     				$subtree = $this->getTreeByStartItem($name, $tree);
     				if($subtree){
     					return $subtree;
@@ -191,12 +191,12 @@ class MenuDataObj extends MetaObject implements iSessionObject{
     	{
     		$tree = $this->m_MenuTreeObj;
     	}
-    	if($tree->m_Id==$id){
+    	if($tree->recordId==$id){
     		return $tree;
     	}else{
-    		if(is_array($tree->m_ChildNodes))
+    		if(is_array($tree->childNodes))
     		{
-    			foreach($tree->m_ChildNodes as $tree){
+    			foreach($tree->childNodes as $tree){
     				$subtree = $this->getTreeByStartID($id, $tree);
     				if($subtree){
     					return $subtree;
@@ -210,14 +210,14 @@ class MenuDataObj extends MetaObject implements iSessionObject{
     protected function cutTree($tree,$deep=1,$currentDeep=0){
     	
 //    		if($currentDeep>=$deep){
-//    			$tree->m_ChildNodes = null;
+//    			$tree->childNodes = null;
 //    			return $tree;
 //    		}else{
 //	    		
-//	    		if(is_array($tree->m_ChildNodes)){
+//	    		if(is_array($tree->childNodes)){
 //	    			$currentDeep++;
-//		    		foreach($tree->m_ChildNodes as $name=>$subtree){
-//		    			$tree->m_ChildNodes[$name] = $this->cutTree($subtree,$deep,$currentDeep);
+//		    		foreach($tree->childNodes as $name=>$subtree){
+//		    			$tree->childNodes[$name] = $this->cutTree($subtree,$deep,$currentDeep);
 //		    		}
 //	    		}	    		
 //    		}

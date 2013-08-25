@@ -16,7 +16,7 @@ class DataSharingForm extends EasyForm
 	public $m_hasOwnerField = false;
 	public $m_DataRecordName ;
 	
-	protected  $m_LogDO = "changelog.do.ChangeLogDO";
+	protected  $logDO = "changelog.do.ChangeLogDO";
 	
 	public function SetPrtRecordId($id)
 	{
@@ -42,7 +42,7 @@ class DataSharingForm extends EasyForm
 			return array();
 		}
 		
-		$this->SetPrtRecordId($this->m_RecordId);
+		$this->SetPrtRecordId($this->recordId);
 		
 		$recId = $this->m_ParentRecordId;
 		$dataObj = $prtFormObj->getDataObj();
@@ -152,7 +152,7 @@ class DataSharingForm extends EasyForm
 		if($result['editable']==0){
 			$result['has_ref_data'] = 0;
 		}
-		$this->m_RecordId = $result['Id'];
+		$this->recordId = $result['Id'];
 		$this->m_ParentRecordId = $result['Id'];
 		//$this->setActiveRecord($result);    	
 		if(BizSystem::allowUserAccess("data_manage.manage")){
@@ -273,7 +273,7 @@ class DataSharingForm extends EasyForm
    				$elem_mapping[$fld_name] = $elem;
    			}
    		}
-		$logDO = $dataObj->getRefObject($this->m_LogDO);
+		$logDO = $dataObj->getRefObject($this->logDO);
 		if ($logDO) {
 			
 			$cond_column = $logDO->m_Association['CondColumn'];

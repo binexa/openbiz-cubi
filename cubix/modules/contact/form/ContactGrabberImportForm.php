@@ -53,7 +53,7 @@ class ContactGrabberImportForm extends EasyForm
 		            }
 		            else
 		            {
-		                $elementName = $element->m_Text;
+		                $elementName = $element->text;
 		            }
         			$errorMessage = $this->getMessage("FORM_ELEMENT_REQUIRED",array($elementName));
                		$this->m_ValidateErrors[$element->objectName] = $errorMessage;

@@ -46,7 +46,7 @@ class BizDataObj extends BizDataObj_Lite
      **/
     public function validateInput()
     {
-        $this->m_ErrorFields = array();
+        $this->errorFields = array();
         foreach($this->bizRecord->m_InputFields as $fld)
         {
 
@@ -54,41 +54,41 @@ class BizDataObj extends BizDataObj_Lite
             $bizField = $this->bizRecord->get($fld);
             if($bizField->m_Encrypted=="Y"){
 	            if ($bizField->checkRequired() == true &&
-	                    ($bizField->m_Value===null || $bizField->m_Value === ""))
+	                    ($bizField->value===null || $bizField->value === ""))
 	            {
-	                $this->m_ErrorMessage = $this->getMessage("DATA_FIELD_REQUIRED",array($fld));
-	                $this->m_ErrorFields[$bizField->objectName] = $this->m_ErrorMessage;
+	                $this->errorMessage = $this->getMessage("DATA_FIELD_REQUIRED",array($fld));
+	                $this->errorFields[$bizField->objectName] = $this->errorMessage;
 	            }
             	continue;
             }
             if ($bizField->checkRequired() == true &&
-                    ($bizField->m_Value===null || $bizField->m_Value === ""))
+                    ($bizField->value===null || $bizField->value === ""))
             {
-                $this->m_ErrorMessage = $this->getMessage("DATA_FIELD_REQUIRED",array($fld));
-                $this->m_ErrorFields[$bizField->objectName] = $this->m_ErrorMessage;
+                $this->errorMessage = $this->getMessage("DATA_FIELD_REQUIRED",array($fld));
+                $this->errorFields[$bizField->objectName] = $this->errorMessage;
             }
-            elseif ($bizField->m_Value!==null && $bizField->checkValueType() == false)
+            elseif ($bizField->value!==null && $bizField->checkValueType() == false)
             {
-                $this->m_ErrorMessage = $this->getMessage("DATA_FIELD_INCORRECT_TYPE", array($fld, $bizField->m_Type));
-                $this->m_ErrorFields[$bizField->objectName] = $this->m_ErrorMessage;
+                $this->errorMessage = $this->getMessage("DATA_FIELD_INCORRECT_TYPE", array($fld, $bizField->m_Type));
+                $this->errorFields[$bizField->objectName] = $this->errorMessage;
             }
-            elseif ($bizField->m_Value!==null && $bizField->Validate() == false)
+            elseif ($bizField->value!==null && $bizField->Validate() == false)
             {
 
                 /* @var $validateService validateService */
                 $validateService = BizSystem::getService(VALIDATE_SERVICE);
-                $this->m_ErrorMessage = $validateService->getErrorMessage($bizField->m_Validator, $bizField->objectName);
-                if ($this->m_ErrorMessage == false)
+                $this->errorMessage = $validateService->getErrorMessage($bizField->m_Validator, $bizField->objectName);
+                if ($this->errorMessage == false)
                 { //Couldn't get a clear error message so let's try this
-                    $this->m_ErrorMessage = $this->getMessage("DATA_FIELD_INVALID_INPUT",array($fld,$value,$bizField->m_Validator));                //
+                    $this->errorMessage = $this->getMessage("DATA_FIELD_INVALID_INPUT",array($fld,$value,$bizField->m_Validator));                //
                 }
-                $this->m_ErrorFields[$bizField->objectName] = $this->m_ErrorMessage;
+                $this->errorFields[$bizField->objectName] = $this->errorMessage;
             }
         }
-        if (count($this->m_ErrorFields)>0)
+        if (count($this->errorFields)>0)
         {
-            //print_r($this->m_ErrorFields);
-            throw new ValidationException($this->m_ErrorFields);
+            //print_r($this->errorFields);
+            throw new ValidationException($this->errorFields);
             return false;
         }
 
@@ -118,32 +118,32 @@ class BizDataObj extends BizDataObj_Lite
             foreach ($fields as $fld)
             {
                 $bizField = $this->bizRecord->get($fld);
-                if ($bizField->m_Value===null || $bizField->m_Value === "" || $bizField->m_Value==$bizField->m_OldValue)
+                if ($bizField->value===null || $bizField->value === "" || $bizField->value==$bizField->m_OldValue)
                 {
                     $needCheck = false;
                     break;
                 }
                 if ($searchRule == "")
-                    $searchRule = "[".$bizField->objectName."]='".addslashes($bizField->m_Value)."'";
+                    $searchRule = "[".$bizField->objectName."]='".addslashes($bizField->value)."'";
                 else
-                    $searchRule .= " AND [".$bizField->objectName."]='".addslashes($bizField->m_Value)."'";
+                    $searchRule .= " AND [".$bizField->objectName."]='".addslashes($bizField->value)."'";
             }
             if ($needCheck)
             {
                 $recordList = $this->directFetch($searchRule, 1);                
                 if ($recordList->count()>0)
                 {
-                    $this->m_ErrorMessage = $this->getMessage("DATA_NOT_UNIQUE",array($group));
+                    $this->errorMessage = $this->getMessage("DATA_NOT_UNIQUE",array($group));
                     foreach ($fields as $fld)
                     {
-                        $this->m_ErrorFields[$fld] = $this->m_ErrorMessage;
+                        $this->errorFields[$fld] = $this->errorMessage;
                     }
                 }
             }
         }
-        if (count($this->m_ErrorFields)>0)
+        if (count($this->errorFields)>0)
         {
-            throw new ValidationException($this->m_ErrorFields);
+            throw new ValidationException($this->errorFields);
             return false;
         }
         return true;
@@ -230,8 +230,8 @@ class BizDataObj extends BizDataObj_Lite
         $this->events()->trigger(__FUNCTION__ . '.pre', $this, array('record'=>$recArr,'old_record'=>$oldRecord));
 		if (!$this->canUpdateRecord($oldRecord))
         {
-            $this->m_ErrorMessage = BizSystem::getMessage("DATA_NO_PERMISSION_UPDATE",$this->objectName);
-            throw new BDOException($this->m_ErrorMessage);
+            $this->errorMessage = BizSystem::getMessage("DATA_NO_PERMISSION_UPDATE",$this->objectName);
+            throw new BDOException($this->errorMessage);
             return false;
         }
 
@@ -275,15 +275,15 @@ class BizDataObj extends BizDataObj_Lite
                     throw $e;
                 else {
                     BizSystem::log(LOG_ERR, "DATAOBJ", "Query error : ".$e->getMessage());
-                    $this->m_ErrorMessage = $this->getMessage("DATA_ERROR_QUERY").": ".$sql.". ".$e->getMessage();
-                    throw new BDOException($this->m_ErrorMessage);
+                    $this->errorMessage = $this->getMessage("DATA_ERROR_QUERY").": ".$sql.". ".$e->getMessage();
+                    throw new BDOException($this->errorMessage);
                 }
                 return false;
             }
 
             $this->cleanCache(); //clean cached data
             $this->_postUpdateLobFields($recArr);
-            $this->m_CurrentRecord = null; 
+            $this->currentRecord = null; 
             $this->_postUpdateRecord($recArr);
         }
 		$this->events()->trigger(__FUNCTION__ . '.post', $this, array('record'=>$recArr,'old_record'=>$oldRecord));
@@ -294,7 +294,7 @@ class BizDataObj extends BizDataObj_Lite
     {
         if (!$this->canUpdateRecordCondition())
         {
-            $this->m_ErrorMessage = BizSystem::getMessage("DATA_NO_PERMISSION_UPDATE",$this->objectName);
+            $this->errorMessage = BizSystem::getMessage("DATA_NO_PERMISSION_UPDATE",$this->objectName);
             return false;
         }
 		/*当$setValue是数组时转成[field]=value格式*/
@@ -321,8 +321,8 @@ class BizDataObj extends BizDataObj_Lite
         catch (Exception $e)
         {
             BizSystem::log(LOG_ERR, "DATAOBJ", "Query error : ".$e->getMessage());
-            $this->m_ErrorMessage = $this->getMessage("DATA_ERROR_QUERY").": ".$sql.". ".$e->getMessage();
-            throw new BDOException($this->m_ErrorMessage);
+            $this->errorMessage = $this->getMessage("DATA_ERROR_QUERY").": ".$sql.". ".$e->getMessage();
+            throw new BDOException($this->errorMessage);
             return false;
         }
 
@@ -358,10 +358,10 @@ class BizDataObj extends BizDataObj_Lite
                 }
                 catch (Exception $e)
                 {
-                    $this->m_ErrorMessage = $this->getMessage("DATA_ERROR_QUERY").": ".$sql.". ".$e->getMessage();
+                    $this->errorMessage = $this->getMessage("DATA_ERROR_QUERY").": ".$sql.". ".$e->getMessage();
                     BizSystem::log(LOG_ERR, "DATAOBJ", "Update lob error = $sql");
                     fclose($fp);
-                    throw new BDOException($this->m_ErrorMessage);
+                    throw new BDOException($this->errorMessage);
                     return null;
                 }
 
@@ -426,7 +426,7 @@ class BizDataObj extends BizDataObj_Lite
 
         if (!$isBeforeInsert && $this->idGeneration != 'Identity')
         {
-            $this->m_ErrorMessage = BizSystem::getMessage( "DATA_UNABLE_GET_ID",$this->objectName);
+            $this->errorMessage = BizSystem::getMessage( "DATA_UNABLE_GET_ID",$this->objectName);
             return false;
         }
 
@@ -448,7 +448,7 @@ class BizDataObj extends BizDataObj_Lite
         }
         catch (Exception $e)
         {
-            $this->m_ErrorMessage = $e->getMessage();
+            $this->errorMessage = $e->getMessage();
             return false;
         }
         return $newId;
@@ -492,8 +492,8 @@ class BizDataObj extends BizDataObj_Lite
         catch (Exception $e)
         {
             BizSystem::log(LOG_ERR, "DATAOBJ", "Query Error : " . $e->getMessage());
-            $this->m_ErrorMessage = $this->getMessage("DATA_ERROR_QUERY").": ".$sql.". ".$e->getMessage();
-            throw new BDOException($this->m_ErrorMessage);
+            $this->errorMessage = $this->getMessage("DATA_ERROR_QUERY").": ".$sql.". ".$e->getMessage();
+            throw new BDOException($this->errorMessage);
             return null;
         }
 
@@ -501,14 +501,14 @@ class BizDataObj extends BizDataObj_Lite
 
         if ($this->_postUpdateLobFields($recArr) === false)
         {
-            $this->m_ErrorMessage = $db->ErrorMsg();
+            $this->errorMessage = $db->ErrorMsg();
             return false;
         }
 
         $this->cleanCache();
 
-        $this->m_RecordId = $recArr["Id"];
-        $this->m_CurrentRecord = null;
+        $this->recordId = $recArr["Id"];
+        $this->currentRecord = null;
 
         $this->_postInsertRecord($recArr);
 		$this->events()->trigger(__FUNCTION__ . '.post', $this, array('record',$recArr));
@@ -537,8 +537,8 @@ class BizDataObj extends BizDataObj_Lite
         $this->events()->trigger(__FUNCTION__ . '.pre', $this, array('record',$recArr));
 		if (!$this->canDeleteRecord())
         {            
-            $this->m_ErrorMessage = BizSystem::getMessage("DATA_NO_PERMISSION_DELETE",$this->objectName);
-            throw new BDOException($this->m_ErrorMessage);
+            $this->errorMessage = BizSystem::getMessage("DATA_NO_PERMISSION_DELETE",$this->objectName);
+            throw new BDOException($this->errorMessage);
             return false;
         }
 
@@ -570,8 +570,8 @@ class BizDataObj extends BizDataObj_Lite
                     throw $e;
                 else {
                     BizSystem::log(LOG_ERR, "DATAOBJ", "Query error : ".$e->getMessage());
-                    $this->m_ErrorMessage = $this->getMessage("DATA_ERROR_QUERY").": ".$sql.". ".$e->getMessage();
-                    throw new BDOException($this->m_ErrorMessage);
+                    $this->errorMessage = $this->getMessage("DATA_ERROR_QUERY").": ".$sql.". ".$e->getMessage();
+                    throw new BDOException($this->errorMessage);
                 }
                 return false;
             }
@@ -608,8 +608,8 @@ class BizDataObj extends BizDataObj_Lite
         {
             BizSystem::log(LOG_ERR, "DATAOBJ", "Query error : ".$e->getMessage());
             $db->rollBack(); //if one failed then rollback all
-            $this->m_ErrorMessage = $this->getMessage("DATA_ERROR_QUERY").": ".$sql.". ".$e->getMessage();
-            throw new BDOException($this->m_ErrorMessage);
+            $this->errorMessage = $this->getMessage("DATA_ERROR_QUERY").": ".$sql.". ".$e->getMessage();
+            throw new BDOException($this->errorMessage);
             return false;
         }
 
@@ -671,7 +671,7 @@ class BizDataObj extends BizDataObj_Lite
                 else if ($objRef->m_OnDelete == "Restrict") {
                     // check if objRef has records
                     $refObj = $this->getRefObject($objRef->objectName);  
-                	$sql = "`$column`='".$refField->m_Value."'";
+                	$sql = "`$column`='".$refField->value."'";
                     if($column2 && $fieldVal2){
                     	$sql .= " AND ".$column2."='".$fieldVal2."'"; 	
                     }                  
@@ -683,10 +683,10 @@ class BizDataObj extends BizDataObj_Lite
             }
             else if ($cascadeType=='Update') {
                 // check if the column value is actually changed
-                if ($refField->m_OldValue == $refField->m_Value) return;
+                if ($refField->m_OldValue == $refField->value) return;
                 
                 if ($objRef->m_OnUpdate == "Cascade") {
-                    $sql = "UPDATE ".$table." SET $column='".$refField->m_Value."' WHERE ".$column."='".$refField->m_OldValue."'";
+                    $sql = "UPDATE ".$table." SET $column='".$refField->value."' WHERE ".$column."='".$refField->m_OldValue."'";
                	 	if($column2 && $fieldVal2){
                     	$sql .= " AND ".$column2."='".$fieldVal2."'"; 	
                     }
@@ -716,8 +716,8 @@ class BizDataObj extends BizDataObj_Lite
             }
             catch (Exception $e) {
                 BizSystem::log(LOG_Err, "DATAOBJ", "Cascade $cascadeType Error: ".$e->getMessage());
-                $this->m_ErrorMessage = $this->getMessage("DATA_ERROR_QUERY").": ".$sql.". ".$e->getMessage();
-                throw new BDOException($this->m_ErrorMessage);
+                $this->errorMessage = $this->getMessage("DATA_ERROR_QUERY").": ".$sql.". ".$e->getMessage();
+                throw new BDOException($this->errorMessage);
             }
         }
     }

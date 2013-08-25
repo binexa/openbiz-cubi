@@ -20,14 +20,14 @@
         		
     </DataPanel>
     <ActionPanel>
-    	<Element Name="lnk_switch" Class="Button" Text="{@:m_ModeStatus =='Enabled'?On:Off}" CssClass="{@:m_ModeStatus =='Enabled'?button_switch_on:button_switch_off}" Description="switch mode" >
+    	<Element Name="lnk_switch" Class="Button" Text="{@:modeStatus =='Enabled'?On:Off}" CssClass="{@:modeStatus =='Enabled'?button_switch_on:button_switch_off}" Description="switch mode" >
 			<EventHandler Name="lnk_switch_onclick" Event="onclick" EventLogMsg="" Function="SwitchMode()"  ShortcutKey="Ctrl+O" ContextMenu="Switch"/>
         </Element>    
         <Element Name="lnk_new" Class="Button" Text="Add" CssClass="button_gray_add" Description="new record (Insert)" >
 			<EventHandler Name="lnk_new_onclick" Event="onclick" EventLogMsg="" Function="SwitchForm(security.form.PostRuleNewForm)"  ShortcutKey="Insert" ContextMenu="New"/>
         </Element>
         <Element Name="btn_edit" Class="Button" Text="Edit" CssClass="button_gray_m" Description="edit record (Ctrl+E)">
-            <EventHandler Name="btn_edit_onclick" Event="onclick" EventLogMsg="" Function="EditRecord()" RedirectPage="form=security.form.PostRuleEditForm&amp;fld:Id={@:m_RecordId}" ShortcutKey="Ctrl+E" ContextMenu="Edit" />
+            <EventHandler Name="btn_edit_onclick" Event="onclick" EventLogMsg="" Function="EditRecord()" RedirectPage="form=security.form.PostRuleEditForm&amp;fld:Id={@:recordId}" ShortcutKey="Ctrl+E" ContextMenu="Edit" />
         </Element>
  
                 

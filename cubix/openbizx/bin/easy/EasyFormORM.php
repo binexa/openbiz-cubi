@@ -1,7 +1,7 @@
 <?php 
 class EasyFormORM extends EasyForm
 {
-	protected $m_AssocDOs = array();
+	protected $assocDOs = array();
 	
 	/**
 	 * 
@@ -12,9 +12,9 @@ class EasyFormORM extends EasyForm
 	 */
 	protected function getAssocDOs()
 	{
-		if($this->m_AssocDOs)
+		if($this->assocDOs)
 		{
-			return $this->m_AssocDOs;
+			return $this->assocDOs;
 		}
 		$formMainDO = $this->getDataObj();
 		foreach ($this->m_DataPanel as $element)
@@ -23,10 +23,10 @@ class EasyFormORM extends EasyForm
             $refObj = $formMainDO->getRefObject($objName);
             if($refObj)
             {
-         		$this->m_AssocDOs[$refObj->objectName] = $refObj;   
+         		$this->assocDOs[$refObj->objectName] = $refObj;   
             }
         }
-        return $this->m_AssocDOs;
+        return $this->assocDOs;
 	}
 	
 	/**

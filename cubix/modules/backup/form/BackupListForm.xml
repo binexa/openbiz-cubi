@@ -62,7 +62,7 @@
         </Element>
     </NavPanel> 
     <SearchPanel>
-		<Element Name="device_selector"  Class="backup.form.LocationSelector" FieldName="location_id" Text="{@:m_LocationId}" SelectFrom="backup.do.BackupDeviceDO[name:Id:system]" >
+		<Element Name="device_selector"  Class="backup.form.LocationSelector" FieldName="location_id" Text="{@:locationId}" SelectFrom="backup.do.BackupDeviceDO[name:Id:system]" >
             <EventHandler Name="device_selector_onchange" Event="onchange" Function="RunSearch()"/>
         </Element> 
     </SearchPanel>

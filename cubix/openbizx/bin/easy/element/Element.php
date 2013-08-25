@@ -24,11 +24,11 @@
  */
 class Element extends MetaObject implements iUIControl
 {
-    public $m_Style;
-    public $m_cssClass;
-    public $m_cssErrorClass;
-    public $m_Width;
-    public $m_Height;
+    public $style;
+    public $cssClass;
+    public $cssErrorClass;
+    public $width;
+    public $height;
     public $m_BizDataObj;
     public $m_Hidden = "N";       // support expression
     public $m_HTMLAttr;
@@ -41,7 +41,7 @@ class Element extends MetaObject implements iUIControl
     public $m_XMLMeta;
 
     public $m_SortFlag;
-    public $m_Value = "";
+    public $value = "";
     public $m_FormName;
     public $m_Extra;
     public $m_ElementSet;
@@ -90,18 +90,18 @@ class Element extends MetaObject implements iUIControl
         $this->objectDescription = isset($xmlArr["ATTRIBUTES"]["DESCRIPTION"]) ? $xmlArr["ATTRIBUTES"]["DESCRIPTION"] : null;
         $this->m_Access = isset($xmlArr["ATTRIBUTES"]["ACCESS"]) ? $xmlArr["ATTRIBUTES"]["ACCESS"] : null;
         $this->m_DefaultValue = isset($xmlArr["ATTRIBUTES"]["DEFAULTVALUE"]) ? $xmlArr["ATTRIBUTES"]["DEFAULTVALUE"] : null;
-        $this->m_cssClass = isset($xmlArr["ATTRIBUTES"]["CSSCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSCLASS"] : null;
-        $this->m_cssErrorClass = isset($xmlArr["ATTRIBUTES"]["CSSERRORCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSERRORCLASS"] : "input_error";
-        $this->m_Style = isset($xmlArr["ATTRIBUTES"]["STYLE"]) ? $xmlArr["ATTRIBUTES"]["STYLE"] : null;
-        $this->m_Width = isset($xmlArr["ATTRIBUTES"]["WIDTH"]) ? $xmlArr["ATTRIBUTES"]["WIDTH"] : null;
-        $this->m_Height = isset($xmlArr["ATTRIBUTES"]["HEIGHT"]) ? $xmlArr["ATTRIBUTES"]["HEIGHT"] : null;
+        $this->cssClass = isset($xmlArr["ATTRIBUTES"]["CSSCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSCLASS"] : null;
+        $this->cssErrorClass = isset($xmlArr["ATTRIBUTES"]["CSSERRORCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSERRORCLASS"] : "input_error";
+        $this->style = isset($xmlArr["ATTRIBUTES"]["STYLE"]) ? $xmlArr["ATTRIBUTES"]["STYLE"] : null;
+        $this->width = isset($xmlArr["ATTRIBUTES"]["WIDTH"]) ? $xmlArr["ATTRIBUTES"]["WIDTH"] : null;
+        $this->height = isset($xmlArr["ATTRIBUTES"]["HEIGHT"]) ? $xmlArr["ATTRIBUTES"]["HEIGHT"] : null;
         $this->m_Hidden = isset($xmlArr["ATTRIBUTES"]["HIDDEN"]) ? $xmlArr["ATTRIBUTES"]["HIDDEN"] : null;
         $this->m_HTMLAttr = isset($xmlArr["ATTRIBUTES"]["HTMLATTR"]) ? $xmlArr["ATTRIBUTES"]["HTMLATTR"] : null;
         $this->m_ElementSet = isset($xmlArr["ATTRIBUTES"]["ELEMENTSET"]) ? $xmlArr["ATTRIBUTES"]["ELEMENTSET"] : null;
         $this->m_ElementSetCode = isset($xmlArr["ATTRIBUTES"]["ELEMENTSET"]) ? $xmlArr["ATTRIBUTES"]["ELEMENTSET"] : null;          
         $this->m_TabSet = isset($xmlArr["ATTRIBUTES"]["TABSET"]) ? $xmlArr["ATTRIBUTES"]["TABSET"] : null;
         $this->m_TabSetCode = isset($xmlArr["ATTRIBUTES"]["TABSET"]) ? $xmlArr["ATTRIBUTES"]["TABSET"] : null;
-        $this->m_Text = isset($xmlArr["ATTRIBUTES"]["TEXT"]) ? $xmlArr["ATTRIBUTES"]["TEXT"] : null;
+        $this->text = isset($xmlArr["ATTRIBUTES"]["TEXT"]) ? $xmlArr["ATTRIBUTES"]["TEXT"] : null;
         $this->m_Translatable = isset($xmlArr["ATTRIBUTES"]["TRANSLATABLE"]) ? $xmlArr["ATTRIBUTES"]["TRANSLATABLE"] : null;
         $this->m_FuzzySearch = isset($xmlArr["ATTRIBUTES"]["FUZZYSEARCH"]) ? $xmlArr["ATTRIBUTES"]["FUZZYSEARCH"] : null;
         $this->m_OnEventLog = isset($xmlArr["ATTRIBUTES"]["ONEVENTLOG"]) ? $xmlArr["ATTRIBUTES"]["ONEVENTLOG"] : null;
@@ -161,7 +161,7 @@ class Element extends MetaObject implements iUIControl
 
     public function reset()
     {
-    	$this->m_Value = null;
+    	$this->value = null;
     	if ($this->m_EventHandlers != null)
         {
             foreach ($this->m_EventHandlers as $eventHandler)
@@ -176,7 +176,7 @@ class Element extends MetaObject implements iUIControl
      */
     public function setValue($value)
     {
-        $this->m_Value = $value;        
+        $this->value = $value;        
         if($this->m_KeepCookie=='Y'){
         	if($value!=""){
         		$formName = $this->getFormObj()->objectName;       
@@ -192,7 +192,7 @@ class Element extends MetaObject implements iUIControl
      */
     public function getValue()
     {
-        return $this->m_Value;
+        return $this->value;
     }
 
     /**
@@ -294,18 +294,18 @@ class Element extends MetaObject implements iUIControl
     protected function getStyle()
     {        
 		$formobj = $this->getFormObj();
-        $htmlClass = Expression::evaluateExpression($this->m_cssClass, $formobj);
+        $htmlClass = Expression::evaluateExpression($this->cssClass, $formobj);
         $htmlClass = "CLASS='$htmlClass'";
         if(!$htmlClass){
         	$htmlClass = null;
         }
         $style ='';
-        if ($this->m_Width && $this->m_Width>=0)
-            $style .= "width:".$this->m_Width."px;";
-        if ($this->m_Height && $this->m_Height>=0)
-            $style .= "height:".$this->m_Height."px;";
-        if ($this->m_Style)
-            $style .= $this->m_Style;
+        if ($this->width && $this->width>=0)
+            $style .= "width:".$this->width."px;";
+        if ($this->height && $this->height>=0)
+            $style .= "height:".$this->height."px;";
+        if ($this->style)
+            $style .= $this->style;
         if (!isset($style) && !$htmlClass)
             return null;
         if (isset($style))
@@ -316,7 +316,7 @@ class Element extends MetaObject implements iUIControl
         }
         if($formobj->m_Errors[$this->objectName])
         {
-      	    $htmlClass = "CLASS='".$this->m_cssErrorClass."'";
+      	    $htmlClass = "CLASS='".$this->cssErrorClass."'";
         }
         if ($htmlClass)
             $style = $htmlClass." ".$style;
@@ -338,10 +338,10 @@ class Element extends MetaObject implements iUIControl
      */
     protected function getText()
     {
-        if ($this->m_Text == null)
+        if ($this->text == null)
             return null;
         $formobj = $this->getFormObj();
-        return Expression::evaluateExpression($this->m_Text, $formobj);
+        return Expression::evaluateExpression($this->text, $formobj);
     }
     
     public function getDescription()
@@ -573,8 +573,8 @@ class Element extends MetaObject implements iUIControl
     protected function translate()
     {
     	$module = $this->getModuleName($this->m_FormName);
-    	if (!empty($this->m_Text))
-    		$this->m_Text = I18n::t($this->m_Text, $this->getTransKey('Text'), $module, $this->getTransPrefix());
+    	if (!empty($this->text))
+    		$this->text = I18n::t($this->text, $this->getTransKey('Text'), $module, $this->getTransPrefix());
     	if (!empty($this->m_Label))
     		$this->m_Label = I18n::t($this->m_Label, $this->getTransKey('Label'), $module, $this->getTransPrefix());
     	if (!empty($this->objectDescription))

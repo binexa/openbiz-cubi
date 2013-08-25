@@ -31,7 +31,7 @@ protected function renderList(){
             $list = array_merge($entryList, $list);
         }    	
     	
-    	$value = $this->m_Value ? $this->m_Value : $this->getText();
+    	$value = $this->value ? $this->value : $this->getText();
     	$sHTML = "<div  class=\"dropdownlist\"  id=\"".$formNameStr.$this->objectName."_scroll\" style=\"display:none;\">".
     	$sHTML .= "<ul style=\"display:none;z-index:50\" id=\"".$formNameStr.$this->objectName."_list\">";
     	$theme = Resource::getCurrentTheme();
@@ -71,7 +71,7 @@ protected function renderList(){
 							$('".$formNameStr.$this->objectName."_hidden').setValue('".addslashes($val)."');
 							$('span_".$formNameStr.$this->objectName."').innerHTML = this.innerHTML;							
 							$onchange_func ;
-							$('".$formNameStr.$this->objectName."').className='".$this->m_cssClass."'
+							$('".$formNameStr.$this->objectName."').className='".$this->cssClass."'
 							\"					
 				>$li_option_value</li>";
     		

@@ -33,7 +33,7 @@ class InputElement extends Element
     public $m_DefaultValueRename = "Y";
     public $m_Required = "N";
     public $m_Enabled = "Y";      // support expression
-    public $m_Text;
+    public $text;
     public $m_Hint;
 
     /**
@@ -52,12 +52,12 @@ class InputElement extends Element
         $this->m_DefaultValueRename = isset($xmlArr["ATTRIBUTES"]["DEFAULTVALUERENAME"]) ? $xmlArr["ATTRIBUTES"]["DEFAULTVALUERENAME"] : "Y";
         $this->m_Required = isset($xmlArr["ATTRIBUTES"]["REQUIRED"]) ? $xmlArr["ATTRIBUTES"]["REQUIRED"] : null;
         $this->m_Enabled = isset($xmlArr["ATTRIBUTES"]["ENABLED"]) ? $xmlArr["ATTRIBUTES"]["ENABLED"] : null;
-        $this->m_Text = isset($xmlArr["ATTRIBUTES"]["TEXT"]) ? $xmlArr["ATTRIBUTES"]["TEXT"] : null;
+        $this->text = isset($xmlArr["ATTRIBUTES"]["TEXT"]) ? $xmlArr["ATTRIBUTES"]["TEXT"] : null;
 
         $this->m_Hint = isset($xmlArr["ATTRIBUTES"]["HINT"]) ? $xmlArr["ATTRIBUTES"]["HINT"] : null;
         
         // if no class name, add default class name. i.e. NewRecord => ObjName.NewRecord
-        $this->m_ValuePicker = $this->prefixPackage($this->m_ValuePicker);
+        $this->valuePicker = $this->prefixPackage($this->valuePicker);
     }
 
 
@@ -84,7 +84,7 @@ class InputElement extends Element
     	$value=parent::getValue();
     	if($value==$this->m_Hint)
     	{
-    		$this->m_Value = null;
+    		$this->value = null;
     		return null;
     	}
     	return $value;
@@ -108,7 +108,7 @@ class InputElement extends Element
      */
     public function render()
     {
-        return $this->m_Value;
+        return $this->value;
     }
 
     /**

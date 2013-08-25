@@ -2,7 +2,7 @@
 //include_once ('ColumnBar.php');
 class LabelBar extends ColumnBar {
     public function render(){
-    	$value = $this->m_Text ? $this->getText() : $this->m_Value;
+    	$value = $this->text ? $this->getText() : $this->value;
     	if($this->m_Color)
     	{
     		$formObj = $this->getFormObj();
@@ -26,8 +26,8 @@ class LabelBar extends ColumnBar {
         $style = $this->getStyle();
         $id = $this->objectName;
         $func = $this->getFunction();
-        $height = $this->m_Height;
-        $width = $this->m_Width - 80;        
+        $height = $this->height;
+        $width = $this->width - 80;        
         $max_value = Expression::evaluateExpression($this->m_MaxValue, $this->getFormObj());
         
         $width_rate = ($value/$max_value);

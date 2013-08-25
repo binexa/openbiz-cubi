@@ -14,7 +14,7 @@
 class ReleaseForm extends PickerForm
 {
 	
-	public $m_BasePath = 'attachment';
+	public $basePath = 'attachment';
 	
 	public function uploadFile()
 	{
@@ -27,13 +27,13 @@ class ReleaseForm extends PickerForm
 		try {
 
                                 
-            if(!file_exists(OPENBIZ_PUBLIC_UPLOAD_PATH.DIRECTORY_SEPARATOR.$this->m_BasePath.DIRECTORY_SEPARATOR.$upload_dir.DIRECTORY_SEPARATOR.$upload_user_dir)) {
-                @mkdir(OPENBIZ_PUBLIC_UPLOAD_PATH.DIRECTORY_SEPARATOR.$this->m_BasePath.DIRECTORY_SEPARATOR.$upload_dir.DIRECTORY_SEPARATOR.$upload_user_dir,0777,true);
+            if(!file_exists(OPENBIZ_PUBLIC_UPLOAD_PATH.DIRECTORY_SEPARATOR.$this->basePath.DIRECTORY_SEPARATOR.$upload_dir.DIRECTORY_SEPARATOR.$upload_user_dir)) {
+                @mkdir(OPENBIZ_PUBLIC_UPLOAD_PATH.DIRECTORY_SEPARATOR.$this->basePath.DIRECTORY_SEPARATOR.$upload_dir.DIRECTORY_SEPARATOR.$upload_user_dir,0777,true);
             }				
             
-            $targetPath = OPENBIZ_PUBLIC_UPLOAD_PATH.DIRECTORY_SEPARATOR.$this->m_BasePath.DIRECTORY_SEPARATOR.$upload_dir.DIRECTORY_SEPARATOR.$upload_user_dir.DIRECTORY_SEPARATOR;
+            $targetPath = OPENBIZ_PUBLIC_UPLOAD_PATH.DIRECTORY_SEPARATOR.$this->basePath.DIRECTORY_SEPARATOR.$upload_dir.DIRECTORY_SEPARATOR.$upload_user_dir.DIRECTORY_SEPARATOR;
             
-            $targetURL = OPENBIZ_PUBLIC_UPLOAD_URL."/".$this->m_BasePath."/".$upload_dir."/".$upload_user_dir."/";
+            $targetURL = OPENBIZ_PUBLIC_UPLOAD_URL."/".$this->basePath."/".$upload_dir."/".$upload_user_dir."/";
             
             $tempFile = $_FILES['Filedata']['tmp_name'];	
             $newFilename = 	date("YmdHis")."_".uniqid().'.att';
@@ -137,9 +137,9 @@ class ReleaseForm extends PickerForm
     public function loadDialog($formName, $id=null)
     {
     	$paramFields = array();
-        if ($id==null && $this->m_RecordId!=null)
+        if ($id==null && $this->recordId!=null)
         {
-        	$id = $this->m_RecordId;
+        	$id = $this->recordId;
         }
         if($id!=null)
             $paramFields["Id"] = $id;
@@ -165,12 +165,12 @@ class ReleaseForm extends PickerForm
             
             if(!$this->canDeleteRecord($dataRec))
             {
-            	$this->m_ErrorMessage = $this->getMessage("FORM_OPEATION_NOT_PERMITTED",$this->objectName);         
+            	$this->errorMessage = $this->getMessage("FORM_OPEATION_NOT_PERMITTED",$this->objectName);         
         		if (strtoupper($this->m_FormType) == "LIST"){
         			BizSystem::log(LOG_ERR, "DATAOBJ", "DataObj error = ".$errorMsg);
-        			BizSystem::clientProxy()->showClientAlert($this->m_ErrorMessage);
+        			BizSystem::clientProxy()->showClientAlert($this->errorMessage);
         		}else{
-        			$this->processFormObjError(array($this->m_ErrorMessage));	
+        			$this->processFormObjError(array($this->errorMessage));	
         		}	
         		return;
             }
@@ -204,7 +204,7 @@ class ReleaseForm extends PickerForm
 		if ($id==null || $id=='')
             $id = BizSystem::clientProxy()->getFormInputs('_selectedId');
         if(!$id)
-        	$id=$this->m_RecordId;
+        	$id=$this->recordId;
 		$dataRec = $this->getDataObj()->fetchById($id);
 		$file_source = $dataRec['path'];
 		$file_name = $dataRec['filename'];

@@ -50,7 +50,7 @@ return array(
     'Zend_Db_Adapter_Oracle'                               => __DIR__ . '/Zend/Db/Adapter/Oracle.php',
     'Zend_Db_Adapter_Pdo_Abstract'                         => __DIR__ . '/Zend/Db/Adapter/Pdo/Abstract.php',
     'Zend_Db_Adapter_Pdo_Ibm_Db2'                          => __DIR__ . '/Zend/Db/Adapter/Pdo/Ibm/Db2.php',
-    'Zend_Db_Adapter_Pdo_Ibm_Ids'                          => __DIR__ . '/Zend/Db/Adapter/Pdo/Ibm/Ids.php',
+    'Zend_Db_Adapter_Pdo_IbrecordIds'                          => __DIR__ . '/Zend/Db/Adapter/Pdo/Ibm/Ids.php',
     'Zend_Db_Adapter_Pdo_Ibm'                              => __DIR__ . '/Zend/Db/Adapter/Pdo/Ibm.php',
     'Zend_Db_Adapter_Pdo_Mssql'                            => __DIR__ . '/Zend/Db/Adapter/Pdo/Mssql.php',
     'Zend_Db_Adapter_Pdo_Mysql'                            => __DIR__ . '/Zend/Db/Adapter/Pdo/Mysql.php',

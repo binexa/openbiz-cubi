@@ -25,11 +25,11 @@ class LabelImage extends LabelText
     {
     	$this->m_Prefix = Expression::evaluateExpression($this->m_Prefix, $formobj);
     	$func = $this->getFunction();
-    	if($this->m_Width){
-    		$width_str = " width=\"".$this->m_Width."\" ";
+    	if($this->width){
+    		$width_str = " width=\"".$this->width."\" ";
     	}
-        if($this->m_Height){
-    		$height_str = " height=\"".$this->m_Height."\" ";
+        if($this->height){
+    		$height_str = " height=\"".$this->height."\" ";
     	}    	
     	$value = $this->getText()?$this->getText():$this->getValue();
     	if($value){

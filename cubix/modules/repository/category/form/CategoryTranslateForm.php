@@ -15,7 +15,7 @@ class CategoryTranslateForm extends PickerForm
 {
 
 	protected $m_TranslateDO = "repository.category.do.CategoryTranslateDO";
-	protected $m_RecordFKField = "repo_cat_id";
+	protected $recordFKField = "repo_cat_id";
 	
 	
 	public function fetchData()
@@ -29,7 +29,7 @@ class CategoryTranslateForm extends PickerForm
 		$record_id = $result["Id"];
 		
 		$transDO = BizSystem::getObject($this->m_TranslateDO,1);
-		$currentRecord = $transDO->fetchOne("[{$this->m_RecordFKField}]='$record_id' AND [lang]='$lang'");
+		$currentRecord = $transDO->fetchOne("[{$this->recordFKField}]='$record_id' AND [lang]='$lang'");
 		if($currentRecord){
 			$currentRecord = $currentRecord->toArray();
 			foreach($currentRecord as $field => $value)
@@ -77,7 +77,7 @@ class CategoryTranslateForm extends PickerForm
 		$transDO = BizSystem::getObject($this->m_TranslateDO,1);
 		
 		$newRecord = array(
-    					"{$this->m_RecordFKField}" =>$record_id,
+    					"{$this->recordFKField}" =>$record_id,
 						"lang"=>$lang,
 						);
 		foreach($inputRecord as $field=>$value)
@@ -88,7 +88,7 @@ class CategoryTranslateForm extends PickerForm
 			}
 		}
 		
-		$searchRule = "[{$this->m_RecordFKField}]='$record_id' AND [lang]='$lang'";
+		$searchRule = "[{$this->recordFKField}]='$record_id' AND [lang]='$lang'";
 		$currentRecord = $transDO->fetchOne($searchRule);
 		if($currentRecord){
 			$currentRecord = $currentRecord->toArray();

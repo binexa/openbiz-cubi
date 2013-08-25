@@ -27,7 +27,7 @@
 class EditCombobox extends OptionElement
 {
     public $m_BlankOption;
-    protected $m_WidthInput = "128px";
+    protected $widthInput = "128px";
     protected $m_Onchange = "";
 
     /**
@@ -49,15 +49,15 @@ class EditCombobox extends OptionElement
      */
     protected function getStyle()
     {
-        $htmlClass = $this->m_cssClass ? "class='".$this->m_cssClass."' " : "class='editcombobox'";
+        $htmlClass = $this->cssClass ? "class='".$this->cssClass."' " : "class='editcombobox'";
         /* 
-        $width = $this->m_Width ? $this->m_Width : 146;
-        $this->m_WidthInput = ($width-18).'px';
-        $this->m_Width = $width.'px';
-        $style = "position: absolute; width: $this->m_Width; z-index: 1; clip: rect(auto, auto, auto, $this->m_WidthInput);";
+        $width = $this->width ? $this->width : 146;
+        $this->widthInput = ($width-18).'px';
+        $this->width = $width.'px';
+        $style = "position: absolute; width: $this->width; z-index: 1; clip: rect(auto, auto, auto, $this->widthInput);";
 		*/
-        if ($this->m_Style)
-            $style .= $this->m_Style;
+        if ($this->style)
+            $style .= $this->style;
         if (!isset($style) && !$htmlClass)
             return null;
         if (isset($style))
@@ -80,7 +80,7 @@ class EditCombobox extends OptionElement
     {
         $fromList = array();
         $this->getFromList($fromList);
-        $valueArr = explode(',', $this->m_Value);
+        $valueArr = explode(',', $this->value);
         $disabledStr = ($this->getEnabled() == "N") ? "disabled=\"true\"" : "";
         $style = $this->getStyle();
         $func = $this->getFunction();
@@ -117,7 +117,7 @@ class EditCombobox extends OptionElement
         }
 
         if (!$selVal)
-            $selVal = $this->m_Value?$this->m_Value:$this->getDefaultValue();
+            $selVal = $this->value?$this->value:$this->getDefaultValue();
 
         $sHTML .= "</select>\n";
         $sHTML .= "<div><input id=\"$this->objectName\" name=\"$this->objectName\" type=\"text\" value=\"$selVal\" $func/></div>\n";

@@ -58,7 +58,7 @@ class GeneralSettingForm extends EasyForm
         	$settingRecord["_".$record['name']] = $record["value"];
         }
         
-        $this->m_RecordId = $resultRecords[0]['Id'];
+        $this->recordId = $resultRecords[0]['Id'];
         $this->setActiveRecord($settingRecord);
 
         QueryStringParam::ReSet();

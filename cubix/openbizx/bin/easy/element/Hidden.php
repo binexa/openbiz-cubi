@@ -45,8 +45,8 @@ class Hidden extends Element
      */
     public function render()
     {
-        if($this->m_Value!=null){
-    		$value = $this->m_Value;
+        if($this->value!=null){
+    		$value = $this->value;
     	}else{
     		$value = $this->getText();
     	} 

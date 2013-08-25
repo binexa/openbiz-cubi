@@ -99,8 +99,8 @@ class ArrayListForm extends EasyForm {
         }
 
         //set default selected record
-        if (!$this->m_RecordId) {
-            $this->m_RecordId = $result[0]["Name"];
+        if (!$this->recordId) {
+            $this->recordId = $result[0]["Name"];
         }
         //set paging 
         $this->m_TotalRecords = count($result);

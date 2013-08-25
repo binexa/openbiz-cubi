@@ -209,18 +209,18 @@ class BizDataObj_SQLHelper
             $col = $fldobj->m_Column;
 
             // ignore empty vallue for Date or Datetime
-            if (($fldobj->m_Value == "" && $fldobj->m_OldValue == "")
+            if (($fldobj->value == "" && $fldobj->m_OldValue == "")
                     && ($fldobj->m_Type == "Date" || $fldobj->m_Type == "Datetime"))
                 continue;
 
-            if ($fldobj->m_ValueOnUpdate != "") // ignore ValueOnUpdate field first
+            if ($fldobj->valueOnUpdate != "") // ignore ValueOnUpdate field first
                 continue;
 
             if ($fldobj->isLobField())  // take care of blob/clob type later
                 continue;
 
             // ignore the column where old value is same as new value; set the column only if new value is diff than the old value
-            if ($fldobj->m_OldValue == $fldobj->m_Value)
+            if ($fldobj->m_OldValue == $fldobj->value)
                 continue;
 
             $_val = $fldobj->getSqlValue();
@@ -232,7 +232,7 @@ class BizDataObj_SQLHelper
         foreach($sqlFlds as $fldobj)
         {
             $col = $fldobj->m_Column;
-            if ($fldobj->m_ValueOnUpdate != "")
+            if ($fldobj->valueOnUpdate != "")
             {
                 $_val = $fldobj->getValueOnUpdate();
                 $colval_pairs[$col] = $_val; //($_val===null || $_val === '') ? "''" : $_val;
@@ -389,7 +389,7 @@ class BizDataObj_SQLHelper
             else
             {
             	$_val = $fldobj->getSqlValue();
-                if ($_val =='' && $fldobj->m_ValueOnCreate != "")
+                if ($_val =='' && $fldobj->valueOnCreate != "")
                     $_val = $fldobj->getValueOnCreate();                
             }
 

@@ -8,32 +8,32 @@ class ChartForm extends EasyForm
 	public $chartColorset;
 	public $chartDescset;
 	public $chartIdset;
-    public $m_Attrs;
-    public $m_SubType;
-    public $m_SelectRecord;
-    public $m_CategoryId;
+    public $attributes;
+    public $subType;
+    public $selectedRecord;
+    public $categoryId;
     
     protected function readMetadata(&$xmlArr)
     {
         parent::readMetaData($xmlArr);
-        $this->m_SubType = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["CHARTTYPE"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["CHARTTYPE"] : null;
-        $this->m_Attrs = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["CHARTATTRS"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["CHARTATTRS"] : null;
-        $this->m_SelectRecord = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["SELECTRECORD"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["SELECTRECORD"] : null;
+        $this->subType    = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["CHARTTYPE"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["CHARTTYPE"] : null;
+        $this->attributes   = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["CHARTATTRS"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["CHARTATTRS"] : null;
+        $this->selectedRecord = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["SELECTRECORD"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["SELECTRECORD"] : null;
     }
     
 
     public function getSessionVars($sessionContext)
     {    	
-    	$sessionContext->getObjVar($this->objectName, "CategoryId", $this->m_CategoryId);
-        $sessionContext->getObjVar($this->objectName, "SubType", $this->m_SubType);
+    	$sessionContext->getObjVar($this->objectName, "CategoryId", $this->categoryId);
+        $sessionContext->getObjVar($this->objectName, "SubType", $this->subType);
         return parent::getSessionVars($sessionContext);
     }
 
 
     public function setSessionVars($sessionContext)
     {
-    	$sessionContext->setObjVar($this->objectName, "CategoryId", $this->m_CategoryId);
-        $sessionContext->setObjVar($this->objectName, "SubType", $this->m_SubType);
+    	$sessionContext->setObjVar($this->objectName, "CategoryId", $this->categoryId);
+        $sessionContext->setObjVar($this->objectName, "SubType", $this->subType);
         return parent::setSessionVars($sessionContext);        
     }    
 	
@@ -43,8 +43,8 @@ class ChartForm extends EasyForm
         $output['title'] = $this->m_Title;
         $output['description'] = str_replace('\n', "<br />", $this->objectDescription);
         $output['data'] = $this->draw();
-        $output['height'] = $this->m_Height;
-        $output['width'] = $this->m_Width;
+        $output['height'] = $this->height;
+        $output['width'] = $this->width;
         $parent = parent::outputAttrs();
         foreach($parent as $key=>$value)
         {
@@ -115,7 +115,7 @@ class ChartForm extends EasyForm
             if (!$arr) break;
             foreach ($this->m_DataPanel as $element)
             {            	
-            	$element->m_Value = $arr[$element->fieldName];
+            	$element->value = $arr[$element->fieldName];
             	$value = $element->getValue();            	
             	if ($element->fieldName && isset($value))
             	{	            	            			            		
@@ -173,7 +173,7 @@ class ChartForm extends EasyForm
     	$data = $this->readInputRecord();
     	if($data['chart_type'])
     	{
-    		$this->m_SubType = $data['chart_type'];
+    		$this->subType = $data['chart_type'];
     	}
     	return parent::updateForm();
     }
@@ -183,7 +183,7 @@ class ChartForm extends EasyForm
     	$data = $this->readInputRecord();
     	if($data['chart_type'])
     	{
-    		$this->m_SubType = $data['chart_type'];
+    		$this->subType = $data['chart_type'];
     	}
     	return parent::runSearch();
     }
@@ -192,8 +192,8 @@ class ChartForm extends EasyForm
     protected function drawChart()
     {
         $this->fetchDatasetByColumn(); 
-        if ($this->checkChartType($this->m_SubType) == false) {
-            $errmsg = "Unsupported chart type $this->m_SubType.";
+        if ($this->checkChartType($this->subType) == false) {
+            $errmsg = "Unsupported chart type $this->subType.";
             trigger_error($errmsg, E_USER_ERROR);
             return;
         }
@@ -216,7 +216,7 @@ class ChartForm extends EasyForm
     	$colorObj = BizSystem::getObject("chart.do.ChartColorDO");
     	$colorList = $colorObj->directFetch("");
     	
-        $FC = new FusionCharts($this->m_SubType, $this->m_Width, $this->m_Height); 
+        $FC = new FusionCharts($this->subType, $this->width, $this->height); 
         $this->seChartParams($FC);
         if(is_array($this->chartDataset)){
 	        foreach ($this->chartDataset as $key=>$ds) {
@@ -235,7 +235,7 @@ class ChartForm extends EasyForm
 	            		$elemConfig.="anchorBorderColor=".$colorList[$i]["color_code"].';';
 	            	}
 	            	//select record feature
-	            	if($this->m_SelectRecord){
+	            	if($this->selectedRecord){
 	            		$elemConfig .="link=JavaScript:Openbiz.CallFunction(\\\"".$this->objectName.".SelectRecord(".addslashes($this->chartIdset[$i]).")\\\");";
 	            	}
 	            	//desc text feature
@@ -264,7 +264,7 @@ class ChartForm extends EasyForm
     	$colorObj = BizSystem::getObject("chart.do.ChartColorDO");
     	$colorList = $colorObj->directFetch("");
     	    	
-        $FC = new FusionCharts($this->m_SubType, $this->m_Width, $this->m_Height); 
+        $FC = new FusionCharts($this->subType, $this->width, $this->height); 
         $this->seChartParams($FC);
         # category names
         foreach ($this->chartCategory as $cat) {
@@ -297,7 +297,7 @@ class ChartForm extends EasyForm
     public function selectRecord($recId,$catId = null)
     {    	
     	if($catId!=null){
-    		$this->m_CategoryId = $catId;
+    		$this->categoryId = $catId;
     	}
     	return parent::selectRecord($recId);
     }
@@ -324,14 +324,14 @@ class ChartForm extends EasyForm
 	        $FC->setChartParam('exportHandler',OPENBIZ_APP_URL."/js/FusionChartsPro/FCExporter.php");
 	        $FC->setChartParam('exportFileName',$this->objectName);
         }
-        //$strParam = "caption=".$this->m_Title.";canvasBorderColor=CECECE;baseFontSize=12;".$this->m_Attrs;
-        $strParam = "canvasBorderColor=CECECE;baseFontSize=10;".$this->m_Attrs;
+        //$strParam = "caption=".$this->m_Title.";canvasBorderColor=CECECE;baseFontSize=12;".$this->attributes;
+        $strParam = "canvasBorderColor=CECECE;baseFontSize=10;".$this->attributes;
         $FC->setChartParams($strParam);
     }
     
     protected function checkChartType($type)
     {    
-        switch ($this->m_SubType) {
+        switch ($this->subType) {
             case "Column2D" : 
             case "Column3D" : 
             case "Bar2D" : 

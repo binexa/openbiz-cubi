@@ -29,7 +29,7 @@
              <EventHandler Name="selector_lang_onchange" Event="onchange" EventLogMsg="" Function="updateLang()"/> 
         </Element>   
         <Element Name="btn_edit" Class="Button" Text="Edit" CssClass="button_gray_m" >
-            <EventHandler Name="btn_edit_onclick" Event="onclick" EventLogMsg="" Function="EditRecord()" RedirectPage="form=translation.form.TranslationEditForm&amp;fld:Id={@:m_RecordId}" ShortcutKey="Ctrl+E" ContextMenu="Edit" />
+            <EventHandler Name="btn_edit_onclick" Event="onclick" EventLogMsg="" Function="EditRecord()" RedirectPage="form=translation.form.TranslationEditForm&amp;fld:Id={@:recordId}" ShortcutKey="Ctrl+E" ContextMenu="Edit" />
         </Element> 
         <Element Name="btn_delete" Class="Button" Text="Delete" CssClass="button_gray_m" >
             <EventHandler Name="del_onclick" Event="onclick" EventLogMsg="" Function="Delete()" ShortcutKey="Ctrl+Delete" ContextMenu="Delete"/>

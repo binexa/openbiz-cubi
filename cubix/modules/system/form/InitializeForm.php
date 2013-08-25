@@ -157,7 +157,7 @@ class InitializeForm extends EasyForm
         $prefRecord["_siteurl"] = SITE_URL;
         $prefRecord["_system_name"] = OPENBIZ_DEFAULT_SYSTEM_NAME;
         
-        $this->m_RecordId = $resultRecords[0]['Id'];
+        $this->recordId = $resultRecords[0]['Id'];
         $this->setActiveRecord($prefRecord);
 
         QueryStringParam::ReSet();

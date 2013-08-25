@@ -40,7 +40,7 @@ class RawData extends Element
         parent::readMetaData($xmlArr);
         $this->m_FieldName = isset($xmlArr["ATTRIBUTES"]["FIELDNAME"]) ? $xmlArr["ATTRIBUTES"]["FIELDNAME"] : null;
         $this->m_Label = isset($xmlArr["ATTRIBUTES"]["LABEL"]) ? $xmlArr["ATTRIBUTES"]["LABEL"] : null;
-        $this->m_Text = isset($xmlArr["ATTRIBUTES"]["TEXT"]) ? $xmlArr["ATTRIBUTES"]["TEXT"] : null;
+        $this->text = isset($xmlArr["ATTRIBUTES"]["TEXT"]) ? $xmlArr["ATTRIBUTES"]["TEXT"] : null;
         $this->m_Link = isset($xmlArr["ATTRIBUTES"]["LINK"]) ? $xmlArr["ATTRIBUTES"]["LINK"] : null;
         $this->m_UnSerialize = isset($xmlArr["ATTRIBUTES"]["UNSERIALIZE"]) ? $xmlArr["ATTRIBUTES"]["UNSERIALIZE"] : null;
     }
@@ -75,10 +75,10 @@ class RawData extends Element
      */
     protected function getText()
     {
-        if ($this->m_Text == null)
+        if ($this->text == null)
             return null;
         $formObj = $this->getFormObj();
-        return Expression::evaluateExpression($this->m_Text, $formObj);
+        return Expression::evaluateExpression($this->text, $formObj);
     }
     
     /**
@@ -88,7 +88,7 @@ class RawData extends Element
      */
     public function render()
     {       
-    	$value = $this->m_Text ? $this->getText() : $this->m_Value;	
+    	$value = $this->text ? $this->getText() : $this->value;	
         if ($value === null || $value == "")
             return $value;
 

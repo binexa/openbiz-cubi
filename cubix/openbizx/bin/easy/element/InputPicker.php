@@ -26,7 +26,7 @@
  */
 class InputPicker extends InputText
 {
-    public $m_ValuePicker;
+    public $valuePicker;
     public $m_PickerMap;
 
     /**
@@ -38,10 +38,10 @@ class InputPicker extends InputText
     public function readMetaData(&$xmlArr)
     {
         parent::readMetaData($xmlArr);
-        $this->m_ValuePicker  = isset($xmlArr["ATTRIBUTES"]["VALUEPICKER"]) ? $xmlArr["ATTRIBUTES"]["VALUEPICKER"] : null;
+        $this->valuePicker  = isset($xmlArr["ATTRIBUTES"]["VALUEPICKER"]) ? $xmlArr["ATTRIBUTES"]["VALUEPICKER"] : null;
         $this->m_PickerMap  = isset($xmlArr["ATTRIBUTES"]["PICKERMAP"]) ? $xmlArr["ATTRIBUTES"]["PICKERMAP"] : null;
         // if no class name, add default class name. i.e. NewRecord => ObjName.NewRecord
-        $this->m_ValuePicker = $this->prefixPackage($this->m_ValuePicker);
+        $this->valuePicker = $this->prefixPackage($this->valuePicker);
         $this->m_UpdateForm = isset($xmlArr["ATTRIBUTES"]["UPDATEFORM"]) ? $xmlArr["ATTRIBUTES"]["UPDATEFORM"] : "N";
     }
 
@@ -57,9 +57,9 @@ class InputPicker extends InputText
         $sHTML = parent::render();
 
         // sample picker call CallFunction('easy.f_AttendeeListChild.LoadPicker(view,form,elem)','Prop_Window');
-        if ($this->m_ValuePicker != null)
+        if ($this->valuePicker != null)
         {
-            $function = $this->m_FormName . ".LoadPicker($this->m_ValuePicker,$this->objectName)";
+            $function = $this->m_FormName . ".LoadPicker($this->valuePicker,$this->objectName)";
             $sHTML .= " <input type=button onClick=\"Openbiz.CallFunction('$function');\" value=\"...\" style='width:20px;' />";
         }
 
@@ -68,7 +68,7 @@ class InputPicker extends InputText
 	
     public function getEvents(){
     	$events = parent::getEvents();
-    	$events['onclick'] .= "Openbiz.CallFunction('".$this->m_FormName . ".LoadPicker($this->m_ValuePicker,$this->objectName)')";
+    	$events['onclick'] .= "Openbiz.CallFunction('".$this->m_FormName . ".LoadPicker($this->valuePicker,$this->objectName)')";
         return $events;
     }
     

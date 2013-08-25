@@ -25,10 +25,10 @@ class MenuWidget extends MetaObject implements iUIControl
     public $m_MenuDeep;
     public $m_TemplateEngine;
     public $m_TemplateFile;
-    public $m_DataObjName;
+    public $dataObjName;
     public $cacheLifeTime;
     public $m_CssClass;
-    protected $m_DataObj;
+    protected $dataObj;
 
     function __construct(&$xmlArr)
     {
@@ -50,7 +50,7 @@ class MenuWidget extends MetaObject implements iUIControl
         $this->searchRule = isset($xmlArr["MENUWIDGET"]["ATTRIBUTES"]["SEARCHRULE"]) ? $xmlArr["MENUWIDGET"]["ATTRIBUTES"]["SEARCHRULE"] : null;
         $this->m_GlobalSearchRule = isset($xmlArr["MENUWIDGET"]["ATTRIBUTES"]["GLOBALSEARCHRULE"]) ? $xmlArr["MENUWIDGET"]["ATTRIBUTES"]["GLOBALSEARCHRULE"] : null;
         $this->m_MenuDeep = isset($xmlArr["MENUWIDGET"]["ATTRIBUTES"]["MENUDEEP"]) ? $xmlArr["MENUWIDGET"]["ATTRIBUTES"]["MENUDEEP"] : null;
-        $this->m_DataObjName = $this->prefixPackage($xmlArr["MENUWIDGET"]["ATTRIBUTES"]["BIZDATAOBJ"]);
+        $this->dataObjName = $this->prefixPackage($xmlArr["MENUWIDGET"]["ATTRIBUTES"]["BIZDATAOBJ"]);
         $this->cacheLifeTime = isset($xmlArr["MENUWIDGET"]["ATTRIBUTES"]["CACHELIFETIME"]) ? $xmlArr["MENUWIDGET"]["ATTRIBUTES"]["CACHELIFETIME"] : "0";
         $this->translate();
     }
@@ -122,17 +122,17 @@ class MenuWidget extends MetaObject implements iUIControl
 
     final public function getDataObj()
     {
-        if (!$this->m_DataObj) {
-            if ($this->m_DataObjName)
-                $this->m_DataObj = BizSystem::getObject($this->m_DataObjName, 1);
-            if ($this->m_DataObj)
-                $this->m_DataObj->m_BizFormName = $this->objectName;
+        if (!$this->dataObj) {
+            if ($this->dataObjName)
+                $this->dataObj = BizSystem::getObject($this->dataObjName, 1);
+            if ($this->dataObj)
+                $this->dataObj->m_BizFormName = $this->objectName;
             else {
-                //BizSystem::clientProxy()->showErrorMessage("Cannot get DataObj of ".$this->m_DataObjName.", please check your metadata file.");
+                //BizSystem::clientProxy()->showErrorMessage("Cannot get DataObj of ".$this->dataObjName.", please check your metadata file.");
                 return null;
             }
         }
-        return $this->m_DataObj;
+        return $this->dataObj;
     }
 
     public function setRequestParams()

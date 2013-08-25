@@ -41,7 +41,7 @@ class ApplicationInstallerForm extends EasyForm
       
     public function fetchData()
     {
-   		$RecordIds = $this->m_RecordId;
+   		$RecordIds = $this->recordId;
     	$RecordIds = explode(":", $RecordIds);
    		$app_id = $RecordIds[0];
    		$repo_id = $RecordIds[1];
@@ -63,7 +63,7 @@ class ApplicationInstallerForm extends EasyForm
     		}
     	}
     	
-    	$result["Id"] = $this->m_RecordId;
+    	$result["Id"] = $this->recordId;
     	//$result['install_download'] = 0;
     	switch(strtoupper($result['install_state']))
     	{
@@ -148,7 +148,7 @@ class ApplicationInstallerForm extends EasyForm
     
     public function install($id)
     {
-    	$RecordIds = $this->m_RecordId;
+    	$RecordIds = $this->recordId;
     	$RecordIds = explode(":", $RecordIds);
    		$app_id = $RecordIds[0];
    		$repo_id = $RecordIds[1];
@@ -157,7 +157,7 @@ class ApplicationInstallerForm extends EasyForm
     	$svc = BizSystem::getService("market.lib.PackageService");
     	$result = $svc->discoverAppInfo($repo_uri,$app_id);
     	        
-        $this->m_RecordId = $id;
+        $this->recordId = $id;
         try {            
             session_write_close();  // close session to unblock other ajax calls
             $packageService = "market.lib.InstallerService";

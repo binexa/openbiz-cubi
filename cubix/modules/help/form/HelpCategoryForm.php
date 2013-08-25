@@ -18,7 +18,7 @@ class HelpCategoryForm extends EasyFormTree
 	public function UpdateRecord(){
 		$result = parent::UpdateRecord();
 		$mappingObj  =  BizSystem::GetObject($this->m_CategoryMappingDO,1);
-		$Id = $this->m_RecordId;
+		$Id = $this->recordId;
 		$mappingObj->deleteRecords("[cat_id]='$Id'");
 		return $result;
 	}
@@ -30,8 +30,8 @@ class HelpCategoryForm extends EasyFormTree
     	
         if($result)
         {
-        	$parentId = $this->m_DataPanel->get("fld_parent_id")->m_Value;
-        	$currentId = $this->m_DataPanel->get("fld_Id")->m_Value;
+        	$parentId = $this->m_DataPanel->get("fld_parent_id")->value;
+        	$currentId = $this->m_DataPanel->get("fld_Id")->value;
 		    if ($parentId == $currentId && strtoupper($this->m_FormType)=='EDIT')
 	        {
 	            $errorMessage = $this->getMessage("FORM_PARENT_SHOULD_NOT_SAME_AS_ITSELF");                                

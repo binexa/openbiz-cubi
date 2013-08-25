@@ -26,7 +26,7 @@ class ToolInputText extends InputText
         else
             $val = "";
         
-        $this->m_Value = $val;
+        $this->value = $val;
         
         $disabledStr = ($this->getEnabled() == "N") ? "DISABLED=\"true\"" : "";
         $style = $this->getStyle();
@@ -39,7 +39,7 @@ class ToolInputText extends InputText
     protected function table($doName)
     {
         $doName = substr($doName, 1);
-        $doName = $this->getFormObj()->getElement($doName)->m_Value;
+        $doName = $this->getFormObj()->getElement($doName)->value;
 
         // get the dataobj file
         $metaFileInfo = $this->getFormObj()->GetMetaFileInfo();

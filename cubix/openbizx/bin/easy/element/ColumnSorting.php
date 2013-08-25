@@ -10,7 +10,7 @@ class ColumnSorting extends ColumnText
         
         
 		//$this->m_EventHandlers = null;
-		$value = $this->m_Text ? $this->getText() : $this->m_Value;
+		$value = $this->text ? $this->getText() : $this->value;
         
         if ($value === null || $value ==="")
             return "";

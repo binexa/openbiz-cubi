@@ -135,6 +135,13 @@ m_DataPermControl   => dataPermControl
 m_EvtMgrName        => eventManagerName
 m_EventManager      => eventManager
 
+BizDataTree:
+- m_Depth               => depth
+- m_globalSearchRule    => globalSearchRule
+- m_Id                  => recordPId
+- m_PId                 => recordParentPId
+- m_Record              => record
+
 m_Name              => objectName
 $m_Class            => $className
 m_Description       => objectDescription

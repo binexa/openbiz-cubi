@@ -30,22 +30,22 @@ class ColumnListbox extends OptionElement
 
 	public function getItemValue($id)
 	{
-		$valueArr = $this->m_Value;
+		$valueArr = $this->value;
 		return $valueArr[$id];		
 	}
 	
 	public function setValue($value)
 	{
-		BizSystem::sessionContext()->getObjVar($this->getFormObj()->objectName, $this->objectName, $this->m_Value);
+		BizSystem::sessionContext()->getObjVar($this->getFormObj()->objectName, $this->objectName, $this->value);
 		$valueArr = $_POST[$this->objectName];
 		if(is_array($valueArr))
 		{
 			foreach($valueArr as $key=>$value)
 			{
-				$this->m_Value[$key] = $value;
+				$this->value[$key] = $value;
 			}
 		}
-		BizSystem::sessionContext()->setObjVar($this->getFormObj()->objectName, $this->objectName, $this->m_Value);
+		BizSystem::sessionContext()->setObjVar($this->getFormObj()->objectName, $this->objectName, $this->value);
 	}    
     
     /**

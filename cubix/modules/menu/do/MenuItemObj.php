@@ -13,8 +13,8 @@
 
 class MenuItemObj
 {
- 	public $m_Id;
- 	public $m_PId;   
+ 	public $recordId;
+ 	public $recordParentId;   
     public $objectName;   
     public $objectDescription;
     public $m_URL;
@@ -23,16 +23,16 @@ class MenuItemObj
 	public $m_CssClass;
 	public $m_IconImage;
 	public $m_IconCSSClass;
-	public $m_ChildNodes = null;
+	public $childNodes = null;
 	 
     function __construct($xmlArr, $pid="0")
     {
-    	$this->m_PId		 = $pid;
+    	$this->recordParentId		 = $pid;
     	$this->readMetadata($xmlArr);
     }
     
     function readMetadata($xmlArr){
-        $this->m_Id		 	 = $xmlArr["ATTRIBUTES"]["ID"];        
+        $this->recordId		 	 = $xmlArr["ATTRIBUTES"]["ID"];        
     	$this->objectName         = $xmlArr["ATTRIBUTES"]["NAME"];
         $this->objectDescription = $xmlArr["ATTRIBUTES"]["DESCRIPTION"];
         $this->m_URL		 = $xmlArr["ATTRIBUTES"]["URL"];
@@ -43,12 +43,12 @@ class MenuItemObj
         $this->m_IconImage		 = $xmlArr["ATTRIBUTES"]["ICONIMAGE"];
         $this->m_IconCSSClass		 = $xmlArr["ATTRIBUTES"]["ICONCSSCLASS"];
         if(is_array($xmlArr["MENUITEM"])){
-        	$this->m_ChildNodes = array();
+        	$this->childNodes = array();
         	if(isset($xmlArr["MENUITEM"]["ATTRIBUTES"])){
-        		$this->m_ChildNodes[$xmlArr["MENUITEM"]["ATTRIBUTES"]["ID"]] = new MenuItemObj($xmlArr["MENUITEM"],$this->m_Id);
+        		$this->childNodes[$xmlArr["MENUITEM"]["ATTRIBUTES"]["ID"]] = new MenuItemObj($xmlArr["MENUITEM"],$this->recordId);
         	}else{        	
 	        	foreach($xmlArr["MENUITEM"] as $menuItem){
-	        		$this->m_ChildNodes[$menuItem["ATTRIBUTES"]["ID"]] = new MenuItemObj($menuItem,$this->m_Id);
+	        		$this->childNodes[$menuItem["ATTRIBUTES"]["ID"]] = new MenuItemObj($menuItem,$this->recordId);
 	        	}
         	}
         }

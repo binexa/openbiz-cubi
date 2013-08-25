@@ -40,7 +40,7 @@ class ColumnText extends LabelText
     {
         parent::readMetaData($xmlArr);
         $this->m_Sortable = isset($xmlArr["ATTRIBUTES"]["SORTABLE"]) ? $xmlArr["ATTRIBUTES"]["SORTABLE"] : null;        
-        $this->m_ColumnStyle = $this->m_Style;
+        $this->m_ColumnStyle = $this->style;
     }
 
     /**

@@ -61,7 +61,7 @@ class Button extends InputElement
         if ($this->m_Image)
         {
             $imagesPath = Resource::getImageUrl();
-            $out = "<img src=\"$imagesPath/" . $this->m_Image . "\" border=0 title=\"" . $this->m_Text . "\" />";
+            $out = "<img src=\"$imagesPath/" . $this->m_Image . "\" border=0 title=\"" . $this->text . "\" />";
             if ($func != "")
                 $out = "<a href='javascript:void(0);' $this->m_HTMLAttr $style $func>".$out."</a>";
         }

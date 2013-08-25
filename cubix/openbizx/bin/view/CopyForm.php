@@ -15,23 +15,23 @@ include_once "NewForm.php";
 class CopyForm extends NewForm
 {
 	//list of method that can directly from browser
-	protected $m_DirectMethodList = array('insertrecord','switchform'); 
+	protected $directMethodList = array('insertrecord','switchform'); 
 	
-	public $m_RecordId;
+	public $recordId;
 	public $m_ActiveRecord;
 	
 	// get request parameters from the url
 	protected function getUrlParameters()
 	{
 		if (isset($_REQUEST['fld:Id'])) {
-			$this->m_RecordId = $_REQUEST['fld:Id'];
+			$this->recordId = $_REQUEST['fld:Id'];
 		}
 	}
 	
 	public function render()
 	{
 		$this->getUrlParameters();
-		if (empty($this->m_RecordId))
+		if (empty($this->recordId))
         {
             BizSystem::clientProxy()->showClientAlert($this->getMessage("PLEASE_EDIT_A_RECORD"));
             return;
@@ -54,7 +54,7 @@ class CopyForm extends NewForm
         if ($dataObj == null) return;
 		
         // TODO: use getDataById to fetch one record
-		$dataRec = $dataObj->fetchById($this->m_RecordId);
+		$dataRec = $dataObj->fetchById($this->recordId);
 		return $dataRec->toArray();
     }
 }

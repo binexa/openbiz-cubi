@@ -76,9 +76,9 @@ class FormElement extends InputElement
         if (method_exists($formObj,"SetSubForms"))
         {
                 $formObj->setSubForms($this->m_FormReference);   
-                if($formObj->m_DataObjName){             
-                	$formDataObj = BizSystem::getObject($formObj->m_DataObjName);
-               	 	$dataObj = $formDataObj->getRefObject($formElementObj->m_DataObjName);
+                if($formObj->dataObjName){             
+                	$formDataObj = BizSystem::getObject($formObj->dataObjName);
+               	 	$dataObj = $formDataObj->getRefObject($formElementObj->dataObjName);
                 }
                 if ($dataObj)
                     $formObj->setDataObj($dataObj);                

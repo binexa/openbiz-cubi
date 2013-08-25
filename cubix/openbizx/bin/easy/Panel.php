@@ -53,7 +53,7 @@ class Panel extends MetaIterator implements iUIControl
             {
                 $panel[$elem->objectName]['element'] = $elem->render();
                 $panel[$elem->objectName]['type'] = $elem->className;
-                $panel[$elem->objectName]['width'] = $elem->m_Width;
+                $panel[$elem->objectName]['width'] = $elem->width;
                 $panel[$elem->objectName]['elementset'] = $elem->m_ElementSet;
                 $panel[$elem->objectName]['elementsetcode'] = $elem->m_ElementSetCode;
                 $panel[$elem->objectName]['tabset'] = $elem->m_TabSet;
@@ -61,8 +61,8 @@ class Panel extends MetaIterator implements iUIControl
                 $panel[$elem->objectName]['extra'] = $elem->m_Extra;                
                 if (isset($elem->m_Label) && $elem->m_Label !== null)
                     $panel[$elem->objectName]['label'] = $elem->renderLabel();
-                if (isset($elem->m_Value) && $elem->m_Value !== null)
-                    $panel[$elem->objectName]['value'] = $elem->m_Value;
+                if (isset($elem->value) && $elem->value !== null)
+                    $panel[$elem->objectName]['value'] = $elem->value;
                 if (isset($elem->objectDescription) && $elem->objectDescription !== null)
                     $panel[$elem->objectName]['description'] = $elem->getDescription();
                 if (isset($elem->m_Required))

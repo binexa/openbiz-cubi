@@ -42,7 +42,7 @@ class ColumnValue extends ColumnText
      */
     public function render()
     {
-        $val = $this->m_Value;
+        $val = $this->value;
         return $val;
     }
 

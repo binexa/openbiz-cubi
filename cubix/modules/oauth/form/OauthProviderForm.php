@@ -62,7 +62,7 @@ class OauthProviderForm extends EasyForm
 		}
 		if(!$Record['Id'])
 		{
-			$Record['Id'] = $this->m_RecordId;
+			$Record['Id'] = $this->recordId;
 		}
 
 		if($this->GetTestOauth())

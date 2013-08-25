@@ -88,7 +88,7 @@ class FileUploader extends FileInput
     		$delete_user_opt=BizSystem::clientProxy()->getFormInputs($this->objectName."_DELETE");
     		if($delete_user_opt)
     		{
-    			$this->m_Value="";
+    			$this->value="";
     			return;
     		}
     		else
@@ -96,7 +96,7 @@ class FileUploader extends FileInput
     			if(count($_FILES)>0){
     				
     			}else{
-    				$this->m_Value = $value;
+    				$this->value = $value;
     			}   
     		} 
     	}
@@ -123,7 +123,7 @@ class FileUploader extends FileInput
 				}
 				if(move_uploaded_file($file['tmp_name'], $this->m_UploadRoot.$uploadFile))
 				{
-					$this->m_Value = $this->m_UploadRootURL.$uploadFile;
+					$this->value = $this->m_UploadRootURL.$uploadFile;
 					$this->m_Uploaded=true;
 				}	                	                
 				return $uploadFile;		
@@ -141,7 +141,7 @@ class FileUploader extends FileInput
         $disabledStr = ($this->getEnabled() == "N") ? "disabled=\"true\"" : "";
         $style = $this->getStyle();
         $func = $this->getFunction();
-        $sHTML .= "<input type=\"file\" name='$this->objectName' id=\"" . $this->objectName ."\" value='$this->m_Value' $disabledStr $this->m_HTMLAttr $style $func />        
+        $sHTML .= "<input type=\"file\" name='$this->objectName' id=\"" . $this->objectName ."\" value='$this->value' $disabledStr $this->m_HTMLAttr $style $func />        
         			$delete_opt";
         return $sHTML;
     }    

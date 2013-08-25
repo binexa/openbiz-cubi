@@ -15,9 +15,9 @@ include_once "InputForm.php";
 class NewForm extends InputForm
 {
 	//list of method that can directly from browser
-	protected $m_DirectMethodList = array('insertrecord','switchform'); 
+	protected $directMethodList = array('insertrecord','switchform'); 
 	
-	public $m_RecordId;
+	public $recordId;
 	public $m_ActiveRecord;
 	
 	/**

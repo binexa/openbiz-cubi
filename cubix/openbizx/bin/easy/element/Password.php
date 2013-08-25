@@ -28,9 +28,9 @@ class Password extends InputElement
 {
 	public function readMetaData(&$xmlArr){
 		parent::readMetaData($xmlArr);
-		$this->m_cssClass = isset($xmlArr["ATTRIBUTES"]["CSSCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSCLASS"] : "input_text";		
-		$this->m_cssErrorClass = isset($xmlArr["ATTRIBUTES"]["CSSERRORCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSERRORCLASS"] : $this->m_cssClass."_error";
-		$this->m_cssFocusClass = isset($xmlArr["ATTRIBUTES"]["CSSFOCUSCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSFOCUSCLASS"] : $this->m_cssClass."_focus";
+		$this->cssClass = isset($xmlArr["ATTRIBUTES"]["CSSCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSCLASS"] : "input_text";		
+		$this->cssErrorClass = isset($xmlArr["ATTRIBUTES"]["CSSERRORCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSERRORCLASS"] : $this->cssClass."_error";
+		$this->m_cssFocusClass = isset($xmlArr["ATTRIBUTES"]["CSSFOCUSCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSFOCUSCLASS"] : $this->cssClass."_focus";
 	}
     /**
      * Render, draw the control according to the mode
@@ -44,12 +44,12 @@ class Password extends InputElement
         $formobj = $this->GetFormObj();
 		if (OPENBIZ_CLIENT_DEVICE != 'mobile') { 
 			if($formobj->m_Errors[$this->objectName]){
-				$func .= "onchange=\"this.className='$this->m_cssClass'\"";
+				$func .= "onchange=\"this.className='$this->cssClass'\"";
 			}else{
-				$func .= "onfocus=\"this.className='$this->m_cssFocusClass'\" onblur=\"this.className='$this->m_cssClass'\"";
+				$func .= "onfocus=\"this.className='$this->m_cssFocusClass'\" onblur=\"this.className='$this->cssClass'\"";
 			} 
 		}
-        $sHTML = "<INPUT TYPE=\"PASSWORD\" NAME='$this->objectName' ID=\"" . $this->objectName ."\" VALUE='$this->m_Value' $disabledStr $this->m_HTMLAttr $style $func />";
+        $sHTML = "<INPUT TYPE=\"PASSWORD\" NAME='$this->objectName' ID=\"" . $this->objectName ."\" VALUE='$this->value' $disabledStr $this->m_HTMLAttr $style $func />";
     	if($this->m_Hint){
         	$sHTML.="<script>        	
         	\$j('#" . $this->objectName . "').tbHinter({

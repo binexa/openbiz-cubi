@@ -43,7 +43,7 @@ class InputPassword extends Password
      * Real value of password
      * @var string
      */
-    protected $m_Value_Real;
+    protected $value_Real;
 
     /**
      * Read array meta data, and store to meta object
@@ -54,9 +54,9 @@ class InputPassword extends Password
     public function readMetaData(&$xmlArr)
     {
         parent::readMetaData($xmlArr);
-        $this->m_cssClass = isset($xmlArr["ATTRIBUTES"]["CSSCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSCLASS"] : "input_text";        
-        $this->m_cssErrorClass = isset($xmlArr["ATTRIBUTES"]["CSSERRORCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSERRORCLASS"] : $this->m_cssClass."_error";
-        $this->m_cssFocusClass = isset($xmlArr["ATTRIBUTES"]["CSSFOCUSCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSFOCUSCLASS"] : $this->m_cssClass."_focus";
+        $this->cssClass = isset($xmlArr["ATTRIBUTES"]["CSSCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSCLASS"] : "input_text";        
+        $this->cssErrorClass = isset($xmlArr["ATTRIBUTES"]["CSSERRORCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSERRORCLASS"] : $this->cssClass."_error";
+        $this->m_cssFocusClass = isset($xmlArr["ATTRIBUTES"]["CSSFOCUSCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSFOCUSCLASS"] : $this->cssClass."_focus";
 
         $this->m_MaskChar = isset($xmlArr["ATTRIBUTES"]["MASKCHAR"]) ? $xmlArr["ATTRIBUTES"]["MASKCHAR"] : $this->m_MaskChar;
         $this->m_MaskLength = isset($xmlArr["ATTRIBUTES"]["MASKLENGTH"]) ? $xmlArr["ATTRIBUTES"]["MASKLENGTH"] : $this->m_MaskLength;
@@ -70,9 +70,9 @@ class InputPassword extends Password
      */
     public function render()
     {
-        $value = $this->m_Value;
+        $value = $this->value;
         
-        	$this->m_Value_Real = $this->m_Value;
+        	$this->value_Real = $this->value;
             $value = $this->m_PasswordMask;
            
         
@@ -82,9 +82,9 @@ class InputPassword extends Password
         $func = $this->getEnabled() == 'N' ? "" : $this->getFunction();		
         $formobj = $this->GetFormObj();
         if($formobj->m_Errors[$this->objectName]){
-			$func .= "onchange=\"this.className='$this->m_cssClass'\"";
+			$func .= "onchange=\"this.className='$this->cssClass'\"";
 		}else{
-			$func .= "onfocus=\"this.className='$this->m_cssFocusClass'\" onblur=\"this.className='$this->m_cssClass'\"";
+			$func .= "onfocus=\"this.className='$this->m_cssFocusClass'\" onblur=\"this.className='$this->cssClass'\"";
 		} 
         $sHTML = "<INPUT TYPE=\"PASSWORD\" NAME='$this->objectName' ID=\"" . $this->objectName ."\" VALUE='$value' $disabledStr $this->m_HTMLAttr $style $func />";
     	if($this->m_Hint){
@@ -105,19 +105,19 @@ class InputPassword extends Password
      */
     public function getValue()
     {    	
-    	if($this->m_Value==null){
-    		$this->m_Value = BizSystem::clientProxy()->getFormInputs($this->objectName);
+    	if($this->value==null){
+    		$this->value = BizSystem::clientProxy()->getFormInputs($this->objectName);
     	}
-        if($this->m_Value==$this->m_PasswordMask)
+        if($this->value==$this->m_PasswordMask)
         {       	
     		$rawDataArr = $this->getFormObj()->getActiveRecord();
-    		$this->m_Value_Real = $rawDataArr[$this->m_FieldName];
-    		$this->m_Value = $rawDataArr[$this->m_FieldName];
-            return $this->m_Value_Real;
+    		$this->value_Real = $rawDataArr[$this->m_FieldName];
+    		$this->value = $rawDataArr[$this->m_FieldName];
+            return $this->value_Real;
         }
         else
         {
-            return $this->m_Value;
+            return $this->value;
         }
     }
 
@@ -131,11 +131,11 @@ class InputPassword extends Password
     {
         if($value==$this->m_PasswordMask)
         {
-            $this->m_Value = $this->m_Value_Real;
+            $this->value = $this->value_Real;
         }
         else
         {
-            $this->m_Value = $value;
+            $this->value = $value;
         }
     }
 

@@ -13,32 +13,32 @@
 
 class BackupForm extends EasyForm
 {
-	protected $m_Folder;
-	protected $m_LocationId;
-	protected $m_LocationName;
+	protected $folder;
+	protected $locationId;
+	protected $locationName;
 	
     protected function readMetadata(&$xmlArr)
     {
         parent::readMetaData($xmlArr);		        
-        if(!$this->m_LocationId){
+        if(!$this->locationId){
         	$this->getLocationInfo(1);
         }
-		$this->m_Folder = OPENBIZ_APP_FILE_PATH.DIRECTORY_SEPARATOR."backup";
+		$this->folder = OPENBIZ_APP_FILE_PATH.DIRECTORY_SEPARATOR."backup";
 	}
 	
 	public function getSessionVars($sessionContext)
     {
-        $sessionContext->getObjVar("backup.form.BackupForms", "LocationId", $this->m_LocationId);
-        $sessionContext->getObjVar("backup.form.BackupForms", "LocationName", $this->m_LocationName);
-        $sessionContext->getObjVar("backup.form.BackupForms", "Folder", $this->m_Folder);
+        $sessionContext->getObjVar("backup.form.BackupForms", "LocationId", $this->locationId);
+        $sessionContext->getObjVar("backup.form.BackupForms", "LocationName", $this->locationName);
+        $sessionContext->getObjVar("backup.form.BackupForms", "Folder", $this->folder);
         return parent::getSessionVars($sessionContext);
     }
  
     public function setSessionVars($sessionContext)
     {
-        $sessionContext->setObjVar("backup.form.BackupForms", "LocationId", $this->m_LocationId);
-        $sessionContext->setObjVar("backup.form.BackupForms", "LocationName", $this->m_LocationName);
-        $sessionContext->setObjVar("backup.form.BackupForms", "Folder", $this->m_Folder);
+        $sessionContext->setObjVar("backup.form.BackupForms", "LocationId", $this->locationId);
+        $sessionContext->setObjVar("backup.form.BackupForms", "LocationName", $this->locationName);
+        $sessionContext->setObjVar("backup.form.BackupForms", "Folder", $this->folder);
         return parent::setSessionVars($sessionContext);
     }
     
@@ -46,10 +46,10 @@ class BackupForm extends EasyForm
     {
     	$locationRec = BizSystem::GetObject("backup.do.BackupDeviceDO")->fetchById($id);
     	if($locationRec){
-	    	$this->m_LocationId = $locationRec["Id"];
-    		$this->m_LocationName =  $locationRec["name"];            
-	        $this->m_Folder = Expression::evaluateExpression($locationRec['location'],null);            
-	        $this->m_Folder = Expression::evaluateExpression($locationRec['location'],null);
+	    	$this->locationId = $locationRec["Id"];
+    		$this->locationName =  $locationRec["name"];            
+	        $this->folder = Expression::evaluateExpression($locationRec['location'],null);            
+	        $this->folder = Expression::evaluateExpression($locationRec['location'],null);
     	}	            
     }
 	
@@ -88,14 +88,14 @@ class BackupForm extends EasyForm
         }
 
         
-        $this->m_RecordId = $record['Id'];
+        $this->recordId = $record['Id'];
         $this->setActiveRecord($record);        
         return $record;    
 	}
 	
 	private function fetchFullDataSet(){
 			//if the folder not exists then create it.
-		if(!is_dir($this->m_Folder)){
+		if(!is_dir($this->folder)){
 			$this->init_folder();
 		}
 	
@@ -108,7 +108,7 @@ class BackupForm extends EasyForm
 		 */
 		$resultRecords = array();
 		try{
-		foreach(glob($this->m_Folder.DIRECTORY_SEPARATOR."*.tar.gz") as $filename){
+		foreach(glob($this->folder.DIRECTORY_SEPARATOR."*.tar.gz") as $filename){
 			$record = array(
 			"Id"		=> md5($filename),
 			"type"		=> "tarball",
@@ -120,7 +120,7 @@ class BackupForm extends EasyForm
 			);
 			$resultRecords[filemtime($filename)]=$record;
 		}		
-		foreach(glob($this->m_Folder.DIRECTORY_SEPARATOR."*.sql") as $filename){
+		foreach(glob($this->folder.DIRECTORY_SEPARATOR."*.sql") as $filename){
 			$record = array(
 			"Id"		=> md5($filename),
 			"type"		=> "sql",
@@ -192,7 +192,7 @@ class BackupForm extends EasyForm
 				$id=$selIds[0];
 			}
 			if(!$id){
-				$id=$this->m_RecordId;
+				$id=$this->recordId;
 			}
 			if(!$id){
 				return;
@@ -261,7 +261,7 @@ class BackupForm extends EasyForm
         
         
     
-        $this->m_RecordId = md5($result);
+        $this->recordId = md5($result);
         
 
         // in case of popup form, close it, then rerender the parent form
@@ -278,7 +278,7 @@ class BackupForm extends EasyForm
 	private function _dumpDatabase($filename,$dbname,$droptable)
 	{
 		$filename.=".sql";
-        $filename = $this->m_Folder.DIRECTORY_SEPARATOR.$filename;
+        $filename = $this->folder.DIRECTORY_SEPARATOR.$filename;
         
 		$dbconfigList = BizSystem::getConfiguration()->getDatabaseInfo();
         $dbconfig = $dbconfigList[$dbname];
@@ -313,7 +313,7 @@ class BackupForm extends EasyForm
 	
 	private function _dumpUserFiles($filename,$db_backup){
 		$filename.=".tar.gz";
-        $filename = $this->m_Folder.DIRECTORY_SEPARATOR.$filename;
+        $filename = $this->folder.DIRECTORY_SEPARATOR.$filename;
         $db_tmpfile = OPENBIZ_APP_PATH.DIRECTORY_SEPARATOR."database.sql";   
         copy($db_backup,$db_tmpfile);
 		$cmd = "tar czf $filename -C '".OPENBIZ_APP_PATH."' --exclude '.svn' --exclude 'files/cache' --exclude 'files/backup' ./files ./database.sql";
@@ -325,7 +325,7 @@ class BackupForm extends EasyForm
 	
 	private function _dumpAllFiles($filename,$db_backup){
 		$filename.=".tar.gz";
-        $filename = $this->m_Folder.DIRECTORY_SEPARATOR.$filename;
+        $filename = $this->folder.DIRECTORY_SEPARATOR.$filename;
         $db_tmpfile = OPENBIZ_APP_PATH.DIRECTORY_SEPARATOR."database.sql";        
         copy($db_backup,$db_tmpfile);
 		$cmd = "tar czf $filename -C '".OPENBIZ_APP_PATH."' --exclude '.svn' --exclude './log' --exclude './session' --exclude 'template/cpl' --exclude 'files/cache' --exclude 'files/backup' ./";
@@ -344,7 +344,7 @@ class BackupForm extends EasyForm
 			return;
 		}
 		
-      	$filename = $this->m_Folder.DIRECTORY_SEPARATOR.basename($recArr['filename']);
+      	$filename = $this->folder.DIRECTORY_SEPARATOR.basename($recArr['filename']);
       	if(preg_match("/.sql$/si",$recArr['filename'])){
       		$recArr['mode']='db';
       	}
@@ -375,7 +375,7 @@ class BackupForm extends EasyForm
 		}
 		
 
-        $this->m_RecordId = md5($filename);
+        $this->recordId = md5($filename);
         if ($this->m_ParentFormName)
         {
             $this->close();
@@ -394,7 +394,7 @@ class BackupForm extends EasyForm
 				return;
 			}
 		}		
-		$this->m_RecordId = $id;
+		$this->recordId = $id;
 		$recArr = $this->readInputRecord();
 		
 		$this->m_FixSearchRule="[Id]='$id'";
@@ -440,8 +440,8 @@ class BackupForm extends EasyForm
 	
 	
 	public function gotoRestore(){
-		$this->m_RecordId = BizSystem::clientProxy()->getFormInputs('_selectedId');
-		$this->switchForm("backup.form.BackupRestoreForm",$this->m_RecordId);
+		$this->recordId = BizSystem::clientProxy()->getFormInputs('_selectedId');
+		$this->switchForm("backup.form.BackupRestoreForm",$this->recordId);
 	}
 	
 	private function _restoreDB($db,$sqlfile,$charset=null){
@@ -496,13 +496,13 @@ class BackupForm extends EasyForm
 	}	
 	
 	private function init_folder(){
-		@mkdir($this->m_Folder,0777,true);
+		@mkdir($this->folder,0777,true);
 		$this->init_htaccess_protect();
 		return;
 	}
 	
 	private function init_htaccess_protect(){
-		$filename = $this->m_Folder.DIRECTORY_SEPARATOR.".htaccess";
+		$filename = $this->folder.DIRECTORY_SEPARATOR.".htaccess";
 		$data = "Deny from all";
 		return file_put_contents($filename,$data);		
 	}

@@ -91,7 +91,7 @@ class PreferenceForm extends EasyForm
         	$prefRecord["_".$record['name']] = $record["value"];
         }
         
-        $this->m_RecordId = $resultRecords[0]['Id'];
+        $this->recordId = $resultRecords[0]['Id'];
         $this->setActiveRecord($prefRecord);
 
         QueryStringParam::ReSet();

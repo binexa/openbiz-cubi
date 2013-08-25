@@ -8,10 +8,10 @@
  */
 class AccountPermService 
 {
-	protected $m_AccountDO 		= "account.do.AccountDO";
-	protected $m_AccountUserDO 	= "account.do.AccountUserDO";
+	protected $accountDO 		= "account.do.AccountDO";
+	protected $accountUserDO 	= "account.do.AccountUserDO";
 	
-	public function BuildSQLRule($accountId,$type)
+	public function buildSQLRule($accountId,$type)
 	{
 		if(BizSystem::allowUserAccess("data_manage.manage")){
 			return " TRUE ";
@@ -44,7 +44,7 @@ class AccountPermService
 				break;
 		}
 		
-		$accountUserDO = BizSystem::getObject($this->m_AccountUserDO);
+		$accountUserDO = BizSystem::getObject($this->accountUserDO);
 		$users = $accountUserDO->directfetch("[account_id]='$accountId' AND [access_level]=$perm_limit");
 		
 		$sql_where = " (";
@@ -58,4 +58,3 @@ class AccountPermService
 		return $sql_where;
 	}
 }
-?>

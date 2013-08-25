@@ -35,8 +35,8 @@ class EasyView extends MetaObject implements iSessionObject
     public $m_Widgets;
 
     public $m_IsPopup = false;
-    public $m_Height;
-    public $m_Width;
+    public $height;
+    public $width;
     public $m_ConsoleOutput = true;
 
     public $messageFile = null;        // message file path

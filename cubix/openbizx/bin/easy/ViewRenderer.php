@@ -152,7 +152,7 @@ class ViewRenderer
         $includedScripts = BizSystem::clientProxy()->getAppendedScripts();
         $tplAttributes["style_sheets"] = BizSystem::clientProxy()->getAppendedStyles();
         if ($viewObj->m_IsPopup && $bReRender == false) {
-            $moveToCenter = "moveToCenter(self, " . $viewObj->m_Width . ", " . $viewObj->m_Height . ");";
+            $moveToCenter = "moveToCenter(self, " . $viewObj->width . ", " . $viewObj->height . ");";
             $tplAttributes["scripts"] = $includedScripts . "\n<script>\n" . $newClntObjs . $moveToCenter . "</script>\n";
         } else
             $tplAttributes["scripts"] = $includedScripts . "\n<script>\n" . $newClntObjs . "</script>\n";

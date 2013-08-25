@@ -17,13 +17,13 @@ class UserRolesForm extends EasyForm{
 		{
 			$role_id =  (int)BizSystem::clientProxy()->getFormInputs('_selectedId');
 		}
-		$user_id = (int)BizSystem::objectFactory()->getObject('system.form.UserDetailForm')->m_RecordId;
+		$user_id = (int)BizSystem::objectFactory()->getObject('system.form.UserDetailForm')->recordId;
 		
 		$roleDo = BizSystem::getObject("system.do.UserRoleDO",1);
 		$roleDo->updateRecords("[default]=0","[user_id]='$user_id'");		
 		$roleDo->updateRecords("[default]=1","[user_id]='$user_id' and [role_id]='$role_id'");
 		
-		$this->m_RecordId = $role_id;
+		$this->recordId = $role_id;
 		$this->UpdateForm();
 	}
 }

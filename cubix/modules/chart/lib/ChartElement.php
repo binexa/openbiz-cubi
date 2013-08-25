@@ -31,8 +31,8 @@ class ChartElement extends Element
 	public $attrs, $attrList;
 	public $style, $styleList;
 	
-	public $m_Value;
-	public $m_Text;
+	public $value;
+	public $text;
 	
     function __construct(&$xmlArr, $formObj)
     {
@@ -51,7 +51,7 @@ class ChartElement extends Element
     protected function readMetaData(&$xmlArr)
     {
         $this->objectName = isset($xmlArr["ATTRIBUTES"]["NAME"]) ? $xmlArr["ATTRIBUTES"]["NAME"] : null;
-        $this->m_Text = isset($xmlArr["ATTRIBUTES"]["TEXT"]) ? $xmlArr["ATTRIBUTES"]["TEXT"] : null;
+        $this->text = isset($xmlArr["ATTRIBUTES"]["TEXT"]) ? $xmlArr["ATTRIBUTES"]["TEXT"] : null;
         $this->className = isset($xmlArr["ATTRIBUTES"]["CLASS"]) ? $xmlArr["ATTRIBUTES"]["CLASS"] : null;
         $this->fieldName = isset($xmlArr["ATTRIBUTES"]["FIELDNAME"]) ? $xmlArr["ATTRIBUTES"]["FIELDNAME"] : null;
         $this->key = isset($xmlArr["ATTRIBUTES"]["LABEL"]) ? $xmlArr["ATTRIBUTES"]["LABEL"] : null;
@@ -85,7 +85,7 @@ class ChartElement extends Element
     	}
     	else
     	{
-    		$value=$this->m_Value;	
+    		$value=$this->value;	
     	}    	
     	return $value;
     }
@@ -123,8 +123,8 @@ class ChartElement extends Element
     protected function translate()
     {
     	$module = $this->getModuleName($this->m_FormName);
-    	if (!empty($this->m_Text))
-    		$this->m_Text = I18n::t($this->m_Text, $this->getTransKey('Text'), $module);
+    	if (!empty($this->text))
+    		$this->text = I18n::t($this->text, $this->getTransKey('Text'), $module);
     	if (!empty($this->m_Label))
     		$this->m_Label = I18n::t($this->m_Label, $this->getTransKey('Label'), $module);
 		if (!empty($this->key))

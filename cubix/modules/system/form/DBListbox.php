@@ -36,7 +36,7 @@ class DBListbox extends InputElement{
     {
         $fromList = array();
         $this->getFromList($fromList);
-        $valueArray = explode(',', $this->m_Value);
+        $valueArray = explode(',', $this->value);
         $disabledStr = ($this->getEnabled() == "N") ? "DISABLED=\"true\"" : "";
         $style = $this->getStyle();
         $func = $this->getFunction();

@@ -15,16 +15,16 @@ include_once "BaseForm.php";
 class DetailForm extends BaseForm
 {
 	//list of method that can directly from browser
-	protected $m_DirectMethodList = array('deleterecord','switchform'); 
+	protected $directMethodList = array('deleterecord','switchform'); 
 	
-	public $m_RecordId;
+	public $recordId;
 	public $m_ActiveRecord;
 	
 	// get request parameters from the url
 	protected function getUrlParameters()
 	{
 		if (isset($_REQUEST['fld:Id'])) {
-			$this->m_RecordId = $_REQUEST['fld:Id'];
+			$this->recordId = $_REQUEST['fld:Id'];
 		}
 	}
 	
@@ -49,7 +49,7 @@ class DetailForm extends BaseForm
         if ($dataObj == null) return;
 		
         // TODO: use getDataById to fetch one record
-		$dataRec = $dataObj->fetchById($this->m_RecordId);
+		$dataRec = $dataObj->fetchById($this->recordId);
 		return $dataRec->toArray();
     }
 	

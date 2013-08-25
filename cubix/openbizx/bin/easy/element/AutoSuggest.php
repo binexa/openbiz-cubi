@@ -29,9 +29,9 @@ class AutoSuggest extends OptionElement
     public function readMetaData (&$xmlArr)
     {
         parent::readMetaData($xmlArr);
-        $this->m_cssClass = isset($xmlArr["ATTRIBUTES"]["CSSCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSCLASS"] : "input_text";
-        $this->m_cssErrorClass = isset($xmlArr["ATTRIBUTES"]["CSSERRORCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSERRORCLASS"] : $this->m_cssClass . "_error";
-        $this->m_cssFocusClass = isset($xmlArr["ATTRIBUTES"]["CSSFOCUSCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSFOCUSCLASS"] : $this->m_cssClass . "_focus";
+        $this->cssClass = isset($xmlArr["ATTRIBUTES"]["CSSCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSCLASS"] : "input_text";
+        $this->cssErrorClass = isset($xmlArr["ATTRIBUTES"]["CSSERRORCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSERRORCLASS"] : $this->cssClass . "_error";
+        $this->m_cssFocusClass = isset($xmlArr["ATTRIBUTES"]["CSSFOCUSCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSFOCUSCLASS"] : $this->cssClass . "_focus";
     }
 
     /**
@@ -44,7 +44,7 @@ class AutoSuggest extends OptionElement
         if (defined('OPENBIZ_JSLIB_BASE') && OPENBIZ_JSLIB_BASE == 'JQUERY') {
 			$inputName = $this->objectName;
 			$style = $this->getStyle();
-			$sHTML = "<input type=\"text\" id=\"$inputName\" name=\"$inputName\" value=\"$this->m_Value\"/ $style>\n";
+			$sHTML = "<input type=\"text\" id=\"$inputName\" name=\"$inputName\" value=\"$this->value\"/ $style>\n";
 			$sHTML .= "<script>Openbiz.AutoSuggest.init('$this->m_FormName','AutoSuggest','$inputName');</script>";
 			return $sHTML;
 		}
@@ -58,19 +58,19 @@ class AutoSuggest extends OptionElement
         $inputChoice = $this->objectName . '_choices';
         $style = $this->getStyle();
         if ($formobj->m_Errors[$this->objectName]) {
-            $func .= "onchange=\"this.className='$this->m_cssClass'\"";
+            $func .= "onchange=\"this.className='$this->cssClass'\"";
         } else {
-            $func .= "onfocus=\"this.className='$this->m_cssFocusClass'\" onblur=\"this.className='$this->m_cssClass'\"";
+            $func .= "onfocus=\"this.className='$this->m_cssFocusClass'\" onblur=\"this.className='$this->cssClass'\"";
         }
         if (strpbrk($first_half, ':')) {
             $hInputName = $this->objectName . '_hidden';
             $inputChoice = $this->objectName . '_hidden_choices';
-            $sHTML = "<input type=\"text\" id=\"$hInputName\" name=\"$hInputName\" value=\"$this->m_Value\" $style $func/>\n";
+            $sHTML = "<input type=\"text\" id=\"$hInputName\" name=\"$hInputName\" value=\"$this->value\" $style $func/>\n";
             $sHTML .= "<div id=\"$inputChoice\" class=\"autocomplete\" style=\"display:none\"></div>\n";
             $sHTML .= "<script>Openbiz.AutoSuggest.init('$this->m_FormName','AutoSuggest','$hInputName','$inputChoice');</script>";
-            $sHTML .= "<INPUT NAME=\"" . $inputName . "\" ID=\"" . $inputName . "\" VALUE=\"" . $this->m_Value . "\" type=\"hidden\" >";
+            $sHTML .= "<INPUT NAME=\"" . $inputName . "\" ID=\"" . $inputName . "\" VALUE=\"" . $this->value . "\" type=\"hidden\" >";
         } else {
-            $sHTML = "<input type=\"text\" id=\"$inputName\" name=\"$inputName\" value=\"$this->m_Value\" $style $func/>\n";
+            $sHTML = "<input type=\"text\" id=\"$inputName\" name=\"$inputName\" value=\"$this->value\" $style $func/>\n";
             $sHTML .= "<div id=\"$inputChoice\" class=\"autocomplete\" style=\"display:none\"></div>\n";
             $sHTML .= "<script>Openbiz.AutoSuggest.init('$this->m_FormName','AutoSuggest','$inputName','$inputChoice');</script>";
         }

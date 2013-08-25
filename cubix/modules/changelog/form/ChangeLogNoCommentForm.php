@@ -17,7 +17,7 @@ class ChangeLogNoCommentForm extends ChangeLogForm
 	protected function readMetadata(&$xmlArr)
     {    						
     	//load message file
-    	$this->m_ChangeLogMessages = Resource::loadMessage("changelog.ini" , "changelog");		
+    	$this->changeLogMessages = Resource::loadMessage("changelog.ini" , "changelog");		
     	parent::readMetaData($xmlArr);
     }      
 }

@@ -39,7 +39,7 @@ class ContactGrabberListForm extends EasyForm
 		parent::SelectRecord($contact_id);
 		
 		if(!$contact_id){
-			$contact_id = $this->m_RecordId;
+			$contact_id = $this->recordId;
 		}
 		
 		$user_id = BizSystem::GetUserProfile("Id");		

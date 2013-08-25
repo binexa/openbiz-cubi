@@ -74,7 +74,7 @@ class UserPreferenceForm extends EasyForm
         	}        	
         }
         
-        $this->m_RecordId = $resultRecords[0]['Id'];
+        $this->recordId = $resultRecords[0]['Id'];
         $this->setActiveRecord($prefRecord);
 
         QueryStringParam::ReSet();

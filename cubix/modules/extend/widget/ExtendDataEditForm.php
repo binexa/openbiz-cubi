@@ -200,7 +200,7 @@ class ExtendDataEditForm extends EasyForm
 		if($elem_name){
 			$column_value = BizSystem::ClientProxy()->getFormInputs($elem_name);
 		}
-		$record_id = BizSystem::getObject($this->m_ParentFormName)->m_RecordId;
+		$record_id = BizSystem::getObject($this->m_ParentFormName)->recordId;
 		
 		$recArr[$cond_column] = $cond_value;
 		$recArr[$column_name] = $column_value;

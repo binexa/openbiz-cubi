@@ -37,16 +37,16 @@ class FileInput extends InputElement
         $disabledStr = ($this->getEnabled() == "N") ? "disabled=\"true\"" : "";
         $style = $this->getStyle();
         $func = $this->getFunction();
-		$sHTML .= "<input type=\"file\" name='$this->objectName' id=\"" . $this->objectName ."\" value='$this->m_Value' $disabledStr $this->m_HTMLAttr $style $func />";
+		$sHTML .= "<input type=\"file\" name='$this->objectName' id=\"" . $this->objectName ."\" value='$this->value' $disabledStr $this->m_HTMLAttr $style $func />";
         return $sHTML;
     }
     
     public function getValue()
     {
-    	if(!$this->m_Value && strtoupper($this->getFormObj()->m_FormType) !='NEW')
+    	if(!$this->value && strtoupper($this->getFormObj()->m_FormType) !='NEW')
     	{
     		$rec = $this->getFormObj()->getActiveRecord();
-    		$this->m_Value = $rec[$this->m_FieldName];
+    		$this->value = $rec[$this->m_FieldName];
     	}
     	return parent::getValue();
     }

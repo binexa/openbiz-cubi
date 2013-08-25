@@ -61,10 +61,10 @@ class LabelList extends OptionElement
      */
     public function render()
     {
-    	$value = $this->m_Text ? $this->getText() : $this->m_Value;
+    	$value = $this->text ? $this->getText() : $this->value;
         $fromList   = array();
         $this->getFromList($fromList);
-        $valueArr = explode(',', $this->m_Value);
+        $valueArr = explode(',', $this->value);
         $style = $this->getStyle();
         $func = $this->getFunction();
         $id = $this->objectName;

@@ -63,7 +63,7 @@ class Expression
                 $start = $pos1 + 1;
                 $fieldName = substr($expression, $pos0 + 1, $pos1 - $pos0 - 1);
                 // get field value
-                $fieldValue = $bizObj->getField($fieldName)->m_Value;
+                $fieldValue = $bizObj->getField($fieldName)->value;
                 if ($fieldValue == null)
                     $fieldValue = $bizObj->getFieldValue($fieldName);
 

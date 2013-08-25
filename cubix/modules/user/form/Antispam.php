@@ -38,14 +38,14 @@ class Antispam extends InputElement{
 		$this->m_AntiSpamImage = isset($xmlArr["ATTRIBUTES"]["ANTISPAMIMAGE"]) ? $xmlArr["ATTRIBUTES"]["ANTISPAMIMAGE"] : "{@home:base_url}/bin/antispam_image.php";
 		$this->m_Length = isset($xmlArr["ATTRIBUTES"]["LENGTH"]) ? $xmlArr["ATTRIBUTES"]["LENGTH"] : 6;
 		$this->m_SpamLevel = isset($xmlArr["ATTRIBUTES"]["SPAMLEVEL"]) ? $xmlArr["ATTRIBUTES"]["SPAMLEVEL"] : 1;
-		$this->m_cssClass = isset($xmlArr["ATTRIBUTES"]["CSSCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSCLASS"] : "input_text_s";
-		$this->m_cssErrorClass = isset($xmlArr["ATTRIBUTES"]["CSSERRORCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSERRORCLASS"] : "input_text_s_error";
+		$this->cssClass = isset($xmlArr["ATTRIBUTES"]["CSSCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSCLASS"] : "input_text_s";
+		$this->cssErrorClass = isset($xmlArr["ATTRIBUTES"]["CSSERRORCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSERRORCLASS"] : "input_text_s_error";
 		$this->m_cssFocusClass = isset($xmlArr["ATTRIBUTES"]["CSSFOCUSCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSFOCUSCLASS"] : "input_text_s_focus";        
 	}
 
 	public function render()
     {
-        $value = $this->m_Value ? $this->m_Value : $this->m_Text;
+        $value = $this->value ? $this->value : $this->text;
 
         $disabledStr = ($this->getEnabled() == "N") ? "READONLY=\"true\"" : "";
         $style = $this->getStyle();
@@ -53,9 +53,9 @@ class Antispam extends InputElement{
         
         $formobj = $this->GetFormObj();
     	if($formobj->m_Errors[$this->objectName]){
-			$func .= "onchange=\"this.className='$this->m_cssClass'\"";
+			$func .= "onchange=\"this.className='$this->cssClass'\"";
 		}else{
-			$func .= "onfocus=\"this.className='$this->m_cssFocusClass'\" onblur=\"this.className='$this->m_cssClass'\"";
+			$func .= "onfocus=\"this.className='$this->m_cssFocusClass'\" onblur=\"this.className='$this->cssClass'\"";
 		}        
         $formObj = $this->getFormObj();       
         $this->m_AntiSpamImage = Expression::evaluateExpression($this->m_AntiSpamImage, $formObj);

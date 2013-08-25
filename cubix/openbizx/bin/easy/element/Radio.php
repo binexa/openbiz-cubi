@@ -37,8 +37,8 @@ class Radio extends OptionElement
         $fromList = array();
         $this->getFromList($fromList);
         $disabledStr = ($this->getEnabled() == "N") ? "DISABLED=\"true\"" : "";
-        if(!$this->m_Style){
-        	$this->m_Style.="margin-right:8px;";
+        if(!$this->style){
+        	$this->style.="margin-right:8px;";
         }
         $style = $this->getStyle();
         $func = $this->getFunction();
@@ -47,9 +47,9 @@ class Radio extends OptionElement
         
         $value = $value===null?$this->getDefaultValue():$value;
         
-        if($this->m_Width){
+        if($this->width){
         	
-        	$width = (int)$this->m_Width."px;";
+        	$width = (int)$this->width."px;";
         }else{
         	$width = "auto;";
         }
@@ -73,17 +73,17 @@ class Radio extends OptionElement
     {
     	 
 		$formobj = $this->getFormObj();    	
-        $htmlClass = Expression::evaluateExpression($this->m_cssClass, $formobj);
+        $htmlClass = Expression::evaluateExpression($this->cssClass, $formobj);
         $htmlClass = "CLASS='$htmlClass'";
         if(!$htmlClass){
         	$htmlClass = null;
         }
         $style ='';
          
-        if ($this->m_Height && $this->m_Height>=0)
-            $style .= "height:".$this->m_Height."px;";
-        if ($this->m_Style)
-            $style .= $this->m_Style;
+        if ($this->height && $this->height>=0)
+            $style .= "height:".$this->height."px;";
+        if ($this->style)
+            $style .= $this->style;
         if (!isset($style) && !$htmlClass)
             return null;
         if (isset($style))
@@ -94,7 +94,7 @@ class Radio extends OptionElement
         }
         if($formobj->m_Errors[$this->objectName])
         {
-      	    $htmlClass = "CLASS='".$this->m_cssErrorClass."'";
+      	    $htmlClass = "CLASS='".$this->cssErrorClass."'";
         }
         if ($htmlClass)
             $style = $htmlClass." ".$style;
@@ -103,4 +103,3 @@ class Radio extends OptionElement
     }
 }
 
-?>

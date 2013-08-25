@@ -32,7 +32,7 @@
 			<EventHandler Name="lnk_new_onclick" Event="onclick" EventLogMsg="" Function="SwitchForm(translation.form.LanguageNewForm)"  ShortcutKey="Insert" ContextMenu="New"/>
         </Element>
         <Element Name="btn_edit" Class="Button" Text="Edit" CssClass="button_gray_m" Description="edit record (Ctrl+E)">
-            <EventHandler Name="btn_edit_onclick" Event="onclick" EventLogMsg="" Function="EditRecord()" RedirectPage="form=translation.form.LanguageEditForm&amp;fld:Id={@:m_RecordId}" ShortcutKey="Ctrl+E" ContextMenu="Edit" />
+            <EventHandler Name="btn_edit_onclick" Event="onclick" EventLogMsg="" Function="EditRecord()" RedirectPage="form=translation.form.LanguageEditForm&amp;fld:Id={@:recordId}" ShortcutKey="Ctrl+E" ContextMenu="Edit" />
         </Element>
  
                 

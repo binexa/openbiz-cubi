@@ -16,7 +16,7 @@ class BaseForm extends MetaObject implements iSessionObject
     public $m_Title;
     public $m_Icon;
     public $m_jsClass;
-    public $m_DataObjName;
+    public $dataObjName;
 	
 	// FormAction handles actions from client
 	public $m_FormAction;
@@ -53,19 +53,19 @@ class BaseForm extends MetaObject implements iSessionObject
      */
     public $m_SearchPanel;
 
-    public $m_Height;
-    public $m_Width;
+    public $height;
+    public $width;
     public $m_TemplateEngine;
     public $m_TemplateFile;
     public $m_SubForms = null;
     public $cacheLifeTime = 0;
 
     // basic form vars
-    protected $m_DataObj;
+    protected $dataObj;
     public $messageFile = null;
     protected $objectMessages;
 	
-	protected $m_DirectMethodList = array(); //list of method that can directly from browser
+	protected $directMethodList = array(); //list of method that can directly from browser
 	
 	protected $formHelper;
     
@@ -102,8 +102,8 @@ class BaseForm extends MetaObject implements iSessionObject
         $this->m_Icon = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["ICON"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["ICON"] : null;        
         $this->objectDescription = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["DESCRIPTION"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["DESCRIPTION"] : null;
         $this->m_jsClass = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["JSCLASS"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["JSCLASS"] : null;
-        $this->m_Height = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["HEIGHT"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["HEIGHT"] : null;
-        $this->m_Width = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["WIDTH"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["WIDTH"] : null;
+        $this->height = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["HEIGHT"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["HEIGHT"] : null;
+        $this->width = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["WIDTH"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["WIDTH"] : null;
         $this->m_TemplateEngine = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["TEMPLATEENGINE"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["TEMPLATEENGINE"] : null;
         $this->m_TemplateFile = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["TEMPLATEFILE"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["TEMPLATEFILE"] : null;
 		$this->m_FormType = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["FORMTYPE"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["FORMTYPE"] : null;
@@ -111,7 +111,7 @@ class BaseForm extends MetaObject implements iSessionObject
         $this->objectName = $this->prefixPackage($this->objectName);
         if ($this->inheritFrom == '@sourceMeta') $this->inheritFrom = '@'.$this->objectName;
         else $this->inheritFrom = $this->prefixPackage($this->inheritFrom);
-        $this->m_DataObjName = $this->prefixPackage($xmlArr["EASYFORM"]["ATTRIBUTES"]["BIZDATAOBJ"]);
+        $this->dataObjName = $this->prefixPackage($xmlArr["EASYFORM"]["ATTRIBUTES"]["BIZDATAOBJ"]);
 
         $this->m_DataPanel = new Panel($xmlArr["EASYFORM"]["DATAPANEL"]["ELEMENT"],"",$this);
         $this->m_ActionPanel = new Panel($xmlArr["EASYFORM"]["ACTIONPANEL"]["ELEMENT"],"",$this);
@@ -152,15 +152,15 @@ class BaseForm extends MetaObject implements iSessionObject
         $this->m_Icon = $this->m_Icon ? $this->m_Icon : $parentObj->m_Icon;        
         $this->objectDescription  = $this->objectDescription ? $this->objectDescription : $parentObj->objectDescription;
         $this->m_jsClass   = $this->m_jsClass ? $this->m_jsClass : $parentObj->m_jsClass;
-        $this->m_Height   = $this->m_Height ? $this->m_Height : $parentObj->m_Height;
-        $this->m_Width   = $this->m_Width ? $this->m_Width : $parentObj->m_Width;
+        $this->height   = $this->height ? $this->height : $parentObj->height;
+        $this->width   = $this->width ? $this->width : $parentObj->width;
         $this->m_TemplateEngine   = $this->m_TemplateEngine ? $this->m_TemplateEngine : $parentObj->m_TemplateEngine;
         $this->m_TemplateFile   = $this->m_TemplateFile ? $this->m_TemplateFile : $parentObj->m_TemplateFile;        
         $this->m_FormType   = $this->m_FormType ? $this->m_FormType : $parentObj->m_FormType;
         $this->m_Range   = $this->m_Range ? $this->m_Range : $parentObj->m_Range;
         $this->m_FixSearchRule   = $this->m_FixSearchRule ? $this->m_FixSearchRule : $parentObj->m_FixSearchRule;
         $this->m_DefaultFixSearchRule   = $this->m_DefaultFixSearchRule ? $this->m_DefaultFixSearchRule : $parentObj->m_DefaultFixSearchRule;		        
-        $this->m_DataObjName   = $this->m_DataObjName ? $this->m_DataObjName : $parentObj->m_DataObjName;
+        $this->dataObjName   = $this->dataObjName ? $this->dataObjName : $parentObj->dataObjName;
         $this->m_EventName   = $this->m_EventName ? $this->m_EventName : $parentObj->m_EventName;
         $this->messageFile   = $this->messageFile ? $this->messageFile : $parentObj->messageFile;
         $this->objectMessages = Resource::loadMessage($this->messageFile , $this->m_Package);
@@ -246,19 +246,19 @@ class BaseForm extends MetaObject implements iSessionObject
      */
     public function getDataObj()
     {
-        if (!$this->m_DataObj)
+        if (!$this->dataObj)
         {
-            if ($this->m_DataObjName)
-                $this->m_DataObj = BizSystem::objectFactory()->getObject($this->m_DataObjName);
-            if($this->m_DataObj)
-                $this->m_DataObj->m_BizFormName = $this->objectName;
+            if ($this->dataObjName)
+                $this->dataObj = BizSystem::objectFactory()->getObject($this->dataObjName);
+            if($this->dataObj)
+                $this->dataObj->m_BizFormName = $this->objectName;
             else
             {
-                //BizSystem::clientProxy()->showErrorMessage("Cannot get DataObj of ".$this->m_DataObjName.", please check your metadata file.");
+                //BizSystem::clientProxy()->showErrorMessage("Cannot get DataObj of ".$this->dataObjName.", please check your metadata file.");
                 return null;
             }
         }
-        return $this->m_DataObj;
+        return $this->dataObj;
     }
 
     /**
@@ -269,7 +269,7 @@ class BaseForm extends MetaObject implements iSessionObject
      */
     final public function setDataObj($dataObj)
     {
-        $this->m_DataObj = $dataObj;
+        $this->dataObj = $dataObj;
     }
 
     /**
@@ -334,7 +334,7 @@ class BaseForm extends MetaObject implements iSessionObject
     }
 	
 	public function setRecordId($val){
-    	$this->m_RecordId = $val;
+    	$this->recordId = $val;
     }
 	
 	public function setFormInputs($inputArr=null)
@@ -453,7 +453,7 @@ class BaseForm extends MetaObject implements iSessionObject
 			foreach ($this->m_SubForms as $subForm)
 			{
 				$formObj = BizSystem::objectFactory()->getObject($subForm);
-				$dataObj = $this->getDataObj()->getRefObject($formObj->m_DataObjName);
+				$dataObj = $this->getDataObj()->getRefObject($formObj->dataObjName);
 				if ($dataObj)
 					$formObj->setDataObj($dataObj);
 			}
@@ -487,7 +487,7 @@ class BaseForm extends MetaObject implements iSessionObject
     public function validateRequest($methodName)
     {
         $methodName = strtolower($methodName);
-		foreach ($this->m_DirectMethodList as $value)
+		foreach ($this->directMethodList as $value)
 		{
 			if ($methodName == $value) return true;
 		}
@@ -513,11 +513,11 @@ class BaseForm extends MetaObject implements iSessionObject
             $recId = BizSystem::clientProxy()->getFormInputs('_selectedId');
         if ($recId==null || $recId=='')
             return null;
-        $this->m_RecordId = $recId;
+        $this->recordId = $recId;
 
         // TODO: may consider cache the current record in session or pass the record from client
         if($this->getDataObj()){
-	        $this->getDataObj()->setActiveRecordId($this->m_RecordId);
+	        $this->getDataObj()->setActiveRecordId($this->recordId);
 	        $rec = $this->getDataObj()->getActiveRecord();
 	
 	        // update the record row

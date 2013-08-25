@@ -69,7 +69,7 @@ class auditService
         $auditFields = $srcDataObj->getOnAuditFields();
         foreach ($auditFields as $field)
         {
-            if ($field->m_OldValue == $field->m_Value)
+            if ($field->m_OldValue == $field->value)
                 continue;
             $recArr = $auditDataObj->newRecord();
             if ($recArr == false)
@@ -83,7 +83,7 @@ class auditService
             $recArr['ObjectId'] = $srcDataObj->getFieldValue("Id");
             $recArr['FieldName'] = $field->objectName;
             $recArr['OldValue'] = $field->m_OldValue;
-            $recArr['NewValue'] = $field->m_Value;
+            $recArr['NewValue'] = $field->value;
             $recArr['ChangeTime'] = date("Y-m-d H:i:s");
             $recArr['ChangeBy'] = $profile["USERID"];
             $recArr['ChangeFrom'] = $_SERVER['REMOTE_ADDR'];

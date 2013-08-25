@@ -6,7 +6,7 @@
 	<li>
 	    {assign var='current' value='0'}
 	    {foreach item=bc from=$widget.breadcrumb}
-			{if $item->m_Id == $bc->m_Id}
+			{if $item->recordId == $bc->recordId}
 	    		{assign var='current' value='1'}
 			{/if}
 	    {/foreach}
@@ -18,12 +18,12 @@
 		<a onclick="show_submenu(this)" class="{$menu_class}" href="{if $item->m_URL and false}{$item->m_URL}{else}javascript:{/if}">
 			<img class="{$item->m_IconCSSClass}" src="{$image_url}/{if $item->m_IconImage!=''}{$item->m_IconImage}{else}spacer.gif{/if}" />{$item->objectName}
 		</a>	
-		{if $item->m_ChildNodes|@count > 0}
+		{if $item->childNodes|@count > 0}
 		<ul class="secondlevel module" {if $menu_class eq 'current'}style="display:block;"{/if}>
-		{foreach item=subitem from=$item->m_ChildNodes}
+		{foreach item=subitem from=$item->childNodes}
     		{assign var='current' value='0'}
     	    {foreach item=bc from=$widget.breadcrumb}
-    			{if $subitem->m_Id == $bc->m_Id}
+    			{if $subitem->recordId == $bc->recordId}
     	    		{assign var='current' value='1'}
     			{/if}
     	    {/foreach}

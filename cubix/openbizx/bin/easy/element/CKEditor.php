@@ -55,8 +55,8 @@ class CKEditor extends InputElement
         $value = $this->getValue();
         $value = htmlentities($value, ENT_QUOTES, "UTF-8");
         $style = $this->getStyle();
-        $width = $this->m_Width ? $this->m_Width : 600;
-        $height = $this->m_Height ? $this->m_Height : 300;
+        $width = $this->width ? $this->width : 600;
+        $height = $this->height ? $this->height : 300;
         //$func = "onclick=\"editRichText('$elementName', $width, $height);\"";
         if(!strlen($value)>0) // fix suggested by smarques
             $value="&nbsp;";

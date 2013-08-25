@@ -42,7 +42,7 @@ class DisplayNameBox extends Listbox
     {
         $fromList = array();
         $this->getFromList($fromList);
-        $value = $this->m_Value?$this->m_Value:$this->getDefaultValue();        
+        $value = $this->value?$this->value:$this->getDefaultValue();        
         $disabledStr = ($this->getEnabled() == "N") ? "DISABLED=\"true\"" : "";
         $style = $this->getStyle();
         $func = $this->getFunction();

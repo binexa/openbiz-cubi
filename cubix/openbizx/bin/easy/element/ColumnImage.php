@@ -93,9 +93,9 @@ class ColumnImage extends ColumnText
     {
     	if(!$this->getText())
     	{
-    		$val = ($this->m_ImgUrl) ? $this->m_ImgUrl.$this->m_Value : $this->m_Value;
+    		$val = ($this->m_ImgUrl) ? $this->m_ImgUrl.$this->value : $this->value;
     	}else{
-    		if(preg_match("/\{OPENBIZ_RESOURCE_URL\}/si",$this->m_Text)){
+    		if(preg_match("/\{OPENBIZ_RESOURCE_URL\}/si",$this->text)){
     			$val = $this->getText();
     		}else{
     			$val = Resource::getImageUrl()."/".$this->getText();
@@ -111,12 +111,12 @@ class ColumnImage extends ColumnText
 
         if ($val)
         {
-            if($height = $this->m_Height)
+            if($height = $this->height)
             {
                 $height = 'height="' . $height . '"';
             }
 
-            if($width = $this->m_Width)
+            if($width = $this->width)
             {
                 $width = 'width="' . $width . '"';
             }

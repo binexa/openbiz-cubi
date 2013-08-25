@@ -28,29 +28,29 @@ class ColumnInputText extends InputElement
 {
 	protected function readMetaData(&$xmlArr){
 		parent::readMetaData($xmlArr);
-		$this->m_cssClass = isset($xmlArr["ATTRIBUTES"]["CSSCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSCLASS"] : "column_input_text";
-		$this->m_cssErrorClass = isset($xmlArr["ATTRIBUTES"]["CSSERRORCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSERRORCLASS"] : $this->m_cssClass."_error";
-		$this->m_cssFocusClass = isset($xmlArr["ATTRIBUTES"]["CSSFOCUSCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSFOCUSCLASS"] : $this->m_cssClass."_focus";
+		$this->cssClass = isset($xmlArr["ATTRIBUTES"]["CSSCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSCLASS"] : "column_input_text";
+		$this->cssErrorClass = isset($xmlArr["ATTRIBUTES"]["CSSERRORCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSERRORCLASS"] : $this->cssClass."_error";
+		$this->m_cssFocusClass = isset($xmlArr["ATTRIBUTES"]["CSSFOCUSCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSFOCUSCLASS"] : $this->cssClass."_focus";
 	}
 	
 	public function getItemValue($id)
 	{
-		$valueArr = $this->m_Value;
+		$valueArr = $this->value;
 		return $valueArr[$id];		
 	}
 	
 	public function setValue($value)
 	{
-		BizSystem::sessionContext()->getObjVar($this->getFormObj()->objectName, $this->objectName, $this->m_Value);
+		BizSystem::sessionContext()->getObjVar($this->getFormObj()->objectName, $this->objectName, $this->value);
 		$valueArr = $_POST[$this->objectName];
 		if(is_array($valueArr))
 		{
 			foreach($valueArr as $key=>$value)
 			{
-				$this->m_Value[$key] = $value;
+				$this->value[$key] = $value;
 			}
 		}
-		BizSystem::sessionContext()->setObjVar($this->getFormObj()->objectName, $this->objectName, $this->m_Value);
+		BizSystem::sessionContext()->setObjVar($this->getFormObj()->objectName, $this->objectName, $this->value);
 	}
 	
 	public function renderLabel()
@@ -89,7 +89,7 @@ class ColumnInputText extends InputElement
     	$rec = $this->getFormObj()->getActiveRecord();
 		$recId = $rec["Id"];
 		
-    	if($this->m_Value!=null){
+    	if($this->value!=null){
     		$value = $this->getItemValue($recId);
     	}else{
     		$value = $this->getText();
@@ -104,9 +104,9 @@ class ColumnInputText extends InputElement
         
         $formobj = $this->GetFormObj();
     	if($formobj->m_Errors[$this->objectName]){
-			$func .= "onchange=\"this.className='$this->m_cssClass'\"";
+			$func .= "onchange=\"this.className='$this->cssClass'\"";
 		}else{
-			$func .= "onfocus=\"this.className='$this->m_cssFocusClass'\" onblur=\"this.className='$this->m_cssClass'\"";
+			$func .= "onfocus=\"this.className='$this->m_cssFocusClass'\" onblur=\"this.className='$this->cssClass'\"";
 		}        
         
 		

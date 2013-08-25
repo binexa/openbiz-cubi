@@ -19,7 +19,7 @@ class ColumnTitle extends ColumnText
 		
 		$id = $rec["Id"];
 		if(!$id && $this->m_FieldName=='Id'){
-			$id = $this->m_Value;
+			$id = $this->value;
 		}
 		$id_display = "<span class=\"title_id\" >$id</span>";
 		return $id_display;

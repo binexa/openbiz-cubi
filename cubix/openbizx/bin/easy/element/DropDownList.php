@@ -37,11 +37,11 @@ class DropDownList extends InputElement
 	
 	protected function readMetaData(&$xmlArr){
 		parent::readMetaData($xmlArr);
-		$this->m_cssClass = isset($xmlArr["ATTRIBUTES"]["CSSCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSCLASS"] : "input_select_w";
-		$this->m_cssErrorClass = isset($xmlArr["ATTRIBUTES"]["CSSERRORCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSERRORCLASS"] : $this->m_cssClass."_error";
-		$this->m_cssFocusClass = isset($xmlArr["ATTRIBUTES"]["CSSFOCUSCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSFOCUSCLASS"] : $this->m_cssClass."_focus";
-		$this->m_cssHoverClass = isset($xmlArr["ATTRIBUTES"]["CSSHOVERCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSHOVERCLASS"] : $this->m_cssClass."_hover";
-		//$this->m_Value = isset($xmlArr["ATTRIBUTES"]["DEFAULTVALUE"]) ? $xmlArr["ATTRIBUTES"]["DEFAULTVALUE"] : null;        
+		$this->cssClass = isset($xmlArr["ATTRIBUTES"]["CSSCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSCLASS"] : "input_select_w";
+		$this->cssErrorClass = isset($xmlArr["ATTRIBUTES"]["CSSERRORCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSERRORCLASS"] : $this->cssClass."_error";
+		$this->m_cssFocusClass = isset($xmlArr["ATTRIBUTES"]["CSSFOCUSCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSFOCUSCLASS"] : $this->cssClass."_focus";
+		$this->m_cssHoverClass = isset($xmlArr["ATTRIBUTES"]["CSSHOVERCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSHOVERCLASS"] : $this->cssClass."_hover";
+		//$this->value = isset($xmlArr["ATTRIBUTES"]["DEFAULTVALUE"]) ? $xmlArr["ATTRIBUTES"]["DEFAULTVALUE"] : null;        
 		$this->m_ReadOnly = isset($xmlArr["ATTRIBUTES"]["READONLY"]) ? $xmlArr["ATTRIBUTES"]["READONLY"] : "N";
         $this->m_SelectFrom = isset($xmlArr["ATTRIBUTES"]["SELECTFROM"]) ? $xmlArr["ATTRIBUTES"]["SELECTFROM"] : null;
         $this->m_SelectedList = isset($xmlArr["ATTRIBUTES"]["SELECTEDLIST"]) ? $xmlArr["ATTRIBUTES"]["SELECTEDLIST"] : null;
@@ -60,8 +60,8 @@ class DropDownList extends InputElement
     	if($this->m_FormPrefix){
     		$formNameStr = str_replace(".","_", $this->getFormObj()->objectName)."_";
     	}        
-    	if($this->m_Value!=null){
-    		$value = $this->m_Value;
+    	if($this->value!=null){
+    		$value = $this->value;
     	}else{
     		$value = $this->getText();
     	}        
@@ -77,10 +77,10 @@ class DropDownList extends InputElement
         $func = $this->getFunction();
         $optionList= $this->renderList();
         
-        $htmlClass = Expression::evaluateExpression($this->m_cssClass, $formobj);
+        $htmlClass = Expression::evaluateExpression($this->cssClass, $formobj);
         $htmlClass = "CLASS='$htmlClass'";
         
-        $sHTML .= "<div class=\"div_".$this->m_cssClass."\">";    	                
+        $sHTML .= "<div class=\"div_".$this->cssClass."\">";    	                
         if($this->m_ReadOnly=='Y')
         {
 	        $display_input = "style=\"display:none;\"";
@@ -142,9 +142,9 @@ class DropDownList extends InputElement
 		}
 		else {
 	        $sHTML .= "<span ID=\"span_$elem_id\"  $this->m_HTMLAttr $style
-						onclick=\"if($('$elem_list_id').visible()){\$('$elem_list_id').hide();\$('$elem_scroll_id').hide();$('$elem_id').className='".$this->m_cssClass."'}else{\$('$elem_list_id').show();\$('$elem_scroll_id').show();$('$elem_id').className='".$this->m_cssFocusClass."'}\"
+						onclick=\"if($('$elem_list_id').visible()){\$('$elem_list_id').hide();\$('$elem_scroll_id').hide();$('$elem_id').className='".$this->cssClass."'}else{\$('$elem_list_id').show();\$('$elem_scroll_id').show();$('$elem_id').className='".$this->m_cssFocusClass."'}\"
 						onmouseover=\"$('span_$elem_id').className='".$this->m_cssHoverClass."'\"
-						onmouseout=\"$('span_$elem_id').className='".$this->m_cssClass."'\"
+						onmouseout=\"$('span_$elem_id').className='".$this->cssClass."'\"
 						>$display_value</span>";
 		}
 		$sHTML .= "</div>";
@@ -154,9 +154,9 @@ class DropDownList extends InputElement
 		}
 		else {
 			$sHTML .= "<INPUT NAME=\"$elem_id\" ID=\"$elem_id\" VALUE=\"" . $display_value . "\" $disabledStr $this->m_HTMLAttr $style 
-						onclick=\"if($('$elem_list_id').visible()){\$('$elem_list_id').hide();\$('$elem_scroll_id').hide();$('$elem_id').className='".$this->m_cssClass."'}else{\$('$elem_list_id').show();\$('$elem_scroll_id').show();$('$elem_id').className='".$this->m_cssFocusClass."'}\"
+						onclick=\"if($('$elem_list_id').visible()){\$('$elem_list_id').hide();\$('$elem_scroll_id').hide();$('$elem_id').className='".$this->cssClass."'}else{\$('$elem_list_id').show();\$('$elem_scroll_id').show();$('$elem_id').className='".$this->m_cssFocusClass."'}\"
 							onmouseover=\"$('span_$elem_id').className='".$this->m_cssHoverClass."'\"
-							onmouseout=\"$('span_$elem_id').className='".$this->m_cssClass."'\"
+							onmouseout=\"$('span_$elem_id').className='".$this->cssClass."'\"
 						/>";
 		}
 		$sHTML .= "<INPUT NAME=\"$elem_id\" ID=\"$elem_hidden_id\" VALUE=\"" . $value . "\" type=\"hidden\" $func />";	        
@@ -176,7 +176,7 @@ if (defined('OPENBIZ_JSLIB_BASE') && OPENBIZ_JSLIB_BASE == 'JQUERY') {
 			$(this).attr('class','$this->m_cssHoverClass');
 		},
 		function () {
-			$(this).attr('class','$this->m_cssClass');
+			$(this).attr('class','$this->cssClass');
 		}
 	);
 	$('#$elem_list_id li').click(
@@ -185,7 +185,7 @@ if (defined('OPENBIZ_JSLIB_BASE') && OPENBIZ_JSLIB_BASE == 'JQUERY') {
 			$('#$elem_id').val($(this).attr('disp_value'));
 			$('#$elem_hidden_id').val($(this).attr('real_value'));
 			$('#span_$elem_id').html($(this).html());
-			$('#$elem_id').attr('class','$this->m_cssClass');
+			$('#$elem_id').attr('class','$this->cssClass');
 			$onchange_func;
 		}
 	);
@@ -258,7 +258,7 @@ else {
             $list = array_merge($entryList, $list);
         }    	
     	
-    	$value = $this->m_Value!==null ? $this->m_Value : $this->getText();
+    	$value = $this->value!==null ? $this->value : $this->getText();
 		$elem_id = $formNameStr.$this->objectName;
 		$elem_scroll_id = $formNameStr.$this->objectName."_scroll";
 		$elem_list_id = $formNameStr.$this->objectName."_list";
@@ -311,7 +311,7 @@ else {
 									$('$elem_hidden_id').setValue('".addslashes($val)."');
 									$('span_$elem_id').innerHTML = this.innerHTML;
 									$onchange_func ;
-									$('$elem_id').className='".$this->m_cssClass."'
+									$('$elem_id').className='".$this->cssClass."'
 									\"	
 					>$li_option_value</li>";
     		}
@@ -502,8 +502,8 @@ else {
     	catch (Exception $e)
         {
             BizSystem::log(LOG_ERR, "DATAOBJ", "Query Error: ".$e->getMessage());
-            $this->m_ErrorMessage = "Error in SQL query: ".$sql.". ".$e->getMessage();
-            throw new BDOException($this->m_ErrorMessage);
+            $this->errorMessage = "Error in SQL query: ".$sql.". ".$e->getMessage();
+            throw new BDOException($this->errorMessage);
             return null;
         }
     }

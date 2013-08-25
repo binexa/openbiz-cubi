@@ -40,7 +40,7 @@ class ColumnList extends OptionElement
         parent::readMetaData($xmlArr);
         $this->m_Sortable = isset($xmlArr["ATTRIBUTES"]["SORTABLE"]) ? $xmlArr["ATTRIBUTES"]["SORTABLE"] : null;
         $this->m_Link = isset($xmlArr["ATTRIBUTES"]["LINK"]) ? $xmlArr["ATTRIBUTES"]["LINK"] : null;
-        $this->m_ColumnStyle = $this->m_Style;
+        $this->m_ColumnStyle = $this->style;
     }
 
     /**
@@ -108,13 +108,13 @@ class ColumnList extends OptionElement
     {
         $fromList   = array();
         $this->getFromList($fromList);
-        $value_arr  = explode(',', $this->m_Value);
+        $value_arr  = explode(',', $this->value);
         $style      = $this->getStyle();
         $func       = $this->getFunction();
 
         $selectedStr = '';
 
-        $selectedStr = $this->m_Value;
+        $selectedStr = $this->value;
 
         foreach ($fromList as $opt)
         {

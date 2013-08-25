@@ -37,28 +37,28 @@ class BizDataObj_Lite extends BizDataObj_Abstract
      *
      * @var mixed
      */
-    protected $m_RecordId = null;
+    protected $recordId = null;
 
     /**
      * Current record
      *
      * @var array
      */
-    protected $m_CurrentRecord = null;
+    protected $currentRecord = null;
 
     /**
      * Error message
      *
      * @var string
      */
-    protected $m_ErrorMessage = "";
+    protected $errorMessage = "";
 
     /**
      * Array fields of error
      *
      * @var array
      */
-    protected $m_ErrorFields = array();
+    protected $errorFields = array();
     
     protected $_fetch4countQuery = null;
 
@@ -72,7 +72,7 @@ class BizDataObj_Lite extends BizDataObj_Abstract
     {
         if ($this->stateless == "Y")
             return;
-        $sessionContext->getObjVar($this->objectName, "RecordId", $this->m_RecordId);
+        $sessionContext->getObjVar($this->objectName, "RecordId", $this->recordId);
         $sessionContext->getObjVar($this->objectName, "SearchRule", $this->searchRule);
         $sessionContext->getObjVar($this->objectName, "SortRule", $this->sortRule);
         $sessionContext->getObjVar($this->objectName, "OtherSqlRule", $this->otherSQLRule);
@@ -89,7 +89,7 @@ class BizDataObj_Lite extends BizDataObj_Abstract
     {
         if ($this->stateless == "Y")
             return;
-        $sessionContext->setObjVar($this->objectName, "RecordId", $this->m_RecordId);
+        $sessionContext->setObjVar($this->objectName, "RecordId", $this->recordId);
         $sessionContext->setObjVar($this->objectName, "SearchRule", $this->searchRule);
         $sessionContext->setObjVar($this->objectName, "SortRule", $this->sortRule);
         $sessionContext->setObjVar($this->objectName, "OtherSqlRule", $this->otherSQLRule);
@@ -105,7 +105,7 @@ class BizDataObj_Lite extends BizDataObj_Abstract
      */
     public function getErrorMessage()
     {
-        return $this->m_ErrorMessage;
+        return $this->errorMessage;
     }
 
     /**
@@ -115,7 +115,7 @@ class BizDataObj_Lite extends BizDataObj_Abstract
      */
     public function getErrorFields()
     {
-        return $this->m_ErrorFields;
+        return $this->errorFields;
     }
 
     /**
@@ -200,8 +200,8 @@ class BizDataObj_Lite extends BizDataObj_Abstract
      **/
     public function setActiveRecord($currentRecord)
     {
-        $this->m_CurrentRecord = $currentRecord;
-        $this->m_RecordId = $this->m_CurrentRecord['Id'];
+        $this->currentRecord = $currentRecord;
+        $this->recordId = $this->currentRecord['Id'];
     }
 
     /**
@@ -212,26 +212,26 @@ class BizDataObj_Lite extends BizDataObj_Abstract
      **/
     public function getActiveRecord()
     {
-        if ($this->m_RecordId == null || $this->m_RecordId == "")
+        if ($this->recordId == null || $this->recordId == "")
             return null;
-        if ($this->m_CurrentRecord == null)
+        if ($this->currentRecord == null)
         {
             // query on $recordId
-            $records = $this->directFetch("[Id]='".$this->m_RecordId."'", 1);
+            $records = $this->directFetch("[Id]='".$this->recordId."'", 1);
             if (count($records) == 1)
             {
-                $this->m_CurrentRecord = $records[0];
-                $this->m_RecordId = $this->m_CurrentRecord["Id"];
+                $this->currentRecord = $records[0];
+                $this->recordId = $this->currentRecord["Id"];
             }
             else
-                $this->m_CurrentRecord = null;
+                $this->currentRecord = null;
         }
 
-        return $this->m_CurrentRecord;
+        return $this->currentRecord;
     }
     
     public function getRecordId(){
-    	return $this->m_RecordId;
+    	return $this->recordId;
     }
 
     /**
@@ -241,10 +241,10 @@ class BizDataObj_Lite extends BizDataObj_Abstract
      **/
     public function setActiveRecordId($recordId)
     {
-        if ($this->m_RecordId != $recordId)
+        if ($this->recordId != $recordId)
         {
-            $this->m_RecordId = $recordId;
-            $this->m_CurrentRecord = null;
+            $this->recordId = $recordId;
+            $this->currentRecord = null;
         }
     }
 
@@ -282,9 +282,9 @@ class BizDataObj_Lite extends BizDataObj_Abstract
      */
     public function directFetch($searchRule="", $count=-1, $offset=0,$sortRule="")
     {
-        $curRecord = $this->m_CurrentRecord;
-        $recId = $this->m_RecordId;
-        $this->m_CurrentRecord = null;
+        $curRecord = $this->currentRecord;
+        $recId = $this->recordId;
+        $this->currentRecord = null;
 
         $oldSearchRule = $this->searchRule;
         $this->clearSearchRule();
@@ -313,8 +313,8 @@ class BizDataObj_Lite extends BizDataObj_Abstract
 
         $this->sortRule = $oldSortRule;
         $this->searchRule = $oldSearchRule;
-        $this->m_CurrentRecord = $curRecord;
-        $this->m_RecordId = $recId;
+        $this->currentRecord = $curRecord;
+        $this->recordId = $recId;
 
         if (count($dataSet) == 0)
             return new DataSet(null);
@@ -380,10 +380,10 @@ class BizDataObj_Lite extends BizDataObj_Abstract
             $offset=0, $clearSearchRule=true, $noAssociation=false)
     {
         if ($count == 0) return;
-        $curRecord = $this->m_CurrentRecord;
-        $recId = $this->m_RecordId;
+        $curRecord = $this->currentRecord;
+        $recId = $this->recordId;
         $oldSearchRule = $this->searchRule;
-        $this->m_CurrentRecord = null;
+        $this->currentRecord = null;
         if ($clearSearchRule)
             $this->clearSearchRule();
         $this->setSearchRule($searchRule);
@@ -407,8 +407,8 @@ class BizDataObj_Lite extends BizDataObj_Abstract
         if ($noAssociation)
             $this->m_Association = $oldAssociation;
         $this->searchRule = $oldSearchRule;
-        $this->m_CurrentRecord = $curRecord;
-        $this->m_RecordId = $recId;
+        $this->currentRecord = $curRecord;
+        $this->recordId = $recId;
         return true;
     }
 
@@ -498,8 +498,8 @@ class BizDataObj_Lite extends BizDataObj_Abstract
         catch (Exception $e)
         {
             BizSystem::log(LOG_ERR, "DATAOBJ", "Query Error: ".$e->getMessage());
-            $this->m_ErrorMessage = $this->getMessage("DATA_ERROR_QUERY").": ".$sql.". ".$e->getMessage();
-            throw new BDOException($this->m_ErrorMessage);
+            $this->errorMessage = $this->getMessage("DATA_ERROR_QUERY").": ".$sql.". ".$e->getMessage();
+            throw new BDOException($this->errorMessage);
             return null;
         }
         return $resultSetArray;
@@ -566,8 +566,8 @@ class BizDataObj_Lite extends BizDataObj_Abstract
         catch (Exception $e)
         {
             BizSystem::log(LOG_ERR, "DATAOBJ", "Query Error: ".$e->getMessage());
-            $this->m_ErrorMessage = $this->getMessage("DATA_ERROR_QUERY").": Rewrite:".$rewritesql.". Raw:".$sql.". ".$e->getMessage();
-            throw new BDOException($this->m_ErrorMessage);
+            $this->errorMessage = $this->getMessage("DATA_ERROR_QUERY").": Rewrite:".$rewritesql.". Raw:".$sql.". ".$e->getMessage();
+            throw new BDOException($this->errorMessage);
             return 0;
         }
         
@@ -592,16 +592,16 @@ class BizDataObj_Lite extends BizDataObj_Abstract
     	}
         if ($sqlArr = current($resultSet))
         {
-            $this->m_CurrentRecord = $this->bizRecord->convertSqlArrToRecArr($sqlArr);
-            $this->m_CurrentRecord = $this->bizRecord->getRecordArr($sqlArr);
-            $this->m_RecordId = $this->m_CurrentRecord["Id"];
+            $this->currentRecord = $this->bizRecord->convertSqlArrToRecArr($sqlArr);
+            $this->currentRecord = $this->bizRecord->getRecordArr($sqlArr);
+            $this->recordId = $this->currentRecord["Id"];
             next($resultSet);
         }
         else
         {
             return null;
         }
-        return $this->m_CurrentRecord;
+        return $this->currentRecord;
     }
 
     /**

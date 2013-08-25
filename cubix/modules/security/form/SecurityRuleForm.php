@@ -15,7 +15,7 @@ class SecurityRuleForm extends EasyForm
 {
 	public $m_ConfigFile;
 	public $m_ConfigNode;
-	public $m_ModeStatus;
+	public $modeStatus;
 	
 	protected function readMetadata(&$xmlArr)
 	{
@@ -39,7 +39,7 @@ class SecurityRuleForm extends EasyForm
             $recId = BizSystem::clientProxy()->getFormInputs('_selectedId');
         if ($recId==null || $recId=='')
             return null;
-        $this->m_RecordId = $recId;
+        $this->recordId = $recId;
 		$this->m_FixSearchRule = "[Id]='$recId'";
         $rec=$this->fetchData();
         $this->m_DataPanel->setRecordArr($rec);
@@ -103,7 +103,7 @@ class SecurityRuleForm extends EasyForm
 				$result["endtime"] = $match[4];
 					
 		}	
-		$this->m_RecordId = $name;
+		$this->recordId = $name;
 		return $result;
 		 
 	}
@@ -134,8 +134,8 @@ class SecurityRuleForm extends EasyForm
 			$this->m_FixSearchRule = "[Id]='$name'";
 			$result[0]=$this->fetchData();
 		}
-		if(!$this->m_RecordId){
-				$this->m_RecordId=$result[0]["Name"];
+		if(!$this->recordId){
+				$this->recordId=$result[0]["Name"];
 		}
 		return $result;
 	}
@@ -147,8 +147,8 @@ class SecurityRuleForm extends EasyForm
 			return;
 		}
 		$configArr=BizSystem::getXmlArray($file);
-   		$this->m_ModeStatus = $configArr["PLUGINSERVICE"]["SECURITY"][strtoupper($this->m_ConfigNode)]["ATTRIBUTES"]["MODE"];
-   		$result['status'] = $this->m_ModeStatus;
+   		$this->modeStatus = $configArr["PLUGINSERVICE"]["SECURITY"][strtoupper($this->m_ConfigNode)]["ATTRIBUTES"]["MODE"];
+   		$result['status'] = $this->modeStatus;
    		return $result;   	
    }
       
@@ -215,7 +215,7 @@ class SecurityRuleForm extends EasyForm
 			$nodeArr["ATTRIBUTES"][strtoupper($key)]=$value;
 		}       
         $this->addNode($nodeArr);
-        $this->m_RecordId = $recArr["NAME"];
+        $this->recordId = $recArr["NAME"];
         $this->processPostAction();		
 	}    
 
@@ -249,7 +249,7 @@ class SecurityRuleForm extends EasyForm
 		$nodeArr["ATTRIBUTES"]["NAME"]=$name;
         $this->updateNode($name, $nodeArr);
         
-		$this->m_RecordId = $name;
+		$this->recordId = $name;
         $this->processPostAction();		
 	}	
 	
@@ -261,8 +261,8 @@ class SecurityRuleForm extends EasyForm
 		}
 		$configArr=BizSystem::getXmlArray($file);
 		
-		$this->m_ModeStatus = $configArr["PLUGINSERVICE"]["SECURITY"][strtoupper($this->m_ConfigNode)]["ATTRIBUTES"]["MODE"];		
-		if($this->m_ModeStatus == 'Enabled')
+		$this->modeStatus = $configArr["PLUGINSERVICE"]["SECURITY"][strtoupper($this->m_ConfigNode)]["ATTRIBUTES"]["MODE"];		
+		if($this->modeStatus == 'Enabled')
 	   	{
 	   		$status = "Disabled";
 	   	}
@@ -270,7 +270,7 @@ class SecurityRuleForm extends EasyForm
 	   	{
 	   		$status = "Enabled";
 	   	}
-	   	$this->m_ModeStatus = $status;
+	   	$this->modeStatus = $status;
 		
 		$configArr["PLUGINSERVICE"]["SECURITY"][strtoupper($this->m_ConfigNode)]["ATTRIBUTES"]["MODE"] = $status;
 		

@@ -35,16 +35,16 @@ class ColumnShare extends ColumnText
     public $m_OtherSharedImg	= null;
     public $m_DefaultImg		= null;
     
-    public $m_RecordOwnerId		= null;
-    public $m_RecordGroupId		= null;
-    public $m_RecordGroupPerm	= null;
-    public $m_RecordOtherPerm	= null;
-    public $m_RecordCreatorId 	= null;
+    public $recordOwnerId		= null;
+    public $recordGroupId		= null;
+    public $recordGroupPerm	= null;
+    public $recordOtherPerm	= null;
+    public $recordCreatorId 	= null;
     
-    protected $m_RecordOwnerId_AutoLoad		= false;
-    protected $m_RecordGroupId_AutoLoad		= false;
-    protected $m_RecordGroupPerm_AutoLoad	= false;
-    protected $m_RecordOtherPerm_AutoLoad	= false;
+    protected $recordOwnerId_AutoLoad		= false;
+    protected $recordGroupId_AutoLoad		= false;
+    protected $recordGroupPerm_AutoLoad	= false;
+    protected $recordOtherPerm_AutoLoad	= false;
     
     public $m_hasOwnerField = false;
     
@@ -65,46 +65,46 @@ class ColumnShare extends ColumnText
         $this->m_OtherSharedImg = isset($xmlArr["ATTRIBUTES"]["OTHERSHAREDIMG"])? $xmlArr["ATTRIBUTES"]["OTHERSHAREDIMG"]: "{OPENBIZ_RESOURCE_URL}/common/images/icon_data_shared_other.gif";
         $this->m_DefaultImg = isset($xmlArr["ATTRIBUTES"]["DEFAULTIMG"])? $xmlArr["ATTRIBUTES"]["DEFAULTIMG"]: "{OPENBIZ_RESOURCE_URL}/common/images/icon_data_shared_other.gif";
         
-        $this->m_RecordCreatorId	=	isset($xmlArr["ATTRIBUTES"]["CREATORID"])		? $xmlArr["ATTRIBUTES"]["CREATORID"]	: null;
-        $this->m_RecordOwnerId	=	isset($xmlArr["ATTRIBUTES"]["OWNERID"])		? $xmlArr["ATTRIBUTES"]["OWNERID"]	: null;
-        $this->m_RecordGroupId	=	isset($xmlArr["ATTRIBUTES"]["GROUPID"])		? $xmlArr["ATTRIBUTES"]["GROUPID"]	: null;
-        $this->m_RecordGroupPerm=	isset($xmlArr["ATTRIBUTES"]["GROUPPERM"])	? $xmlArr["ATTRIBUTES"]["GROUPPERM"]: null;
-        $this->m_RecordOtherPerm=	isset($xmlArr["ATTRIBUTES"]["OTHERPERM"])	? $xmlArr["ATTRIBUTES"]["OTHERPERM"]: null;
+        $this->recordCreatorId	=	isset($xmlArr["ATTRIBUTES"]["CREATORID"])		? $xmlArr["ATTRIBUTES"]["CREATORID"]	: null;
+        $this->recordOwnerId	=	isset($xmlArr["ATTRIBUTES"]["OWNERID"])		? $xmlArr["ATTRIBUTES"]["OWNERID"]	: null;
+        $this->recordGroupId	=	isset($xmlArr["ATTRIBUTES"]["GROUPID"])		? $xmlArr["ATTRIBUTES"]["GROUPID"]	: null;
+        $this->recordGroupPerm=	isset($xmlArr["ATTRIBUTES"]["GROUPPERM"])	? $xmlArr["ATTRIBUTES"]["GROUPPERM"]: null;
+        $this->recordOtherPerm=	isset($xmlArr["ATTRIBUTES"]["OTHERPERM"])	? $xmlArr["ATTRIBUTES"]["OTHERPERM"]: null;
         
-        $this->m_RecordOwnerId_AutoLoad		=	isset($xmlArr["ATTRIBUTES"]["OWNERID"])?false:true;	
-        $this->m_RecordGroupId_AutoLoad		=	isset($xmlArr["ATTRIBUTES"]["GROUPID"])?false:true;	
-        $this->m_RecordGroupPerm_AutoLoad	=	isset($xmlArr["ATTRIBUTES"]["GROUPPERM"])?false:true;	
-        $this->m_RecordOtherPerm_AutoLoad	=	isset($xmlArr["ATTRIBUTES"]["OTHERPERM"])?false:true;	
+        $this->recordOwnerId_AutoLoad		=	isset($xmlArr["ATTRIBUTES"]["OWNERID"])?false:true;	
+        $this->recordGroupId_AutoLoad		=	isset($xmlArr["ATTRIBUTES"]["GROUPID"])?false:true;	
+        $this->recordGroupPerm_AutoLoad	=	isset($xmlArr["ATTRIBUTES"]["GROUPPERM"])?false:true;	
+        $this->recordOtherPerm_AutoLoad	=	isset($xmlArr["ATTRIBUTES"]["OTHERPERM"])?false:true;	
     }
     
     public function setValue($value){
 		$formObj = $this->getFormObj();
         $rec = $formObj->getActiveRecord();                
 		
-        if($this->m_RecordOwnerId_AutoLoad)
+        if($this->recordOwnerId_AutoLoad)
         {
         	$this->m_hasOwnerField = $this->hasOwnerField();
         	if($this->m_hasOwnerField){
-        		$this->m_RecordOwnerId = $rec['owner_id'];
-        		$this->m_RecordCreatorId = $rec['create_by'];
+        		$this->recordOwnerId = $rec['owner_id'];
+        		$this->recordCreatorId = $rec['create_by'];
         	}else{
-        		$this->m_RecordOwnerId = $rec['create_by'];
+        		$this->recordOwnerId = $rec['create_by'];
         	}        	
         }
         
-    	if($this->m_RecordGroupId_AutoLoad)
+    	if($this->recordGroupId_AutoLoad)
         {
-        	$this->m_RecordGroupId = $rec['group_id'];        	
+        	$this->recordGroupId = $rec['group_id'];        	
         }
         
-        if($this->m_RecordGroupPerm_AutoLoad)
+        if($this->recordGroupPerm_AutoLoad)
         {
-        	$this->m_RecordGroupPerm = $rec['group_perm'];
+        	$this->recordGroupPerm = $rec['group_perm'];
         }
 
-        if($this->m_RecordOtherPerm_AutoLoad)
+        if($this->recordOtherPerm_AutoLoad)
         {
-        	$this->m_RecordOtherPerm = $rec['other_perm'];
+        	$this->recordOtherPerm = $rec['other_perm'];
         }       	     
     }
 
@@ -116,45 +116,45 @@ class ColumnShare extends ColumnText
 		$this->m_hasOwnerField = $this->hasOwnerField();
        if($this->m_hasOwnerField){
        		
-			if($this->m_RecordOwnerId != $this->m_RecordCreatorId)
+			if($this->recordOwnerId != $this->recordCreatorId)
 			{
-				if($this->m_RecordOwnerId == $user_id)
+				if($this->recordOwnerId == $user_id)
 				{
-					$this->m_Value = 4;
-					return $this->m_Value ;
+					$this->value = 4;
+					return $this->value ;
 				}
-				elseif($this->m_RecordCreatorId == $user_id)
+				elseif($this->recordCreatorId == $user_id)
 				{
-					$this->m_Value = 5;
-					return $this->m_Value ;
+					$this->value = 5;
+					return $this->value ;
 				}
 			}
        }
 		
-	    if($user_id == $this->m_RecordOwnerId)
+	    if($user_id == $this->recordOwnerId)
 		{
-			if((int)$this->m_RecordGroupPerm>0 || (int)$this->m_RecordOtherPerm>0 )
+			if((int)$this->recordGroupPerm>0 || (int)$this->recordOtherPerm>0 )
 			{
 				
-				$this->m_Value = 1;
+				$this->value = 1;
 			}
 			else 
 			{
-				$this->m_Value = 0;
+				$this->value = 0;
 			}
 		}
-		elseif($this->m_RecordOtherPerm>0)
+		elseif($this->recordOtherPerm>0)
 		{
-			$this->m_Value = 3;
+			$this->value = 3;
 			
 		}
 		else
 		{
             foreach($groups as $group_id)
 			{
-				if($group_id == $this->m_RecordGroupId)
+				if($group_id == $this->recordGroupId)
 				{
-					$this->m_Value = 2;
+					$this->value = 2;
 					break;
 				}
 			}
@@ -163,7 +163,7 @@ class ColumnShare extends ColumnText
 		
     
                	
-		return $this->m_Value;  		
+		return $this->value;  		
     }
     
     /**
@@ -212,9 +212,9 @@ class ColumnShare extends ColumnText
         }else{
         	$image_url = Resource::getImageUrl()."/".$image_url;
         }
-        if($this->m_Width)
+        if($this->width)
         {
-        	$width = "width=\"$this->m_Width\"";
+        	$width = "width=\"$this->width\"";
         }
     	if ($this->m_Link)
         {

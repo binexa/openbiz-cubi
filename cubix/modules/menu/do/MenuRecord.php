@@ -27,8 +27,8 @@
  */
 class MenuRecord
 {
- 	public $m_Id;
- 	public $m_PId; 
+ 	public $recordId;
+ 	public $recordParentId; 
  	public $m_Key;  
     public $objectName;
     public $m_Module;
@@ -41,7 +41,7 @@ class MenuRecord
 	public $m_IconCSSClass;
     public $m_Access;
 	public $m_Current = 0;
-	public $m_ChildNodes = null;
+	public $childNodes = null;
 
     /**
      * Initialize Node
@@ -51,8 +51,8 @@ class MenuRecord
      */
     function __construct($rec)
     {
-        $this->m_Id = $rec['Id'];
-        $this->m_PId = $rec['PId'];
+        $this->recordId = $rec['Id'];
+        $this->recordParentId = $rec['PId'];
         $this->objectName = $rec['title'];
         $this->m_Module = $rec['module'];
         $this->objectDescription = $rec['description'];
@@ -94,8 +94,8 @@ class MenuRecord
 
     protected function getTransKey($name)
     {
-    	//return strtoupper('MENU_'.$this->m_Id.'_'.$name);
-        $k = '_MENU_'.$this->m_Id.'_'.$name;
+    	//return strtoupper('MENU_'.$this->recordId.'_'.$name);
+        $k = '_MENU_'.$this->recordId.'_'.$name;
         return strtoupper($k);
     }
 }

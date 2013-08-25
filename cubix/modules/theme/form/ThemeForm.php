@@ -33,7 +33,7 @@ class ThemeForm extends EasyForm
             $recId = BizSystem::clientProxy()->getFormInputs('_selectedId');
         if ($recId==null || $recId=='')
             return null;
-        $this->m_RecordId = $recId;
+        $this->recordId = $recId;
 		$rec=array();
         $this->ReadThemePack($recId,$rec);
         $this->m_DataPanel->setRecordArr($rec);
@@ -145,7 +145,7 @@ class ThemeForm extends EasyForm
 		$result['users']	=	"0";
 		
 		$this->ReadThemePack($theme,$result);
-		$this->m_RecordId = $theme;
+		$this->recordId = $theme;
 		return $result;
 	}
 	
@@ -166,8 +166,8 @@ class ThemeForm extends EasyForm
 				$i++;	
 			}
 		}
-		if(!$this->m_RecordId){
-			$this->m_RecordId=$result[0]["Id"];
+		if(!$this->recordId){
+			$this->recordId=$result[0]["Id"];
 		}
 		return $result;
 	}
@@ -225,7 +225,7 @@ class ThemeForm extends EasyForm
 
 	
 	public function CreateThemePack($theme,$recArr){
-		$this->m_RecordID=$theme;
+		$this->recordID=$theme;
 		
 		//mkdir
 		$theme_dir = OPENBIZ_THEME_PATH.DIRECTORY_SEPARATOR.$theme;
@@ -261,7 +261,7 @@ class ThemeForm extends EasyForm
 	}
 	
 public function UpdateThemePack($theme,$recArr){
-		$this->m_RecordID=$theme;
+		$this->recordID=$theme;
 		$locale = explode('_', $theme);
 	    $theme_code = strtolower($locale[0]);
 

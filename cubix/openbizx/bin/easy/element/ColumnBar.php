@@ -14,12 +14,12 @@ class ColumnBar extends ColumnText
         $this->m_MaxValue = isset($xmlArr["ATTRIBUTES"]["MAXVALUE"]) ? $xmlArr["ATTRIBUTES"]["MAXVALUE"] : "1";
         $this->m_DisplayUnit = isset($xmlArr["ATTRIBUTES"]["DISPLAYUNIT"]) ? $xmlArr["ATTRIBUTES"]["DISPLAYUNIT"] : null;
         $this->m_Color = isset($xmlArr["ATTRIBUTES"]["COLOR"]) ? $xmlArr["ATTRIBUTES"]["COLOR"] : null;        
-        $this->m_cssClass = isset($xmlArr["ATTRIBUTES"]["CSSCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSCLASS"] : "column_bar";
-        $this->m_Height = isset($xmlArr["ATTRIBUTES"]["HEIGHT"]) ? $xmlArr["ATTRIBUTES"]["HEIGHT"] : "14";
+        $this->cssClass = isset($xmlArr["ATTRIBUTES"]["CSSCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSCLASS"] : "column_bar";
+        $this->height = isset($xmlArr["ATTRIBUTES"]["HEIGHT"]) ? $xmlArr["ATTRIBUTES"]["HEIGHT"] : "14";
     }
 
     public function render(){    	
-    	$value =  $this->m_Value;
+    	$value =  $this->value;
     	if($this->m_Color)
     	{
     		$formObj = $this->getFormObj();
@@ -43,8 +43,8 @@ class ColumnBar extends ColumnText
         $style = $this->getStyle();
         $id = $this->objectName;
         $func = $this->getFunction();
-        $height = $this->m_Height;
-        $width = $this->m_Width;        
+        $height = $this->height;
+        $width = $this->width;        
         $max_value = Expression::evaluateExpression($this->m_MaxValue, $this->getFormObj());
        
         if($max_value)
@@ -66,7 +66,7 @@ class ColumnBar extends ColumnText
 		}else{
 			$bar = "<span class=\"bar_data\" style=\"".$bgcolor_str."height:".$height."px;width:".$width_bar."px;opacity: 0.4;filter: alpha(opacity=40);\"></span>";
 		}
-		$value = $this->m_Text ? $this->getText() : $this->m_Value;
+		$value = $this->text ? $this->getText() : $this->value;
         $sHTML = "
     	<span id=\"$id\" $func $style >
     		
@@ -83,14 +83,14 @@ class ColumnBar extends ColumnText
    protected function getStyle()
     {        
 		$formobj = $this->getFormObj();    	
-        $htmlClass = Expression::evaluateExpression($this->m_cssClass, $formobj);
+        $htmlClass = Expression::evaluateExpression($this->cssClass, $formobj);
         $htmlClass = "CLASS='$htmlClass'";
         if(!$htmlClass){
         	$htmlClass = null;
         }
         $style ='';        
-        if ($this->m_Style)
-            $style .= $this->m_Style;
+        if ($this->style)
+            $style .= $this->style;
         if (!isset($style) && !$htmlClass)
             return null;
         if (isset($style))
@@ -101,7 +101,7 @@ class ColumnBar extends ColumnText
         }
         if($formobj->m_Errors[$this->objectName])
         {
-      	    $htmlClass = "CLASS='".$this->m_cssErrorClass."'";
+      	    $htmlClass = "CLASS='".$this->cssErrorClass."'";
         }
         if ($htmlClass)
             $style = $htmlClass." ".$style;

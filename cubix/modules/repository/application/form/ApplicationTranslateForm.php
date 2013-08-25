@@ -4,6 +4,6 @@ include_once OPENBIZ_APP_MODULE_PATH.'/repository/category/form/CategoryTranslat
 class ApplicationTranslateForm extends CategoryTranslateForm
 {
 	protected $m_TranslateDO = "repository.application.do.ApplicationTranslateDO";
-	protected $m_RecordFKField = "repo_app_id";	
+	protected $recordFKField = "repo_app_id";	
 }
 ?>

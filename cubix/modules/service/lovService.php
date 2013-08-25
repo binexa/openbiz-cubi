@@ -209,8 +209,8 @@ class lovService extends MetaObject
     	catch (Exception $e)
         {
             BizSystem::log(LOG_ERR, "DATAOBJ", "Query Error: ".$e->getMessage());
-            $this->m_ErrorMessage = "Error in SQL query: ".$sql.". ".$e->getMessage();
-            throw new BDOException($this->m_ErrorMessage);
+            $this->errorMessage = "Error in SQL query: ".$sql.". ".$e->getMessage();
+            throw new BDOException($this->errorMessage);
             return null;
         }
         return $list;

@@ -30,8 +30,8 @@ class Textarea extends OptionElement
 	
 	public function readMetaData(&$xmlArr){
 		parent::readMetaData($xmlArr);
-		$this->m_cssClass = isset($xmlArr["ATTRIBUTES"]["CSSCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSCLASS"] : "input_textarea";
-		$this->m_cssErrorClass = isset($xmlArr["ATTRIBUTES"]["CSSERRORCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSERRORCLASS"] : "input_textarea_error";
+		$this->cssClass = isset($xmlArr["ATTRIBUTES"]["CSSCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSCLASS"] : "input_textarea";
+		$this->cssErrorClass = isset($xmlArr["ATTRIBUTES"]["CSSERRORCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSERRORCLASS"] : "input_textarea_error";
 		$this->m_cssFocusClass = isset($xmlArr["ATTRIBUTES"]["CSSFOCUSCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSFOCUSCLASS"] : "input_textarea_focus";
 		$this->m_BlankOption = isset($xmlArr["ATTRIBUTES"]["BLANKOPTION"]) ? $xmlArr["ATTRIBUTES"]["BLANKOPTION"] : null;
 	}
@@ -48,16 +48,16 @@ class Textarea extends OptionElement
         $style = $this->getStyle();
         $func = $this->getFunction(); 
     	if($formobj->m_Errors[$this->objectName]){
-			$func .= "onchange=\"this.className='$this->m_cssClass'\"";
+			$func .= "onchange=\"this.className='$this->cssClass'\"";
 		}else{
-			$func .= "onfocus=\"this.className='$this->m_cssFocusClass'\" onblur=\"this.className='$this->m_cssClass'\"";
+			$func .= "onfocus=\"this.className='$this->m_cssFocusClass'\" onblur=\"this.className='$this->cssClass'\"";
 		}        
-        $sHTML .= "<TEXTAREA NAME=\"" . $this->objectName . "\" ID=\"" . $this->objectName ."\" $disabledStr $this->m_HTMLAttr $style $func>".$this->m_Value."</TEXTAREA>";        
+        $sHTML .= "<TEXTAREA NAME=\"" . $this->objectName . "\" ID=\"" . $this->objectName ."\" $disabledStr $this->m_HTMLAttr $style $func>".$this->value."</TEXTAREA>";        
     	
         if($this->m_SelectFrom){
         	$fromList = array();
 	        $this->getFromList($fromList);
-	        $valueArray = explode(',', $this->m_Value);
+	        $valueArray = explode(',', $this->value);
 	        $sHTML .= "<UL ID=\"" . $this->objectName ."_suggestion\" class=\"input_textarea_suggestion\" >";
 	        if ($this->m_BlankOption) // ADD a blank option
 	        {

@@ -14,8 +14,8 @@
 class PictureUploader extends InputText
 {
  public function render() {      
-    	$this->m_cssClass=null;
-    	$this->m_cssErrorClass = null;
+    	$this->cssClass=null;
+    	$this->cssErrorClass = null;
     	$this->m_cssHoverClass = null;   
     	
         $sHTML = "

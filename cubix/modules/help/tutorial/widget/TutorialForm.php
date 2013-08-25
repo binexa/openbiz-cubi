@@ -3,7 +3,7 @@ class TutorialForm extends EasyForm
 {
 	public function closeTutorial()
 	{
-		$tutorailId = $this->m_RecordId;
+		$tutorailId = $this->recordId;
 		$rec= $this->readInputs();
 		if($rec['chk_show_on_next'])
 		{

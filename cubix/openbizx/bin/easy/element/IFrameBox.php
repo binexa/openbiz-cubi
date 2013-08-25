@@ -24,17 +24,17 @@ class IFrameBox extends Element
     }
 	protected function getWidth()
     {
-        if ($this->m_Width == null)
+        if ($this->width == null)
             return null;
         $formobj = $this->getFormObj();
-        return Expression::evaluateExpression($this->m_Width, $formobj);
+        return Expression::evaluateExpression($this->width, $formobj);
     }
 	protected function getHeight()
     {
-        if ($this->m_Height == null)
+        if ($this->height == null)
             return null;
         $formobj = $this->getFormObj();
-        return Expression::evaluateExpression($this->m_Height, $formobj);
+        return Expression::evaluateExpression($this->height, $formobj);
     }
     
     public function renderLabel()

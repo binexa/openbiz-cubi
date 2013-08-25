@@ -168,7 +168,7 @@ class MenuTreeDO extends BizDataObj
     private function _getChildrenNodes(&$node, $depth, $globalSearchRule=null)
     {
         $url = $_SERVER['REQUEST_URI'];
-    	$pid = $node->m_Id;
+    	$pid = $node->recordId;
         //echo "<br>in _getChildrenNodes";
         if($globalSearchRule){
         	$searchRule = "[PId]='$pid' AND $globalSearchRule";
@@ -182,13 +182,13 @@ class MenuTreeDO extends BizDataObj
             // TODO: check access with role
             $menuRec = new MenuRecord($rec);
             if ($menuRec->allowAccess()) {
-                $node->m_ChildNodes[$i] = $menuRec;
+                $node->childNodes[$i] = $menuRec;
                 $i++;
             }
         }
-        //print_r($node->m_ChildNodes);
+        //print_r($node->childNodes);
         // reach leave node
-        if ($node->m_ChildNodes == null) {
+        if ($node->childNodes == null) {
             return;
         }
         $depth++;
@@ -197,7 +197,7 @@ class MenuTreeDO extends BizDataObj
             return;
         else
         {
-            foreach ($node->m_ChildNodes as $node_c)
+            foreach ($node->childNodes as $node_c)
             {
                 $this->_getChildrenNodes($node_c, $depth, $globalSearchRule);
             }

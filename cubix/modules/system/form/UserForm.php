@@ -341,7 +341,7 @@ class UserForm extends EasyForm
    
     public function CheckSmartCard($rec)    
     {
-    	$recId = $this->m_RecordId;
+    	$recId = $this->recordId;
     	$cardcode = $rec['smartcard'];
     	$do = $this->getDataObj();
     	$record = $do->directfetch("[smartcard]='$cardcode' AND [Id]!='$recId'");
@@ -445,8 +445,8 @@ class UserForm extends EasyForm
         // query UserDO by the username
         $userDO = $this->getDataObj();        
         //include optional ID when editing records
-        if ($this->m_RecordId > 0 ) {
-            $searchTxt .= " AND [Id]<>$this->m_RecordId";  
+        if ($this->recordId > 0 ) {
+            $searchTxt .= " AND [Id]<>$this->recordId";  
         }
                        
         $records = $userDO->directFetch($searchTxt,1);
@@ -468,8 +468,8 @@ class UserForm extends EasyForm
         $userDO = $this->getDataObj();        
         
         //include optional ID when editing records
-        if ($this->m_RecordId > 0 ) {
-            $searchTxt .= " AND [Id]<>$this->m_RecordId";  
+        if ($this->recordId > 0 ) {
+            $searchTxt .= " AND [Id]<>$this->recordId";  
         }        
         $records = $userDO->directFetch($searchTxt,1);
         if (count($records)==1)

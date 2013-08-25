@@ -398,12 +398,12 @@ class MetaIterator implements Iterator
  */
 class Parameter
 {
-    public $objectName, $m_Value, $m_Required, $m_InOut;
+    public $objectName, $value, $m_Required, $m_InOut;
 
     public function __construct(&$xmlArr)
     {
         $this->objectName = isset($xmlArr["ATTRIBUTES"]["NAME"]) ? $xmlArr["ATTRIBUTES"]["NAME"] : null;
-        $this->m_Value = isset($xmlArr["ATTRIBUTES"]["VALUE"]) ? $xmlArr["ATTRIBUTES"]["VALUE"] : null;
+        $this->value = isset($xmlArr["ATTRIBUTES"]["VALUE"]) ? $xmlArr["ATTRIBUTES"]["VALUE"] : null;
         $this->m_Required = isset($xmlArr["ATTRIBUTES"]["REQUIRED"]) ? $xmlArr["ATTRIBUTES"]["REQUIRED"] : null;
         $this->m_InOut = isset($xmlArr["ATTRIBUTES"]["INOUT"]) ? $xmlArr["ATTRIBUTES"]["INOUT"] : null;
     }
@@ -417,7 +417,7 @@ class Parameter
     public function getProperty($propertyName)
     {
         if ($propertyName == "Value")
-            return $this->m_Value;
+            return $this->value;
         return null;
     }
 

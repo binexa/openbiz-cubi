@@ -18,7 +18,7 @@ class DataPublishingForm extends  DataSharingForm
 	{
 		$prtForm = $this->m_ParentFormName;
 		$prtFormObj = BizSystem::GetObject($prtForm);
-		$recId = $this->m_RecordId;
+		$recId = $this->recordId;
 		$dataObj = $prtFormObj->getDataObj();
 		$dataRec = $dataObj->fetchById($recId);
 		

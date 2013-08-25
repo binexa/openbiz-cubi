@@ -21,7 +21,7 @@ class FieldListbox extends Listbox
 		{
 			foreach($usedFields as $field)
 			{
-				if($list[$i]['val']==$field && $list[$i]['val']!=$this->m_Value)
+				if($list[$i]['val']==$field && $list[$i]['val']!=$this->value)
 				{
 					unset($list[$i]);
 				}

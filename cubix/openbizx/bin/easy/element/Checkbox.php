@@ -48,13 +48,13 @@ class Checkbox extends OptionElement
        
     	if(strtoupper($this->getDefaultChecked())=='Y' && !isset($_GET['F']) )
     	{
-    		$this->m_Value = $this->getSelectFrom();
-    		return $this->m_Value;
+    		$this->value = $this->getSelectFrom();
+    		return $this->value;
     	}
     	
-        if($this->m_Value!=null)
+        if($this->value!=null)
         {
-            return $this->m_Value;
+            return $this->value;
         }
         else
         {

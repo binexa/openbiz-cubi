@@ -47,7 +47,7 @@ class TranslationForm extends EasyForm
     	$image = "<image  style=\"float:left;display:block;margin-right:5px;padding-top:2px;\" src=\"$image_path\" />";
 		$record['lang']	=	"<div>".$image." <span style=\"float:left;display:block;\">$lang ( $lang_code )</span></div>";
     	$record['translation'] = file_get_contents($record['path']);
-    	$this->m_RecordId = "file_".$Id;
+    	$this->recordId = "file_".$Id;
     	return $record;
     }
     
@@ -84,8 +84,8 @@ class TranslationForm extends EasyForm
 				$i++;
 			}
 		}
-		if(!$this->m_RecordId){
-			$this->m_RecordId=$result[0]["Id"];
+		if(!$this->recordId){
+			$this->recordId=$result[0]["Id"];
 		}
 		return $result ; 
 	}

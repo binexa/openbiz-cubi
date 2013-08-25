@@ -7,7 +7,7 @@
 -->
 <EasyForm Name="BackupNewForm" Class="BackupForm" Icon="{OPENBIZ_RESOURCE_URL}/backup/images/icon_backup_add.gif" FormType="New" jsClass="jbForm" Title="New Backup" Description="Database backup management could help you backup or restore your system database with simply one click. \n It could prevent your data lost by any mistake." BizDataObj="" TemplateEngine="Smarty" TemplateFile="detail.tpl" EventName="" MessageFile="" Access="backup.Access_Backup">
     <DataPanel>                        
-		<Element Name="fld_location"  Class="LabelText" FieldName="" Label="Location" Text="{@:m_LocationName}" AllowURLParam="N"/>
+		<Element Name="fld_location"  Class="LabelText" FieldName="" Label="Location" Text="{@:locationName}" AllowURLParam="N"/>
 		<Element Name="fld_name" DefaultValue="New Backup" Class="InputText" FieldName="filename" Label="Filename" AllowURLParam="N" CssClass="input_text" CssErrorClass="input_text_error" CssFocusClass="input_text_focus"/>
 		<Element Name="fld_mode"  Class="Listbox" SelectFrom="backup.lov.BackupOption(BackupMode)" FieldName="mode" Label="Backup Mode" AllowURLParam="N" />
 		<Element Name="fld_db"  Class="DatabaseListbox" FieldName="database" Label="Database" AllowURLParam="N" />
@@ -16,7 +16,7 @@
         </DataPanel>
     <ActionPanel>
         <Element Name="btn_save" Class="Button" Text="Save" CssClass="button_gray_m">
-            <EventHandler Name="save_onclick" EventLogMsg="" Event="onclick" Function="Backup()" RedirectPage="form=backup.form.BackupDetailForm&amp;fld:Id={@:m_RecordId}" ShortcutKey="Ctrl+Enter" ContextMenu="Save"/>
+            <EventHandler Name="save_onclick" EventLogMsg="" Event="onclick" Function="Backup()" RedirectPage="form=backup.form.BackupDetailForm&amp;fld:Id={@:recordId}" ShortcutKey="Ctrl+Enter" ContextMenu="Save"/>
         </Element>
         <Element Name="btn_cancel" Class="Button" Text="Cancel" CssClass="button_gray_m">
             <EventHandler Name="cancel_onclick" Event="onclick" Function="SwitchForm(backup.form.BackupListForm)" ShortcutKey="Escape" ContextMenu="Cancel"/>

@@ -51,7 +51,7 @@ class LabelBool extends LabelText{
     	{
     		$this->m_FalseImg = "flag_n.gif";
     	}
-        $val=$this->m_Value;
+        $val=$this->value;
         $style = $this->getStyle();
         $text = $this->getText();
         $id = $this->objectName;

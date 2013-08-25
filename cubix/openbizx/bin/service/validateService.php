@@ -28,7 +28,7 @@ include_once (OPENBIZ_PATH."/messages/validateService.msg");
  */
 class validateService
 {
-    protected $m_ErrorMessage = null;
+    protected $errorMessage = null;
     protected $m_FieldNameMask = "%%FIELDNAME%%";
 
     /**
@@ -61,7 +61,7 @@ class validateService
      */
     public function shorterThan($value, $max)
     {
-        $this->m_ErrorMessage = null;
+        $this->errorMessage = null;
         $result = false;
         if(function_exists("mb_strlen"))
         {
@@ -78,7 +78,7 @@ class validateService
         }
         if (!$result)
         {
-            $this->m_ErrorMessage= BizSystem::getMessage("VALIDATESVC_SHORTER_THAN",array($this->m_FieldNameMask,$max));
+            $this->errorMessage= BizSystem::getMessage("VALIDATESVC_SHORTER_THAN",array($this->m_FieldNameMask,$max));
         }
         return $result;
     }
@@ -99,7 +99,7 @@ class validateService
             $min = $max;
             $max = $tmp;
         }
-        $this->m_ErrorMessage = null;
+        $this->errorMessage = null;
         $result = false;
         if(function_exists("mb_strlen"))
         {
@@ -117,7 +117,7 @@ class validateService
         }
         if (!$result)
         {
-            $this->m_ErrorMessage= BizSystem::getMessage("VALIDATESVC_BETWEEN_LENGTH",array($this->m_FieldNameMask,$min,$max));
+            $this->errorMessage= BizSystem::getMessage("VALIDATESVC_BETWEEN_LENGTH",array($this->m_FieldNameMask,$min,$max));
         }
         return $result;
     }
@@ -131,7 +131,7 @@ class validateService
      */
     public function longerThan($value, $min)
     {
-        $this->m_ErrorMessage = null;
+        $this->errorMessage = null;
         $result = false;
         if(function_exists("mb_strlen"))
         {
@@ -149,7 +149,7 @@ class validateService
         }
         if (!$result)
         {
-            $this->m_ErrorMessage= BizSystem::getMessage("VALIDATESVC_LONGER_THAN",array($this->m_FieldNameMask,$min));
+            $this->errorMessage= BizSystem::getMessage("VALIDATESVC_LONGER_THAN",array($this->m_FieldNameMask,$min));
         }
         return $result;
     }
@@ -165,13 +165,13 @@ class validateService
      */
     public function lessThan($value, $max)
     {
-        $this->m_ErrorMessage = null;
+        $this->errorMessage = null;
         require_once 'Zend/Validate/LessThan.php';
         $validator = new Zend_Validate_LessThan($max);
         $result = $validator->isValid($value);
         if(!$result)
         {
-            $this->m_ErrorMessage= BizSystem::getMessage("VALIDATESVC_LESS_THAN",array($this->m_FieldNameMask,$max));
+            $this->errorMessage= BizSystem::getMessage("VALIDATESVC_LESS_THAN",array($this->m_FieldNameMask,$max));
         }
         return $result;
     }
@@ -185,13 +185,13 @@ class validateService
      */
     public function strongPassword($value)
     {
-        $this->m_ErrorMessage = null;
+        $this->errorMessage = null;
         require_once 'Zend/Validate/Regex.php';
         $validator = new Zend_Validate_Regex("/^.*(?=.{8,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*$/");
         $result = $validator->isValid($value);
         if(!$result)
         {
-            $this->m_ErrorMessage= BizSystem::getMessage("VALIDATESVC_PASSWORD_NOT_STRONG",array($this->m_FieldNameMask));
+            $this->errorMessage= BizSystem::getMessage("VALIDATESVC_PASSWORD_NOT_STRONG",array($this->m_FieldNameMask));
         }
         return $result;
     }
@@ -207,13 +207,13 @@ class validateService
      */
     public function greaterThan($value, $min)
     {
-        $this->m_ErrorMessage = null;
+        $this->errorMessage = null;
         require_once 'Zend/Validate/GreaterThan.php';
         $validator = new Zend_Validate_GreaterThan($min);
         $result = $validator->isValid($value);
         if(!$result)
         {
-            $this->m_ErrorMessage= BizSystem::getMessage("VALIDATESVC_GREATER_THAN",array($this->m_FieldNameMask, $min));
+            $this->errorMessage= BizSystem::getMessage("VALIDATESVC_GREATER_THAN",array($this->m_FieldNameMask, $min));
         }
         return $result;
     }
@@ -230,13 +230,13 @@ class validateService
      */
     public function between($value, $min, $max, $inclusive=true)
     {
-        $this->m_ErrorMessage = null;
+        $this->errorMessage = null;
         require_once 'Zend/Validate/Between.php';
         $validator = new Zend_Validate_Between($min, $max, $inclusive);
         $result = $validator->isValid($value);
         if(!$result)
         {
-            $this->m_ErrorMessage= BizSystem::getMessage("VALIDATESVC_BETWEEN",array($this->m_FieldNameMask ,$min, $max));
+            $this->errorMessage= BizSystem::getMessage("VALIDATESVC_BETWEEN",array($this->m_FieldNameMask ,$min, $max));
         }
         return $result;
     }
@@ -250,7 +250,7 @@ class validateService
      */
     public function email($email)
     {
-        $this->m_ErrorMessage = null;
+        $this->errorMessage = null;
         require_once 'Zend/Validate/EmailAddress.php';
 
         /*
@@ -265,7 +265,7 @@ class validateService
 		};
         if(!$result)
         {
-            $this->m_ErrorMessage= BizSystem::getMessage("VALIDATESVC_EMAIL_INVALID",array($this->m_FieldNameMask));
+            $this->errorMessage= BizSystem::getMessage("VALIDATESVC_EMAIL_INVALID",array($this->m_FieldNameMask));
         }
         return $result;
     }
@@ -278,13 +278,13 @@ class validateService
      */
     public function date($date)
     {
-        $this->m_ErrorMessage=null;
+        $this->errorMessage=null;
         require_once 'Zend/Validate/Date.php';
         $validator = new Zend_Validate_Date();
         $result = $validator->isValid($date);
         if(!$result)
         {
-            $this->m_ErrorMessage = BizSystem::getMessage("VALIDATESVC_DATE_INVALID",array($this->m_FieldNameMask));
+            $this->errorMessage = BizSystem::getMessage("VALIDATESVC_DATE_INVALID",array($this->m_FieldNameMask));
         }
         return $result;
     }
@@ -297,13 +297,13 @@ class validateService
      */
     public function phone($phone)
     {
-        $this->m_ErrorMessage = null;
+        $this->errorMessage = null;
         require_once 'Zend/Validate/Regex.php';
         $validator = new Zend_Validate_Regex("/^[0-9]{3}-[0-9]{3}-[0-9]{4}/");
         $result = $validator->isValid($phone);
         if(!$result)
         {
-            $this->m_ErrorMessage= BizSystem::getMessage("VALIDATESVC_PHONE_INVALID",array($this->m_FieldNameMask));
+            $this->errorMessage= BizSystem::getMessage("VALIDATESVC_PHONE_INVALID",array($this->m_FieldNameMask));
         }
         return $result;
     }
@@ -316,13 +316,13 @@ class validateService
      */
     public function zip($zip)
     {
-        $this->m_ErrorMessage = null;
+        $this->errorMessage = null;
         require_once 'Zend/Validate/Regex.php';
         $validator = new Zend_Validate_Regex("/^[0-9]{5,5}([- ]?[0-9]{4,4})?$/");
         $result = $validator->isValid($zip);
         if(!$result)
         {
-            $this->m_ErrorMessage= BizSystem::getMessage("VALIDATESVC_ZIP_INVALID",array($this->m_FieldNameMask));
+            $this->errorMessage= BizSystem::getMessage("VALIDATESVC_ZIP_INVALID",array($this->m_FieldNameMask));
         }
         return $result;
     }
@@ -335,13 +335,13 @@ class validateService
      */
     public function social($social)
     {
-        $this->m_ErrorMessage = null;
+        $this->errorMessage = null;
         require_once 'Zend/Validate/Regex.php';
         $validator = new Zend_Validate_Regex("\b[0-9]{3}-[0-9]{2}-[0-9]{4}\b");
         $result = $validator->isValid($social);
         if(!$result)
         {
-            $this->m_ErrorMessage= BizSystem::getMessage("VALIDATESVC_SOCIAL_INVALID",array($this->m_FieldNameMask));
+            $this->errorMessage= BizSystem::getMessage("VALIDATESVC_SOCIAL_INVALID",array($this->m_FieldNameMask));
         }
         return $result;
     }
@@ -354,13 +354,13 @@ class validateService
      */
     public function credit($credit)
     {
-        $this->m_ErrorMessage = null;
+        $this->errorMessage = null;
         require_once 'Zend/Validate/Regex.php';
         $validator = new Zend_Validate_Regex("^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|");
         $result = $validator->isValid($credit);
         if(!$result)
         {
-            $this->m_ErrorMessage= BizSystem::getMessage("VALIDATESVC_CREDIT_INVALID",array($this->m_FieldNameMask));
+            $this->errorMessage= BizSystem::getMessage("VALIDATESVC_CREDIT_INVALID",array($this->m_FieldNameMask));
         }
         return $result;
     }
@@ -373,13 +373,13 @@ class validateService
      */
     public function street($street)
     {
-        $this->m_ErrorMessage = null;
+        $this->errorMessage = null;
         require_once 'Zend/Validate/Regex.php';
         $validator = new Zend_Validate_Regex("");
         $result = $validator->isValid($street);
         if(!$result)
         {
-            $this->m_ErrorMessage= BizSystem::getMessage("VALIDATESVC_STREET_INVALID",array($this->m_FieldNameMask));
+            $this->errorMessage= BizSystem::getMessage("VALIDATESVC_STREET_INVALID",array($this->m_FieldNameMask));
         }
         return $result;
     }
@@ -393,15 +393,15 @@ class validateService
      */
     public function getErrorMessage($validator=null, $fieldName=null)
     {
-        if($this->m_ErrorMessage != "")
+        if($this->errorMessage != "")
         {
             if($fieldName != "")
             {
-                $this->m_ErrorMessage = str_replace($this->m_FieldNameMask,
+                $this->errorMessage = str_replace($this->m_FieldNameMask,
                         $fieldName,
-                        $this->m_ErrorMessage);
+                        $this->errorMessage);
             }
-            return $this->m_ErrorMessage;
+            return $this->errorMessage;
         }
         else
         {

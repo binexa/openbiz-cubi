@@ -2,7 +2,7 @@
 	{foreach item=item from=$widget.menu}
 		{assign var='current' value='0'}
 		{foreach item=bc from=$widget.breadcrumb}
-			{if $item->m_Id == $bc->m_Id}
+			{if $item->recordId == $bc->recordId}
 	    		{assign var='current' value='1'}
 			{/if}
 	    {/foreach}

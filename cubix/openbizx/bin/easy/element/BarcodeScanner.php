@@ -28,9 +28,9 @@ class BarcodeScanner extends InputElement
 {
 	protected function readMetaData(&$xmlArr){
 		parent::readMetaData($xmlArr);
-		$this->m_cssClass = isset($xmlArr["ATTRIBUTES"]["CSSCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSCLASS"] : "input_barcodescanner";
-		$this->m_cssErrorClass = isset($xmlArr["ATTRIBUTES"]["CSSERRORCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSERRORCLASS"] : $this->m_cssClass."_error";
-		$this->m_cssFocusClass = isset($xmlArr["ATTRIBUTES"]["CSSFOCUSCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSFOCUSCLASS"] : $this->m_cssClass."_focus";
+		$this->cssClass = isset($xmlArr["ATTRIBUTES"]["CSSCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSCLASS"] : "input_barcodescanner";
+		$this->cssErrorClass = isset($xmlArr["ATTRIBUTES"]["CSSERRORCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSERRORCLASS"] : $this->cssClass."_error";
+		$this->m_cssFocusClass = isset($xmlArr["ATTRIBUTES"]["CSSFOCUSCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSFOCUSCLASS"] : $this->cssClass."_focus";
 	}
     /**
      * Render, draw the control according to the mode
@@ -39,8 +39,8 @@ class BarcodeScanner extends InputElement
      */
     public function render()
     {
-    	if($this->m_Value!=null){
-    		$value = $this->m_Value;
+    	if($this->value!=null){
+    		$value = $this->value;
     	}else{
     		$value = $this->getText();
     	} 
@@ -54,9 +54,9 @@ class BarcodeScanner extends InputElement
         
         $formobj = $this->GetFormObj();
     	if($formobj->m_Errors[$this->objectName]){
-			$func .= "onchange=\"this.className='$this->m_cssClass'\"";
+			$func .= "onchange=\"this.className='$this->cssClass'\"";
 		}else{
-			$func .= "onfocus=\"this.className='$this->m_cssFocusClass'\" onblur=\"this.className='$this->m_cssClass'\"";
+			$func .= "onfocus=\"this.className='$this->m_cssFocusClass'\" onblur=\"this.className='$this->cssClass'\"";
 		}        
         
 		$sHTML = " <div id=\"" . $this->objectName . "_reader\" $disabledStr $this->m_HTMLAttr $style $func >

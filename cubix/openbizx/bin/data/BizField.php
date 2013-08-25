@@ -29,7 +29,7 @@ class BizField extends MetaObject
      *
      * @var string
      */
-    public $m_BizObjName;
+    public $bizDataObjName;
     public $m_Join = null;
     public $m_Column = null;
     public $m_Alias = null;
@@ -54,7 +54,7 @@ class BizField extends MetaObject
      * @var number
      */
     public $m_Length = null;
-    public $m_ValueExpression = null;// support expression
+    public $valueExpression = null;// support expression
 
     /**
      * Is field required?
@@ -72,8 +72,8 @@ class BizField extends MetaObject
      * @var mixed
      */
     public $m_DefaultValue = null;
-    public $m_ValueOnCreate = null;
-    public $m_ValueOnUpdate = null;
+    public $valueOnCreate = null;
+    public $valueOnUpdate = null;
 
     /**
      * Is on Audit?
@@ -87,7 +87,7 @@ class BizField extends MetaObject
      *
      * @var mixed
      */
-    public $m_Value = null; 
+    public $value = null; 
     public $m_OldValue = null; // the old value of the field
 	public $m_IgnoreInQuery = false;
 	
@@ -103,12 +103,12 @@ class BizField extends MetaObject
     function __construct(&$xmlArr, $bizObj)
     {
         $this->objectName = isset($xmlArr["ATTRIBUTES"]["NAME"]) ? $xmlArr["ATTRIBUTES"]["NAME"] : null;
-        $this->m_BizObjName = $bizObj->objectName;
+        $this->bizDataObjName = $bizObj->objectName;
         $this->m_Package = $bizObj->m_Package;
         $this->m_Join = isset($xmlArr["ATTRIBUTES"]["JOIN"]) ? $xmlArr["ATTRIBUTES"]["JOIN"] : null;
         $this->m_Column = isset($xmlArr["ATTRIBUTES"]["COLUMN"]) ? $xmlArr["ATTRIBUTES"]["COLUMN"] : null;
         $this->m_Alias = isset($xmlArr["ATTRIBUTES"]["ALIAS"]) ? $xmlArr["ATTRIBUTES"]["ALIAS"] : null;
-        $this->m_ValueExpression = isset($xmlArr["ATTRIBUTES"]["VALUE"]) ? $xmlArr["ATTRIBUTES"]["VALUE"] : null;
+        $this->valueExpression = isset($xmlArr["ATTRIBUTES"]["VALUE"]) ? $xmlArr["ATTRIBUTES"]["VALUE"] : null;
         $this->m_DefaultValue = isset($xmlArr["ATTRIBUTES"]["DEFAULTVALUE"]) ? $xmlArr["ATTRIBUTES"]["DEFAULTVALUE"] : null;
         $this->m_Type = isset($xmlArr["ATTRIBUTES"]["TYPE"]) ? $xmlArr["ATTRIBUTES"]["TYPE"] : null;
         $this->m_Format = isset($xmlArr["ATTRIBUTES"]["FORMAT"]) ? $xmlArr["ATTRIBUTES"]["FORMAT"] : null;
@@ -122,12 +122,12 @@ class BizField extends MetaObject
 //        }
         $this->m_Validator = isset($xmlArr["ATTRIBUTES"]["VALIDATOR"]) ? $xmlArr["ATTRIBUTES"]["VALIDATOR"] : null;
         $this->m_SqlExpression = isset($xmlArr["ATTRIBUTES"]["SQLEXPR"]) ? $xmlArr["ATTRIBUTES"]["SQLEXPR"] : null;
-        $this->m_ValueOnCreate = isset($xmlArr["ATTRIBUTES"]["VALUEONCREATE"]) ? $xmlArr["ATTRIBUTES"]["VALUEONCREATE"] : null;
-        $this->m_ValueOnUpdate = isset($xmlArr["ATTRIBUTES"]["VALUEONUPDATE"]) ? $xmlArr["ATTRIBUTES"]["VALUEONUPDATE"] : null;
+        $this->valueOnCreate = isset($xmlArr["ATTRIBUTES"]["VALUEONCREATE"]) ? $xmlArr["ATTRIBUTES"]["VALUEONCREATE"] : null;
+        $this->valueOnUpdate = isset($xmlArr["ATTRIBUTES"]["VALUEONUPDATE"]) ? $xmlArr["ATTRIBUTES"]["VALUEONUPDATE"] : null;
         if (isset($xmlArr["ATTRIBUTES"]["ONAUDIT"]) && $xmlArr["ATTRIBUTES"]["ONAUDIT"]=='Y')
             $this->m_OnAudit = true;
 
-        $this->m_BizObjName = $this->prefixPackage($this->m_BizObjName);
+        $this->bizDataObjName = $this->prefixPackage($this->bizDataObjName);
 
         if (!$this->m_Format) $this->useDefaultFormat();
     }
@@ -170,8 +170,8 @@ class BizField extends MetaObject
      */
     public function adjustBizObjName($bizObjName)
     {
-        if ($this->m_BizObjName != $bizObjName)
-            $this->m_BizObjName = $bizObjName;
+        if ($this->bizDataObjName != $bizObjName)
+            $this->bizDataObjName = $bizObjName;
     }
 
     /**
@@ -182,7 +182,7 @@ class BizField extends MetaObject
      */
     public function getSqlValue($input=null)
     {
-        $value = ($input !== null) ? $input : $this->m_Value;
+        $value = ($input !== null) ? $input : $this->value;
         if ($value === null)
         {
             return "";
@@ -251,20 +251,20 @@ class BizField extends MetaObject
         //if ($this->getDataObj()->CheckDataRetrieved() == false)    	
         //$this->getDataObj()->getActiveRecord();
 
-		if ($this->_prevValue == $this->m_Value) return $this->_getValueCache;
+		if ($this->_prevValue == $this->value) return $this->_getValueCache;
 		
-        $value = stripcslashes($this->m_Value);
+        $value = stripcslashes($this->value);
 
-        $value = $this->m_Value;
-        if ($this->m_ValueExpression && trim($this->m_Column) == "")
+        $value = $this->value;
+        if ($this->valueExpression && trim($this->m_Column) == "")
         {
-            $value = Expression::evaluateExpression($this->m_ValueExpression,$this->getDataObj());
+            $value = Expression::evaluateExpression($this->valueExpression,$this->getDataObj());
         }
         if ($this->m_Format && $formatted)
         {
             $value = BizSystem::typeManager()->valueToFormattedString($this->m_Type, $this->m_Format, $value);
         }
-		$this->_prevValue = $this->m_Value;
+		$this->_prevValue = $this->value;
 		$this->_getValueCache = $value;
         return $value;
     }
@@ -277,7 +277,7 @@ class BizField extends MetaObject
      */
     public function setValue($value)
     {    	
-        $this->m_Value = $value;
+        $this->value = $value;
     }
 
     /**
@@ -291,7 +291,7 @@ class BizField extends MetaObject
         if ($oldValue)
             $this->m_OldValue = $oldValue;
         else
-            $this->m_OldValue = $this->m_Value;
+            $this->m_OldValue = $this->value;
     }
 
     /**
@@ -313,8 +313,8 @@ class BizField extends MetaObject
      */
     public function getValueOnCreate()
     {
-        if($this->m_ValueOnCreate !== null)
-            return $this->getSqlValue(Expression::evaluateExpression($this->m_ValueOnCreate, $this->getDataObj()));
+        if($this->valueOnCreate !== null)
+            return $this->getSqlValue(Expression::evaluateExpression($this->valueOnCreate, $this->getDataObj()));
         return "";
     }
 
@@ -325,8 +325,8 @@ class BizField extends MetaObject
      */
     public function getValueOnUpdate()
     {
-        if($this->m_ValueOnUpdate !== null)
-            return $this->getSqlValue(Expression::evaluateExpression($this->m_ValueOnUpdate, $this->getDataObj()));
+        if($this->valueOnUpdate !== null)
+            return $this->getSqlValue(Expression::evaluateExpression($this->valueOnUpdate, $this->getDataObj()));
         return "";
     }
 
@@ -337,7 +337,7 @@ class BizField extends MetaObject
      */
     protected function getDataObj()
     {
-        return BizSystem::getObject($this->m_BizObjName);
+        return BizSystem::getObject($this->bizDataObjName);
     }
 
     /**
@@ -369,7 +369,7 @@ class BizField extends MetaObject
     {
         if(!$value)
         {
-            $value = $this->m_Value;
+            $value = $this->value;
         }
         $validator = BizSystem::getService(VALIDATE_SERVICE);
         switch ($this->m_Type)

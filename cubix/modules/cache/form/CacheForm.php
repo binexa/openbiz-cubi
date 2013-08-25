@@ -13,9 +13,9 @@
 
 class CacheForm extends EasyFormGrouping
 {
-	public $m_ModeStatus;
+	public $modeStatus;
 	
-	public function Clear()
+	public function clear()
 	{
 		if ($id==null || $id=='')
             $id = BizSystem::clientProxy()->getFormInputs('_selectedId');
@@ -38,7 +38,7 @@ class CacheForm extends EasyFormGrouping
         $this->updateForm();
 	}
 	
-	public function ClearAll(){
+	public function clearAll(){
 		$data = $this->fetchDataGroup(true);
 		foreach($data as $group){
 			foreach($group as $item){
@@ -55,8 +55,8 @@ class CacheForm extends EasyFormGrouping
 		$this->updateForm();
 	}
 	
-	public function ClearBin(){
-		$data = $this->getRecoredDetail($this->m_RecordId);
+	public function clearBin(){
+		$data = $this->getRecoredDetail($this->recordId);
 		$this->DeleteDirectory($data['path']);
 		$this->updateForm();
 	}
@@ -69,13 +69,13 @@ class CacheForm extends EasyFormGrouping
 		}
 		$configArr=BizSystem::getXmlArray($file);
 		
-   		$this->m_ModeStatus = $configArr["PLUGINSERVICE"]["CACHESETTING"]["ATTRIBUTES"]["MODE"];
-   		if($this->m_ModeStatus == 'Enabled'){
+   		$this->modeStatus = $configArr["PLUGINSERVICE"]["CACHESETTING"]["ATTRIBUTES"]["MODE"];
+   		if($this->modeStatus == 'Enabled'){
    			$result['status'] 	= 'Enabled';
-   			$this->m_ModeStatus = 'Enabled';
+   			$this->modeStatus = 'Enabled';
    		}else{
    			$result['status'] 	= 'Disabled';
-   			$this->m_ModeStatus = 'Disabled';	
+   			$this->modeStatus = 'Disabled';	
    		}   		
    		return $result;   	
    }	
@@ -87,8 +87,8 @@ class CacheForm extends EasyFormGrouping
 		}
 		$configArr=BizSystem::getXmlArray($file);
 		
-   		$this->m_ModeStatus = $configArr["PLUGINSERVICE"]["CACHESETTING"]["ATTRIBUTES"]["MODE"];
-   		if($this->m_ModeStatus == 'Enabled'){   			   		
+   		$this->modeStatus = $configArr["PLUGINSERVICE"]["CACHESETTING"]["ATTRIBUTES"]["MODE"];
+   		if($this->modeStatus == 'Enabled'){   			   		
    			$newMode = 'Disabled';
    		}else{   		   		
    			$newMode = 'Enabled';	
@@ -102,7 +102,7 @@ class CacheForm extends EasyFormGrouping
 	   	$this->updateForm();
    }   
    
-	private function GetRecoredDetail($recId){
+	private function getRecoredDetail($recId){
 		$data = $this->fetchDataGroup(true);
 		foreach($data as $group){
 			foreach($group as $item){
@@ -183,11 +183,11 @@ class CacheForm extends EasyFormGrouping
     	{
     		$results["Complied Template"]= $tempdata;
     	}
-    	$this->m_RecordId = "APPDATA_1";
+    	$this->recordId = "APPDATA_1";
     	return $results;
     }
     
-    private function GetSpaceUsage($dir){
+    private function getSpaceUsage($dir){
     	$size = 0;
 	    foreach(new RecursiveIteratorIterator(new RecursiveDirectoryIterator($dir)) as $file){
 	        $size+=$file->getSize();
@@ -195,7 +195,7 @@ class CacheForm extends EasyFormGrouping
     	return sprintf("%.1f KB",($size/1024));
     }
     
-	private function GetChildItems($dir){		
+	private function getChildItems($dir){
 		$dir_iterator = new RecursiveDirectoryIterator($dir);
 		$iterator = new RecursiveIteratorIterator($dir_iterator, RecursiveIteratorIterator::SELF_FIRST);
 		// could use CHILD_FIRST if you so wish
@@ -207,7 +207,7 @@ class CacheForm extends EasyFormGrouping
 		return $i." Items";
     }
     
-    private function DeleteDirectory($dir,$deleteItSelf=false){
+    private function deleteDirectory($dir,$deleteItSelf=false){
 	   $iterator = new RecursiveDirectoryIterator($dir);
 	   foreach (new RecursiveIteratorIterator($iterator, RecursiveIteratorIterator::CHILD_FIRST) as $file)
 	   {
@@ -225,4 +225,3 @@ class CacheForm extends EasyFormGrouping
     	return true;
     }
 }
-?>

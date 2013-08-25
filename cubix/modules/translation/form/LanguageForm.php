@@ -33,7 +33,7 @@ class LanguageForm extends EasyForm
             $recId = BizSystem::clientProxy()->getFormInputs('_selectedId');
         if ($recId==null || $recId=='')
             return null;
-        $this->m_RecordId = $recId;
+        $this->recordId = $recId;
 		$rec=array();
         $this->ReadLangPack($recId,$rec);
         $this->m_DataPanel->setRecordArr($rec);
@@ -141,7 +141,7 @@ class LanguageForm extends EasyForm
 			$result['icon']	=	OPENBIZ_APP_URL."/images/nations/22x14/".strtolower($locale[0]).'.png';
 			
 		}		
-		$this->m_RecordId = $lang;
+		$this->recordId = $lang;
 		return $result;
 	}
 	
@@ -175,8 +175,8 @@ class LanguageForm extends EasyForm
 				$i++;	
 			}
 		}
-		if(!$this->m_RecordId){
-			$this->m_RecordId=$result[0]["Id"];
+		if(!$this->recordId){
+			$this->recordId=$result[0]["Id"];
 		}
 		return $result;
 	}
@@ -288,7 +288,7 @@ class LanguageForm extends EasyForm
 	}
 	
 	public function CreateLangPack($lang,$recArr){
-		$this->m_RecordID=$lang;
+		$this->recordID=$lang;
 		$locale = explode('_', $lang);
 	    $lang_code = strtolower($locale[0]);
 		
@@ -323,7 +323,7 @@ class LanguageForm extends EasyForm
 	}
 	
 public function UpdateLangPack($lang,$recArr){
-		$this->m_RecordID=$lang;
+		$this->recordID=$lang;
 		$locale = explode('_', $lang);
 	    $lang_code = strtolower($locale[0]);
 
