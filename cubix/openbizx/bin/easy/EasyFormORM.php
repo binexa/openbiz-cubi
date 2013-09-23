@@ -17,9 +17,9 @@ class EasyFormORM extends EasyForm
 			return $this->assocDOs;
 		}
 		$formMainDO = $this->getDataObj();
-		foreach ($this->m_DataPanel as $element)
+		foreach ($this->dataPanel as $element)
         {           
-            $objName = $element->m_BizDataObj;
+            $objName = $element->bizDataObj;
             $refObj = $formMainDO->getRefObject($objName);
             if($refObj)
             {
@@ -37,9 +37,9 @@ class EasyFormORM extends EasyForm
 	protected function getAssocRec($doName)
 	{
 		$recArr = array();
-		foreach ($this->m_DataPanel as $element)
+		foreach ($this->dataPanel as $element)
         {           
-            if( $element->m_BizDataObj == $doName){
+            if( $element->bizDataObj == $doName){
             	$value = BizSystem::clientProxy()->getFormInputs($element->objectName);
             	if ($value ===null && (
 	            	   !is_a($element,"FileUploader")

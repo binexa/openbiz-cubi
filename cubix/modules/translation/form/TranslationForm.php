@@ -17,16 +17,16 @@ class TranslationForm extends EasyForm
 {
  public $m_Lang;
 
- public function getSessionVars($sessionContext)
+ public function loadSessionVars($sessionContext)
     {
-        parent::getSessionVars($sessionContext);
+        parent::loadSessionVars($sessionContext);
     	$sessionContext->getObjVar("Translation", "Lang", $this->m_Lang);
         
     }
 
-    public function setSessionVars($sessionContext)
+    public function saveSessionVars($sessionContext)
     {
-    	parent::setSessionVars($sessionContext);
+    	parent::saveSessionVars($sessionContext);
         $sessionContext->setObjVar("Translation", "Lang", $this->m_Lang);      
     }	
 
@@ -106,7 +106,7 @@ class TranslationForm extends EasyForm
 	}
 	
 	public function Delete(){
-		if ($this->m_Resource != "" && !$this->allowAccess($this->m_Resource.".delete"))
+		if ($this->resource != "" && !$this->allowAccess($this->resource.".delete"))
             return BizSystem::clientProxy()->redirectView(OPENBIZ_ACCESS_DENIED_VIEW);
 
         if ($id==null || $id=='')
@@ -124,7 +124,7 @@ class TranslationForm extends EasyForm
         	$filename = $resultArr[$id]["path"];
         	@unlink($filename);
         }
-        if (strtoupper($this->m_FormType) == "LIST")
+        if (strtoupper($this->formType) == "LIST")
             $this->rerender();
 
         $this->runEventLog();

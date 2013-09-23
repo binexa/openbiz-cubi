@@ -31,7 +31,7 @@ class EasyFormGrouping extends EasyForm
     	$dataObj = $this->getDataObj();    	    	
 
     	if (!$dataObj) return null;
-        if ($this->m_RefreshData)
+        if ($this->isRefreshData)
             $dataObj->resetRules();
         else
             $dataObj->clearSearchRule();
@@ -65,17 +65,17 @@ class EasyFormGrouping extends EasyForm
         $dataObj->setSearchRule($searchRule);
         
         $resultRecords = $dataObj->fetch();
-        $this->m_TotalRecords = $dataObj->count();
+        $this->totalRecords = $dataObj->count();
         if ($this->m_Range && $this->m_Range > 0)
-            $this->m_TotalPages = ceil($this->m_TotalRecords/$this->m_Range);
+            $this->totalPages = ceil($this->totalRecords/$this->m_Range);
             
-        $this->m_TotalPagesBak = $this->m_TotalPages;
+        $this->totalPagesBak = $this->totalPages;
         QueryStringParam::ReSet();
         //looping
         $i=0;
         $results = array();
         foreach($resultRecords as $record){
-        	if ($this->m_RefreshData)
+        	if ($this->isRefreshData)
 	            $dataObj->resetRules();
 	        else
 	            $dataObj->clearSearchRule();
@@ -109,7 +109,7 @@ class EasyFormGrouping extends EasyForm
 	        $dataObj->setSearchRule($searchRule); 
 	        $resultRecords_grouped = $dataObj->fetch();
 	        //renderTable
-	        $resultRecords_grouped_table = $this->m_DataPanel->renderTable($resultRecords_grouped);
+	        $resultRecords_grouped_table = $this->dataPanel->renderTable($resultRecords_grouped);
 	        
 	        if($record[$GroupField]){
 	        	if($GroupFieldName){
@@ -135,7 +135,7 @@ class EasyFormGrouping extends EasyForm
     public function fetchDataSet(){
     	$this->fetchDataGroup();
     	$resultset = parent::fetchDataSet();
-    	$this->m_TotalPages = $this->m_TotalPagesBak;
+    	$this->totalPages = $this->totalPagesBak;
     	return $resultset; 
     }
     

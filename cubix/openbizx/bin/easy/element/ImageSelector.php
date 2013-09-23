@@ -3,13 +3,13 @@
 
 class ImageSelector extends OptionElement
 {
-    public $m_BlankOption;
+    public $blankOption;
 
 
     protected function readMetaData(&$xmlArr)
     {
         parent::readMetaData($xmlArr);
-        $this->m_BlankOption = isset($xmlArr["ATTRIBUTES"]["BLANKOPTION"]) ? $xmlArr["ATTRIBUTES"]["BLANKOPTION"] : null;
+        $this->blankOption = isset($xmlArr["ATTRIBUTES"]["BLANKOPTION"]) ? $xmlArr["ATTRIBUTES"]["BLANKOPTION"] : null;
         $this->cssClass = isset($xmlArr["ATTRIBUTES"]["CSSCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSCLASS"] : 'image_selector';
         $this->cssErrorClass = isset($xmlArr["ATTRIBUTES"]["CSSERRORCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSERRORCLASS"] : $this->cssClass . "_error";
         $this->m_cssFocusClass = isset($xmlArr["ATTRIBUTES"]["CSSFOCUSCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSFOCUSCLASS"] : $this->cssClass . "_focus";
@@ -39,9 +39,9 @@ class ImageSelector extends OptionElement
 		
         $sHTML = "<input type=\"hidden\" NAME=\"" . $this->objectName . "\" ID=\"" . $this->objectName ."\" value=\"".$value."\" $disabledStr $this->m_HTMLAttr />";
 		$sHTML .= "<ul id=\"image_list_" . $this->objectName ."\" $style $func >";
-        if ($this->m_BlankOption) // ADD a blank option
+        if ($this->blankOption) // ADD a blank option
         {
-            $entry = explode(",",$this->m_BlankOption);
+            $entry = explode(",",$this->blankOption);
             $text = $entry[0];
             $value = ($entry[1]!= "") ? $entry[1] : null;
             $entryList = array(array("val" => $value, "txt" => $text ));

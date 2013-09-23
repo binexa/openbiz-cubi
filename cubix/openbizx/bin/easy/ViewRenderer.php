@@ -34,7 +34,7 @@ class ViewRenderer
      */
     static public function render ($viewObj)
     {    	
-        $tplEngine = $viewObj->m_TemplateEngine;
+        $tplEngine = $viewObj->templateEngine;
         $tplAttributes = ViewRenderer::buildTemplateAttributes($viewObj);
         
         if(defined("OPENBIZ_PAGE_MINIFY") && OPENBIZ_PAGE_MINIFY==1)
@@ -191,9 +191,9 @@ class ViewRenderer
             $smarty->assign($key, $value);
         }
         if ($viewObj->m_ConsoleOutput)
-            $smarty->display(BizSystem::getTplFileWithPath($viewObj->m_TemplateFile, $viewObj->m_Package));
+            $smarty->display(BizSystem::getTplFileWithPath($viewObj->templateFile, $viewObj->m_Package));
         else
-            return $smarty->fetch(BizSystem::getTplFileWithPath($viewObj->m_TemplateFile, $viewObj->m_Package));
+            return $smarty->fetch(BizSystem::getTplFileWithPath($viewObj->templateFile, $viewObj->m_Package));
     }
 
     /**
@@ -206,7 +206,7 @@ class ViewRenderer
     static protected function renderPHP ($viewObj, $tplAttributes = Array())
     {
         $view = BizSystem::getZendTemplate();
-        $tplFile = BizSystem::getTplFileWithPath($viewObj->m_TemplateFile, $viewObj->m_Package);
+        $tplFile = BizSystem::getTplFileWithPath($viewObj->templateFile, $viewObj->m_Package);
         $view->addScriptPath(dirname($tplFile));
         
         //Translate Array of template variables to Zend template object
@@ -218,9 +218,9 @@ class ViewRenderer
             }
         }
         if ($viewObj->m_ConsoleOutput)
-            echo $view->render($viewObj->m_TemplateFile);
+            echo $view->render($viewObj->templateFile);
         else
-            return $view->render($viewObj->m_TemplateFile);
+            return $view->render($viewObj->templateFile);
     }
 
     /**

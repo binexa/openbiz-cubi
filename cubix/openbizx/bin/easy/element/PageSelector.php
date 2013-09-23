@@ -31,7 +31,7 @@ class PageSelector extends DropDownList
     public function getList(){
     	$formobj=$this->getFormObj();
     	$list=array();
-    	for($i=1;$i<=$formobj->m_TotalPages;$i++){
+    	for($i=1;$i<=$formobj->totalPages;$i++){
     		array_push($list,array("val"=>$i,"txt"=>$i));
     	}
     	return $list;

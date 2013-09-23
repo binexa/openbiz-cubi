@@ -14,8 +14,8 @@
 include_once (OPENBIZ_BIN."/easy/element/InputElement.php");
 class Antispam extends InputElement{
 
-	public $m_AntiSpamImage ;
-	public $m_Length;
+	public $antiSpamImage ;
+	public $length;
 	public $m_SpamLevel;
 	
     public function Validate()
@@ -35,8 +35,8 @@ class Antispam extends InputElement{
 	
 	protected function readMetaData(&$xmlArr){
 		parent::readMetaData($xmlArr);
-		$this->m_AntiSpamImage = isset($xmlArr["ATTRIBUTES"]["ANTISPAMIMAGE"]) ? $xmlArr["ATTRIBUTES"]["ANTISPAMIMAGE"] : "{@home:base_url}/bin/antispam_image.php";
-		$this->m_Length = isset($xmlArr["ATTRIBUTES"]["LENGTH"]) ? $xmlArr["ATTRIBUTES"]["LENGTH"] : 6;
+		$this->antiSpamImage = isset($xmlArr["ATTRIBUTES"]["ANTISPAMIMAGE"]) ? $xmlArr["ATTRIBUTES"]["ANTISPAMIMAGE"] : "{@home:base_url}/bin/antispam_image.php";
+		$this->length = isset($xmlArr["ATTRIBUTES"]["LENGTH"]) ? $xmlArr["ATTRIBUTES"]["LENGTH"] : 6;
 		$this->m_SpamLevel = isset($xmlArr["ATTRIBUTES"]["SPAMLEVEL"]) ? $xmlArr["ATTRIBUTES"]["SPAMLEVEL"] : 1;
 		$this->cssClass = isset($xmlArr["ATTRIBUTES"]["CSSCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSCLASS"] : "input_text_s";
 		$this->cssErrorClass = isset($xmlArr["ATTRIBUTES"]["CSSERRORCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSERRORCLASS"] : "input_text_s_error";
@@ -58,10 +58,10 @@ class Antispam extends InputElement{
 			$func .= "onfocus=\"this.className='$this->m_cssFocusClass'\" onblur=\"this.className='$this->cssClass'\"";
 		}        
         $formObj = $this->getFormObj();       
-        $this->m_AntiSpamImage = Expression::evaluateExpression($this->m_AntiSpamImage, $formObj);
+        $this->antiSpamImage = Expression::evaluateExpression($this->antiSpamImage, $formObj);
         
         $sHTML = "<INPUT maxlength='".$this->m_Lenght."' NAME=\"" . $this->objectName . "\" ID=\"" . $this->objectName ."\" VALUE=\"" . $value . "\" $disabledStr $this->m_HTMLAttr $style $func>";
-        $sHTML .= "<IMG style='margin-left:10px;' BRODER='0' SRC=\"". $this->m_AntiSpamImage."?form=".$formobj->objectName."&name=".$this->objectName."&length=".$this->m_Length."&level=".$this->m_SpamLevel."&rand=".rand()."\" />"; 
+        $sHTML .= "<IMG style='margin-left:10px;' BRODER='0' SRC=\"". $this->antiSpamImage."?form=".$formobj->objectName."&name=".$this->objectName."&length=".$this->length."&level=".$this->m_SpamLevel."&rand=".rand()."\" />"; 
         return $sHTML;
     }
 }

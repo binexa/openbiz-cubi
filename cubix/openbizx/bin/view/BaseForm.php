@@ -36,28 +36,28 @@ class BaseForm extends MetaObject implements iSessionObject
      * Data Panel object
      * @var Panel
      */
-    public $m_DataPanel;
+    public $dataPanel;
     /**
      * Action Panel object
      * @var Panel
      */
-    public $m_ActionPanel;
+    public $actionPanel;
     /**
      * Navigation Panel object
      * @var Panel
      */
-    public $m_NavPanel;
+    public $navPanel;
     /**
      * Search Panel object
      * @var Panel
      */
-    public $m_SearchPanel;
+    public $searchPanel;
 
     public $height;
     public $width;
-    public $m_TemplateEngine;
-    public $m_TemplateFile;
-    public $m_SubForms = null;
+    public $templateEngine;
+    public $templateFile;
+    public $subForms = null;
     public $cacheLifeTime = 0;
 
     // basic form vars
@@ -104,20 +104,20 @@ class BaseForm extends MetaObject implements iSessionObject
         $this->m_jsClass = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["JSCLASS"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["JSCLASS"] : null;
         $this->height = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["HEIGHT"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["HEIGHT"] : null;
         $this->width = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["WIDTH"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["WIDTH"] : null;
-        $this->m_TemplateEngine = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["TEMPLATEENGINE"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["TEMPLATEENGINE"] : null;
-        $this->m_TemplateFile = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["TEMPLATEFILE"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["TEMPLATEFILE"] : null;
-		$this->m_FormType = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["FORMTYPE"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["FORMTYPE"] : null;
+        $this->templateEngine = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["TEMPLATEENGINE"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["TEMPLATEENGINE"] : null;
+        $this->templateFile = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["TEMPLATEFILE"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["TEMPLATEFILE"] : null;
+		$this->formType = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["FORMTYPE"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["FORMTYPE"] : null;
         
         $this->objectName = $this->prefixPackage($this->objectName);
         if ($this->inheritFrom == '@sourceMeta') $this->inheritFrom = '@'.$this->objectName;
         else $this->inheritFrom = $this->prefixPackage($this->inheritFrom);
         $this->dataObjName = $this->prefixPackage($xmlArr["EASYFORM"]["ATTRIBUTES"]["BIZDATAOBJ"]);
 
-        $this->m_DataPanel = new Panel($xmlArr["EASYFORM"]["DATAPANEL"]["ELEMENT"],"",$this);
-        $this->m_ActionPanel = new Panel($xmlArr["EASYFORM"]["ACTIONPANEL"]["ELEMENT"],"",$this);
-        $this->m_NavPanel = new Panel($xmlArr["EASYFORM"]["NAVPANEL"]["ELEMENT"],"",$this);
-        $this->m_SearchPanel = new Panel($xmlArr["EASYFORM"]["SEARCHPANEL"]["ELEMENT"],"",$this);
-        $this->m_Panels = array($this->m_DataPanel, $this->m_ActionPanel, $this->m_NavPanel, $this->m_SearchPanel);
+        $this->dataPanel = new Panel($xmlArr["EASYFORM"]["DATAPANEL"]["ELEMENT"],"",$this);
+        $this->actionPanel = new Panel($xmlArr["EASYFORM"]["ACTIONPANEL"]["ELEMENT"],"",$this);
+        $this->navPanel = new Panel($xmlArr["EASYFORM"]["NAVPANEL"]["ELEMENT"],"",$this);
+        $this->searchPanel = new Panel($xmlArr["EASYFORM"]["SEARCHPANEL"]["ELEMENT"],"",$this);
+        $this->m_Panels = array($this->dataPanel, $this->actionPanel, $this->navPanel, $this->searchPanel);
 
         $this->m_EventName = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["EVENTNAME"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["EVENTNAME"] : null;
 
@@ -127,12 +127,12 @@ class BaseForm extends MetaObject implements iSessionObject
         $this->cacheLifeTime = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["CACHELIFETIME"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["CACHELIFETIME"] : "0";
 
         // parse access
-        if ($this->m_Access)
+        if ($this->access)
         {
-            $arr = explode (".", $this->m_Access);
-            $this->m_Resource = $arr[0];
+            $arr = explode (".", $this->access);
+            $this->resource = $arr[0];
         }
-		if ($this->m_jsClass == "jbForm" && strtoupper($this->m_FormType) == "LIST") $this->m_jsClass = "Openbiz.TableForm";
+		if ($this->m_jsClass == "jbForm" && strtoupper($this->formType) == "LIST") $this->m_jsClass = "Openbiz.TableForm";
         if ($this->m_jsClass == "jbForm") $this->m_jsClass = "Openbiz.Form";
         
 		$this->translate();	// translate for multi-language support
@@ -154,9 +154,9 @@ class BaseForm extends MetaObject implements iSessionObject
         $this->m_jsClass   = $this->m_jsClass ? $this->m_jsClass : $parentObj->m_jsClass;
         $this->height   = $this->height ? $this->height : $parentObj->height;
         $this->width   = $this->width ? $this->width : $parentObj->width;
-        $this->m_TemplateEngine   = $this->m_TemplateEngine ? $this->m_TemplateEngine : $parentObj->m_TemplateEngine;
-        $this->m_TemplateFile   = $this->m_TemplateFile ? $this->m_TemplateFile : $parentObj->m_TemplateFile;        
-        $this->m_FormType   = $this->m_FormType ? $this->m_FormType : $parentObj->m_FormType;
+        $this->templateEngine   = $this->templateEngine ? $this->templateEngine : $parentObj->templateEngine;
+        $this->templateFile   = $this->templateFile ? $this->templateFile : $parentObj->templateFile;        
+        $this->formType   = $this->formType ? $this->formType : $parentObj->formType;
         $this->m_Range   = $this->m_Range ? $this->m_Range : $parentObj->m_Range;
         $this->m_FixSearchRule   = $this->m_FixSearchRule ? $this->m_FixSearchRule : $parentObj->m_FixSearchRule;
         $this->m_DefaultFixSearchRule   = $this->m_DefaultFixSearchRule ? $this->m_DefaultFixSearchRule : $parentObj->m_DefaultFixSearchRule;		        
@@ -166,35 +166,35 @@ class BaseForm extends MetaObject implements iSessionObject
         $this->objectMessages = Resource::loadMessage($this->messageFile , $this->m_Package);
 		$this->cacheLifeTime   = $this->cacheLifeTime ? $this->cacheLifeTime : $parentObj->cacheLifeTime;
         
-        $this->m_DataPanel->merge($parentObj->m_DataPanel);
-        $this->m_ActionPanel->merge($parentObj->m_ActionPanel);
-        $this->m_NavPanel->merge($parentObj->m_NavPanel);
-        $this->m_SearchPanel->merge($parentObj->m_SearchPanel);        
+        $this->dataPanel->merge($parentObj->dataPanel);
+        $this->actionPanel->merge($parentObj->actionPanel);
+        $this->navPanel->merge($parentObj->navPanel);
+        $this->searchPanel->merge($parentObj->searchPanel);        
 
-        if($this->m_DataPanel->current()){
-	        foreach ($this->m_DataPanel as $elem)
+        if($this->dataPanel->current()){
+	        foreach ($this->dataPanel as $elem)
 	            $elem->adjustFormName($this->objectName);
         }
-        if($this->m_ActionPanel->current()){
-	        foreach ($this->m_ActionPanel as $elem)
+        if($this->actionPanel->current()){
+	        foreach ($this->actionPanel as $elem)
 	            $elem->adjustFormName($this->objectName);
         }
-        if($this->m_NavPanel->current()){                
-	        foreach ($this->m_NavPanel as $elem)
+        if($this->navPanel->current()){                
+	        foreach ($this->navPanel as $elem)
 	            $elem->adjustFormName($this->objectName);
         }
-        if($this->m_SearchPanel->current()){
-	        foreach ($this->m_SearchPanel as $elem)
+        if($this->searchPanel->current()){
+	        foreach ($this->searchPanel as $elem)
 	            $elem->adjustFormName($this->objectName);            
         }   
-		$this->m_Panels = array($this->m_DataPanel, $this->m_ActionPanel, $this->m_NavPanel, $this->m_SearchPanel);            
+		$this->m_Panels = array($this->dataPanel, $this->actionPanel, $this->navPanel, $this->searchPanel);            
     } 
 	
 // -------------------------- Session Methods ---------------------- //
 	
-	public function getSessionVars($sessionContext) {}
+	public function loadSessionVars($sessionContext) {}
 	
-	public function setSessionVars($sessionContext) {}
+	public function saveSessionVars($sessionContext) {}
     
 // -------------------------- Attribute Methods ---------------------- //
     /**
@@ -251,7 +251,7 @@ class BaseForm extends MetaObject implements iSessionObject
             if ($this->dataObjName)
                 $this->dataObj = BizSystem::objectFactory()->getObject($this->dataObjName);
             if($this->dataObj)
-                $this->dataObj->m_BizFormName = $this->objectName;
+                $this->dataObj->bizFormName = $this->objectName;
             else
             {
                 //BizSystem::clientProxy()->showErrorMessage("Cannot get DataObj of ".$this->dataObjName.", please check your metadata file.");
@@ -295,7 +295,7 @@ class BaseForm extends MetaObject implements iSessionObject
     public function getSubForms()
     {
         // ask view to give its subforms if not set yet
-        return $this->m_SubForms;
+        return $this->subForms;
     }
 
     /**
@@ -306,10 +306,10 @@ class BaseForm extends MetaObject implements iSessionObject
      */
     public function getElement($elementName)
     {
-        if ($this->m_DataPanel->get($elementName)) return $this->m_DataPanel->get($elementName);
-        if ($this->m_ActionPanel->get($elementName)) return $this->m_ActionPanel->get($elementName);
-        if ($this->m_NavPanel->get($elementName)) return $this->m_NavPanel->get($elementName);
-        if ($this->m_SearchPanel->get($elementName)) return $this->m_SearchPanel->get($elementName);
+        if ($this->dataPanel->get($elementName)) return $this->dataPanel->get($elementName);
+        if ($this->actionPanel->get($elementName)) return $this->actionPanel->get($elementName);
+        if ($this->navPanel->get($elementName)) return $this->navPanel->get($elementName);
+        if ($this->searchPanel->get($elementName)) return $this->searchPanel->get($elementName);
         if ($this->m_WizardPanel)
         {
         	if ($this->m_WizardPanel->get($elementName)) return $this->m_WizardPanel->get($elementName);
@@ -327,7 +327,7 @@ class BaseForm extends MetaObject implements iSessionObject
         $errElements = array();
         foreach ($fields as $field=>$error)
         {
-            $element = $this->m_DataPanel->getByField($field);
+            $element = $this->dataPanel->getByField($field);
             $errElements[$element->objectName]=$error;
         }
         return $errElements;
@@ -345,7 +345,7 @@ class BaseForm extends MetaObject implements iSessionObject
     	if(!is_array($inputArr)){
     		$inputArr = array();
         }        
-        foreach ($this->m_DataPanel as $element)
+        foreach ($this->dataPanel as $element)
         {
             if (isset($inputArr[$element->objectName]))
             {             
@@ -353,7 +353,7 @@ class BaseForm extends MetaObject implements iSessionObject
             }
         }
 
-        foreach ($this->m_SearchPanel as $element)
+        foreach ($this->searchPanel as $element)
         {
             if (isset($inputArr[$element->objectName]))
             {
@@ -378,7 +378,7 @@ class BaseForm extends MetaObject implements iSessionObject
             return "";
         //$this->setClientScripts();
 
-        if($this->cacheLifeTime>0 && $this->m_SubForms == null)
+        if($this->cacheLifeTime>0 && $this->subForms == null)
         {
             $cache_id = md5($this->objectName);
             //try to process cache service.
@@ -435,10 +435,10 @@ class BaseForm extends MetaObject implements iSessionObject
      */
     protected function rerenderSubForms()
     {
-        if (! $this->m_SubForms)
+        if (! $this->subForms)
             return;
 		$this->prepareSubFormsDataObj();
-        foreach ($this->m_SubForms as $subForm)
+        foreach ($this->subForms as $subForm)
         {
             $formObj = BizSystem::objectFactory()->getObject($subForm);
             $formObj->rerender();
@@ -448,9 +448,9 @@ class BaseForm extends MetaObject implements iSessionObject
 	
 	protected function prepareSubFormsDataObj()
 	{
-		if ($this->m_SubForms && $this->getDataObj())
+		if ($this->subForms && $this->getDataObj())
 		{
-			foreach ($this->m_SubForms as $subForm)
+			foreach ($this->subForms as $subForm)
 			{
 				$formObj = BizSystem::objectFactory()->getObject($subForm);
 				$dataObj = $this->getDataObj()->getRefObject($formObj->dataObjName);
@@ -501,11 +501,11 @@ class BaseForm extends MetaObject implements iSessionObject
      */
     public function getActiveRecord($recId=null)
     {
-        if ($this->m_ActiveRecord != null)
+        if ($this->activeRecord != null)
         {
-            if($this->m_ActiveRecord['Id'] != null)
+            if($this->activeRecord['Id'] != null)
             {
-                return $this->m_ActiveRecord;
+                return $this->activeRecord;
             }
         }
 
@@ -521,9 +521,9 @@ class BaseForm extends MetaObject implements iSessionObject
 	        $rec = $this->getDataObj()->getActiveRecord();
 	
 	        // update the record row
-	        $this->m_DataPanel->setRecordArr($rec);
+	        $this->dataPanel->setRecordArr($rec);
 	
-	        $this->m_ActiveRecord = $rec;
+	        $this->activeRecord = $rec;
         }
         return $rec;
     }
@@ -537,11 +537,11 @@ class BaseForm extends MetaObject implements iSessionObject
     protected function setActiveRecord($record)
     {
         // update the record row
-        $this->m_DataPanel->setRecordArr($record);           
+        $this->dataPanel->setRecordArr($record);           
   	        
 		foreach($record as $key=>$value){
 			//if($key=='extend')continue;
-			$this->m_ActiveRecord[$key] = $record[$key];
+			$this->activeRecord[$key] = $record[$key];
 		}
 	}
 

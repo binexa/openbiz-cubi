@@ -132,7 +132,7 @@ class ModuleForm extends EasyForm
     
     public function DeleteRecord($id=null, $deleteFiles=false){
     	//delete menu items
-        if ($this->m_Resource != "" && !$this->allowAccess($this->m_Resource.".delete"))
+        if ($this->resource != "" && !$this->allowAccess($this->resource.".delete"))
             return BizSystem::clientProxy()->redirectView(OPENBIZ_ACCESS_DENIED_VIEW);
 
         if ($id==null || $id=='')
@@ -168,7 +168,7 @@ class ModuleForm extends EasyForm
                 return;
             }
         }
-        if (strtoupper($this->m_FormType) == "LIST")
+        if (strtoupper($this->formType) == "LIST")
             $this->rerender();
 
         $this->runEventLog();

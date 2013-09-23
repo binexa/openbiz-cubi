@@ -4,7 +4,7 @@ require_once 'google/apiClient.php';
 require_once 'google/contrib/apiOauth2Service.php';
 class google extends oauthClass
 {
-	protected $m_Type='google';
+	protected $type='google';
 	protected $m_loginUrl;
 	private $m_akey;
 	private $m_skey;
@@ -78,7 +78,7 @@ class google extends oauthClass
 		}	
 		$me = $this->oauth2->userinfo->get();	
 		$user['id']          = $me['id'];
-		$user['type']        = $this->m_Type;
+		$user['type']        = $this->type;
 		$user['uname']       = $me['name'];
 		$user['province']    = '';
 		$user['city']        = '';

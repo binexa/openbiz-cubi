@@ -97,7 +97,7 @@ function inputValToRule($fieldName, $inputVal, $formObj)
     // unformat value to real value data
     if($formObj->getDataObj()){
     	$bizField = $formObj->getDataObj()->getField($fieldName);
-    	$realValue = BizSystem::typeManager()->formattedStringToValue($bizField->m_Type, $bizField->m_Format, $val);
+    	$realValue = BizSystem::typeManager()->formattedStringToValue($bizField->type, $bizField->format, $val);
     }else{
     	$realValue = $val;
     }

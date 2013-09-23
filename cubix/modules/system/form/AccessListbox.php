@@ -29,9 +29,9 @@ class AccessListbox extends Listbox
         //$sHTML = "<SELECT NAME=\"" . $this->objectName . "[]\" ID=\"" . $this->objectName ."\" $disabledStr $this->m_HTMLAttr $style $func>";
         $sHTML = "<SELECT NAME=\"" . $this->objectName . "[]\" ID=\"" . $this->objectName ."\" $disabledStr $this->m_HTMLAttr $style $func>";
 
-        if ($this->m_BlankOption) // ADD a blank option
+        if ($this->blankOption) // ADD a blank option
         {
-            $entry = explode(",",$this->m_BlankOption);
+            $entry = explode(",",$this->blankOption);
             $text = $entry[0];
             $value = ($entry[1]!= "") ? $entry[1] : null;
             $entryList = array(array("val" => $value, "txt" => $text ));

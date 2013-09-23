@@ -53,7 +53,7 @@ abstract class MetaObject
      * @var string
      */
     public $objectDescription;
-    public $m_Access;
+    public $access;
 
     function __construct(&$xmlArr)
     {
@@ -78,14 +78,14 @@ abstract class MetaObject
             $this->objectDescription = isset($xmlArr[$rootKey]["ATTRIBUTES"]["DESCRIPTION"]) ? $xmlArr[$rootKey]["ATTRIBUTES"]["DESCRIPTION"] : null;
             $this->m_Package = isset($xmlArr[$rootKey]["ATTRIBUTES"]["PACKAGE"]) ? $xmlArr[$rootKey]["ATTRIBUTES"]["PACKAGE"] : null;
             $this->className = isset($xmlArr[$rootKey]["ATTRIBUTES"]["CLASS"]) ? $xmlArr[$rootKey]["ATTRIBUTES"]["CLASS"] : null;
-            $this->m_Access = isset($xmlArr[$rootKey]["ATTRIBUTES"]["ACCESS"]) ? $xmlArr[$rootKey]["ATTRIBUTES"]["ACCESS"] : null;
+            $this->access = isset($xmlArr[$rootKey]["ATTRIBUTES"]["ACCESS"]) ? $xmlArr[$rootKey]["ATTRIBUTES"]["ACCESS"] : null;
         } else
         {
             $this->objectName = isset($xmlArr["ATTRIBUTES"]["NAME"]) ? $xmlArr["ATTRIBUTES"]["NAME"] : null;
             $this->objectDescription = isset($xmlArr["ATTRIBUTES"]["DESCRIPTION"]) ? $xmlArr["ATTRIBUTES"]["DESCRIPTION"] : null;
             $this->m_Package = isset($xmlArr["ATTRIBUTES"]["PACKAGE"]) ? $xmlArr["ATTRIBUTES"]["PACKAGE"] : null;
             $this->className = isset($xmlArr["ATTRIBUTES"]["CLASS"]) ? $xmlArr["ATTRIBUTES"]["CLASS"] : null;
-            $this->m_Access = isset($xmlArr["ATTRIBUTES"]["ACCESS"]) ? $xmlArr["ATTRIBUTES"]["ACCESS"] : null;
+            $this->access = isset($xmlArr["ATTRIBUTES"]["ACCESS"]) ? $xmlArr["ATTRIBUTES"]["ACCESS"] : null;
         }
     }
 
@@ -156,7 +156,7 @@ abstract class MetaObject
             return OPENBIZ_ALLOW;
         }
         if (!$access)
-            $access = $this->m_Access;
+            $access = $this->access;
         if ($access)
         {
             return BizSystem::allowUserAccess($access);
@@ -206,7 +206,7 @@ class MetaIterator implements Iterator
      * Store value
      * @var array
      */
-    protected $m_var = array();
+    protected $varValue = array();
 
     /**
      * Contructor of class
@@ -235,7 +235,7 @@ class MetaIterator implements Iterator
             }
             //if (!$clsLoaded) trigger_error("Cannot find the load class $className", E_USER_ERROR);
             $obj = new $className($xmlArr, $parentObj);
-            $this->m_var[$obj->objectName] = $obj;
+            $this->varValue[$obj->objectName] = $obj;
         } else
         {
             foreach ($xmlArr as $child)
@@ -266,7 +266,7 @@ class MetaIterator implements Iterator
                     }
                     //if (!$clsLoaded) trigger_error("Cannot find the load class $className", E_USER_ERROR);
                     $obj = new $className($child, $parentObj);
-                    $this->m_var[$obj->objectName] = $obj;
+                    $this->varValue[$obj->objectName] = $obj;
                 }
             }
         }
@@ -280,23 +280,23 @@ class MetaIterator implements Iterator
      */
     public function merge(&$anotherMIObj)
     {
-        $old_m_var = $this->m_var;
-        $this->m_var = array();
+        $old_varValue = $this->varValue;
+        $this->varValue = array();
         foreach ($anotherMIObj as $key => $value)
         {
-            if (!$old_m_var[$key])
+            if (!$old_varValue[$key])
             {
-                $this->m_var[$key] = $value;
+                $this->varValue[$key] = $value;
             } else
             {
-                $this->m_var[$key] = $old_m_var[$key];
+                $this->varValue[$key] = $old_varValue[$key];
             }
         }
-        foreach ($old_m_var as $key => $value)
+        foreach ($old_varValue as $key => $value)
         {
-            if (!key_exists($key, $this->m_var))
+            if (!key_exists($key, $this->varValue))
             {
-                $this->m_var[$key] = $value;
+                $this->varValue[$key] = $value;
             }
         }
     }
@@ -309,7 +309,7 @@ class MetaIterator implements Iterator
      */
     public function get($key)
     {
-        return isset($this->m_var[$key]) ? $this->m_var[$key] : null;
+        return isset($this->varValue[$key]) ? $this->varValue[$key] : null;
     }
 
     /**
@@ -320,7 +320,7 @@ class MetaIterator implements Iterator
      */
     public function set($key, $val)
     {
-        $this->m_var[$key] = $val;
+        $this->varValue[$key] = $val;
     }
 
     /**
@@ -331,12 +331,12 @@ class MetaIterator implements Iterator
      */
     public function clear($key)
     {
-        unset($this->m_var[$key]);
+        unset($this->varValue[$key]);
     }
 
     public function count()
     {
-        return count($this->m_var);
+        return count($this->varValue);
     }
 
     /**
@@ -346,7 +346,7 @@ class MetaIterator implements Iterator
      */
     public function rewind()
     {
-        reset($this->m_var);
+        reset($this->varValue);
     }
 
     /**
@@ -356,7 +356,7 @@ class MetaIterator implements Iterator
      */
     public function current()
     {
-        return current($this->m_var);
+        return current($this->varValue);
     }
 
     /**
@@ -365,7 +365,7 @@ class MetaIterator implements Iterator
      */
     public function key()
     {
-        return key($this->m_var);
+        return key($this->varValue);
     }
 
     /**
@@ -374,7 +374,7 @@ class MetaIterator implements Iterator
      */
     public function next()
     {
-        return next($this->m_var);
+        return next($this->varValue);
     }
 
     /**
@@ -398,13 +398,13 @@ class MetaIterator implements Iterator
  */
 class Parameter
 {
-    public $objectName, $value, $m_Required, $m_InOut;
+    public $objectName, $value, $required, $m_InOut;
 
     public function __construct(&$xmlArr)
     {
         $this->objectName = isset($xmlArr["ATTRIBUTES"]["NAME"]) ? $xmlArr["ATTRIBUTES"]["NAME"] : null;
         $this->value = isset($xmlArr["ATTRIBUTES"]["VALUE"]) ? $xmlArr["ATTRIBUTES"]["VALUE"] : null;
-        $this->m_Required = isset($xmlArr["ATTRIBUTES"]["REQUIRED"]) ? $xmlArr["ATTRIBUTES"]["REQUIRED"] : null;
+        $this->required = isset($xmlArr["ATTRIBUTES"]["REQUIRED"]) ? $xmlArr["ATTRIBUTES"]["REQUIRED"] : null;
         $this->m_InOut = isset($xmlArr["ATTRIBUTES"]["INOUT"]) ? $xmlArr["ATTRIBUTES"]["INOUT"] : null;
     }
 
@@ -434,9 +434,9 @@ class Parameter
 interface iSessionObject
 {
 
-    public function setSessionVars($sessCtxt);
+    public function saveSessionVars($sessCtxt);
 
-    public function getSessionVars($sessCtxt);
+    public function loadSessionVars($sessCtxt);
 }
 
 /**

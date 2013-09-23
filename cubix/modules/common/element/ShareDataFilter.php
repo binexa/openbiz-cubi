@@ -33,7 +33,7 @@ class ShareDataFilter extends DropDownList
 		
 		switch((int)$value){
 			case 1:
-				if($this->hasOwnerField()){
+				if($this->_hasOwnerField()){
 					$searchRule = "([create_by]= '$my_user_id' OR [owner_id]='$my_user_id')";
 				}
 				else{
@@ -61,7 +61,7 @@ class ShareDataFilter extends DropDownList
 		return $searchRule;        
 	}
 	
-	public function hasOwnerField(){
+	private function _hasOwnerField(){
 		$field = $this->getFormObj()->getDataObj()->getField('owner_id');
 		if($field){
 			return true;
@@ -74,7 +74,7 @@ class ShareDataFilter extends DropDownList
 	
 	protected function getList(){
     	$list= parent::getList();
-    	if(!$this->hasOwnerField()){
+    	if(!$this->_hasOwnerField()){
     		unset($list[3]);
     		unset($list[4]);
     		unset($list[5]);

@@ -16,7 +16,7 @@ class EmailQueueForm extends EasyForm
 {
 	public function SendAllPendingEmails()
 	{
-//       if ($this->m_Resource != "" && !$this->allowAccess($this->m_Resource.".sendemail"))
+//       if ($this->resource != "" && !$this->allowAccess($this->resource.".sendemail"))
 //            return BizSystem::clientProxy()->redirectView(OPENBIZ_ACCESS_DENIED_VIEW);		
             
 		$emailSvc = BizSystem::getService(CUBI_USER_EMAIL_SERVICE);
@@ -28,7 +28,7 @@ class EmailQueueForm extends EasyForm
 	
 	public function sendEmails()
 	{
-//       if ($this->m_Resource != "" && !$this->allowAccess($this->m_Resource.".sendemail"))
+//       if ($this->resource != "" && !$this->allowAccess($this->resource.".sendemail"))
 //            return BizSystem::clientProxy()->redirectView(OPENBIZ_ACCESS_DENIED_VIEW);
 
         if ($id==null || $id=='')
@@ -52,7 +52,7 @@ class EmailQueueForm extends EasyForm
                 return;
             }
         }
-        if (strtoupper($this->m_FormType) == "LIST")
+        if (strtoupper($this->formType) == "LIST")
             $this->rerender();
 
         $this->runEventLog();
@@ -62,7 +62,7 @@ class EmailQueueForm extends EasyForm
 
 	public function deleteAllEmails()
 	{
-       if ($this->m_Resource != "" && !$this->allowAccess($this->m_Resource.".delete"))
+       if ($this->resource != "" && !$this->allowAccess($this->resource.".delete"))
             return BizSystem::clientProxy()->redirectView(OPENBIZ_ACCESS_DENIED_VIEW);
 
         try
@@ -75,7 +75,7 @@ class EmailQueueForm extends EasyForm
            return;
         }
        
-        if (strtoupper($this->m_FormType) == "LIST")
+        if (strtoupper($this->formType) == "LIST")
             $this->rerender();
 
         $this->runEventLog();
@@ -86,7 +86,7 @@ class EmailQueueForm extends EasyForm
 	
 	public function deleteSentEmails()
 	{
-       if ($this->m_Resource != "" && !$this->allowAccess($this->m_Resource.".delete"))
+       if ($this->resource != "" && !$this->allowAccess($this->resource.".delete"))
             return BizSystem::clientProxy()->redirectView(OPENBIZ_ACCESS_DENIED_VIEW);
 
         try
@@ -99,7 +99,7 @@ class EmailQueueForm extends EasyForm
            return;
         }
        
-        if (strtoupper($this->m_FormType) == "LIST")
+        if (strtoupper($this->formType) == "LIST")
             $this->rerender();
 
         $this->runEventLog();
@@ -113,7 +113,7 @@ class EmailQueueForm extends EasyForm
 		for($i=0;$i<count($resultRecords);$i++)
 		{
 						
-			$account = $emailSvc->m_Accounts->get($resultRecords[$i]['sender']);						
+			$account = $emailSvc->accounts->get($resultRecords[$i]['sender']);						
 			$resultRecords[$i]['sender'] = $account->m_FromName;
 			$resultRecords[$i]['sender_mail'] = $account->m_FromEmail;
 			$resultRecords[$i]['recipient_name'] = $resultRecords[$i]['recipient'];
@@ -126,7 +126,7 @@ class EmailQueueForm extends EasyForm
 		$resultRecords = parent::fetchData();
 		$emailSvc = BizSystem::getService(EMAIL_SERVICE);
 
-		$account = $emailSvc->m_Accounts->get($resultRecords['sender']);	
+		$account = $emailSvc->accounts->get($resultRecords['sender']);	
 		$resultRecords['sender'] = $account->m_FromName;
 		$resultRecords['sender_mail'] = $account->m_FromEmail;
 		$resultRecords['recipient_name'] = $resultRecords['recipient'];

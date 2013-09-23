@@ -44,7 +44,7 @@ class OauthProviderForm extends EasyForm
 		if(!$this->m_type)
 		{
 			
-			switch(strtoupper($this->m_FormType))
+			switch(strtoupper($this->formType))
 			{
 				case "EDIT":
 					$Record=$this->readInputRecord();

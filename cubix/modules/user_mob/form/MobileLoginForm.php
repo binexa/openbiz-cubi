@@ -107,8 +107,8 @@ class MobileLoginForm extends LoginForm
     	   	    	setcookie("SYSTEM_SESSION_PASSWORD",$password,time()+(int)$cookies,"/");
     	   	    }
     	   	    
-    	   	    if($this->m_LastViewedPage!=""){
-    	   	    	BizSystem::clientProxy()->ReDirectPage($this->m_LastViewedPage);
+    	   	    if($this->lastViewedPage!=""){
+    	   	    	BizSystem::clientProxy()->ReDirectPage($this->lastViewedPage);
     	   	    }
        	        else{
        	        	BizSystem::clientProxy()->ReDirectPage($this->MOBILE_STARTPAGE);    	        	

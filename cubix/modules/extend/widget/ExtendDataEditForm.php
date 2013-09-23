@@ -47,17 +47,17 @@ class ExtendDataEditForm extends EasyForm
 	{
 		
 		$do = $this->getDataObj();
-		$cond_column	= $do->m_Association['CondColumn'];
-		$cond_value		= $do->m_Association['CondValue'];
-		$column_name	= $do->m_Association['Column'];
-		$column_value	= $do->m_Association['FieldRefVal']; 
+		$cond_column	= $do->association['CondColumn'];
+		$cond_value		= $do->association['CondValue'];
+		$column_name	= $do->association['Column'];
+		$column_value	= $do->association['FieldRefVal']; 
 		
 		if(!$column_name){
 			return $this->searchRule;
 		}
 		
 		$prtFormObj = BizSystem::getObject($this->m_ParentFormName);
-		$elem_name = $prtFormObj->m_DataPanel->getByField($column_name)->objectName;		
+		$elem_name = $prtFormObj->dataPanel->getByField($column_name)->objectName;		
 		$type_id = BizSystem::ClientProxy()->getFormInputs($elem_name);
 		if (!$type_id && $elem_name) {
 			$type_id = $prtFormObj->getElement($elem_name)->getValue();
@@ -78,11 +78,11 @@ class ExtendDataEditForm extends EasyForm
 	
 	public function render()
 	{						
-		if(!$this->m_DataPanel->count())
+		if(!$this->dataPanel->count())
 		{		
-			$this->m_DataPanel = new Panel($this->configDataPanel(),"",$this);
+			$this->dataPanel = new Panel($this->configDataPanel(),"",$this);
 		}	
-		if(!$this->m_DataPanel->count()){
+		if(!$this->dataPanel->count()){
 			return "";
 		}
 		return parent::render();
@@ -191,12 +191,12 @@ class ExtendDataEditForm extends EasyForm
 		$recArr = $this->readInputExtendRecord();
 		$do = $this->getDataObj();
 		
-		$cond_column	= $do->m_Association['CondColumn'];
-		$cond_value		= $do->m_Association['CondValue'];
-		$column_name	= $do->m_Association['Column'];
-		$column_value	= $do->m_Association['FieldRefVal']; 
+		$cond_column	= $do->association['CondColumn'];
+		$cond_value		= $do->association['CondValue'];
+		$column_name	= $do->association['Column'];
+		$column_value	= $do->association['FieldRefVal']; 
 				
-		$elem_name = BizSystem::getObject($this->m_ParentFormName)->m_DataPanel->getByField($column_name)->objectName;
+		$elem_name = BizSystem::getObject($this->m_ParentFormName)->dataPanel->getByField($column_name)->objectName;
 		if($elem_name){
 			$column_value = BizSystem::ClientProxy()->getFormInputs($elem_name);
 		}

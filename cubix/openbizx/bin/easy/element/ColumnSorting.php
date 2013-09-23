@@ -21,14 +21,14 @@ class ColumnSorting extends ColumnText
         if ($this->m_Translatable == 'Y')
             $value = $this->translateString($value);
         
-        if((int)$this->m_MaxLength>0){
+        if((int)$this->maxLength>0){
 	        if(function_exists('mb_strlen') && function_exists('mb_substr')){
-	        	if(mb_strlen($value,'UTF8') > (int)$this->m_MaxLength){
-	        		$value = mb_substr($value,0,(int)$this->m_MaxLength,'UTF8').'...';
+	        	if(mb_strlen($value,'UTF8') > (int)$this->maxLength){
+	        		$value = mb_substr($value,0,(int)$this->maxLength,'UTF8').'...';
 	        	}        	
 	        }else{
-	        	if(strlen($value) > (int)$this->m_MaxLength){
-	        		$value = substr($value,0,(int)$this->m_MaxLength).'...';
+	        	if(strlen($value) > (int)$this->maxLength){
+	        		$value = substr($value,0,(int)$this->maxLength).'...';
 	        	}         	
 	        }
         }
@@ -39,12 +39,12 @@ class ColumnSorting extends ColumnText
         	{
         		$value = sprintf($this->m_DisplayFormat,$value);
         	}
-        	if($this->m_Percent=='Y')
+        	if($this->percent=='Y')
         	{
         		$value = sprintf("%.2f",$value*100).'%';
         	}
         	
-            if ($this->m_Link)
+            if ($this->link)
             {
                 $link = $this->getLink();
                 $target = $this->getTarget();

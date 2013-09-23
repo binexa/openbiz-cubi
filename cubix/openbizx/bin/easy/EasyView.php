@@ -27,8 +27,8 @@ class EasyView extends MetaObject implements iSessionObject
 {
     public $m_Title;
     public $m_Keywords;
-	public $m_TemplateEngine;
-    public $m_TemplateFile;
+	public $templateEngine;
+    public $templateFile;
     public $m_ViewSet;
     public $m_Tab;
     public $m_FormRefs;
@@ -68,8 +68,8 @@ class EasyView extends MetaObject implements iSessionObject
         $this->objectName = $this->prefixPackage($this->objectName);
         $this->m_Title = isset($xmlArr["EASYVIEW"]["ATTRIBUTES"]["TITLE"]) ? $xmlArr["EASYVIEW"]["ATTRIBUTES"]["TITLE"] : null;
         $this->m_Keywords = isset($xmlArr["EASYVIEW"]["ATTRIBUTES"]["KEYWORDS"]) ? $xmlArr["EASYVIEW"]["ATTRIBUTES"]["KEYWORDS"] : null;
-        $this->m_TemplateEngine = isset($xmlArr["EASYVIEW"]["ATTRIBUTES"]["TEMPLATEENGINE"]) ? $xmlArr["EASYVIEW"]["ATTRIBUTES"]["TEMPLATEENGINE"] : null;
-        $this->m_TemplateFile = isset($xmlArr["EASYVIEW"]["ATTRIBUTES"]["TEMPLATEFILE"]) ? $xmlArr["EASYVIEW"]["ATTRIBUTES"]["TEMPLATEFILE"] : null;
+        $this->templateEngine = isset($xmlArr["EASYVIEW"]["ATTRIBUTES"]["TEMPLATEENGINE"]) ? $xmlArr["EASYVIEW"]["ATTRIBUTES"]["TEMPLATEENGINE"] : null;
+        $this->templateFile = isset($xmlArr["EASYVIEW"]["ATTRIBUTES"]["TEMPLATEFILE"]) ? $xmlArr["EASYVIEW"]["ATTRIBUTES"]["TEMPLATEFILE"] : null;
         $this->m_ViewSet = isset($xmlArr["EASYVIEW"]["ATTRIBUTES"]["VIEWSET"]) ? $xmlArr["EASYVIEW"]["ATTRIBUTES"]["VIEWSET"] : null;
         $this->m_Tab = isset($xmlArr["EASYVIEW"]["ATTRIBUTES"]["TAB"]) ? $xmlArr["EASYVIEW"]["ATTRIBUTES"]["TAB"] : null;
 
@@ -172,7 +172,7 @@ class EasyView extends MetaObject implements iSessionObject
      * @param SessionContext $sessionContext
      * @return void
      */
-    public function getSessionVars($sessionContext)
+    public function loadSessionVars($sessionContext)
     {
         $sessionContext->getObjVar($this->objectName, "LastRenderedForm", $this->m_LastRenderedForm);        
     }
@@ -183,7 +183,7 @@ class EasyView extends MetaObject implements iSessionObject
      * @param SessionContext $sessionContext
      * @return void
      */
-    public function setSessionVars($sessionContext)
+    public function saveSessionVars($sessionContext)
     {       
         $sessionContext->setObjVar($this->objectName, "LastRenderedForm", $this->m_LastRenderedForm);
     }
@@ -350,8 +350,8 @@ class EasyView extends MetaObject implements iSessionObject
             $formRef->setViewName($this->objectName);
             $formName = $formRef->objectName;
             $formObj = BizSystem::objectFactory()->getObject($formName);
-            if ($formRef->m_SubForms && method_exists($formObj,"SetSubForms"))
-                $formObj->setSubForms($formRef->m_SubForms);
+            if ($formRef->subForms && method_exists($formObj,"SetSubForms"))
+                $formObj->setSubForms($formRef->subForms);
         }
     }
 
@@ -463,7 +463,7 @@ class EasyView extends MetaObject implements iSessionObject
 class FormReference
 {
     public $objectName;
-    public $m_SubForms;
+    public $subForms;
     public $objectDescription;
     private $_parentForm;
     public $m_Display = true;
@@ -482,7 +482,7 @@ class FormReference
         	$this->$name = $value;
         }
         $this->objectName = $xmlArr["ATTRIBUTES"]["NAME"];
-        $this->m_SubForms = $xmlArr["ATTRIBUTES"]["SUBFORMS"];
+        $this->subForms = $xmlArr["ATTRIBUTES"]["SUBFORMS"];
         $this->objectDescription = $xmlArr["ATTRIBUTES"]["DESCRIPTION"];        
     }
 

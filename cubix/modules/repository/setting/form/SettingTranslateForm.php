@@ -7,7 +7,7 @@ class SettingTranslateForm extends SettingForm
 	public function fetchData()
 	{
 		
-		$this->m_ActiveRecord = null;
+		$this->activeRecord = null;
 		$resultRaw = parent::fetchData();
 		foreach($resultRaw as $key=>$value)
 		{
@@ -116,7 +116,7 @@ class SettingTranslateForm extends SettingForm
             $this->processBDOException($e);
             return false;
         }
-		$this->m_ActiveRecord = null;
+		$this->activeRecord = null;
         $this->getActiveRecord($dataRec["Id"]);
 
         $this->runEventLog();

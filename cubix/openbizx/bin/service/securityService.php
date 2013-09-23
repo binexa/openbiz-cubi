@@ -157,9 +157,9 @@ class securityFilter extends MetaIterator
      */
     public function processRules()
     {
-        if(is_array($this->m_Rules->m_var))
+        if(is_array($this->m_Rules->varValue))
         {
-            foreach($this->m_Rules->m_var as $name=>$obj)
+            foreach($this->m_Rules->varValue as $name=>$obj)
             {
                 $obj->process();
                 if($obj->getErrorMessage())
@@ -199,7 +199,7 @@ interface iSecurityRule
 class securityRule_Abstract implements iSecurityRule
 {
     public $objectName      =	null;
-    public $m_Action    =	null;
+    public $action    =	null;
     public $m_Match     =	null;
     public $m_Status     =	null;
     public $m_EffectiveTime =	null;
@@ -225,7 +225,7 @@ class securityRule_Abstract implements iSecurityRule
     protected function readMetadata(&$xmlArr)
     {
         $this->objectName 	= $xmlArr["ATTRIBUTES"]["NAME"];
-        $this->m_Action	= $xmlArr["ATTRIBUTES"]["ACTION"];
+        $this->action	= $xmlArr["ATTRIBUTES"]["ACTION"];
         $this->m_Status	= $xmlArr["ATTRIBUTES"]["STATUS"];
         $this->m_Match 	= $xmlArr["ATTRIBUTES"]["MATCH"];
         $this->m_EffectiveTime = $xmlArr["ATTRIBUTES"]["EFFECTIVETIME"];
@@ -323,11 +323,11 @@ class URLFilterRule extends securityRule_Abstract
 	            $url = $_SERVER['REQUEST_URI'];
 	            if(preg_match("/".$this->m_Match."/si",$url))
 	            {
-	                if(strtoupper($this->m_Action)=='OPENBIZ_DENY')
+	                if(strtoupper($this->action)=='OPENBIZ_DENY')
 	                {
 	                    $this->errorMessage=BizSystem::getMessage('SECURITYSVC_URL_DENIED');
 	                    return false;
-	                }elseif(strtoupper($this->m_Action)=='OPENBIZ_ALLOW')
+	                }elseif(strtoupper($this->action)=='OPENBIZ_ALLOW')
 	                {
 	                    return true;
 	                }
@@ -370,12 +370,12 @@ class DomainFilterRule extends securityRule_Abstract
 	            $url = $_SERVER['HTTP_HOST'];
 	            if(preg_match("/".$this->m_Match."/si",$url))
 	            {
-	                if(strtoupper($this->m_Action)=='OPENBIZ_DENY')
+	                if(strtoupper($this->action)=='OPENBIZ_DENY')
 	                {
 	                    $this->errorMessage=BizSystem::getMessage('SECURITYSVC_DOMAIN_DENIED');
 	                    return false;
 	                }
-	                elseif(strtoupper($this->m_Action)=='OPENBIZ_ALLOW')
+	                elseif(strtoupper($this->action)=='OPENBIZ_ALLOW')
 	                {
 	                    return true;
 	                }
@@ -417,12 +417,12 @@ class AgentFilterRule extends securityRule_Abstract
 	            $url = $_SERVER['HTTP_USER_AGENT'];
 	            if(preg_match("/".$this->m_Match."/si",$url))
 	            {
-	                if(strtoupper($this->m_Action)=='OPENBIZ_DENY')
+	                if(strtoupper($this->action)=='OPENBIZ_DENY')
 	                {
 	                    $this->errorMessage=BizSystem::getMessage('SECURITYSVC_AGENT_DENIED');
 	                    return false;
 	                }
-	                elseif(strtoupper($this->m_Action)=='OPENBIZ_ALLOW')
+	                elseif(strtoupper($this->action)=='OPENBIZ_ALLOW')
 	                {
 	                    return true;
 	                }
@@ -464,12 +464,12 @@ class IPFilterRule extends securityRule_Abstract
 	            $url = $_SERVER['REMOTE_ADDR'];
 	            if(preg_match("/".$this->m_Match."/si",$url))
 	            {
-	                if(strtoupper($this->m_Action)=='OPENBIZ_DENY')
+	                if(strtoupper($this->action)=='OPENBIZ_DENY')
 	                {
 	                    $this->errorMessage = BizSystem::getMessage('SECURITYSVC_IPADDR_DENIED');
 	                    return false;
 	                }
-	                elseif(strtoupper($this->m_Action)=='OPENBIZ_ALLOW')
+	                elseif(strtoupper($this->action)=='OPENBIZ_ALLOW')
 	                {
 	                    return true;
 	                }
@@ -514,12 +514,12 @@ class PostFilterRule extends securityRule_Abstract
 	            {
 	                if(preg_match("/".$this->m_Match."/si",$post_str))
 	                {
-	                    if(strtoupper($this->m_Action)=='OPENBIZ_DENY')
+	                    if(strtoupper($this->action)=='OPENBIZ_DENY')
 	                    {
 	                        $this->errorMessage=BizSystem::getMessage('SECURITYSVC_POST_DENIED');
 	                        return false;
 	                    }
-	                    elseif(strtoupper($this->m_Action)=='OPENBIZ_ALLOW')
+	                    elseif(strtoupper($this->action)=='OPENBIZ_ALLOW')
 	                    {
 	                        return true;
 	                    }
@@ -567,12 +567,12 @@ class GetFilterRule extends securityRule_Abstract
 	            $get_str = serialize($_GET);
 	            if(preg_match("/".$this->m_Match."/si",$get_str))
 	            {
-	                if(strtoupper($this->m_Action)=='OPENBIZ_DENY')
+	                if(strtoupper($this->action)=='OPENBIZ_DENY')
 	                {
 	                    $this->errorMessage=BizSystem::getMessage('SECURITYSVC_GET_DENIED');
 	                    return false;
 	                }
-	                elseif(strtoupper($this->m_Action)=='OPENBIZ_ALLOW')
+	                elseif(strtoupper($this->action)=='OPENBIZ_ALLOW')
 	                {
 	                    return true;
 	                }

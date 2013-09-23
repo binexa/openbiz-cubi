@@ -182,9 +182,9 @@ class ResetPasswordForm extends UserForm
     	$password = BizSystem::ClientProxy()->GetFormInputs("fld_password");
 		$password_repeat = BizSystem::ClientProxy()->GetFormInputs("fld_password_repeat");
     	if (!$password_repeat)
-    	    $this->getElement("fld_password")->m_Validator = null;
+    	    $this->getElement("fld_password")->validator = null;
     	if (!$password)
-    	    $this->getElement("fld_password_repeat")->m_Validator = null;
+    	    $this->getElement("fld_password_repeat")->validator = null;
 
     	
         

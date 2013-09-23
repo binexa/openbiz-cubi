@@ -4,7 +4,7 @@ include_once('_OAuth/WeiboOAuth.php');
 require_once "oauth.class.php";
 include_once( 'qq/txwboauth.php' );
 class qq extends oauthClass{
-	protected $m_Type='qq';
+	protected $type='qq';
 	protected $m_loginUrl;
 	private $m_akey;
 	private $m_skey;
@@ -60,7 +60,7 @@ class qq extends oauthClass{
 	function userInfo(){
 		$me = $this->doClient()->verify_credentials();
 		$user['id']         = $me['data']['name'];
-		$user['type']         = $this->m_Type;
+		$user['type']         = $this->type;
 		$user['email']         =  $me['data']['email'];
 		$user['uname']       = $me['data']['nick'];
 		$user['province']    = $me['data']['province_code'];

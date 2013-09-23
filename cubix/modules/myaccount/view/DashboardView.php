@@ -13,7 +13,7 @@
 
 class DashboardView extends EasyView
 {
-	private $m_UserWidgetDO = "myaccount.do.UserWidgetDO";	
+	private $userWidgetDO = "myaccount.do.UserWidgetDO";	
 	
 	protected function readMetadata(&$xmlArr)
     {
@@ -26,7 +26,7 @@ class DashboardView extends EasyView
 	{
 		$user_id = BizSystem::GetUserProfile("Id");
 		$searchRule="[user_id]='$user_id'";
-		$do = BizSystem::GetObject($this->m_UserWidgetDO);
+		$do = BizSystem::GetObject($this->userWidgetDO);
 		$formRecs = $do->directfetch($searchRule);
 		$formRefXML = array();
 		foreach($formRecs as $form){

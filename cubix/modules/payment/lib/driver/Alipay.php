@@ -7,9 +7,9 @@ require_once dirname(dirname(__FILE__))."/dll/alipay/lib/alipay_notify.class.php
 class Alipay extends PaymentAdapter
 {
 	protected $m_ProviderId = 2;
-	protected $m_Type = 'alipay';
+	protected $type = 'alipay';
 	
-	protected $m_APIURL = 'https://mapi.alipay.com/gateway.do?';
+	protected $aPIURL = 'https://mapi.alipay.com/gateway.do?';
 	
 	
 	protected function _getConfig()
@@ -65,7 +65,7 @@ class Alipay extends PaymentAdapter
 		);
 		//构造即时到帐接口
 		$alipaySubmit = new AlipaySubmit();
-		$url = $this->m_APIURL. $alipaySubmit->buildRequestParaToString($parameter,$alipay_config);
+		$url = $this->aPIURL. $alipaySubmit->buildRequestParaToString($parameter,$alipay_config);
 
 		return $url;
 	}

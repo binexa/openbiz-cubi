@@ -244,8 +244,8 @@ class SessionContext
         {
             if (method_exists($obj, "SetSessionVars"))
             {
-                //after calling $obj->setSessionVars SessObjArr and StatefulSessObjArr are filled
-                $obj->setSessionVars($this);
+                //after calling $obj->saveSessionVars SessObjArr and StatefulSessObjArr are filled
+                $obj->saveSessionVars($this);
             }
             // if previous view's object is used in current view, don't discard its session data
             if (isset($obj->objectName) && key_exists($obj->objectName, $this->_prevViewObjNames)) {

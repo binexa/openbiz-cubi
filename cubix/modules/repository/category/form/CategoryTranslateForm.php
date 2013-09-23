@@ -21,7 +21,7 @@ class CategoryTranslateForm extends PickerForm
 	public function fetchData()
 	{
 		
-		$this->m_ActiveRecord = null;
+		$this->activeRecord = null;
 		$result = parent::fetchData();
 		
 		$lang = BizSystem::ClientProxy()->getFormInputs("fld_lang");
@@ -123,7 +123,7 @@ class CategoryTranslateForm extends PickerForm
             $this->processBDOException($e);
             return false;
         }
-		$this->m_ActiveRecord = null;
+		$this->activeRecord = null;
         $this->getActiveRecord($dataRec["Id"]);
 
         $this->runEventLog();

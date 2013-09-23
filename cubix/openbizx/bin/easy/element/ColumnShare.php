@@ -1,4 +1,5 @@
 <?php
+
 /**
  * PHPOpenBiz Framework
  *
@@ -13,7 +14,6 @@
  * @link      http://www.phpopenbiz.org/
  * @version   $Id: ColumnBool.php 3687 2011-04-12 19:58:36Z jixian2003 $
  */
-
 //include_once("ColumnText.php");
 
 /**
@@ -27,27 +27,25 @@
  */
 class ColumnShare extends ColumnText
 {
-    public $m_MyPrivateImg		= null;
-    public $m_MySharedImg		= null;
-    public $m_MyAssignedImg		= null;
-    public $m_MyDistributedImg	= null;    
-    public $m_GroupSharedImg	= null;
-    public $m_OtherSharedImg	= null;
-    public $m_DefaultImg		= null;
-    
-    public $recordOwnerId		= null;
-    public $recordGroupId		= null;
-    public $recordGroupPerm	= null;
-    public $recordOtherPerm	= null;
-    public $recordCreatorId 	= null;
-    
-    protected $recordOwnerId_AutoLoad		= false;
-    protected $recordGroupId_AutoLoad		= false;
-    protected $recordGroupPerm_AutoLoad	= false;
-    protected $recordOtherPerm_AutoLoad	= false;
-    
-    public $m_hasOwnerField = false;
-    
+
+    public $m_MyPrivateImg = null;
+    public $m_MySharedImg = null;
+    public $m_MyAssignedImg = null;
+    public $m_MyDistributedImg = null;
+    public $m_GroupSharedImg = null;
+    public $m_OtherSharedImg = null;
+    public $m_DefaultImg = null;
+    public $recordOwnerId = null;
+    public $recordGroupId = null;
+    public $recordGroupPerm = null;
+    public $recordOtherPerm = null;
+    public $recordCreatorId = null;
+    protected $recordOwnerId_AutoLoad = false;
+    protected $recordGroupId_AutoLoad = false;
+    protected $recordGroupPerm_AutoLoad = false;
+    protected $recordOtherPerm_AutoLoad = false;
+    public $hasOwnerField = false;
+
     /**
      * Read array meta data, and store to meta object
      *
@@ -57,115 +55,98 @@ class ColumnShare extends ColumnText
     protected function readMetaData(&$xmlArr)
     {
         parent::readMetaData($xmlArr);
-        $this->m_MyPrivateImg = isset($xmlArr["ATTRIBUTES"]["MYPRIVATEIMG"])	? $xmlArr["ATTRIBUTES"]["MYPRIVATEIMG"]	: "{OPENBIZ_RESOURCE_URL}/common/images/icon_data_private.gif";
-        $this->m_MySharedImg  = isset($xmlArr["ATTRIBUTES"]["MYSHAREDIMG"])		? $xmlArr["ATTRIBUTES"]["MYSHAREDIMG"]	: "{OPENBIZ_RESOURCE_URL}/common/images/icon_data_shared.gif";
-        $this->m_MyAssignedImg  = isset($xmlArr["ATTRIBUTES"]["MYASSIGNEDIMG"])		? $xmlArr["ATTRIBUTES"]["MYASSIGNEDIMG"]	: "{OPENBIZ_RESOURCE_URL}/common/images/icon_data_assigned.gif";
-        $this->m_MyDistributedImg  = isset($xmlArr["ATTRIBUTES"]["MYDISTRIBUTEDIMG"])		? $xmlArr["ATTRIBUTES"]["MYDISTRIBUTEDIMG"]	: "{OPENBIZ_RESOURCE_URL}/common/images/icon_data_distributed.gif";
-        $this->m_GroupSharedImg = isset($xmlArr["ATTRIBUTES"]["GROUPSHAREDIMG"])? $xmlArr["ATTRIBUTES"]["GROUPSHAREDIMG"]: "{OPENBIZ_RESOURCE_URL}/common/images/icon_data_shared_group.gif";
-        $this->m_OtherSharedImg = isset($xmlArr["ATTRIBUTES"]["OTHERSHAREDIMG"])? $xmlArr["ATTRIBUTES"]["OTHERSHAREDIMG"]: "{OPENBIZ_RESOURCE_URL}/common/images/icon_data_shared_other.gif";
-        $this->m_DefaultImg = isset($xmlArr["ATTRIBUTES"]["DEFAULTIMG"])? $xmlArr["ATTRIBUTES"]["DEFAULTIMG"]: "{OPENBIZ_RESOURCE_URL}/common/images/icon_data_shared_other.gif";
-        
-        $this->recordCreatorId	=	isset($xmlArr["ATTRIBUTES"]["CREATORID"])		? $xmlArr["ATTRIBUTES"]["CREATORID"]	: null;
-        $this->recordOwnerId	=	isset($xmlArr["ATTRIBUTES"]["OWNERID"])		? $xmlArr["ATTRIBUTES"]["OWNERID"]	: null;
-        $this->recordGroupId	=	isset($xmlArr["ATTRIBUTES"]["GROUPID"])		? $xmlArr["ATTRIBUTES"]["GROUPID"]	: null;
-        $this->recordGroupPerm=	isset($xmlArr["ATTRIBUTES"]["GROUPPERM"])	? $xmlArr["ATTRIBUTES"]["GROUPPERM"]: null;
-        $this->recordOtherPerm=	isset($xmlArr["ATTRIBUTES"]["OTHERPERM"])	? $xmlArr["ATTRIBUTES"]["OTHERPERM"]: null;
-        
-        $this->recordOwnerId_AutoLoad		=	isset($xmlArr["ATTRIBUTES"]["OWNERID"])?false:true;	
-        $this->recordGroupId_AutoLoad		=	isset($xmlArr["ATTRIBUTES"]["GROUPID"])?false:true;	
-        $this->recordGroupPerm_AutoLoad	=	isset($xmlArr["ATTRIBUTES"]["GROUPPERM"])?false:true;	
-        $this->recordOtherPerm_AutoLoad	=	isset($xmlArr["ATTRIBUTES"]["OTHERPERM"])?false:true;	
-    }
-    
-    public function setValue($value){
-		$formObj = $this->getFormObj();
-        $rec = $formObj->getActiveRecord();                
-		
-        if($this->recordOwnerId_AutoLoad)
-        {
-        	$this->m_hasOwnerField = $this->hasOwnerField();
-        	if($this->m_hasOwnerField){
-        		$this->recordOwnerId = $rec['owner_id'];
-        		$this->recordCreatorId = $rec['create_by'];
-        	}else{
-        		$this->recordOwnerId = $rec['create_by'];
-        	}        	
-        }
-        
-    	if($this->recordGroupId_AutoLoad)
-        {
-        	$this->recordGroupId = $rec['group_id'];        	
-        }
-        
-        if($this->recordGroupPerm_AutoLoad)
-        {
-        	$this->recordGroupPerm = $rec['group_perm'];
-        }
+        $this->m_MyPrivateImg = isset($xmlArr["ATTRIBUTES"]["MYPRIVATEIMG"]) ? $xmlArr["ATTRIBUTES"]["MYPRIVATEIMG"] : "{OPENBIZ_RESOURCE_URL}/common/images/icon_data_private.gif";
+        $this->m_MySharedImg = isset($xmlArr["ATTRIBUTES"]["MYSHAREDIMG"]) ? $xmlArr["ATTRIBUTES"]["MYSHAREDIMG"] : "{OPENBIZ_RESOURCE_URL}/common/images/icon_data_shared.gif";
+        $this->m_MyAssignedImg = isset($xmlArr["ATTRIBUTES"]["MYASSIGNEDIMG"]) ? $xmlArr["ATTRIBUTES"]["MYASSIGNEDIMG"] : "{OPENBIZ_RESOURCE_URL}/common/images/icon_data_assigned.gif";
+        $this->m_MyDistributedImg = isset($xmlArr["ATTRIBUTES"]["MYDISTRIBUTEDIMG"]) ? $xmlArr["ATTRIBUTES"]["MYDISTRIBUTEDIMG"] : "{OPENBIZ_RESOURCE_URL}/common/images/icon_data_distributed.gif";
+        $this->m_GroupSharedImg = isset($xmlArr["ATTRIBUTES"]["GROUPSHAREDIMG"]) ? $xmlArr["ATTRIBUTES"]["GROUPSHAREDIMG"] : "{OPENBIZ_RESOURCE_URL}/common/images/icon_data_shared_group.gif";
+        $this->m_OtherSharedImg = isset($xmlArr["ATTRIBUTES"]["OTHERSHAREDIMG"]) ? $xmlArr["ATTRIBUTES"]["OTHERSHAREDIMG"] : "{OPENBIZ_RESOURCE_URL}/common/images/icon_data_shared_other.gif";
+        $this->m_DefaultImg = isset($xmlArr["ATTRIBUTES"]["DEFAULTIMG"]) ? $xmlArr["ATTRIBUTES"]["DEFAULTIMG"] : "{OPENBIZ_RESOURCE_URL}/common/images/icon_data_shared_other.gif";
 
-        if($this->recordOtherPerm_AutoLoad)
-        {
-        	$this->recordOtherPerm = $rec['other_perm'];
-        }       	     
+        $this->recordCreatorId = isset($xmlArr["ATTRIBUTES"]["CREATORID"]) ? $xmlArr["ATTRIBUTES"]["CREATORID"] : null;
+        $this->recordOwnerId = isset($xmlArr["ATTRIBUTES"]["OWNERID"]) ? $xmlArr["ATTRIBUTES"]["OWNERID"] : null;
+        $this->recordGroupId = isset($xmlArr["ATTRIBUTES"]["GROUPID"]) ? $xmlArr["ATTRIBUTES"]["GROUPID"] : null;
+        $this->recordGroupPerm = isset($xmlArr["ATTRIBUTES"]["GROUPPERM"]) ? $xmlArr["ATTRIBUTES"]["GROUPPERM"] : null;
+        $this->recordOtherPerm = isset($xmlArr["ATTRIBUTES"]["OTHERPERM"]) ? $xmlArr["ATTRIBUTES"]["OTHERPERM"] : null;
+
+        $this->recordOwnerId_AutoLoad = isset($xmlArr["ATTRIBUTES"]["OWNERID"]) ? false : true;
+        $this->recordGroupId_AutoLoad = isset($xmlArr["ATTRIBUTES"]["GROUPID"]) ? false : true;
+        $this->recordGroupPerm_AutoLoad = isset($xmlArr["ATTRIBUTES"]["GROUPPERM"]) ? false : true;
+        $this->recordOtherPerm_AutoLoad = isset($xmlArr["ATTRIBUTES"]["OTHERPERM"]) ? false : true;
     }
 
-    public function getValue(){
-    	$user_id 	= BizSystem::GetUserProfile("Id");
-		$groups 	= BizSystem::GetUserProfile("groups");
-        if (!$groups) $groups = array();
-    	
-		$this->m_hasOwnerField = $this->hasOwnerField();
-       if($this->m_hasOwnerField){
-       		
-			if($this->recordOwnerId != $this->recordCreatorId)
-			{
-				if($this->recordOwnerId == $user_id)
-				{
-					$this->value = 4;
-					return $this->value ;
-				}
-				elseif($this->recordCreatorId == $user_id)
-				{
-					$this->value = 5;
-					return $this->value ;
-				}
-			}
-       }
-		
-	    if($user_id == $this->recordOwnerId)
-		{
-			if((int)$this->recordGroupPerm>0 || (int)$this->recordOtherPerm>0 )
-			{
-				
-				$this->value = 1;
-			}
-			else 
-			{
-				$this->value = 0;
-			}
-		}
-		elseif($this->recordOtherPerm>0)
-		{
-			$this->value = 3;
-			
-		}
-		else
-		{
-            foreach($groups as $group_id)
-			{
-				if($group_id == $this->recordGroupId)
-				{
-					$this->value = 2;
-					break;
-				}
-			}
-			
-		} 
-		
-    
-               	
-		return $this->value;  		
+    public function setValue($value)
+    {
+        $formObj = $this->getFormObj();
+        $rec = $formObj->getActiveRecord();
+
+        if ($this->recordOwnerId_AutoLoad) {
+            $this->hasOwnerField = $this->_hasOwnerField();
+            if ($this->hasOwnerField) {
+                $this->recordOwnerId = $rec['owner_id'];
+                $this->recordCreatorId = $rec['create_by'];
+            } else {
+                $this->recordOwnerId = $rec['create_by'];
+            }
+        }
+
+        if ($this->recordGroupId_AutoLoad) {
+            $this->recordGroupId = $rec['group_id'];
+        }
+
+        if ($this->recordGroupPerm_AutoLoad) {
+            $this->recordGroupPerm = $rec['group_perm'];
+        }
+
+        if ($this->recordOtherPerm_AutoLoad) {
+            $this->recordOtherPerm = $rec['other_perm'];
+        }
     }
-    
+
+    public function getValue()
+    {
+        $user_id = BizSystem::GetUserProfile("Id");
+        $groups = BizSystem::GetUserProfile("groups");
+        if (!$groups)
+            $groups = array();
+
+        $this->hasOwnerField = $this->_hasOwnerField();
+        if ($this->hasOwnerField) {
+
+            if ($this->recordOwnerId != $this->recordCreatorId) {
+                if ($this->recordOwnerId == $user_id) {
+                    $this->value = 4;
+                    return $this->value;
+                } elseif ($this->recordCreatorId == $user_id) {
+                    $this->value = 5;
+                    return $this->value;
+                }
+            }
+        }
+
+        if ($user_id == $this->recordOwnerId) {
+            if ((int) $this->recordGroupPerm > 0 || (int) $this->recordOtherPerm > 0) {
+
+                $this->value = 1;
+            } else {
+                $this->value = 0;
+            }
+        } elseif ($this->recordOtherPerm > 0) {
+            $this->value = 3;
+        } else {
+            foreach ($groups as $group_id) {
+                if ($group_id == $this->recordGroupId) {
+                    $this->value = 2;
+                    break;
+                }
+            }
+        }
+
+
+
+        return $this->value;
+    }
+
     /**
      * Render element, according to the mode
      *
@@ -173,69 +154,65 @@ class ColumnShare extends ColumnText
      */
     public function render()
     {
-		$style = $this->getStyle();
+        $style = $this->getStyle();
         $text = $this->getText();
         $id = $this->objectName;
-        $func = $this->getFunction();        
-        
-       switch($this->getValue()){
-	       	case "0":
-	       		$image_url = $this->m_MyPrivateImg;
-	       		break;
-	       	case "1":
-	       		$image_url = $this->m_MySharedImg;
-	       		break;
-	       	case "2":
-	       		$image_url = $this->m_GroupSharedImg;
-	       		break;
-	       	case "3":
-	       		$image_url = $this->m_OtherSharedImg;
-	       		break;
-	       	case "4":
-	       		$image_url = $this->m_MyAssignedImg;
-	       		break;
-	       	case "5":
-	       		$image_url = $this->m_MyDistributedImg;
-	       		break;	    
-	       	default:
-	       		if($this->m_DefaultImg=='{OPENBIZ_RESOURCE_URL}/common/images/icon_data_shared_other.gif'){
-	       			$this->m_DefaultImg = $this->m_OtherSharedImg;
-	       		}
-	       		$image_url = $this->m_DefaultImg;
-	       		break;   			       		
-       }
-       
-        if(preg_match("/\{.*\}/si",$image_url))
-        {
-        	$formobj = $this->getFormObj();
-        	$image_url =  Expression::evaluateExpression($image_url, $formobj);
-        }else{
-        	$image_url = Resource::getImageUrl()."/".$image_url;
+        $func = $this->getFunction();
+
+        switch ($this->getValue()) {
+            case "0":
+                $image_url = $this->m_MyPrivateImg;
+                break;
+            case "1":
+                $image_url = $this->m_MySharedImg;
+                break;
+            case "2":
+                $image_url = $this->m_GroupSharedImg;
+                break;
+            case "3":
+                $image_url = $this->m_OtherSharedImg;
+                break;
+            case "4":
+                $image_url = $this->m_MyAssignedImg;
+                break;
+            case "5":
+                $image_url = $this->m_MyDistributedImg;
+                break;
+            default:
+                if ($this->m_DefaultImg == '{OPENBIZ_RESOURCE_URL}/common/images/icon_data_shared_other.gif') {
+                    $this->m_DefaultImg = $this->m_OtherSharedImg;
+                }
+                $image_url = $this->m_DefaultImg;
+                break;
         }
-        if($this->width)
-        {
-        	$width = "width=\"$this->width\"";
+
+        if (preg_match("/\{.*\}/si", $image_url)) {
+            $formobj = $this->getFormObj();
+            $image_url = Expression::evaluateExpression($image_url, $formobj);
+        } else {
+            $image_url = Resource::getImageUrl() . "/" . $image_url;
         }
-    	if ($this->m_Link)
-        {
+        if ($this->width) {
+            $width = "width=\"$this->width\"";
+        }
+        if ($this->link) {
             $link = $this->getLink();
             $target = $this->getTarget();
             $sHTML = "<a   id=\"$id\" href=\"$link\" $target $func $style><img $width src='$image_url' /></a>";
-        }else{
-        	$sHTML = "<img id=\"$id\"  alt=\"".$text."\" title=\"".$text."\" $width src='$image_url' />";
+        } else {
+            $sHTML = "<img id=\"$id\"  alt=\"" . $text . "\" title=\"" . $text . "\" $width src='$image_url' />";
         }
-        return  $sHTML;
+        return $sHTML;
     }
-    
-	
-	public function hasOwnerField(){		        
-		$field = $this->getFormObj()->getDataObj()->getField('owner_id');
-		if($field){
-			return true;
-		}
-		else{
-			return false;
-		}
-		
-	}    
+
+    private function _hasOwnerField()
+    {
+        $field = $this->getFormObj()->getDataObj()->getField('owner_id');
+        if ($field) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }

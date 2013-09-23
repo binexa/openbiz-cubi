@@ -17,8 +17,8 @@ class ApplicationInstallerForm extends EasyForm
 	public $m_InstallState = false;
 	public $m_InstallStateStr;
 	public $m_hasUpagrade = false;
-	public $m_AppIcon;
-	public $m_AppReleaseDate;
+	public $appIcon;
+	public $appReleaseDate;
 	
 	public $m_InstallDO = "market.installed.do.InstalledDO";
 	
@@ -32,8 +32,8 @@ class ApplicationInstallerForm extends EasyForm
     public function outputAttrs()
     {
     	$result = parent::outputAttrs();
-    	$result['remote_icon'] = $this->m_AppIcon;
-    	$result['release_date'] = $this->m_AppReleaseDate;
+    	$result['remote_icon'] = $this->appIcon;
+    	$result['release_date'] = $this->appReleaseDate;
     	$result['install_state'] = $this->m_InstallStateStr;
     	return $result;
     }
@@ -49,8 +49,8 @@ class ApplicationInstallerForm extends EasyForm
     	$repo_uri = $repoRec['repository_uri'];
     	$svc = BizSystem::getService("market.lib.PackageService");
     	$result = $svc->discoverAppInfo($repo_uri,$app_id);    	
-    	$this->m_AppIcon = $repo_uri.$result['icon'];
-    	$this->m_AppReleaseDate = date('Y-m-d',strtotime($result['pkg_release_time']));
+    	$this->appIcon = $repo_uri.$result['icon'];
+    	$this->appReleaseDate = date('Y-m-d',strtotime($result['pkg_release_time']));
     	 
     	
     	

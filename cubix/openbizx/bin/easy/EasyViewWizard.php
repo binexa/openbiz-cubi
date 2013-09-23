@@ -40,7 +40,7 @@ class EasyViewWizard extends EasyView
      * @param SessionContext $sessionContext
      * @return void
      */
-    public function getSessionVars($sessionContext)
+    public function loadSessionVars($sessionContext)
     {
         $sessionContext->getObjVar($this->objectName, "FormStates", $this->m_FormStates, true);
         $sessionContext->getObjVar($this->objectName, "CurrentStep", $this->m_CurrentStep, true);
@@ -52,7 +52,7 @@ class EasyViewWizard extends EasyView
      * @param SessionContext $sessionContext
      * @return void
      */
-    public function setSessionVars($sessionContext)
+    public function saveSessionVars($sessionContext)
     {
         if ($this->m_DropSession){
             $sessionContext->cleanObj($this->objectName, true);

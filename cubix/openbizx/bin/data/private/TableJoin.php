@@ -37,7 +37,7 @@ class TableJoin extends MetaObject
      *
      * @var string
      */
-    public $m_Column;
+    public $column;
 
     /**
      * ????
@@ -45,28 +45,28 @@ class TableJoin extends MetaObject
      * @var string
      * @todo blank description
      */
-    public $m_JoinRef;
+    public $joinRef;
 
     /**
      * Column name of master table as reference for join table
      *
      * @var string
      */
-    public $m_ColumnRef;
+    public $columnRef;
 
     /**
      * SQL command for join type like INNER JOIN, LEFT JOIN, RIGHT JOIN or OUTER JOIN
      *
      * @var string
      */
-    public $m_JoinType;
+    public $joinType;
 	
 	/**
      * Additional join condition other than the foriegn matching
      *
      * @var string
      */
-	public $m_JoinCondition;
+	public $joinCondition;
 
     /**
      *
@@ -88,11 +88,11 @@ class TableJoin extends MetaObject
         $this->m_Package = $bizObj->m_Package;
         $this->objectDescription= isset($xmlArr["ATTRIBUTES"]["DESCRIPTION"]) ? $xmlArr["ATTRIBUTES"]["DESCRIPTION"] : null;
         $this->m_Table = isset($xmlArr["ATTRIBUTES"]["TABLE"]) ? $xmlArr["ATTRIBUTES"]["TABLE"] : null;
-        $this->m_Column = isset($xmlArr["ATTRIBUTES"]["COLUMN"]) ? $xmlArr["ATTRIBUTES"]["COLUMN"] : null;
-        $this->m_JoinRef = isset($xmlArr["ATTRIBUTES"]["JOINREF"]) ? $xmlArr["ATTRIBUTES"]["JOINREF"] : null;
-        $this->m_ColumnRef = isset($xmlArr["ATTRIBUTES"]["COLUMNREF"]) ? $xmlArr["ATTRIBUTES"]["COLUMNREF"] : null;
-        $this->m_JoinType = isset($xmlArr["ATTRIBUTES"]["JOINTYPE"]) ? $xmlArr["ATTRIBUTES"]["JOINTYPE"] : null;
-		$this->m_JoinCondition = isset($xmlArr["ATTRIBUTES"]["JOINCONDITION"]) ? $xmlArr["ATTRIBUTES"]["JOINCONDITION"] : null;
+        $this->column = isset($xmlArr["ATTRIBUTES"]["COLUMN"]) ? $xmlArr["ATTRIBUTES"]["COLUMN"] : null;
+        $this->joinRef = isset($xmlArr["ATTRIBUTES"]["JOINREF"]) ? $xmlArr["ATTRIBUTES"]["JOINREF"] : null;
+        $this->columnRef = isset($xmlArr["ATTRIBUTES"]["COLUMNREF"]) ? $xmlArr["ATTRIBUTES"]["COLUMNREF"] : null;
+        $this->joinType = isset($xmlArr["ATTRIBUTES"]["JOINTYPE"]) ? $xmlArr["ATTRIBUTES"]["JOINTYPE"] : null;
+		$this->joinCondition = isset($xmlArr["ATTRIBUTES"]["JOINCONDITION"]) ? $xmlArr["ATTRIBUTES"]["JOINCONDITION"] : null;
         $this->m_OnSaveDataObj = isset($xmlArr["ATTRIBUTES"]["ONSAVEDATAOBJ"]) ? $xmlArr["ATTRIBUTES"]["ONSAVEDATAOBJ"] : null;
 
         $this->bizDataObjName = $this->prefixPackage($this->bizDataObjName);

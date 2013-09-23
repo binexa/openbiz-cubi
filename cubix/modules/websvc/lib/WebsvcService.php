@@ -139,7 +139,7 @@ class WebsvcService
             return false;
         }
         
-        $access = $pmethod->m_Access;
+        $access = $pmethod->access;
         return $this->checkPermission($username, $access);
     }
     
@@ -180,7 +180,7 @@ class WebsvcService
 class PublicMethod
 {
     public $objectName;
-    public $m_Access;
+    public $access;
 
     /**
      * Contructor, store form info from array to variable of class
@@ -190,7 +190,7 @@ class PublicMethod
     public function __construct($xmlArr)
     {
         $this->objectName = $xmlArr["ATTRIBUTES"]["NAME"];
-        $this->m_Access = $xmlArr["ATTRIBUTES"]["ACCESS"];
+        $this->access = $xmlArr["ATTRIBUTES"]["ACCESS"];
     }
 }
 ?>

@@ -28,7 +28,7 @@
 class LabelPassword extends LabelText
 {
     public $m_Sortable;
-    public $m_ColumnStyle;
+    public $columnStyle;
     public $m_MaskChar;
     public $m_MaskLength;
 

@@ -27,7 +27,7 @@ class FeaturedAppsListForm extends AppListForm
 			"sortRule" => $this->sortRule,
 			"searchRule" => $this->m_RemoteSearchRule,
 			"range" => $this->m_Range,
-			"startItem" => ($this->m_CurrentPage-1)*$this->m_Range
+			"startItem" => ($this->currentPage-1)*$this->m_Range
 		);		
 		
 		$appList = $svc->discoverFeaturedApps($repo_uri,$params);	
@@ -38,9 +38,9 @@ class FeaturedAppsListForm extends AppListForm
 				$resultSet[] = $appInfo;
 			}
 		}		
-        $this->m_TotalRecords = $appList['totalRecords'];
+        $this->totalRecords = $appList['totalRecords'];
         if ($this->m_Range && $this->m_Range > 0)
-            $this->m_TotalPages = ceil($this->m_TotalRecords/$this->m_Range);
+            $this->totalPages = ceil($this->totalRecords/$this->m_Range);
 		
 		return $resultSet;
 	}

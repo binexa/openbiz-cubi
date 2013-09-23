@@ -6,7 +6,7 @@ class PaymentAdapter implements iPayment
 	protected $m_ReturnURL = "";
 	protected $m_CancelURL = "";
 	protected $m_NotifyURL = "";		
-	protected $m_Type = '';
+	protected $type = '';
 		
 	protected $m_ProviderDO = "payment.provider.do.ProviderDO";
 	protected $logDO = "payment.log.do.LogDO";
@@ -25,9 +25,9 @@ class PaymentAdapter implements iPayment
 	
 	public function __construct()
 	{
-		$this->m_NotifyURL  = SITE_URL.'ws.php/payment/callback/verify/type_'.$this->m_Type.'/';
-		$this->m_ReturnURL  = SITE_URL.OPENBIZ_APP_INDEX_URL.'/payment/payment_finished/type_'.$this->m_Type.'/';
-		$this->m_CancelURL  = SITE_URL.OPENBIZ_APP_INDEX_URL.'/payment/payment_cancelled/type_'.$this->m_Type.'/';
+		$this->m_NotifyURL  = SITE_URL.'ws.php/payment/callback/verify/type_'.$this->type.'/';
+		$this->m_ReturnURL  = SITE_URL.OPENBIZ_APP_INDEX_URL.'/payment/payment_finished/type_'.$this->type.'/';
+		$this->m_CancelURL  = SITE_URL.OPENBIZ_APP_INDEX_URL.'/payment/payment_cancelled/type_'.$this->type.'/';
 	}
 	
     public function GetPaymentURL($orderId, $amount,  $title=null,$customData=null){}

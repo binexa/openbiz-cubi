@@ -59,8 +59,8 @@
 class authService
 {
 
-    public $m_AuthticationType;
-    public $m_AuthticationDataObj;
+    public $authticationType;
+    public $authticationDataObj;
 
     function __construct(&$xmlArr)
     {
@@ -74,8 +74,8 @@ class authService
      */
     protected function readMetadata(&$xmlArr)
     {
-        $this->m_AuthticationType = $xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["AUTHTYPE"];
-        $this->m_AuthticationDataObj = $xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["BIZDATAOBJ"];
+        $this->authticationType = $xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["AUTHTYPE"];
+        $this->authticationDataObj = $xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["BIZDATAOBJ"];
     }
 
     /**
@@ -87,7 +87,7 @@ class authService
      */
     public function authenticateUser($username, $password)
     {
-        if ($this->m_AuthticationType == "database")
+        if ($this->authticationType == "database")
             return $this->authDbUser($username, $password);
         return false;
     }
@@ -102,7 +102,7 @@ class authService
     public function authenticateUserByCookies($username, $password)
     {
         /* @var $authDO BizDataObj */
-        $authDO = BizSystem::getObject($this->m_AuthticationDataObj);
+        $authDO = BizSystem::getObject($this->authticationDataObj);
         if (!$authDO)
             return false;
         
@@ -131,7 +131,7 @@ class authService
     public function authenticateUserBySmartCard($smartcard)
     {
         /* @var $authDO BizDataObj */
-        $authDO = BizSystem::getObject($this->m_AuthticationDataObj);
+        $authDO = BizSystem::getObject($this->authticationDataObj);
         if (!$authDO)
             return false;
         $searchRule = "[smartcard]='$smartcard' and status='1'";
@@ -150,7 +150,7 @@ class authService
     protected function authDbUser($username, $password)
     {
         /* @var $authDO BizDataObj */
-        $authDO = BizSystem::getObject($this->m_AuthticationDataObj);
+        $authDO = BizSystem::getObject($this->authticationDataObj);
         if (!$authDO)
             return false;
         $searchRule = "[username]='$username' and status='1'";

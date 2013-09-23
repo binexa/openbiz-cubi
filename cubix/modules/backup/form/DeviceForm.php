@@ -24,7 +24,7 @@ class DeviceForm extends EasyForm
 	
 	public function canDisplayForm()
     {
-    	switch(strtolower($this->m_FormType))
+    	switch(strtolower($this->formType))
         {
        		case 'edit':
 		        $dataRec = $this->fetchData();

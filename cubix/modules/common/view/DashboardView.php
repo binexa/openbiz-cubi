@@ -13,7 +13,7 @@
 
 class DashboardView extends EasyView
 {
-	protected $m_UserWidgetDO = "common.do.UserWidgetDO";	
+	protected $userWidgetDO = "common.do.UserWidgetDO";	
 	protected $columns;
 	
 	protected function readMetadata(&$xmlArr)
@@ -29,7 +29,7 @@ class DashboardView extends EasyView
 		$user_id = BizSystem::GetUserProfile("Id");
 		$viewName = $this->objectName;
 		$searchRule="[user_id]='$user_id' AND [view]='$viewName'";
-		$do = BizSystem::GetObject($this->m_UserWidgetDO);
+		$do = BizSystem::GetObject($this->userWidgetDO);
 		$formRecs = $do->directfetch($searchRule);
 		// if no user widgets found, get system widgets of this view
 		if (count($formRecs)==0) {

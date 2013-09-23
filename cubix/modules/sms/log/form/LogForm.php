@@ -16,7 +16,7 @@ class LogForm extends EasyForm
 {
 	 public function ClearLog()	
 	{
-       if ($this->m_Resource != "" && !$this->allowAccess("sms.Manage"))
+       if ($this->resource != "" && !$this->allowAccess("sms.Manage"))
             return BizSystem::clientProxy()->redirectView(OPENBIZ_ACCESS_DENIED_VIEW);
 
         try
@@ -29,7 +29,7 @@ class LogForm extends EasyForm
            return;
         }
        
-        if (strtoupper($this->m_FormType) == "LIST")
+        if (strtoupper($this->formType) == "LIST")
             $this->rerender();
 
         $this->runEventLog();

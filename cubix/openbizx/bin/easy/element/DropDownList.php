@@ -46,9 +46,9 @@ class DropDownList extends InputElement
         $this->m_SelectFrom = isset($xmlArr["ATTRIBUTES"]["SELECTFROM"]) ? $xmlArr["ATTRIBUTES"]["SELECTFROM"] : null;
         $this->m_SelectedList = isset($xmlArr["ATTRIBUTES"]["SELECTEDLIST"]) ? $xmlArr["ATTRIBUTES"]["SELECTEDLIST"] : null;
         $this->m_SelectFromSQL = isset($xmlArr["ATTRIBUTES"]["SELECTFROMSQL"]) ? $xmlArr["ATTRIBUTES"]["SELECTFROMSQL"] : null;
-    	$this->m_BlankOption = isset($xmlArr["ATTRIBUTES"]["BLANKOPTION"]) ? $xmlArr["ATTRIBUTES"]["BLANKOPTION"] : null;
-		$this->m_DefaultValueRename = isset($xmlArr["ATTRIBUTES"]["DEFAULTVALUERENAME"]) ? $xmlArr["ATTRIBUTES"]["DEFAULTVALUERENAME"] : "N";  
-		$this->m_BlankOption = $this->translateString($this->m_BlankOption);
+    	$this->blankOption = isset($xmlArr["ATTRIBUTES"]["BLANKOPTION"]) ? $xmlArr["ATTRIBUTES"]["BLANKOPTION"] : null;
+		$this->defaultValueRename = isset($xmlArr["ATTRIBUTES"]["DEFAULTVALUERENAME"]) ? $xmlArr["ATTRIBUTES"]["DEFAULTVALUERENAME"] : "N";  
+		$this->blankOption = $this->translateString($this->blankOption);
 	}
     /**
      * Render, draw the control according to the mode
@@ -92,9 +92,9 @@ class DropDownList extends InputElement
 	        $display_input = "style=\"position:;\"";
         }
         $list = $this->getList();
-        if ($this->m_BlankOption) // ADD a blank option
+        if ($this->blankOption) // ADD a blank option
         {
-            $entry = explode(",",$this->m_BlankOption);
+            $entry = explode(",",$this->blankOption);
             $text = $entry[0];
             $blkvalue = ($entry[1]!= "") ? $entry[1] : null;
             $display_value = $text;
@@ -249,9 +249,9 @@ else {
     	$onchange_func = $this->getOnChangeFunction();
     	$list = $this->getList();
     	
-        if ($this->m_BlankOption) // ADD a blank option
+        if ($this->blankOption) // ADD a blank option
         {
-            $entry = explode(",",$this->m_BlankOption);
+            $entry = explode(",",$this->blankOption);
             $text = $entry[0];
             $value = ($entry[1]!= "") ? $entry[1] : null;
             $entryList = array(array("val" => $value, "txt" => $text ));
@@ -449,11 +449,11 @@ else {
                 return false;
 
             $recList = array();
-            $oldAssoc = $bizObj->m_Association;
-            $bizObj->m_Association = null;
+            $oldAssoc = $bizObj->association;
+            $bizObj->association = null;
             QueryStringParam::reset();
             $recList = $bizObj->directFetch($searchRule);
-            $bizObj->m_Association = $oldAssoc;
+            $bizObj->association = $oldAssoc;
 
             foreach ($recList as $rec)
             {

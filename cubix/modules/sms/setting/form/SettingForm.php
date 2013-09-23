@@ -53,7 +53,7 @@ class SettingForm extends UserPreferenceForm
         $user_id = 0;
         $prefDo = $this->getDataObj();
         
-        foreach ($this->m_DataPanel as $element)
+        foreach ($this->dataPanel as $element)
         {
             $value = $recArr[$element->m_FieldName];
             if ($value === null){ 

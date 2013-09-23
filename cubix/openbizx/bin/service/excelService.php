@@ -113,7 +113,7 @@ class excelService
         }
 
         // convert form element names to DO field names
-        foreach ($parentFormObj->m_DataPanel as $element)
+        foreach ($parentFormObj->dataPanel as $element)
         {
             $elem_fields[$element->m_Label] = $element->m_FieldName;
         }
@@ -233,7 +233,7 @@ class excelService
         if ($formObj instanceof EasyForm)
         {
             $recordSet = $formObj->fetchDataSet(); 
-            $dataSet = $formObj->m_DataPanel->renderTable($recordSet);
+            $dataSet = $formObj->dataPanel->renderTable($recordSet);
             foreach ($dataSet['elems'] as $elem)
             {
                 $labelRow[] = $elem['label'];

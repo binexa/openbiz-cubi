@@ -28,7 +28,7 @@
 class ColumnPassword extends ColumnText
 {
     public $m_Sortable;
-    public $m_ColumnStyle;
+    public $columnStyle;
     public $m_MaskChar='*';
     public $m_MaskLength=6;
     

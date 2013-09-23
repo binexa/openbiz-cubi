@@ -32,10 +32,10 @@ class LabelText extends Element
     public $m_Label;
     public $m_DisplayFormat;
     public $text;
-    public $m_Link;    
+    public $link;    
     public $m_Target;
-    public $m_MaxLength;
-    public $m_Percent;
+    public $maxLength;
+    public $percent;
     
     public $m_StripTags;
     /**
@@ -50,11 +50,11 @@ class LabelText extends Element
         $this->m_FieldName = isset($xmlArr["ATTRIBUTES"]["FIELDNAME"]) ? $xmlArr["ATTRIBUTES"]["FIELDNAME"] : null;
         $this->m_Label = isset($xmlArr["ATTRIBUTES"]["LABEL"]) ? $xmlArr["ATTRIBUTES"]["LABEL"] : null;
         $this->text = isset($xmlArr["ATTRIBUTES"]["TEXT"]) ? $xmlArr["ATTRIBUTES"]["TEXT"] : null;
-        $this->m_Link = isset($xmlArr["ATTRIBUTES"]["LINK"]) ? $xmlArr["ATTRIBUTES"]["LINK"] : null;
+        $this->link = isset($xmlArr["ATTRIBUTES"]["LINK"]) ? $xmlArr["ATTRIBUTES"]["LINK"] : null;
         $this->m_Target = isset($xmlArr["ATTRIBUTES"]["TARGET"]) ? $xmlArr["ATTRIBUTES"]["TARGET"] : null;
-        $this->m_MaxLength = isset($xmlArr["ATTRIBUTES"]["MAXLENGHT"]) ? $xmlArr["ATTRIBUTES"]["MAXLENGHT"] : null;
-        $this->m_MaxLength = isset($xmlArr["ATTRIBUTES"]["MAXLENGTH"]) ? $xmlArr["ATTRIBUTES"]["MAXLENGTH"] : null;
-        $this->m_Percent = isset($xmlArr["ATTRIBUTES"]["PERCENT"]) ? $xmlArr["ATTRIBUTES"]["PERCENT"] : "N";
+        $this->maxLength = isset($xmlArr["ATTRIBUTES"]["MAXLENGHT"]) ? $xmlArr["ATTRIBUTES"]["MAXLENGHT"] : null;
+        $this->maxLength = isset($xmlArr["ATTRIBUTES"]["MAXLENGTH"]) ? $xmlArr["ATTRIBUTES"]["MAXLENGTH"] : null;
+        $this->percent = isset($xmlArr["ATTRIBUTES"]["PERCENT"]) ? $xmlArr["ATTRIBUTES"]["PERCENT"] : "N";
         $this->m_DisplayFormat = isset($xmlArr["ATTRIBUTES"]["DISPLAYFORMAT"]) ? $xmlArr["ATTRIBUTES"]["DISPLAYFORMAT"] : null;
         $this->m_StripTags = isset($xmlArr["ATTRIBUTES"]["STRIPTAGS"]) ? $xmlArr["ATTRIBUTES"]["STRIPTAGS"] : "N";
     }
@@ -81,10 +81,10 @@ class LabelText extends Element
      */
     protected function getLink()
     {
-        if ($this->m_Link == null)
+        if ($this->link == null)
             return null;
         $formobj = $this->getFormObj();
-        return Expression::evaluateExpression($this->m_Link, $formobj);
+        return Expression::evaluateExpression($this->link, $formobj);
     }
 
     /**
@@ -128,14 +128,14 @@ class LabelText extends Element
         if ($this->m_Translatable == 'Y')
             $value = $this->translateString($value);
         $value_org = strip_tags($value);
-        if((int)$this->m_MaxLength>0){
+        if((int)$this->maxLength>0){
 	        if(function_exists('mb_strlen') && function_exists('mb_substr')){
-	        	if(mb_strlen($value,'UTF8') > (int)$this->m_MaxLength){
-	        		$value = mb_substr($value,0,(int)$this->m_MaxLength,'UTF8').'...';
+	        	if(mb_strlen($value,'UTF8') > (int)$this->maxLength){
+	        		$value = mb_substr($value,0,(int)$this->maxLength,'UTF8').'...';
 	        	}        	
 	        }else{
-	        	if(strlen($value) > (int)$this->m_MaxLength){
-	        		$value = substr($value,0,(int)$this->m_MaxLength).'...';
+	        	if(strlen($value) > (int)$this->maxLength){
+	        		$value = substr($value,0,(int)$this->maxLength).'...';
 	        	}         	
 	        }
         }
@@ -146,7 +146,7 @@ class LabelText extends Element
         	{
         		$value = sprintf($this->m_DisplayFormat,$value);
         	}
-        	if($this->m_Percent=='Y')
+        	if($this->percent=='Y')
         	{
         		$value = sprintf("%.2f",$value*100).'%';
         	}else{
@@ -160,7 +160,7 @@ class LabelText extends Element
         		}        		        		
         	}
         	
-            if ($this->m_Link)
+            if ($this->link)
             {
                 $link = $this->getLink();
                 $target = $this->getTarget();
@@ -171,7 +171,7 @@ class LabelText extends Element
             {
                 $sHTML = "<span  title=\"$value_org\" $style $func $this->m_HTMLAttr>" . $value . "</span>";
             }
-            if($this->m_BackgroundColor)
+            if($this->backgroundColor)
             {
             	$bgcolor = $this->getBackgroundColor();
             	if($bgcolor){

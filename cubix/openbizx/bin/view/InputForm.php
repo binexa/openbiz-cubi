@@ -18,7 +18,7 @@ class InputForm extends BaseForm
 	protected $directMethodList = array('saverecord','switchform'); 
 	
 	public $recordId;
-	public $m_ActiveRecord;
+	public $activeRecord;
 	
     /**
      * Read user input data from UI
@@ -28,7 +28,7 @@ class InputForm extends BaseForm
     protected function readInputRecord()
     {
         $recArr = array();
-        foreach ($this->m_DataPanel as $element)
+        foreach ($this->dataPanel as $element)
         {
             $value = BizSystem::clientProxy()->getFormInputs($element->objectName);
             if ($value ===null && (
@@ -45,7 +45,7 @@ class InputForm extends BaseForm
             if ( $element->m_FieldName)
                 $recArr[$element->m_FieldName] = $value;
         }
-		$this->m_ActiveRecord = $recArr;
+		$this->activeRecord = $recArr;
 		return $recArr;
     }
 
@@ -57,14 +57,14 @@ class InputForm extends BaseForm
     protected function readInputs()
     {
         $inputArr = array();
-        foreach ($this->m_DataPanel as $element)
+        foreach ($this->dataPanel as $element)
         {
             $value = BizSystem::clientProxy()->getFormInputs($element->objectName);
             $element->setValue($value);
             $inputArr[$element->objectName] = $value;
         }
 
-        foreach ($this->m_SearchPanel as $element)
+        foreach ($this->searchPanel as $element)
         {
             $value = BizSystem::clientProxy()->getFormInputs($element->objectName);
             $element->setValue($value);
@@ -86,11 +86,11 @@ class InputForm extends BaseForm
         {
             $this->m_ValidateErrors = array();
         }
-        $this->m_DataPanel->rewind();
-        while($this->m_DataPanel->valid())
+        $this->dataPanel->rewind();
+        while($this->dataPanel->valid())
         {
             /* @var $element Element */
-            $element = $this->m_DataPanel->current();
+            $element = $this->dataPanel->current();
             if($element->m_Label)
             {
                 $elementName = $element->m_Label;
@@ -109,15 +109,15 @@ class InputForm extends BaseForm
             elseif ($element->value!==null && $element->Validate() == false)
             {
                 $validateService = BizSystem::getService(VALIDATE_SERVICE);
-                $errorMessage = $this->getMessage("FORM_ELEMENT_INVALID_INPUT",array($elementName,$value,$element->m_Validator));                
+                $errorMessage = $this->getMessage("FORM_ELEMENT_INVALID_INPUT",array($elementName,$value,$element->validator));                
                 if ($errorMessage == false)
                 { //Couldn't get a clear error message so let's try this
-                    $errorMessage = $validateService->getErrorMessage($element->m_Validator, $elementName);
+                    $errorMessage = $validateService->getErrorMessage($element->validator, $elementName);
                 }
                 $this->m_ValidateErrors[$element->objectName] = $errorMessage;
                 //return false;
             }
-            $this->m_DataPanel->next() ;
+            $this->dataPanel->next() ;
         }
         if (count($this->m_ValidateErrors) > 0)
         {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * PHPOpenBiz Framework
  *
@@ -24,7 +25,8 @@
  */
 class auditService
 {
-    public $m_AuditDataObj = "system.obj.d_audit_log";
+
+    public $auditDataObj = "system.obj.d_audit_log";
 
     /**
      * Initialize auditService with xml array metadata
@@ -45,7 +47,7 @@ class auditService
      */
     protected function readMetadata(&$xmlArr)
     {
-        $this->m_AuditDataObj 	= $xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["BIZDATAOBJ"];
+        $this->auditDataObj = $xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["BIZDATAOBJ"];
     }
 
     /**
@@ -58,22 +60,22 @@ class auditService
     public function audit($dataObjName)
     {
         // get audit dataobj
-        $auditDataObj = BizSystem::getObject($this->m_AuditDataObj);
-        if (!$auditDataObj) return false;
+        $auditDataObj = BizSystem::getObject($this->auditDataObj);
+        if (!$auditDataObj)
+            return false;
 
         // get the source dataobj
         $srcDataObj = BizSystem::getObject($dataObjName);
-        if (!$srcDataObj) return false;
+        if (!$srcDataObj)
+            return false;
 
         // for each onaudit field, add a record in audit dataobj
         $auditFields = $srcDataObj->getOnAuditFields();
-        foreach ($auditFields as $field)
-        {
-            if ($field->m_OldValue == $field->value)
+        foreach ($auditFields as $field) {
+            if ($field->oldValue == $field->value)
                 continue;
             $recArr = $auditDataObj->newRecord();
-            if ($recArr == false)
-            {
+            if ($recArr == false) {
                 BizSystem::log(LOG_ERR, "DATAOBJ", $auditDataObj->getErrorMessage());
                 return false;
             }
@@ -82,7 +84,7 @@ class auditService
             $recArr['DataObjName'] = $dataObjName;
             $recArr['ObjectId'] = $srcDataObj->getFieldValue("Id");
             $recArr['FieldName'] = $field->objectName;
-            $recArr['OldValue'] = $field->m_OldValue;
+            $recArr['OldValue'] = $field->oldValue;
             $recArr['NewValue'] = $field->value;
             $recArr['ChangeTime'] = date("Y-m-d H:i:s");
             $recArr['ChangeBy'] = $profile["USERID"];
@@ -90,12 +92,12 @@ class auditService
             $recArr['RequestURI'] = $_SERVER['REQUEST_URI'];
             $recArr['Timestamp'] = date("Y-m-d H:i:s");
             $ok = $auditDataObj->insertRecord($recArr);
-            if ($ok == false)
-            {
+            if ($ok == false) {
                 BizSystem::log(LOG_ERR, "DATAOBJ", $auditDataObj->getErrorMessage());
                 return false;
             }
         }
     }
+
 }
-?>
+

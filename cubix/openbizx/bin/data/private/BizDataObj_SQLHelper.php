@@ -109,17 +109,17 @@ class BizDataObj_SQLHelper
 				}
 			}
 			// add columns
-			foreach($dataObj->bizRecord as $bizFld)
+			foreach($dataObj->bizRecord as $bizField)
 			{
-				if ($bizFld->m_IgnoreInQuery) // field to be ignore in query - save memory
+				if ($bizField->ignoreInQuery) // field to be ignore in query - save memory
 					continue;
-				if ($bizFld->m_Column && $bizFld->m_Type == "Blob")   // ignore blob column
+				if ($bizField->column && $bizField->type == "Blob")   // ignore blob column
 					continue;
-				if ($bizFld->m_Column && !$bizFld->m_SqlExpression && (strpos($bizFld->m_Column,',') == 0))
-					$dataSqlObj->addTableColumn($bizFld->m_Join, $bizFld->m_Column, $bizFld->m_Alias);
-				if ($bizFld->m_SqlExpression)
+				if ($bizField->column && !$bizField->sqlExpression && (strpos($bizField->column,',') == 0))
+					$dataSqlObj->addTableColumn($bizField->join, $bizField->column, $bizField->aliasName);
+				if ($bizField->sqlExpression)
 				{
-					$dataSqlObj->addSqlExpression($this->_convertSqlExpression($dataObj, $bizFld->m_SqlExpression),$bizFld->m_Alias);
+					$dataSqlObj->addSqlExpression($this->_convertSqlExpression($dataObj, $bizField->sqlExpression),$bizField->aliasName);
 				}
 			}
 		}
@@ -159,25 +159,25 @@ class BizDataObj_SQLHelper
         $dataSqlObj->addSqlWhere($sqlAccessSQLRule);
 
         // add association to SQL
-        if ($dataObj->m_Association["AsscObjName"] != ""
-                && $dataObj->m_Association["FieldRefVal"] == "")
+        if ($dataObj->association["AsscObjName"] != ""
+                && $dataObj->association["FieldRefVal"] == "")
         {
-            $asscObj = BizSystem::getObject($dataObj->m_Association["AsscObjName"]);
-            $dataObj->m_Association["FieldRefVal"] = $asscObj->getFieldValue($dataObj->m_Association["FieldRef"]);
+            $asscObj = BizSystem::getObject($dataObj->association["AsscObjName"]);
+            $dataObj->association["FieldRefVal"] = $asscObj->getFieldValue($dataObj->association["FieldRef"]);
         }
         
-    	if ($dataObj->m_Association["AsscObjName"] != ""
-                && $dataObj->m_Association["FieldRefVal2"] == "")
+    	if ($dataObj->association["AsscObjName"] != ""
+                && $dataObj->association["FieldRefVal2"] == "")
         {
-            $asscObj = BizSystem::getObject($dataObj->m_Association["AsscObjName"]);
-            $dataObj->m_Association["FieldRefVal2"] = $asscObj->getFieldValue($dataObj->m_Association["FieldRef2"]);
+            $asscObj = BizSystem::getObject($dataObj->association["AsscObjName"]);
+            $dataObj->association["FieldRefVal2"] = $asscObj->getFieldValue($dataObj->association["FieldRef2"]);
         }
         
-        if($dataObj->m_Association["Relationship"]=="Self-Self")
+        if($dataObj->association["Relationship"]=="Self-Self")
         {        	
-        	$dataObj->m_Association["ParentRecordIdColumn"] = $dataObj->getField("Id")->m_Column;
+        	$dataObj->association["ParentRecordIdColumn"] = $dataObj->getField("Id")->column;
         }
-        $dataSqlObj->addAssociation($dataObj->m_Association);
+        $dataSqlObj->addAssociation($dataObj->association);
 
         // apply _ruleToSql to JoinCondition if any
 		if ($dataSqlObj->hasJoinCondition) {
@@ -206,11 +206,11 @@ class BizDataObj_SQLHelper
         $colval_pairs = null;
         foreach($sqlFlds as $fldobj)
         {
-            $col = $fldobj->m_Column;
+            $col = $fldobj->column;
 
             // ignore empty vallue for Date or Datetime
-            if (($fldobj->value == "" && $fldobj->m_OldValue == "")
-                    && ($fldobj->m_Type == "Date" || $fldobj->m_Type == "Datetime"))
+            if (($fldobj->value == "" && $fldobj->oldValue == "")
+                    && ($fldobj->type == "Date" || $fldobj->type == "Datetime"))
                 continue;
 
             if ($fldobj->valueOnUpdate != "") // ignore ValueOnUpdate field first
@@ -220,7 +220,7 @@ class BizDataObj_SQLHelper
                 continue;
 
             // ignore the column where old value is same as new value; set the column only if new value is diff than the old value
-            if ($fldobj->m_OldValue == $fldobj->value)
+            if ($fldobj->oldValue == $fldobj->value)
                 continue;
 
             $_val = $fldobj->getSqlValue();
@@ -231,7 +231,7 @@ class BizDataObj_SQLHelper
         // take care value on update fields only
         foreach($sqlFlds as $fldobj)
         {
-            $col = $fldobj->m_Column;
+            $col = $fldobj->column;
             if ($fldobj->valueOnUpdate != "")
             {
                 $_val = $fldobj->getValueOnUpdate();
@@ -378,7 +378,7 @@ class BizDataObj_SQLHelper
 		$db = $dataObj->getDBConnection('WRITE');
         foreach($sqlFlds as $fldobj)
         {
-            $col = $fldobj->m_Column;
+            $col = $fldobj->column;
 
             // if Field Id has null value and Id is an identity type, remove the Id's column from the array
             if ($fldobj->objectName == "Id" && $dataObj->idGeneration == "Identity")
@@ -451,28 +451,28 @@ class BizDataObj_SQLHelper
 			return $rule;
 		}
 		foreach ($m[1] as $fld) {
-			$bizFld = $dataObj->getField($fld);
-			if (!$bizFld) continue;
-			$fld_pattern = "[".$bizFld->objectName."]";
-			if ($bizFld->m_Column && (strpos($bizFld->m_Column,',') != 0))
+			$bizField = $dataObj->getField($fld);
+			if (!$bizField) continue;
+			$fld_pattern = "[".$bizField->objectName."]";
+			if ($bizField->column && (strpos($bizField->column,',') != 0))
 			{  // handle composite key.
-				if (!preg_match('/\['.$bizFld->objectName.'\].*=.*\'(.+)\'/', $rule, $matches)) continue; //print_r($matches);
+				if (!preg_match('/\['.$bizField->objectName.'\].*=.*\'(.+)\'/', $rule, $matches)) continue; //print_r($matches);
 				$keyval = $matches[1];
 				// replace the matching part [compkey field]='value' 
-				$compkey_value = $this->_compKeyRuleToSql($bizFld->m_Column,$keyval);
+				$compkey_value = $this->_compKeyRuleToSql($bizField->column,$keyval);
 				$rule = $str_replace($matches[0], $compkey_value, $rule);
 			}
 			else
 			{
-				if ($bizFld->m_Alias){
-					$rule = str_replace($fld_pattern, $bizFld->m_Alias, $rule);
+				if ($bizField->aliasName){
+					$rule = str_replace($fld_pattern, $bizField->aliasName, $rule);
 				}
-				elseif($bizFld->m_SqlExpression){
-					$rule = str_replace($fld_pattern, $bizFld->m_SqlExpression, $rule);
+				elseif($bizField->sqlExpression){
+					$rule = str_replace($fld_pattern, $bizField->sqlExpression, $rule);
 				}
 				else
 				{
-					$tableColumn = $dataSqlObj->getTableColumn($bizFld->m_Join, $bizFld->m_Column);
+					$tableColumn = $dataSqlObj->getTableColumn($bizField->join, $bizField->column);
 					$rule = str_replace($fld_pattern, $tableColumn, $rule);
 				}
 			}
@@ -526,8 +526,8 @@ class BizDataObj_SQLHelper
             if ($fieldname == "") break;
             else
             {
-                $bizFld = $dataObj->bizRecord->get($fieldname);
-                $tableColumn = $dataSqlObj->getTableColumn($bizFld->m_Join, $bizFld->m_Column);
+                $bizField = $dataObj->bizRecord->get($fieldname);
+                $tableColumn = $dataSqlObj->getTableColumn($bizField->join, $bizField->column);
                 $sqlstr = str_replace("[$fieldname]", $tableColumn, $sqlstr);
                 $startpos = strpos($sqlstr, '['); // Move startpos to the first [ (if it exists) in order to be detect by next itteration
             }
@@ -546,8 +546,8 @@ class BizDataObj_SQLHelper
             if ($fieldname == "") break;
             else
             {
-                $bizFld = $dataObj->bizRecord->get($fieldname);
-                $tableColumn = "`".$bizFld->m_Column."`";
+                $bizField = $dataObj->bizRecord->get($fieldname);
+                $tableColumn = "`".$bizField->column."`";
                 $sqlstr = str_replace("[$fieldname]", $tableColumn, $sqlstr);
                 $startpos = strpos($sqlstr, '['); // Move startpos to the first [ (if it exists) in order to be detect by next itteration
             }
@@ -582,7 +582,7 @@ function queryParamToRule($fieldName, $value, $dataObj)
     $val = trim($value);
 	// unformat the data
 	$bizField = $dataObj->getField($fieldName);
-	$val = BizSystem::typeManager()->formattedStringToValue($bizField->m_Type, $bizField->m_Format, $val);
+	$val = BizSystem::typeManager()->formattedStringToValue($bizField->type, $bizField->format, $val);
     // check " AND ", " OR "
     if (($pos=strpos($val, " AND "))!==false)
     {

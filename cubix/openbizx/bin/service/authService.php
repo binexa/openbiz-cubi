@@ -69,8 +69,8 @@
  */
 class authService
 {
-    public $m_AuthticationType ;
-    public $m_AuthticationDataObj;
+    public $authticationType ;
+    public $authticationDataObj;
 
     /**
      * Initialize auditService with xml array metadata
@@ -91,8 +91,8 @@ class authService
      */
     protected function readMetadata(&$xmlArr)
     {
-        $this->m_AuthticationType 	= $xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["AUTHTYPE"];
-        $this->m_AuthticationDataObj 	= $xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["BIZDATAOBJ"];
+        $this->authticationType 	= $xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["AUTHTYPE"];
+        $this->authticationDataObj 	= $xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["BIZDATAOBJ"];
     }
 
     /**
@@ -104,7 +104,7 @@ class authService
      */
     public function authenticateUser($userName, $password)
     {
-        if ($this->m_AuthticationType == "database")
+        if ($this->authticationType == "database")
             return $this->authDBUser($userName, $password);
         return false;
     }
@@ -118,7 +118,7 @@ class authService
      */
     protected function authDBUser($userName, $password)
     {
-        $boAuth = BizSystem::getObject($this->m_AuthticationDataObj);
+        $boAuth = BizSystem::getObject($this->authticationDataObj);
         if (!$boAuth)
             return false;
         $searchRule = "[login]='$userName'";

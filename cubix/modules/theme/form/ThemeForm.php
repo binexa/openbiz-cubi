@@ -21,11 +21,11 @@ class ThemeForm extends EasyForm
 	
 	public function getActiveRecord($recId=null)
     {
-        if ($this->m_ActiveRecord != null)
+        if ($this->activeRecord != null)
         {
-            if($this->m_ActiveRecord['Id'] != null)
+            if($this->activeRecord['Id'] != null)
             {
-                return $this->m_ActiveRecord;
+                return $this->activeRecord;
             }
         }
 
@@ -36,8 +36,8 @@ class ThemeForm extends EasyForm
         $this->recordId = $recId;
 		$rec=array();
         $this->ReadThemePack($recId,$rec);
-        $this->m_DataPanel->setRecordArr($rec);
-        $this->m_ActiveRecord = $rec;
+        $this->dataPanel->setRecordArr($rec);
+        $this->activeRecord = $rec;
         return $rec;
     }
 	
@@ -100,7 +100,7 @@ class ThemeForm extends EasyForm
 	}
    public function deleteRecord($id=null)
     {
-        if ($this->m_Resource != "" && !$this->allowAccess($this->m_Resource.".delete"))
+        if ($this->resource != "" && !$this->allowAccess($this->resource.".delete"))
             return BizSystem::clientProxy()->redirectView(OPENBIZ_ACCESS_DENIED_VIEW);
 
         if ($id==null || $id=='')
@@ -123,7 +123,7 @@ class ThemeForm extends EasyForm
         		$this->DeleteThemePack($id);
         	}            
         }
-        if (strtoupper($this->m_FormType) == "LIST")
+        if (strtoupper($this->formType) == "LIST")
             $this->rerender();
 
         $this->runEventLog();
@@ -131,7 +131,7 @@ class ThemeForm extends EasyForm
     }
     	
 	public function fetchData(){
-		if (strtoupper($this->m_FormType) == "NEW")
+		if (strtoupper($this->formType) == "NEW")
             return $this->getNewTheme();
                         
 		preg_match("/\[(.*?)\]=\'(.*?)\'/si",$this->m_FixSearchRule,$match);
@@ -198,7 +198,7 @@ class ThemeForm extends EasyForm
         $recArr = $this->readInputRecord();        
         // load default values if new record value is empty
         $defaultRecArr = array();
-        foreach ($this->m_DataPanel as $element)
+        foreach ($this->dataPanel as $element)
         {
             if ($element->m_FieldName)
             {

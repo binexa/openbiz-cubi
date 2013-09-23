@@ -13,24 +13,24 @@
 
 class ErrorForm extends EasyForm
 {
-		protected $m_ShowError = false;
+		protected $isShowError = false;
 	    function __construct(&$xmlArr)
 	    {
 	        parent::readMetadata($xmlArr);     
 	    }        
 
-	    public function getSessionVars($sessionContext)
+	    public function loadSessionVars($sessionContext)
 	    {
-	        parent::getSessionVars($sessionContext);
+	        parent::loadSessionVars($sessionContext);
 	        $sessionContext->getObjVar($this->objectName, "Errors", $this->m_Errors);	  
-	        $sessionContext->getObjVar($this->objectName, "showError", $this->m_ShowError);      	          
+	        $sessionContext->getObjVar($this->objectName, "showError", $this->isShowError);      	          
 	    }    
 	    
-	    public function setSessionVars($sessionContext)
+	    public function saveSessionVars($sessionContext)
 	    {
-	    	parent::setSessionVars($sessionContext);
+	    	parent::saveSessionVars($sessionContext);
 	        $sessionContext->setObjVar($this->objectName, "Errors", $this->m_Errors);   
-	        $sessionContext->setObjVar($this->objectName, "showError", $this->m_ShowError);   
+	        $sessionContext->setObjVar($this->objectName, "showError", $this->isShowError);   
 	    }
 	    
 	    public function getViewObject()
@@ -50,11 +50,11 @@ class ErrorForm extends EasyForm
 	    
 	    public function showError()
 	    {
-	    	if($this->m_ShowError)
+	    	if($this->isShowError)
 	    	{
-	    		$this->m_ShowError=false;
+	    		$this->isShowError=false;
 	    	}else{
-	    		$this->m_ShowError=true;
+	    		$this->isShowError=true;
 	    	}
 	    	$this->rerender();
 	    }
@@ -62,7 +62,7 @@ class ErrorForm extends EasyForm
 	    public function outputAttrs()
 	    {
 	    	$result = parent::outputAttrs();
-	    	$result['show_error'] = $this->m_ShowError;
+	    	$result['show_error'] = $this->isShowError;
 	    	return $result;	
 	    }
 	    

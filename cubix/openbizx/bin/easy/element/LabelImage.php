@@ -34,7 +34,7 @@ class LabelImage extends LabelText
     	$value = $this->getText()?$this->getText():$this->getValue();
     	if($value){
     		
-    		if ($this->m_Link)
+    		if ($this->link)
             {
                 $link = $this->getLink();
                 $target = $this->getTarget();

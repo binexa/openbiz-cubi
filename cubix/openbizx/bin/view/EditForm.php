@@ -44,8 +44,8 @@ class EditForm extends InputForm
     public function fetchData()
     {    	
         // if has valid active record, return it, otherwise do a query
-        if ($this->m_ActiveRecord != null)
-            return $this->m_ActiveRecord;
+        if ($this->activeRecord != null)
+            return $this->activeRecord;
         
         $dataObj = $this->getDataObj();
         if ($dataObj == null) return;
@@ -131,7 +131,7 @@ class EditForm extends InputForm
             $this->processBDOException($e);
             return false;
         }
-		$this->m_ActiveRecord = null;
+		$this->activeRecord = null;
         $this->getActiveRecord($dataRec["Id"]);
 
         //$this->runEventLog();

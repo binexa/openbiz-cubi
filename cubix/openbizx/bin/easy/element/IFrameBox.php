@@ -4,23 +4,23 @@
 class IFrameBox extends Element
 {
 	
-    public $m_Link;
+    public $link;
     public $m_Label;
     public $m_Scrolling;
     
     protected function readMetaData(&$xmlArr)
     {
         parent::readMetaData($xmlArr);
-        $this->m_Link = isset($xmlArr["ATTRIBUTES"]["LINK"]) ? $xmlArr["ATTRIBUTES"]["LINK"] : null;
+        $this->link = isset($xmlArr["ATTRIBUTES"]["LINK"]) ? $xmlArr["ATTRIBUTES"]["LINK"] : null;
         $this->m_Label = isset($xmlArr["ATTRIBUTES"]["LABEL"]) ? $xmlArr["ATTRIBUTES"]["LABEL"] : null;    
         $this->m_Scrolling = isset($xmlArr["ATTRIBUTES"]["SCROLLING"]) ? $xmlArr["ATTRIBUTES"]["SCROLLING"] : 'auto';
     }    
     protected function getLink()
     {
-        if ($this->m_Link == null)
+        if ($this->link == null)
             return null;
         $formobj = $this->getFormObj();
-        return Expression::evaluateExpression($this->m_Link, $formobj);
+        return Expression::evaluateExpression($this->link, $formobj);
     }
 	protected function getWidth()
     {

@@ -25,12 +25,12 @@ class ListForm extends BaseForm
 	protected $queryParams = array();
 	
 	// vars for grid(list)
-    protected $m_CurrentPage = 1;
+    protected $currentPage = 1;
     protected $m_StartItem = 1;
-    public $m_TotalPages = 1;
-    protected $m_TotalRecords = 0;
+    public $totalPages = 1;
+    protected $totalRecords = 0;
     protected $recordSet = null;
-    protected $m_RefreshData = false;
+    protected $isRefreshData = false;
 
 	protected function readMetadata($xmlArr)
     {
@@ -57,16 +57,16 @@ class ListForm extends BaseForm
      * @param SessionContext $sessionContext
      * @return void
      */
-    public function getSessionVars($sessionContext)
+    public function loadSessionVars($sessionContext)
     {
         $sessionContext->getObjVar($this->objectName, "RecordId", $this->recordId);
         $sessionContext->getObjVar($this->objectName, "FixSearchRule", $this->m_FixSearchRule);
         $sessionContext->getObjVar($this->objectName, "SearchRule", $this->searchRule);
         $sessionContext->getObjVar($this->objectName, "SearchRuleBindValues", $this->searchRuleBindValues);
-        $sessionContext->getObjVar($this->objectName, "SubForms", $this->m_SubForms);
-        $sessionContext->getObjVar($this->objectName, "CurrentPage", $this->m_CurrentPage);
+        $sessionContext->getObjVar($this->objectName, "SubForms", $this->subForms);
+        $sessionContext->getObjVar($this->objectName, "CurrentPage", $this->currentPage);
         $sessionContext->getObjVar($this->objectName, "PageSize", $this->m_Range);
-        $sessionContext->getObjVar($this->objectName, "SearchPanelValues", $this->m_SearchPanelValues);
+        $sessionContext->getObjVar($this->objectName, "SearchPanelValues", $this->searchPanelValues);
     }
 
     /**
@@ -75,16 +75,16 @@ class ListForm extends BaseForm
      * @param SessionContext $sessionContext
      * @return void
      */
-    public function setSessionVars($sessionContext)
+    public function saveSessionVars($sessionContext)
     {
         $sessionContext->setObjVar($this->objectName, "RecordId", $this->recordId);
         $sessionContext->setObjVar($this->objectName, "FixSearchRule", $this->m_FixSearchRule);
         $sessionContext->setObjVar($this->objectName, "SearchRule", $this->searchRule);        
         $sessionContext->setObjVar($this->objectName, "SearchRuleBindValues", $this->searchRuleBindValues);
-        $sessionContext->setObjVar($this->objectName, "SubForms", $this->m_SubForms);
-        $sessionContext->setObjVar($this->objectName, "CurrentPage", $this->m_CurrentPage);
+        $sessionContext->setObjVar($this->objectName, "SubForms", $this->subForms);
+        $sessionContext->setObjVar($this->objectName, "CurrentPage", $this->currentPage);
         $sessionContext->setObjVar($this->objectName, "PageSize", $this->m_Range);
-        $sessionContext->setObjVar($this->objectName, "SearchPanelValues", $this->m_SearchPanelValues);        
+        $sessionContext->setObjVar($this->objectName, "SearchPanelValues", $this->searchPanelValues);        
     }
 	
 	/**
@@ -98,7 +98,7 @@ class ListForm extends BaseForm
 
         if (!$dataObj) return null;
 
-        if ($this->m_RefreshData)
+        if ($this->isRefreshData)
             $dataObj->resetRules();
         else
             $dataObj->clearSearchRule();
@@ -122,23 +122,23 @@ class ListForm extends BaseForm
         }
         else
         {
-            $dataObj->setLimit($this->m_Range, ($this->m_CurrentPage-1)*$this->m_Range);
+            $dataObj->setLimit($this->m_Range, ($this->currentPage-1)*$this->m_Range);
         }      
         if($this->sortRule && $this->sortRule != $this->getDataObj()->sortRule)
         {
 			$dataObj->setSortRule($this->sortRule);
         }          
         $resultRecords = $dataObj->fetch();
-        $this->m_TotalRecords = $dataObj->count();
+        $this->totalRecords = $dataObj->count();
         if ($this->m_Range && $this->m_Range > 0)
-            $this->m_TotalPages = ceil($this->m_TotalRecords/$this->m_Range);
+            $this->totalPages = ceil($this->totalRecords/$this->m_Range);
         $selectedIndex = 0;
         
         //if current page is large than total pages ,then reset current page to last page
-        if($this->m_CurrentPage>$this->m_TotalPages && $this->m_TotalPages>0)
+        if($this->currentPage>$this->totalPages && $this->totalPages>0)
         {
-        	$this->m_CurrentPage = $this->m_TotalPages;
-        	$dataObj->setLimit($this->m_Range, ($this->m_CurrentPage-1)*$this->m_Range);
+        	$this->currentPage = $this->totalPages;
+        	$dataObj->setLimit($this->m_Range, ($this->currentPage-1)*$this->m_Range);
         	$resultRecords = $dataObj->fetch();
         }
         
@@ -305,7 +305,7 @@ class ListForm extends BaseForm
     {
         $tgtPage = intval($page);
         if ($tgtPage == 0) $tgtPage = 1;
-        $this->m_CurrentPage = $tgtPage;
+        $this->currentPage = $tgtPage;
         $this->rerender();
     }
     public function gotoSelectedPage($elemName)
@@ -344,7 +344,7 @@ class ListForm extends BaseForm
         $this->getDataObj()->setSortRule("[" . $element->m_FieldName . "] " . $order);
 
         // move to 1st page
-        $this->m_CurrentPage = 1;
+        $this->currentPage = 1;
         $this->sortRule = "";
 
         $this->rerender();
@@ -364,13 +364,13 @@ class ListForm extends BaseForm
             $isSearchHelperLoaded = true;
         }*/
 		$queryArray = array();
-        foreach ($this->m_SearchPanel as $element)
+        foreach ($this->searchPanel as $element)
         {       	
 			if (!$element->m_FieldName)
 				continue;
 
 			$value = BizSystem::clientProxy()->getFormInputs($element->objectName);  
-			$this->m_SearchPanelValues[$element->m_FieldName] = $value;	// ??? neede
+			$this->searchPanelValues[$element->m_FieldName] = $value;	// ??? neede
 			if($element->m_FuzzySearch=="Y")
 			{
 				$value="*$value*";
@@ -381,14 +381,14 @@ class ListForm extends BaseForm
 			}
         }
 
-        $this->m_RefreshData = true;
+        $this->isRefreshData = true;
 
-        $this->m_CurrentPage = 1;
+        $this->currentPage = 1;
 
         BizSystem::log(LOG_DEBUG,"FORMOBJ",$this->objectName."::runSearch(), SearchRule=".$this->searchRule);
 
 		//$recArr = $this->readInputRecord();
-		//$this->m_SearchPanelValues = $recArr;
+		//$this->searchPanelValues = $recArr;
         //$this->runEventLog();
         $this->rerender();
     }
@@ -401,8 +401,8 @@ class ListForm extends BaseForm
     public function resetSearch()
     {
         $this->searchRule = "";
-        $this->m_RefreshData = true;
-        $this->m_CurrentPage = 1;
+        $this->isRefreshData = true;
+        $this->currentPage = 1;
         $this->runEventLog();
         $this->rerender();
     }
@@ -411,8 +411,8 @@ class ListForm extends BaseForm
     {
     	$this->searchRule = $searchRule;
     	$this->searchRuleBindValues = $searchRuleBindValues;
-    	$this->m_RefreshData = true;
-        $this->m_CurrentPage = 1;
+    	$this->isRefreshData = true;
+        $this->currentPage = 1;
     }
 }
 ?>

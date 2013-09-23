@@ -17,7 +17,7 @@ class MenuDataObj extends MetaObject implements iSessionObject{
 	public $objectName;
 	public $m_MenuTreeObj;
 	public $cacheLifeTime;	
-	public $m_BreadCrumb=array();
+	public $breadCrumb=array();
 
 	private $m_RootMenuItem;
 	
@@ -61,14 +61,14 @@ class MenuDataObj extends MetaObject implements iSessionObject{
         	$this->m_MenuTreeObj = null;
     		$this->m_MenuTreeObj = new MenuItemObj($xmlArr);
         }
-        $this->m_BreadCrumb=array();
+        $this->breadCrumb=array();
         $this->getBreadCrumb();          
     	return $this->m_MenuTreeObj;
     }
     
     public function getBreadCrumb($node=null){
-    	if (count($this->m_BreadCrumb)>0)
-    		return $this->m_BreadCrumb;
+    	if (count($this->breadCrumb)>0)
+    		return $this->breadCrumb;
     	$url = $_SERVER['REQUEST_URI'];
     	if($node==null){
     		$node = $this->m_MenuTreeObj;
@@ -87,7 +87,7 @@ class MenuDataObj extends MetaObject implements iSessionObject{
     			foreach ($node->childNodes as $name=>$node){
     				if($this->getBreadCrumb($node) == 'current'){
     					//$node->childNodes=null;
-    					array_unshift($this->m_BreadCrumb,$node);    					
+    					array_unshift($this->breadCrumb,$node);    					
     					return "current";
     				}
     			}
@@ -233,10 +233,10 @@ class MenuDataObj extends MetaObject implements iSessionObject{
         return $name;
     } 
             
-	public function setSessionVars($sessCtxt){
+	public function saveSessionVars($sessCtxt){
 		
 	}
-    public function getSessionVars($sessCtxt){
+    public function loadSessionVars($sessCtxt){
     	
     }
 }

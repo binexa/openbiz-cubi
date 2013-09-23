@@ -59,7 +59,7 @@ class ObjectFactory
         
         if($new!=1){
 	        if (method_exists($obj, "GetSessionVars"))
-	            $obj->getSessionVars(BizSystem::sessionContext());
+	            $obj->loadSessionVars(BizSystem::sessionContext());
         }
         return $obj;
     }

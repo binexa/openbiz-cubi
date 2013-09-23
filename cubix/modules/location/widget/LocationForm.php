@@ -16,15 +16,15 @@ class LocationForm extends EasyForm
 	protected $geocode_url = "http://maps.googleapis.com/maps/api/geocode/json?sensor=false";
 	
 	// keep canUpdate in session
-	public function getSessionVars($sessionContext)
+	public function loadSessionVars($sessionContext)
     {
-        parent::getSessionVars($sessionContext);
+        parent::loadSessionVars($sessionContext);
 		$sessionContext->getObjVar($this->objectName, "CanUpdateRecord", $this->m_CanUpdateRecord);
 	}
 	
-	public function setSessionVars($sessionContext)
+	public function saveSessionVars($sessionContext)
     {
-        parent::setSessionVars($sessionContext);
+        parent::saveSessionVars($sessionContext);
 		$sessionContext->setObjVar($this->objectName, "CanUpdateRecord", $this->m_CanUpdateRecord);
 	}
 	
@@ -119,13 +119,13 @@ class LocationForm extends EasyForm
         	//$parentForm->getDataObj()->clearSearchRule();
 	        $parentDo = $parentForm->getDataObj();
 	        
-	        $column = $parentDo->m_Association['Column'];
+	        $column = $parentDo->association['Column'];
 	    	$field = $parentDo->getFieldNameByColumn($column);	    	    	
-	    	$parentRefVal = $parentDo->m_Association["FieldRefVal"];
+	    	$parentRefVal = $parentDo->association["FieldRefVal"];
 	    	
 			$recArr[$field] = $parentRefVal;
-	    	$cond_column = $parentDo->m_Association['CondColumn'];
-	    	$cond_value = $parentDo->m_Association['CondValue'];
+	    	$cond_column = $parentDo->association['CondColumn'];
+	    	$cond_value = $parentDo->association['CondValue'];
 	    	if($cond_column)
 	    	{
 	    		$cond_field = $parentDo->getFieldNameByColumn($cond_column);

@@ -14,23 +14,23 @@
 class ExtendSettingForm extends EasyForm
 {
 	public $m_ParentFormElementMeta;
-	public $m_AccessSelectFrom;		
+	public $accessSelectFrom;		
 	
-	public function getSessionVars($sessionContext)
+	public function loadSessionVars($sessionContext)
     {
         $sessionContext->getObjVar($this->objectName, "ParentFormElementMeta", $this->m_ParentFormElementMeta);
-        return parent::getSessionVars($sessionContext);
+        return parent::loadSessionVars($sessionContext);
     }
 
-    public function setSessionVars($sessionContext)
+    public function saveSessionVars($sessionContext)
     {
         $sessionContext->setObjVar($this->objectName, "ParentFormElementMeta", $this->m_ParentFormElementMeta);
-        return parent::setSessionVars($sessionContext);       
+        return parent::saveSessionVars($sessionContext);       
     }
 
     public function fetchDataSet()
     {
-    	$this->m_AccessSelectFrom = $this->m_ParentFormElementMeta["ATTRIBUTES"]['ACCESSSELECTFROM'];
+    	$this->accessSelectFrom = $this->m_ParentFormElementMeta["ATTRIBUTES"]['ACCESSSELECTFROM'];
     	return parent::fetchDataSet();
     }
     

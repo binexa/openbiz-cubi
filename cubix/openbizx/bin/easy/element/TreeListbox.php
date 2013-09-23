@@ -44,8 +44,8 @@ class TreeListbox extends Listbox
 
             $recList = array();
 
-            $oldAssoc = $bizObj->m_Association;
-            $bizObj->m_Association = null;
+            $oldAssoc = $bizObj->association;
+            $bizObj->association = null;
 
             if ($searchRule) {
                 $searchRule = Expression::evaluateExpression($searchRule, $this->getFormObj());
@@ -58,7 +58,7 @@ class TreeListbox extends Listbox
             }
 
             $recListTree = $bizObj->fetchTree($rootSearchRule, 100, $searchRule);
-            $bizObj->m_Association = $oldAssoc;
+            $bizObj->association = $oldAssoc;
 
             if (!$recListTree)
                 return; // bugfix : error if data blank

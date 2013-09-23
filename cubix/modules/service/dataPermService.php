@@ -166,7 +166,7 @@ class dataPermService
 				$record_table = $dataObj->mainTableName;	
 			}
 			$record_main_table =$dataObj->mainTableName;	
-			$record_id_field = $dataObj->getField("Id")->m_Column;
+			$record_id_field = $dataObj->getField("Id")->column;
 			$sql_where .=" OR (
 								SELECT COUNT(*) FROM `$acl_table` WHERE 							 
 								`$acl_table`.`user_id`='$user_id' AND

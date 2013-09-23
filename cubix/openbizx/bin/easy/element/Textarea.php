@@ -26,14 +26,14 @@
  */
 class Textarea extends OptionElement
 {
-	public $m_BlankOption;
+	public $blankOption;
 	
 	public function readMetaData(&$xmlArr){
 		parent::readMetaData($xmlArr);
 		$this->cssClass = isset($xmlArr["ATTRIBUTES"]["CSSCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSCLASS"] : "input_textarea";
 		$this->cssErrorClass = isset($xmlArr["ATTRIBUTES"]["CSSERRORCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSERRORCLASS"] : "input_textarea_error";
 		$this->m_cssFocusClass = isset($xmlArr["ATTRIBUTES"]["CSSFOCUSCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSFOCUSCLASS"] : "input_textarea_focus";
-		$this->m_BlankOption = isset($xmlArr["ATTRIBUTES"]["BLANKOPTION"]) ? $xmlArr["ATTRIBUTES"]["BLANKOPTION"] : null;
+		$this->blankOption = isset($xmlArr["ATTRIBUTES"]["BLANKOPTION"]) ? $xmlArr["ATTRIBUTES"]["BLANKOPTION"] : null;
 	}
    /**
     * Render, draw the element according to the mode
@@ -59,9 +59,9 @@ class Textarea extends OptionElement
 	        $this->getFromList($fromList);
 	        $valueArray = explode(',', $this->value);
 	        $sHTML .= "<UL ID=\"" . $this->objectName ."_suggestion\" class=\"input_textarea_suggestion\" >";
-	        if ($this->m_BlankOption) // ADD a blank option
+	        if ($this->blankOption) // ADD a blank option
 	        {
-	            $entry = explode(",",$this->m_BlankOption);
+	            $entry = explode(",",$this->blankOption);
 	            $text = $entry[0];
 	            $value = ($entry[1]!= "") ? $entry[1] : null;
 	            $entryList = array("val" => $value, "txt" => $text );

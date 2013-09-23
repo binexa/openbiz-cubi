@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Openbiz Cubi Application Platform
  *
@@ -10,42 +11,39 @@
  * @link      http://code.google.com/p/openbiz-cubi/
  * @version   $Id: RecordFuzzySearchList.php 3355 2012-05-31 05:43:33Z rockyswen@gmail.com $
  */
-
 class RecordFuzzySearchList extends AutoSuggest
 {
-	public $m_SearchFields;
-	
-    public function readMetaData (&$xmlArr)
+
+    public $searchFields;
+
+    public function readMetaData(&$xmlArr)
     {
         parent::readMetaData($xmlArr);
-        $this->m_SearchFields = isset($xmlArr["ATTRIBUTES"]["SEARCHFIELDS"]) ? $xmlArr["ATTRIBUTES"]["SEARCHFIELDS"] : null;
+        $this->searchFields = isset($xmlArr["ATTRIBUTES"]["SEARCHFIELDS"]) ? $xmlArr["ATTRIBUTES"]["SEARCHFIELDS"] : null;
     }
 
     public function getSearchRule()
     {
-    	$value = BizSystem::clientProxy()->getFormInputs($this->objectName); 
-    	$value = addslashes($value); //escape sql strings          
-	    
-	    if ($value!='')
-	    {
-	        $searchStr = " [$this->m_FieldName] LIKE '%$value%' ";	               
-	    }else{
-	    	return "";
-	    }
-	    
+        $value = BizSystem::clientProxy()->getFormInputs($this->objectName);
+        $value = addslashes($value); //escape sql strings
 
-	    if($this->m_SearchFields) //process other search fields
-	    {
-	    	$fields = $lovService = BizSystem::getService(CUBI_LOV_SERVICE)->getList($this->m_SearchFields);
-	    	foreach($fields as $opt)
-	    	{
-	    		$field = $opt['val'];
-	    		$searchStr.= " OR [$field] LIKE '%$value%' ";
-	    	}
-	    }
-	    
-	    $searchStr = "( $searchStr )";
-	    return $searchStr;
+        if ($value != '') {
+            $searchStr = " [$this->m_FieldName] LIKE '%$value%' ";
+        } else {
+            return "";
+        }
+
+        if ($this->searchFields) { //process other search fields
+            $fields = $lovService = BizSystem::getService(CUBI_LOV_SERVICE)->getList($this->searchFields);
+            foreach ($fields as $opt) {
+                $field = $opt['val'];
+                $searchStr.= " OR [$field] LIKE '%$value%' ";
+            }
+        }
+
+        $searchStr = "( $searchStr )";
+        return $searchStr;
     }
+
 }
-?>
+

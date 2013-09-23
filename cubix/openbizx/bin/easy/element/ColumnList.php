@@ -27,7 +27,7 @@
 class ColumnList extends OptionElement
 {
     public $m_Sortable;
-    public $m_ColumnStyle;
+    public $columnStyle;
 
     /**
      * Read metadata info from metadata array and store to class variable
@@ -39,8 +39,8 @@ class ColumnList extends OptionElement
     {
         parent::readMetaData($xmlArr);
         $this->m_Sortable = isset($xmlArr["ATTRIBUTES"]["SORTABLE"]) ? $xmlArr["ATTRIBUTES"]["SORTABLE"] : null;
-        $this->m_Link = isset($xmlArr["ATTRIBUTES"]["LINK"]) ? $xmlArr["ATTRIBUTES"]["LINK"] : null;
-        $this->m_ColumnStyle = $this->style;
+        $this->link = isset($xmlArr["ATTRIBUTES"]["LINK"]) ? $xmlArr["ATTRIBUTES"]["LINK"] : null;
+        $this->columnStyle = $this->style;
     }
 
     /**
@@ -61,10 +61,10 @@ class ColumnList extends OptionElement
      */
     protected function getLink()
     {
-        if ($this->m_Link == null)
+        if ($this->link == null)
             return null;
         $formobj = $this->getFormObj();
-        return Expression::evaluateExpression($this->m_Link, $formobj);
+        return Expression::evaluateExpression($this->link, $formobj);
     }
 
 
@@ -126,7 +126,7 @@ class ColumnList extends OptionElement
             }
         }
 
-        if ($this->m_Link)
+        if ($this->link)
         {
             $link = $this->getLink();
             $sHTML = "<a href=\"$link\" $func $style>" . $selectedStr . "</a>";

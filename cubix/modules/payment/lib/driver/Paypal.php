@@ -6,7 +6,7 @@ require_once dirname(dirname(__FILE__))."/dll/paypal/paypal_class.php" ;
 class Paypal extends PaymentAdapter
 {
 	protected $m_ProviderId = 3;
-	protected $m_Type = 'paypal';
+	protected $type = 'paypal';
 	
 	protected $m_CurrencyCode = 'USD';
 	

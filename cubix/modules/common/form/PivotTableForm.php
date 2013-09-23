@@ -20,14 +20,14 @@ class PivotTableForm extends EasyForm
         $this->pivotConfig['columns'] = array();
 		$this->pivotConfig['rows'] = array();
 		$this->pivotConfig['datas'] = array();
-		foreach ($this->m_DataPanel as $elem) {
-			if ($elem->m_PivotType == 'Column') {
+		foreach ($this->dataPanel as $elem) {
+			if ($elem->pivotType == 'Column') {
 				$this->pivotConfig['columns'][$elem->m_FieldName] = $elem->m_Label;
 			}
-			else if ($elem->m_PivotType == 'Row') {
+			else if ($elem->pivotType == 'Row') {
 				$this->pivotConfig['rows'][$elem->m_FieldName] = $elem->m_Label;
 			}
-			else if ($elem->m_PivotType == 'Data') {
+			else if ($elem->pivotType == 'Data') {
 				$this->pivotConfig['datas'][$elem->m_FieldName] = $elem->m_Label;
 			}
 		}

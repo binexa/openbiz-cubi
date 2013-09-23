@@ -4,12 +4,12 @@ class MyProfileView extends EasyView
 	protected  $m_ForceCompeleteProfile = false;
 	
 
-    public function getSessionVars($sessionContext)
+    public function loadSessionVars($sessionContext)
     {
         $sessionContext->getObjVar($this->objectName, "ForceCompeleteProfile", $this->m_ForceCompeleteProfile);        
     }
 
-    public function setSessionVars($sessionContext)
+    public function saveSessionVars($sessionContext)
     {       
         $sessionContext->setObjVar($this->objectName, "ForceCompeleteProfile", $this->m_ForceCompeleteProfile);
     }	

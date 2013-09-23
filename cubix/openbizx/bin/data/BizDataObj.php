@@ -47,12 +47,12 @@ class BizDataObj extends BizDataObj_Lite
     public function validateInput()
     {
         $this->errorFields = array();
-        foreach($this->bizRecord->m_InputFields as $fld)
+        foreach($this->bizRecord->inputFields as $fld)
         {
 
             /* @var $bizField BizField */
             $bizField = $this->bizRecord->get($fld);
-            if($bizField->m_Encrypted=="Y"){
+            if($bizField->encrypted=="Y"){
 	            if ($bizField->checkRequired() == true &&
 	                    ($bizField->value===null || $bizField->value === ""))
 	            {
@@ -69,7 +69,7 @@ class BizDataObj extends BizDataObj_Lite
             }
             elseif ($bizField->value!==null && $bizField->checkValueType() == false)
             {
-                $this->errorMessage = $this->getMessage("DATA_FIELD_INCORRECT_TYPE", array($fld, $bizField->m_Type));
+                $this->errorMessage = $this->getMessage("DATA_FIELD_INCORRECT_TYPE", array($fld, $bizField->type));
                 $this->errorFields[$bizField->objectName] = $this->errorMessage;
             }
             elseif ($bizField->value!==null && $bizField->Validate() == false)
@@ -77,10 +77,10 @@ class BizDataObj extends BizDataObj_Lite
 
                 /* @var $validateService validateService */
                 $validateService = BizSystem::getService(VALIDATE_SERVICE);
-                $this->errorMessage = $validateService->getErrorMessage($bizField->m_Validator, $bizField->objectName);
+                $this->errorMessage = $validateService->getErrorMessage($bizField->validator, $bizField->objectName);
                 if ($this->errorMessage == false)
                 { //Couldn't get a clear error message so let's try this
-                    $this->errorMessage = $this->getMessage("DATA_FIELD_INVALID_INPUT",array($fld,$value,$bizField->m_Validator));                //
+                    $this->errorMessage = $this->getMessage("DATA_FIELD_INVALID_INPUT",array($fld,$value,$bizField->validator));                //
                 }
                 $this->errorFields[$bizField->objectName] = $this->errorMessage;
             }
@@ -118,7 +118,7 @@ class BizDataObj extends BizDataObj_Lite
             foreach ($fields as $fld)
             {
                 $bizField = $this->bizRecord->get($fld);
-                if ($bizField->value===null || $bizField->value === "" || $bizField->value==$bizField->m_OldValue)
+                if ($bizField->value===null || $bizField->value === "" || $bizField->value==$bizField->oldValue)
                 {
                     $needCheck = false;
                     break;
@@ -342,10 +342,10 @@ class BizDataObj extends BizDataObj_Lite
         $searchRule = $this->bizRecord->getKeySearchRule(false, true);
         foreach ($this->bizRecord as $field)
         {
-            if (isset($recArr[$field->objectName]) && $field->isLobField() && $field->m_Column != "")
+            if (isset($recArr[$field->objectName]) && $field->isLobField() && $field->column != "")
             {
                 $db = $this->getDBConnection("WRITE");
-                $sql = "UPDATE " . $this->mainTableName . " SET " . $field->m_Column . "=? WHERE $searchRule";
+                $sql = "UPDATE " . $this->mainTableName . " SET " . $field->column . "=? WHERE $searchRule";
                 BizSystem::log(LOG_DEBUG, "DATAOBJ", "Update lob Sql = $sql");
                 $stmt = $db->prepare($sql);
 
@@ -394,13 +394,13 @@ class BizDataObj extends BizDataObj_Lite
         $recArr = $this->bizRecord->getEmptyRecordArr();
 
         // if association is 1-M, set the field (pointing to the column) value as the FieldRefVal
-        if ($this->m_Association["Relationship"] == "1-M")
+        if ($this->association["Relationship"] == "1-M")
         {
             foreach ($this->bizRecord as $field)
             {
-                if ($field->m_Column == $this->m_Association["Column"] && !$field->m_Join)
+                if ($field->column == $this->association["Column"] && !$field->join)
                 {
-                    $recArr[$field->objectName] = $this->m_Association["FieldRefVal"];
+                    $recArr[$field->objectName] = $this->association["FieldRefVal"];
                     break;
                 }
             }
@@ -440,7 +440,7 @@ class BizDataObj extends BizDataObj_Lite
         $dbInfo = BizSystem::Configuration()->getDatabaseInfo($this->databaseAliasName);
         $dbType = $dbInfo["Driver"];
         $table = $tableName ? $tableName : $this->mainTableName;
-        $column = $idCloumnName ? $idCloumnName : $this->getField("Id")->m_Column;
+        $column = $idCloumnName ? $idCloumnName : $this->getField("Id")->column;
 
         try
         {
@@ -637,8 +637,8 @@ class BizDataObj extends BizDataObj_Lite
         {
             if ($objRef->m_Relationship == "1-M" || $objRef->m_Relationship == "1-1") {
                 $table = $objRef->m_Table;
-                $column = $objRef->m_Column;
-                $column2 = $objRef->m_Column2;
+                $column = $objRef->column;
+                $column2 = $objRef->column2;
             }
             else if ($objRef->m_Relationship == "M-M" || $objRef->m_Relationship == "Self-Self") {
                 $table = $objRef->m_XTable;
@@ -683,16 +683,16 @@ class BizDataObj extends BizDataObj_Lite
             }
             else if ($cascadeType=='Update') {
                 // check if the column value is actually changed
-                if ($refField->m_OldValue == $refField->value) return;
+                if ($refField->oldValue == $refField->value) return;
                 
                 if ($objRef->m_OnUpdate == "Cascade") {
-                    $sql = "UPDATE ".$table." SET $column='".$refField->value."' WHERE ".$column."='".$refField->m_OldValue."'";
+                    $sql = "UPDATE ".$table." SET $column='".$refField->value."' WHERE ".$column."='".$refField->oldValue."'";
                	 	if($column2 && $fieldVal2){
                     	$sql .= " AND ".$column2."='".$fieldVal2."'"; 	
                     }
                 }
                 else if ($objRef->m_OnUpdate == "SetNull") {
-                    $sql = "UPDATE ".$table." SET $column=null WHERE ".$column."='".$refField->m_OldValue."'";
+                    $sql = "UPDATE ".$table." SET $column=null WHERE ".$column."='".$refField->oldValue."'";
                 	if($column2 && $fieldVal2){
                     	$sql .= " AND ".$column2."='".$fieldVal2."'"; 	
                     }
@@ -700,7 +700,7 @@ class BizDataObj extends BizDataObj_Lite
                 else if ($objRef->m_OnUpdate == "Restrict") {
                     // check if objRef has records
                     $refObj = BizSystem::getObject($objRef->objectName);
-					$sql = "[".$objRef->m_FieldRef."]='".$refField->m_OldValue."'";
+					$sql = "[".$objRef->m_FieldRef."]='".$refField->oldValue."'";
                     if($column2 && $fieldVal2){
                     	$sql .= " AND ".$column2."='".$fieldVal2."'"; 	
                     }
@@ -754,7 +754,7 @@ class BizDataObj extends BizDataObj_Lite
         $fieldList = array();
         foreach ($this->bizRecord as $field)
         {
-            if ($field->m_OnAudit)
+            if ($field->onAudit)
                 $fieldList[] = $field;
         }
         return $fieldList;
@@ -800,20 +800,20 @@ class BizDataObj extends BizDataObj_Lite
             {
                 // populate the column-fieldvalue to columnRef-fieldvalue
                 // get the field mapping to the column, then get the field value
-                $joinFieldName = $joinDataObj->bizRecord->getFieldByColumn($tableJoin->m_Column); // joined-main table
+                $joinFieldName = $joinDataObj->bizRecord->getFieldByColumn($tableJoin->column); // joined-main table
 
                 if (!$joinFieldName) continue;
 
-                $refFieldName = $this->bizRecord->getFieldByColumn($tableJoin->m_ColumnRef); // join table
+                $refFieldName = $this->bizRecord->getFieldByColumn($tableJoin->columnRef); // join table
                 $returnRecord[$refFieldName] = $joinFieldName;
 
                 // populate joinRecord's field to current record
                 foreach ($this->bizRecord as $field)
                 {
-                    if ($field->m_Join == $tableJoin->objectName)
+                    if ($field->join == $tableJoin->objectName)
                     {
                         // use join column to match joinRecord field's column
-                        $jFieldName = $joinDataObj->bizRecord->getFieldByColumn($field->m_Column); // joined-main table
+                        $jFieldName = $joinDataObj->bizRecord->getFieldByColumn($field->column); // joined-main table
                         $returnRecord[$field->objectName] = $jFieldName;
                     }
                 }
@@ -845,19 +845,19 @@ class BizDataObj extends BizDataObj_Lite
             {
                 // populate the column-fieldvalue to columnRef-fieldvalue
                 // get the field mapping to the column, then get the field value
-                $joinFieldName = $joinDataObj->bizRecord->getFieldByColumn($tableJoin->m_Column); // joined-main table
+                $joinFieldName = $joinDataObj->bizRecord->getFieldByColumn($tableJoin->column); // joined-main table
                 if (!$joinFieldName) continue;
                 if (!$joinRecord)
                     $joinRecord = $joinDataObj->getActiveRecord();
-                $refFieldName = $this->bizRecord->getFieldByColumn($tableJoin->m_ColumnRef); // join table
+                $refFieldName = $this->bizRecord->getFieldByColumn($tableJoin->columnRef); // join table
                 $returnRecord[$refFieldName] = $joinRecord[$joinFieldName];
                 // populate joinRecord's field to current record
                 foreach ($this->bizRecord as $fld)
                 {
-                    if ($fld->m_Join == $tableJoin->objectName)
+                    if ($fld->join == $tableJoin->objectName)
                     {
                         // use join column to match joinRecord field's column
-                        $jfldname = $joinDataObj->bizRecord->getFieldByColumn($fld->m_Column); // joined-main table
+                        $jfldname = $joinDataObj->bizRecord->getFieldByColumn($fld->column); // joined-main table
                         $returnRecord[$fld->objectName] = $joinRecord[$jfldname];
                     }
                 }

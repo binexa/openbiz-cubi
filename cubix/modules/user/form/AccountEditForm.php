@@ -63,7 +63,7 @@ class AccountEditForm extends UserForm
     public function rerender()
     {
         // clean active record to force query again
-        $this->m_ActiveRecord = null;
+        $this->activeRecord = null;
         // set fix search rule
         if (!$this->_userId)
             return BizSystem::clientProxy()->redirectView(OPENBIZ_ACCESS_DENIED_VIEW);

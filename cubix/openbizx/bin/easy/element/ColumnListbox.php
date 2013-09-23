@@ -26,7 +26,7 @@
  */
 class ColumnListbox extends OptionElement
 {
-    public $m_BlankOption;
+    public $blankOption;
 
 	public function getItemValue($id)
 	{
@@ -87,7 +87,7 @@ class ColumnListbox extends OptionElement
     protected function readMetaData(&$xmlArr)
     {
         parent::readMetaData($xmlArr);
-        $this->m_BlankOption = isset($xmlArr["ATTRIBUTES"]["BLANKOPTION"]) ? $xmlArr["ATTRIBUTES"]["BLANKOPTION"] : null;
+        $this->blankOption = isset($xmlArr["ATTRIBUTES"]["BLANKOPTION"]) ? $xmlArr["ATTRIBUTES"]["BLANKOPTION"] : null;
     }
 
     /**
@@ -112,9 +112,9 @@ class ColumnListbox extends OptionElement
         //$sHTML = "<SELECT NAME=\"" . $this->objectName . "[]\" ID=\"" . $this->objectName ."\" $disabledStr $this->m_HTMLAttr $style $func>";
         $sHTML = "<SELECT NAME=\"" . $this->objectName . "[$recId]\" ID=\"" . $this->objectName ."\" $disabledStr $this->m_HTMLAttr $style $func>";
 
-        if ($this->m_BlankOption) // ADD a blank option
+        if ($this->blankOption) // ADD a blank option
         {
-            $entry = explode(",",$this->m_BlankOption);
+            $entry = explode(",",$this->blankOption);
             $text = $entry[0];
             $value = ($entry[1]!= "") ? $entry[1] : null;
             $entryList = array(array("val" => $value, "txt" => $text ));

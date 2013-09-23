@@ -13,7 +13,7 @@
 
 include_once (OPENBIZ_BIN."/easy/element/InputElement.php");
 class DBListbox extends InputElement{
-    public $m_BlankOption;
+    public $blankOption;
    
     /**
      * Read metadata info from metadata array and store to class variable
@@ -24,7 +24,7 @@ class DBListbox extends InputElement{
     protected function readMetaData(&$xmlArr)
     {
         parent::readMetaData($xmlArr);
-        $this->m_BlankOption = isset($xmlArr["ATTRIBUTES"]["BLANKOPTION"]) ? $xmlArr["ATTRIBUTES"]["BLANKOPTION"] : null;        
+        $this->blankOption = isset($xmlArr["ATTRIBUTES"]["BLANKOPTION"]) ? $xmlArr["ATTRIBUTES"]["BLANKOPTION"] : null;        
     }
 
     /**
@@ -44,9 +44,9 @@ class DBListbox extends InputElement{
         //$sHTML = "<SELECT NAME=\"" . $this->objectName . "[]\" ID=\"" . $this->objectName ."\" $disabledStr $this->m_HTMLAttr $style $func>";
         $sHTML = "<SELECT NAME=\"" . $this->objectName . "\" ID=\"" . $this->objectName ."\" $disabledStr $this->m_HTMLAttr $style $func>";
 
-        if ($this->m_BlankOption) // ADD a blank option
+        if ($this->blankOption) // ADD a blank option
         {
-            $entry = explode(",",$this->m_BlankOption);
+            $entry = explode(",",$this->blankOption);
             $text = $entry[0];
             $value = ($entry[1]!= "") ? $entry[1] : null;
             $entryList = array(array("val" => $value, "txt" => $text ));

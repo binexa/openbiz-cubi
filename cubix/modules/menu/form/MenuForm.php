@@ -16,16 +16,16 @@ class MenuForm extends EasyForm
    	private $_parents = array();
    	private $_directParentId = "";
    
-   	public function getSessionVars($sessCtxt)
+   	public function loadSessionVars($sessCtxt)
 	{
       $sessCtxt->getObjVar($this->objectName, "DirectParent", $this->_directParentId);
-      parent::getSessionVars($sessCtxt);
+      parent::loadSessionVars($sessCtxt);
 	}
 	
-   	public function setSessionVars($sessCtxt)
+   	public function saveSessionVars($sessCtxt)
 	{
       $sessCtxt->setObjVar($this->objectName, "DirectParent", $this->_directParentId);
-      parent::setSessionVars($sessCtxt);
+      parent::saveSessionVars($sessCtxt);
 	}
 	
 	public function validateRequest($methodName)

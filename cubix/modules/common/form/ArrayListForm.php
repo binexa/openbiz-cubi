@@ -13,12 +13,12 @@
  */
 class ArrayListForm extends EasyForm {
 
-    public $m_TotalRecords;
+    public $totalRecords;
 
     public function runSearch() {
         //include_once(OPENBIZ_BIN . "/easy/SearchHelper.php");
         $searchRule = "";
-        foreach ($this->m_SearchPanel as $element) {
+        foreach ($this->searchPanel as $element) {
             $searchStr = '';
             if (method_exists($element, "getSearchRule")) {
                 $searchStr = $element->getSearchRule();
@@ -45,15 +45,15 @@ class ArrayListForm extends EasyForm {
         $this->searchRule = $searchRule;
         $this->searchRuleBindValues = $values;
 
-        $this->m_RefreshData = true;
+        $this->isRefreshData = true;
 
-        $this->m_CurrentPage = 1;
+        $this->currentPage = 1;
 
         BizSystem::log(LOG_DEBUG, "FORMOBJ", $this->objectName . "::runSearch(), SearchRule=" . $this->searchRule);
 
         $recArr = $this->readInputRecord();
 
-        $this->m_SearchPanelValues = $recArr;
+        $this->searchPanelValues = $recArr;
 
 
         $this->runEventLog();
@@ -103,17 +103,17 @@ class ArrayListForm extends EasyForm {
             $this->recordId = $result[0]["Name"];
         }
         //set paging 
-        $this->m_TotalRecords = count($result);
+        $this->totalRecords = count($result);
 
         if ($this->m_Range && $this->m_Range > 0)
-            $this->m_TotalPages = ceil($this->m_TotalRecords / $this->m_Range);
+            $this->totalPages = ceil($this->totalRecords / $this->m_Range);
 
-        if ($this->m_CurrentPage > $this->m_TotalPages) {
-            $this->m_CurrentPage = $this->m_TotalPages;
+        if ($this->currentPage > $this->totalPages) {
+            $this->currentPage = $this->totalPages;
         }
 
         if (is_array($result)) {
-            $result = array_slice($result, ($this->m_CurrentPage - 1) * $this->m_Range, $this->m_Range);
+            $result = array_slice($result, ($this->currentPage - 1) * $this->m_Range, $this->m_Range);
         }
 
         return $result;

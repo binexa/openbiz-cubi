@@ -102,13 +102,13 @@ class ReleaseForm extends PickerForm
         	//$parentForm->getDataObj()->clearSearchRule();
 	        $parentDo = $parentForm->getDataObj();
 	        
-	        $column = $parentDo->m_Association['Column'];
+	        $column = $parentDo->association['Column'];
 	    	$field = $parentDo->getFieldNameByColumn($column);	    	    	
-	    	$parentRefVal = $parentDo->m_Association["FieldRefVal"];
+	    	$parentRefVal = $parentDo->association["FieldRefVal"];
 	    	
 			$recArr[$field] = $parentRefVal;
-	    	$cond_column = $parentDo->m_Association['CondColumn'];
-	    	$cond_value = $parentDo->m_Association['CondValue'];
+	    	$cond_column = $parentDo->association['CondColumn'];
+	    	$cond_value = $parentDo->association['CondValue'];
 	    	if($cond_column)
 	    	{
 	    		$cond_field = $parentDo->getFieldNameByColumn($cond_column);
@@ -166,7 +166,7 @@ class ReleaseForm extends PickerForm
             if(!$this->canDeleteRecord($dataRec))
             {
             	$this->errorMessage = $this->getMessage("FORM_OPEATION_NOT_PERMITTED",$this->objectName);         
-        		if (strtoupper($this->m_FormType) == "LIST"){
+        		if (strtoupper($this->formType) == "LIST"){
         			BizSystem::log(LOG_ERR, "DATAOBJ", "DataObj error = ".$errorMsg);
         			BizSystem::clientProxy()->showClientAlert($this->errorMessage);
         		}else{
@@ -186,7 +186,7 @@ class ReleaseForm extends PickerForm
                 return;
             }
         }
-        if (strtoupper($this->m_FormType) == "LIST")
+        if (strtoupper($this->formType) == "LIST")
             $this->rerender();
 
         $this->runEventLog();

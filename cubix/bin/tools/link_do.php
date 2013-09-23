@@ -49,8 +49,8 @@ $do2Table = $do2->mainTableName;
 
 $fkCol = "";
 foreach ($do1->bizRecord as $field) {
-    if ($field->m_Column == "$do2name"."_id") {
-        $fkCol = $field->m_Column;
+    if ($field->column == "$do2name"."_id") {
+        $fkCol = $field->column;
     }
     
 }
@@ -61,8 +61,8 @@ else {
     echo "Select the '$do1Table' foreign key column pointing to '$do2Table':\n";
     $i = 1;
     foreach ($do1->bizRecord as $field) {
-        if (stripos($field->m_Column, "id")!==false && $field->objectName != "Id") {
-            echo "\t$i. $field->objectName ($field->m_Column)\n";
+        if (stripos($field->column, "id")!==false && $field->objectName != "Id") {
+            echo "\t$i. $field->objectName ($field->column)\n";
             $i++;
         }
     }
@@ -70,9 +70,9 @@ else {
     $selection = trim(fgets(STDIN));
     $i = 1;
     foreach ($do1->bizRecord as $field) {
-        if (stripos($field->m_Column, "id")!==false && $field->objectName != "Id") {
+        if (stripos($field->column, "id")!==false && $field->objectName != "Id") {
             if ($i == $selection) {
-                $fkCol = $field->m_Column;
+                $fkCol = $field->column;
                 $fkName = $field->objectName;
                 break;
             }
@@ -103,12 +103,12 @@ while(1) {
 
 //else echo "You selected '$fkCol' as the foreign key column.\n";
 echo "\nPlease confirm the following before start:\n";
-echo "    Table relationship: $do1Table.$fkCol ---> $do2Table.".$do2->getField("Id")->m_Column . "\n";
+echo "    Table relationship: $do1Table.$fkCol ---> $do2Table.".$do2->getField("Id")->column . "\n";
 echo "    The 'name' column of $do2Table is 'name'\n";
 echo "Start linking two data objects? (y/n) ";
 if (trim(fgets(STDIN)) != 'y') exit;
 
-$pkCol = $do2->getField('Id')->m_Column;
+$pkCol = $do2->getField('Id')->column;
 
 // generate a join in do1
 echo "--------------------------------------------------------\n";

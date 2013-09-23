@@ -27,7 +27,7 @@
  */
 class LabelList extends OptionElement
 {
-    public $m_BlankOption;
+    public $blankOption;
 
     /**
      * Read metadata info from metadata array and store to class variable
@@ -38,8 +38,8 @@ class LabelList extends OptionElement
     protected function readMetaData(&$xmlArr)
     {
         parent::readMetaData($xmlArr);
-        $this->m_Link = isset($xmlArr["ATTRIBUTES"]["LINK"]) ? $xmlArr["ATTRIBUTES"]["LINK"] : null;
-        $this->m_BlankOption = isset($xmlArr["ATTRIBUTES"]["BLANKOPTION"]) ? $xmlArr["ATTRIBUTES"]["BLANKOPTION"] : null;
+        $this->link = isset($xmlArr["ATTRIBUTES"]["LINK"]) ? $xmlArr["ATTRIBUTES"]["LINK"] : null;
+        $this->blankOption = isset($xmlArr["ATTRIBUTES"]["BLANKOPTION"]) ? $xmlArr["ATTRIBUTES"]["BLANKOPTION"] : null;
     }    
     /**
      * Get link that evaluated by Expression::evaluateExpression
@@ -48,10 +48,10 @@ class LabelList extends OptionElement
      */
     protected function getLink()
     {
-        if ($this->m_Link == null)
+        if ($this->link == null)
             return null;
         $formobj = $this->getFormObj();
-        return Expression::evaluateExpression($this->m_Link, $formobj);
+        return Expression::evaluateExpression($this->link, $formobj);
     }
 
     /**
@@ -83,7 +83,7 @@ class LabelList extends OptionElement
         }
         
         if($selectedStr=="0" || $selectedStr==null){
-        	$selectedStr = $this->m_BlankOption;
+        	$selectedStr = $this->blankOption;
         }
 
         if ($this->getLink())
@@ -94,7 +94,7 @@ class LabelList extends OptionElement
         else
             $sHTML = "<span $func $style>" . $selectedStr . "</span>";
 
-        if($this->m_BackgroundColor)
+        if($this->backgroundColor)
         {
             	$bgcolor = $this->getBackgroundColor();
        			if($bgcolor){

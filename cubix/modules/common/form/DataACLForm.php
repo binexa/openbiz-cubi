@@ -14,7 +14,7 @@
 require_once('DataSharingForm.php');
 class DataACLForm extends DataSharingForm
 {
-	public $m_AclDO = "common.do.DataACLDO";
+	public $aclDO = "common.do.DataACLDO";
 	
 	public function SetPrtRecordId($id)
 	{		

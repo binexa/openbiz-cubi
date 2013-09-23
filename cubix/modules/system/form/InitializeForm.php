@@ -25,7 +25,7 @@ class InitializeForm extends EasyForm
         $user_id = 0;
         $prefDo = $this->getDataObj();
         
-        foreach ($this->m_DataPanel as $element)
+        foreach ($this->dataPanel as $element)
         {
             $value = $recArr[$element->m_FieldName];
             if ($value === null){ 
@@ -122,8 +122,8 @@ class InitializeForm extends EasyForm
 	}
 	
 	public function fetchData(){
-        if ($this->m_ActiveRecord != null)
-            return $this->m_ActiveRecord;
+        if ($this->activeRecord != null)
+            return $this->activeRecord;
         
         $dataObj = $this->getDataObj();
         if ($dataObj == null) return;
@@ -136,7 +136,7 @@ class InitializeForm extends EasyForm
     	QueryStringParam::setBindValues($this->searchRuleBindValues);
         
         	
-        if ($this->m_RefreshData)   $dataObj->resetRules();
+        if ($this->isRefreshData)   $dataObj->resetRules();
         else $dataObj->clearSearchRule();
 
         if ($this->m_FixSearchRule)

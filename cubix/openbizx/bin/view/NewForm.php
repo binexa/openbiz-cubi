@@ -18,7 +18,7 @@ class NewForm extends InputForm
 	protected $directMethodList = array('insertrecord','switchform'); 
 	
 	public $recordId;
-	public $m_ActiveRecord;
+	public $activeRecord;
 	
 	/**
      * Fetch single record
@@ -102,7 +102,7 @@ class NewForm extends InputForm
             $this->processBDOException($e);
             return;
         }
-		$this->m_ActiveRecord = null;
+		$this->activeRecord = null;
         $this->getActiveRecord($dataRec["Id"]);
 
         //$this->runEventLog();
@@ -124,7 +124,7 @@ class NewForm extends InputForm
             return null;
         // load default values if new record value is empty
         $defaultRecArr = array();
-        foreach ($this->m_DataPanel as $element)
+        foreach ($this->dataPanel as $element)
         {
             if ($element->m_FieldName)
             {

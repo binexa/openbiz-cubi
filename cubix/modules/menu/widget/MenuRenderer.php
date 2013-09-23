@@ -44,8 +44,8 @@ class MenuRenderer
      */
     static public function render($widgetObj)
     {
-        $tplEngine = $widgetObj->m_TemplateEngine;
-        $tplFile = BizSystem::getTplFileWithPath($widgetObj->m_TemplateFile, $widgetObj->m_Package);
+        $tplEngine = $widgetObj->templateEngine;
+        $tplFile = BizSystem::getTplFileWithPath($widgetObj->templateFile, $widgetObj->m_Package);
 
         if ($tplEngine == "Smarty" || $tplEngine == null)
             return MenuRenderer::renderSmarty($widgetObj, $tplFile);
@@ -91,7 +91,7 @@ class MenuRenderer
         $smarty->assign("title", $view->m_Title);
         $smarty->assign("errors", $view->m_Errors);
         $smarty->assign("notices", $view->m_Notices);
-        return $view->render($view->m_TemplateFile);
+        return $view->render($view->templateFile);
     }
 }
 ?>

@@ -22,19 +22,18 @@ class ChartForm extends EasyForm
     }
     
 
-    public function getSessionVars($sessionContext)
+    public function loadSessionVars($sessionContext)
     {    	
     	$sessionContext->getObjVar($this->objectName, "CategoryId", $this->categoryId);
         $sessionContext->getObjVar($this->objectName, "SubType", $this->subType);
-        return parent::getSessionVars($sessionContext);
+        return parent::loadSessionVars($sessionContext);
     }
 
-
-    public function setSessionVars($sessionContext)
+    public function saveSessionVars($sessionContext)
     {
     	$sessionContext->setObjVar($this->objectName, "CategoryId", $this->categoryId);
         $sessionContext->setObjVar($this->objectName, "SubType", $this->subType);
-        return parent::setSessionVars($sessionContext);        
+        return parent::saveSessionVars($sessionContext);        
     }    
 	
 	public function outputAttrs()
@@ -78,7 +77,7 @@ class ChartForm extends EasyForm
 
         QueryStringParam::setBindValues($this->searchRuleBindValues);
 
-        if ($this->m_RefreshData)
+        if ($this->isRefreshData)
             $dataObj->resetRules();
         else
             $dataObj->clearSearchRule();
@@ -100,20 +99,20 @@ class ChartForm extends EasyForm
         }
         else
         {
-            $dataObj->setLimit($this->m_Range, ($this->m_CurrentPage-1)*$this->m_Range);
+            $dataObj->setLimit($this->m_Range, ($this->currentPage-1)*$this->m_Range);
         }
         QueryStringParam::setBindValues($this->searchRuleBindValues);
         $resultRecords = $dataObj->fetch();
-        $this->m_TotalRecords = $dataObj->count();
+        $this->totalRecords = $dataObj->count();
         if ($this->m_Range && $this->m_Range > 0)
-            $this->m_TotalPages = ceil($this->m_TotalRecords/$this->m_Range);
+            $this->totalPages = ceil($this->totalRecords/$this->m_Range);
 		//$resultRecords = $dataObj->directFetch($searchRule);
 		$counter = 0;
         while (true)
         {
             $arr = $resultRecords[$counter];
             if (!$arr) break;
-            foreach ($this->m_DataPanel as $element)
+            foreach ($this->dataPanel as $element)
             {            	
             	$element->value = $arr[$element->fieldName];
             	$value = $element->getValue();            	

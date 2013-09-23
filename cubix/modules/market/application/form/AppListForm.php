@@ -104,7 +104,7 @@ class AppListForm extends EasyForm
         $this->sortRule="[" . $element->m_FieldName . "] $order";
 
         // move to 1st page
-        $this->m_CurrentPage = 1;
+        $this->currentPage = 1;
         //$this->sortRule = "";
 
         $this->rerender();

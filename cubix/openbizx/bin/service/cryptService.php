@@ -18,7 +18,7 @@
 class cryptService
 {
     protected $m_DefaultKey ;
-    public $m_Algorithm;
+    public $algorithm;
     public $m_OperationMode;
 
     /**
@@ -41,7 +41,7 @@ class cryptService
     protected function readMetadata(&$xmlArr)
     {
         $this->m_DefaultKey 	= strtolower($xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["DEFAULTKEY"]);
-    	$this->m_Algorithm 		= strtolower($xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["ALGORITHM"]);
+    	$this->algorithm 		= strtolower($xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["ALGORITHM"]);
         $this->m_OperationMode 	= strtolower($xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["OPERATIONMODE"]);
     }
 
@@ -56,7 +56,7 @@ class cryptService
     	}
     	if($data==null)
     		return;
-        $td = mcrypt_module_open($this->m_Algorithm, '', $this->m_OperationMode, '');
+        $td = mcrypt_module_open($this->algorithm, '', $this->m_OperationMode, '');
         $iv = mcrypt_create_iv(mcrypt_enc_get_iv_size($td), MCRYPT_RAND);
        // $iv ="jixian";
         $ks = mcrypt_enc_get_key_size($td);
@@ -79,7 +79,7 @@ class cryptService
     	}    	
     	if($data==null)
     		return;
-        $td = mcrypt_module_open($this->m_Algorithm, '', $this->m_OperationMode, '');
+        $td = mcrypt_module_open($this->algorithm, '', $this->m_OperationMode, '');
         $iv = mcrypt_create_iv(mcrypt_enc_get_iv_size($td), MCRYPT_RAND);        
         $ks = mcrypt_enc_get_key_size($td);
         $keystr = substr(md5($key), 0, $ks);

@@ -36,8 +36,8 @@ class ObjReference extends MetaObject
      *
      * @var string
      */
-    public $m_Column;
-    public $m_Column2;
+    public $column;
+    public $column2;
     /**
      * Field name for reference
      *
@@ -62,7 +62,7 @@ class ObjReference extends MetaObject
     public $m_CondField;
     public $m_CondValue;
     public $m_Condition;
-    //public $m_Association;
+    //public $association;
 
     /**
      * Initialize ObjReference with xml array
@@ -78,9 +78,9 @@ class ObjReference extends MetaObject
         $this->objectDescription= isset($xmlArr["ATTRIBUTES"]["DESCRIPTION"]) ? $xmlArr["ATTRIBUTES"]["DESCRIPTION"] : null;
         $this->m_Relationship = isset($xmlArr["ATTRIBUTES"]["RELATIONSHIP"]) ? $xmlArr["ATTRIBUTES"]["RELATIONSHIP"] : null;
         $this->m_Table = isset($xmlArr["ATTRIBUTES"]["TABLE"]) ? $xmlArr["ATTRIBUTES"]["TABLE"] : null;
-        $this->m_Column = isset($xmlArr["ATTRIBUTES"]["COLUMN"]) ? $xmlArr["ATTRIBUTES"]["COLUMN"] : null;
+        $this->column = isset($xmlArr["ATTRIBUTES"]["COLUMN"]) ? $xmlArr["ATTRIBUTES"]["COLUMN"] : null;
         $this->m_FieldRef = isset($xmlArr["ATTRIBUTES"]["FIELDREF"]) ? $xmlArr["ATTRIBUTES"]["FIELDREF"] : null;
-        $this->m_Column2 = isset($xmlArr["ATTRIBUTES"]["COLUMN2"]) ? $xmlArr["ATTRIBUTES"]["COLUMN2"] : null;
+        $this->column2 = isset($xmlArr["ATTRIBUTES"]["COLUMN2"]) ? $xmlArr["ATTRIBUTES"]["COLUMN2"] : null;
         $this->m_FieldRef2 = isset($xmlArr["ATTRIBUTES"]["FIELDREF2"]) ? $xmlArr["ATTRIBUTES"]["FIELDREF2"] : null;
         $this->m_CascadeDelete = (isset($xmlArr["ATTRIBUTES"]["CASCADEDELETE"]) && $xmlArr["ATTRIBUTES"]["CASCADEDELETE"] == "Y");
         $this->m_OnDelete = isset($xmlArr["ATTRIBUTES"]["ONDELETE"]) ? $xmlArr["ATTRIBUTES"]["ONDELETE"] : null;
@@ -98,7 +98,7 @@ class ObjReference extends MetaObject
             $this->m_XDataObj = isset($xmlArr["ATTRIBUTES"]["XDATAOBJ"]) ? $xmlArr["ATTRIBUTES"]["XDATAOBJ"] : null;
             $this->m_XDataObj = $this->prefixPackage($this->m_XDataObj);
         }
-        //$this->m_Association = @$xmlArr["ATTRIBUTES"]["ASSOCIATION"];
+        //$this->association = @$xmlArr["ATTRIBUTES"]["ASSOCIATION"];
 
         $this->objectName = $this->prefixPackage($this->objectName);
     }

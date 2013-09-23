@@ -45,7 +45,7 @@ class EasyFormTree extends EasyForm
         
         QueryStringParam::setBindValues($this->searchRuleBindValues);
 
-        if ($this->m_RefreshData)
+        if ($this->isRefreshData)
             $dataObj->resetRules();
         else
             $dataObj->clearSearchRule();
@@ -67,7 +67,7 @@ class EasyFormTree extends EasyForm
         }
         else
         {
-            $dataObj->setLimit($this->m_Range, ($this->m_CurrentPage-1)*$this->m_Range);
+            $dataObj->setLimit($this->m_Range, ($this->currentPage-1)*$this->m_Range);
         }
         //$resultRecords = $dataObj->fetch();
         
@@ -77,9 +77,9 @@ class EasyFormTree extends EasyForm
 	        	$this->tree2array($resultRecordTreeNode, $resultRecords);
 	        }
         }
-        $this->m_TotalRecords = $dataObj->count();
+        $this->totalRecords = $dataObj->count();
         if ($this->m_Range && $this->m_Range > 0)
-            $this->m_TotalPages = ceil($this->m_TotalRecords/$this->m_Range);
+            $this->totalPages = ceil($this->totalRecords/$this->m_Range);
         $selectedIndex = 0;
         $this->getDataObj()->setActiveRecord($resultRecords[$selectedIndex]);
 

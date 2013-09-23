@@ -5,7 +5,7 @@
   Copyright (c) 2005-2011, Openbiz Technology LLC
   Version $Id: DashboardWidgetForm.xml 4076 2012-09-01 08:11:35Z rockyswen@gmail.com $
 -->
-<EasyForm Name="DashboardWidgetForm" Class="contact.form.ContactForm" FormType="List" jsClass="jbForm" Title="Contact" Description="{@:m_TotalRecords} contacts" BizDataObj="contact.do.ContactDO" PageSize="4" DefaultForm="Y" TemplateEngine="Smarty" TemplateFile="dashboard_widget_form.tpl.html" EventName="CONTACT" MessageFile="Contact.msg"  Access="contact.access">
+<EasyForm Name="DashboardWidgetForm" Class="contact.form.ContactForm" FormType="List" jsClass="jbForm" Title="Contact" Description="{@:totalRecords} contacts" BizDataObj="contact.do.ContactDO" PageSize="4" DefaultForm="Y" TemplateEngine="Smarty" TemplateFile="dashboard_widget_form.tpl.html" EventName="CONTACT" MessageFile="Contact.msg"  Access="contact.access">
     <DataPanel>
         <Element Name="fld_Id" Class="RawData" FieldName="Id" Label="ID" Sortable="Y" AllowURLParam="N" />
 		<Element Name="fld_share" Class="ColumnShare" 
@@ -25,11 +25,11 @@
 		<Element Name="fld_type" Class="LabelText" MaxLength="5" FieldName="type_name" Label="Type"  Sortable="Y" AllowURLParam="N" Translatable="N" OnEventLog="N" />						        
     </DataPanel>
     <ActionPanel>
-		<Element Name="btn_prev" Class="Button" Enabled="{(@:m_CurrentPage == 1)?'N':'Y'}" Text="" CssClass="button_navi {(@:m_CurrentPage == 1)?'prev_gray':'prev'}">
-            <EventHandler Name="prev_onclick" Event="onclick" Function="GotoPage({@:m_CurrentPage - 1})" ShortcutKey="Ctrl+Shift+Left"/>
+		<Element Name="btn_prev" Class="Button" Enabled="{(@:currentPage == 1)?'N':'Y'}" Text="" CssClass="button_navi {(@:currentPage == 1)?'prev_gray':'prev'}">
+            <EventHandler Name="prev_onclick" Event="onclick" Function="GotoPage({@:currentPage - 1})" ShortcutKey="Ctrl+Shift+Left"/>
         </Element>
-        <Element Name="btn_next" Class="Button" Enabled="{(@:m_CurrentPage == @:m_TotalPages )?'N':'Y'}" Text="" CssClass="button_navi {(@:m_CurrentPage == @:m_TotalPages)?'next_gray':'next'}">
-            <EventHandler Name="next_onclick" Event="onclick" Function="GotoPage({@:m_CurrentPage + 1})" ShortcutKey="Ctrl+Shift+Right"/>
+        <Element Name="btn_next" Class="Button" Enabled="{(@:currentPage == @:totalPages )?'N':'Y'}" Text="" CssClass="button_navi {(@:currentPage == @:totalPages)?'next_gray':'next'}">
+            <EventHandler Name="next_onclick" Event="onclick" Function="GotoPage({@:currentPage + 1})" ShortcutKey="Ctrl+Shift+Right"/>
         </Element>
         <Element Name="btn_markread" Class="LabelText" text=" " CssClass="icon_list" Link="{@home:url}/contact/contact_list"></Element>
 	</ActionPanel>

@@ -1,7 +1,7 @@
 <?php 
 class OauthConnectUserFinishedForm extends EasyForm
 {
-	public $m_BackURL;
+	public $backURL;
 	
 	public function fetchData()
 	{
@@ -16,12 +16,12 @@ class OauthConnectUserFinishedForm extends EasyForm
 		$redirectURL = BizSystem::sessionContext()->getVar("oauth_redirect_url");
 		if($redirectURL)
 		{
-			$this->m_BackURL = $redirectURL;
+			$this->backURL = $redirectURL;
 		}
 		else
 		{
-			//$this->m_BackURL = OPENBIZ_APP_INDEX_URL.'/myaccount/my_social_account';
-			$this->m_BackURL = OPENBIZ_APP_INDEX_URL;
+			//$this->backURL = OPENBIZ_APP_INDEX_URL.'/myaccount/my_social_account';
+			$this->backURL = OPENBIZ_APP_INDEX_URL;
 		}
 		return $record;
 	}

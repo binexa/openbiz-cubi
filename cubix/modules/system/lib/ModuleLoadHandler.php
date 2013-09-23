@@ -23,7 +23,7 @@ interface ModuleLoadHandler
 class DefaultModuleLoadHandler implements ModuleLoadHandler
 {
 	protected $m_RoleName;
-	protected $m_ModuleName;
+	protected $moduleName;
 	
     public function beforeLoadingModule($moduelLoader)
     {
@@ -35,7 +35,7 @@ class DefaultModuleLoadHandler implements ModuleLoadHandler
     	$roleRec = BizSystem::getObject("system.do.RoleDO")->fetchOne("[name]='{$this->m_RoleName}'");
     	$memberRoleId = $roleRec['Id'];
     	
-    	$actionList = BizSystem::getObject("system.do.AclActionDO")->directfetch("[module]='{$this->m_ModuleName}'");
+    	$actionList = BizSystem::getObject("system.do.AclActionDO")->directfetch("[module]='{$this->moduleName}'");
     	foreach ($actionList as $actionRec){
 	    	$actionId = $actionRec["Id"];
 	    	
@@ -59,13 +59,13 @@ class DefaultModuleLoadHandler implements ModuleLoadHandler
     	$memberRoleId = $roleRec['Id'];
     	$roleRec->delete();
     	
-    	$actionList = BizSystem::getObject("system.do.AclActionDO")->directfetch("[module]='{$this->m_ModuleName}'");
+    	$actionList = BizSystem::getObject("system.do.AclActionDO")->directfetch("[module]='{$this->moduleName}'");
     	foreach ($actionList as $actionRec){
 	    	$actionId = $actionRec["Id"];	    		    
 	    	BizSystem::getObject("system.do.AclRoleActionDO")->deleteRecords("[action_id]='$actionId' AND [role_id]='$memberRoleId'");
     	}
     	
-    	BizSystem::getObject("system.do.AclActionDO")->deleteRecords("[module]='{$this->m_ModuleName}'");
+    	BizSystem::getObject("system.do.AclActionDO")->deleteRecords("[module]='{$this->moduleName}'");
     }
 }
 ?>

@@ -30,22 +30,22 @@ class HelpCategoryForm extends EasyFormTree
     	
         if($result)
         {
-        	$parentId = $this->m_DataPanel->get("fld_parent_id")->value;
-        	$currentId = $this->m_DataPanel->get("fld_Id")->value;
-		    if ($parentId == $currentId && strtoupper($this->m_FormType)=='EDIT')
+        	$parentId = $this->dataPanel->get("fld_parent_id")->value;
+        	$currentId = $this->dataPanel->get("fld_Id")->value;
+		    if ($parentId == $currentId && strtoupper($this->formType)=='EDIT')
 	        {
 	            $errorMessage = $this->getMessage("FORM_PARENT_SHOULD_NOT_SAME_AS_ITSELF");                                
 	            $this->m_ValidateErrors[$element->objectName] = $errorMessage;
 	        }           
 			
-	        if (!$this->hasRootExcept($currentId) && strtoupper($this->m_FormType)=='EDIT')
+	        if (!$this->hasRootExcept($currentId) && strtoupper($this->formType)=='EDIT')
 	        {
 	        	$errorMessage = $this->getMessage("FORM_ITS_LAST_ROOT_CATEGORY");                                
 	            $this->m_ValidateErrors[$element->objectName] = $errorMessage;
 	        }
 	        
 	        /* todo:
-        	if ($this->isMovedToChild($parentId,$currentId) && strtoupper($this->m_FormType)=='EDIT')
+        	if ($this->isMovedToChild($parentId,$currentId) && strtoupper($this->formType)=='EDIT')
 	        {
 	        	$errorMessage = $this->getMessage("FORM_CANNOT_MOVE_ITS_CHILD");                                
 	            $this->m_ValidateErrors[$element->objectName] = $errorMessage;

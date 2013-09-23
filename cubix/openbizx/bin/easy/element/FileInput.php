@@ -43,7 +43,7 @@ class FileInput extends InputElement
     
     public function getValue()
     {
-    	if(!$this->value && strtoupper($this->getFormObj()->m_FormType) !='NEW')
+    	if(!$this->value && strtoupper($this->getFormObj()->formType) !='NEW')
     	{
     		$rec = $this->getFormObj()->getActiveRecord();
     		$this->value = $rec[$this->m_FieldName];

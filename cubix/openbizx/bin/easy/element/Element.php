@@ -29,7 +29,7 @@ class Element extends MetaObject implements iUIControl
     public $cssErrorClass;
     public $width;
     public $height;
-    public $m_BizDataObj;
+    public $bizDataObj;
     public $m_Hidden = "N";       // support expression
     public $m_HTMLAttr;
     public $m_Label;
@@ -37,7 +37,7 @@ class Element extends MetaObject implements iUIControl
     public $m_Translatable;
     public $m_FuzzySearch;
     public $m_OnEventLog;
-    public $m_AllowURLParam = 'N';
+    public $allowURLParam = 'N';
     public $m_XMLMeta;
 
     public $m_SortFlag;
@@ -49,12 +49,12 @@ class Element extends MetaObject implements iUIControl
     public $m_TabSet;
     public $m_TabSetCode;
     public $m_FieldName;
-    public $m_Required = null;
-    public $m_Validator = null;
+    public $required = null;
+    public $validator = null;
     public $m_ClientValidator = null;
 	public $m_KeepCookie = null;
 	public $m_CookieLifetime = 3600;
-	public $m_BackgroundColor;
+	public $backgroundColor;
 	
 	public $m_DataRole = "";
 	
@@ -84,12 +84,12 @@ class Element extends MetaObject implements iUIControl
     protected function readMetaData(&$xmlArr)
     {
         $this->objectName = isset($xmlArr["ATTRIBUTES"]["NAME"]) ? $xmlArr["ATTRIBUTES"]["NAME"] : null;
-        $this->m_BizDataObj = isset($xmlArr["ATTRIBUTES"]["BIZDATAOBJ"]) ? $xmlArr["ATTRIBUTES"]["BIZDATAOBJ"] : null;
-		$this->m_BackgroundColor = isset($xmlArr["ATTRIBUTES"]["BACKGROUNDCOLOR"]) ? $xmlArr["ATTRIBUTES"]["BACKGROUNDCOLOR"] : null;        
+        $this->bizDataObj = isset($xmlArr["ATTRIBUTES"]["BIZDATAOBJ"]) ? $xmlArr["ATTRIBUTES"]["BIZDATAOBJ"] : null;
+		$this->backgroundColor = isset($xmlArr["ATTRIBUTES"]["BACKGROUNDCOLOR"]) ? $xmlArr["ATTRIBUTES"]["BACKGROUNDCOLOR"] : null;        
         $this->className = isset($xmlArr["ATTRIBUTES"]["CLASS"]) ? $xmlArr["ATTRIBUTES"]["CLASS"] : null;
         $this->objectDescription = isset($xmlArr["ATTRIBUTES"]["DESCRIPTION"]) ? $xmlArr["ATTRIBUTES"]["DESCRIPTION"] : null;
-        $this->m_Access = isset($xmlArr["ATTRIBUTES"]["ACCESS"]) ? $xmlArr["ATTRIBUTES"]["ACCESS"] : null;
-        $this->m_DefaultValue = isset($xmlArr["ATTRIBUTES"]["DEFAULTVALUE"]) ? $xmlArr["ATTRIBUTES"]["DEFAULTVALUE"] : null;
+        $this->access = isset($xmlArr["ATTRIBUTES"]["ACCESS"]) ? $xmlArr["ATTRIBUTES"]["ACCESS"] : null;
+        $this->defaultValue = isset($xmlArr["ATTRIBUTES"]["DEFAULTVALUE"]) ? $xmlArr["ATTRIBUTES"]["DEFAULTVALUE"] : null;
         $this->cssClass = isset($xmlArr["ATTRIBUTES"]["CSSCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSCLASS"] : null;
         $this->cssErrorClass = isset($xmlArr["ATTRIBUTES"]["CSSERRORCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSERRORCLASS"] : "input_error";
         $this->style = isset($xmlArr["ATTRIBUTES"]["STYLE"]) ? $xmlArr["ATTRIBUTES"]["STYLE"] : null;
@@ -105,10 +105,10 @@ class Element extends MetaObject implements iUIControl
         $this->m_Translatable = isset($xmlArr["ATTRIBUTES"]["TRANSLATABLE"]) ? $xmlArr["ATTRIBUTES"]["TRANSLATABLE"] : null;
         $this->m_FuzzySearch = isset($xmlArr["ATTRIBUTES"]["FUZZYSEARCH"]) ? $xmlArr["ATTRIBUTES"]["FUZZYSEARCH"] : null;
         $this->m_OnEventLog = isset($xmlArr["ATTRIBUTES"]["ONEVENTLOG"]) ? $xmlArr["ATTRIBUTES"]["ONEVENTLOG"] : null;
-        $this->m_Required = isset($xmlArr["ATTRIBUTES"]["REQUIRED"]) ? $xmlArr["ATTRIBUTES"]["REQUIRED"] : null;
-        $this->m_Validator = isset($xmlArr["ATTRIBUTES"]["VALIDATOR"]) ? $xmlArr["ATTRIBUTES"]["VALIDATOR"] : null;
+        $this->required = isset($xmlArr["ATTRIBUTES"]["REQUIRED"]) ? $xmlArr["ATTRIBUTES"]["REQUIRED"] : null;
+        $this->validator = isset($xmlArr["ATTRIBUTES"]["VALIDATOR"]) ? $xmlArr["ATTRIBUTES"]["VALIDATOR"] : null;
         $this->m_ClientValidator = isset($xmlArr["ATTRIBUTES"]["CLIENTVALIDATOR"]) ? $xmlArr["ATTRIBUTES"]["CLIENTVALIDATOR"] : null;
-        $this->m_AllowURLParam = isset($xmlArr["ATTRIBUTES"]["ALLOWURLPARAM"]) ? $xmlArr["ATTRIBUTES"]["ALLOWURLPARAM"] : 'Y';
+        $this->allowURLParam = isset($xmlArr["ATTRIBUTES"]["ALLOWURLPARAM"]) ? $xmlArr["ATTRIBUTES"]["ALLOWURLPARAM"] : 'Y';
         $this->m_KeepCookie = isset($xmlArr["ATTRIBUTES"]["KEEPCOOKIE"]) ? $xmlArr["ATTRIBUTES"]["KEEPCOOKIE"] : 'N';
         $this->m_CookieLifetime = isset($xmlArr["ATTRIBUTES"]["COOKIELIFETIME"]) ? (int)$xmlArr["ATTRIBUTES"]["COOKIELIFETIME"] : '3600';
 		$this->m_DataRole = isset($xmlArr["ATTRIBUTES"]["DATAROLE"]) ? $xmlArr["ATTRIBUTES"]["DATAROLE"] : null;
@@ -230,7 +230,7 @@ class Element extends MetaObject implements iUIControl
      */
     public function getDefaultValue()
     {
-        if ($this->m_DefaultValue == "" && $this->m_KeepCookie!='Y')
+        if ($this->defaultValue == "" && $this->m_KeepCookie!='Y')
             return "";
         $formObj = $this->getFormObj();
         if($this->m_KeepCookie=='Y'){
@@ -239,10 +239,10 @@ class Element extends MetaObject implements iUIControl
         	$defValue = $_COOKIE[$cookieName];         	       
         }                
         if(!$defValue){
-        	$defValue = Expression::evaluateExpression($this->m_DefaultValue, $formObj);
+        	$defValue = Expression::evaluateExpression($this->defaultValue, $formObj);
         }
         //add automatic append like new record (2)
-        if($this->m_DefaultValueRename!='N'){
+        if($this->defaultValueRename!='N'){
 	        if(!is_numeric($defValue)){
 		        $dataobj = $formObj->getDataObj();
 		        if($this->m_FieldName && $dataobj){
@@ -325,10 +325,10 @@ class Element extends MetaObject implements iUIControl
 
     protected function getBackgroundColor()
     {
-        if ($this->m_BackgroundColor == null)
+        if ($this->backgroundColor == null)
             return null;   
         $formObj = $this->getFormObj();
-        return Expression::evaluateExpression($this->m_BackgroundColor, $formObj);
+        return Expression::evaluateExpression($this->backgroundColor, $formObj);
     }        
     
     /**
@@ -514,14 +514,14 @@ class Element extends MetaObject implements iUIControl
      */
     public function checkRequired()
     {
-        if (!$this->m_Required || $this->m_Required == "")
+        if (!$this->required || $this->required == "")
             return false;
-        else if ($this->m_Required == "Y")
+        else if ($this->required == "Y")
             $required = true;
-        else if($this->m_Required == "N")
+        else if($this->required == "N")
             $required = false;
         else{
-            $required = Expression::evaluateExpression($this->m_Required, $this->getFormObj());
+            $required = Expression::evaluateExpression($this->required, $this->getFormObj());
             if(strtoupper($required)=='Y')
             {
             	$required=true;
@@ -546,8 +546,8 @@ class Element extends MetaObject implements iUIControl
     public function validate()
     {
         $ret = true;
-        if ($this->m_Validator)
-            $ret = Expression::evaluateExpression($this->m_Validator, $this->getFormObj());
+        if ($this->validator)
+            $ret = Expression::evaluateExpression($this->validator, $this->getFormObj());
         return $ret;
     }
 
@@ -579,12 +579,12 @@ class Element extends MetaObject implements iUIControl
     		$this->m_Label = I18n::t($this->m_Label, $this->getTransKey('Label'), $module, $this->getTransPrefix());
     	if (!empty($this->objectDescription))
     		$this->objectDescription = I18n::t($this->objectDescription, $this->getTransKey('Description'), $module, $this->getTransPrefix());
-        if (!empty($this->m_DefaultValue) && !preg_match("/\{/si",$this->m_DefaultValue))
-    		$this->m_DefaultValue = I18n::t($this->m_DefaultValue, $this->getTransKey('DefaultValue'), $module, $this->getTransPrefix());
+        if (!empty($this->defaultValue) && !preg_match("/\{/si",$this->defaultValue))
+    		$this->defaultValue = I18n::t($this->defaultValue, $this->getTransKey('DefaultValue'), $module, $this->getTransPrefix());
 		if (!empty($this->m_ElementSet))
     		$this->m_ElementSet = I18n::t($this->m_ElementSet, $this->getTransKey('ElementSet'), $module, $this->getTransPrefix());
-    	if (!empty($this->m_BlankOption))
-    		$this->m_BlankOption = I18n::t($this->m_BlankOption, $this->getTransKey('BlankOption'), $module, $this->getTransPrefix());
+    	if (!empty($this->blankOption))
+    		$this->blankOption = I18n::t($this->blankOption, $this->getTransKey('BlankOption'), $module, $this->getTransPrefix());
     	if (!empty($this->m_TabSet))
     		$this->m_TabSet = I18n::t($this->m_TabSet, $this->getTransKey('TabSet'), $module, $this->getTransPrefix());  
     	if (!empty($this->m_Hint))
@@ -616,10 +616,10 @@ class Element extends MetaObject implements iUIControl
     
     public function getDataObj()
     {
-    	if(!$this->m_BizDataObj){
+    	if(!$this->bizDataObj){
     		return $this->getFormObj()->getDataObj();
     	}else{
-    		return BizSystem::getDataObject($this->m_BizDataObj);
+    		return BizSystem::getDataObject($this->bizDataObj);
     	}
     }
 }

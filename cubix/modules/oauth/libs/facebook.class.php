@@ -3,7 +3,7 @@ require_once ('facebook/facebook.php');
 require_once ("oauth.class.php");
 class facebook extends oauthClass
 {
-	protected $m_Type='facebook';
+	protected $type='facebook';
 	protected $m_loginUrl;
 	private $m_akey;
 	private $m_skey;
@@ -44,7 +44,7 @@ class facebook extends oauthClass
 		$getSigned=$this->m_facebook->getSignedRequest();
 		$access_token['access_token_json']=$_GET;
 		$access_token['oauth_token_secret']=$_GET['code'];
-		Bizsystem::getSessionContext()->setVar($this->m_Type.'_access_token',$access_token);
+		Bizsystem::getSessionContext()->setVar($this->type.'_access_token',$access_token);
 		$userInfo=$this->userInfo();
 		$this->check($userInfo);
 	}
@@ -65,7 +65,7 @@ class facebook extends oauthClass
 	function userInfo(){
 		$me = $this->m_facebook->api('/me');
 		$user['id']         = $me['id'];
-		$user['type']         = $this->m_Type;
+		$user['type']         = $this->type;
 		$user['email']         = $me['data']['email'];
 		$user['uname']       = $me['name'];
 		$user['location']    = $me['locale'];

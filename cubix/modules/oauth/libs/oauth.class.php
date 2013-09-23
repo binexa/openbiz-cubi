@@ -19,7 +19,7 @@ class oauthClass extends EasyForm
 	 * e.g.: Taobao or Facebook etc..
 	 * @var string
 	 */
-	protected $m_Type;
+	protected $type;
 		
 	/**
 	 * 
@@ -43,7 +43,7 @@ class oauthClass extends EasyForm
 	
   public function __construct()  
     {
-         $this->m_CallBack=SITE_URL.'ws.php/oauth/callback/callback/type_'.$this->m_Type.'/';
+         $this->m_CallBack=SITE_URL.'ws.php/oauth/callback/callback/type_'.$this->type.'/';
     } 
 
     
@@ -55,17 +55,17 @@ class oauthClass extends EasyForm
 	
 	public function getProviderList()
 	{
-	  	 $recArr=BizSystem::sessionContext()->getVar("_OAUTH_{$this->m_Type}");
+	  	 $recArr=BizSystem::sessionContext()->getVar("_OAUTH_{$this->type}");
 	  	 $recArr=false;
 		 if(!$recArr)
 			 {
 			 $do=BizSystem::getObject($this->m_oauthProviderDo);
-			 $recArr=$do->fetchOne("[status]=1 and [type]='{$this->m_Type}'",1);
+			 $recArr=$do->fetchOne("[status]=1 and [type]='{$this->type}'",1);
 			 if($recArr)
 			 {
 				$recArr=$recArr->toArray();
 			 }
-			 BizSystem::sessionContext()->setVar("_OAUTH_{$this->m_Type}",$recArr);
+			 BizSystem::sessionContext()->setVar("_OAUTH_{$this->type}",$recArr);
 		 }
 		 $recArr['key']=trim($recArr['key']);
 		 $recArr['value']=trim($recArr['value']);
@@ -99,7 +99,7 @@ class oauthClass extends EasyForm
 	
 		$UserTokenObj = BizSystem::getObject('oauth.do.UserTokenDO');
 		$UserToken=$UserTokenObj->fetchOne("[oauth_uid]='".$oauth_data['id']."'");
-		$access_token=Bizsystem::getSessionContext()->getVar($this->m_Type.'_access_token');
+		$access_token=Bizsystem::getSessionContext()->getVar($this->type.'_access_token');
 		$oauth_data['oauth_token']=$access_token['oauth_token'] ; 
 		$oauth_data['oauth_token_secret']=$access_token['oauth_token_secret']; 
 		$oauth_data['access_token_json']=$access_token['access_token_json']; 

@@ -32,10 +32,10 @@ class HTMLPreview extends Element
     public $m_Label;
     public $m_DisplayFormat;
     public $text;
-    public $m_Link;    
+    public $link;    
     public $m_Target;
-    public $m_MaxLength;
-    public $m_Percent;
+    public $maxLength;
+    public $percent;
     /**
      * Read array meta data, and store to meta object
      *
@@ -48,11 +48,11 @@ class HTMLPreview extends Element
         $this->m_FieldName = isset($xmlArr["ATTRIBUTES"]["FIELDNAME"]) ? $xmlArr["ATTRIBUTES"]["FIELDNAME"] : null;
         $this->m_Label = isset($xmlArr["ATTRIBUTES"]["LABEL"]) ? $xmlArr["ATTRIBUTES"]["LABEL"] : null;
         $this->text = isset($xmlArr["ATTRIBUTES"]["TEXT"]) ? $xmlArr["ATTRIBUTES"]["TEXT"] : null;
-        $this->m_Link = isset($xmlArr["ATTRIBUTES"]["LINK"]) ? $xmlArr["ATTRIBUTES"]["LINK"] : null;
+        $this->link = isset($xmlArr["ATTRIBUTES"]["LINK"]) ? $xmlArr["ATTRIBUTES"]["LINK"] : null;
         $this->m_Target = isset($xmlArr["ATTRIBUTES"]["TARGET"]) ? $xmlArr["ATTRIBUTES"]["TARGET"] : null;
-        $this->m_MaxLength = isset($xmlArr["ATTRIBUTES"]["MAXLENGHT"]) ? $xmlArr["ATTRIBUTES"]["MAXLENGHT"] : null;
-        $this->m_MaxLength = isset($xmlArr["ATTRIBUTES"]["MAXLENGTH"]) ? $xmlArr["ATTRIBUTES"]["MAXLENGTH"] : null;
-        $this->m_Percent = isset($xmlArr["ATTRIBUTES"]["PERCENT"]) ? $xmlArr["ATTRIBUTES"]["PERCENT"] : "N";
+        $this->maxLength = isset($xmlArr["ATTRIBUTES"]["MAXLENGHT"]) ? $xmlArr["ATTRIBUTES"]["MAXLENGHT"] : null;
+        $this->maxLength = isset($xmlArr["ATTRIBUTES"]["MAXLENGTH"]) ? $xmlArr["ATTRIBUTES"]["MAXLENGTH"] : null;
+        $this->percent = isset($xmlArr["ATTRIBUTES"]["PERCENT"]) ? $xmlArr["ATTRIBUTES"]["PERCENT"] : "N";
         $this->m_DisplayFormat = isset($xmlArr["ATTRIBUTES"]["DISPLAYFORMAT"]) ? $xmlArr["ATTRIBUTES"]["DISPLAYFORMAT"] : null;
     }
 
@@ -78,10 +78,10 @@ class HTMLPreview extends Element
      */
     protected function getLink()
     {
-        if ($this->m_Link == null)
+        if ($this->link == null)
             return null;
         $formobj = $this->getFormObj();
-        return Expression::evaluateExpression($this->m_Link, $formobj);
+        return Expression::evaluateExpression($this->link, $formobj);
     }
 
     /**
@@ -126,14 +126,14 @@ class HTMLPreview extends Element
         if ($this->m_Translatable == 'Y')
             $value = $this->translateString($value);
         $value_org = strip_tags($value);
-        if((int)$this->m_MaxLength>0){
+        if((int)$this->maxLength>0){
 	        if(function_exists('mb_strlen') && function_exists('mb_substr')){
-	        	if(mb_strlen($value,'UTF8') > (int)$this->m_MaxLength){
-	        		$value = mb_substr($value,0,(int)$this->m_MaxLength,'UTF8').'...';
+	        	if(mb_strlen($value,'UTF8') > (int)$this->maxLength){
+	        		$value = mb_substr($value,0,(int)$this->maxLength,'UTF8').'...';
 	        	}        	
 	        }else{
-	        	if(strlen($value) > (int)$this->m_MaxLength){
-	        		$value = substr($value,0,(int)$this->m_MaxLength).'...';
+	        	if(strlen($value) > (int)$this->maxLength){
+	        		$value = substr($value,0,(int)$this->maxLength).'...';
 	        	}         	
 	        }
         }

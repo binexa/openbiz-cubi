@@ -194,11 +194,11 @@ class OptionElement extends InputElement
                 return false;
 
             $recList = array();
-            $oldAssoc = $bizObj->m_Association;
-            $bizObj->m_Association = null;
+            $oldAssoc = $bizObj->association;
+            $bizObj->association = null;
             QueryStringParam::reset();
             $recList = $bizObj->directFetch($searchRule);
-            $bizObj->m_Association = $oldAssoc;
+            $bizObj->association = $oldAssoc;
 
             foreach ($recList as $rec)
             {

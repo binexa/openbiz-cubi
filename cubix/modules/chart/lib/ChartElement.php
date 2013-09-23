@@ -131,8 +131,8 @@ class ChartElement extends Element
     		$this->key = I18n::t($this->key, $this->getTransKey('Label'), $module);    		
     	if (!empty($this->objectDescription))
     		$this->objectDescription = I18n::t($this->objectDescription, $this->getTransKey('Description'), $module);
-        if (!empty($this->m_DefaultValue))
-    		$this->m_DefaultValue = I18n::t($this->m_DefaultValue, $this->getTransKey('DefaultValue'), $module);
+        if (!empty($this->defaultValue))
+    		$this->defaultValue = I18n::t($this->defaultValue, $this->getTransKey('DefaultValue'), $module);
 		if (!empty($this->m_ElementSet))
     		$this->m_ElementSet = I18n::t($this->m_ElementSet, $this->getTransKey('ElementSet'), $module);    		
     }

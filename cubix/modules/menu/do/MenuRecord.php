@@ -39,7 +39,7 @@ class MenuRecord
 	public $m_CssClass;
 	public $m_IconImage;
 	public $m_IconCSSClass;
-    public $m_Access;
+    public $access;
 	public $m_Current = 0;
 	public $childNodes = null;
 
@@ -69,15 +69,15 @@ class MenuRecord
         //$this->m_CssClass = $rec['Id'];
         $this->m_IconImage = $rec['icon'];
         $this->m_IconCSSClass = $rec['icon_css'];
-        $this->m_Access = $rec['access'];
+        $this->access = $rec['access'];
         
         $this->translate();	// translate for multi-language support
     }
     
     public function allowAccess()
     {
-    	$access = $this->m_Access;
-        if (!$access) $access = $this->m_Access;
+    	$access = $this->access;
+        if (!$access) $access = $this->access;
         if ($access)
         	return BizSystem::allowUserAccess($access);
         return OPENBIZ_ALLOW;

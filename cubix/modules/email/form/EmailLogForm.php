@@ -18,7 +18,7 @@ class EmailLogForm extends EasyForm
 		$emailSvc = BizSystem::getService(EMAIL_SERVICE);
 		for($i=0;$i<count($resultRecords);$i++)
 		{
-			$account = $emailSvc->m_Accounts->get($resultRecords[$i]['sender']);						
+			$account = $emailSvc->accounts->get($resultRecords[$i]['sender']);						
 			$resultRecords[$i]['sender_email'] = $resultRecords[$i]['sender'];
 			$resultRecords[$i]['sender'] = $resultRecords[$i]['sender_name'];			
 			$recipentArr = preg_split('/;/',$resultRecords[$i]['recipients']);
@@ -43,7 +43,7 @@ class EmailLogForm extends EasyForm
 	public function fetchData(){
 		$resultRecords = parent::fetchData();
 		$emailSvc = BizSystem::getService(EMAIL_SERVICE);
-		$account = $emailSvc->m_Accounts->get($resultRecords['sender']);						
+		$account = $emailSvc->accounts->get($resultRecords['sender']);						
 		
 		$resultRecords['sender_email'] = $resultRecords['sender'];
 		$resultRecords['sender'] = $resultRecords['sender_name'];
@@ -74,7 +74,7 @@ class EmailLogForm extends EasyForm
 
     public function ClearLog()	
 	{
-       if ($this->m_Resource != "" && !$this->allowAccess($this->m_Resource.".delete"))
+       if ($this->resource != "" && !$this->allowAccess($this->resource.".delete"))
             return BizSystem::clientProxy()->redirectView(OPENBIZ_ACCESS_DENIED_VIEW);
 
         try
@@ -87,7 +87,7 @@ class EmailLogForm extends EasyForm
            return;
         }
        
-        if (strtoupper($this->m_FormType) == "LIST")
+        if (strtoupper($this->formType) == "LIST")
             $this->rerender();
 
         $this->runEventLog();

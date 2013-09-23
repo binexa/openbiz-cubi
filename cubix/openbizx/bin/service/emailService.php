@@ -33,7 +33,7 @@ class emailService extends MetaObject
      *
      * @var array
      */
-    public $m_Accounts = null;
+    public $accounts = null;
 
     /**
      * Error Message returned by mail object
@@ -88,7 +88,7 @@ class emailService extends MetaObject
     {
         $this->readMetadata($xmlArr);
         $this->_constructMail();
-        $acct = $this->m_Accounts->current();
+        $acct = $this->accounts->current();
         if (! $acct)
             return; //TODO Throw exception
         $this->useAccount($acct->objectName);
@@ -103,7 +103,7 @@ class emailService extends MetaObject
     protected function readMetadata(&$xmlArr)
     {
         parent::readMetaData($xmlArr);
-        $this->m_Accounts = new MetaIterator($xmlArr["PLUGINSERVICE"]["ACCOUNTS"]["ACCOUNT"], "EmailAccount");
+        $this->accounts = new MetaIterator($xmlArr["PLUGINSERVICE"]["ACCOUNTS"]["ACCOUNT"], "EmailAccount");
         $this->_logEnabled = $xmlArr["PLUGINSERVICE"]["LOGGING"]["ATTRIBUTES"]["ENABLED"];
         if ($this->_logEnabled)
         {
@@ -146,7 +146,7 @@ class emailService extends MetaObject
             $this->_constructMail();
 
         $this->m_UseAccount = $accountName;
-        $account = $this->m_Accounts->get($accountName);
+        $account = $this->accounts->get($accountName);
 
         if ($account->m_IsSMTP == "Y")
         {
@@ -323,7 +323,7 @@ class emailService extends MetaObject
         }
         if ($this->_logType == 'DB')
         {
-            $account = $this->m_Accounts->get($this->m_UseAccount);
+            $account = $this->accounts->get($this->m_UseAccount);
             $sender_name = $account->m_FromName;
             $sender = $account->m_FromEmail;
             

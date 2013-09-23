@@ -20,7 +20,7 @@ class NotificationWidgetForm extends EasyForm
 		$this->triggerCheckers();
 		
 		$result = parent::render();
-		if(!$this->m_TotalRecords)
+		if(!$this->totalRecords)
 		{
 			return "";
 		}

@@ -30,21 +30,21 @@ class DataRecord implements Iterator, ArrayAccess
      *
      * @var array
      */
-    protected $m_var = array();
+    protected $varValue = array();
 
     /**
      * Old record in array format
      *
      * @var array
      */
-    protected $m_var_old = array();
+    protected $oldVarValue = array();
 
     /**
      * Reference of {@link BizDataObj}
      *
      * @var BizDataObj
      */
-    protected $m_BizObj = null;
+    protected $bizDataObj = null;
 
     /**
      * Initialize DataRecord with record array.
@@ -60,18 +60,18 @@ class DataRecord implements Iterator, ArrayAccess
         if ($recArray != null)
         {
             if (is_array($recArray)) {
-                $this->m_var = $recArray;
-                $this->m_var_old = $recArray;
+                $this->varValue = $recArray;
+                $this->oldVarValue = $recArray;
             }
             else if (is_a($recArray,"DataRecord")) {
-                $this->m_var = $recArray->toArray();
-                $this->m_var_old = $this->m_var;
+                $this->varValue = $recArray->toArray();
+                $this->oldVarValue = $this->varValue;
             }
         }
         else
-            $this->m_var = $bizObj->newRecord();
+            $this->varValue = $bizObj->newRecord();
 
-        $this->m_BizObj = $bizObj;
+        $this->bizDataObj = $bizObj;
     }
 
     // Iterator methods BEGIN---------
@@ -84,17 +84,17 @@ class DataRecord implements Iterator, ArrayAccess
      */
     public function get($key)
     {
-        return isset($this->m_var[$key]) ? $this->m_var[$key] : null;
+        return isset($this->varValue[$key]) ? $this->varValue[$key] : null;
     }
     
     public function getOldValue($key)
     {
-    	return isset($this->m_var_old[$key]) ? $this->m_var_old[$key] : null;
+    	return isset($this->oldVarValue[$key]) ? $this->oldVarValue[$key] : null;
     }
 
 	public function getDataObj()
     {
-    	return $this->m_BizObj;
+    	return $this->bizDataObj;
     }
     /**
      * Set item value of array
@@ -104,7 +104,7 @@ class DataRecord implements Iterator, ArrayAccess
      */
     public function set($key, $val)
     {
-        $this->m_var[$key] = $val;
+        $this->varValue[$key] = $val;
 
     }
 
@@ -115,7 +115,7 @@ class DataRecord implements Iterator, ArrayAccess
      */
     public function rewind()
     { 
-        reset($this->m_var);
+        reset($this->varValue);
     }
 
     /**
@@ -125,7 +125,7 @@ class DataRecord implements Iterator, ArrayAccess
      */
     public function current()
     { 
-        return current($this->m_var);
+        return current($this->varValue);
     }
 
 
@@ -136,7 +136,7 @@ class DataRecord implements Iterator, ArrayAccess
      */
     public function key()
     { 
-        return key($this->m_var);
+        return key($this->varValue);
     }
 
     /**
@@ -146,7 +146,7 @@ class DataRecord implements Iterator, ArrayAccess
      */
     public function next()
     { 
-        return next($this->m_var);
+        return next($this->varValue);
     }
 
     /**
@@ -169,7 +169,7 @@ class DataRecord implements Iterator, ArrayAccess
      */
     public function offsetExists($key)
     { 
-        return isset($this->m_var[$key]);
+        return isset($this->varValue[$key]);
     }
 
     /**
@@ -201,7 +201,7 @@ class DataRecord implements Iterator, ArrayAccess
      */
     public function offsetUnset($key)
     { 
-        unset($this->m_var[$key]);
+        unset($this->varValue[$key]);
     }
 
     /**
@@ -240,16 +240,16 @@ class DataRecord implements Iterator, ArrayAccess
      */
     public function save()
     {
-        if (count($this->m_var_old) > 0)
-            $ok = $this->m_BizObj->updateRecord($this->m_var, $this->m_var_old);
+        if (count($this->oldVarValue) > 0)
+            $ok = $this->bizDataObj->updateRecord($this->varValue, $this->oldVarValue);
         else
-            $ok = $this->m_BizObj->insertRecord($this->m_var);
+            $ok = $this->bizDataObj->insertRecord($this->varValue);
 
         // repopulate current record with bizdataobj activerecord
         if ($ok)
         {
-            $this->m_var = $this->m_BizObj->getActiveRecord();
-            $this->m_var_old = $this->m_var;
+            $this->varValue = $this->bizDataObj->getActiveRecord();
+            $this->oldVarValue = $this->varValue;
         }
 
         return $ok;
@@ -262,7 +262,7 @@ class DataRecord implements Iterator, ArrayAccess
      */
     public function delete()
     {
-        return $this->m_BizObj->deleteRecord($this->m_var);
+        return $this->bizDataObj->deleteRecord($this->varValue);
     }
 
     /**
@@ -272,7 +272,7 @@ class DataRecord implements Iterator, ArrayAccess
      */
     public function getError()
     {
-        return $this->m_BizObj->getErrorMessage();
+        return $this->bizDataObj->getErrorMessage();
     }
 
     /**
@@ -282,7 +282,7 @@ class DataRecord implements Iterator, ArrayAccess
      */
     public function toArray()
     {
-        return $this->m_var;
+        return $this->varValue;
     }
 
     /**
@@ -293,7 +293,7 @@ class DataRecord implements Iterator, ArrayAccess
      */
     public function getRefObject($objName)
     {
-        return $this->m_BizObj->getRefObject($objName);
+        return $this->bizDataObj->getRefObject($objName);
     }
 
 }

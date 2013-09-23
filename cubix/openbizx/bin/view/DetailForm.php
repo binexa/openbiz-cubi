@@ -18,7 +18,7 @@ class DetailForm extends BaseForm
 	protected $directMethodList = array('deleterecord','switchform'); 
 	
 	public $recordId;
-	public $m_ActiveRecord;
+	public $activeRecord;
 	
 	// get request parameters from the url
 	protected function getUrlParameters()
@@ -42,8 +42,8 @@ class DetailForm extends BaseForm
     public function fetchData()
     {    	
         // if has valid active record, return it, otherwise do a query
-        if ($this->m_ActiveRecord != null)
-            return $this->m_ActiveRecord;
+        if ($this->activeRecord != null)
+            return $this->activeRecord;
         
         $dataObj = $this->getDataObj();
         if ($dataObj == null) return;

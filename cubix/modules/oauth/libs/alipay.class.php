@@ -20,7 +20,7 @@ require_once("alipay/alipay_notify.class.php");
 require_once "oauth.class.php";
 class alipay extends oauthClass
 {
-	protected $m_Type='alipay';
+	protected $type='alipay';
 	protected $m_loginUrl;
 	private $m_akey;
 	private $m_skey;
@@ -105,7 +105,7 @@ class alipay extends oauthClass
 	//用户资料
 	function userInfo(){
 		$user['id']          = $_GET['user_id'];
-		$user['type']        = $this->m_Type;
+		$user['type']        = $this->type;
 		$user['uname']       = $_GET['real_name'];
 		return $user;
 	}

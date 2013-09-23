@@ -23,7 +23,7 @@ class ChangeLogService
 	{
 		if(!$panel)
 		{
-			$panel = clone $formObj->m_DataPanel;
+			$panel = clone $formObj->dataPanel;
 		}		
 		$postFields = $_POST;
    		$elem_mapping = array();
@@ -41,8 +41,8 @@ class ChangeLogService
 			return true;
 		}
 				
-    	$cond_column = $logDO->m_Association['CondColumn'];
-    	$cond_value = $logDO->m_Association['CondValue'];
+    	$cond_column = $logDO->association['CondColumn'];
+    	$cond_value = $logDO->association['CondValue'];
     	
     	if($cond_column)
     	{

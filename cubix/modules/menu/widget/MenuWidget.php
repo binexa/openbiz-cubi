@@ -23,8 +23,8 @@ class MenuWidget extends MetaObject implements iUIControl
     public $searchRule;
     public $m_GlobalSearchRule;
     public $m_MenuDeep;
-    public $m_TemplateEngine;
-    public $m_TemplateFile;
+    public $templateEngine;
+    public $templateFile;
     public $dataObjName;
     public $cacheLifeTime;
     public $m_CssClass;
@@ -43,8 +43,8 @@ class MenuWidget extends MetaObject implements iUIControl
         $this->m_Title = isset($xmlArr["MENUWIDGET"]["ATTRIBUTES"]["TITLE"]) ? $xmlArr["MENUWIDGET"]["ATTRIBUTES"]["TITLE"] : null;
         $this->objectDescription = isset($xmlArr["MENUWIDGET"]["ATTRIBUTES"]["DESCRIPTION"]) ? $xmlArr["MENUWIDGET"]["ATTRIBUTES"]["DESCRIPTION"] : null;
         $this->m_CssClass = isset($xmlArr["MENUWIDGET"]["ATTRIBUTES"]["CSSCLASS"]) ? $xmlArr["MENUWIDGET"]["ATTRIBUTES"]["CSSCLASS"] : null;
-        $this->m_TemplateEngine = isset($xmlArr["MENUWIDGET"]["ATTRIBUTES"]["TEMPLATEENGINE"]) ? $xmlArr["MENUWIDGET"]["ATTRIBUTES"]["TEMPLATEENGINE"] : null;
-        $this->m_TemplateFile = isset($xmlArr["MENUWIDGET"]["ATTRIBUTES"]["TEMPLATEFILE"]) ? $xmlArr["MENUWIDGET"]["ATTRIBUTES"]["TEMPLATEFILE"] : null;
+        $this->templateEngine = isset($xmlArr["MENUWIDGET"]["ATTRIBUTES"]["TEMPLATEENGINE"]) ? $xmlArr["MENUWIDGET"]["ATTRIBUTES"]["TEMPLATEENGINE"] : null;
+        $this->templateFile = isset($xmlArr["MENUWIDGET"]["ATTRIBUTES"]["TEMPLATEFILE"]) ? $xmlArr["MENUWIDGET"]["ATTRIBUTES"]["TEMPLATEFILE"] : null;
         $this->m_StartMenuItem = isset($xmlArr["MENUWIDGET"]["ATTRIBUTES"]["STARTMENUITEM"]) ? $xmlArr["MENUWIDGET"]["ATTRIBUTES"]["STARTMENUITEM"] : null;
         $this->m_StartMenuID = isset($xmlArr["MENUWIDGET"]["ATTRIBUTES"]["STARTMENUID"]) ? $xmlArr["MENUWIDGET"]["ATTRIBUTES"]["STARTMENUID"] : null;
         $this->searchRule = isset($xmlArr["MENUWIDGET"]["ATTRIBUTES"]["SEARCHRULE"]) ? $xmlArr["MENUWIDGET"]["ATTRIBUTES"]["SEARCHRULE"] : null;
@@ -126,7 +126,7 @@ class MenuWidget extends MetaObject implements iUIControl
             if ($this->dataObjName)
                 $this->dataObj = BizSystem::getObject($this->dataObjName, 1);
             if ($this->dataObj)
-                $this->dataObj->m_BizFormName = $this->objectName;
+                $this->dataObj->bizFormName = $this->objectName;
             else {
                 //BizSystem::clientProxy()->showErrorMessage("Cannot get DataObj of ".$this->dataObjName.", please check your metadata file.");
                 return null;

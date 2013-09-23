@@ -48,7 +48,7 @@ class LicenseInitializeForm extends LicenseForm
 	
 	public function getTrailLicense()
 	{
-		$func = $this->m_ModuleName.'_trial_handler';
+		$func = $this->moduleName.'_trial_handler';
 		$result = $func();		
 		return $result;
 	}

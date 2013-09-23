@@ -11,7 +11,7 @@
 		 $sql="SELECT `type` ,  `key` ,  `value`  FROM  `{$do->mainTableName}` where status=1   LIMIT 0 , 15 ";
 		 $db=$do->getDBConnection();
 		 $recArr=$db->fetchAssoc($sql);
-		 BizSystem::sessionContext()->setVar("_OAUTH_{$this->m_Type}",$recArr);
+		 BizSystem::sessionContext()->setVar("_OAUTH_{$this->type}",$recArr);
 	  }
 $this->assign('_OauthLogin', $recArr);
 {/php}
@@ -27,13 +27,13 @@ $this->assign('_OauthLogin', $recArr);
 class OauthLogin extends InputElement
 {
 	protected $m_RedirectURL;
-	protected $m_AssocURL;
+	protected $assocURL;
 	
 	public function readMetaData($xmlArr)
 	{
 		$result = parent::readMetaData($xmlArr);
 		$this->m_RedirectURL = isset($xmlArr["ATTRIBUTES"]["REDIRECTURL"]) ? $xmlArr["ATTRIBUTES"]["REDIRECTURL"] : null;
-		$this->m_AssocURL 	= isset($xmlArr["ATTRIBUTES"]["ASSOCURL"]) ? $xmlArr["ATTRIBUTES"]["ASSOCURL"] : null;
+		$this->assocURL 	= isset($xmlArr["ATTRIBUTES"]["ASSOCURL"]) ? $xmlArr["ATTRIBUTES"]["ASSOCURL"] : null;
 		return $result;
 	}
 	
@@ -51,10 +51,10 @@ class OauthLogin extends InputElement
 			 	$this->m_RedirectURL = Expression::evaluateExpression($this->m_RedirectURL, $this);
 			 	$url_append.="redirect_url=".urlencode($this->m_RedirectURL)."&";
 			 }
-			 if($this->m_AssocURL)
+			 if($this->assocURL)
 			 {
-			 	$this->m_AssocURL = Expression::evaluateExpression($this->m_AssocURL, $this);
-			 	$url_append.="assoc_url=".urlencode($this->m_AssocURL)."&";
+			 	$this->assocURL = Expression::evaluateExpression($this->assocURL, $this);
+			 	$url_append.="assoc_url=".urlencode($this->assocURL)."&";
 			 }
 			 if(count($recArr))
 			 {

@@ -134,7 +134,7 @@ class AttrsForm extends EasyForm
             return null;
         // load default values if new record value is empty
         $defaultRecArr = array();
-        foreach ($this->m_DataPanel as $element)
+        foreach ($this->dataPanel as $element)
         {
             if ($element->m_FieldName)
             {

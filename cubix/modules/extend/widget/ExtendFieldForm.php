@@ -48,14 +48,14 @@ class ExtendFieldForm extends PickerForm
         	//$parentForm->getDataObj()->clearSearchRule();
 	        $parentDo = $parentForm->getDataObj();
 	        
-	        $column = $parentDo->m_Association['Column'];
+	        $column = $parentDo->association['Column'];
 	    	$field = $parentDo->getFieldNameByColumn($column);	    	    	
-	    	$parentRefVal = $parentDo->m_Association["FieldRefVal"];
+	    	$parentRefVal = $parentDo->association["FieldRefVal"];
 	    	
 			$recArr[$field] = $parentRefVal;
-	    	if($parentDo->m_Association['Relationship']=='1-M'){	    			    	
-		    	$cond_column = $parentDo->m_Association['CondColumn'];
-		    	$cond_value = $parentDo->m_Association['CondValue'];
+	    	if($parentDo->association['Relationship']=='1-M'){	    			    	
+		    	$cond_column = $parentDo->association['CondColumn'];
+		    	$cond_value = $parentDo->association['CondValue'];
 		    	if($cond_column)
 		    	{
 		    		$cond_field = $parentDo->getFieldNameByColumn($cond_column);

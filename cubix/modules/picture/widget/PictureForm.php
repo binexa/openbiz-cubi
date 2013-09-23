@@ -16,15 +16,15 @@ class PictureForm extends PickerForm
 	public $basePath = 'picture';
 	
 	// keep canUpdate in session
-	public function getSessionVars($sessionContext)
+	public function loadSessionVars($sessionContext)
     {
-        parent::getSessionVars($sessionContext);
+        parent::loadSessionVars($sessionContext);
 		$sessionContext->getObjVar($this->objectName, "CanUpdateRecord", $this->m_CanUpdateRecord);
 	}
 	
-	public function setSessionVars($sessionContext)
+	public function saveSessionVars($sessionContext)
     {
-        parent::setSessionVars($sessionContext);
+        parent::saveSessionVars($sessionContext);
 		$sessionContext->setObjVar($this->objectName, "CanUpdateRecord", $this->m_CanUpdateRecord);
 	}
 	
@@ -38,7 +38,7 @@ class PictureForm extends PickerForm
 		
 		try {
             $parentForm = BizSystem::getObject($this->m_ParentFormName);		
-            $cond_value = $parentForm->getDataObj()->m_Association['CondValue'];
+            $cond_value = $parentForm->getDataObj()->association['CondValue'];
             if($cond_value)
             {
                 $upload_dir = $cond_value;
@@ -119,13 +119,13 @@ class PictureForm extends PickerForm
         	//$parentForm->getDataObj()->clearSearchRule();
 	        $parentDo = $parentForm->getDataObj();
 	        
-	        $column = $parentDo->m_Association['Column'];
+	        $column = $parentDo->association['Column'];
 	    	$field = $parentDo->getFieldNameByColumn($column);	    	    	
-	    	$parentRefVal = $parentDo->m_Association["FieldRefVal"];
+	    	$parentRefVal = $parentDo->association["FieldRefVal"];
 	    	
 			$recArr[$field] = $parentRefVal;
-	    	$cond_column = $parentDo->m_Association['CondColumn'];
-	    	$cond_value = $parentDo->m_Association['CondValue'];
+	    	$cond_column = $parentDo->association['CondColumn'];
+	    	$cond_value = $parentDo->association['CondValue'];
 	    	if($cond_column)
 	    	{
 	    		$cond_field = $parentDo->getFieldNameByColumn($cond_column);
@@ -182,7 +182,7 @@ class PictureForm extends PickerForm
             if(!$this->canDeleteRecord($dataRec))
             {
             	$this->errorMessage = $this->getMessage("FORM_OPEATION_NOT_PERMITTED",$this->objectName);         
-        		if (strtoupper($this->m_FormType) == "LIST"){
+        		if (strtoupper($this->formType) == "LIST"){
         			BizSystem::log(LOG_ERR, "DATAOBJ", "DataObj error = ".$errorMsg);
         			BizSystem::clientProxy()->showClientAlert($this->errorMessage);
         		}else{
@@ -202,7 +202,7 @@ class PictureForm extends PickerForm
                 return;
             }
         }
-        if (strtoupper($this->m_FormType) == "LIST")
+        if (strtoupper($this->formType) == "LIST")
             $this->rerender();
 
         $this->runEventLog();

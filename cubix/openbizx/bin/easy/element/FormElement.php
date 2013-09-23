@@ -18,7 +18,7 @@ class FormElement extends InputElement
     		return;
     	}
     	$formElementObj = BizSystem::GetObject($this->m_FormReference);
-    	if(strtolower($formElementObj->m_FormType)!='list'){
+    	if(strtolower($formElementObj->formType)!='list'){
     		return;
     	}
     	if(!$formElementObj->getDataObj())
@@ -43,7 +43,7 @@ class FormElement extends InputElement
     	$my_elementset = $this->m_ElementSet;
     	
     	//update other elements
-    	$panel = $this->getFormObj()->m_DataPanel;
+    	$panel = $this->getFormObj()->dataPanel;
     	$panel->rewind();
         while($panel->valid())    	    	
         {      

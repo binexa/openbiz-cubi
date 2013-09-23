@@ -71,11 +71,11 @@ class BizDataSql
     public function addJoinTable($tableJoin, $sqlHelper=null)
     {
         $table = $tableJoin->m_Table;
-        $joinType = $tableJoin->m_JoinType;
-        $column = $tableJoin->m_Column;
-        $joinRef = $tableJoin->m_JoinRef;
-        $columnRef = $tableJoin->m_ColumnRef;
-		$joinCondition = $tableJoin->m_JoinCondition;
+        $joinType = $tableJoin->joinType;
+        $column = $tableJoin->column;
+        $joinRef = $tableJoin->joinRef;
+        $columnRef = $tableJoin->columnRef;
+		$joinCondition = $tableJoin->joinCondition;
 
         $alias = "T".(count($this->_joinAliasList)+1);   // start with T1, T2
         $this->_joinAliasList[$tableJoin->objectName] = $alias;

@@ -17,7 +17,7 @@ class QueueForm extends EasyForm
 	public function SendAllPendingSms()
 	{
 		BizSystem::getService('sms.lib.SmsService')->SendSmsFromQueue();
-		if (strtoupper($this->m_FormType) == "LIST")
+		if (strtoupper($this->formType) == "LIST")
             $this->rerender();
 		$this->runEventLog();
         $this->processPostAction();
@@ -32,7 +32,7 @@ class QueueForm extends EasyForm
 			$arr[0]=$Record;
 			BizSystem::getService('sms.lib.SmsService')->SendSmsFromQueue($arr);
 		} 
-	 if (strtoupper($this->m_FormType) == "LIST")
+	 if (strtoupper($this->formType) == "LIST")
             $this->rerender();
 
         $this->runEventLog();
@@ -42,7 +42,7 @@ class QueueForm extends EasyForm
 
 	public function DeleteAllSms()
 	{
-       if ($this->m_Resource != "" && !$this->allowAccess("sms.Manage"))
+       if ($this->resource != "" && !$this->allowAccess("sms.Manage"))
            return BizSystem::clientProxy()->redirectView(OPENBIZ_ACCESS_DENIED_VIEW);
 
         try
@@ -55,7 +55,7 @@ class QueueForm extends EasyForm
            return;
         }
        
-        if (strtoupper($this->m_FormType) == "LIST")
+        if (strtoupper($this->formType) == "LIST")
             $this->rerender();
 
         $this->runEventLog();
@@ -66,7 +66,7 @@ class QueueForm extends EasyForm
 	
 	public function DeleteSentSms()
 	{ 
-       if ($this->m_Resource != "" && !$this->allowAccess("sms.Manage"))
+       if ($this->resource != "" && !$this->allowAccess("sms.Manage"))
             return BizSystem::clientProxy()->redirectView(OPENBIZ_ACCESS_DENIED_VIEW);
 
         try
@@ -80,7 +80,7 @@ class QueueForm extends EasyForm
         }
 		
        
-        if (strtoupper($this->m_FormType) == "LIST")
+        if (strtoupper($this->formType) == "LIST")
             $this->rerender();
 
         $this->runEventLog();

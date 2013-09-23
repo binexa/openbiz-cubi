@@ -161,12 +161,12 @@ class doTriggerService extends MetaObject
     protected function executeAction($triggerAction, $dataObj)
     {
         // action method        
-        $methodName = $triggerAction->m_Action;        
+        $methodName = $triggerAction->action;        
         // action method arguments
         if (method_exists($this, $methodName))
         {        	
             // evaluate arguments as expression support
-            foreach ($triggerAction->m_ArgList as $argName => $argValue)
+            foreach ($triggerAction->argList as $argName => $argValue)
                 $argList[$argName] = Expression::evaluateExpression($argValue, $dataObj);
             // check the immediate flag
             if ($triggerAction->m_Immediate == "Y") // call the method if Immediate is "Y"
@@ -389,11 +389,11 @@ class DOTrigger
 class TriggerAction extends MetaObject
 {
     public $objectName;
-    public $m_Action;
+    public $action;
     public $m_Immediate;
     public $m_DelayMinutes;
     public $m_RepeatMinutes;
-    public $m_ArgList = array();
+    public $argList = array();
 
     /**
      * Initialize TriggerAction with xml array metadata
@@ -404,7 +404,7 @@ class TriggerAction extends MetaObject
     public function __construct ($xmlArr)
     {
         $this->objectName = $xmlArr["ATTRIBUTES"]["NAME"];
-        $this->m_Action = $xmlArr["ATTRIBUTES"]["ACTION"];
+        $this->action = $xmlArr["ATTRIBUTES"]["ACTION"];
         $this->m_Immediate = $xmlArr["ATTRIBUTES"]["IMMEDIATE"];
         $this->m_DelayMinutes = $xmlArr["ATTRIBUTES"]["DELAYMINUTES"];
         $this->m_RepeatMinutes = $xmlArr["ATTRIBUTES"]["REPEATMINUTES"];
@@ -413,7 +413,7 @@ class TriggerAction extends MetaObject
             return;
         foreach ($tmpList as $arg)
         {
-            $this->m_ArgList[$arg["ATTRIBUTES"]["NAME"]] = $arg["ATTRIBUTES"]["VALUE"];
+            $this->argList[$arg["ATTRIBUTES"]["NAME"]] = $arg["ATTRIBUTES"]["VALUE"];
         }
     }
 }

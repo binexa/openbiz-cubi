@@ -15,15 +15,15 @@ class AclRoleActionsForm extends EasyForm
 {
 	protected $_roleId;
 	
-	public function getSessionVars($sessionContext)
+	public function loadSessionVars($sessionContext)
     {
-        parent::getSessionVars($sessionContext);
+        parent::loadSessionVars($sessionContext);
         $sessionContext->getObjVar($this->objectName, "_roleId", $this->_roleId);
     }
 
-    public function setSessionVars($sessionContext)
+    public function saveSessionVars($sessionContext)
     {
-        parent::setSessionVars($sessionContext);
+        parent::saveSessionVars($sessionContext);
         $sessionContext->setObjVar($this->objectName, "_roleId", $this->_roleId);
     }
     
@@ -44,7 +44,7 @@ class AclRoleActionsForm extends EasyForm
         $do->setSortRule("[" . $element->m_FieldName . "] " . $order);
 
         // move to 1st page
-        $this->m_CurrentPage = 1;
+        $this->currentPage = 1;
 
         $this->rerender();
     }
@@ -62,11 +62,11 @@ class AclRoleActionsForm extends EasyForm
         if($this->searchRule){
         	$do->setSearchRule($this->searchRule);
         }
-        $do->setLimit($this->m_Range, ($this->m_CurrentPage-1)*$this->m_Range);
+        $do->setLimit($this->m_Range, ($this->currentPage-1)*$this->m_Range);
         $rs = $do->fetch()->toArray();
-        $this->m_TotalRecords = $do->count();
+        $this->totalRecords = $do->count();
         if ($this->m_Range && $this->m_Range > 0)
-            $this->m_TotalPages = ceil($this->m_TotalRecords/$this->m_Range);
+            $this->totalPages = ceil($this->totalRecords/$this->m_Range);
         
         // fetch role and access
         //$this->getDataObj()->searchRule .= "[role_id]=$roleId ";        

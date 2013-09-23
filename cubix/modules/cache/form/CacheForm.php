@@ -134,7 +134,7 @@ class CacheForm extends EasyFormGrouping
     	}
     	if(!$lite)
     	{
-    		$results["Application Data"]= $this->m_DataPanel->renderTable($appdata);
+    		$results["Application Data"]= $this->dataPanel->renderTable($appdata);
     	}
     	else
     	{
@@ -152,7 +152,7 @@ class CacheForm extends EasyFormGrouping
     	$metadata[0]['path'] = OPENBIZ_CACHE_METADATA_PATH;
     	if(!$lite)
     	{
-    		$results["System Metadata"]= $this->m_DataPanel->renderTable($metadata);
+    		$results["System Metadata"]= $this->dataPanel->renderTable($metadata);
     	}
     	else
     	{
@@ -177,7 +177,7 @@ class CacheForm extends EasyFormGrouping
 
     	if(!$lite)
     	{
-    		$results["Complied Template"]= $this->m_DataPanel->renderTable($tempdata);
+    		$results["Complied Template"]= $this->dataPanel->renderTable($tempdata);
     	}
     	else
     	{

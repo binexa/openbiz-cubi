@@ -68,7 +68,7 @@ class BizDataObj_Lite extends BizDataObj_Abstract
      * @param SessionContext $sessionContext
      * @return void
      */
-    public function getSessionVars($sessionContext)
+    public function loadSessionVars($sessionContext)
     {
         if ($this->stateless == "Y")
             return;
@@ -76,7 +76,7 @@ class BizDataObj_Lite extends BizDataObj_Abstract
         $sessionContext->getObjVar($this->objectName, "SearchRule", $this->searchRule);
         $sessionContext->getObjVar($this->objectName, "SortRule", $this->sortRule);
         $sessionContext->getObjVar($this->objectName, "OtherSqlRule", $this->otherSQLRule);
-        $sessionContext->getObjVar($this->objectName, "Association", $this->m_Association);
+        $sessionContext->getObjVar($this->objectName, "Association", $this->association);
     }
 
     /**
@@ -85,7 +85,7 @@ class BizDataObj_Lite extends BizDataObj_Abstract
      * @param SessionContext $sessionContext
      * @return void
      */
-    public function setSessionVars($sessionContext)
+    public function saveSessionVars($sessionContext)
     {
         if ($this->stateless == "Y")
             return;
@@ -93,8 +93,8 @@ class BizDataObj_Lite extends BizDataObj_Abstract
         $sessionContext->setObjVar($this->objectName, "SearchRule", $this->searchRule);
         $sessionContext->setObjVar($this->objectName, "SortRule", $this->sortRule);
         $sessionContext->setObjVar($this->objectName, "OtherSqlRule", $this->otherSQLRule);
-        if(is_array($this->m_Association)){
-        	$sessionContext->setObjVar($this->objectName, "Association", $this->m_Association);
+        if(is_array($this->association)){
+        	$sessionContext->setObjVar($this->objectName, "Association", $this->association);
         }
     }
 
@@ -137,7 +137,7 @@ class BizDataObj_Lite extends BizDataObj_Abstract
      */
     public function getOldValue($fieldName)
     {
-        return $this->getField($fieldName)->m_OldValue;
+        return $this->getField($fieldName)->oldValue;
     }    
 
 	
@@ -389,8 +389,8 @@ class BizDataObj_Lite extends BizDataObj_Abstract
         $this->setSearchRule($searchRule);
         if ($noAssociation)
         {
-            $oldAssociation = $this->m_Association;
-            $this->m_Association = null;
+            $oldAssociation = $this->association;
+            $this->association = null;
         }
         $limit = ($count == -1) ? null : array('count'=>$count, 'offset'=>$offset);
 
@@ -405,7 +405,7 @@ class BizDataObj_Lite extends BizDataObj_Abstract
             }
         }
         if ($noAssociation)
-            $this->m_Association = $oldAssociation;
+            $this->association = $oldAssociation;
         $this->searchRule = $oldSearchRule;
         $this->currentRecord = $curRecord;
         $this->recordId = $recId;

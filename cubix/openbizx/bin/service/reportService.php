@@ -81,7 +81,7 @@ class reportService extends MetaObject
         $fieldNames = array();
         foreach($keyList as $key)
         {
-            $fieldNames[] = $bizform->GetControl($key)->m_BizFieldName;
+            $fieldNames[] = $bizform->GetControl($key)->bizFieldName;
         }
         fputcsv($fp, $fieldNames);
 
@@ -93,7 +93,7 @@ class reportService extends MetaObject
             $line = "";
             foreach($keyList as $key)
             {
-                $fieldValues[] = $recArray[$bizform->GetControl($key)->m_BizFieldName];
+                $fieldValues[] = $recArray[$bizform->GetControl($key)->bizFieldName];
             }
             fputcsv($fp, $fieldValues);
         }
@@ -103,8 +103,8 @@ class reportService extends MetaObject
         $i = 0;
         foreach($keyList as $key)
         {
-            $rpt_fields[$i]["name"] = $bizform->GetControl($key)->m_BizFieldName;
-            $rpt_fields[$i]["type"] = $bizobj->getField($rpt_fields[$i]["name"])->m_Type;
+            $rpt_fields[$i]["name"] = $bizform->GetControl($key)->bizFieldName;
+            $rpt_fields[$i]["type"] = $bizobj->getField($rpt_fields[$i]["name"])->type;
             $i++;
         }
 

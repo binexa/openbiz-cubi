@@ -43,9 +43,9 @@ class PickerForm extends EasyForm
      * @param SessionContext $sessionContext
      * @return void
      */
-    public function getSessionVars($sessionContext)
+    public function loadSessionVars($sessionContext)
     {
-        parent::getSessionVars($sessionContext);
+        parent::loadSessionVars($sessionContext);
         $sessionContext->getObjVar($this->objectName, "ParentFormElemName", $this->m_ParentFormElemName);
         $sessionContext->getObjVar($this->objectName, "PickerMap", $this->m_PickerMap);
         $sessionContext->getObjVar($this->objectName, "ParentFormRecord", $this->m_ParentFormRecord);
@@ -57,9 +57,9 @@ class PickerForm extends EasyForm
      * @param SessionContext $sessionContext
      * @return void
      */
-    public function setSessionVars($sessionContext)
+    public function saveSessionVars($sessionContext)
     {
-        parent::setSessionVars($sessionContext);
+        parent::saveSessionVars($sessionContext);
         $sessionContext->setObjVar($this->objectName, "ParentFormElemName", $this->m_ParentFormElemName);
         $sessionContext->setObjVar($this->objectName, "PickerMap", $this->m_PickerMap);
         $sessionContext->setObjVar($this->objectName, "ParentFormRecord", $this->m_ParentFormRecord);
@@ -136,14 +136,14 @@ class PickerForm extends EasyForm
         	//$parentForm->getDataObj()->clearSearchRule();
 	        $parentDo = $parentForm->getDataObj();
 	        
-	        $column = $parentDo->m_Association['Column'];
+	        $column = $parentDo->association['Column'];
 	    	$field = $parentDo->getFieldNameByColumn($column);	    	    	
-	    	$parentRefVal = $parentDo->m_Association["FieldRefVal"];
+	    	$parentRefVal = $parentDo->association["FieldRefVal"];
 	    	
 			$recArr[$field] = $parentRefVal;
-	    	if($parentDo->m_Association['Relationship']=='1-M'){	    			    	
-		    	$cond_column = $parentDo->m_Association['CondColumn'];
-		    	$cond_value = $parentDo->m_Association['CondValue'];
+	    	if($parentDo->association['Relationship']=='1-M'){	    			    	
+		    	$cond_column = $parentDo->association['CondColumn'];
+		    	$cond_value = $parentDo->association['CondValue'];
 		    	if($cond_column)
 		    	{
 		    		$cond_field = $parentDo->getFieldNameByColumn($cond_column);

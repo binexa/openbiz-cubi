@@ -27,11 +27,11 @@ class SecurityRuleForm extends EasyForm
 
 	public function getActiveRecord($recId=null)
     {
-        if ($this->m_ActiveRecord != null)
+        if ($this->activeRecord != null)
         {
-            if($this->m_ActiveRecord['Id'] != null)
+            if($this->activeRecord['Id'] != null)
             {
-                return $this->m_ActiveRecord;
+                return $this->activeRecord;
             }
         }
 
@@ -42,13 +42,13 @@ class SecurityRuleForm extends EasyForm
         $this->recordId = $recId;
 		$this->m_FixSearchRule = "[Id]='$recId'";
         $rec=$this->fetchData();
-        $this->m_DataPanel->setRecordArr($rec);
-        $this->m_ActiveRecord = $rec;
+        $this->dataPanel->setRecordArr($rec);
+        $this->activeRecord = $rec;
         return $rec;
     }	
 	
 	public function fetchData(){
-		if (strtoupper($this->m_FormType) == "NEW")
+		if (strtoupper($this->formType) == "NEW")
             return $this->getNewRule();
             
 		$file = OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR."service".DIRECTORY_SEPARATOR.$this->m_ConfigFile;
@@ -157,7 +157,7 @@ class SecurityRuleForm extends EasyForm
         $recArr = $this->readInputRecord();        
         // load default values if new record value is empty
         $defaultRecArr = array();
-        foreach ($this->m_DataPanel as $element)
+        foreach ($this->dataPanel as $element)
         {
             if ($element->m_FieldName)
             {
@@ -280,7 +280,7 @@ class SecurityRuleForm extends EasyForm
    
    public function deleteRecord($id=null)
     {
-        if ($this->m_Resource != "" && !$this->allowAccess($this->m_Resource.".delete"))
+        if ($this->resource != "" && !$this->allowAccess($this->resource.".delete"))
             return BizSystem::clientProxy()->redirectView(OPENBIZ_ACCESS_DENIED_VIEW);
 
         if ($id==null || $id=='')
@@ -295,7 +295,7 @@ class SecurityRuleForm extends EasyForm
         {
             $this->removeNode($id);            
         }
-        if (strtoupper($this->m_FormType) == "LIST")
+        if (strtoupper($this->formType) == "LIST")
             $this->rerender();
 
         $this->runEventLog();

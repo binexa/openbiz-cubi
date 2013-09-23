@@ -2,7 +2,7 @@
 //include_once("ColumnText.php");
 class ColumnBar extends ColumnText
 {
-    public $m_Percent;
+    public $percent;
     public $m_MaxValue;
     public $m_DisplayUnit;
     public $m_Color;
@@ -10,7 +10,7 @@ class ColumnBar extends ColumnText
     protected function readMetaData(&$xmlArr)
     {
         parent::readMetaData($xmlArr);
-        $this->m_Percent = isset($xmlArr["ATTRIBUTES"]["PERCENT"]) ? $xmlArr["ATTRIBUTES"]["PERCENT"] : "N";
+        $this->percent = isset($xmlArr["ATTRIBUTES"]["PERCENT"]) ? $xmlArr["ATTRIBUTES"]["PERCENT"] : "N";
         $this->m_MaxValue = isset($xmlArr["ATTRIBUTES"]["MAXVALUE"]) ? $xmlArr["ATTRIBUTES"]["MAXVALUE"] : "1";
         $this->m_DisplayUnit = isset($xmlArr["ATTRIBUTES"]["DISPLAYUNIT"]) ? $xmlArr["ATTRIBUTES"]["DISPLAYUNIT"] : null;
         $this->m_Color = isset($xmlArr["ATTRIBUTES"]["COLOR"]) ? $xmlArr["ATTRIBUTES"]["COLOR"] : null;        
@@ -36,7 +36,7 @@ class ColumnBar extends ColumnText
         {
         	$value = sprintf($this->m_DisplayFormat,$value);
         }
-    	if($this->m_Percent=='Y')
+    	if($this->percent=='Y')
         {        	
         	$value = sprintf("%.2f",$value*100).'%';        
         }

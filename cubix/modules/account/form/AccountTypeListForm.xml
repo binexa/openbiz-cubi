@@ -175,7 +175,7 @@
     
     	<Element Name="page_selector" 
     			Class="PageSelector" 
-    			Text="{@:m_CurrentPage}" 
+    			Text="{@:currentPage}" 
     			Label="Go to Page" 
     			CssClass="input_select" 
     			cssFocusClass="input_select_focus">
@@ -195,9 +195,9 @@
         </Element>    
         <Element Name="btn_first" 
         		Class="Button" 
-        		Enabled="{(@:m_CurrentPage == 1)?'N':'Y'}" 
+        		Enabled="{(@:currentPage == 1)?'N':'Y'}" 
         		Text="" 
-        		CssClass="button_gray_navi {(@:m_CurrentPage == 1)?'first_gray':'first'}">
+        		CssClass="button_gray_navi {(@:currentPage == 1)?'first_gray':'first'}">
             <EventHandler 
             		Name="first_onclick" 
             		Event="onclick" 
@@ -205,36 +205,36 @@
         </Element>
         <Element Name="btn_prev" 
         		Class="Button" 
-        		Enabled="{(@:m_CurrentPage == 1)?'N':'Y'}" 
+        		Enabled="{(@:currentPage == 1)?'N':'Y'}" 
         		Text="" 
-        		CssClass="button_gray_navi {(@:m_CurrentPage == 1)?'prev_gray':'prev'}">
+        		CssClass="button_gray_navi {(@:currentPage == 1)?'prev_gray':'prev'}">
             <EventHandler Name="prev_onclick" 
             			Event="onclick" 
-            			Function="GotoPage({@:m_CurrentPage - 1})" 
+            			Function="GotoPage({@:currentPage - 1})" 
             			ShortcutKey="Ctrl+Shift+Left"/>
         </Element>
         <Element Name="txt_page" 
         		Class="LabelText" 
-        		Text="{'@:m_CurrentPage of @:m_TotalPages '}">
+        		Text="{'@:currentPage of @:totalPages '}">
         </Element>
         <Element Name="btn_next" 
         		Class="Button" 
-        		Enabled="{(@:m_CurrentPage == @:m_TotalPages )?'N':'Y'}" 
+        		Enabled="{(@:currentPage == @:totalPages )?'N':'Y'}" 
         		Text="" 
-        		CssClass="button_gray_navi {(@:m_CurrentPage == @:m_TotalPages)?'next_gray':'next'}">
+        		CssClass="button_gray_navi {(@:currentPage == @:totalPages)?'next_gray':'next'}">
             <EventHandler Name="next_onclick" 
             			Event="onclick" 
-            			Function="GotoPage({@:m_CurrentPage + 1})" 
+            			Function="GotoPage({@:currentPage + 1})" 
             			ShortcutKey="Ctrl+Shift+Right"/>
         </Element>
         <Element Name="btn_last" 
         		Class="Button" 
-        		Enabled="{(@:m_CurrentPage == @:m_TotalPages )?'N':'Y'}" 
+        		Enabled="{(@:currentPage == @:totalPages )?'N':'Y'}" 
         		Text="" 
-        		CssClass="button_gray_navi {(@:m_CurrentPage == @:m_TotalPages)?'last_gray':'last'}">
+        		CssClass="button_gray_navi {(@:currentPage == @:totalPages)?'last_gray':'last'}">
             <EventHandler Name="last_onclick" 
             			Event="onclick" 
-            			Function="GotoPage({@:m_TotalPages})"/>
+            			Function="GotoPage({@:totalPages})"/>
         </Element>
     
     </NavPanel> 

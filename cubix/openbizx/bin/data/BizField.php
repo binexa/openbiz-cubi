@@ -30,30 +30,30 @@ class BizField extends MetaObject
      * @var string
      */
     public $bizDataObjName;
-    public $m_Join = null;
-    public $m_Column = null;
-    public $m_Alias = null;
-    public $m_Index;
+    public $join = null;
+    public $column = null;
+    public $aliasName = null;
+    public $fieldIndex;
     /**
      * Type of field in string
      *
      * @var string
      */
-    public $m_Type = null;
+    public $type = null;
 
     /**
      * Format of field
      *
      * @var string
      */
-    public $m_Format = null;
+    public $format = null;
 
     /**
      * Length of field
      *
      * @var number
      */
-    public $m_Length = null;
+    public $length = null;
     public $valueExpression = null;// support expression
 
     /**
@@ -61,17 +61,17 @@ class BizField extends MetaObject
      *
      * @var mixed
      */
-    public $m_Required = null;       // support expression
-    public $m_Validator = null;      // support expression
-    public $m_SqlExpression = null;  // support expression
-	public $m_Encrypted = "N";
-	public $m_ClearText = null;
+    public $required = null;       // support expression
+    public $validator = null;      // support expression
+    public $sqlExpression = null;  // support expression
+	public $encrypted = "N";
+	public $clearText = null;
     /**
      * Default value of field
      *
      * @var mixed
      */
-    public $m_DefaultValue = null;
+    public $defaultValue = null;
     public $valueOnCreate = null;
     public $valueOnUpdate = null;
 
@@ -80,7 +80,7 @@ class BizField extends MetaObject
      *
      * @var boolean
      */
-    public $m_OnAudit = false;
+    public $onAudit = false;
 
     /**
      * The real value of the field, not from metadata
@@ -88,8 +88,8 @@ class BizField extends MetaObject
      * @var mixed
      */
     public $value = null; 
-    public $m_OldValue = null; // the old value of the field
-	public $m_IgnoreInQuery = false;
+    public $oldValue = null; // the old value of the field
+	public $ignoreInQuery = false;
 	
 	protected $_prevValue, $_getValueCache;
 
@@ -105,31 +105,31 @@ class BizField extends MetaObject
         $this->objectName = isset($xmlArr["ATTRIBUTES"]["NAME"]) ? $xmlArr["ATTRIBUTES"]["NAME"] : null;
         $this->bizDataObjName = $bizObj->objectName;
         $this->m_Package = $bizObj->m_Package;
-        $this->m_Join = isset($xmlArr["ATTRIBUTES"]["JOIN"]) ? $xmlArr["ATTRIBUTES"]["JOIN"] : null;
-        $this->m_Column = isset($xmlArr["ATTRIBUTES"]["COLUMN"]) ? $xmlArr["ATTRIBUTES"]["COLUMN"] : null;
-        $this->m_Alias = isset($xmlArr["ATTRIBUTES"]["ALIAS"]) ? $xmlArr["ATTRIBUTES"]["ALIAS"] : null;
+        $this->join = isset($xmlArr["ATTRIBUTES"]["JOIN"]) ? $xmlArr["ATTRIBUTES"]["JOIN"] : null;
+        $this->column = isset($xmlArr["ATTRIBUTES"]["COLUMN"]) ? $xmlArr["ATTRIBUTES"]["COLUMN"] : null;
+        $this->aliasName = isset($xmlArr["ATTRIBUTES"]["ALIAS"]) ? $xmlArr["ATTRIBUTES"]["ALIAS"] : null;
         $this->valueExpression = isset($xmlArr["ATTRIBUTES"]["VALUE"]) ? $xmlArr["ATTRIBUTES"]["VALUE"] : null;
-        $this->m_DefaultValue = isset($xmlArr["ATTRIBUTES"]["DEFAULTVALUE"]) ? $xmlArr["ATTRIBUTES"]["DEFAULTVALUE"] : null;
-        $this->m_Type = isset($xmlArr["ATTRIBUTES"]["TYPE"]) ? $xmlArr["ATTRIBUTES"]["TYPE"] : null;
-        $this->m_Format = isset($xmlArr["ATTRIBUTES"]["FORMAT"]) ? $xmlArr["ATTRIBUTES"]["FORMAT"] : null;
-        $this->m_Length = isset($xmlArr["ATTRIBUTES"]["LENGTH"]) ? $xmlArr["ATTRIBUTES"]["LENGTH"] : null;
-        $this->m_Required = isset($xmlArr["ATTRIBUTES"]["REQUIRED"]) ? $xmlArr["ATTRIBUTES"]["REQUIRED"] : null;
-        $this->m_Encrypted = isset($xmlArr["ATTRIBUTES"]["ENCRYPTED"]) ? strtoupper($xmlArr["ATTRIBUTES"]["ENCRYPTED"]) :"N";
-//        if($this->m_Encrypted=='Y'){
-//        	$this->m_ClearText="N";
+        $this->defaultValue = isset($xmlArr["ATTRIBUTES"]["DEFAULTVALUE"]) ? $xmlArr["ATTRIBUTES"]["DEFAULTVALUE"] : null;
+        $this->type = isset($xmlArr["ATTRIBUTES"]["TYPE"]) ? $xmlArr["ATTRIBUTES"]["TYPE"] : null;
+        $this->format = isset($xmlArr["ATTRIBUTES"]["FORMAT"]) ? $xmlArr["ATTRIBUTES"]["FORMAT"] : null;
+        $this->length = isset($xmlArr["ATTRIBUTES"]["LENGTH"]) ? $xmlArr["ATTRIBUTES"]["LENGTH"] : null;
+        $this->required = isset($xmlArr["ATTRIBUTES"]["REQUIRED"]) ? $xmlArr["ATTRIBUTES"]["REQUIRED"] : null;
+        $this->encrypted = isset($xmlArr["ATTRIBUTES"]["ENCRYPTED"]) ? strtoupper($xmlArr["ATTRIBUTES"]["ENCRYPTED"]) :"N";
+//        if($this->encrypted=='Y'){
+//        	$this->clearText="N";
 //        }else{
-//        	$this->m_ClearText="Y";
+//        	$this->clearText="Y";
 //        }
-        $this->m_Validator = isset($xmlArr["ATTRIBUTES"]["VALIDATOR"]) ? $xmlArr["ATTRIBUTES"]["VALIDATOR"] : null;
-        $this->m_SqlExpression = isset($xmlArr["ATTRIBUTES"]["SQLEXPR"]) ? $xmlArr["ATTRIBUTES"]["SQLEXPR"] : null;
+        $this->validator = isset($xmlArr["ATTRIBUTES"]["VALIDATOR"]) ? $xmlArr["ATTRIBUTES"]["VALIDATOR"] : null;
+        $this->sqlExpression = isset($xmlArr["ATTRIBUTES"]["SQLEXPR"]) ? $xmlArr["ATTRIBUTES"]["SQLEXPR"] : null;
         $this->valueOnCreate = isset($xmlArr["ATTRIBUTES"]["VALUEONCREATE"]) ? $xmlArr["ATTRIBUTES"]["VALUEONCREATE"] : null;
         $this->valueOnUpdate = isset($xmlArr["ATTRIBUTES"]["VALUEONUPDATE"]) ? $xmlArr["ATTRIBUTES"]["VALUEONUPDATE"] : null;
         if (isset($xmlArr["ATTRIBUTES"]["ONAUDIT"]) && $xmlArr["ATTRIBUTES"]["ONAUDIT"]=='Y')
-            $this->m_OnAudit = true;
+            $this->onAudit = true;
 
         $this->bizDataObjName = $this->prefixPackage($this->bizDataObjName);
 
-        if (!$this->m_Format) $this->useDefaultFormat();
+        if (!$this->format) $this->useDefaultFormat();
     }
 
     /**
@@ -139,10 +139,10 @@ class BizField extends MetaObject
      */
     protected function useDefaultFormat()
     {
-        if ($this->m_Type == "Date")
-            $this->m_Format = '%Y-%m-%d';
-        elseif ($this->m_Type == "Datetime")
-            $this->m_Format = '%Y-%m-%d %H:%M:%S';
+        if ($this->type == "Date")
+            $this->format = '%Y-%m-%d';
+        elseif ($this->type == "Datetime")
+            $this->format = '%Y-%m-%d %H:%M:%S';
     }
 
     /**
@@ -188,7 +188,7 @@ class BizField extends MetaObject
             return "";
         }
         /*
-        if ($this->m_Type != 'Number')
+        if ($this->type != 'Number')
         {
             if (get_magic_quotes_gpc() == 0) {
                 $val = addcslashes($value, "\000\n\r\\'\"\032");
@@ -207,7 +207,7 @@ class BizField extends MetaObject
      */
     public function isLobField()
     {
-        return ($this->m_Type == 'Blob' || $this->m_Type == 'Clob');
+        return ($this->type == 'Blob' || $this->type == 'Clob');
     }
 
     /**
@@ -221,8 +221,8 @@ class BizField extends MetaObject
     {
         if ($dbType == 'oracle' || $dbType == 'oci8')
         {
-            if ($this->m_Type != 'Blob') return 'empty_blob()';
-            if ($this->m_Type != 'Clob') return 'empty_clob()';
+            if ($this->type != 'Blob') return 'empty_blob()';
+            if ($this->type != 'Clob') return 'empty_clob()';
         }
         return 'null';
     }
@@ -256,13 +256,13 @@ class BizField extends MetaObject
         $value = stripcslashes($this->value);
 
         $value = $this->value;
-        if ($this->valueExpression && trim($this->m_Column) == "")
+        if ($this->valueExpression && trim($this->column) == "")
         {
             $value = Expression::evaluateExpression($this->valueExpression,$this->getDataObj());
         }
-        if ($this->m_Format && $formatted)
+        if ($this->format && $formatted)
         {
-            $value = BizSystem::typeManager()->valueToFormattedString($this->m_Type, $this->m_Format, $value);
+            $value = BizSystem::typeManager()->valueToFormattedString($this->type, $this->format, $value);
         }
 		$this->_prevValue = $this->value;
 		$this->_getValueCache = $value;
@@ -289,9 +289,9 @@ class BizField extends MetaObject
     public function saveOldValue($oldValue=null)
     {
         if ($oldValue)
-            $this->m_OldValue = $oldValue;
+            $this->oldValue = $oldValue;
         else
-            $this->m_OldValue = $this->value;
+            $this->oldValue = $this->value;
     }
 
     /**
@@ -301,8 +301,8 @@ class BizField extends MetaObject
      */
     public function getDefaultValue()
     {
-        if($this->m_DefaultValue !== null)
-            return Expression::evaluateExpression($this->m_DefaultValue, $this->getDataObj());
+        if($this->defaultValue !== null)
+            return Expression::evaluateExpression($this->defaultValue, $this->getDataObj());
         return "";
     }
 
@@ -347,14 +347,14 @@ class BizField extends MetaObject
      */
     public function checkRequired()
     {
-        if (!$this->m_Required || $this->m_Required == "")
+        if (!$this->required || $this->required == "")
             return false;
-        elseif ($this->m_Required == "Y")
+        elseif ($this->required == "Y")
             $required = true;
         elseif($required != "N")
             $required = false;
         else
-            $required = Expression::evaluateExpression($this->m_Required, $this->getDataObj());
+            $required = Expression::evaluateExpression($this->required, $this->getDataObj());
 
         return $required;
     }
@@ -372,7 +372,7 @@ class BizField extends MetaObject
             $value = $this->value;
         }
         $validator = BizSystem::getService(VALIDATE_SERVICE);
-        switch ($this->m_Type)
+        switch ($this->type)
         {
             case "Number":
                 $result = is_numeric($value);
@@ -414,8 +414,8 @@ class BizField extends MetaObject
     public function validate()
     {
         $ret = true;
-        if ($this->m_Validator)
-            $ret = Expression::evaluateExpression($this->m_Validator, $this->getDataObj());
+        if ($this->validator)
+            $ret = Expression::evaluateExpression($this->validator, $this->getDataObj());
         return $ret;
     }
 

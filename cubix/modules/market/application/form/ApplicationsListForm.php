@@ -27,7 +27,7 @@ class ApplicationsListForm extends AppListForm
 		$params=array(
 			"searchRule" => $this->m_RemoteSearchRule,	
 			"sortRule" => $this->sortRule,			
-			"startItem" => ($this->m_CurrentPage-1)*$this->m_Range,
+			"startItem" => ($this->currentPage-1)*$this->m_Range,
 			"range" => $this->m_Range,
 		);
 		
@@ -39,9 +39,9 @@ class ApplicationsListForm extends AppListForm
 				$resultSet[] = $appInfo;
 			}
 		}		
-        $this->m_TotalRecords = $appList['totalRecords'];
+        $this->totalRecords = $appList['totalRecords'];
         if ($this->m_Range && $this->m_Range > 0)
-            $this->m_TotalPages = ceil($this->m_TotalRecords/$this->m_Range);
+            $this->totalPages = ceil($this->totalRecords/$this->m_Range);
 		
 		return $resultSet;
 	}

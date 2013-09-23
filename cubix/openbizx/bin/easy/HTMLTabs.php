@@ -25,10 +25,10 @@
  */
 class HTMLTabs extends MetaObject implements iUIControl
 {
-    public $m_TemplateFile;
+    public $templateFile;
     public $m_TabViews = null;
     protected $m_CurrentTab = null;
-    protected $m_ActiveCssClassName = null;
+    protected $activeCssClassName = null;
     protected $m_InactiveCssClassName = null;
 
     /**
@@ -52,9 +52,9 @@ class HTMLTabs extends MetaObject implements iUIControl
         $this->objectName = $xmlArr["TABS"]["ATTRIBUTES"]["NAME"];
         $this->m_Package = $xmlArr["TABS"]["ATTRIBUTES"]["PACKAGE"];
         $this->className = $xmlArr["TABS"]["ATTRIBUTES"]["CLASS"];
-        $this->m_TemplateFile = $xmlArr["TABS"]["ATTRIBUTES"]["TEMPLATEFILE"];
+        $this->templateFile = $xmlArr["TABS"]["ATTRIBUTES"]["TEMPLATEFILE"];
         $this->m_TabViews = new MetaIterator($xmlArr["TABS"]["TABVIEWS"]["VIEW"],"TabView");
-        $this->m_ActiveCssClassName = "'{$xmlArr["TABS"]["ATTRIBUTES"]["ACTIVECSSCLASSNAME"]}'";
+        $this->activeCssClassName = "'{$xmlArr["TABS"]["ATTRIBUTES"]["ACTIVECSSCLASSNAME"]}'";
         $this->m_InactiveCssClassName = "'{$xmlArr["TABS"]["ATTRIBUTES"]["INACTIVECSSCLASSNAME"]}'";
     }
 
@@ -238,7 +238,7 @@ class HTMLTabs extends MetaObject implements iUIControl
         $smarty->assign("tabs", $tabs);
         $smarty->assign("tabs_Name",$this->objectName);
 
-        return $smarty->fetch(BizSystem::getTplFileWithPath($this->m_TemplateFile, $this->m_Package));
+        return $smarty->fetch(BizSystem::getTplFileWithPath($this->templateFile, $this->m_Package));
     }
 
     /**
@@ -272,7 +272,7 @@ class HTMLTabs extends MetaObject implements iUIControl
             {
                 $tab_script .=   'var '.$tab['name'].'_config = '.$tab['forms'].';'.PHP_EOL;
             }
-            $tab_script .=   'var '.$this->objectName.'_active = '.$this->m_ActiveCssClassName.';'.PHP_EOL;
+            $tab_script .=   'var '.$this->objectName.'_active = '.$this->activeCssClassName.';'.PHP_EOL;
             $tab_script .=   'var '.$this->objectName.'_inactive = '.$this->m_InactiveCssClassName.';'.PHP_EOL;
             $tab_script .= '</script>';
             BizSystem::clientProxy()->appendScripts("tab_forms_$this->objectName", $tab_script, FALSE);

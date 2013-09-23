@@ -4,7 +4,7 @@ require_once "oauth.class.php";
 include_once( 'sina/saetv2.ex.class.php' );
 class sina extends oauthClass
 {
-	protected $m_Type='sina';
+	protected $type='sina';
 	protected $m_loginUrl;
 	private $m_sina_akey;
 	private $m_sina_skey;
@@ -66,7 +66,7 @@ class sina extends oauthClass
 		$me = $c->show_user_by_id( $uid);//根据ID获取用户等基本信息
 	 
 		$user['id']          = $me['id'];
-		$user['type']        = $this->m_Type;
+		$user['type']        = $this->type;
 		$user['uname']       = $me['name'];
 		$user['province']    = $me['province'];
 		$user['city']        = $me['city'];

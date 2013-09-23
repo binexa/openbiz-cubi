@@ -16,14 +16,14 @@ class RepositoryService extends WebsvcService
 {
 	protected $m_CategoryDO 		= "repository.category.do.CategoryDO";
 	protected $m_CategoryTransDO 	= "repository.category.do.CategoryTranslateDO";
-	protected $m_ApplicationDO 		= "repository.application.do.ApplicationDO";
-	protected $m_ApplicationTransDO = "repository.application.do.ApplicationTranslateDO";	
+	protected $applicationDO 		= "repository.application.do.ApplicationDO";
+	protected $applicationTransDO = "repository.application.do.ApplicationTranslateDO";	
 	protected $m_ReleaseDO 			= "repository.release.do.ReleaseDO";
 	protected $m_InstallLogDO 		= "repository.install.do.InstallLogDO";
 	protected $m_PictureDO	 		= "picture.do.PictureDO";
 	protected $m_RepositorySettingDO= "myaccount.do.PreferenceDO";
 	protected $m_RepositorySettingTransDO= "repository.setting.do.SettingTranslateDO";
-	protected $m_ApplicationVersionDO 		= "repository.application.do.ApplicationVersionDO";
+	protected $applicationVersionDO 		= "repository.application.do.ApplicationVersionDO";
 	
     public function fetchRepoInfo()
     {
@@ -71,7 +71,7 @@ class RepositoryService extends WebsvcService
     {
     	$appIds = implode(",",$ids);
     	$searchRule = "[status]=1 AND [Id] IN ($appIds)";
-    	$dataObj = BizSystem::getObject($this->m_ApplicationVersionDO,1);  
+    	$dataObj = BizSystem::getObject($this->applicationVersionDO,1);  
         $resultRecords = $dataObj->directFetch($searchRule);
         $resultSet=array();
        	foreach($resultRecords as $record)
@@ -85,7 +85,7 @@ class RepositoryService extends WebsvcService
 	public function fetchNewAppRelease($timestamp)
     {
     	$searchRule = "[release_time] > '$timestamp' AND [status]='1' ";
-    	$dataObj = BizSystem::getObject($this->m_ApplicationDO,1);  
+    	$dataObj = BizSystem::getObject($this->applicationDO,1);  
         $resultRecords = $dataObj->directFetch($searchRule);
         $resultSet=array();
        	foreach($resultRecords as $record)
@@ -100,7 +100,7 @@ class RepositoryService extends WebsvcService
     public function fetchAppInfo($id=null)
     {
     	$searchRule = "[status]=1 AND [release_time] < NOW() AND [Id]='$id'";   	    	
-    	$dataObj = BizSystem::getObject($this->m_ApplicationDO,1);  
+    	$dataObj = BizSystem::getObject($this->applicationDO,1);  
         $result = $dataObj->fetchOne($searchRule);  
         if($result)
         {
@@ -158,7 +158,7 @@ class RepositoryService extends WebsvcService
     	if($userSearchRule){
     		$searchRule .= " AND ".$userSearchRule;
     	}    	    	
-    	$dataObj = BizSystem::getObject($this->m_ApplicationDO,1);  
+    	$dataObj = BizSystem::getObject($this->applicationDO,1);  
     	$dataObj->setSearchRule($searchRule);
     	$dataObj->setSortRule($sortRule);
     	$dataObj->setLimit($range, $startItem);  
@@ -191,7 +191,7 @@ class RepositoryService extends WebsvcService
     	if($userSearchRule){
     		$searchRule .= " AND ".$userSearchRule;
     	}    	
-    	$dataObj = BizSystem::getObject($this->m_ApplicationDO,1);  
+    	$dataObj = BizSystem::getObject($this->applicationDO,1);  
     	$dataObj->setSearchRule($searchRule);
     	$dataObj->setSortRule($sortRule);
     	$dataObj->setLimit($range, $startItem);  
@@ -226,7 +226,7 @@ class RepositoryService extends WebsvcService
     {
     	$lang = $_REQUEST['lang'];
        	if($lang){       		       	
-	    	$applicationTransDO = BizSystem::getObject($this->m_ApplicationTransDO,1);
+	    	$applicationTransDO = BizSystem::getObject($this->applicationTransDO,1);
 	       	$transFields = array('name','description','author','type');
 	       	$recordId = $result['Id'];
 	    	$transRec = $applicationTransDO->fetchOne("[repo_app_id]='$recordId' AND [lang]='$lang'");

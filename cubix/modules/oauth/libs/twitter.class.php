@@ -4,7 +4,7 @@ require_once ('twitter/twitteroauth.php');
 require_once ("oauth.class.php");
 class twitter extends oauthClass
 {
-	protected $m_Type='twitter';
+	protected $type='twitter';
 	protected $m_loginUrl;
 	private $m_akey;
 	private $m_skey;
@@ -41,7 +41,7 @@ class twitter extends oauthClass
 			return false;
 		}
 		
-		Bizsystem::getSessionContext()->setVar($this->m_Type.'_access_token',$access_token);
+		Bizsystem::getSessionContext()->setVar($this->type.'_access_token',$access_token);
 	
 		$userInfo=$this->userInfo($access_token['oauth_token'],$access_token['oauth_token_secret']);
 		$this->check($userInfo);
@@ -77,7 +77,7 @@ class twitter extends oauthClass
 		$Twitter = new TwitterOAuth($this->m_akey ,$this->m_skey,$oauth_token, $oauth_token_secret);
 		$me =(array)$Twitter->get('account/verify_credentials');
 		$user['id']         = $me['id'];
-		$user['type']         = $this->m_Type;
+		$user['type']         = $this->type;
 		$user['email']         = '';
 		$user['uname']       = $me['name'];
 		$user['location']    = $me['location'];

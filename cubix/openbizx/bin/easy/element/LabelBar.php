@@ -19,7 +19,7 @@ class LabelBar extends ColumnBar {
         {
         	$value = sprintf($this->m_DisplayFormat,$value);
         }
-    	if($this->m_Percent=='Y')
+    	if($this->percent=='Y')
         {        	
         	$value = sprintf("%.2f",$value*100).'%';        
         }

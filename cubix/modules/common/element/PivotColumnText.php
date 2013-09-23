@@ -13,7 +13,7 @@ include_once(OPENBIZ_PATH."/bin/easy/element/ColumnText.php");
  */
 class PivotColumnText extends ColumnText
 {
-    public $m_PivotType;
+    public $pivotType;
 
     /**
      * Read array meta data, and store to meta object
@@ -24,7 +24,7 @@ class PivotColumnText extends ColumnText
     protected function readMetaData(&$xmlArr)
     {
         parent::readMetaData($xmlArr);
-        $this->m_PivotType = isset($xmlArr["ATTRIBUTES"]["PIVOTTYPE"]) ? $xmlArr["ATTRIBUTES"]["PIVOTTYPE"] : null;     
+        $this->pivotType = isset($xmlArr["ATTRIBUTES"]["PIVOTTYPE"]) ? $xmlArr["ATTRIBUTES"]["PIVOTTYPE"] : null;     
 	}
 }
 ?>

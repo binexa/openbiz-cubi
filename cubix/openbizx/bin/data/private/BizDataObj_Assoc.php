@@ -36,23 +36,23 @@ class BizDataObj_Assoc
      */
     public static function addRecord($dataObj, $recArr, &$isParentObjUpdated)
     {
-        if ($dataObj->m_Association["Relationship"] == "M-M"  )
+        if ($dataObj->association["Relationship"] == "M-M"  )
         {
             $isParentObjUpdated = false;
             return self::_addRecordMtoM($dataObj, $recArr);
         }
-        elseif($dataObj->m_Association["Relationship"] == "Self-Self")
+        elseif($dataObj->association["Relationship"] == "Self-Self")
         {
         	$isParentObjUpdated = false;
             return self::_addRecordSelftoSelf($dataObj, $recArr);
         }
-        elseif ($dataObj->m_Association["Relationship"] == "M-1"
-                || $dataObj->m_Association["Relationship"] == "1-1")
+        elseif ($dataObj->association["Relationship"] == "M-1"
+                || $dataObj->association["Relationship"] == "1-1")
         {
             $isParentObjUpdated = true;
             return self::_addRecordMto1($dataObj, $recArr);
         }
-    	elseif ($dataObj->m_Association["Relationship"] == "1-M")                
+    	elseif ($dataObj->association["Relationship"] == "1-M")                
         {
             $isParentObjUpdated = false;
             return self::_addRecord1toM($dataObj, $recArr);
@@ -80,22 +80,22 @@ class BizDataObj_Assoc
 
         // insert a record on XTable
         $db = $dataObj->getDBConnection();
-        $xDataObj = isset($dataObj->m_Association["XDataObj"]) ? $dataObj->m_Association["XDataObj"] : null;
-        $val1 = $dataObj->m_Association["FieldRefVal"];
+        $xDataObj = isset($dataObj->association["XDataObj"]) ? $dataObj->association["XDataObj"] : null;
+        $val1 = $dataObj->association["FieldRefVal"];
         $val2 = $recArr["Id"];
         if ($xDataObj)
         {   // get new record from XDataObj
             $xObj = BizSystem::getObject($xDataObj);
             $newRecArr = $xObj->newRecord();
             // verify the main table of XDataobj is same as the XTable
-            if ($xObj->mainTableName != $dataObj->m_Association["XTable"])
+            if ($xObj->mainTableName != $dataObj->association["XTable"])
             {
                 throw new BDOException("Unable to create a record in intersection table: XDataObj's main table is not same as XTable.");
                 return false;
             }
-            $fld1 = $xObj->getFieldNameByColumn($dataObj->m_Association["XColumn1"]);
+            $fld1 = $xObj->getFieldNameByColumn($dataObj->association["XColumn1"]);
             $newRecArr[$fld1] = $val1;
-            $fld2 = $xObj->getFieldNameByColumn($dataObj->m_Association["XColumn2"]);
+            $fld2 = $xObj->getFieldNameByColumn($dataObj->association["XColumn2"]);
             $newRecArr[$fld2] = $val2;
             $ok = $xObj->insertRecord($newRecArr);
             if ($ok === false)
@@ -106,11 +106,11 @@ class BizDataObj_Assoc
         }
         else
         {
-            $sql_col = "(" . $dataObj->m_Association["XColumn1"] . ","
-                        . $dataObj->m_Association["XColumn2"].")";
+            $sql_col = "(" . $dataObj->association["XColumn1"] . ","
+                        . $dataObj->association["XColumn2"].")";
 
             $sql_val = "('".$val1."','".$val2."')";
-            $sql = "INSERT INTO " . $dataObj->m_Association["XTable"] . " "
+            $sql = "INSERT INTO " . $dataObj->association["XTable"] . " "
                     . $sql_col . " VALUES " . $sql_val;
 
             try
@@ -150,39 +150,39 @@ class BizDataObj_Assoc
     {
         // set the $recArr[Id] to the parent table foriegn key column
         // get parent/association dataobj
-        $asscObj = BizSystem::getObject($dataObj->m_Association["AsscObjName"]);
+        $asscObj = BizSystem::getObject($dataObj->association["AsscObjName"]);
         // call parent dataobj's updateRecord
         $updateRecArr["Id"] = $asscObj->getFieldValue("Id");
-        $updateRecArr[$dataObj->m_Association["FieldRef"]] = $recArr["Id"];
+        $updateRecArr[$dataObj->association["FieldRef"]] = $recArr["Id"];
         $ok = $asscObj->updateRecord($updateRecArr);
         if ($ok == false)
             return false;
         // requery on this object
-        $dataObj->m_Association["FieldRefVal"] = $recArr["Id"];
+        $dataObj->association["FieldRefVal"] = $recArr["Id"];
         return $dataObj->runSearch();
     }
     
     private static function _addRecord1toM($dataObj, $recArr)
     {    	
-    	$column = $dataObj->m_Association['Column'];
+    	$column = $dataObj->association['Column'];
     	$field = $dataObj->getFieldNameByColumn($column);
     	    	
-    	$parentRefVal = $dataObj->m_Association["FieldRefVal"];
+    	$parentRefVal = $dataObj->association["FieldRefVal"];
     	
     	$newRecArr["Id"] = $recArr["Id"];    	
 		$newRecArr[$field] = $parentRefVal;
 		
-		$column2 = $dataObj->m_Association['Column2'];
+		$column2 = $dataObj->association['Column2'];
     	$field2 = $dataObj->getFieldNameByColumn($column2);
     	    	
-    	$parentRefVal2 = $dataObj->m_Association["FieldRefVal2"];
+    	$parentRefVal2 = $dataObj->association["FieldRefVal2"];
     	if($column2)
     	{
     		$newRecArr[$field2] = $parentRefVal2;
     	}
     	
-    	$cond_column = $dataObj->m_Association['CondColumn'];
-    	$cond_value = $dataObj->m_Association['CondValue'];
+    	$cond_column = $dataObj->association['CondColumn'];
+    	$cond_value = $dataObj->association['CondValue'];
     	if($cond_column)
     	{
     		$cond_field = $dataObj->getFieldNameByColumn($cond_column);
@@ -208,22 +208,22 @@ class BizDataObj_Assoc
      */
     public static function removeRecord($dataObj, $recArr, &$isParentObjUpdated)
     {
-        if ($dataObj->m_Association["Relationship"] == "M-M")
+        if ($dataObj->association["Relationship"] == "M-M")
         {
             $isParentObjUpdated = false;
             return self::_removeRecordMtoM($dataObj, $recArr);
         }
-    	elseif ($dataObj->m_Association["Relationship"] == "Self-Self")
+    	elseif ($dataObj->association["Relationship"] == "Self-Self")
         {
             $isParentObjUpdated = false;
             return self::_removeRecordSelftoSelf($dataObj, $recArr);
         }
-        elseif ($dataObj->m_Association["Relationship"] == "M-1" || $dataObj->m_Association["Relationship"] == "1-1")
+        elseif ($dataObj->association["Relationship"] == "M-1" || $dataObj->association["Relationship"] == "1-1")
         {
             $isParentObjUpdated = true;
             return self::_removeRecordMto1($dataObj, $recArr);
         }
-    	elseif ($dataObj->m_Association["Relationship"] == "1-M" )
+    	elseif ($dataObj->association["Relationship"] == "1-M" )
         {
             $isParentObjUpdated = false;
             return self::_removeRecord1toM($dataObj, $recArr);
@@ -249,9 +249,9 @@ class BizDataObj_Assoc
 
         //TODO: delete using XDataObj if XDataObj is defined
 
-        $where = $dataObj->m_Association["XColumn1"] . "='" . $dataObj->m_Association["FieldRefVal"] . "'";
-        $where .= " AND " . $dataObj->m_Association["XColumn2"] . "='" . $recArr["Id"] . "'";
-        $sql = "DELETE FROM " . $dataObj->m_Association["XTable"] . " WHERE " . $where;
+        $where = $dataObj->association["XColumn1"] . "='" . $dataObj->association["FieldRefVal"] . "'";
+        $where .= " AND " . $dataObj->association["XColumn2"] . "='" . $recArr["Id"] . "'";
+        $sql = "DELETE FROM " . $dataObj->association["XTable"] . " WHERE " . $where;
 
         try
         {
@@ -275,13 +275,13 @@ class BizDataObj_Assoc
 
         //TODO: delete using XDataObj if XDataObj is defined
 
-        $where = $dataObj->m_Association["XColumn1"] . "='" . $dataObj->m_Association["FieldRefVal"] . "'";
-        $where .= " AND " . $dataObj->m_Association["XColumn2"] . "='" . $recArr["Id"] . "'";
-        $sql = "DELETE FROM " . $dataObj->m_Association["XTable"] . " WHERE " . $where;
+        $where = $dataObj->association["XColumn1"] . "='" . $dataObj->association["FieldRefVal"] . "'";
+        $where .= " AND " . $dataObj->association["XColumn2"] . "='" . $recArr["Id"] . "'";
+        $sql = "DELETE FROM " . $dataObj->association["XTable"] . " WHERE " . $where;
 
-		$where_2 = $dataObj->m_Association["XColumn2"] . "='" . $dataObj->m_Association["FieldRefVal"] . "'";
-        $where_2 .= " AND " . $dataObj->m_Association["XColumn1"] . "='" . $recArr["Id"] . "'";
-        $sql_2 = "DELETE FROM " . $dataObj->m_Association["XTable"] . " WHERE " . $where_2;
+		$where_2 = $dataObj->association["XColumn2"] . "='" . $dataObj->association["FieldRefVal"] . "'";
+        $where_2 .= " AND " . $dataObj->association["XColumn1"] . "='" . $recArr["Id"] . "'";
+        $sql_2 = "DELETE FROM " . $dataObj->association["XTable"] . " WHERE " . $where_2;
 
         try
         {
@@ -310,25 +310,25 @@ class BizDataObj_Assoc
     {
         // set the $recArr[Id] to the parent table foriegn key column
         // get parent/association dataobj
-        $asscObj = BizSystem::getObject($dataObj->m_Association["AsscObjName"]);
+        $asscObj = BizSystem::getObject($dataObj->association["AsscObjName"]);
         // call parent dataobj's updateRecord
         $updateRecArr["Id"] = $asscObj->getFieldValue("Id");
-        $updateRecArr[$dataObj->m_Association["FieldRef"]] = "";
+        $updateRecArr[$dataObj->association["FieldRef"]] = "";
         $ok = $asscObj->updateRecord($updateRecArr);
         if ($ok == false)
             return false;
         // requery on this object
-        $dataObj->m_Association["FieldRefVal"] = "";
+        $dataObj->association["FieldRefVal"] = "";
         return $dataObj->runSearch();
     }
 
     private static function _removeRecord1toM($dataObj, $recArr)
     {        
     	    
-    	$column = $dataObj->m_Association['Column'];
+    	$column = $dataObj->association['Column'];
     	$field = $dataObj->getFieldNameByColumn($column);
     	    	    	
-    	$column2 = $dataObj->m_Association['Column2'];
+    	$column2 = $dataObj->association['Column2'];
     	$field2 = $dataObj->getFieldNameByColumn($column2);
     	
     	$newRecArr["Id"] = $recArr["Id"];
@@ -338,8 +338,8 @@ class BizDataObj_Assoc
 			$newRecArr[$field2] = '';
 		}
 		
-    	$cond_column = $dataObj->m_Association['CondColumn'];
-    	$cond_value = $dataObj->m_Association['CondValue'];    	
+    	$cond_column = $dataObj->association['CondColumn'];
+    	$cond_value = $dataObj->association['CondValue'];    	
 		
     	if($cond_column)
     	{

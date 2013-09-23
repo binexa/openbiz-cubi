@@ -4,7 +4,7 @@ require_once('_OAuth/oauth.php');
 require_once "oauth.class.php";
 class baiduapp extends oauthClass
 {
-	protected $m_Type='baiduapp'; 
+	protected $type='baiduapp'; 
 	protected $m_tokenUrl='https://openapi.baidu.com/oauth/2.0/token';
 	protected $m_userUrl='https://openapi.baidu.com/rest/2.0/passport/users/getInfo';
 	protected $m_authorizeUrl='https://openapi.baidu.com/oauth/2.0/authorize';//登录验证地址
@@ -53,7 +53,7 @@ class baiduapp extends oauthClass
 			$recinfo['oauth_token']=$token['access_token'];
 			$recinfo['oauth_token_secret']=$token['session_secret'];
 			$recinfo['access_token_json']=$token;
-			Bizsystem::getSessionContext()->setVar($this->m_Type.'_access_token',$recinfo);
+			Bizsystem::getSessionContext()->setVar($this->type.'_access_token',$recinfo);
 			$userInfo=$this->userInfo(); 
 			$this->check($userInfo);
 		}
@@ -76,7 +76,7 @@ class baiduapp extends oauthClass
 
 	//用户资料
 	public function userInfo(){
-		$recinfo=Bizsystem::getSessionContext()->getVar($this->m_Type.'_access_token');
+		$recinfo=Bizsystem::getSessionContext()->getVar($this->type.'_access_token');
 		$postfields=array('access_token'=>$recinfo['oauth_token'],'format'=>'json');
 
 		$user=json_decode(OAuthUtil::Curl_Post($this->m_userUrl,$postfields),true);
@@ -86,7 +86,7 @@ class baiduapp extends oauthClass
 			return false;
 		}
 		$user['id']          = $user['userid'];
-		$user['type']        = $this->m_Type;
+		$user['type']        = $this->type;
 		$user['uname']       = $user['username'].$this->m_suffix;
 		return $user;
 	}

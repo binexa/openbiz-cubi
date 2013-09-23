@@ -4,7 +4,7 @@ require_once('_OAuth/oauth.php');
 require_once "oauth.class.php";
 class alitao extends oauthClass
 {
-	protected $m_Type='alitao'; 
+	protected $type='alitao'; 
 	protected $m_tokenUrl='https://oauth.taobao.com/token';
 	protected $m_authorizeUrl='https://oauth.taobao.com/authorize';//登录验证地址
 	protected $loginUrl;
@@ -69,7 +69,7 @@ class alitao extends oauthClass
 		$recinfo=Bizsystem::getSessionContext()->getVar('alitao_access_token');
 	
 		$user['id']          = $recinfo['access_token_json']['taobao_user_id'];
-		$user['type']        = $this->m_Type;
+		$user['type']        = $this->type;
 		$user['uname']       = urldecode($recinfo['access_token_json']['taobao_user_nick']);
 		return $user;
 	}

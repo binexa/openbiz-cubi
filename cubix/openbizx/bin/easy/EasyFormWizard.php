@@ -39,12 +39,12 @@ class EasyFormWizard extends EasyForm
      * @param SessionContext $sessionContext
      * @return void
      */
-    public function getSessionVars($sessionContext)
+    public function loadSessionVars($sessionContext)
     {
-    	parent::getSessionVars($sessionContext);
-        $sessionContext->getObjVar($this->objectName, "ActiveRecord", $this->m_ActiveRecord, true);
+    	parent::loadSessionVars($sessionContext);
+        $sessionContext->getObjVar($this->objectName, "ActiveRecord", $this->activeRecord, true);
         $sessionContext->getObjVar($this->objectName, "FormInputs", $this->m_FormInputs, true);
-        $this->setActiveRecord($this->m_ActiveRecord);
+        $this->setActiveRecord($this->activeRecord);
     }
 
  	protected function readMetadata(&$xmlArr)
@@ -59,13 +59,13 @@ class EasyFormWizard extends EasyForm
      * @param SessionContext $sessionContext
      * @return void
      */
-    public function setSessionVars($sessionContext)
+    public function saveSessionVars($sessionContext)
     {    	
         if ($this->m_DropSession)
             $sessionContext->cleanObj($this->objectName, true);
         else {
-        	parent::setSessionVars($sessionContext);
-            $sessionContext->setObjVar($this->objectName, "ActiveRecord", $this->m_ActiveRecord, true);
+        	parent::saveSessionVars($sessionContext);
+            $sessionContext->setObjVar($this->objectName, "ActiveRecord", $this->activeRecord, true);
             $sessionContext->setObjVar($this->objectName, "FormInputs", $this->m_FormInputs, true);
         }
     }
@@ -93,7 +93,7 @@ class EasyFormWizard extends EasyForm
             return;
         }
 
-        $this->m_ActiveRecord = $this->readInputRecord();
+        $this->activeRecord = $this->readInputRecord();
 		$viewObj = $this->getViewObject();
         // get the step
     	if($viewObj->getCurrentStep()){
@@ -141,7 +141,7 @@ class EasyFormWizard extends EasyForm
     {
         $recArr = $this->readInputRecord();
         $this->setActiveRecord($recArr);
-		$this->m_ActiveRecord = $this->readInputRecord();
+		$this->activeRecord = $this->readInputRecord();
 		
         $viewObj = $this->getViewObject();
         
@@ -182,7 +182,7 @@ class EasyFormWizard extends EasyForm
             return;
         }
 
-        $this->m_ActiveRecord = $this->readInputRecord();
+        $this->activeRecord = $this->readInputRecord();
 		
         /* @var $viewObj EasyViewWizard */
         $viewObj = $this->getViewObject();
@@ -221,9 +221,9 @@ class EasyFormWizard extends EasyForm
 			return true;
 		}
     	// commit the form input. call SaveRecord()        
-        $recArr = $this->m_ActiveRecord;
+        $recArr = $this->activeRecord;
         
-        if (strtoupper($this->m_FormType) == "NEW")
+        if (strtoupper($this->formType) == "NEW")
             $dataRec = new DataRecord(null, $this->getDataObj());
         else
         {

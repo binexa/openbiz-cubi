@@ -3,13 +3,13 @@ class F_ElementEdit extends EasyForm
 { 
     protected $m_MetaFile;
     protected $m_ElemPath;
-    protected $m_AttrName;
+    protected $attrName;
     protected $m_XmlFile;
     protected $m_Doc;
         
-    public function getSessionVars($sessCtxt) 
+    public function loadSessionVars($sessCtxt) 
     {
-        parent::getSessionVars($sessCtxt);
+        parent::loadSessionVars($sessCtxt);
         
         if (!$_GET['metaName']) 
             $sessCtxt->getObjVar($this->objectName, "MetaFile", $this->m_MetaFile);
@@ -23,9 +23,9 @@ class F_ElementEdit extends EasyForm
             $this->m_ElemPath = $this->adjustElemPath($_GET['elemPath']);
         //echo $_GET['elemPath'].','.$this->m_ElemPath; exit;
         if (!$_GET['attrName']) 
-            $sessCtxt->getObjVar($this->objectName, "AttrName", $this->m_AttrName);
+            $sessCtxt->getObjVar($this->objectName, "AttrName", $this->attrName);
         else
-            $this->m_AttrName = $_GET['attrName'];
+            $this->attrName = $_GET['attrName'];
     }
     
     // replace [@abc] with [@Name='abc']
@@ -41,12 +41,12 @@ class F_ElementEdit extends EasyForm
         return implode('/',$list2);
     }
     
-    public function setSessionVars($sessCtxt) 
+    public function saveSessionVars($sessCtxt) 
     {
-        parent::setSessionVars($sessCtxt);
+        parent::saveSessionVars($sessCtxt);
         $sessCtxt->setObjVar($this->objectName, "MetaFile", $this->m_MetaFile);
         $sessCtxt->setObjVar($this->objectName, "ElemPath", $this->m_ElemPath);
-        $sessCtxt->setObjVar($this->objectName, "AttrName", $this->m_AttrName);
+        $sessCtxt->setObjVar($this->objectName, "AttrName", $this->attrName);
     }
     
     public function getCurrentElement()
@@ -88,8 +88,8 @@ class F_ElementEdit extends EasyForm
     public function fetchData()
     {
         // if has valid active record, return it, otherwise do a query
-	    if ($this->m_ActiveRecord != null)
-	        return $this->m_ActiveRecord;
+	    if ($this->activeRecord != null)
+	        return $this->activeRecord;
 
         // complete the pending action first
         $pendingAction = $_GET['pending_action'];
@@ -115,14 +115,14 @@ class F_ElementEdit extends EasyForm
             return null;
         $rootElem = simplexml_load_file($this->m_XmlFile);
         //print_r($rootElem);
-        $xpathStr = '/'.$this->m_ElemPath.'[@Name="'.$this->m_AttrName.'"]';   // TODO: fix it by full path
+        $xpathStr = '/'.$this->m_ElemPath.'[@Name="'.$this->attrName.'"]';   // TODO: fix it by full path
         $elems = $rootElem->xpath($xpathStr);
         if (!$elems || count($elems)==0)
             return null;
         // give warning if find >1 matching elements
         if (count($elems) > 1)
         {
-            echo "<div class='error'>WARNING: More than 1 '$this->m_ElemPath' elements are found with Name as '".$this->m_AttrName."'. Please change these elements with unique names!</div>";
+            echo "<div class='error'>WARNING: More than 1 '$this->m_ElemPath' elements are found with Name as '".$this->attrName."'. Please change these elements with unique names!</div>";
         }
         // get the attributes of the element
         $elem = $elems[0];
@@ -154,7 +154,7 @@ class F_ElementEdit extends EasyForm
             return;
         
         //BizSystem::clientProxy()->showClientAlert ("Changes of ".$this->m_MetaName." are saved");
-        BizSystem::clientProxy()->updateClientElement("html_msg", "Changes of ".$this->m_ElemPath.": ".$this->m_AttrName." are saved");
+        BizSystem::clientProxy()->updateClientElement("html_msg", "Changes of ".$this->m_ElemPath.": ".$this->attrName." are saved");
     }
     
     protected function GetDocDocument()
@@ -276,7 +276,7 @@ class F_ElementEdit extends EasyForm
         }
         
         $xpath = new DOMXPath($doc);
-        $xpathStr = '/'.$this->m_ElemPath.'[@Name="'.$this->m_AttrName.'"]';
+        $xpathStr = '/'.$this->m_ElemPath.'[@Name="'.$this->attrName.'"]';
         $elems = $xpath->query($xpathStr);
         $elem = $elems->item(0);
         
@@ -299,10 +299,10 @@ class F_ElementEdit extends EasyForm
         $doc->save($this->m_XmlFile);
         
         // if name is changed, refresh the left tree node name
-        if ($recArr['Name'] != $this->m_AttrName)
+        if ($recArr['Name'] != $this->attrName)
         {
             $script = "<script>";
-            $script .= "window.parent.changeElementName('".$this->m_AttrName."','".$recArr['Name']."');";
+            $script .= "window.parent.changeElementName('".$this->attrName."','".$recArr['Name']."');";
             $script .= "</script>";
             BizSystem::clientProxy()->runClientScript($script);
         }

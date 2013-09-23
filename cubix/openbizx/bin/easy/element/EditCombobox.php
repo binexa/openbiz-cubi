@@ -26,7 +26,7 @@
  */
 class EditCombobox extends OptionElement
 {
-    public $m_BlankOption;
+    public $blankOption;
     protected $widthInput = "128px";
     protected $m_Onchange = "";
 
@@ -39,7 +39,7 @@ class EditCombobox extends OptionElement
     protected function readMetaData(&$xmlArr)
     {
         parent::readMetaData($xmlArr);
-        $this->m_BlankOption=isset($xmlArr["ATTRIBUTES"]["BLANKOPTION"]) ? $xmlArr["ATTRIBUTES"]["BLANKOPTION"] : null;
+        $this->blankOption=isset($xmlArr["ATTRIBUTES"]["BLANKOPTION"]) ? $xmlArr["ATTRIBUTES"]["BLANKOPTION"] : null;
     }
 
     /**
@@ -91,10 +91,10 @@ class EditCombobox extends OptionElement
         $sHTML = "<div $style>\n";
         $sHTML .= "<select name=\"" . $selName . "\" id=\"" . $selName ."\" $disabledStr $this->m_HTMLAttr $onChange>\n";
 
-        if ($this->m_BlankOption) // ADD a blank option
+        if ($this->blankOption) // ADD a blank option
 
         {
-            $entry = explode(",",$this->m_BlankOption);
+            $entry = explode(",",$this->blankOption);
             $text = $entry[0];
             $value = ($entry[1]!="") ? $entry[1] : null;
             $entryList = array(array("val" => $value, "txt" => $text ));

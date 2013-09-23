@@ -29,15 +29,15 @@ class ColumnImage extends ColumnText
 {
     /**
      * String for alternate attribute of image
-     *    <img alt="$m_Alt" />
+     *    <img alt="$alt" />
      *
      * @var string
      */
-    public $m_Alt;
+    public $alt;
 
     /**
      * String for title attribute of image
-     *    <img title="$m_Alt" />
+     *    <img title="$alt" />
      * 
      * @var string
      */
@@ -53,7 +53,7 @@ class ColumnImage extends ColumnText
     protected function readMetaData(&$xmlArr)
     {
         parent::readMetaData($xmlArr);
-        $this->m_Alt = isset($xmlArr["ATTRIBUTES"]["ALT"]) ? $xmlArr["ATTRIBUTES"]["ALT"] : null;
+        $this->alt = isset($xmlArr["ATTRIBUTES"]["ALT"]) ? $xmlArr["ATTRIBUTES"]["ALT"] : null;
         $this->m_Title = isset($xmlArr["ATTRIBUTES"]["TITLE"]) ? $xmlArr["ATTRIBUTES"]["TITLE"] : null;
         $this->m_ImgUrl = isset($xmlArr["ATTRIBUTES"]["IMGURL"]) ? $xmlArr["ATTRIBUTES"]["IMGURL"] : '';
     }
@@ -65,10 +65,10 @@ class ColumnImage extends ColumnText
      */
     protected function getAlt()
     {
-        if ($this->m_Alt == null)
+        if ($this->alt == null)
             return null;
         $formobj = $this->getFormObj();
-        return Expression::evaluateExpression($this->m_Alt, $formobj);
+        return Expression::evaluateExpression($this->alt, $formobj);
     }
 
     /**
@@ -124,7 +124,7 @@ class ColumnImage extends ColumnText
             $alt = 'alt="' . $alt . '"';
             $title = 'title="' . $title . '"';
 
-            if ($this->m_Link)
+            if ($this->link)
             {
                 $link = $this->getLink();
                 $target = $this->getTarget();

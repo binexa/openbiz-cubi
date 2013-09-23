@@ -47,7 +47,7 @@ class Panel extends MetaIterator implements iUIControl
         $panel = array();
 
         /* @var $elem Element */
-        foreach($this->m_var as $elem)
+        foreach($this->varValue as $elem)
         {
             if ($elem->canDisplayed())
             {
@@ -65,10 +65,10 @@ class Panel extends MetaIterator implements iUIControl
                     $panel[$elem->objectName]['value'] = $elem->value;
                 if (isset($elem->objectDescription) && $elem->objectDescription !== null)
                     $panel[$elem->objectName]['description'] = $elem->getDescription();
-                if (isset($elem->m_Required))
-                    $panel[$elem->objectName]['required'] = $elem->m_Required;
-                if (isset($elem->m_ColumnStyle))
-                    $panel[$elem->objectName]['colstyle'] = $elem->m_ColumnStyle;
+                if (isset($elem->required))
+                    $panel[$elem->objectName]['required'] = $elem->required;
+                if (isset($elem->columnStyle))
+                    $panel[$elem->objectName]['colstyle'] = $elem->columnStyle;
             }
         }
 
@@ -105,13 +105,13 @@ class Panel extends MetaIterator implements iUIControl
             
             if (!$arr) break;
 
-            foreach($this->m_var as $elem)  // reset the elements
+            foreach($this->varValue as $elem)  // reset the elements
                 $elem->reset();
             $this->setRecordArr($arr);
             $table['ids'][] = $arr['Id'];
 
             /* @var $elem Element */
-            foreach($this->m_var as $elem)
+            foreach($this->varValue as $elem)
             {
                 if ($elem->canDisplayed())
                     $tableRow[$elem->objectName] = $elem->render();
@@ -136,15 +136,15 @@ class Panel extends MetaIterator implements iUIControl
     		return ;
     		
     	foreach($recArr as $key=>$value){	        	
-	       	$this->getFormObj()->m_ActiveRecord[$key] = $recArr[$key];
+	       	$this->getFormObj()->activeRecord[$key] = $recArr[$key];
 	    }     	
     	
         // reset elements first to avoid use stale data
-        foreach ($this->m_var as $elem)
+        foreach ($this->varValue as $elem)
         	$elem->reset();
         /* @var $elem Element */
         $this->getFormObj()->setFormInputs();
-        foreach ($this->m_var as $elem)
+        foreach ($this->varValue as $elem)
         {
             //if (!$recArr)
             //    $elem->setValue("");
@@ -167,7 +167,7 @@ class Panel extends MetaIterator implements iUIControl
     public function getByField($fieldName)
     {
         /* @var $elem Element */
-    	$elems =  $this->m_var;
+    	$elems =  $this->varValue;
         foreach ($elems as $elem)
         {
             if($elem->m_FieldName == $fieldName && $elem->className!='RowCheckbox')
@@ -179,7 +179,7 @@ class Panel extends MetaIterator implements iUIControl
     
 	public function hasFormElement()
     {       
-        foreach ($this->m_var as $elem)
+        foreach ($this->varValue as $elem)
         {
             if($elem->className == 'FormElement')
             {

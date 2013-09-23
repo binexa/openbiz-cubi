@@ -57,7 +57,7 @@ class ChangeLogForm extends EasyForm
         $postFields = $_POST;
         $elem_mapping = array();
         foreach ($postFields as $elem_name => $value) {
-            $elem = $this->m_DataPanel->get($elem_name);
+            $elem = $this->dataPanel->get($elem_name);
             $fld_name = $elem->m_FieldName;
             if ($elem) {
                 $elem_mapping[$fld_name] = $elem;
@@ -68,8 +68,8 @@ class ChangeLogForm extends EasyForm
             return true;
         }
 
-        $cond_column = $logDO->m_Association['CondColumn'];
-        $cond_value = $logDO->m_Association['CondValue'];
+        $cond_column = $logDO->association['CondColumn'];
+        $cond_value = $logDO->association['CondValue'];
 
         if ($cond_column) {
             $type = $cond_value;
@@ -84,7 +84,7 @@ class ChangeLogForm extends EasyForm
 
             $elem = $elem_mapping[$fldName]->m_XMLMeta;
             if (!$elem) {
-                $elem = $this->m_DataPanel->getByField($fldName)->m_XMLMeta;
+                $elem = $this->dataPanel->getByField($fldName)->m_XMLMeta;
             }
             if ($elem['ATTRIBUTES']['CLASS'] != 'Hidden') {
                 $logRecord[$fldName] = array('old' => $oldVal, 'new' => $fldVal, 'element' => $elem);

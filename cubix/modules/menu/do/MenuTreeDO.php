@@ -29,7 +29,7 @@ class MenuTreeDO extends BizDataObj
 {
 	protected $rootNodes;
 	protected $depth;
-	static protected $m_BreadCrumb = null; 
+	static protected $breadCrumb = null; 
 	static protected $fullMenuTree = null; 
 
 	public function fetchTree($rootSearchRule, $depth)
@@ -110,10 +110,10 @@ class MenuTreeDO extends BizDataObj
     
 	public function getBreadCrumb()
 	{
-    	if (self::$m_BreadCrumb != null)
-    		return self::$m_BreadCrumb;
+    	if (self::$breadCrumb != null)
+    		return self::$breadCrumb;
     	
-    	self::$m_BreadCrumb = array();
+    	self::$breadCrumb = array();
 		$uri = $_SERVER['REQUEST_URI'];
 		if (empty($uri))
 			return array();
@@ -128,20 +128,20 @@ class MenuTreeDO extends BizDataObj
     	// first find the exact uri match
     	$this->fetchNodePath("[link]='$uri'", $pathArray);
     	if (count($pathArray)>0) {
-    		self::$m_BreadCrumb = $pathArray;
+    		self::$breadCrumb = $pathArray;
     		return $pathArray;
     	}
 
     	// then find partial match uri
 		$this->fetchNodePath("[url_match] LIKE '%$matchUri%'", $pathArray);	
 		if (count($pathArray)>0) {	
-			self::$m_BreadCrumb = $pathArray;
+			self::$breadCrumb = $pathArray;
 			return $pathArray;
 		}
     	
     	// then find partial match uri
 		$this->fetchNodePath("[link] LIKE '%$matchUri%'", $pathArray);		
-		self::$m_BreadCrumb = $pathArray;
+		self::$breadCrumb = $pathArray;
 		return $pathArray;
     }
     

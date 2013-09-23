@@ -28,7 +28,7 @@
 class ColumnText extends LabelText
 {
     public $m_Sortable;
-    public $m_ColumnStyle;    
+    public $columnStyle;    
 
     /**
      * Read array meta data, and store to meta object
@@ -40,7 +40,7 @@ class ColumnText extends LabelText
     {
         parent::readMetaData($xmlArr);
         $this->m_Sortable = isset($xmlArr["ATTRIBUTES"]["SORTABLE"]) ? $xmlArr["ATTRIBUTES"]["SORTABLE"] : null;        
-        $this->m_ColumnStyle = $this->style;
+        $this->columnStyle = $this->style;
     }
 
     /**

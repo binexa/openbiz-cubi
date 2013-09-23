@@ -30,14 +30,14 @@ class DataSet implements Iterator, ArrayAccess, Countable
      *
      * @var array
      */
-    protected $m_var = array();
+    protected $varValue = array();
 
     /**
      * Reference of {@link BizDataObj}
      *
      * @var BizDataObj
      */
-    protected $m_BizObj = null;
+    protected $bizDataObj = null;
 
     /**
      * Initialize DataSet
@@ -48,7 +48,7 @@ class DataSet implements Iterator, ArrayAccess, Countable
      */
     public function __construct($bizObj)
     {
-        $this->m_BizObj = $bizObj;
+        $this->bizDataObj = $bizObj;
     }
 
     // Iterator methods BEGIN---------
@@ -61,7 +61,7 @@ class DataSet implements Iterator, ArrayAccess, Countable
      */
     public function get($key)
     {
-        return isset($this->m_var[$key]) ? $this->m_var[$key] : null;
+        return isset($this->varValue[$key]) ? $this->varValue[$key] : null;
     }
 
     /**
@@ -72,7 +72,7 @@ class DataSet implements Iterator, ArrayAccess, Countable
      */
     public function set($key, $val)
     {
-        $this->m_var[$key] = $val;
+        $this->varValue[$key] = $val;
 
     }
 
@@ -83,7 +83,7 @@ class DataSet implements Iterator, ArrayAccess, Countable
      */
     public function rewind()
     { 
-        reset($this->m_var);
+        reset($this->varValue);
     }
 
     /**
@@ -93,7 +93,7 @@ class DataSet implements Iterator, ArrayAccess, Countable
      */
     public function current()
     { 
-        return current($this->m_var);
+        return current($this->varValue);
     }
 
 
@@ -104,7 +104,7 @@ class DataSet implements Iterator, ArrayAccess, Countable
      */
     public function key()
     { 
-        return key($this->m_var);
+        return key($this->varValue);
     }
 
     /**
@@ -114,7 +114,7 @@ class DataSet implements Iterator, ArrayAccess, Countable
      */
     public function next()
     { 
-        return next($this->m_var);
+        return next($this->varValue);
     }
 
     /**
@@ -137,7 +137,7 @@ class DataSet implements Iterator, ArrayAccess, Countable
      */
     public function offsetExists($key)
     { 
-        return isset($this->m_var[$key]);
+        return isset($this->varValue[$key]);
     }
 
     /**
@@ -169,12 +169,12 @@ class DataSet implements Iterator, ArrayAccess, Countable
      */
     public function offsetUnset($key)
     { 
-        unset($this->m_var[$key]);
+        unset($this->varValue[$key]);
     }
     
     public function count() 
     {
-        return count($this->m_var);
+        return count($this->varValue);
     }
 
     /**
@@ -184,7 +184,7 @@ class DataSet implements Iterator, ArrayAccess, Countable
      */
     public function toArray()
     {
-        return $this->m_var;
+        return $this->varValue;
     }
 
     /**
@@ -195,7 +195,7 @@ class DataSet implements Iterator, ArrayAccess, Countable
      */
     public function getRefObject($objName)
     {
-        return $this->m_BizObj->getRefObject($objName);
+        return $this->bizDataObj->getRefObject($objName);
     }
 
 }

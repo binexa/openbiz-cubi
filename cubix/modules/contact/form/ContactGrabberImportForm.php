@@ -46,7 +46,7 @@ class ContactGrabberImportForm extends EasyForm
         		$new_type_name = $recArr['contact_type_new'];
         		if($new_type_name=='')
         		{
-        			$element = $this->m_DataPanel->get('fld_type_new');
+        			$element = $this->dataPanel->get('fld_type_new');
 		        	if($element->m_Label)
 		            {
 		                $elementName = $element->m_Label;

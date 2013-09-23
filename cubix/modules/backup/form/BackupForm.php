@@ -26,20 +26,20 @@ class BackupForm extends EasyForm
 		$this->folder = OPENBIZ_APP_FILE_PATH.DIRECTORY_SEPARATOR."backup";
 	}
 	
-	public function getSessionVars($sessionContext)
+	public function loadSessionVars($sessionContext)
     {
         $sessionContext->getObjVar("backup.form.BackupForms", "LocationId", $this->locationId);
         $sessionContext->getObjVar("backup.form.BackupForms", "LocationName", $this->locationName);
         $sessionContext->getObjVar("backup.form.BackupForms", "Folder", $this->folder);
-        return parent::getSessionVars($sessionContext);
+        return parent::loadSessionVars($sessionContext);
     }
  
-    public function setSessionVars($sessionContext)
+    public function saveSessionVars($sessionContext)
     {
         $sessionContext->setObjVar("backup.form.BackupForms", "LocationId", $this->locationId);
         $sessionContext->setObjVar("backup.form.BackupForms", "LocationName", $this->locationName);
         $sessionContext->setObjVar("backup.form.BackupForms", "Folder", $this->folder);
-        return parent::setSessionVars($sessionContext);
+        return parent::saveSessionVars($sessionContext);
     }
     
     public function getLocationInfo($id)
@@ -55,7 +55,7 @@ class BackupForm extends EasyForm
 	
 	public function runSearch()
     {
-        foreach ($this->m_SearchPanel as $element)
+        foreach ($this->searchPanel as $element)
         {
             if (!$element->m_FieldName)
                 continue;
@@ -64,17 +64,17 @@ class BackupForm extends EasyForm
             $this->getLocationInfo($value);
         }
 
-        $this->m_RefreshData = true;
+        $this->isRefreshData = true;
 
-        $this->m_CurrentPage = 1;
+        $this->currentPage = 1;
 
         $this->runEventLog();
         $this->rerender();
     }    
     
 	public function fetchData(){		
-        if ($this->m_ActiveRecord != null)
-            return $this->m_ActiveRecord;		
+        if ($this->activeRecord != null)
+            return $this->activeRecord;		
 		
 		preg_match("/\[Id\]='(.*?)'/si",$this->m_FixSearchRule,$match);
 		$recId = $match[1];
@@ -145,11 +145,11 @@ class BackupForm extends EasyForm
 		$resultRecords = $this->fetchFullDataSet();
 		//paging		
 		if(is_array($resultRecords)){
-			$result = array_slice($resultRecords,($this->m_CurrentPage-1)*$this->m_Range,$this->m_Range);
+			$result = array_slice($resultRecords,($this->currentPage-1)*$this->m_Range,$this->m_Range);
 		}			
-		$this->m_TotalRecords = count($resultRecords);
+		$this->totalRecords = count($resultRecords);
         if ($this->m_Range && $this->m_Range > 0)
-            $this->m_TotalPages = ceil($this->m_TotalRecords/$this->m_Range);
+            $this->totalPages = ceil($this->totalRecords/$this->m_Range);
 		return $result;
 		
 	}	
@@ -176,7 +176,7 @@ class BackupForm extends EasyForm
 	        }                	        	
         }
         
-        if (strtoupper($this->m_FormType) == "LIST")
+        if (strtoupper($this->formType) == "LIST")
             $this->rerender();
 
         $this->runEventLog();

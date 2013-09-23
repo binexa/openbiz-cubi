@@ -71,7 +71,7 @@ class LabelBool extends LabelText{
         }else{
         	$image_url = Resource::getImageUrl()."/".$image_url;
         }                   
-    	if ($this->m_Link)
+    	if ($this->link)
         {
             $link = $this->getLink();
             $target = $this->getTarget();

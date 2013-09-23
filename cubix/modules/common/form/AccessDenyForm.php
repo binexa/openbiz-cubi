@@ -13,13 +13,13 @@
 
 class AccessDenyForm extends EasyForm
 {
-	public $m_isDefaultPage = 0;
+	public $isDefaultPage = 0;
 	
-    public function setSessionVars($sessionContext)
+    public function saveSessionVars($sessionContext)
     {
     	$current_url = $this->getUrlAddress();
 		$sessionContext->setObjVar("SYSTEM", "LastViewedPage", $current_url);
-		parent::setSessionVars($sessionContext);
+		parent::saveSessionVars($sessionContext);
     }
     
     public function fetchData()
@@ -29,9 +29,9 @@ class AccessDenyForm extends EasyForm
 		$default_url = OPENBIZ_APP_INDEX_URL.$roleStartpages[0];		
 		if($url == $default_url)
 		{
-			$this->m_isDefaultPage = 1;
+			$this->isDefaultPage = 1;
 		}else{
-			$this->m_isDefaultPage = 0;
+			$this->isDefaultPage = 0;
 		}
 		return parent::fetchData();
     }
