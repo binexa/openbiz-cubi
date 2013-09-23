@@ -4,10 +4,10 @@ Openbiz combine it witdh event drivent programming on Web GUI.
 | Section          | Openbiz                     | Other Framework               |
 |------------------|-----------------------------|-------------------------------|
 | Front Controller | BizController               | Front_Controller, Application |
-| Controller       | View                        | Controller                    |
+| Controller       |                             | Controller                    |
 | Action of        | method of form              | method of controller          |
 | Model            | DataObject, Service         | Model, ActiveRecord, ORM      |
-| View             | View, FOrm & template       | template                      |
+| View             | View, FOrm & template       | View, template                |
 
 
 **Note from Rocky Swen :**
