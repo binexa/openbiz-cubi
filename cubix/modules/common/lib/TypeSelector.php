@@ -76,7 +76,7 @@ protected function renderList(){
 				>$li_option_value</li>";
     		
     		if($val == $value){
-    			$this->m_DefaultDisplayValue="".$str_pic."<span>".$txt."</span>";
+    			$this->defaultDisplayValue="".$str_pic."<span>".$txt."</span>";
     		}		
     	}
     	$sHTML .= "</ul>";

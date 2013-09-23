@@ -1,7 +1,7 @@
 <?php
 class DomMeta {
     public $m_XmlFile;
-    public $m_Doc;
+    public $doc;
     
     public function __construct($metaName) {
         if (strpos($metaName,".xml")>0)
@@ -13,8 +13,8 @@ class DomMeta {
     
     public function GetDocDocument()
     {
-        if ($this->m_Doc) 
-            return $this->m_Doc;
+        if ($this->doc) 
+            return $this->doc;
         
         if (!file_exists($this->m_XmlFile)) 
             return null;
@@ -22,7 +22,7 @@ class DomMeta {
         $ok = $doc->load($this->m_XmlFile);
         if (!$ok)
             return null;
-        $this->m_Doc = $doc;
+        $this->doc = $doc;
         return $doc;
     }
     

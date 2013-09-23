@@ -26,7 +26,7 @@
  */
 class CKEditor extends InputElement
 {
-	public $m_Config;
+	public $config;
 	public $m_Mode;
     /**
      * Read array meta data, and store to meta object
@@ -38,7 +38,7 @@ class CKEditor extends InputElement
     {
         parent::readMetaData($xmlArr);
         $this->m_Mode = isset($xmlArr["ATTRIBUTES"]["MODE"]) ? $xmlArr["ATTRIBUTES"]["MODE"] : null;
-        $this->m_Config = isset($xmlArr["ATTRIBUTES"]["CONFIG"]) ? $xmlArr["ATTRIBUTES"]["CONFIG"] : null;
+        $this->config = isset($xmlArr["ATTRIBUTES"]["CONFIG"]) ? $xmlArr["ATTRIBUTES"]["CONFIG"] : null;
     }
 
     /**
@@ -66,7 +66,7 @@ class CKEditor extends InputElement
 
         $languageCode = I18n::getCurrentLangCode();
         $languageCode = str_replace("_","-",$languageCode);
-        $config = $this->m_Config;        
+        $config = $this->config;        
         $sHTML .= "<textarea id=\"$elementName\" name=\"$elementName\" >$value</textarea>\n";
         $sHTML .= "<script type=\"text/javascript\">\n";
         if($config){

@@ -4,26 +4,26 @@ class ColumnBar extends ColumnText
 {
     public $percent;
     public $m_MaxValue;
-    public $m_DisplayUnit;
-    public $m_Color;
+    public $displayUnit;
+    public $color;
 
     protected function readMetaData(&$xmlArr)
     {
         parent::readMetaData($xmlArr);
         $this->percent = isset($xmlArr["ATTRIBUTES"]["PERCENT"]) ? $xmlArr["ATTRIBUTES"]["PERCENT"] : "N";
         $this->m_MaxValue = isset($xmlArr["ATTRIBUTES"]["MAXVALUE"]) ? $xmlArr["ATTRIBUTES"]["MAXVALUE"] : "1";
-        $this->m_DisplayUnit = isset($xmlArr["ATTRIBUTES"]["DISPLAYUNIT"]) ? $xmlArr["ATTRIBUTES"]["DISPLAYUNIT"] : null;
-        $this->m_Color = isset($xmlArr["ATTRIBUTES"]["COLOR"]) ? $xmlArr["ATTRIBUTES"]["COLOR"] : null;        
+        $this->displayUnit = isset($xmlArr["ATTRIBUTES"]["DISPLAYUNIT"]) ? $xmlArr["ATTRIBUTES"]["DISPLAYUNIT"] : null;
+        $this->color = isset($xmlArr["ATTRIBUTES"]["COLOR"]) ? $xmlArr["ATTRIBUTES"]["COLOR"] : null;        
         $this->cssClass = isset($xmlArr["ATTRIBUTES"]["CSSCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSCLASS"] : "column_bar";
         $this->height = isset($xmlArr["ATTRIBUTES"]["HEIGHT"]) ? $xmlArr["ATTRIBUTES"]["HEIGHT"] : "14";
     }
 
     public function render(){    	
     	$value =  $this->value;
-    	if($this->m_Color)
+    	if($this->color)
     	{
     		$formObj = $this->getFormObj();
-    		$color = Expression::evaluateExpression($this->m_Color, $formObj);    		
+    		$color = Expression::evaluateExpression($this->color, $formObj);    		
     		if(!$color){
     			$color = '33b5fb';
     		}
@@ -32,9 +32,9 @@ class ColumnBar extends ColumnText
     		$bgcolor_str = "background-color: #33b5fb;";
     	}
     	
-    	if($this->m_DisplayFormat)
+    	if($this->displayFormat)
         {
-        	$value = sprintf($this->m_DisplayFormat,$value);
+        	$value = sprintf($this->displayFormat,$value);
         }
     	if($this->percent=='Y')
         {        	
@@ -75,7 +75,7 @@ class ColumnBar extends ColumnText
     		$bar_overlay
     		$bar	    		    			
     		</span>
-    		<span class=\"value\">$value".$this->m_DisplayUnit."</span>
+    		<span class=\"value\">$value".$this->displayUnit."</span>
     	</span>
     	";
     	return $sHTML;

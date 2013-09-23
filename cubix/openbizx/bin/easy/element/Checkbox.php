@@ -27,18 +27,18 @@
 class Checkbox extends OptionElement
 {
 
-    protected $m_DefaultChecked;
+    protected $defaultChecked;
 
     protected function readMetaData(&$xmlArr)
     {
         parent::readMetaData($xmlArr);
-        $this->m_DefaultChecked = isset($xmlArr["ATTRIBUTES"]["DEFAULTCHECKED"]) ? $xmlArr["ATTRIBUTES"]["DEFAULTCHECKED"] : "N";
+        $this->defaultChecked = isset($xmlArr["ATTRIBUTES"]["DEFAULTCHECKED"]) ? $xmlArr["ATTRIBUTES"]["DEFAULTCHECKED"] : "N";
     }
 
     public function getDefaultChecked()
     {
         $formObj = $this->getFormObj();
-        return Expression::evaluateExpression($this->m_DefaultChecked, $formObj);
+        return Expression::evaluateExpression($this->defaultChecked, $formObj);
     }
 
     /**

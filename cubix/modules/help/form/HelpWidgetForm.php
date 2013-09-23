@@ -16,8 +16,8 @@ class HelpWidgetForm extends EasyForm
 	public $m_EncodedURL ;
 	public $m_TutorialId =false;
 	
-	protected $m_CategoryDO 		= "help.do.HelpCategoryDO";
-	protected $m_CategoryMappingDO 	= "help.do.HelpCategoryMappingDO";
+	protected $categoryDO 		= "help.do.HelpCategoryDO";
+	protected $categoryMappingDO 	= "help.do.HelpCategoryMappingDO";
 	
 	protected function GetURL(){
 		if($_SERVER["REDIRECT_QUERY_STRING"])
@@ -57,7 +57,7 @@ class HelpWidgetForm extends EasyForm
 		$this->m_TutorialId = BizSystem::getService("help.lib.TutorialService")->getTutorialId('/'.$url);
 	
 		//search cat_id from mapping table
-		$mappingObj  =  BizSystem::GetObject($this->m_CategoryMappingDO,1);
+		$mappingObj  =  BizSystem::GetObject($this->categoryMappingDO,1);
     	
 		//@todo: $url need to be filtered before use in database
     	$records = $mappingObj->directFetch("[url]='$url'");
@@ -67,7 +67,7 @@ class HelpWidgetForm extends EasyForm
     	else
     	{
 			//if no matched, generate record from category table url_match
-			$categoryObj  =  BizSystem::GetObject($this->m_CategoryDO,1);
+			$categoryObj  =  BizSystem::GetObject($this->categoryDO,1);
 			$records = $categoryObj->directFetch();
 			foreach($records as $record){  
 				$match = $record['url_match'];

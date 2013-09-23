@@ -27,7 +27,7 @@ class HTMLTabs extends MetaObject implements iUIControl
 {
     public $templateFile;
     public $m_TabViews = null;
-    protected $m_CurrentTab = null;
+    protected $currentTab = null;
     protected $activeCssClassName = null;
     protected $m_InactiveCssClassName = null;
 
@@ -121,7 +121,7 @@ class HTMLTabs extends MetaObject implements iUIControl
      */
     public function setCurrentTab($viewName)
     {
-        $this->m_CurrentTab = $viewName;
+        $this->currentTab = $viewName;
     }
 
     /**
@@ -135,9 +135,9 @@ class HTMLTabs extends MetaObject implements iUIControl
     public function isCurrentTab($tabView, $curViewObj, $curViewName)
     { //--jmmz
         $currentTab = false; //this variable save 'true' if is the current tab and 'false' in otherwise --jmmz
-        if ($this->m_CurrentTab)
+        if ($this->currentTab)
         {
-            $currentTab = ($this->m_CurrentTab == $tabView->objectName || $this->m_CurrentTab == $tabView->m_Tab)
+            $currentTab = ($this->currentTab == $tabView->objectName || $this->currentTab == $tabView->m_Tab)
                     ? TRUE
                     : FALSE;
         }
@@ -215,7 +215,7 @@ class HTMLTabs extends MetaObject implements iUIControl
 
                 $tabs[$i]['name']=$tview->objectName; //Name of each tab--jmmz
                 $tabs[$i]['forms']=$this->_renderJSCodeForForms($tview->m_Forms);//Configuration of the forms to hide or show--jmmz
-                $tabs[$i]['caption'] = $tview->m_Caption;
+                $tabs[$i]['caption'] = $tview->caption;
 
                 $tabs[$i]['url'] = $this->_renderURL($tview); //Call the method to render the url--jmmz
 
@@ -295,7 +295,7 @@ class TabView
     public $objectName;
     public $m_View;
     public $m_ViewSet;
-    public $m_Caption;
+    public $caption;
     public $m_URL;
     public $m_Target;
     public $m_Icon;
@@ -336,7 +336,7 @@ class TabView
         $this->m_View = $xmlArr["ATTRIBUTES"]["VIEW"];
         if(array_key_exists("VIEWSET", $xmlArr["ATTRIBUTES"]))
             $this->m_ViewSet = $xmlArr["ATTRIBUTES"]["VIEWSET"];
-        $this->m_Caption = $this->translate($xmlArr["ATTRIBUTES"]["CAPTION"]);
+        $this->caption = $this->translate($xmlArr["ATTRIBUTES"]["CAPTION"]);
         if(array_key_exists("URL", $xmlArr["ATTRIBUTES"]))
             $this->m_URL = $xmlArr["ATTRIBUTES"]["URL"];
         if(array_key_exists("TARGET", $xmlArr["ATTRIBUTES"]))

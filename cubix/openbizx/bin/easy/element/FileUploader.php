@@ -31,7 +31,7 @@ class FileUploader extends FileInput
     public $m_UploadFolder ;
     public $m_UploadFileType ;
     public $m_Uploaded =false;   	
-    public $m_Deleteable;
+    public $deleteable;
     public $m_UseRawName=false;        
 
     /**
@@ -67,7 +67,7 @@ class FileUploader extends FileInput
         parent::readMetaData($xmlArr);
         $this->m_UploadFolder = isset($xmlArr["ATTRIBUTES"]["UPLOADFOLDER"]) ? $xmlArr["ATTRIBUTES"]["UPLOADFOLDER"] : null;
         $this->m_UploadFileType = isset($xmlArr["ATTRIBUTES"]["FILETYPE"]) ? $xmlArr["ATTRIBUTES"]["FILETYPE"] : null;
-        $this->m_Deleteable = isset($xmlArr["ATTRIBUTES"]["DELETEABLE"]) ? $xmlArr["ATTRIBUTES"]["DELETEABLE"] : "N";
+        $this->deleteable = isset($xmlArr["ATTRIBUTES"]["DELETEABLE"]) ? $xmlArr["ATTRIBUTES"]["DELETEABLE"] : "N";
         $this->m_UseRawName = isset($xmlArr["ATTRIBUTES"]["USERAWNAME"]) ? $xmlArr["ATTRIBUTES"]["USERAWNAME"] : false;
     }
 
@@ -79,7 +79,7 @@ class FileUploader extends FileInput
      */
     function setValue($value)
     {
-        if($this->m_Deleteable=='N')
+        if($this->deleteable=='N')
     	{
 
     	}
@@ -133,7 +133,7 @@ class FileUploader extends FileInput
 
     public function render()
     {
-    	if($this->m_Deleteable=="Y"){
+    	if($this->deleteable=="Y"){
         	$delete_opt="<input type=\"checkbox\" name=\"" . $this->objectName . "_DELETE\" id=\"" . $this->objectName ."_DELETE\" >Delete";
         } else{
         	$delete_opt="";

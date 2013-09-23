@@ -35,9 +35,9 @@ class ColumnSorting extends ColumnText
         
         if ($value!==null)
         {
-        	if($this->m_DisplayFormat)
+        	if($this->displayFormat)
         	{
-        		$value = sprintf($this->m_DisplayFormat,$value);
+        		$value = sprintf($this->displayFormat,$value);
         	}
         	if($this->percent=='Y')
         	{

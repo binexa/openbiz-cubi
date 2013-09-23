@@ -36,14 +36,14 @@ class oauthClass extends EasyForm
 	protected $m_UserOAuthDO;
  
 	protected $m_Providers;
-	protected $m_CallBack;
+	protected $callBack;
  
 	protected $m_oauthProviderDo='oauth.do.OauthProviderDO';
 	
 	
   public function __construct()  
     {
-         $this->m_CallBack=SITE_URL.'ws.php/oauth/callback/callback/type_'.$this->type.'/';
+         $this->callBack=SITE_URL.'ws.php/oauth/callback/callback/type_'.$this->type.'/';
     } 
 
     

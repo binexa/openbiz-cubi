@@ -591,9 +591,9 @@ abstract class BizDataObj_Abstract extends MetaObject implements iSessionObject
         $this->association["Column"] = $objRef->column;
         $this->association["FieldRef"] = $objRef->m_FieldRef;
         $this->association["FieldRefVal"] = $asscObj->getFieldValue($objRef->m_FieldRef);
-        $this->association["CondColumn"] = $objRef->m_CondColumn;
-        $this->association["CondValue"] = $objRef->m_CondValue;
-        $this->association["Condition"] = $objRef->m_Condition;        
+        $this->association["CondColumn"] = $objRef->condColumn;
+        $this->association["CondValue"] = $objRef->condValue;
+        $this->association["Condition"] = $objRef->condition;        
         if ($objRef->m_Relationship == "M-M" || $objRef->m_Relationship  == "Self-Self")
         {
             $this->association["XTable"] = $objRef->m_XTable;

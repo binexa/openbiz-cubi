@@ -8,7 +8,7 @@ class Paypal extends PaymentAdapter
 	protected $m_ProviderId = 3;
 	protected $type = 'paypal';
 	
-	protected $m_CurrencyCode = 'USD';
+	protected $currencyCode = 'USD';
 	
 	public function GetPaymentURL($orderId, $amount, 
 								  $title=null,$customData=null)
@@ -25,7 +25,7 @@ class Paypal extends PaymentAdapter
 		$paypal->add_field("cmd", 			"_xclick");
 		$paypal->add_field("business", 		$config['account']);
 		$paypal->add_field("return", 		$this->m_ReturnURL);
-		$paypal->add_field("cancel_return", $this->m_CancelURL);
+		$paypal->add_field("cancel_return", $this->cancelURL);
 		$paypal->add_field("quantity",		1);
 		$paypal->add_field("amount",		$amount);
 		$paypal->add_field("item_name",		$title);
@@ -36,7 +36,7 @@ class Paypal extends PaymentAdapter
 		$paypal->add_field("rm",			2);
 		$paypal->add_field("custom",		$customData);
 		$paypal->add_field("charset",		'utf-8');
-		$paypal->add_field("currency_code",	$this->m_CurrencyCode);
+		$paypal->add_field("currency_code",	$this->currencyCode);
 		
 		$url = $paypal->build_param_url();
 

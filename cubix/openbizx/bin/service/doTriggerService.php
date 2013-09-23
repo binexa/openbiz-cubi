@@ -49,7 +49,7 @@ class doTriggerService extends MetaObject
      *
      * @var array array of {@link DOTrigger}
      */
-    public $m_DOTriggerList = array();
+    public $dOTriggerList = array();
 
     /**
      * Initialize chartService with xml array metadata
@@ -80,7 +80,7 @@ class doTriggerService extends MetaObject
             return;
         foreach ($tmpList as $triggerXml)
         {
-            $this->m_DOTriggerList[] = new DOTrigger($triggerXml);
+            $this->dOTriggerList[] = new DOTrigger($triggerXml);
         }
     }
 
@@ -94,7 +94,7 @@ class doTriggerService extends MetaObject
     public function execute($dataObj, $triggerType)
     {
         /* @var $doTrigger DOTrigger */
-        foreach ($this->m_DOTriggerList as $doTrigger)
+        foreach ($this->dOTriggerList as $doTrigger)
         {        	
             if ($doTrigger->m_TriggerType == $triggerType){            	;
                 $this->executeAllActions($doTrigger, $dataObj);
@@ -175,7 +175,7 @@ class doTriggerService extends MetaObject
             { // put it to a passive queue
                 /* $passiveQueueSvc->Push($methodName,
                                       $argList, 
-                                      $triggerAction->m_DelayMinutes, 
+                                      $triggerAction->delayMinutes, 
                                       $triggerAction->m_RepeatMinutes); */
             }
         }
@@ -193,7 +193,7 @@ class doTriggerService extends MetaObject
     {
         $actionMsg["Method"] = $methodName;
         $actionMsg["ArgList"] = $argList;
-        $actionMsg["DelayMinutes"] = $triggerAction->m_DelayMinutes;
+        $actionMsg["DelayMinutes"] = $triggerAction->delayMinutes;
         $actionMsg["RepeatMinutes"] = $triggerAction->m_RepeatMinutes;
         $actionMsg["StartTime"] = strftime("%Y-%m-%d %H:%M:%S");
     }
@@ -391,7 +391,7 @@ class TriggerAction extends MetaObject
     public $objectName;
     public $action;
     public $m_Immediate;
-    public $m_DelayMinutes;
+    public $delayMinutes;
     public $m_RepeatMinutes;
     public $argList = array();
 
@@ -406,7 +406,7 @@ class TriggerAction extends MetaObject
         $this->objectName = $xmlArr["ATTRIBUTES"]["NAME"];
         $this->action = $xmlArr["ATTRIBUTES"]["ACTION"];
         $this->m_Immediate = $xmlArr["ATTRIBUTES"]["IMMEDIATE"];
-        $this->m_DelayMinutes = $xmlArr["ATTRIBUTES"]["DELAYMINUTES"];
+        $this->delayMinutes = $xmlArr["ATTRIBUTES"]["DELAYMINUTES"];
         $this->m_RepeatMinutes = $xmlArr["ATTRIBUTES"]["REPEATMINUTES"];
         $this->readMetaCollection($xmlArr["ACTIONARGUMENT"], $tmpList);
         if (! $tmpList)

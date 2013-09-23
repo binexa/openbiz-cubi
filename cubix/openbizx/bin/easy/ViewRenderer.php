@@ -118,7 +118,7 @@ class ViewRenderer
         if ($viewObj->m_Tiles) {
             foreach ($viewObj->m_Tiles as $tname => $tile) {
                 foreach ($tile as $formRef) {
-                    if ($formRef->m_Display == false)
+                    if ($formRef->display == false)
                         continue;
                     $tiles[$tname][$formRef->objectName] = BizSystem::getObject($formRef->objectName)->render();
                     $tiletabs[$tname][$formRef->objectName] = $formRef->objectDescription;
@@ -126,7 +126,7 @@ class ViewRenderer
             }
         } else {
             foreach ($viewObj->m_FormRefs as $formRef) {
-                if ($formRef->m_Display == false)
+                if ($formRef->display == false)
                     continue;
                 $forms[$formRef->objectName] = BizSystem::getObject($formRef->objectName)->render();
                 $formtabs[$formRef->objectName] = $formRef->objectDescription;
@@ -135,7 +135,7 @@ class ViewRenderer
         
         if(count($viewObj->m_Widgets)){
     		foreach ($viewObj->m_Widgets as $formRef) {
-                if ($formRef->m_Display == false)
+                if ($formRef->display == false)
                     continue;
                 $widgets[$formRef->objectName] = BizSystem::getObject($formRef->objectName)->render();
             }
@@ -190,7 +190,7 @@ class ViewRenderer
         foreach ($tplAttributes as $key => $value) {
             $smarty->assign($key, $value);
         }
-        if ($viewObj->m_ConsoleOutput)
+        if ($viewObj->consoleOutput)
             $smarty->display(BizSystem::getTplFileWithPath($viewObj->templateFile, $viewObj->m_Package));
         else
             return $smarty->fetch(BizSystem::getTplFileWithPath($viewObj->templateFile, $viewObj->m_Package));
@@ -217,7 +217,7 @@ class ViewRenderer
                 $view->$key = $value;
             }
         }
-        if ($viewObj->m_ConsoleOutput)
+        if ($viewObj->consoleOutput)
             echo $view->render($viewObj->templateFile);
         else
             return $view->render($viewObj->templateFile);

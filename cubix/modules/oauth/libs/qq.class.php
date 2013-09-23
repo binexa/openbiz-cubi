@@ -17,12 +17,12 @@ class qq extends oauthClass{
 	}
 	
   	function login(){
-		$redirectPage=$this->getUrl($this->m_CallBack);
+		$redirectPage=$this->getUrl($this->callBack);
 		BizSystem::clientProxy()->ReDirectPage($redirectPage);
 	} 
 	function test($akey,$skey){
 		$o = new QqWeiboOAuth( $akey,$skey );
-        return $o->getRequestToken($this->m_CallBack);
+        return $o->getRequestToken($this->callBack);
 	}
 	
 	function callback(){ 

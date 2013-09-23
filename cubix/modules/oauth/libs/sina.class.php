@@ -32,7 +32,7 @@ class sina extends oauthClass
 	function callback(){ 
 		$keys = array();
 		$keys['code'] = $_REQUEST['code'];
-		$keys['redirect_uri'] = $this->m_CallBack;
+		$keys['redirect_uri'] = $this->callBack;
 		$token = $this->m_sina->getAccessToken('code', $keys ) ; 
 		if(!$token )
 		{
@@ -52,7 +52,7 @@ class sina extends oauthClass
 			throw new Exception('Unknown sina_akey');
 			return false;
 		}
-		$this->loginUrl = $this->m_sina->getAuthorizeURL($this->m_CallBack);
+		$this->loginUrl = $this->m_sina->getAuthorizeURL($this->callBack);
 		return $this->loginUrl;
 	} 
  

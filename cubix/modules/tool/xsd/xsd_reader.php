@@ -13,7 +13,7 @@ function readElement($elementXsdFile)
     $ok = $doc->load($elementXsdFile);
     if (!$ok)
         return null;
-    $this->m_Doc = $doc;
+    $this->doc = $doc;
     $rootElem = $doc->documentElement;*/
     print_r($rootElem);
 }

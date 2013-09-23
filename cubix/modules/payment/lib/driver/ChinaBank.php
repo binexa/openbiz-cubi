@@ -6,7 +6,7 @@ class ChinaBank extends PaymentAdapter
 	protected $m_ProviderId = 4;
 	protected $type = 'chinabank';
 	
-	protected $m_CurrencyCode = 'CNY';
+	protected $currencyCode = 'CNY';
 	
 	public function GetPaymentURL($orderId, $amount, 
 								  $title=null,$customData=null)
@@ -26,7 +26,7 @@ class ChinaBank extends PaymentAdapter
 			"v_url"		=> $this->m_ReturnURL,			
 			"v_oid"		=> $orderId,
 			"v_amount"	=> $amount,
-			"v_moneytype" => $this->m_CurrencyCode,
+			"v_moneytype" => $this->currencyCode,
 			"remark1"	=> base64_encode($customData),					
 		); 
 		

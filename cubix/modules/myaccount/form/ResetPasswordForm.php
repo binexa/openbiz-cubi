@@ -38,15 +38,15 @@ include_once(OPENBIZ_APP_MODULE_PATH."/system/form/UserForm.php");
 
 class ResetPasswordForm extends UserForm
 {
-	public $m_DefaultLogoff = 'Y';
+	public $defaultLogoff = 'Y';
 	
 	public function fetchData()
 	{
 		if($this->getViewObject()->isForceResetPassword())
 		{
-			$this->m_DefaultLogoff = 'N';
+			$this->defaultLogoff = 'N';
 		}else{
-			$this->m_DefaultLogoff = 'Y';
+			$this->defaultLogoff = 'Y';
 		}
 		return parent::fetchData();
 	}

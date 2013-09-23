@@ -13,8 +13,8 @@
 
 class checkerService extends MetaObject
 {
-	protected $m_CheckerList;
-	protected $m_CheckerDO = "notification.do.NotificationCheckerDO";	
+	protected $checkerList;
+	protected $checkerDO = "notification.do.NotificationCheckerDO";	
 	protected $m_NotificationDO = "notification.do.NotificationDO";	
 	
 	public function __construct(&$xmlArr)
@@ -33,12 +33,12 @@ class checkerService extends MetaObject
 	{
 		if($checkers['ATTRIBUTES'])
 		{
-			$this->m_CheckerList[] = $checkers["ATTRIBUTES"];
+			$this->checkerList[] = $checkers["ATTRIBUTES"];
 		}
 		else{
 			foreach($checkers as $checker)
 			{
-				$this->m_CheckerList[] = $checker["ATTRIBUTES"];
+				$this->checkerList[] = $checker["ATTRIBUTES"];
 			}	
 		}
 	}
@@ -47,14 +47,14 @@ class checkerService extends MetaObject
 	
 	public function checkNotification()
 	{
-		$checkerDO = BizSystem::getObject($this->m_CheckerDO);
+		$checkerDO = BizSystem::getObject($this->checkerDO);
 		$checkerRecs = $checkerDO->directfetch();
 		$checkerLogList = array();
 		foreach($checkerRecs as $checker)
 		{
 			$checkerLogList[$checker['checker']] = strtotime($checker['last_checktime']);
 		}
-		foreach($this->m_CheckerList as $checker)
+		foreach($this->checkerList as $checker)
 		{
 			//test is the checker recently called
 			if( $checkerLogList[$checker['NAME']] + (int)$checker['MININTERVAL'] < time() ){

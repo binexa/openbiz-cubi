@@ -129,7 +129,7 @@
     <ActionPanel>           
               
 		<Element Name="btn_custom" 
-				Hidden="{@:m_CanUpdateRecord=='1'?'N':'Y'}" 
+				Hidden="{@:canUpdateRecord=='1'?'N':'Y'}" 
 				Class="Button" 
 				Text="Custom" 
 				CssClass="button_gray_w">
@@ -138,7 +138,7 @@
             			Function="SwitchForm(product.form.ProductTypeCustomForm,{@:Elem[fld_Id].Value})"/>
         </Element>
 		<Element Name="btn_spacer"  
-				Hidden="{@:m_CanUpdateRecord=='1'?'N':'Y'}" 
+				Hidden="{@:canUpdateRecord=='1'?'N':'Y'}" 
 				Class="Spacer" 
 				Width="10" />	
 	   				

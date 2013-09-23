@@ -8,14 +8,14 @@ class SPemay extends SPDriver implements iSMS
 	protected $m_ProviderId = 3;
 	protected $m_type = 'emay';
 	protected $m_WebsvcURL	=	'http://sdkhttp.eucp.b2m.cn/sdk/SDKService?wsdl';
-	protected $m_ClientObj;
+	protected $clientObj;
 	
 	
 	protected function getClientObj()
 	{
-		if($this->m_ClientObj)
+		if($this->clientObj)
 		{
-			return $this->m_ClientObj;
+			return $this->clientObj;
 		}		
 		$ProviderInfo = $this->_getProviderInfo(); 
 		if(!$ProviderInfo)
@@ -37,8 +37,8 @@ class SPemay extends SPDriver implements iSMS
 		$client = new EmayClient($this->m_WebsvcURL,$serialNumber,$password,$sessionKey,
 							$proxyhost,$proxyport,$proxyusername,$proxypassword,$connectTimeOut,$readTimeOut);
 		$client->setOutgoingEncoding("UTF-8");
-		$this->m_ClientObj = $client;
-		return $this->m_ClientObj;
+		$this->clientObj = $client;
+		return $this->clientObj;
 	}
 		
 	public function activeService()

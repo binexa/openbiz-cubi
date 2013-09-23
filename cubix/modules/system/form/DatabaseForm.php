@@ -13,15 +13,15 @@
 
 class DatabaseForm extends EasyForm
 {
-	public $m_ConfigFile;
-	public $m_ConfigNode;
+	public $configFile;
+	public $configNode;
 	public $modeStatus;
 	
 	protected function readMetadata(&$xmlArr)
 	{
 		parent::readMetaData($xmlArr);
-		$this->m_ConfigFile = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["CONFIGFILE"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["CONFIGFILE"] : null;
-		$this->m_ConfigNode = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["CONFIGNODE"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["CONFIGNODE"] : null;
+		$this->configFile = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["CONFIGFILE"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["CONFIGFILE"] : null;
+		$this->configNode = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["CONFIGNODE"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["CONFIGNODE"] : null;
 		
 	}
 
@@ -54,18 +54,18 @@ class DatabaseForm extends EasyForm
 		if (strtoupper($this->formType) == "NEW")
             return $this->getNewRule();
             
-		$file = OPENBIZ_APP_PATH.DIRECTORY_SEPARATOR.$this->m_ConfigFile;
+		$file = OPENBIZ_APP_PATH.DIRECTORY_SEPARATOR.$this->configFile;
 		if(!is_file($file)){
 			return;
 		}
 		$configArr=BizSystem::getXmlArray($file);
-		$nodesArr = $configArr["APPLICATION"][strtoupper($this->m_ConfigNode)]["DATABASE"];
+		$nodesArr = $configArr["APPLICATION"][strtoupper($this->configNode)]["DATABASE"];
 		$result = array();
 		
 		preg_match("/\[(.*?)\]=\'(.*?)\'/si",$this->m_FixSearchRule,$match);
 		$name = $match[2];
 		
-		$recordName = $configArr["APPLICATION"][strtoupper($this->m_ConfigNode)]["DATABASE"]["ATTRIBUTES"]["NAME"];
+		$recordName = $configArr["APPLICATION"][strtoupper($this->configNode)]["DATABASE"]["ATTRIBUTES"]["NAME"];
 		if(!$recordName){
 			for($i=0;$i<count($nodesArr);$i++){
 				if(is_array($nodesArr[$i]["ATTRIBUTES"])){
@@ -112,15 +112,15 @@ class DatabaseForm extends EasyForm
 	}
 	
 	public function fetchDataSet(){
-		$file = OPENBIZ_APP_PATH.DIRECTORY_SEPARATOR.$this->m_ConfigFile;
+		$file = OPENBIZ_APP_PATH.DIRECTORY_SEPARATOR.$this->configFile;
 		if(!is_file($file)){
 			return;
 		}
 		$configArr=BizSystem::getXmlArray($file);
-		$nodesArr = $configArr["APPLICATION"][strtoupper($this->m_ConfigNode)]["DATABASE"];
+		$nodesArr = $configArr["APPLICATION"][strtoupper($this->configNode)]["DATABASE"];
 		$result = array();				
 		
-		$name = $configArr["APPLICATION"][strtoupper($this->m_ConfigNode)]["DATABASE"]["ATTRIBUTES"]["NAME"];
+		$name = $configArr["APPLICATION"][strtoupper($this->configNode)]["DATABASE"]["ATTRIBUTES"]["NAME"];
 		if(!$name){
 			for($i=0;$i<count($nodesArr);$i++){
 				if(is_array($nodesArr[$i]["ATTRIBUTES"])){				
@@ -143,12 +143,12 @@ class DatabaseForm extends EasyForm
 	
    public function outputAttrs(){
    		$result = parent::outputAttrs();
-   		$file = OPENBIZ_APP_PATH.DIRECTORY_SEPARATOR.$this->m_ConfigFile;
+   		$file = OPENBIZ_APP_PATH.DIRECTORY_SEPARATOR.$this->configFile;
 		if(!is_file($file)){
 			return;
 		}
 		$configArr=BizSystem::getXmlArray($file);
-   		$this->modeStatus = $configArr["APPLICATION"][strtoupper($this->m_ConfigNode)]["ATTRIBUTES"]["MODE"];
+   		$this->modeStatus = $configArr["APPLICATION"][strtoupper($this->configNode)]["ATTRIBUTES"]["MODE"];
    		$result['status'] = $this->modeStatus;
    		return $result;   	
    }
@@ -311,15 +311,15 @@ class DatabaseForm extends EasyForm
     }
 	
 	private function testConnStatus($name){
-		$file = OPENBIZ_APP_PATH.DIRECTORY_SEPARATOR.$this->m_ConfigFile;
+		$file = OPENBIZ_APP_PATH.DIRECTORY_SEPARATOR.$this->configFile;
 		if(!is_file($file)){
 			return;
 		}
 		$configArr=BizSystem::getXmlArray($file);
-		$recordName = $configArr["APPLICATION"][strtoupper($this->m_ConfigNode)]["DATABASE"]["ATTRIBUTES"]["NAME"];
+		$recordName = $configArr["APPLICATION"][strtoupper($this->configNode)]["DATABASE"]["ATTRIBUTES"]["NAME"];
 		if(!$recordName)
 		{
-			$nodesArr = $configArr["APPLICATION"][strtoupper($this->m_ConfigNode)]["DATABASE"];
+			$nodesArr = $configArr["APPLICATION"][strtoupper($this->configNode)]["DATABASE"];
 			for($i=0;$i<count($nodesArr);$i++){
 				if(is_array($nodesArr[$i]["ATTRIBUTES"])){					
 					if($nodesArr[$i]["ATTRIBUTES"]["NAME"]==$name){	
@@ -344,14 +344,14 @@ class DatabaseForm extends EasyForm
 		        				break;
 		        			}
 		        		}
-						$configArr["APPLICATION"][strtoupper($this->m_ConfigNode)]["DATABASE"][$i]["ATTRIBUTES"]['STATUS']=$connStatus;
+						$configArr["APPLICATION"][strtoupper($this->configNode)]["DATABASE"][$i]["ATTRIBUTES"]['STATUS']=$connStatus;
 					}
 				}
 			}
 		}
 		else
 		{			
-			$rec = $configArr["APPLICATION"][strtoupper($this->m_ConfigNode)]["DATABASE"]["ATTRIBUTES"];
+			$rec = $configArr["APPLICATION"][strtoupper($this->configNode)]["DATABASE"]["ATTRIBUTES"];
 						
 						$server = $rec['SERVER'];	
 			    		$port 	= $rec['PORT'];
@@ -371,49 +371,49 @@ class DatabaseForm extends EasyForm
 		        				break;
 		        			}
 		        		}
-		        		$configArr["APPLICATION"][strtoupper($this->m_ConfigNode)]["DATABASE"]["ATTRIBUTES"]['STATUS']=$connStatus;
+		        		$configArr["APPLICATION"][strtoupper($this->configNode)]["DATABASE"]["ATTRIBUTES"]['STATUS']=$connStatus;
 			
 		}
 		$this->saveToXML($configArr);	
 	}
     
 	private function addNode($nodeArr){
-		$file = OPENBIZ_APP_PATH.DIRECTORY_SEPARATOR.$this->m_ConfigFile;
+		$file = OPENBIZ_APP_PATH.DIRECTORY_SEPARATOR.$this->configFile;
 		if(!is_file($file)){
 			return;
 		}
 		$configArr=BizSystem::getXmlArray($file);		
-		$recordName = $configArr["APPLICATION"][strtoupper($this->m_ConfigNode)]["DATABASE"]["ATTRIBUTES"]["NAME"];
-		$recordCount = count($configArr["APPLICATION"][strtoupper($this->m_ConfigNode)]["DATABASE"]);
+		$recordName = $configArr["APPLICATION"][strtoupper($this->configNode)]["DATABASE"]["ATTRIBUTES"]["NAME"];
+		$recordCount = count($configArr["APPLICATION"][strtoupper($this->configNode)]["DATABASE"]);
 		if(!$recordName && $recordCount){
-			array_push($configArr["APPLICATION"][strtoupper($this->m_ConfigNode)]["DATABASE"] , $nodeArr);			
+			array_push($configArr["APPLICATION"][strtoupper($this->configNode)]["DATABASE"] , $nodeArr);			
 		}
 		elseif($recordCount)
 		{
-			$oldNodeArr = $configArr["APPLICATION"][strtoupper($this->m_ConfigNode)]["DATABASE"];
-			$configArr["APPLICATION"][strtoupper($this->m_ConfigNode)]["DATABASE"]=array();
-			array_push($configArr["APPLICATION"][strtoupper($this->m_ConfigNode)]["DATABASE"] , $nodeArr);
-			array_push($configArr["APPLICATION"][strtoupper($this->m_ConfigNode)]["DATABASE"] , $oldNodeArr);
+			$oldNodeArr = $configArr["APPLICATION"][strtoupper($this->configNode)]["DATABASE"];
+			$configArr["APPLICATION"][strtoupper($this->configNode)]["DATABASE"]=array();
+			array_push($configArr["APPLICATION"][strtoupper($this->configNode)]["DATABASE"] , $nodeArr);
+			array_push($configArr["APPLICATION"][strtoupper($this->configNode)]["DATABASE"] , $oldNodeArr);
 		}else{
-			$configArr["APPLICATION"][strtoupper($this->m_ConfigNode)]["DATABASE"] = $nodeArr;
+			$configArr["APPLICATION"][strtoupper($this->configNode)]["DATABASE"] = $nodeArr;
 		}
 		$this->saveToXML($configArr);	
 		$this->TestConnection($nodeArr["ATTRIBUTES"]["NAME"]);	
 	}
 	
 	private function updateNode($name, $nodeArr){
-		$file = OPENBIZ_APP_PATH.DIRECTORY_SEPARATOR.$this->m_ConfigFile;
+		$file = OPENBIZ_APP_PATH.DIRECTORY_SEPARATOR.$this->configFile;
 		if(!is_file($file)){
 			return;
 		}
 		$configArr=BizSystem::getXmlArray($file);
-		$recordName = $configArr["APPLICATION"][strtoupper($this->m_ConfigNode)]["DATABASE"]["ATTRIBUTES"]["NAME"];
+		$recordName = $configArr["APPLICATION"][strtoupper($this->configNode)]["DATABASE"]["ATTRIBUTES"]["NAME"];
 		if(!$recordName){
-			$nodesArr = $configArr["APPLICATION"][strtoupper($this->m_ConfigNode)]["DATABASE"];
+			$nodesArr = $configArr["APPLICATION"][strtoupper($this->configNode)]["DATABASE"];
 			for($i=0;$i<count($nodesArr);$i++){
 				if(is_array($nodesArr[$i]["ATTRIBUTES"])){
 					if($nodesArr[$i]["ATTRIBUTES"]["NAME"]==$name){	
-						$configArr["APPLICATION"][strtoupper($this->m_ConfigNode)]["DATABASE"][$i]=$nodeArr;
+						$configArr["APPLICATION"][strtoupper($this->configNode)]["DATABASE"][$i]=$nodeArr;
 						break;
 					}
 				}
@@ -421,47 +421,47 @@ class DatabaseForm extends EasyForm
 		}
 		else
 		{
-			$configArr["APPLICATION"][strtoupper($this->m_ConfigNode)]["DATABASE"]=$nodeArr;
+			$configArr["APPLICATION"][strtoupper($this->configNode)]["DATABASE"]=$nodeArr;
 		}
 		$this->saveToXML($configArr);		
 		$this->TestConnection($name);
 	}
 	
 	private function removeNode($name){
-		$file = OPENBIZ_APP_PATH.DIRECTORY_SEPARATOR.$this->m_ConfigFile;
+		$file = OPENBIZ_APP_PATH.DIRECTORY_SEPARATOR.$this->configFile;
 		if(!is_file($file)){
 			return;
 		}
 		$configArr=BizSystem::getXmlArray($file);
-		$recordName = $configArr["APPLICATION"][strtoupper($this->m_ConfigNode)]["DATABASE"]["ATTRIBUTES"]["NAME"];
+		$recordName = $configArr["APPLICATION"][strtoupper($this->configNode)]["DATABASE"]["ATTRIBUTES"]["NAME"];
 		if(!$recordName)
 		{
-			$nodesArr = $configArr["APPLICATION"][strtoupper($this->m_ConfigNode)]["DATABASE"];
+			$nodesArr = $configArr["APPLICATION"][strtoupper($this->configNode)]["DATABASE"];
 			for($i=0;$i<count($nodesArr);$i++){
 				if(is_array($nodesArr[$i]["ATTRIBUTES"])){					
 					if($nodesArr[$i]["ATTRIBUTES"]["NAME"]==$name){	
-						unset($configArr["APPLICATION"][strtoupper($this->m_ConfigNode)]["DATABASE"][$i]);
+						unset($configArr["APPLICATION"][strtoupper($this->configNode)]["DATABASE"][$i]);
 					}
 				}
 			}
 		}
 		else
 		{
-			unset($configArr["APPLICATION"][strtoupper($this->m_ConfigNode)]["DATABASE"]);
+			unset($configArr["APPLICATION"][strtoupper($this->configNode)]["DATABASE"]);
 		}
 		$this->saveToXML($configArr);
 	}
 	
 	private function checkDupNodeName($nodeName){
-		$file = OPENBIZ_APP_PATH.DIRECTORY_SEPARATOR.$this->m_ConfigFile;
+		$file = OPENBIZ_APP_PATH.DIRECTORY_SEPARATOR.$this->configFile;
 		if(!is_file($file)){
 			return;
 		}
 		$configArr=BizSystem::getXmlArray($file);
-		$recordName = $configArr["APPLICATION"][strtoupper($this->m_ConfigNode)]["DATABASE"]["ATTRIBUTES"]["NAME"];
+		$recordName = $configArr["APPLICATION"][strtoupper($this->configNode)]["DATABASE"]["ATTRIBUTES"]["NAME"];
 		if(!$recordName)
 		{
-			$nodesArr = $configArr["APPLICATION"][strtoupper($this->m_ConfigNode)]["DATABASE"];
+			$nodesArr = $configArr["APPLICATION"][strtoupper($this->configNode)]["DATABASE"];
 			$result = array();
 			
 			for($i=0;$i<count($nodesArr);$i++){
@@ -486,7 +486,7 @@ class DatabaseForm extends EasyForm
 		$smarty->assign("data", $data);
 		$xmldata = $smarty->fetch(BizSystem::getTplFileWithPath("applicationTemplate.xml.tpl", $this->m_Package));
 		$service_dir = OPENBIZ_APP_PATH;
-		$service_file = $service_dir.DIRECTORY_SEPARATOR.$this->m_ConfigFile;
+		$service_file = $service_dir.DIRECTORY_SEPARATOR.$this->configFile;
 		file_put_contents($service_file ,$xmldata);		
 		return true;
 	}	

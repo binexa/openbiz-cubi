@@ -38,9 +38,9 @@ class EasyForm extends MetaObject implements iSessionObject
     public $dataObjName;
     public $height;
     public $width;
-    public $m_DefaultForm;
+    public $defaultForm;
   
-    public $m_CanUpdateRecord;
+    public $canUpdateRecord;
     public $directMethodList = null; //list of method that can directly from browser
 
     public $m_Panels; 
@@ -86,7 +86,7 @@ class EasyForm extends MetaObject implements iSessionObject
     // parent form is the form that trigger the popup. "this" form is a popup form
     public $m_ParentFormName;
     // the form that drives navigation - the 1st form deplayed in the view
-    public $m_DefaultFormName = null;
+    public $defaultFormName = null;
 
     public $m_Errors;   // errors array (error_element, error_message)
     public $m_Notices;  // list of notice messages
@@ -101,7 +101,7 @@ class EasyForm extends MetaObject implements iSessionObject
     
     public $sortRule = null;
     
-    protected $m_DefaultFixSearchRule = null;
+    protected $defaultFixSearchRule = null;
     protected $m_Referer = "";
     public $messageFile = null;
     protected $m_hasError = false;
@@ -168,14 +168,14 @@ class EasyForm extends MetaObject implements iSessionObject
         $this->m_jsClass = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["JSCLASS"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["JSCLASS"] : null;
         $this->height = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["HEIGHT"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["HEIGHT"] : null;
         $this->width = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["WIDTH"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["WIDTH"] : null;
-        $this->m_DefaultForm = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["DEFAULTFORM"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["DEFAULTFORM"] : null;
+        $this->defaultForm = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["DEFAULTFORM"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["DEFAULTFORM"] : null;
         $this->templateEngine = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["TEMPLATEENGINE"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["TEMPLATEENGINE"] : null;
         $this->templateFile = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["TEMPLATEFILE"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["TEMPLATEFILE"] : null;
         $this->formType = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["FORMTYPE"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["FORMTYPE"] : null;
         $this->m_Range = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["PAGESIZE"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["PAGESIZE"] : $this->m_Range;
         $this->m_FixSearchRule = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["SEARCHRULE"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["SEARCHRULE"] : null;
         $this->sortRule = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["SORTRULE"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["SORTRULE"] : null;
-		$this->m_DefaultFixSearchRule = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["SEARCHRULE"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["SEARCHRULE"] : null;
+		$this->defaultFixSearchRule = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["SEARCHRULE"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["SEARCHRULE"] : null;
         
         $this->objectName = $this->prefixPackage($this->objectName);
         if ($this->inheritFrom == '@sourceMeta') $this->inheritFrom = '@'.$this->objectName;
@@ -233,13 +233,13 @@ class EasyForm extends MetaObject implements iSessionObject
         $this->m_jsClass   = $this->m_jsClass ? $this->m_jsClass : $parentObj->m_jsClass;
         $this->height   = $this->height ? $this->height : $parentObj->height;
         $this->width   = $this->width ? $this->width : $parentObj->width;
-        $this->m_DefaultForm   = $this->m_DefaultForm ? $this->m_DefaultForm : $parentObj->m_DefaultForm;        
+        $this->defaultForm   = $this->defaultForm ? $this->defaultForm : $parentObj->defaultForm;        
         $this->templateEngine   = $this->templateEngine ? $this->templateEngine : $parentObj->templateEngine;
         $this->templateFile   = $this->templateFile ? $this->templateFile : $parentObj->templateFile;        
         $this->formType   = $this->formType ? $this->formType : $parentObj->formType;
         $this->m_Range   = $this->m_Range ? $this->m_Range : $parentObj->m_Range;
         $this->m_FixSearchRule   = $this->m_FixSearchRule ? $this->m_FixSearchRule : $parentObj->m_FixSearchRule;
-        $this->m_DefaultFixSearchRule   = $this->m_DefaultFixSearchRule ? $this->m_DefaultFixSearchRule : $parentObj->m_DefaultFixSearchRule;		        
+        $this->defaultFixSearchRule   = $this->defaultFixSearchRule ? $this->defaultFixSearchRule : $parentObj->defaultFixSearchRule;		        
         $this->dataObjName   = $this->dataObjName ? $this->dataObjName : $parentObj->dataObjName;
         $this->directMethodList   = $this->directMethodList ? $this->directMethodList : $parentObj->directMethodList;
         $this->m_EventName   = $this->m_EventName ? $this->m_EventName : $parentObj->m_EventName;
@@ -351,7 +351,7 @@ class EasyForm extends MetaObject implements iSessionObject
         $sessionContext->getObjVar($this->objectName, "QueryParams", $this->queryParams);
         $sessionContext->getObjVar($this->objectName, "SubForms", $this->subForms);
         $sessionContext->getObjVar($this->objectName, "ParentFormName", $this->m_ParentFormName);
-        $sessionContext->getObjVar($this->objectName, "DefaultFormName", $this->m_DefaultFormName);
+        $sessionContext->getObjVar($this->objectName, "DefaultFormName", $this->defaultFormName);
         $sessionContext->getObjVar($this->objectName, "CurrentPage", $this->currentPage);
         $sessionContext->getObjVar($this->objectName, "PageSize", $this->m_Range);
         $sessionContext->getObjVar($this->objectName, "ReferenceFormName", $this->m_ReferenceFormName);
@@ -372,7 +372,7 @@ class EasyForm extends MetaObject implements iSessionObject
         $sessionContext->setObjVar($this->objectName, "QueryParams", $this->queryParams);
         $sessionContext->setObjVar($this->objectName, "SubForms", $this->subForms);
         $sessionContext->setObjVar($this->objectName, "ParentFormName", $this->m_ParentFormName);
-        $sessionContext->setObjVar($this->objectName, "DefaultFormName", $this->m_DefaultFormName);
+        $sessionContext->setObjVar($this->objectName, "DefaultFormName", $this->defaultFormName);
         $sessionContext->setObjVar($this->objectName, "CurrentPage", $this->currentPage);
         $sessionContext->setObjVar($this->objectName, "PageSize", $this->m_Range);
         $sessionContext->setObjVar($this->objectName, "ReferenceFormName", $this->m_ReferenceFormName);
@@ -857,7 +857,7 @@ class EasyForm extends MetaObject implements iSessionObject
     public function setFixSearchRule($rule = null, $cleanActualRule = true)
     {
         if ($cleanActualRule)
-            $this->m_FixSearchRule = $this->m_DefaultFixSearchRule;
+            $this->m_FixSearchRule = $this->defaultFixSearchRule;
             
         if ($this->m_FixSearchRule && $rule)
         {        	
@@ -996,7 +996,7 @@ class EasyForm extends MetaObject implements iSessionObject
         $this->setActiveRecord($resultRecords[0]);    	
         
     	if($this->getDataObj()){
-			$this->m_CanUpdateRecord = (int)$this->getDataObj()->canUpdateRecord();
+			$this->canUpdateRecord = (int)$this->getDataObj()->canUpdateRecord();
     	}        
         return $resultRecords[0];
     }
@@ -1201,19 +1201,19 @@ class EasyForm extends MetaObject implements iSessionObject
     {
     	
     	$formName_org = $formName;
-        if (!$this->m_DefaultFormName)
-    		$this->m_DefaultFormName = $this->objectName;
+        if (!$this->defaultFormName)
+    		$this->defaultFormName = $this->objectName;
     	if ($formName == null)
     	{
     		if($this->m_ReferenceFormName == null)
     		{
-    			$formName = $this->m_DefaultFormName;
+    			$formName = $this->defaultFormName;
     		}else{
     			if($formName = $this->m_ReferenceFormName){
     				//this judgement is for anti endless loop between swtich forms
     				$formObj = BizSystem::objectFactory()->getObject($this->m_ReferenceFormName);
     				if($formObj->m_ReferenceFormName == $this->objectName){    					
-    					$formName = $this->m_DefaultFormName;
+    					$formName = $this->defaultFormName;
     				}else{    				
     					$formName = $this->m_ReferenceFormName;
     				}
@@ -1225,7 +1225,7 @@ class EasyForm extends MetaObject implements iSessionObject
             // get the form object
             /* @var $formObj EasyForm */
             $formObj = BizSystem::objectFactory()->getObject($formName);
-            $formObj->m_DefaultFormName = $this->m_DefaultFormName;
+            $formObj->defaultFormName = $this->defaultFormName;
             if($formName_org){
             	//RefenerenceForm records where the from switch from
      			if( $this->formType!='EDIT' &&

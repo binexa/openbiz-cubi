@@ -16,24 +16,24 @@
  * */
 class MySQLDumpParser{
 	static private $m_Finished;
-	static private $m_DataBuffer;
-	static private $m_DataOffset;
+	static private $dataBuffer;
+	static private $dataOffset;
 	
 	
 	static private function GetNextChunk($chunkSize=32728){		
-		if (strlen(self::$m_DataBuffer) < $chunkSize) {
+		if (strlen(self::$dataBuffer) < $chunkSize) {
             self::$m_Finished = TRUE;           
-            return self::$m_DataBuffer;
+            return self::$dataBuffer;
         } else {
-            $r = substr(self::$m_DataBuffer, 0, $chunkSize);
-            self::$m_DataOffset += $chunkSize;
-            self::$m_DataBuffer = substr(self::$m_DataBuffer, $chunkSize);           
+            $r = substr(self::$dataBuffer, 0, $chunkSize);
+            self::$dataOffset += $chunkSize;
+            self::$dataBuffer = substr(self::$dataBuffer, $chunkSize);           
             return $r;
         }
 	}
 	
 	static public function parse($data){	
-		self::$m_DataBuffer = $data;	
+		self::$dataBuffer = $data;	
 		unset($data);
 		$buffer = '';
 		$result = array();

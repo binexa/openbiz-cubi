@@ -37,7 +37,7 @@ class EasyView extends MetaObject implements iSessionObject
     public $m_IsPopup = false;
     public $height;
     public $width;
-    public $m_ConsoleOutput = true;
+    public $consoleOutput = true;
 
     public $messageFile = null;        // message file path
     protected $objectMessages;
@@ -206,7 +206,7 @@ class EasyView extends MetaObject implements iSessionObject
      */
     public function setConsoleOutput($consoleOutput)
     {
-        $this->m_ConsoleOutput = $consoleOutput;
+        $this->consoleOutput = $consoleOutput;
     }
 
     /**
@@ -270,7 +270,7 @@ class EasyView extends MetaObject implements iSessionObject
             else
             {
                 //include_once(OPENBIZ_BIN."/easy/ViewRenderer.php");
-                $this->m_ConsoleOutput = false;
+                $this->consoleOutput = false;
                 $output = ViewRenderer::render($this);
                 BizSystem::log(LOG_DEBUG, "VIEW", "Set cache. url = ".$pageUrl);
                 $cacheSvc->save($output, $cache_id);
@@ -466,7 +466,7 @@ class FormReference
     public $subForms;
     public $objectDescription;
     private $_parentForm;
-    public $m_Display = true;
+    public $display = true;
     protected $m_ViewName;
 
     /**

@@ -13,15 +13,15 @@
 
 class EmailSettingForm extends EasyForm
 {
-	public $m_ConfigFile;
-	public $m_ConfigNode;
+	public $configFile;
+	public $configNode;
 	public $modeStatus;
 	
 	protected function readMetadata(&$xmlArr)
 	{
 		parent::readMetaData($xmlArr);
-		$this->m_ConfigFile = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["CONFIGFILE"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["CONFIGFILE"] : null;
-		$this->m_ConfigNode = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["CONFIGNODE"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["CONFIGNODE"] : null;
+		$this->configFile = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["CONFIGFILE"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["CONFIGFILE"] : null;
+		$this->configNode = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["CONFIGNODE"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["CONFIGNODE"] : null;
 		
 	}
 
@@ -51,17 +51,17 @@ class EmailSettingForm extends EasyForm
 		if (strtoupper($this->formType) == "NEW")
             return $this->getNewRule();
             
-		$file = OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR."service".DIRECTORY_SEPARATOR.$this->m_ConfigFile;
+		$file = OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR."service".DIRECTORY_SEPARATOR.$this->configFile;
 		if(!is_file($file)){
 			return;
 		}
 		$configArr=BizSystem::getXmlArray($file);
-		$nodesArr = $configArr["PLUGINSERVICE"]["ACCOUNTS"][strtoupper($this->m_ConfigNode)];
+		$nodesArr = $configArr["PLUGINSERVICE"]["ACCOUNTS"][strtoupper($this->configNode)];
 		$result = array();
 		
 		preg_match("/\[(.*?)\]=\'(.*?)\'/si",$this->m_FixSearchRule,$match);
 		$name = $match[2];
-		$recordName = $configArr["PLUGINSERVICE"]["ACCOUNTS"][strtoupper($this->m_ConfigNode)]["ATTRIBUTES"]["NAME"];
+		$recordName = $configArr["PLUGINSERVICE"]["ACCOUNTS"][strtoupper($this->configNode)]["ATTRIBUTES"]["NAME"];
 		if(!$recordName){
 			for($i=0;$i<count($nodesArr);$i++){
 				if(is_array($nodesArr[$i]["ATTRIBUTES"])){
@@ -98,16 +98,16 @@ class EmailSettingForm extends EasyForm
 	}
 	
 	public function fetchDataSet(){
-		$file = OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR."service".DIRECTORY_SEPARATOR.$this->m_ConfigFile;
+		$file = OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR."service".DIRECTORY_SEPARATOR.$this->configFile;
 		if(!is_file($file)){
 			return;
 		}
 		
 		$configArr=BizSystem::getXmlArray($file);
-		$nodesArr = $configArr["PLUGINSERVICE"]["ACCOUNTS"][strtoupper($this->m_ConfigNode)];
+		$nodesArr = $configArr["PLUGINSERVICE"]["ACCOUNTS"][strtoupper($this->configNode)];
 		$result = array();				
 
-		$name = $configArr["PLUGINSERVICE"]["ACCOUNTS"][strtoupper($this->m_ConfigNode)]["ATTRIBUTES"]["NAME"];
+		$name = $configArr["PLUGINSERVICE"]["ACCOUNTS"][strtoupper($this->configNode)]["ATTRIBUTES"]["NAME"];
 		if(!$name){
 			for($i=0;$i<count($nodesArr);$i++){
 				if(is_array($nodesArr[$i]["ATTRIBUTES"])){				
@@ -130,12 +130,12 @@ class EmailSettingForm extends EasyForm
 	
    public function outputAttrs(){
    		$result = parent::outputAttrs();
-   		$file = OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR."service".DIRECTORY_SEPARATOR.$this->m_ConfigFile;
+   		$file = OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR."service".DIRECTORY_SEPARATOR.$this->configFile;
 		if(!is_file($file)){
 			return;
 		}
 		$configArr=BizSystem::getXmlArray($file);
-   		$this->modeStatus = $configArr["PLUGINSERVICE"]["ACCOUNTS"][strtoupper($this->m_ConfigNode)]["ATTRIBUTES"]["MODE"];
+   		$this->modeStatus = $configArr["PLUGINSERVICE"]["ACCOUNTS"][strtoupper($this->configNode)]["ATTRIBUTES"]["MODE"];
    		$result['status'] = $this->modeStatus;
    		return $result;   	
    }
@@ -243,13 +243,13 @@ class EmailSettingForm extends EasyForm
 	
 	
    public function switchMode(){	   	   	 
-   		$file = OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR."service".DIRECTORY_SEPARATOR.$this->m_ConfigFile;
+   		$file = OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR."service".DIRECTORY_SEPARATOR.$this->configFile;
 		if(!is_file($file)){
 			return;
 		}
 		$configArr=BizSystem::getXmlArray($file);
 		
-		$this->modeStatus = $configArr["PLUGINSERVICE"]["ACCOUNTS"][strtoupper($this->m_ConfigNode)]["ATTRIBUTES"]["MODE"];		
+		$this->modeStatus = $configArr["PLUGINSERVICE"]["ACCOUNTS"][strtoupper($this->configNode)]["ATTRIBUTES"]["MODE"];		
 		if($this->modeStatus == 'Enabled')
 	   	{
 	   		$status = "Disabled";
@@ -260,7 +260,7 @@ class EmailSettingForm extends EasyForm
 	   	}
 	   	$this->modeStatus = $status;
 		
-		$configArr["PLUGINSERVICE"]["ACCOUNTS"][strtoupper($this->m_ConfigNode)]["ATTRIBUTES"]["MODE"] = $status;
+		$configArr["PLUGINSERVICE"]["ACCOUNTS"][strtoupper($this->configNode)]["ATTRIBUTES"]["MODE"] = $status;
 		
 	   	$this->saveToXML($configArr);
 	   	$this->updateForm();
@@ -325,41 +325,41 @@ class EmailSettingForm extends EasyForm
     }
     
 	private function addNode($nodeArr){
-		$file = OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR."service".DIRECTORY_SEPARATOR.$this->m_ConfigFile;
+		$file = OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR."service".DIRECTORY_SEPARATOR.$this->configFile;
 		if(!is_file($file)){
 			return;
 		}
 		$configArr=BizSystem::getXmlArray($file);		
-		$recordName = $configArr["PLUGINSERVICE"]["ACCOUNTS"][strtoupper($this->m_ConfigNode)]["ATTRIBUTES"]["NAME"];
-		$recordCount = count($configArr["PLUGINSERVICE"]["ACCOUNTS"][strtoupper($this->m_ConfigNode)]);
+		$recordName = $configArr["PLUGINSERVICE"]["ACCOUNTS"][strtoupper($this->configNode)]["ATTRIBUTES"]["NAME"];
+		$recordCount = count($configArr["PLUGINSERVICE"]["ACCOUNTS"][strtoupper($this->configNode)]);
 		if(!$recordName && $recordCount){
-			array_push($configArr["PLUGINSERVICE"]["ACCOUNTS"][strtoupper($this->m_ConfigNode)] , $nodeArr);			
+			array_push($configArr["PLUGINSERVICE"]["ACCOUNTS"][strtoupper($this->configNode)] , $nodeArr);			
 		}
 		elseif($recordCount)
 		{
-			$oldNodeArr = $configArr["PLUGINSERVICE"]["ACCOUNTS"][strtoupper($this->m_ConfigNode)];
-			$configArr["PLUGINSERVICE"]["ACCOUNTS"][strtoupper($this->m_ConfigNode)]=array();
-			array_push($configArr["PLUGINSERVICE"]["ACCOUNTS"][strtoupper($this->m_ConfigNode)] , $nodeArr);
-			array_push($configArr["PLUGINSERVICE"]["ACCOUNTS"][strtoupper($this->m_ConfigNode)] , $oldNodeArr);
+			$oldNodeArr = $configArr["PLUGINSERVICE"]["ACCOUNTS"][strtoupper($this->configNode)];
+			$configArr["PLUGINSERVICE"]["ACCOUNTS"][strtoupper($this->configNode)]=array();
+			array_push($configArr["PLUGINSERVICE"]["ACCOUNTS"][strtoupper($this->configNode)] , $nodeArr);
+			array_push($configArr["PLUGINSERVICE"]["ACCOUNTS"][strtoupper($this->configNode)] , $oldNodeArr);
 		}else{
-			$configArr["PLUGINSERVICE"]["ACCOUNTS"][strtoupper($this->m_ConfigNode)] = $nodeArr;
+			$configArr["PLUGINSERVICE"]["ACCOUNTS"][strtoupper($this->configNode)] = $nodeArr;
 		}
 		$this->saveToXML($configArr);		
 	}
 	
 	private function updateNode($name, $nodeArr){
-		$file = OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR."service".DIRECTORY_SEPARATOR.$this->m_ConfigFile;
+		$file = OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR."service".DIRECTORY_SEPARATOR.$this->configFile;
 		if(!is_file($file)){
 			return;
 		}
 		$configArr=BizSystem::getXmlArray($file);
-		$recordName = $configArr["PLUGINSERVICE"]["ACCOUNTS"][strtoupper($this->m_ConfigNode)]["ATTRIBUTES"]["NAME"];
+		$recordName = $configArr["PLUGINSERVICE"]["ACCOUNTS"][strtoupper($this->configNode)]["ATTRIBUTES"]["NAME"];
 		if(!$recordName){
-			$nodesArr = $configArr["PLUGINSERVICE"]["ACCOUNTS"][strtoupper($this->m_ConfigNode)];
+			$nodesArr = $configArr["PLUGINSERVICE"]["ACCOUNTS"][strtoupper($this->configNode)];
 			for($i=0;$i<count($nodesArr);$i++){
 				if(is_array($nodesArr[$i]["ATTRIBUTES"])){
 					if($nodesArr[$i]["ATTRIBUTES"]["NAME"]==$name){	
-						$configArr["PLUGINSERVICE"]["ACCOUNTS"][strtoupper($this->m_ConfigNode)][$i]=$nodeArr;
+						$configArr["PLUGINSERVICE"]["ACCOUNTS"][strtoupper($this->configNode)][$i]=$nodeArr;
 						break;
 					}
 				}
@@ -367,46 +367,46 @@ class EmailSettingForm extends EasyForm
 		}
 		else
 		{
-			$configArr["PLUGINSERVICE"]["ACCOUNTS"][strtoupper($this->m_ConfigNode)]=$nodeArr;
+			$configArr["PLUGINSERVICE"]["ACCOUNTS"][strtoupper($this->configNode)]=$nodeArr;
 		}
 		$this->saveToXML($configArr);		
 	}
 	
 	private function removeNode($name){
-		$file = OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR."service".DIRECTORY_SEPARATOR.$this->m_ConfigFile;
+		$file = OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR."service".DIRECTORY_SEPARATOR.$this->configFile;
 		if(!is_file($file)){
 			return;
 		}
 		$configArr=BizSystem::getXmlArray($file);
-		$recordName = $configArr["PLUGINSERVICE"]["ACCOUNTS"][strtoupper($this->m_ConfigNode)]["ATTRIBUTES"]["NAME"];
+		$recordName = $configArr["PLUGINSERVICE"]["ACCOUNTS"][strtoupper($this->configNode)]["ATTRIBUTES"]["NAME"];
 		if(!$recordName)
 		{
-			$nodesArr = $configArr["PLUGINSERVICE"]["ACCOUNTS"][strtoupper($this->m_ConfigNode)];
+			$nodesArr = $configArr["PLUGINSERVICE"]["ACCOUNTS"][strtoupper($this->configNode)];
 			for($i=0;$i<count($nodesArr);$i++){
 				if(is_array($nodesArr[$i]["ATTRIBUTES"])){
 					if($nodesArr[$i]["ATTRIBUTES"]["NAME"]==$name){	
-						unset($configArr["PLUGINSERVICE"]["ACCOUNTS"][strtoupper($this->m_ConfigNode)][$i]);
+						unset($configArr["PLUGINSERVICE"]["ACCOUNTS"][strtoupper($this->configNode)][$i]);
 					}
 				}
 			}
 		}
 		else
 		{
-			unset($configArr["PLUGINSERVICE"]["ACCOUNTS"][strtoupper($this->m_ConfigNode)]);
+			unset($configArr["PLUGINSERVICE"]["ACCOUNTS"][strtoupper($this->configNode)]);
 		}
 		$this->saveToXML($configArr);
 	}
 	
 	private function checkDupNodeName($nodeName){
-		$file = OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR."service".DIRECTORY_SEPARATOR.$this->m_ConfigFile;
+		$file = OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR."service".DIRECTORY_SEPARATOR.$this->configFile;
 		if(!is_file($file)){
 			return;
 		}
 		$configArr=BizSystem::getXmlArray($file);
-		$recordName = $configArr["PLUGINSERVICE"]["ACCOUNTS"][strtoupper($this->m_ConfigNode)]["ATTRIBUTES"]["NAME"];
+		$recordName = $configArr["PLUGINSERVICE"]["ACCOUNTS"][strtoupper($this->configNode)]["ATTRIBUTES"]["NAME"];
 		if(!$recordName)
 		{
-			$nodesArr = $configArr["PLUGINSERVICE"]["ACCOUNTS"][strtoupper($this->m_ConfigNode)];
+			$nodesArr = $configArr["PLUGINSERVICE"]["ACCOUNTS"][strtoupper($this->configNode)];
 			$result = array();
 			
 			for($i=0;$i<count($nodesArr);$i++){
@@ -431,7 +431,7 @@ class EmailSettingForm extends EasyForm
 		$smarty->assign("data", $data);
 		$xmldata = $smarty->fetch(BizSystem::getTplFileWithPath("serviceTemplate.xml.tpl", $this->m_Package));
 		$service_dir = OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR."service";
-		$service_file = $service_dir.DIRECTORY_SEPARATOR.$this->m_ConfigFile;
+		$service_file = $service_dir.DIRECTORY_SEPARATOR.$this->configFile;
 		file_put_contents($service_file ,$xmldata);		
 		return true;
 	}

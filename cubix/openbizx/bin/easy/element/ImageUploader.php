@@ -73,7 +73,7 @@ class ImageUploader extends FileUploader
      */
     function setValue($value)
     {
-    	if($this->m_Deleteable=='N' )
+    	if($this->deleteable=='N' )
     	{
     	}
 	    else
@@ -234,7 +234,7 @@ class ImageUploader extends FileUploader
 	        	$preview = "<img id=\"" . $this->objectName ."_preview\" src=\"$value\" class=\"image_preview\" />";
 	        }
         }
-        if($this->m_Deleteable=="Y"){
+        if($this->deleteable=="Y"){
         	$delete_opt="<input type=\"checkbox\" name=\"" . $this->objectName . "_DELETE\" id=\"" . $this->objectName ."_DELETE\" >Delete";
         } else{
         	$delete_opt="";

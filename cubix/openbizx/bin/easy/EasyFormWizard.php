@@ -24,7 +24,7 @@
  */
 class EasyFormWizard extends EasyForm
 {
-    protected $m_DropSession = false;
+    protected $dropSession = false;
 
     /**
      * Wizard Navigation Panel object
@@ -61,7 +61,7 @@ class EasyFormWizard extends EasyForm
      */
     public function saveSessionVars($sessionContext)
     {    	
-        if ($this->m_DropSession)
+        if ($this->dropSession)
             $sessionContext->cleanObj($this->objectName, true);
         else {
         	parent::saveSessionVars($sessionContext);
@@ -248,7 +248,7 @@ class EasyFormWizard extends EasyForm
 
     public function dropSession(){
     	// clean the session record    	
-        $this->m_DropSession = true;
+        $this->dropSession = true;
         return true;
     }    
     
@@ -261,7 +261,7 @@ class EasyFormWizard extends EasyForm
     public function cancel()
     {
         // clean the session record
-        $this->m_DropSession = true;
+        $this->dropSession = true;
         BizSystem::sessionContext()->cleanObj($this->objectName, true);
     }
 

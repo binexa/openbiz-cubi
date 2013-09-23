@@ -36,11 +36,11 @@ class MenuRecord
     public $m_URL;
     public $m_URL_Match;
 	public $m_Target;
-	public $m_CssClass;
+	public $cssClass;
 	public $m_IconImage;
 	public $m_IconCSSClass;
     public $access;
-	public $m_Current = 0;
+	public $current = 0;
 	public $childNodes = null;
 
     /**
@@ -66,7 +66,7 @@ class MenuRecord
         		$this->m_URL = OPENBIZ_APP_INDEX_URL.'/'.$this->m_URL;
         }
         $this->m_URL_Match = $rec['alias'];
-        //$this->m_CssClass = $rec['Id'];
+        //$this->cssClass = $rec['Id'];
         $this->m_IconImage = $rec['icon'];
         $this->m_IconCSSClass = $rec['icon_css'];
         $this->access = $rec['access'];

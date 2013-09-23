@@ -20,7 +20,7 @@ class facebook extends oauthClass
 		$this->m_facebook = new FacebookApi(array(
 		  'appId'  => $this->m_akey,
 		  'secret' => $this->m_skey,
-		  'CallBack' => $this->m_CallBack,
+		  'CallBack' => $this->callBack,
 		));
 	}
 	

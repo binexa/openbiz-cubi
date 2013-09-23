@@ -17,7 +17,7 @@
 
 class cryptService
 {
-    protected $m_DefaultKey ;
+    protected $defaultKey ;
     public $algorithm;
     public $m_OperationMode;
 
@@ -40,7 +40,7 @@ class cryptService
      */
     protected function readMetadata(&$xmlArr)
     {
-        $this->m_DefaultKey 	= strtolower($xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["DEFAULTKEY"]);
+        $this->defaultKey 	= strtolower($xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["DEFAULTKEY"]);
     	$this->algorithm 		= strtolower($xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["ALGORITHM"]);
         $this->m_OperationMode 	= strtolower($xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["OPERATIONMODE"]);
     }
@@ -52,7 +52,7 @@ class cryptService
     		return $data;
     	}
     	if($key==null){
-    		$key = $this->m_DefaultKey;
+    		$key = $this->defaultKey;
     	}
     	if($data==null)
     		return;
@@ -75,7 +75,7 @@ class cryptService
     		return $data;
     	}
    	 	if($key==null){
-    		$key = $this->m_DefaultKey;
+    		$key = $this->defaultKey;
     	}    	
     	if($data==null)
     		return;

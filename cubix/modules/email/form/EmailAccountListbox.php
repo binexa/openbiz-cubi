@@ -14,25 +14,25 @@
 require_once(OPENBIZ_BIN."easy/element/Listbox.php");
 class EmailAccountListbox extends Listbox{
 	
-	public $m_ConfigFile = "emailService.xml";
-	public $m_ConfigNode = "Account";
+	public $configFile = "emailService.xml";
+	public $configNode = "Account";
 	
 	public function getFromList(&$list)
     {    	
    	    
-    	$file = OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR."service".DIRECTORY_SEPARATOR.$this->m_ConfigFile;
+    	$file = OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR."service".DIRECTORY_SEPARATOR.$this->configFile;
 		if(!is_file($file)){
 			return;
 		}
 		
 		$configArr=BizSystem::getXmlArray($file);
-		$nodesArr = $configArr["PLUGINSERVICE"]["ACCOUNTS"][strtoupper($this->m_ConfigNode)];
+		$nodesArr = $configArr["PLUGINSERVICE"]["ACCOUNTS"][strtoupper($this->configNode)];
 		
     	
 		$list = array();
 		$i=0;
 
-    	$name = $configArr["PLUGINSERVICE"]["ACCOUNTS"][strtoupper($this->m_ConfigNode)]["ATTRIBUTES"]["NAME"];
+    	$name = $configArr["PLUGINSERVICE"]["ACCOUNTS"][strtoupper($this->configNode)]["ATTRIBUTES"]["NAME"];
 		if(!$name){
 			for($i=0;$i<count($nodesArr);$i++){
 				$list[$i]["txt"]=$nodesArr[$i]["ATTRIBUTES"]["NAME"]." ( ".$nodesArr[$i]["ATTRIBUTES"]["FROMEMAIL"]." )";
@@ -40,7 +40,7 @@ class EmailAccountListbox extends Listbox{
 			}
 			
 		}else{
-			$list[0]["txt"]=$name." ( ".$configArr["PLUGINSERVICE"]["ACCOUNTS"][strtoupper($this->m_ConfigNode)]["ATTRIBUTES"]["FROMEMAIL"]." )";
+			$list[0]["txt"]=$name." ( ".$configArr["PLUGINSERVICE"]["ACCOUNTS"][strtoupper($this->configNode)]["ATTRIBUTES"]["FROMEMAIL"]." )";
 			$list[0]["val"]=$name;
 		}		
 		

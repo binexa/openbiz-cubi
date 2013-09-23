@@ -34,7 +34,7 @@ class ColumnShare extends ColumnText
     public $m_MyDistributedImg = null;
     public $m_GroupSharedImg = null;
     public $m_OtherSharedImg = null;
-    public $m_DefaultImg = null;
+    public $defaultImg = null;
     public $recordOwnerId = null;
     public $recordGroupId = null;
     public $recordGroupPerm = null;
@@ -61,7 +61,7 @@ class ColumnShare extends ColumnText
         $this->m_MyDistributedImg = isset($xmlArr["ATTRIBUTES"]["MYDISTRIBUTEDIMG"]) ? $xmlArr["ATTRIBUTES"]["MYDISTRIBUTEDIMG"] : "{OPENBIZ_RESOURCE_URL}/common/images/icon_data_distributed.gif";
         $this->m_GroupSharedImg = isset($xmlArr["ATTRIBUTES"]["GROUPSHAREDIMG"]) ? $xmlArr["ATTRIBUTES"]["GROUPSHAREDIMG"] : "{OPENBIZ_RESOURCE_URL}/common/images/icon_data_shared_group.gif";
         $this->m_OtherSharedImg = isset($xmlArr["ATTRIBUTES"]["OTHERSHAREDIMG"]) ? $xmlArr["ATTRIBUTES"]["OTHERSHAREDIMG"] : "{OPENBIZ_RESOURCE_URL}/common/images/icon_data_shared_other.gif";
-        $this->m_DefaultImg = isset($xmlArr["ATTRIBUTES"]["DEFAULTIMG"]) ? $xmlArr["ATTRIBUTES"]["DEFAULTIMG"] : "{OPENBIZ_RESOURCE_URL}/common/images/icon_data_shared_other.gif";
+        $this->defaultImg = isset($xmlArr["ATTRIBUTES"]["DEFAULTIMG"]) ? $xmlArr["ATTRIBUTES"]["DEFAULTIMG"] : "{OPENBIZ_RESOURCE_URL}/common/images/icon_data_shared_other.gif";
 
         $this->recordCreatorId = isset($xmlArr["ATTRIBUTES"]["CREATORID"]) ? $xmlArr["ATTRIBUTES"]["CREATORID"] : null;
         $this->recordOwnerId = isset($xmlArr["ATTRIBUTES"]["OWNERID"]) ? $xmlArr["ATTRIBUTES"]["OWNERID"] : null;
@@ -179,10 +179,10 @@ class ColumnShare extends ColumnText
                 $image_url = $this->m_MyDistributedImg;
                 break;
             default:
-                if ($this->m_DefaultImg == '{OPENBIZ_RESOURCE_URL}/common/images/icon_data_shared_other.gif') {
-                    $this->m_DefaultImg = $this->m_OtherSharedImg;
+                if ($this->defaultImg == '{OPENBIZ_RESOURCE_URL}/common/images/icon_data_shared_other.gif') {
+                    $this->defaultImg = $this->m_OtherSharedImg;
                 }
-                $image_url = $this->m_DefaultImg;
+                $image_url = $this->defaultImg;
                 break;
         }
 

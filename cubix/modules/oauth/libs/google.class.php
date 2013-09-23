@@ -21,7 +21,7 @@ class google extends oauthClass
 		$this->m_google= new apiClient();
 		$this->m_google->setClientId($recArr['key']) ;
 		$this->m_google->setClientSecret($recArr['value'] );
-		$this->m_google->setRedirectUri($this->m_CallBack);	
+		$this->m_google->setRedirectUri($this->callBack);	
 	}
 	
   	function login(){	

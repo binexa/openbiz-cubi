@@ -36,7 +36,7 @@ class alitao extends oauthClass
 							 'client_id'     => $this->m_akey,
 							 'client_secret' => $this->m_skey,
 							 'code'          => $_REQUEST['code'],
-							 'redirect_uri'  => $this->m_CallBack
+							 'redirect_uri'  => $this->callBack
 						);
 		 $token = json_decode(OAuthUtil::Curl_Post($this->m_tokenUrl,$postfields),true); 
 	
@@ -60,7 +60,7 @@ class alitao extends oauthClass
 		/*oauth.taobao.com/authorize?response_type=code&client_id
 		 * =12382619&redirect_uri=127.0.0.1/loginDemo/oauthLogin.php&state=1
 		 */
-		$this->loginUrl=$this->m_authorizeUrl.'?response_type=code&client_id='.$this->m_akey.'&redirect_uri='.$this->m_CallBack;
+		$this->loginUrl=$this->m_authorizeUrl.'?response_type=code&client_id='.$this->m_akey.'&redirect_uri='.$this->callBack;
 		return $this->loginUrl;
 	}  
 

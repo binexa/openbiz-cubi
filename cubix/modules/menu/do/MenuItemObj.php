@@ -20,7 +20,7 @@ class MenuItemObj
     public $m_URL;
     public $m_URL_Match;
 	public $m_Target;
-	public $m_CssClass;
+	public $cssClass;
 	public $m_IconImage;
 	public $m_IconCSSClass;
 	public $childNodes = null;
@@ -39,7 +39,7 @@ class MenuItemObj
         $this->m_URL		 = Expression::evaluateExpression($this->m_URL, $this);
         $this->m_URL_Match	 = $xmlArr["ATTRIBUTES"]["URLMATCH"];
         $this->m_Target		 = $xmlArr["ATTRIBUTES"]["TARGET"];        
-        $this->m_CssClass		 = $xmlArr["ATTRIBUTES"]["CSSCLASS"];
+        $this->cssClass		 = $xmlArr["ATTRIBUTES"]["CSSCLASS"];
         $this->m_IconImage		 = $xmlArr["ATTRIBUTES"]["ICONIMAGE"];
         $this->m_IconCSSClass		 = $xmlArr["ATTRIBUTES"]["ICONCSSCLASS"];
         if(is_array($xmlArr["MENUITEM"])){

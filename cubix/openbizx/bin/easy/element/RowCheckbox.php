@@ -26,12 +26,12 @@
  */
 class RowCheckbox extends InputElement
 {
-	protected  $m_CheckStatus;
+	protected  $checkStatus;
 	
     protected function readMetaData(&$xmlArr)
     {
         parent::readMetaData($xmlArr);
-        $this->m_CheckStatus = isset($xmlArr["ATTRIBUTES"]["CHECKSTATUS"]) ? $xmlArr["ATTRIBUTES"]["CHECKSTATUS"] : null;
+        $this->checkStatus = isset($xmlArr["ATTRIBUTES"]["CHECKSTATUS"]) ? $xmlArr["ATTRIBUTES"]["CHECKSTATUS"] : null;
     }
     /**
      * Render label
@@ -56,10 +56,10 @@ class RowCheckbox extends InputElement
         $value = $this->value;
         $name = $this->objectName.'[]';
         $style = $this->getStyle();
-        if($this->m_CheckStatus)
+        if($this->checkStatus)
         {
         	$formObj = $this->getFormObj();
-        	$testResult = Expression::evaluateExpression($this->m_CheckStatus, $formObj);        	
+        	$testResult = Expression::evaluateExpression($this->checkStatus, $formObj);        	
         	if($testResult)
         	{
         		$checkStatus = " checked=\"checked\" ";

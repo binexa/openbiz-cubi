@@ -21,7 +21,7 @@ class ListForm extends BaseForm
 	public $searchRule = null;
     public $m_FixSearchRule = null; // FixSearchRule is the search rule always applying on the search
     public $sortRule = null;
-    protected $m_DefaultFixSearchRule = null;
+    protected $defaultFixSearchRule = null;
 	protected $queryParams = array();
 	
 	// vars for grid(list)
@@ -38,7 +38,7 @@ class ListForm extends BaseForm
 		$this->m_Range = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["PAGESIZE"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["PAGESIZE"] : $this->m_Range;
         $this->m_FixSearchRule = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["SEARCHRULE"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["SEARCHRULE"] : null;
         $this->sortRule = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["SORTRULE"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["SORTRULE"] : null;
-		$this->m_DefaultFixSearchRule = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["SEARCHRULE"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["SEARCHRULE"] : null;
+		$this->defaultFixSearchRule = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["SEARCHRULE"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["SEARCHRULE"] : null;
 	}
 	
 	protected function inheritParentObj()
@@ -48,7 +48,7 @@ class ListForm extends BaseForm
 		parent::inheritParentObj();
 		$this->m_Range = $this->m_Range ? $this->m_Range : $parentObj->m_Range;
         $this->m_FixSearchRule = $this->m_FixSearchRule ? $this->m_FixSearchRule : $parentObj->m_FixSearchRule;
-        $this->m_DefaultFixSearchRule = $this->m_DefaultFixSearchRule ? $this->m_DefaultFixSearchRule : $parentObj->m_DefaultFixSearchRule;
+        $this->defaultFixSearchRule = $this->defaultFixSearchRule ? $this->defaultFixSearchRule : $parentObj->defaultFixSearchRule;
 	}
 	
 	/**

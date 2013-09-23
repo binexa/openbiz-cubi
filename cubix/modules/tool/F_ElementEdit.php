@@ -5,7 +5,7 @@ class F_ElementEdit extends EasyForm
     protected $m_ElemPath;
     protected $attrName;
     protected $m_XmlFile;
-    protected $m_Doc;
+    protected $doc;
         
     public function loadSessionVars($sessCtxt) 
     {
@@ -159,8 +159,8 @@ class F_ElementEdit extends EasyForm
     
     protected function GetDocDocument()
     {
-        if ($this->m_Doc) 
-            return $this->m_Doc;
+        if ($this->doc) 
+            return $this->doc;
         //$this->m_XmlFile = OPENBIZ_APP_MODULE_PATH."/".str_replace(".","/",$this->m_MetaName).".xml";
         $this->m_XmlFile = $this->m_MetaFile;
         
@@ -170,7 +170,7 @@ class F_ElementEdit extends EasyForm
         $ok = $doc->load($this->m_XmlFile);
         if (!$ok)
             return null;
-        $this->m_Doc = $doc;
+        $this->doc = $doc;
         //$rootElem = $doc->documentElement;
         return $doc;
     }

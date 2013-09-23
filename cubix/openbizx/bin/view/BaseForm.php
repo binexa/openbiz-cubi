@@ -159,7 +159,7 @@ class BaseForm extends MetaObject implements iSessionObject
         $this->formType   = $this->formType ? $this->formType : $parentObj->formType;
         $this->m_Range   = $this->m_Range ? $this->m_Range : $parentObj->m_Range;
         $this->m_FixSearchRule   = $this->m_FixSearchRule ? $this->m_FixSearchRule : $parentObj->m_FixSearchRule;
-        $this->m_DefaultFixSearchRule   = $this->m_DefaultFixSearchRule ? $this->m_DefaultFixSearchRule : $parentObj->m_DefaultFixSearchRule;		        
+        $this->defaultFixSearchRule   = $this->defaultFixSearchRule ? $this->defaultFixSearchRule : $parentObj->defaultFixSearchRule;		        
         $this->dataObjName   = $this->dataObjName ? $this->dataObjName : $parentObj->dataObjName;
         $this->m_EventName   = $this->m_EventName ? $this->m_EventName : $parentObj->m_EventName;
         $this->messageFile   = $this->messageFile ? $this->messageFile : $parentObj->messageFile;

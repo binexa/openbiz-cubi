@@ -46,7 +46,7 @@ class MenuForm extends EasyForm
    		$this->GetParents($id);
    		$this->searchRule = "[PId] = '$id'";
    		$this->searchRuleBindValues = "";
-	    $this->m_ClearSearchRule = true;
+	    $this->clearSearchRule = true;
 	    return $this->rerender();
    	}
    	
@@ -55,7 +55,7 @@ class MenuForm extends EasyForm
    		$this->GetParents($this->_directParentId);
    		$this->searchRule = "[PId] = '".$this->_directParentId."'";
    		$this->searchRuleBindValues = "";
-	    $this->m_ClearSearchRule = true;
+	    $this->clearSearchRule = true;
    		
    		return parent::render();
    		

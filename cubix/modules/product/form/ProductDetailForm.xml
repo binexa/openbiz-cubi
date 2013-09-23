@@ -17,23 +17,23 @@
 		</Element>
     <Element Name="fld_extend_fields" ElementSet="Extend Fields" Class="FormElement" FormReference="extend.widget.ExtendDataDetailForm" FieldName="extend" Label="" AllowURLParam="N"/>
     <Element Name="fld_related_goods" Access="store.Access" TabSet="Extra Information" ElementSet="Store Goods" Class="FormElement" FormReference="store.product.widget.StoreProductListWidgetForm" FieldName="" Label="" AllowURLParam="N" />
-    <Element Name="btn_manage_goods" Access="store.Access" Hidden="{@:m_CanUpdateRecord=='1'?'N':'Y'}" TabSet="Extra Information" ElementSet="Store Goods" Class="Button" CssClass="button_gray_w" Text="Manage" Style="color:#666666;margin-left:5px;margin-top:2px;" >
+    <Element Name="btn_manage_goods" Access="store.Access" Hidden="{@:canUpdateRecord=='1'?'N':'Y'}" TabSet="Extra Information" ElementSet="Store Goods" Class="Button" CssClass="button_gray_w" Text="Manage" Style="color:#666666;margin-left:5px;margin-top:2px;" >
       <EventHandler Name="btn_manage_goods_onclick" Event="onclick" Function="SwitchForm(product.form.ProductEditGoodsForm,{@:Elem[fld_Id].Value})"/>
     </Element>
     <Element Name="fld_related_attachment" TabSet="Extra Information" Access="attachment.access" ElementSet="Attachment" Class="FormElement" FormReference="attachment.widget.AttachmentListDetailForm" FieldName="" Label="" AllowURLParam="N"/>
-    <Element Name="btn_manage_attachment" TabSet="Extra Information" Access="attachment.access" Hidden="{@:m_CanUpdateRecord=='1'?'N':'Y'}" ElementSet="Attachment" Style="color:#666666;margin-left:5px;margin-top:2px;" Class="Button" Text="Manage" CssClass="button_gray_w" Description="">
+    <Element Name="btn_manage_attachment" TabSet="Extra Information" Access="attachment.access" Hidden="{@:canUpdateRecord=='1'?'N':'Y'}" ElementSet="Attachment" Style="color:#666666;margin-left:5px;margin-top:2px;" Class="Button" Text="Manage" CssClass="button_gray_w" Description="">
       <EventHandler Name="btn_manage_attachment_onclick" Event="onclick" Function="SwitchForm(product.form.ProductEditAttachmentForm,{@:Elem[fld_Id].Value})"/>
     </Element>
     <Element Name="fld_related_picture" TabSet="Extra Information" Access="picture.access" ElementSet="Picture" Class="FormElement" FormReference="picture.widget.PictureListDetailForm" FieldName="" Label="" AllowURLParam="N"/>
-    <Element Name="btn_manage_picture" TabSet="Extra Information" Access="picture.access" Hidden="{@:m_CanUpdateRecord=='1'?'N':'Y'}" ElementSet="Picture" Style="color:#666666;margin-left:5px;margin-top:2px;" Class="Button" Text="Manage" CssClass="button_gray_w" Description="">
+    <Element Name="btn_manage_picture" TabSet="Extra Information" Access="picture.access" Hidden="{@:canUpdateRecord=='1'?'N':'Y'}" ElementSet="Picture" Style="color:#666666;margin-left:5px;margin-top:2px;" Class="Button" Text="Manage" CssClass="button_gray_w" Description="">
       <EventHandler Name="btn_manage_picture_onclick" Event="onclick" Function="SwitchForm(product.form.ProductEditPictureForm,{@:Elem[fld_Id].Value})"/>
     </Element>
     <Element Name="fld_related_account" TabSet="Related Data" ElementSet="Account" Class="FormElement" FormReference="account.widget.AccountListWidgetForm" FieldName="" Label="" AllowURLParam="N" Access="account.Access"/>
-    <Element Name="btn_manage_account" Hidden="{@:m_CanUpdateRecord=='1'?'N':'Y'}" TabSet="Related Data" ElementSet="Account" Class="Button" CssClass="button_gray_w" Text="Manage" Style="color:#666666;margin-left:5px;margin-top:2px;" Access="account.Access">
+    <Element Name="btn_manage_account" Hidden="{@:canUpdateRecord=='1'?'N':'Y'}" TabSet="Related Data" ElementSet="Account" Class="Button" CssClass="button_gray_w" Text="Manage" Style="color:#666666;margin-left:5px;margin-top:2px;" Access="account.Access">
       <EventHandler Name="btn_manage_account_onclick" Event="onclick" Function="SwitchForm(product.form.ProductEditAccountForm,{@:Elem[fld_Id].Value})"/>
     </Element>
     <Element Name="fld_related_data" TabSet="Related Data" ElementSet="Related" Class="FormElement" FormReference="product.widget.ProductListRelatedWidgetForm" FieldName="" Label="" AllowURLParam="N"/>
-    <Element Name="btn_manage_related" TabSet="Related Data" Hidden="{@:m_CanUpdateRecord=='1'?'N':'Y'}" ElementSet="Related" Style="color:#666666;margin-left:5px;margin-top:2px;" Class="Button" Text="Manage" CssClass="button_gray_w" Description="">
+    <Element Name="btn_manage_related" TabSet="Related Data" Hidden="{@:canUpdateRecord=='1'?'N':'Y'}" ElementSet="Related" Style="color:#666666;margin-left:5px;margin-top:2px;" Class="Button" Text="Manage" CssClass="button_gray_w" Description="">
       <EventHandler Name="btn_manage_related_onclick" Event="onclick" Function="SwitchForm(product.form.ProductEditRelatedForm,{@:Elem[fld_Id].Value})"/>
     </Element>
     <Element Name="fld_changelog" TabSet="Extra Information" Access="changelog.access" ElementSet="Change Log" Class="FormElement" FormReference="changelog.widget.ChangeLogWidgetForm" FieldName="" Label="" AllowURLParam="N"/>
@@ -43,10 +43,10 @@
     <Element Name="fld_create_time" Class="LabelText" ElementSet="Misc" FieldName="create_time" Label="Create Time" AllowURLParam="N" TabSet="Extra Information"/>
   </DataPanel>
   <ActionPanel>
-    <Element Name="btn_share" Hidden="{@:m_CanUpdateRecord=='1'?'N':'Y'}" Class="Button" Text="Share" CssClass="button_gray_share" Description="Share">
+    <Element Name="btn_share" Hidden="{@:canUpdateRecord=='1'?'N':'Y'}" Class="Button" Text="Share" CssClass="button_gray_share" Description="Share">
       <EventHandler Name="btn_update_onclick" Event="onclick" Function="LoadDialog(common.form.DataSharingForm,{@:Elem[fld_Id].Value})"/>
     </Element>
-    <Element Name="btn_spacer_for_share" Hidden="{@:m_CanUpdateRecord=='1'?'N':'Y'}" Class="Spacer" Width="10"/>
+    <Element Name="btn_spacer_for_share" Hidden="{@:canUpdateRecord=='1'?'N':'Y'}" Class="Spacer" Width="10"/>
     <Element Name="btn_new" Class="Button" Text="Add" CssClass="button_gray_add" Description="New record (Insert)">
       <EventHandler Name="btn_new_onclick" Event="onclick" Function="SwitchForm(product.form.ProductNewForm)" ShortcutKey="Insert" ContextMenu="New"/>
     </Element>

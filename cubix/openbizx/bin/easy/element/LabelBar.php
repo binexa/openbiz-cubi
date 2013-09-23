@@ -3,10 +3,10 @@
 class LabelBar extends ColumnBar {
     public function render(){
     	$value = $this->text ? $this->getText() : $this->value;
-    	if($this->m_Color)
+    	if($this->color)
     	{
     		$formObj = $this->getFormObj();
-    		$color = Expression::evaluateExpression($this->m_Color, $formObj);    		
+    		$color = Expression::evaluateExpression($this->color, $formObj);    		
     		if(!$color){
     			$color = '33b5fb';
     		}
@@ -15,9 +15,9 @@ class LabelBar extends ColumnBar {
     		$bgcolor_str = "background-color: #33b5fb;";
     	}
     	
-    	if($this->m_DisplayFormat)
+    	if($this->displayFormat)
         {
-        	$value = sprintf($this->m_DisplayFormat,$value);
+        	$value = sprintf($this->displayFormat,$value);
         }
     	if($this->percent=='Y')
         {        	
@@ -52,7 +52,7 @@ class LabelBar extends ColumnBar {
     		$bar	 
     		</span>
     		
-    		<span class=\"value\" style=\"text-align:left;text-indent:10px;\">$value".$this->m_DisplayUnit."</span>
+    		<span class=\"value\" style=\"text-align:left;text-indent:10px;\">$value".$this->displayUnit."</span>
     	</span>
     	";
     	return $sHTML;

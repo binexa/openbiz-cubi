@@ -16,7 +16,7 @@
 
 //include_once("InputElement.php");
 class ColorPicker extends InputText {
-	public $m_Config;
+	public $config;
 	public $m_Mode;
     /**
      * Read array meta data, and store to meta object
@@ -31,7 +31,7 @@ class ColorPicker extends InputText {
 		$this->cssErrorClass = isset($xmlArr["ATTRIBUTES"]["CSSERRORCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSERRORCLASS"] : $this->cssClass."_error";
 		$this->m_cssFocusClass = isset($xmlArr["ATTRIBUTES"]["CSSFOCUSCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSFOCUSCLASS"] : $this->cssClass."_focus";
         $this->m_Mode = isset($xmlArr["ATTRIBUTES"]["MODE"]) ? $xmlArr["ATTRIBUTES"]["MODE"] : null;
-        $this->m_Config = isset($xmlArr["ATTRIBUTES"]["CONFIG"]) ? $xmlArr["ATTRIBUTES"]["CONFIG"] : null;
+        $this->config = isset($xmlArr["ATTRIBUTES"]["CONFIG"]) ? $xmlArr["ATTRIBUTES"]["CONFIG"] : null;
     }
     
 	public function render(){
@@ -137,8 +137,8 @@ class ColorPicker extends InputText {
 				break;
 		}
 		
-		if($this->m_Config){
-			$config .= ",".$this->m_Config;	
+		if($this->config){
+			$config .= ",".$this->config;	
 		}
 		$config = "{".$default_color.$config."}";
 		foreach($elementTrigger as $trigger){

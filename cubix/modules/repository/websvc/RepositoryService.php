@@ -14,8 +14,8 @@
 include_once OPENBIZ_APP_MODULE_PATH.'/websvc/lib/WebsvcService.php';
 class RepositoryService extends WebsvcService
 {
-	protected $m_CategoryDO 		= "repository.category.do.CategoryDO";
-	protected $m_CategoryTransDO 	= "repository.category.do.CategoryTranslateDO";
+	protected $categoryDO 		= "repository.category.do.CategoryDO";
+	protected $categoryTransDO 	= "repository.category.do.CategoryTranslateDO";
 	protected $applicationDO 		= "repository.application.do.ApplicationDO";
 	protected $applicationTransDO = "repository.application.do.ApplicationTranslateDO";	
 	protected $m_ReleaseDO 			= "repository.release.do.ReleaseDO";
@@ -237,7 +237,7 @@ class RepositoryService extends WebsvcService
 	       		}	       		
 	       	}
 	       	//translate cate name
-	       	$categoryTransDO = BizSystem::getObject($this->m_CategoryTransDO,1);
+	       	$categoryTransDO = BizSystem::getObject($this->categoryTransDO,1);
 	       	$catId = $result['category_id']; 
 	       	$categoryTransRec = $categoryTransDO->fetchOne("[repo_cat_id]='$catId' AND [lang]='$lang'");
 	       	if($categoryTransRec)     	 
@@ -251,7 +251,7 @@ class RepositoryService extends WebsvcService
     public function fetchCategories()
     {
     	$searchRule = "[publish]=1";    	
-    	$dataObj = BizSystem::getObject($this->m_CategoryDO,1);      	    	  
+    	$dataObj = BizSystem::getObject($this->categoryDO,1);      	    	  
         $resultRecords = $dataObj->directfetch($searchRule);  
         $resultSet = array();        
        	foreach($resultRecords as $record)
@@ -263,7 +263,7 @@ class RepositoryService extends WebsvcService
        	if($lang){
        		$resultSetTrans  = $resultSet;
        		$resultSet = array();
-       		$categoryTransDO = BizSystem::getObject($this->m_CategoryTransDO,1);
+       		$categoryTransDO = BizSystem::getObject($this->categoryTransDO,1);
        		$transFields = array('name','description');
 	    	foreach($resultSetTrans as $record)
 	       	{

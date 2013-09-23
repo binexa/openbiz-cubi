@@ -70,7 +70,7 @@ class MenuTreeDO extends BizDataObj
             if ($menuRec->allowAccess()) {  // check access with role
                 $this->rootNodes[$i] = $menuRec;
                 if ($this->rootNodes[$i]->m_URL == $url)
-                    $this->rootNodes[$i]->m_Current = 1;
+                    $this->rootNodes[$i]->current = 1;
                 $i++;
             }
         }

@@ -24,9 +24,9 @@
  */
 class EasyViewWizard extends EasyView
 {
-    protected $m_CurrentStep;
+    protected $currentStep;
     protected $m_FormStates;    // (formname, visited, committed)
-    protected $m_DropSession = false;
+    protected $dropSession = false;
     protected $m_NaviMethod = 'SwitchPage';
 
     protected function readMetadata(&$xmlArr)
@@ -43,7 +43,7 @@ class EasyViewWizard extends EasyView
     public function loadSessionVars($sessionContext)
     {
         $sessionContext->getObjVar($this->objectName, "FormStates", $this->m_FormStates, true);
-        $sessionContext->getObjVar($this->objectName, "CurrentStep", $this->m_CurrentStep, true);
+        $sessionContext->getObjVar($this->objectName, "CurrentStep", $this->currentStep, true);
     }
 
     /**
@@ -54,11 +54,11 @@ class EasyViewWizard extends EasyView
      */
     public function saveSessionVars($sessionContext)
     {
-        if ($this->m_DropSession){
+        if ($this->dropSession){
             $sessionContext->cleanObj($this->objectName, true);
         }else{
             $sessionContext->setObjVar($this->objectName, "FormStates", $this->m_FormStates, true);
-            $sessionContext->setObjVar($this->objectName, "CurrentStep", $this->m_CurrentStep, true);
+            $sessionContext->setObjVar($this->objectName, "CurrentStep", $this->currentStep, true);
         }
         
     }
@@ -89,9 +89,9 @@ class EasyViewWizard extends EasyView
         foreach ($this->m_FormRefs as $formRef)
         {
             if ($i == $step)
-                $formRef->m_Display = true;
+                $formRef->display = true;
             else
-                $formRef->m_Display = false;
+                $formRef->display = false;
             $i++;
         }
     }
@@ -116,15 +116,15 @@ class EasyViewWizard extends EasyView
     public function getCurrentStep()
     {  	if($_GET['step'])
 	    {
-	    	$this->m_CurrentStep=$_GET['step'];
-	    	return $this->m_CurrentStep;
+	    	$this->currentStep=$_GET['step'];
+	    	return $this->currentStep;
 	    }
-    	elseif($this->m_CurrentStep)
+    	elseif($this->currentStep)
     	{
-    		if($this->m_CurrentStep > $this->m_FormRefs->count()){    			            			
+    		if($this->currentStep > $this->m_FormRefs->count()){    			            			
     			return $this->m_FormRefs->count();	
     		}else{
-    			return $this->m_CurrentStep;	
+    			return $this->currentStep;	
     		}    		
     	}
     	else
@@ -138,7 +138,7 @@ class EasyViewWizard extends EasyView
 	            $step = 1;
 	        if ($step > $numForms)
 	            $step = $numForms;
-	        $this->m_CurrentStep = $step;
+	        $this->currentStep = $step;
 	        return $step;
     	}
     }
@@ -151,8 +151,8 @@ class EasyViewWizard extends EasyView
      */
     public function renderStep($step)
     {
-    	if($this->m_CurrentStep){
-    		$currentStep = $this->m_CurrentStep;
+    	if($this->currentStep){
+    		$currentStep = $this->currentStep;
     	}else{
         	$currentStep = $this->getCurrentStep();
     	}
@@ -162,7 +162,7 @@ class EasyViewWizard extends EasyView
 			case "SWITCHFORM":
 				$targetForm = $this->getStepName($step);
 				$currentForm = $this->getStepName($currentStep);
-				$this->m_CurrentStep = $step;		
+				$this->currentStep = $step;		
 				$formObj = BizSystem::objectFactory()->getObject($currentForm);
 				$formObj->switchForm($targetForm);
 				break;
@@ -233,7 +233,7 @@ class EasyViewWizard extends EasyView
                 }
             }
         }         
-        $this->m_DropSession = true;
+        $this->dropSession = true;
         return true;
     }
    
@@ -252,7 +252,7 @@ class EasyViewWizard extends EasyView
 	                BizSystem::objectFactory()->getObject($formName)->cancel();
 	        }
         }
-        $this->m_DropSession = true;
+        $this->dropSession = true;
     }
 
     /**
@@ -264,7 +264,7 @@ class EasyViewWizard extends EasyView
     public function outputAttrs()
     {
         $out = parent::outputAttrs();
-        $out['step'] = $this->m_CurrentStep;
+        $out['step'] = $this->currentStep;
         $out['forms'] = $this->m_FormRefs;
         return $out;
     }

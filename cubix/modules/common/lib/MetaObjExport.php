@@ -2,7 +2,7 @@
 class MetaObjExport
 {
 	protected $m_Object;
-	protected $m_Doc;
+	protected $doc;
 	protected $m_XmlFile;
 	protected $m_ObjType;
 	protected $m_RelXmlFile;
@@ -18,8 +18,8 @@ class MetaObjExport
 	
 	public function GetDocDocument()
     {
-        if ($this->m_Doc) 
-            return $this->m_Doc;
+        if ($this->doc) 
+            return $this->doc;
         $this->m_XmlFile = OPENBIZ_APP_MODULE_PATH."/".str_replace(".","/",$this->m_Object->objectName).".xml";
 		$this->m_RelXmlFile = "cubi/modules/".str_replace(".","/",$this->m_Object->objectName).".xml";
 
@@ -29,7 +29,7 @@ class MetaObjExport
         //$ok = $doc->load($this->m_XmlFile);
         //if (!$ok)
         //    return null;
-        $this->m_Doc = $doc;
+        $this->doc = $doc;
         //$rootElem = $doc->documentElement;
         return $doc;
     }

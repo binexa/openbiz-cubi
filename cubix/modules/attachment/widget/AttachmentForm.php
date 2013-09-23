@@ -19,13 +19,13 @@ class AttachmentForm extends PickerForm
 	public function loadSessionVars($sessionContext)
     {
         parent::loadSessionVars($sessionContext);
-		$sessionContext->getObjVar($this->objectName, "CanUpdateRecord", $this->m_CanUpdateRecord);
+		$sessionContext->getObjVar($this->objectName, "CanUpdateRecord", $this->canUpdateRecord);
 	}
 	
 	public function saveSessionVars($sessionContext)
     {
         parent::saveSessionVars($sessionContext);
-		$sessionContext->setObjVar($this->objectName, "CanUpdateRecord", $this->m_CanUpdateRecord);
+		$sessionContext->setObjVar($this->objectName, "CanUpdateRecord", $this->canUpdateRecord);
 	}
 	
 	public function uploadFile()

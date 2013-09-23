@@ -13,11 +13,11 @@
 
 class HelpCategoryForm extends EasyFormTree
 {
-	protected $m_CategoryMappingDO 	= "help.do.HelpCategoryMappingDO";
+	protected $categoryMappingDO 	= "help.do.HelpCategoryMappingDO";
 	
 	public function UpdateRecord(){
 		$result = parent::UpdateRecord();
-		$mappingObj  =  BizSystem::GetObject($this->m_CategoryMappingDO,1);
+		$mappingObj  =  BizSystem::GetObject($this->categoryMappingDO,1);
 		$Id = $this->recordId;
 		$mappingObj->deleteRecords("[cat_id]='$Id'");
 		return $result;

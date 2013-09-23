@@ -28,7 +28,7 @@ class DropDownList extends InputElement
 {
 	
 	public $m_ReadOnly;
-	public $m_DefaultDisplayValue;
+	public $defaultDisplayValue;
 	public $m_cssHoverClass;
     public $m_SelectFrom;
     public $m_SelectFromSQL;
@@ -316,7 +316,7 @@ else {
 					>$li_option_value</li>";
     		}
     		if($val == $value){
-    			$this->m_DefaultDisplayValue="".$str_pic."<span>".$txt."</span>";
+    			$this->defaultDisplayValue="".$str_pic."<span>".$txt."</span>";
     		}		
     	}
     	$sHTML .= "</ul>";

@@ -28,7 +28,7 @@ class twitter extends oauthClass
 	
 	function test($akey,$skey){
 		$Twitter = new TwitterOAuth($akey ,$skey);
-        return $Twitter->getRequestToken($this->m_CallBack);
+        return $Twitter->getRequestToken($this->callBack);
 	}
 	
 	function callback(){ 
@@ -55,7 +55,7 @@ class twitter extends oauthClass
 			return false;
 		}
 		$Twitter = new TwitterOAuth($this->m_akey ,$this->m_skey);
-		$request_token = $Twitter->getRequestToken($this->m_CallBack);
+		$request_token = $Twitter->getRequestToken($this->callBack);
 		
 		if ($Twitter->http_code==200) 
 		{

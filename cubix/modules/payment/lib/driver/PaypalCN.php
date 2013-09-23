@@ -5,6 +5,6 @@ class PaypalCN extends Paypal
 {
 	protected $m_ProviderId = 1;
 	protected $type = 'paypalcn';
-	protected $m_CurrencyCode = 'CNY';
+	protected $currencyCode = 'CNY';
 }
 ?>

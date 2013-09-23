@@ -30,7 +30,7 @@ class LabelText extends Element
 {
     public $m_FieldName;
     public $m_Label;
-    public $m_DisplayFormat;
+    public $displayFormat;
     public $text;
     public $link;    
     public $m_Target;
@@ -55,7 +55,7 @@ class LabelText extends Element
         $this->maxLength = isset($xmlArr["ATTRIBUTES"]["MAXLENGHT"]) ? $xmlArr["ATTRIBUTES"]["MAXLENGHT"] : null;
         $this->maxLength = isset($xmlArr["ATTRIBUTES"]["MAXLENGTH"]) ? $xmlArr["ATTRIBUTES"]["MAXLENGTH"] : null;
         $this->percent = isset($xmlArr["ATTRIBUTES"]["PERCENT"]) ? $xmlArr["ATTRIBUTES"]["PERCENT"] : "N";
-        $this->m_DisplayFormat = isset($xmlArr["ATTRIBUTES"]["DISPLAYFORMAT"]) ? $xmlArr["ATTRIBUTES"]["DISPLAYFORMAT"] : null;
+        $this->displayFormat = isset($xmlArr["ATTRIBUTES"]["DISPLAYFORMAT"]) ? $xmlArr["ATTRIBUTES"]["DISPLAYFORMAT"] : null;
         $this->m_StripTags = isset($xmlArr["ATTRIBUTES"]["STRIPTAGS"]) ? $xmlArr["ATTRIBUTES"]["STRIPTAGS"] : "N";
     }
 
@@ -142,9 +142,9 @@ class LabelText extends Element
         
         if ($value!==null)
         {
-        	if($this->m_DisplayFormat)
+        	if($this->displayFormat)
         	{
-        		$value = sprintf($this->m_DisplayFormat,$value);
+        		$value = sprintf($this->displayFormat,$value);
         	}
         	if($this->percent=='Y')
         	{

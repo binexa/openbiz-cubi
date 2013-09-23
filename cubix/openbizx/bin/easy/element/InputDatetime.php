@@ -25,7 +25,7 @@
  * @access public
  */
 class InputDatetime extends InputText {
-    public $m_DateFormat;
+    public $dateFormat;
 
     /**
      * Read array meta data, and store to meta object
@@ -35,7 +35,7 @@ class InputDatetime extends InputText {
      */
     protected function readMetaData(&$xmlArr) {
         parent::readMetaData($xmlArr);
-        $this->m_DateFormat  = isset($xmlArr["ATTRIBUTES"]["DATEFORMAT"]) ? $xmlArr["ATTRIBUTES"]["DATEFORMAT"] : null;
+        $this->dateFormat  = isset($xmlArr["ATTRIBUTES"]["DATEFORMAT"]) ? $xmlArr["ATTRIBUTES"]["DATEFORMAT"] : null;
     }
 
     /**
@@ -46,7 +46,7 @@ class InputDatetime extends InputText {
     public function render() {
         BizSystem::clientProxy()->includeCalendarScripts();
 
-        $format = $this->m_DateFormat ? $this->m_DateFormat : "%Y-%m-%d %H:%M:%S";
+        $format = $this->dateFormat ? $this->dateFormat : "%Y-%m-%d %H:%M:%S";
 
         $sHTML = parent::render();
 

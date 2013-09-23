@@ -51,12 +51,12 @@ class Element extends MetaObject implements iUIControl
     public $m_FieldName;
     public $required = null;
     public $validator = null;
-    public $m_ClientValidator = null;
+    public $clientValidator = null;
 	public $m_KeepCookie = null;
-	public $m_CookieLifetime = 3600;
+	public $cookieLifetime = 3600;
 	public $backgroundColor;
 	
-	public $m_DataRole = "";
+	public $dataRole = "";
 	
     /**
      * Initialize Element with xml array
@@ -107,11 +107,11 @@ class Element extends MetaObject implements iUIControl
         $this->m_OnEventLog = isset($xmlArr["ATTRIBUTES"]["ONEVENTLOG"]) ? $xmlArr["ATTRIBUTES"]["ONEVENTLOG"] : null;
         $this->required = isset($xmlArr["ATTRIBUTES"]["REQUIRED"]) ? $xmlArr["ATTRIBUTES"]["REQUIRED"] : null;
         $this->validator = isset($xmlArr["ATTRIBUTES"]["VALIDATOR"]) ? $xmlArr["ATTRIBUTES"]["VALIDATOR"] : null;
-        $this->m_ClientValidator = isset($xmlArr["ATTRIBUTES"]["CLIENTVALIDATOR"]) ? $xmlArr["ATTRIBUTES"]["CLIENTVALIDATOR"] : null;
+        $this->clientValidator = isset($xmlArr["ATTRIBUTES"]["CLIENTVALIDATOR"]) ? $xmlArr["ATTRIBUTES"]["CLIENTVALIDATOR"] : null;
         $this->allowURLParam = isset($xmlArr["ATTRIBUTES"]["ALLOWURLPARAM"]) ? $xmlArr["ATTRIBUTES"]["ALLOWURLPARAM"] : 'Y';
         $this->m_KeepCookie = isset($xmlArr["ATTRIBUTES"]["KEEPCOOKIE"]) ? $xmlArr["ATTRIBUTES"]["KEEPCOOKIE"] : 'N';
-        $this->m_CookieLifetime = isset($xmlArr["ATTRIBUTES"]["COOKIELIFETIME"]) ? (int)$xmlArr["ATTRIBUTES"]["COOKIELIFETIME"] : '3600';
-		$this->m_DataRole = isset($xmlArr["ATTRIBUTES"]["DATAROLE"]) ? $xmlArr["ATTRIBUTES"]["DATAROLE"] : null;
+        $this->cookieLifetime = isset($xmlArr["ATTRIBUTES"]["COOKIELIFETIME"]) ? (int)$xmlArr["ATTRIBUTES"]["COOKIELIFETIME"] : '3600';
+		$this->dataRole = isset($xmlArr["ATTRIBUTES"]["DATAROLE"]) ? $xmlArr["ATTRIBUTES"]["DATAROLE"] : null;
 		$this->m_Extra = isset($xmlArr["ATTRIBUTES"]["EXTRA"]) ? $xmlArr["ATTRIBUTES"]["EXTRA"] : null;
 
         // read EventHandler element
@@ -125,8 +125,8 @@ class Element extends MetaObject implements iUIControl
         }
 
         // additional data in HTMLAttr
-		$this->m_HTMLAttr .= ($this->m_DataRole) ? " data-role='".$this->m_DataRole."'" : "";
-        $this->m_HTMLAttr .= " title='".$this->objectDescription."'"." clientValidator='".$this->m_ClientValidator."'";
+		$this->m_HTMLAttr .= ($this->dataRole) ? " data-role='".$this->dataRole."'" : "";
+        $this->m_HTMLAttr .= " title='".$this->objectDescription."'"." clientValidator='".$this->clientValidator."'";
     }
 
     /**
@@ -180,7 +180,7 @@ class Element extends MetaObject implements iUIControl
         if($this->m_KeepCookie=='Y'){
         	if($value!=""){
         		$formName = $this->getFormObj()->objectName;       
-        		setcookie($formName."-".$this->objectName,$value,time()+(int)$this->m_CookieLifetime,"/");
+        		setcookie($formName."-".$this->objectName,$value,time()+(int)$this->cookieLifetime,"/");
         	}
         }
     }
@@ -397,9 +397,9 @@ class Element extends MetaObject implements iUIControl
         $i = 0;
         foreach ($this->m_EventHandlers as $eventHandler)
         {
-            if ($eventHandler->m_ContextMenu)
+            if ($eventHandler->contextMenu)
             {
-                $menus[$i]['text'] = $eventHandler->m_ContextMenu;
+                $menus[$i]['text'] = $eventHandler->contextMenu;
                 $menus[$i]['func'] = $eventHandler->getFormedFunction();
                 $menus[$i]['key']  = $eventHandler->m_ShortcutKey;
             }
@@ -558,10 +558,10 @@ class Element extends MetaObject implements iUIControl
      */
     public function getClientValidator()
     {
-        if ($this->m_ClientValidator)
-            return $this->m_ClientValidator;
+        if ($this->clientValidator)
+            return $this->clientValidator;
 
-        //return Expression::evaluateExpression($this->m_ClientValidator, $this->getFormObj());
+        //return Expression::evaluateExpression($this->clientValidator, $this->getFormObj());
         return null;
     }
     
@@ -640,7 +640,7 @@ class EventHandler
     public $m_FunctionType;
     public $m_PostAction;   // support expression
     public $m_ShortcutKey;
-    public $m_ContextMenu;
+    public $contextMenu;
     public $m_RedirectPage;
     public $m_Parameter;
     public $m_EventLogMsg;
@@ -666,7 +666,7 @@ class EventHandler
         $this->m_FunctionType = isset($xmlArr["ATTRIBUTES"]["FUNCTIONTYPE"]) ? $xmlArr["ATTRIBUTES"]["FUNCTIONTYPE"] : null;
         $this->m_PostAction = isset($xmlArr["ATTRIBUTES"]["POSTACTION"]) ? $xmlArr["ATTRIBUTES"]["POSTACTION"] : null;
         $this->m_ShortcutKey = isset($xmlArr["ATTRIBUTES"]["SHORTCUTKEY"]) ? $xmlArr["ATTRIBUTES"]["SHORTCUTKEY"] : null;
-        $this->m_ContextMenu = isset($xmlArr["ATTRIBUTES"]["CONTEXTMENU"]) ? $xmlArr["ATTRIBUTES"]["CONTEXTMENU"] : null;
+        $this->contextMenu = isset($xmlArr["ATTRIBUTES"]["CONTEXTMENU"]) ? $xmlArr["ATTRIBUTES"]["CONTEXTMENU"] : null;
         $this->m_RedirectPage = isset($xmlArr["ATTRIBUTES"]["REDIRECTPAGE"]) ? $xmlArr["ATTRIBUTES"]["REDIRECTPAGE"] : null;        
 		$this->m_Parameter = isset($xmlArr["ATTRIBUTES"]["PARAMETER"]) ? $xmlArr["ATTRIBUTES"]["PARAMETER"] : null;        
         $this->m_EventLogMsg = isset($xmlArr["ATTRIBUTES"]["EVENTLOGMSG"]) ? $xmlArr["ATTRIBUTES"]["EVENTLOGMSG"] : null;
@@ -812,8 +812,8 @@ class EventHandler
     protected function translate()
     {
     	$module = substr($this->_formName,0,intval(strpos($this->_formName,'.')));
-    	if (!empty($this->m_ContextMenu))
-    		$this->m_ContextMenu = I18n::t($this->m_ContextMenu, $this->getTransKey('ContextMenu'), $module);
+    	if (!empty($this->contextMenu))
+    		$this->contextMenu = I18n::t($this->contextMenu, $this->getTransKey('ContextMenu'), $module);
     }
     
     protected function getTransKey($name)

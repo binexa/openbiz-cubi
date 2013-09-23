@@ -27,7 +27,7 @@ class MenuWidget extends MetaObject implements iUIControl
     public $templateFile;
     public $dataObjName;
     public $cacheLifeTime;
-    public $m_CssClass;
+    public $cssClass;
     protected $dataObj;
 
     function __construct(&$xmlArr)
@@ -42,7 +42,7 @@ class MenuWidget extends MetaObject implements iUIControl
         $this->objectName = $this->prefixPackage($this->objectName);
         $this->m_Title = isset($xmlArr["MENUWIDGET"]["ATTRIBUTES"]["TITLE"]) ? $xmlArr["MENUWIDGET"]["ATTRIBUTES"]["TITLE"] : null;
         $this->objectDescription = isset($xmlArr["MENUWIDGET"]["ATTRIBUTES"]["DESCRIPTION"]) ? $xmlArr["MENUWIDGET"]["ATTRIBUTES"]["DESCRIPTION"] : null;
-        $this->m_CssClass = isset($xmlArr["MENUWIDGET"]["ATTRIBUTES"]["CSSCLASS"]) ? $xmlArr["MENUWIDGET"]["ATTRIBUTES"]["CSSCLASS"] : null;
+        $this->cssClass = isset($xmlArr["MENUWIDGET"]["ATTRIBUTES"]["CSSCLASS"]) ? $xmlArr["MENUWIDGET"]["ATTRIBUTES"]["CSSCLASS"] : null;
         $this->templateEngine = isset($xmlArr["MENUWIDGET"]["ATTRIBUTES"]["TEMPLATEENGINE"]) ? $xmlArr["MENUWIDGET"]["ATTRIBUTES"]["TEMPLATEENGINE"] : null;
         $this->templateFile = isset($xmlArr["MENUWIDGET"]["ATTRIBUTES"]["TEMPLATEFILE"]) ? $xmlArr["MENUWIDGET"]["ATTRIBUTES"]["TEMPLATEFILE"] : null;
         $this->m_StartMenuItem = isset($xmlArr["MENUWIDGET"]["ATTRIBUTES"]["STARTMENUITEM"]) ? $xmlArr["MENUWIDGET"]["ATTRIBUTES"]["STARTMENUITEM"] : null;
@@ -104,7 +104,7 @@ class MenuWidget extends MetaObject implements iUIControl
         $attrs = array();
         $attrs['name'] = $this->objectName;
         $attrs['title'] = $this->m_Title;
-        $attrs['css'] = $this->m_CssClass;
+        $attrs['css'] = $this->cssClass;
         $attrs['description'] = $this->objectDescription;
         $attrs['menu'] = $this->fetchMenuTree();
         $attrs['breadcrumb'] = $this->getDataObj()->getBreadCrumb();

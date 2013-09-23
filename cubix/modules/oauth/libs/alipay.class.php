@@ -37,7 +37,7 @@ class alipay extends oauthClass
 		$aliapy_config['key']          = $recArr['value'];
 		//页面跳转同步通知页面路径，要用 http://格式的完整路径，不允许加?id=123这类自定义参数
 		//return_url的域名不能写成http://localhost/alipay.auth.authorize_php_utf8/return_url.php ，否则会导致return_url执行无效
-		$aliapy_config['return_url']   = $this->m_CallBack;
+		$aliapy_config['return_url']   = $this->callBack;
 		//签名方式 不需修改
 		$aliapy_config['sign_type']    = 'MD5';
 		//字符编码格式 目前支持 gbk 或 utf-8

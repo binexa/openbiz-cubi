@@ -40,7 +40,7 @@ class baiduapp extends oauthClass
 							 'client_id'     => $this->m_akey,
 							 'client_secret' => $this->m_skey,
 							 'code'          => $_REQUEST['code'],
-							 'redirect_uri'  => $this->m_CallBack
+							 'redirect_uri'  => $this->callBack
 						);
 		if(!$_REQUEST['code'])
 		{
@@ -69,7 +69,7 @@ class baiduapp extends oauthClass
 		 * =12382619&redirect_uri=127.0.0.1/loginDemo/oauthLogin.php&state=1
 		 * http://taotools.bbaos.com/ws.php/oauth/callback/callback/type_alitao/app_TitleOptimization/
 		 */
-		$this->loginUrl=$this->m_authorizeUrl.'?response_type=code&client_id='.$this->m_akey.'&redirect_uri='.$this->m_CallBack.'&display=page';
+		$this->loginUrl=$this->m_authorizeUrl.'?response_type=code&client_id='.$this->m_akey.'&redirect_uri='.$this->callBack.'&display=page';
 
 		return $this->loginUrl;
 	}  
