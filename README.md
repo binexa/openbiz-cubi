@@ -40,7 +40,7 @@ Roadmap
 
 
 
-We are still looking for more good architecture for Openbizx Cubi.
+We are still looking for more good architecture for Openbizx CubiX.
 
 Of course , contributor welcome.
 
