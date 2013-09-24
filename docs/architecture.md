@@ -4,9 +4,9 @@ Draf of OpenbizX Architecture
 All Library
 -----------------
 - Use power of namespace
-- Use Universal AutoLoad and use ClassMap increase performance
+- Use Universal AutoLoad and use ClassMap to increase performance
 - If possible, library of Openbiz is group of components, that each component is independent, can use on other framework 
-- If possible, lybrary must lose couple, so easy to performe unit test.
+- If possible, library must lose couple, so easy to perform unit test.
 
 MetaObject
 -----------------
