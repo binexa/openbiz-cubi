@@ -56,7 +56,7 @@ class AccountEditForm extends UserForm
         // set fix search rule
         if (!$this->_userId)
             return BizSystem::clientProxy()->redirectView(OPENBIZ_ACCESS_DENIED_VIEW);
-        $this->m_FixSearchRule = "[Id]=".$this->_userId;
+        $this->fixSearchRule = "[Id]=".$this->_userId;
         return parent::render();
     }
     
@@ -67,7 +67,7 @@ class AccountEditForm extends UserForm
         // set fix search rule
         if (!$this->_userId)
             return BizSystem::clientProxy()->redirectView(OPENBIZ_ACCESS_DENIED_VIEW);
-        $this->m_FixSearchRule = "[Id]=".$this->_userId;
+        $this->fixSearchRule = "[Id]=".$this->_userId;
         return parent::rerender();
     }
     
@@ -88,7 +88,7 @@ class AccountEditForm extends UserForm
         }
         catch (ValidationException $e)
         {
-            $this->processFormObjError($e->m_Errors);
+            $this->processFormObjError($e->errors);
             return;
         }
 
@@ -100,7 +100,7 @@ class AccountEditForm extends UserForm
         // if 'notify email' option is checked, send confirmation email to user email address
         // ...
         
-        $this->m_Notices[] = $this->GetMessage("USER_DATA_UPDATED");
+        $this->notices[] = $this->GetMessage("USER_DATA_UPDATED");
 
        	//run eventlog        
         $eventlog 	= BizSystem::getService(OPENBIZ_EVENTLOG_SERVICE);        

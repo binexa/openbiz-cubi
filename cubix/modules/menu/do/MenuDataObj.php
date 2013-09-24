@@ -15,11 +15,11 @@ include_once (dirname(__FILE__).'/MenuItemObj.php');
 
 class MenuDataObj extends MetaObject implements iSessionObject{
 	public $objectName;
-	public $m_MenuTreeObj;
+	public $menuTreeObj;
 	public $cacheLifeTime;	
 	public $breadCrumb=array();
 
-	private $m_RootMenuItem;
+	private $rootMenuItem;
 	
     function __construct(&$xmlArr)
     {
@@ -32,7 +32,7 @@ class MenuDataObj extends MetaObject implements iSessionObject{
     	parent::readMetaData($xmlArr);
     	$this->objectName = $this->prefixPackage($this->objectName);
     	$this->cacheLifeTime = isset($xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["CACHELIFETIME"]) ? $xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["CACHELIFETIME"] : "0";    	   
-    	$this->m_RootMenuItem =  $xmlArr["BIZDATAOBJ"]["MENUITEM"];
+    	$this->rootMenuItem =  $xmlArr["BIZDATAOBJ"]["MENUITEM"];
     	$this->fetchEntireTree();
     }
     
@@ -51,19 +51,19 @@ class MenuDataObj extends MetaObject implements iSessionObject{
             else
             {
                 BizSystem::log(LOG_DEBUG, "MENU", "Set cache. menu dataobj = ".$this->objectName);
-                $xmlArr = $this->m_RootMenuItem;
+                $xmlArr = $this->rootMenuItem;
                 $output = new MenuItemObj($xmlArr);                                
                 $cacheSvc->save($output, $cache_id);
             }
-            $this->m_MenuTreeObj = $output;
+            $this->menuTreeObj = $output;
         }else{
-        	$xmlArr = $this->m_RootMenuItem;
-        	$this->m_MenuTreeObj = null;
-    		$this->m_MenuTreeObj = new MenuItemObj($xmlArr);
+        	$xmlArr = $this->rootMenuItem;
+        	$this->menuTreeObj = null;
+    		$this->menuTreeObj = new MenuItemObj($xmlArr);
         }
         $this->breadCrumb=array();
         $this->getBreadCrumb();          
-    	return $this->m_MenuTreeObj;
+    	return $this->menuTreeObj;
     }
     
     public function getBreadCrumb($node=null){
@@ -71,14 +71,14 @@ class MenuDataObj extends MetaObject implements iSessionObject{
     		return $this->breadCrumb;
     	$url = $_SERVER['REQUEST_URI'];
     	if($node==null){
-    		$node = $this->m_MenuTreeObj;
+    		$node = $this->menuTreeObj;
     	}
-    	if($node->m_URL == $_SERVER['REQUEST_URI']){   		    		
+    	if($node->url == $_SERVER['REQUEST_URI']){   		    		
     		return "current";    		
     	}
-    	elseif($node->m_URL_Match!="")
+    	elseif($node->url_Match!="")
     	{
-    		if(preg_match("@".$node->m_URL_Match."@si", $_SERVER['REQUEST_URI'])){
+    		if(preg_match("@".$node->url_Match."@si", $_SERVER['REQUEST_URI'])){
     			return "current"; 
     		}
     	}
@@ -168,7 +168,7 @@ class MenuDataObj extends MetaObject implements iSessionObject{
     protected function getTreeByStartItem($name, $tree = null){
     	if($tree==null)
     	{
-    		$tree = $this->m_MenuTreeObj;
+    		$tree = $this->menuTreeObj;
     	}
     	if($tree->objectName==$name){
     		return $tree;
@@ -189,7 +189,7 @@ class MenuDataObj extends MetaObject implements iSessionObject{
     protected function getTreeByStartID($id, $tree = null){
     	if($tree==null)
     	{
-    		$tree = $this->m_MenuTreeObj;
+    		$tree = $this->menuTreeObj;
     	}
     	if($tree->recordId==$id){
     		return $tree;
@@ -227,8 +227,8 @@ class MenuDataObj extends MetaObject implements iSessionObject{
     
     protected function prefixPackage($name)
     {
-        if ($name && !strpos($name, ".") && ($this->m_Package)) // no package prefix as package.object, add it
-            $name = $this->m_Package.".".$name;
+        if ($name && !strpos($name, ".") && ($this->package)) // no package prefix as package.object, add it
+            $name = $this->package.".".$name;
 
         return $name;
     } 

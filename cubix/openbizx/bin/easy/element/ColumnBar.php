@@ -3,7 +3,7 @@
 class ColumnBar extends ColumnText
 {
     public $percent;
-    public $m_MaxValue;
+    public $maxValue;
     public $displayUnit;
     public $color;
 
@@ -11,7 +11,7 @@ class ColumnBar extends ColumnText
     {
         parent::readMetaData($xmlArr);
         $this->percent = isset($xmlArr["ATTRIBUTES"]["PERCENT"]) ? $xmlArr["ATTRIBUTES"]["PERCENT"] : "N";
-        $this->m_MaxValue = isset($xmlArr["ATTRIBUTES"]["MAXVALUE"]) ? $xmlArr["ATTRIBUTES"]["MAXVALUE"] : "1";
+        $this->maxValue = isset($xmlArr["ATTRIBUTES"]["MAXVALUE"]) ? $xmlArr["ATTRIBUTES"]["MAXVALUE"] : "1";
         $this->displayUnit = isset($xmlArr["ATTRIBUTES"]["DISPLAYUNIT"]) ? $xmlArr["ATTRIBUTES"]["DISPLAYUNIT"] : null;
         $this->color = isset($xmlArr["ATTRIBUTES"]["COLOR"]) ? $xmlArr["ATTRIBUTES"]["COLOR"] : null;        
         $this->cssClass = isset($xmlArr["ATTRIBUTES"]["CSSCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSCLASS"] : "column_bar";
@@ -45,7 +45,7 @@ class ColumnBar extends ColumnText
         $func = $this->getFunction();
         $height = $this->height;
         $width = $this->width;        
-        $max_value = Expression::evaluateExpression($this->m_MaxValue, $this->getFormObj());
+        $max_value = Expression::evaluateExpression($this->maxValue, $this->getFormObj());
        
         if($max_value)
         {        	        
@@ -99,7 +99,7 @@ class ColumnBar extends ColumnText
             $style = Expression::evaluateExpression($style, $formobj);
             $style = "STYLE='$style'";
         }
-        if($formobj->m_Errors[$this->objectName])
+        if($formobj->errors[$this->objectName])
         {
       	    $htmlClass = "CLASS='".$this->cssErrorClass."'";
         }

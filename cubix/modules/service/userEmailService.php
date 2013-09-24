@@ -16,9 +16,9 @@
  */
 class userEmailService extends MetaObject
 {
-    public $m_Tempaltes;
-	public $m_EmailDataObj;
-	public $m_SendtoQueue;
+    public $tempaltes;
+	public $emailDataObj;
+	public $sendtoQueue;
     
     function __construct(&$xmlArr)
     {
@@ -28,9 +28,9 @@ class userEmailService extends MetaObject
     protected function readMetadata(&$xmlArr)
     {
         parent::readMetadata($xmlArr);
-    	$this->m_Tempaltes	 	= $this->readTemplates($xmlArr["PLUGINSERVICE"]["TEMPLATE"]);
-        $this->m_EmailDataObj 	= isset($xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["BIZDATAOBJ"]) ? $xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["BIZDATAOBJ"]: "email.do.EmailQueueDO";
-        $this->m_SendtoQueue	= isset($xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["SENDTOQUEUE"]) ? $xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["SENDTOQUEUE"] : "Y";
+    	$this->tempaltes	 	= $this->readTemplates($xmlArr["PLUGINSERVICE"]["TEMPLATE"]);
+        $this->emailDataObj 	= isset($xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["BIZDATAOBJ"]) ? $xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["BIZDATAOBJ"]: "email.do.EmailQueueDO";
+        $this->sendtoQueue	= isset($xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["SENDTOQUEUE"]) ? $xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["SENDTOQUEUE"] : "Y";
     }
 
     protected function readTemplates($templateArray)
@@ -45,9 +45,9 @@ class userEmailService extends MetaObject
     public function UserWelcomeEmail($userId)
 	{
 		//init email info
-		$template = $this->m_Tempaltes["WelcomeEmail"]["TEMPLATE"];
-		$subject  = $this->m_Tempaltes["WelcomeEmail"]["TITLE"];
-		$sender   = $this->m_Tempaltes["WelcomeEmail"]["EMAILACCOUNT"];
+		$template = $this->tempaltes["WelcomeEmail"]["TEMPLATE"];
+		$subject  = $this->tempaltes["WelcomeEmail"]["TITLE"];
+		$sender   = $this->tempaltes["WelcomeEmail"]["EMAILACCOUNT"];
 		
 		//prepare data     
         $userDO = BizSystem::getObject("system.do.UserDO");
@@ -78,9 +78,9 @@ class userEmailService extends MetaObject
 	
     public function resetUserPassword($tokenId) {
 		//init email info
-		$template = $this->m_Tempaltes["ForgetPasswordEmail"]["TEMPLATE"];
-		$subject  = $this->m_Tempaltes["ForgetPasswordEmail"]["TITLE"];
-		$sender   = $this->m_Tempaltes["ForgetPasswordEmail"]["EMAILACCOUNT"];
+		$template = $this->tempaltes["ForgetPasswordEmail"]["TEMPLATE"];
+		$subject  = $this->tempaltes["ForgetPasswordEmail"]["TITLE"];
+		$sender   = $this->tempaltes["ForgetPasswordEmail"]["EMAILACCOUNT"];
 		
 		//prepare data
         /* @var $tokenDO BizDataObj */
@@ -126,9 +126,9 @@ class userEmailService extends MetaObject
 	public function DataSharingEmail($recipient_user_id, $data)
 	{
 		//init email info
-		$template = $this->m_Tempaltes["DataSharingEmail"]["TEMPLATE"];
-		$subject  = $this->m_Tempaltes["DataSharingEmail"]["TITLE"];
-		$sender   = $this->m_Tempaltes["DataSharingEmail"]["EMAILACCOUNT"];
+		$template = $this->tempaltes["DataSharingEmail"]["TEMPLATE"];
+		$subject  = $this->tempaltes["DataSharingEmail"]["TITLE"];
+		$sender   = $this->tempaltes["DataSharingEmail"]["EMAILACCOUNT"];
 				        
 		//render the email tempalte
 		$tplFile = BizSystem::getTplFileWithPath($template, "email");
@@ -152,9 +152,9 @@ class userEmailService extends MetaObject
 	public function TaskUpdateEmail($recipient_user_id, $data)
 	{
 		//init email info
-		$template = $this->m_Tempaltes["TaskUpdateEmail"]["TEMPLATE"];
-		$subject  = $this->m_Tempaltes["TaskUpdateEmail"]["TITLE"];
-		$sender   = $this->m_Tempaltes["TaskUpdateEmail"]["EMAILACCOUNT"];
+		$template = $this->tempaltes["TaskUpdateEmail"]["TEMPLATE"];
+		$subject  = $this->tempaltes["TaskUpdateEmail"]["TITLE"];
+		$sender   = $this->tempaltes["TaskUpdateEmail"]["EMAILACCOUNT"];
 				        
 		//render the email tempalte
 		$tplFile = BizSystem::getTplFileWithPath($template, "email");
@@ -178,9 +178,9 @@ class userEmailService extends MetaObject
 	public function NewMessageEmail($recipient_user_id, $data)
 	{
 		//init email info
-		$template = $this->m_Tempaltes["NewMessageEmail"]["TEMPLATE"];
-		$subject  = $this->m_Tempaltes["NewMessageEmail"]["TITLE"];
-		$sender   = $this->m_Tempaltes["NewMessageEmail"]["EMAILACCOUNT"];
+		$template = $this->tempaltes["NewMessageEmail"]["TEMPLATE"];
+		$subject  = $this->tempaltes["NewMessageEmail"]["TITLE"];
+		$sender   = $this->tempaltes["NewMessageEmail"]["EMAILACCOUNT"];
 				        
 		//render the email tempalte
 		$tplFile = BizSystem::getTplFileWithPath($template, "email");
@@ -204,9 +204,9 @@ class userEmailService extends MetaObject
 	public function DataAssignedEmail($recipient_user_id, $data)
 	{
 		//init email info
-		$template = $this->m_Tempaltes["DataAssignedEmail"]["TEMPLATE"];
-		$subject  = $this->m_Tempaltes["DataAssignedEmail"]["TITLE"];
-		$sender   = $this->m_Tempaltes["DataAssignedEmail"]["EMAILACCOUNT"];
+		$template = $this->tempaltes["DataAssignedEmail"]["TEMPLATE"];
+		$subject  = $this->tempaltes["DataAssignedEmail"]["TITLE"];
+		$sender   = $this->tempaltes["DataAssignedEmail"]["EMAILACCOUNT"];
 				        
 		//render the email tempalte
 		$tplFile = BizSystem::getTplFileWithPath($template, "email");
@@ -230,9 +230,9 @@ class userEmailService extends MetaObject
 	public function DataPublishEmail($recipient_user_id, $data)
 	{
 		//init email info
-		$template = $this->m_Tempaltes["DataPublishEmail"]["TEMPLATE"];
-		$subject  = $this->m_Tempaltes["DataPublishEmail"]["TITLE"];
-		$sender   = $this->m_Tempaltes["DataPublishEmail"]["EMAILACCOUNT"];
+		$template = $this->tempaltes["DataPublishEmail"]["TEMPLATE"];
+		$subject  = $this->tempaltes["DataPublishEmail"]["TITLE"];
+		$sender   = $this->tempaltes["DataPublishEmail"]["EMAILACCOUNT"];
 				        
 		//render the email tempalte
 		$tplFile = BizSystem::getTplFileWithPath($template, "email");
@@ -256,9 +256,9 @@ class userEmailService extends MetaObject
 	public function SendEmailToUser($template_name, $recipient_user_id, $data)
 	{
 		//init email info
-		$template = $this->m_Tempaltes[$template_name]["TEMPLATE"];
-		$subject  = $this->m_Tempaltes[$template_name]["TITLE"];
-		$sender   = $this->m_Tempaltes[$template_name]["EMAILACCOUNT"];
+		$template = $this->tempaltes[$template_name]["TEMPLATE"];
+		$subject  = $this->tempaltes[$template_name]["TITLE"];
+		$sender   = $this->tempaltes[$template_name]["EMAILACCOUNT"];
 				        
 		//render the email tempalte		
 		$data['app_index'] = OPENBIZ_APP_INDEX_URL;
@@ -287,9 +287,9 @@ class userEmailService extends MetaObject
 	public function SendEmailToContact($template_name, $recipient_contact_id, $data)
 	{
 		//init email info
-		$template = $this->m_Tempaltes[$template_name]["TEMPLATE"];
-		$subject  = $this->m_Tempaltes[$template_name]["TITLE"];
-		$sender   = $this->m_Tempaltes[$template_name]["EMAILACCOUNT"];
+		$template = $this->tempaltes[$template_name]["TEMPLATE"];
+		$subject  = $this->tempaltes[$template_name]["TITLE"];
+		$sender   = $this->tempaltes[$template_name]["EMAILACCOUNT"];
 				        
 		//render the email tempalte	
 		$data['app_index'] = OPENBIZ_APP_INDEX_URL;
@@ -329,9 +329,9 @@ class userEmailService extends MetaObject
 	public function SystemInternalErrorEmail($recipient, $errMsg)
 	{
 		//init email info
-		$template = $this->m_Tempaltes["SystemInternalError"]["TEMPLATE"];
-		$subject  = $this->m_Tempaltes["SystemInternalError"]["TITLE"];
-		$sender   = $this->m_Tempaltes["SystemInternalError"]["EMAILACCOUNT"];
+		$template = $this->tempaltes["SystemInternalError"]["TEMPLATE"];
+		$subject  = $this->tempaltes["SystemInternalError"]["TITLE"];
+		$sender   = $this->tempaltes["SystemInternalError"]["EMAILACCOUNT"];
 		
 		//prepare data
 		$system 	=  array("error_message"=>$errMsg);
@@ -349,9 +349,9 @@ class userEmailService extends MetaObject
 	public function CronJobEmail($recipientEmail, $job_name, $output)
 	{
 		//init email info
-		$template = $this->m_Tempaltes["CronjobEmail"]["TEMPLATE"];
-		$subject  = $this->m_Tempaltes["CronjobEmail"]["TITLE"];
-		$sender   = $this->m_Tempaltes["CronjobEmail"]["EMAILACCOUNT"];
+		$template = $this->tempaltes["CronjobEmail"]["TEMPLATE"];
+		$subject  = $this->tempaltes["CronjobEmail"]["TITLE"];
+		$sender   = $this->tempaltes["CronjobEmail"]["EMAILACCOUNT"];
 		
 		//prepare data
 		$data["job_name"] = $job_name;
@@ -382,7 +382,7 @@ class userEmailService extends MetaObject
 	protected function sendEmail($sender,$recipient,$subject,$content)
 	{		
 
-		$dataObj = BizSystem::getObject($this->m_EmailDataObj);
+		$dataObj = BizSystem::getObject($this->emailDataObj);
 		
 		if(is_array($recipient)){
 			$recipient_name = $recipient['name'];
@@ -399,7 +399,7 @@ class userEmailService extends MetaObject
 	    
 	    $ok = $dataObj->insertRecord($recArr);
 		    
-		if($this->m_SendtoQueue=='Y')
+		if($this->sendtoQueue=='Y')
 		{	
 			return $ok;
 		}
@@ -417,7 +417,7 @@ class userEmailService extends MetaObject
 //	or called by SendEmail
 	public function sendEmailNow($email_id){
 		//prepare email data				
-		$dataObj = BizSystem::getObject($this->m_EmailDataObj);				
+		$dataObj = BizSystem::getObject($this->emailDataObj);				
 		$dataObj->setSearchRule("[Id]='".$email_id."' and [status]!='sending' ", true);	
 		$data = $dataObj->fetch();
 		$dataObj->setActiveRecord($data[0]);	
@@ -450,7 +450,7 @@ class userEmailService extends MetaObject
 	
 	public function sendEmailFromQueue()
 	{
-		$dataObj = BizSystem::getObject($this->m_EmailDataObj);
+		$dataObj = BizSystem::getObject($this->emailDataObj);
 		$dataObj->setSortRule("[Id] ASC");
 		$dataObj->setSearchRule("[status]='pending'", true);
 		$data = $dataObj->fetch();

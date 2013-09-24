@@ -149,7 +149,7 @@
         <!-- Page Size Selector -->
         <Element  Name="pagesize_selector" 
         			Class="PagesizeSelector" 
-        			Text="{@:m_Range}" 
+        			Text="{@:range}" 
         			Label="Show Rows" 
         			CssClass="input_select" 
         			CssFocusClass="input_select_focus">

@@ -165,7 +165,7 @@ class LoginForm extends EasyForm
         try {
             $this->ValidateForm();
         } catch (ValidationException $e) {
-            $this->processFormObjError($e->m_Errors);
+            $this->processFormObjError($e->errors);
             return;
         }
 
@@ -174,10 +174,10 @@ class LoginForm extends EasyForm
         $this->password = BizSystem::ClientProxy()->getFormInputs("password");
         $this->smartcard = BizSystem::ClientProxy()->getFormInputs("smartcard");
 
-        if ($this->username == $this->getElement("username")->m_Hint) {
+        if ($this->username == $this->getElement("username")->hint) {
             $this->username = null;
         }
-        if ($this->password == $this->getElement("password")->m_Hint) {
+        if ($this->password == $this->getElement("password")->hint) {
             $this->password = null;
         }
 
@@ -338,7 +338,7 @@ class LoginForm extends EasyForm
                 $currentTheme = OPENBIZ_DEFAULT_LANGUAGE;
             } else {
                 BizSystem::sessionContext()->setVar("LANG", $currentLanguage);
-                $this->m_Notices[] = "<script>window.location.reload()</script>";
+                $this->notices[] = "<script>window.location.reload()</script>";
                 $this->UpdateForm();
             }
         }
@@ -355,7 +355,7 @@ class LoginForm extends EasyForm
                 BizSystem::sessionContext()->setVar("THEME", $currentTheme);
                 $recArr = $this->readInputRecord();
                 $this->setActiveRecord($recArr);
-                $this->m_Notices[] = "<script>window.location.reload()</script>";
+                $this->notices[] = "<script>window.location.reload()</script>";
                 $this->UpdateForm();
             }
         }

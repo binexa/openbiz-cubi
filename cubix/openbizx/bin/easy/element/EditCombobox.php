@@ -28,7 +28,7 @@ class EditCombobox extends OptionElement
 {
     public $blankOption;
     protected $widthInput = "128px";
-    protected $m_Onchange = "";
+    protected $onchange = "";
 
     /**
      * Read array meta data, and store to meta object
@@ -85,11 +85,11 @@ class EditCombobox extends OptionElement
         $style = $this->getStyle();
         $func = $this->getFunction();
         $selName = $this->objectName . "_sel";
-        //$onchange = "onchange=\"$('$inputName').value=this.value;".$this->m_Onchange."\"";
+        //$onchange = "onchange=\"$('$inputName').value=this.value;".$this->onchange."\"";
         $onChange = "onchange=\"$('$this->objectName').value=this.value; $('$this->objectName').triggerEvent('change');\" $func";
 
         $sHTML = "<div $style>\n";
-        $sHTML .= "<select name=\"" . $selName . "\" id=\"" . $selName ."\" $disabledStr $this->m_HTMLAttr $onChange>\n";
+        $sHTML .= "<select name=\"" . $selName . "\" id=\"" . $selName ."\" $disabledStr $this->htmlAttr $onChange>\n";
 
         if ($this->blankOption) // ADD a blank option
 

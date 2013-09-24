@@ -14,7 +14,7 @@
 include_once 'AppListForm.php';
 class ApplicationsListForm extends AppListForm
 {
-	protected $m_MarketInstalledDO = "market.installed.do.InstalledDO";
+	protected $marketInstalledDO = "market.installed.do.InstalledDO";
 	
 	public function fetchDataSet()
 	{
@@ -25,10 +25,10 @@ class ApplicationsListForm extends AppListForm
 		$repo_uri = $this->getDefaultRepoURI();	
 				
 		$params=array(
-			"searchRule" => $this->m_RemoteSearchRule,	
+			"searchRule" => $this->remoteSearchRule,	
 			"sortRule" => $this->sortRule,			
-			"startItem" => ($this->currentPage-1)*$this->m_Range,
-			"range" => $this->m_Range,
+			"startItem" => ($this->currentPage-1)*$this->range,
+			"range" => $this->range,
 		);
 		
 		$appList = $svc->discoverApplication($repo_uri,$cat_id,$params);	
@@ -40,8 +40,8 @@ class ApplicationsListForm extends AppListForm
 			}
 		}		
         $this->totalRecords = $appList['totalRecords'];
-        if ($this->m_Range && $this->m_Range > 0)
-            $this->totalPages = ceil($this->totalRecords/$this->m_Range);
+        if ($this->range && $this->range > 0)
+            $this->totalPages = ceil($this->totalRecords/$this->range);
 		
 		return $resultSet;
 	}
@@ -49,14 +49,14 @@ class ApplicationsListForm extends AppListForm
 	public function isNeedCleanup()
 	{
 		$searchRule = "[app_id]=0 OR [install_state]!='OK'";
-		return BizSystem::getObject($this->m_MarketInstalledDO)->directFetch($searchRule)->count();		
+		return BizSystem::getObject($this->marketInstalledDO)->directFetch($searchRule)->count();		
 	}
 	
 	public function Cleanup()
 	{
 		$searchRule = "[app_id]=0 OR [install_state]!='OK'";
-		BizSystem::getObject($this->m_MarketInstalledDO)->deleteRecords($searchRule);
-		$this->m_Notices = array(
+		BizSystem::getObject($this->marketInstalledDO)->deleteRecords($searchRule);
+		$this->notices = array(
 			"cleanup"=>$this->getMessage("MSG_CLEANUP")
 		);
 		$this->rerender();

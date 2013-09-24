@@ -52,19 +52,19 @@ class ThemeForm extends EasyForm
         try
         {
 	        $theme = $recArr['theme'];
-	        $this->m_ValidateErrors = array();
+	        $this->validateErrors = array();
 	        if(is_dir(OPENBIZ_THEME_PATH.DIRECTORY_SEPARATOR.$theme)){	        			       	
 	        		$errorMessage = $this->getMessage("FORM_THEME_EXIST",array("fld_theme"));
-	                $this->m_ValidateErrors["fld_theme"] = $errorMessage;
+	                $this->validateErrors["fld_theme"] = $errorMessage;
 	        }
-	        if (count($this->m_ValidateErrors) > 0)
+	        if (count($this->validateErrors) > 0)
 	        {
-	            throw new ValidationException($this->m_ValidateErrors);
+	            throw new ValidationException($this->validateErrors);
 	        }
         }
         catch (ValidationException $e)
         {
-            $this->processFormObjError($e->m_Errors);
+            $this->processFormObjError($e->errors);
             return;
         }
 
@@ -81,7 +81,7 @@ class ThemeForm extends EasyForm
         if (count($recArr) == 0)
             return;
 		
-        preg_match("/\[(.*?)\]=\'(.*?)\'/si",$this->m_FixSearchRule,$match);
+        preg_match("/\[(.*?)\]=\'(.*?)\'/si",$this->fixSearchRule,$match);
 		$theme = $match[2];		
         $this->UpdateThemePack($theme , $recArr);
         
@@ -134,7 +134,7 @@ class ThemeForm extends EasyForm
 		if (strtoupper($this->formType) == "NEW")
             return $this->getNewTheme();
                         
-		preg_match("/\[(.*?)\]=\'(.*?)\'/si",$this->m_FixSearchRule,$match);
+		preg_match("/\[(.*?)\]=\'(.*?)\'/si",$this->fixSearchRule,$match);
 		$theme = $match[2];
 		$dir = OPENBIZ_THEME_PATH.DIRECTORY_SEPARATOR.$theme;
 		$result['Id']	=	$theme;
@@ -200,9 +200,9 @@ class ThemeForm extends EasyForm
         $defaultRecArr = array();
         foreach ($this->dataPanel as $element)
         {
-            if ($element->m_FieldName)
+            if ($element->fieldName)
             {
-                $defaultRecArr[$element->m_FieldName] = $element->getDefaultValue();
+                $defaultRecArr[$element->fieldName] = $element->getDefaultValue();
             }
         }
 
@@ -248,7 +248,7 @@ class ThemeForm extends EasyForm
 		$smarty->assign("author_email", 	$recArr['authorEmail']);
 		$smarty->assign("author_url", 		$recArr['authorUrl']);
 		$smarty->assign("description",	 	$recArr['description']);
-		$data = $smarty->fetch(BizSystem::getTplFileWithPath("theme.xml.tpl", $this->m_Package));
+		$data = $smarty->fetch(BizSystem::getTplFileWithPath("theme.xml.tpl", $this->package));
 		$theme_dir = OPENBIZ_THEME_PATH.DIRECTORY_SEPARATOR.$theme;
 		$theme_file = $theme_dir.DIRECTORY_SEPARATOR."theme.xml";
 		file_put_contents($theme_file ,$data);
@@ -282,7 +282,7 @@ public function UpdateThemePack($theme,$recArr){
 		$smarty->assign("author_email", 	$recArr['authorEmail']);
 		$smarty->assign("author_url", 		$recArr['authorUrl']);
 		$smarty->assign("description",	 	$recArr['description']);
-		$data = $smarty->fetch(BizSystem::getTplFileWithPath("theme.xml.tpl", $this->m_Package));
+		$data = $smarty->fetch(BizSystem::getTplFileWithPath("theme.xml.tpl", $this->package));
 		$theme_dir = OPENBIZ_THEME_PATH.DIRECTORY_SEPARATOR.$theme;
 		$theme_file = $theme_dir.DIRECTORY_SEPARATOR."theme.xml";
 		@unlink($theme_file);

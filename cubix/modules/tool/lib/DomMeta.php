@@ -1,14 +1,14 @@
 <?php
 class DomMeta {
-    public $m_XmlFile;
+    public $xmlFile;
     public $doc;
     
     public function __construct($metaName) {
         if (strpos($metaName,".xml")>0)
-            $this->m_XmlFile = $metaName;
+            $this->xmlFile = $metaName;
         else
-            $this->m_XmlFile = OPENBIZ_APP_MODULE_PATH."/".str_replace(".","/",$metaName).".xml";
-        //echo $this->m_XmlFile."\n";
+            $this->xmlFile = OPENBIZ_APP_MODULE_PATH."/".str_replace(".","/",$metaName).".xml";
+        //echo $this->xmlFile."\n";
     }
     
     public function GetDocDocument()
@@ -16,10 +16,10 @@ class DomMeta {
         if ($this->doc) 
             return $this->doc;
         
-        if (!file_exists($this->m_XmlFile)) 
+        if (!file_exists($this->xmlFile)) 
             return null;
         $doc = new DomDocument();
-        $ok = $doc->load($this->m_XmlFile);
+        $ok = $doc->load($this->xmlFile);
         if (!$ok)
             return null;
         $this->doc = $doc;
@@ -53,7 +53,7 @@ class DomMeta {
         // save xml file
         $doc->formatOutput = true;
         $doc->preserveWhiteSpace = false;
-        $doc->save($this->m_XmlFile);
+        $doc->save($this->xmlFile);
         return true;
     }
     
@@ -92,7 +92,7 @@ class DomMeta {
         // save xml file
         $doc->formatOutput = true;
         $doc->preserveWhiteSpace = false;
-        $doc->save($this->m_XmlFile);
+        $doc->save($this->xmlFile);
         return true;
     }    
     
@@ -119,7 +119,7 @@ class DomMeta {
         // save xml file
         $doc->formatOutput = true;
         $doc->preserveWhiteSpace = false;
-        $doc->save($this->m_XmlFile);
+        $doc->save($this->xmlFile);
         return true;
     }
     
@@ -150,7 +150,7 @@ class DomMeta {
         
         // save xml file
         $doc->formatOutput = true;
-        $doc->save($this->m_XmlFile);
+        $doc->save($this->xmlFile);
     }
 }
 ?>

@@ -18,8 +18,8 @@
 		{else}
 			{assign var=menu_class value="" }
 	    {/if}	
-		<a onclick="show_submenu(this)" class="{$menu_class}" href="{if $item->m_URL}{$item->m_URL}{else}javascript:{/if}">
-			<img class="{$item->m_IconCSSClass}" src="{$image_url}/{if $item->m_IconImage!=''}{$item->m_IconImage}{else}spacer.gif{/if}" />{$item->objectName}
+		<a onclick="show_submenu(this)" class="{$menu_class}" href="{if $item->url}{$item->url}{else}javascript:{/if}">
+			<img class="{$item->iconCSSClass}" src="{$image_url}/{if $item->iconImage!=''}{$item->iconImage}{else}spacer.gif{/if}" />{$item->objectName}
 		</a>	
 		{if $item->childNodes|@count > 0}
 		<ul class="secondlevel module" {if $menu_class eq 'current'}style="display:block;"{/if}>
@@ -35,7 +35,7 @@
 			{else}
 				{assign var=submenu_class value="" }
 		    {/if}					
-				<li><a class="{$submenu_class}" href="{if $subitem->m_URL}{$subitem->m_URL}{else}javascript:{/if}">{$subitem->objectName}</a></li>						
+				<li><a class="{$submenu_class}" href="{if $subitem->url}{$subitem->url}{else}javascript:{/if}">{$subitem->objectName}</a></li>						
 		{/foreach}	
 		</ul>
 		{/if}

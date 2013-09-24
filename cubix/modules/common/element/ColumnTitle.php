@@ -18,7 +18,7 @@ class ColumnTitle extends ColumnText
 		$rec = $this->getFormObj()->getActiveRecord();
 		
 		$id = $rec["Id"];
-		if(!$id && $this->m_FieldName=='Id'){
+		if(!$id && $this->fieldName=='Id'){
 			$id = $this->value;
 		}
 		$id_display = "<span class=\"title_id\" >$id</span>";
@@ -27,7 +27,7 @@ class ColumnTitle extends ColumnText
 	
 	public function render(){
 		$sHTML = parent::render();
-		if($this->m_FieldName!='Id'){
+		if($this->fieldName!='Id'){
 			$sHTML = $this->getIDPrefix().$sHTML;
 		}
 		else{

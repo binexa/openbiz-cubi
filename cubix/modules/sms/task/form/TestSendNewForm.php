@@ -18,7 +18,7 @@ class TestSendNewForm extends EasyForm
 		$SmsObj=BizSystem::getService("sms.lib.SmsService");
 		if(!$SmsObj->validateMobile($inputRec['mobile']))
 		{
-			$this->m_Errors = array("fld_mobile"=>$this->getMessage("MOBILE_ERROR"));
+			$this->errors = array("fld_mobile"=>$this->getMessage("MOBILE_ERROR"));
 			$this->updateForm();
 			return false;
 		}
@@ -31,11 +31,11 @@ class TestSendNewForm extends EasyForm
 		$rec=$SmsObj->sendSMS($mobile,$content,0,$queue,$provider);
 		if($rec)
 		{
-			$this->m_Notices = array("test"=>$this->getMessage("SMS_SENT_SUCCESSFUL"));
+			$this->notices = array("test"=>$this->getMessage("SMS_SENT_SUCCESSFUL"));
 		}
 		else
 		{
-			$this->m_Errors = array("test"=>$this->getMessage("SMS_SENT_FAILURE"));
+			$this->errors = array("test"=>$this->getMessage("SMS_SENT_FAILURE"));
 		}
 		
 		$this->updateForm();

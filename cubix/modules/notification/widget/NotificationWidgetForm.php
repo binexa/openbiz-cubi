@@ -13,7 +13,7 @@
 
 class NotificationWidgetForm extends EasyForm
 {
-	protected $m_ReadAccess;
+	protected $readAccess;
 	
 	public function render()
 	{
@@ -24,8 +24,8 @@ class NotificationWidgetForm extends EasyForm
 		{
 			return "";
 		}
-		if($this->m_ReadAccess){
-			if(BizSystem::allowUserAccess($this->m_ReadAccess))
+		if($this->readAccess){
+			if(BizSystem::allowUserAccess($this->readAccess))
 			{
 				return $result;
 			}			
@@ -48,7 +48,7 @@ class NotificationWidgetForm extends EasyForm
 			$record['release_date'] = date("Y-m-d",strtotime($record['create_time']));
 			$resultSet[$key] = $record;
 		}
-		$this->m_ReadAccess = $resultSet[0]['read_access'];
+		$this->readAccess = $resultSet[0]['read_access'];
 		return $resultSet;
 	}
 	

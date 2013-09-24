@@ -44,7 +44,7 @@ class ResetPasswordForm extends UserForm
 
     	if($user_id = $this->ValidateToken($token))
     	{
-    		$this->m_FixSearchRule = "[Id] = $user_id";
+    		$this->fixSearchRule = "[Id] = $user_id";
   	 		return 1;
     	}
     	else
@@ -64,7 +64,7 @@ class ResetPasswordForm extends UserForm
         }
         catch (ValidationException $e)
         {
-        	$this->processFormObjError($e->m_Errors);
+        	$this->processFormObjError($e->errors);
             return;
         }
 
@@ -93,7 +93,7 @@ class ResetPasswordForm extends UserForm
         $logComment=array($currentRec['username']);
     	$eventlog->log("USER_MANAGEMENT", "MSG_RESET_PASSWORD_BY_TOKEN", $logComment);       	
 	    
-        $this->m_Notices[] = $this->GetMessage("USER_DATA_UPDATED");
+        $this->notices[] = $this->GetMessage("USER_DATA_UPDATED");
         $this->processPostAction();
  
     }
@@ -140,8 +140,8 @@ class ResetPasswordForm extends UserForm
 		if(!$validateSvc->betweenLength($password,6,50))
 		{
 			$errorMessage = $this->GetMessage("PASSWORD_LENGTH");
-			$this->m_ValidateErrors['fld_password'] = $errorMessage;
-			throw new ValidationException($this->m_ValidateErrors);
+			$this->validateErrors['fld_password'] = $errorMessage;
+			throw new ValidationException($this->validateErrors);
 			return false;
 		}
 		
@@ -158,9 +158,9 @@ class ResetPasswordForm extends UserForm
 		if($password != "" && ($password != $password_repeat))
 		{
 			$passRepeatElem = $this->getElement("fld_password_repeat");
-			$errorMessage = $this->GetMessage("PASSOWRD_REPEAT_NOTSAME",array($passRepeatElem->m_Label));
-			$this->m_ValidateErrors['fld_password_repeat'] = $errorMessage;
-			throw new ValidationException($this->m_ValidateErrors);
+			$errorMessage = $this->GetMessage("PASSOWRD_REPEAT_NOTSAME",array($passRepeatElem->label));
+			$this->validateErrors['fld_password_repeat'] = $errorMessage;
+			throw new ValidationException($this->validateErrors);
 			return false;
 		}
 	

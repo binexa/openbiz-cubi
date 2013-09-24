@@ -5,16 +5,16 @@ require_once "oauth.class.php";
 class alitao extends oauthClass
 {
 	protected $type='alitao'; 
-	protected $m_tokenUrl='https://oauth.taobao.com/token';
-	protected $m_authorizeUrl='https://oauth.taobao.com/authorize';//登录验证地址
+	protected $tokenUrl='https://oauth.taobao.com/token';
+	protected $authorizeUrl='https://oauth.taobao.com/authorize';//登录验证地址
 	protected $loginUrl;
-	private $m_akey;
+	private $akey;
 	private $m_skey;
 	
 	public function __construct() {
 		parent::__construct();
 		$recArr=$this->getProviderList(); 
-		$this->m_akey = $recArr['key'];
+		$this->akey = $recArr['key'];
 		$this->m_skey =$recArr['value']; 
 	}
 	
@@ -33,12 +33,12 @@ class alitao extends oauthClass
 		
 		  //请求参数
 		 $postfields= array('grant_type'     => 'authorization_code',
-							 'client_id'     => $this->m_akey,
+							 'client_id'     => $this->akey,
 							 'client_secret' => $this->m_skey,
 							 'code'          => $_REQUEST['code'],
 							 'redirect_uri'  => $this->callBack
 						);
-		 $token = json_decode(OAuthUtil::Curl_Post($this->m_tokenUrl,$postfields),true); 
+		 $token = json_decode(OAuthUtil::Curl_Post($this->tokenUrl,$postfields),true); 
 	
 		if($token['access_token'])
 		{ 	
@@ -60,7 +60,7 @@ class alitao extends oauthClass
 		/*oauth.taobao.com/authorize?response_type=code&client_id
 		 * =12382619&redirect_uri=127.0.0.1/loginDemo/oauthLogin.php&state=1
 		 */
-		$this->loginUrl=$this->m_authorizeUrl.'?response_type=code&client_id='.$this->m_akey.'&redirect_uri='.$this->callBack;
+		$this->loginUrl=$this->authorizeUrl.'?response_type=code&client_id='.$this->akey.'&redirect_uri='.$this->callBack;
 		return $this->loginUrl;
 	}  
 

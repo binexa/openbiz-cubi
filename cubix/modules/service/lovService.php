@@ -21,7 +21,7 @@ class lovService extends MetaObject
 	
     public function getDictionary($selectFrom)
     {
-    	$this->m_SelectFrom=$selectFrom;
+    	$this->selectFrom=$selectFrom;
     	$dict = array();
     	$list = $this->getList($selectFrom);
 		if ($list) {
@@ -218,9 +218,9 @@ class lovService extends MetaObject
     
     protected function translateList($list, $tag)
     {
-    	$module = $this->getModuleName($this->m_SelectFrom);
+    	$module = $this->getModuleName($this->selectFrom);
         if (empty($module))
-            $module = $this->getModuleName($this->m_FormName);
+            $module = $this->getModuleName($this->formName);
     	for ($i=0; $i<count($list); $i++)
     	{
     		$key = 'SELECTION_'.strtoupper($tag).'_'.$i.'_TEXT';
@@ -232,7 +232,7 @@ class lovService extends MetaObject
 
     protected function getTransLOVPrefix()
     {    	
-    	$nameArr = explode(".",$this->m_SelectFrom);
+    	$nameArr = explode(".",$this->selectFrom);
     	for($i=1;$i<count($nameArr)-1;$i++)
     	{
     		$prefix .= strtoupper($nameArr[$i])."_";

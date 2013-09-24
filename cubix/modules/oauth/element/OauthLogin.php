@@ -26,13 +26,13 @@ $this->assign('_OauthLogin', $recArr);
  */
 class OauthLogin extends InputElement
 {
-	protected $m_RedirectURL;
+	protected $redirectURL;
 	protected $assocURL;
 	
 	public function readMetaData($xmlArr)
 	{
 		$result = parent::readMetaData($xmlArr);
-		$this->m_RedirectURL = isset($xmlArr["ATTRIBUTES"]["REDIRECTURL"]) ? $xmlArr["ATTRIBUTES"]["REDIRECTURL"] : null;
+		$this->redirectURL = isset($xmlArr["ATTRIBUTES"]["REDIRECTURL"]) ? $xmlArr["ATTRIBUTES"]["REDIRECTURL"] : null;
 		$this->assocURL 	= isset($xmlArr["ATTRIBUTES"]["ASSOCURL"]) ? $xmlArr["ATTRIBUTES"]["ASSOCURL"] : null;
 		return $result;
 	}
@@ -46,10 +46,10 @@ class OauthLogin extends InputElement
 			 $recArr=$do->directFetch ("[status]=1",30);
 			 $recArr=$recArr->toArray();
 
-			 if($this->m_RedirectURL)
+			 if($this->redirectURL)
 			 {
-			 	$this->m_RedirectURL = Expression::evaluateExpression($this->m_RedirectURL, $this);
-			 	$url_append.="redirect_url=".urlencode($this->m_RedirectURL)."&";
+			 	$this->redirectURL = Expression::evaluateExpression($this->redirectURL, $this);
+			 	$url_append.="redirect_url=".urlencode($this->redirectURL)."&";
 			 }
 			 if($this->assocURL)
 			 {

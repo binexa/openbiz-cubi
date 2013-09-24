@@ -29,7 +29,7 @@ class InputDateRangePicker extends InputText {
 
 	public function getSearchRule(){
 		$value = BizSystem::clientProxy()->getFormInputs($this->objectName);
-		$field = $this->m_FieldName;
+		$field = $this->fieldName;
 		
 		$dates = explode("-", $value);
 		$date_start = str_replace("/","-",trim($dates[0]))." 00:00:00";

@@ -47,14 +47,14 @@ class Textarea extends OptionElement
         $disabledStr = ($this->getEnabled() == "N") ? "DISABLED=\"true\"" : "";
         $style = $this->getStyle();
         $func = $this->getFunction(); 
-    	if($formobj->m_Errors[$this->objectName]){
+    	if($formobj->errors[$this->objectName]){
 			$func .= "onchange=\"this.className='$this->cssClass'\"";
 		}else{
 			$func .= "onfocus=\"this.className='$this->m_cssFocusClass'\" onblur=\"this.className='$this->cssClass'\"";
 		}        
-        $sHTML .= "<TEXTAREA NAME=\"" . $this->objectName . "\" ID=\"" . $this->objectName ."\" $disabledStr $this->m_HTMLAttr $style $func>".$this->value."</TEXTAREA>";        
+        $sHTML .= "<TEXTAREA NAME=\"" . $this->objectName . "\" ID=\"" . $this->objectName ."\" $disabledStr $this->htmlAttr $style $func>".$this->value."</TEXTAREA>";        
     	
-        if($this->m_SelectFrom){
+        if($this->selectFrom){
         	$fromList = array();
 	        $this->getFromList($fromList);
 	        $valueArray = explode(',', $this->value);

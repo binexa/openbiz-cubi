@@ -4,7 +4,7 @@
 class TreeListbox extends Listbox
 {
 
-    public $m_SelectFieldName;
+    public $selectFieldName;
 
     protected function getDOFromList(&$list, $selectFrom)
     {
@@ -23,7 +23,7 @@ class TreeListbox extends Listbox
                 $fieldName = substr($selectFrom, $pos0 + 1, $pos1 - $pos0 - 1);
                 $fieldName_v = $fieldName;
             }
-            $this->m_SelectFieldName = $fieldName;
+            $this->selectFieldName = $fieldName;
             $commaPos = strpos($selectFrom, ",", $pos1);
             $commaPos2 = strpos($selectFrom, ",", $commaPos + 1);
 
@@ -92,7 +92,7 @@ class TreeListbox extends Listbox
             $treeNodeArray[$key] = $value;
         }
 
-        $treeNodeArray[$this->m_SelectFieldName] = "+" . str_repeat("--", $level) . $treeNodeArray[$this->m_SelectFieldName];
+        $treeNodeArray[$this->selectFieldName] = "+" . str_repeat("--", $level) . $treeNodeArray[$this->selectFieldName];
 
         array_push($array, $treeNodeArray);
         $level++;

@@ -15,7 +15,7 @@ class checkerService extends MetaObject
 {
 	protected $checkerList;
 	protected $checkerDO = "notification.do.NotificationCheckerDO";	
-	protected $m_NotificationDO = "notification.do.NotificationDO";	
+	protected $notificationDO = "notification.do.NotificationDO";	
 	
 	public function __construct(&$xmlArr)
 	{
@@ -87,7 +87,7 @@ class checkerService extends MetaObject
 	
 	public function saveNotificationList($notificationList)
 	{
-		$notiDO = BizSystem::getObject($this->m_NotificationDO);
+		$notiDO = BizSystem::getObject($this->notificationDO);
 		$counter = 0;
 		foreach ($notificationList as $notiRec)
 		{		

@@ -20,11 +20,11 @@ class SmsService extends MetaObject
 	const DISPATCH_BY_BALANCE	=2;
 	const DISPATCH_ROUND_ROBIN	=3;
 	
-	protected $m_SmsProviderDO='sms.provider.do.ProviderDO';
-	protected $m_SmsQueueDO='sms.queue.do.QueueDO';
-	protected $m_PreferenceDO='myaccount.do.PreferenceDO';
+	protected $smsProviderDO='sms.provider.do.ProviderDO';
+	protected $smsQueueDO='sms.queue.do.QueueDO';
+	protected $preferenceDO='myaccount.do.PreferenceDO';
 
-	protected $m_SmsPreference;
+	protected $smsPreference;
 	
 	public function __construct()  
     {
@@ -81,7 +81,7 @@ class SmsService extends MetaObject
      */
     public function UpdateProviderCounter()
     {
-		 foreach(BizSystem::getObject($this->m_SmsProviderDO)->directFetch("[status]=1") as $providerRec)
+		 foreach(BizSystem::getObject($this->smsProviderDO)->directFetch("[status]=1") as $providerRec)
 		 {	
 			$this->getMsgBalance($providerRec['type']); 
 		 }
@@ -95,7 +95,7 @@ class SmsService extends MetaObject
 	 * 发送队列中的短信;
 	 */
 	public function SendSmsFromQueue($SmsQueue=null,$limit=10){
-		$SmsProviderDO = BizSystem::getObject($this->m_SmsProviderDO);
+		$SmsProviderDO = BizSystem::getObject($this->smsProviderDO);
 		$Provider=$this->_getProvider();
 		$return=false;
 		if(!$SmsQueue)
@@ -169,16 +169,16 @@ class SmsService extends MetaObject
 		switch($action)
 		{
 			case 'pending':
-				$return=BizSystem::getObject($this->m_SmsQueueDO)->updateRecords("[status]='pending'","[Id]={$id}");
+				$return=BizSystem::getObject($this->smsQueueDO)->updateRecords("[status]='pending'","[Id]={$id}");
 				 break;
 			case 'sending':
-				$return=BizSystem::getObject($this->m_SmsQueueDO)->updateRecords("[status]='sending'","[Id]={$id}");
+				$return=BizSystem::getObject($this->smsQueueDO)->updateRecords("[status]='sending'","[Id]={$id}");
 				 break;
 			case 'sent':
-				$return=BizSystem::getObject($this->m_SmsQueueDO)->updateRecords("[status]='sent'","[Id]={$id}");
+				$return=BizSystem::getObject($this->smsQueueDO)->updateRecords("[status]='sent'","[Id]={$id}");
 				 break;
 			case 'batch_sending':	 			    
-				$return=BizSystem::getObject($this->m_SmsQueueDO)->updateRecords("[status]='sending'","[Id] ".BizSystem::getService("sms.lib.SmsUtilService")->db_create_in($sms_ids));
+				$return=BizSystem::getObject($this->smsQueueDO)->updateRecords("[status]='sending'","[Id] ".BizSystem::getService("sms.lib.SmsUtilService")->db_create_in($sms_ids));
 				 break;
 		}
 		return $return;
@@ -188,7 +188,7 @@ class SmsService extends MetaObject
 	 */
 	protected function _addSmsQueueInfo($mobile,$content,$defer)
 	{
-		$SmsQueueDO = BizSystem::getObject($this->m_SmsQueueDO);
+		$SmsQueueDO = BizSystem::getObject($this->smsQueueDO);
 		if(!$this->validateMobile($mobile))
 		{
 			return false;
@@ -206,7 +206,7 @@ class SmsService extends MetaObject
 	 */
 	protected function _getSmsQueue($limit=1)
 	{
-		$SmsQueueDO = BizSystem::getObject($this->m_SmsQueueDO);
+		$SmsQueueDO = BizSystem::getObject($this->smsQueueDO);
 		$SmsQueueArr=$SmsQueueDO->directFetch("[status]='pending' AND [mobile] IS NOT NULL",$limit,0,"[Id] ASC");
 		 if($SmsQueueArr)
 		 {
@@ -220,12 +220,12 @@ class SmsService extends MetaObject
  */
 	protected  function _getSmsPreference(){
 
-		if($this->m_SmsPreference)
+		if($this->smsPreference)
 		{
-			return $this->m_SmsPreference;
+			return $this->smsPreference;
 		}
 		
-		$PreferenceDO = BizSystem::getObject($this->m_PreferenceDO);
+		$PreferenceDO = BizSystem::getObject($this->preferenceDO);
 		$PreferenceArr=$PreferenceDO->directFetch("[section]='SMS'");
 		 if($PreferenceArr)
 		 {
@@ -236,7 +236,7 @@ class SmsService extends MetaObject
 		 {
 			$SmsPreferenceInfo[$info['name']]=$info['value'];
 		 }
-		 $this->m_SmsPreference = $SmsPreferenceInfo;
+		 $this->smsPreference = $SmsPreferenceInfo;
 		 return $SmsPreferenceInfo;
 		
 		
@@ -246,7 +246,7 @@ class SmsService extends MetaObject
  */
 	protected function _getProvider(){
 
-		$SmsProviderDO = BizSystem::getObject($this->m_SmsProviderDO);
+		$SmsProviderDO = BizSystem::getObject($this->smsProviderDO);
 		$SmsPreference=$this->_getSmsPreference();
 		switch($SmsPreference['dispatch'])
 		{
@@ -293,7 +293,7 @@ class SmsService extends MetaObject
 		}
 		else
 		{
-			$SmsProviderDO = BizSystem::getObject($this->m_SmsProviderDO);
+			$SmsProviderDO = BizSystem::getObject($this->smsProviderDO);
 			$ProvidersInfo =$SmsProviderDO->fetchOne
 			("[status]=1 AND [type]='{$providerCode}'");
 			if(!$ProvidersInfo)

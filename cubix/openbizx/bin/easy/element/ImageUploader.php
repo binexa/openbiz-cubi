@@ -26,12 +26,12 @@
  */
 class ImageUploader extends FileUploader
 {
-    public $m_PicWidth ;
-    public $m_PicHeight ;
-    public $m_ThumbWidth ;
-    public $m_ThumbHeight ;
-    public $m_ThumbFolder ;
-    public $m_Preview ;
+    public $picWidth ;
+    public $picHeight ;
+    public $thumbWidth ;
+    public $thumbHeight ;
+    public $thumbFolder ;
+    public $preview ;
 
     /**
      * Initialize Element with xml array
@@ -55,14 +55,14 @@ class ImageUploader extends FileUploader
     protected function readMetaData(&$xmlArr)
     {
         parent::readMetaData($xmlArr);
-        $this->m_PicWidth 	= isset($xmlArr["ATTRIBUTES"]["PICWIDTH"]) ? $xmlArr["ATTRIBUTES"]["PICWIDTH"] : null;
-        $this->m_PicHeight 	= isset($xmlArr["ATTRIBUTES"]["PICHEIGHT"]) ? $xmlArr["ATTRIBUTES"]["PICHEIGHT"] : null;
-        $this->m_PicQuality 	= isset($xmlArr["ATTRIBUTES"]["PICQUALITY"]) ? $xmlArr["ATTRIBUTES"]["PICQUALITY"] : 80;
-        $this->m_ThumbWidth 	= isset($xmlArr["ATTRIBUTES"]["THUMBWIDTH"]) ? $xmlArr["ATTRIBUTES"]["THUMBWIDTH"] : null;
-        $this->m_ThumbHeight 	= isset($xmlArr["ATTRIBUTES"]["THUMBHEIGHT"]) ? $xmlArr["ATTRIBUTES"]["THUMBHEIGHT"] : null;
-        $this->m_ThumbQuality	= isset($xmlArr["ATTRIBUTES"]["THUMBQUALITY"]) ? $xmlArr["ATTRIBUTES"]["THUMBQUALITY"] : 50;
-        $this->m_ThumbFolder 	= isset($xmlArr["ATTRIBUTES"]["THUMBFOLDER"]) ? $xmlArr["ATTRIBUTES"]["THUMBFOLDER"] : null;
-        $this->m_Preview 	= isset($xmlArr["ATTRIBUTES"]["PREVIEW"]) ? $xmlArr["ATTRIBUTES"]["PREVIEW"] : false;
+        $this->picWidth 	= isset($xmlArr["ATTRIBUTES"]["PICWIDTH"]) ? $xmlArr["ATTRIBUTES"]["PICWIDTH"] : null;
+        $this->picHeight 	= isset($xmlArr["ATTRIBUTES"]["PICHEIGHT"]) ? $xmlArr["ATTRIBUTES"]["PICHEIGHT"] : null;
+        $this->picQuality 	= isset($xmlArr["ATTRIBUTES"]["PICQUALITY"]) ? $xmlArr["ATTRIBUTES"]["PICQUALITY"] : 80;
+        $this->thumbWidth 	= isset($xmlArr["ATTRIBUTES"]["THUMBWIDTH"]) ? $xmlArr["ATTRIBUTES"]["THUMBWIDTH"] : null;
+        $this->thumbHeight 	= isset($xmlArr["ATTRIBUTES"]["THUMBHEIGHT"]) ? $xmlArr["ATTRIBUTES"]["THUMBHEIGHT"] : null;
+        $this->thumbQuality	= isset($xmlArr["ATTRIBUTES"]["THUMBQUALITY"]) ? $xmlArr["ATTRIBUTES"]["THUMBQUALITY"] : 50;
+        $this->thumbFolder 	= isset($xmlArr["ATTRIBUTES"]["THUMBFOLDER"]) ? $xmlArr["ATTRIBUTES"]["THUMBFOLDER"] : null;
+        $this->preview 	= isset($xmlArr["ATTRIBUTES"]["PREVIEW"]) ? $xmlArr["ATTRIBUTES"]["PREVIEW"] : false;
     }
 
     /**
@@ -96,39 +96,39 @@ class ImageUploader extends FileUploader
     	
    		if(count($_FILES)>0)
 		{
-			if(!$this->m_Uploaded && $_FILES[$this->objectName]["size"] > 0)
+			if(!$this->uploaded && $_FILES[$this->objectName]["size"] > 0)
 			{
 				$picFileName = parent::setValue($value);
-				if((int)$this->m_PicWidth>0 || (int)$this->m_PicHeight>0)
+				if((int)$this->picWidth>0 || (int)$this->picHeight>0)
 				{
 					//resize picture size
-					$fileName = $this->m_UploadRoot.$picFileName;
-					$width = $this->m_PicWidth;
-					$height = $this->m_PicHeight;
-					$quality = $this->m_PicQuality;
+					$fileName = $this->uploadRoot.$picFileName;
+					$width = $this->picWidth;
+					$height = $this->picHeight;
+					$quality = $this->picQuality;
 
 					$this->resizeImage($fileName, $fileName, $width, $height, $quality);
 				}
 				if(
-				((int)$this->m_ThumbWidth>0 || (int)$this->m_ThumbHeight>0) &&
-						$this->m_ThumbFolder!=""
+				((int)$this->thumbWidth>0 || (int)$this->thumbHeight>0) &&
+						$this->thumbFolder!=""
 				)
 				{
 					//generate thumbs picture
-					if(!is_dir($this->m_UploadRoot.$this->m_ThumbFolder))
+					if(!is_dir($this->uploadRoot.$this->thumbFolder))
 					{
-						mkdir($this->m_UploadRoot.$this->m_ThumbFolder ,0777,true);
+						mkdir($this->uploadRoot.$this->thumbFolder ,0777,true);
 					}
 					$file = $_FILES[$this->objectName];
-					$thumbPath = $this->m_ThumbFolder."/thumbs-".date("YmdHis")."-".urlencode($file['name']);
-					$thumbFileName = $this->m_UploadRoot.$thumbPath;
-					$width = $this->m_ThumbWidth;
-					$height = $this->m_ThumbHeight;
-					$quality = $this->m_ThumbQuality;
+					$thumbPath = $this->thumbFolder."/thumbs-".date("YmdHis")."-".urlencode($file['name']);
+					$thumbFileName = $this->uploadRoot.$thumbPath;
+					$width = $this->thumbWidth;
+					$height = $this->thumbHeight;
+					$quality = $this->thumbQuality;
 
 					$this->resizeImage($fileName, $thumbFileName, $width, $height, $quality);
 
-					$result=array('picture'=>$this->m_UploadRootURL.$picFileName,'thumbpic'=>$this->m_UploadRootURL.$thumbPath);	                    
+					$result=array('picture'=>$this->uploadRootURL.$picFileName,'thumbpic'=>$this->uploadRootURL.$thumbPath);	                    
 					$this->value=serialize($result);
 				}
 			}
@@ -229,7 +229,7 @@ class ImageUploader extends FileUploader
         $style = $this->getStyle();
         $func = $this->getFunction();
         $value = $this->getValue();
-        if($this->m_Preview){
+        if($this->preview){
 	        if($value){
 	        	$preview = "<img id=\"" . $this->objectName ."_preview\" src=\"$value\" class=\"image_preview\" />";
 	        }
@@ -241,7 +241,7 @@ class ImageUploader extends FileUploader
         }
         $sHTML .= "
         $preview
-        <input type=\"file\" onchange=\"Openbiz.ImageUploader.updatePreview('" . $this->objectName ."')\" name=\"$this->objectName\" id=\"" . $this->objectName ."\" value=\"$this->value\" $disabledStr $this->m_HTMLAttr $style $func>
+        <input type=\"file\" onchange=\"Openbiz.ImageUploader.updatePreview('" . $this->objectName ."')\" name=\"$this->objectName\" id=\"" . $this->objectName ."\" value=\"$this->value\" $disabledStr $this->htmlAttr $style $func>
         $delete_opt
         ";
         return $sHTML;

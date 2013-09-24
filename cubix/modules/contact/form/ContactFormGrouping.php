@@ -35,7 +35,7 @@ class ContactFormGrouping extends EasyFormGrouping
         }
         catch (ValidationException $e)
         {
-            $this->processFormObjError($e->m_Errors);
+            $this->processFormObjError($e->errors);
             return;
         }
 
@@ -44,7 +44,7 @@ class ContactFormGrouping extends EasyFormGrouping
         
 
         // in case of popup form, close it, then rerender the parent form
-        if ($this->m_ParentFormName)
+        if ($this->parentFormName)
         {
             $this->close();
 

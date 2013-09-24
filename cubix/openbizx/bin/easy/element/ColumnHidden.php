@@ -30,7 +30,7 @@ class ColumnHidden extends LabelText
 
     public function setSortFlag($flag=null)
     {
-        $this->m_SortFlag = $flag;
+        $this->sortFlag = $flag;
     }
 
     /**

@@ -17,7 +17,7 @@ include_once(OPENBIZ_APP_MODULE_PATH."/common/lib/httpClient.php");
 class CubiService extends  MetaObject
 {
 	const CUBI_VERSION = "3.0";	
-	protected $m_UDC_Server;
+	protected $udcServer;
   	
 	function __construct(&$xmlArr)
    	{      
@@ -26,7 +26,7 @@ class CubiService extends  MetaObject
 	
    	protected function readMetadata(&$xmlArr)
    	{      
-     	 $this->m_UDC_Server 	= $xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["UDCSERVER"].'/ws.php/udc/CollectService';      
+     	 $this->udcServer 	= $xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["UDCSERVER"].'/ws.php/udc/CollectService';      
    	}
 	
 	public function getVersion()
@@ -45,7 +45,7 @@ class CubiService extends  MetaObject
 		foreach ($query as $q)
 		        $httpClient->addQuery($q);
 		$headerList = array();
-		$out = $httpClient->fetchContents($this->m_UDC_Server, $headerList);		        
+		$out = $httpClient->fetchContents($this->udcServer, $headerList);		        
 		$cats = json_decode($out, true);
 		$result = $cats['data'];
 		return $result;
@@ -123,7 +123,7 @@ class CubiService extends  MetaObject
 		foreach ($query as $q)
 		        $httpClient->addQuery($q);
 		$headerList = array();
-		$out = $httpClient->fetchContents($this->m_UDC_Server, $headerList);		        
+		$out = $httpClient->fetchContents($this->udcServer, $headerList);		        
 		$cats = json_decode($out, true);
 		$result = $cats['data'];
 		if($result)
@@ -156,4 +156,3 @@ class CubiService extends  MetaObject
 		return $uuid;
 	}
 }
-?>

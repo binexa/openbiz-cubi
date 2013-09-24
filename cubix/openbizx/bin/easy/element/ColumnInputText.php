@@ -55,26 +55,26 @@ class ColumnInputText extends InputElement
 	
 	public function renderLabel()
     {
-        if ($this->m_Sortable == "Y")
+        if ($this->sortable == "Y")
         {
             $rule = $this->objectName;
 
-            $function = $this->m_FormName . ".SortRecord($rule,$this->m_SortFlag)";
-            if($this->m_SortFlag == "ASC" || $this->m_SortFlag == "DESC"){
+            $function = $this->formName . ".SortRecord($rule,$this->sortFlag)";
+            if($this->sortFlag == "ASC" || $this->sortFlag == "DESC"){
             	$class=" class=\"current\" ";
             }else{
             	$class=" class=\"normal\" ";
             }
-            if ($this->m_SortFlag == "ASC")
+            if ($this->sortFlag == "ASC")
             	$span_class = " class=\"sort_up\" ";
-            else if ($this->m_SortFlag == "DESC")
+            else if ($this->sortFlag == "DESC")
                 $span_class = " class=\"sort_down\" ";
-            $sHTML = "<a href=javascript:Openbiz.CallFunction('" . $function . "') $class ><span $span_class >" . $this->m_Label ."</span>";            
+            $sHTML = "<a href=javascript:Openbiz.CallFunction('" . $function . "') $class ><span $span_class >" . $this->label ."</span>";            
             $sHTML .= "</a>";
         }
         else
         {
-            $sHTML = $this->m_Label;
+            $sHTML = $this->label;
         }
         return $sHTML;
     }	
@@ -103,18 +103,18 @@ class ColumnInputText extends InputElement
         $func = $this->getFunction();
         
         $formobj = $this->GetFormObj();
-    	if($formobj->m_Errors[$this->objectName]){
+    	if($formobj->errors[$this->objectName]){
 			$func .= "onchange=\"this.className='$this->cssClass'\"";
 		}else{
 			$func .= "onfocus=\"this.className='$this->m_cssFocusClass'\" onblur=\"this.className='$this->cssClass'\"";
 		}        
         
 		
-        $sHTML = "<INPUT NAME=\"" . $this->objectName . "[".$recId."]\" ID=\"" . $this->objectName ."\" VALUE=\"" . $value . "\" $disabledStr $this->m_HTMLAttr $style $func />";
-        if($this->m_Hint){
+        $sHTML = "<INPUT NAME=\"" . $this->objectName . "[".$recId."]\" ID=\"" . $this->objectName ."\" VALUE=\"" . $value . "\" $disabledStr $this->htmlAttr $style $func />";
+        if($this->hint){
         	$sHTML.="<script>        	
         	\$j('#" . $this->objectName . "').tbHinter({
-				text: '".$this->m_Hint."'
+				text: '".$this->hint."'
 			});
         	</script>";
         }

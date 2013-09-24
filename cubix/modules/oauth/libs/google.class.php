@@ -6,7 +6,7 @@ class google extends oauthClass
 {
 	protected $type='google';
 	protected $m_loginUrl;
-	private $m_akey;
+	private $akey;
 	private $m_skey;
 	private $m_google;
 	private $m_oauth2;
@@ -16,7 +16,7 @@ class google extends oauthClass
 	public function __construct() {
 		parent::__construct();
 		$recArr=$this->getProviderList(); 
-		$this->m_akey = $recArr['key'];
+		$this->akey = $recArr['key'];
 		$this->m_skey =$recArr['value'];	
 		$this->m_google= new apiClient();
 		$this->m_google->setClientId($recArr['key']) ;
@@ -57,7 +57,7 @@ class google extends oauthClass
     /*获取登录URL*/
     function getUrl($call_back = null) {
  
-		if (!$this->m_akey || !$this->m_skey )
+		if (!$this->akey || !$this->m_skey )
 		{
 			throw new Exception('Unknown akey');
 			return false;

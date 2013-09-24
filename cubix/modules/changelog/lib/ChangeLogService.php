@@ -31,7 +31,7 @@ class ChangeLogService
    		foreach($postFields as $elem_name=>$value)
    		{
    			$elem = $panel->get($elem_name);
-   			$fld_name = $elem->m_FieldName;
+   			$fld_name = $elem->fieldName;
    			if($elem){
    				$elem_mapping[$fld_name] = $elem;
    			}
@@ -57,9 +57,9 @@ class ChangeLogService
 			if ($oldVal == $fldVal)
 				continue;
 			
-			$elem = $elem_mapping[$fldName]->m_XMLMeta;		
+			$elem = $elem_mapping[$fldName]->xmlMeta;		
 			if(!$elem){
-				$elem = $panel->getByField($fldName)->m_XMLMeta;
+				$elem = $panel->getByField($fldName)->xmlMeta;
 			}	
 			$logRecord[$fldName] = array('old'=>$oldVal, 'new'=>$fldVal, 'element'=>$elem);
 		}
@@ -69,7 +69,7 @@ class ChangeLogService
 			
 		$formMetaLite = array(
 			"name" 		=> $formObj->objectName,
-			"package" 	=> $formObj->m_Package,
+			"package" 	=> $formObj->package,
 			"message_file" 	=> $formObj->messageFile,		
 		);
 		

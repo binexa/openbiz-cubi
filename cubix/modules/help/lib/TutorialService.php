@@ -3,9 +3,9 @@ class TutorialService
 {	
 	const SESSION_VAR_NAME			= "HELP_TUTORAIL_SHOWN";
 	
-	protected $m_TutorialDO 		= "help.tutorial.do.TutorialDO";
-	protected $m_TutorialUserDO 	= "help.tutorial.do.TutorialUserDO";
-	protected $m_TutorialForm 		= "help.tutorial.widget.TutorialForm";	
+	protected $tutorialDO 		= "help.tutorial.do.TutorialDO";
+	protected $tutorialUserDO 	= "help.tutorial.do.TutorialUserDO";
+	protected $tutorialForm 		= "help.tutorial.widget.TutorialForm";	
 	
 	public function checkInstalledVersion()
 	{
@@ -34,7 +34,7 @@ class TutorialService
 		if($this->_checkNeedShowTutorial($tutorialId))
 		{
 			//show the form		
-			$formObj->loadDialog($this->m_TutorialForm,$tutorialId);			
+			$formObj->loadDialog($this->tutorialForm,$tutorialId);			
 			//set it has been shown in session
 			//$this->_setTutorialShownInSession($tutorialId);
 		}		
@@ -47,10 +47,10 @@ class TutorialService
 		{
 			return 0;
 		}
-		$tutorialRec = BizSystem::getObject($this->m_TutorialDO)->fetchOne("[url_match]='$url'");
+		$tutorialRec = BizSystem::getObject($this->tutorialDO)->fetchOne("[url_match]='$url'");
 		if(!$tutorialRec)
 		{
-			foreach(BizSystem::getObject($this->m_TutorialDO)->directfetch("[url_match] LIKE '%.*%'") as $record)
+			foreach(BizSystem::getObject($this->tutorialDO)->directfetch("[url_match] LIKE '%.*%'") as $record)
 			{
 				$match = $record['url_match'];
 				$pattern = "@".$match."@si";
@@ -66,7 +66,7 @@ class TutorialService
 	
 	public function ShowTutorial($tutorialId,$formObj)
 	{		
-		$formObj->loadDialog($this->m_TutorialForm,$tutorialId);					
+		$formObj->loadDialog($this->tutorialForm,$tutorialId);					
 		return true;
 	}	
 	
@@ -78,7 +78,7 @@ class TutorialService
 			return false;
 		}
 		$userId = BizSystem::getUserProfile("Id");
-		$showLog = BizSystem::getObject($this->m_TutorialUserDO)->fetchOne("[tutorial_id]='$tutorialId' AND [user_id]='$userId'");		
+		$showLog = BizSystem::getObject($this->tutorialUserDO)->fetchOne("[tutorial_id]='$tutorialId' AND [user_id]='$userId'");		
 		if(!$showLog)
 		{
 			return true;
@@ -108,7 +108,7 @@ class TutorialService
 	{
 		$this->_setTutorialShownInSession($tutorialId);
 		$userId = BizSystem::getUserProfile("Id");
-		$logRec = BizSystem::getObject($this->m_TutorialUserDO)->fetchOne("[tutorial_id]='$tutorialId' AND [user_id]='$userId'");
+		$logRec = BizSystem::getObject($this->tutorialUserDO)->fetchOne("[tutorial_id]='$tutorialId' AND [user_id]='$userId'");
 		if(!$logRec)
 		{
 			$rec = array(
@@ -116,7 +116,7 @@ class TutorialService
 				"user_id"	  => $userId,
 				"autoshow"	  => $showOnNextLogin
 			);
-			BizSystem::getObject($this->m_TutorialUserDO)->insertRecord($rec);
+			BizSystem::getObject($this->tutorialUserDO)->insertRecord($rec);
 		}
 		else{
 			$logRec['autoshow']=$showOnNextLogin;

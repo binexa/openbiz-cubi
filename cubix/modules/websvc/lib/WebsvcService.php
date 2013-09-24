@@ -18,11 +18,11 @@ include_once 'WebsvcResponse.php';
 class WebsvcService
 {   
     public $errorCode = 0;
-    public $m_WebsvcDO = "websvc.do.WebsvcDO";
-    public $m_PublicMethods;
+    public $websvcDO = "websvc.do.WebsvcDO";
+    public $publicMethods;
     public $messageFile;
     public $objectMessages;
-    public $m_RequireAuth = "N";
+    public $requireAuth = "N";
 
     function __construct(&$xmlArr)
     {      
@@ -31,9 +31,9 @@ class WebsvcService
 
     protected function readMetadata(&$xmlArr)
     {      
-        $this->m_RequireAuth = isset($xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["REQUIREAUTH"]) ? $xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["REQUIREAUTH"] : 'N';
-        $this->m_RequireAuth = strtoupper($this->m_RequireAuth);
-        $this->m_PublicMethods = new MetaIterator($xmlArr["PLUGINSERVICE"]["PUBLICMETHOD"],"PublicMethod",$this);
+        $this->requireAuth = isset($xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["REQUIREAUTH"]) ? $xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["REQUIREAUTH"] : 'N';
+        $this->requireAuth = strtoupper($this->requireAuth);
+        $this->publicMethods = new MetaIterator($xmlArr["PLUGINSERVICE"]["PUBLICMETHOD"],"PublicMethod",$this);
         $this->messageFile = isset($xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["MESSAGEFILE"]) ? $xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["MESSAGEFILE"] : null;
         $this->objectMessages = Resource::loadMessage($this->messageFile);
     }
@@ -51,7 +51,7 @@ class WebsvcService
         $secret = $this->getInput('secret');
         $format = $this->getInput('format');
         
-        if($this->m_RequireAuth=='Y'){
+        if($this->requireAuth=='Y'){
 	        if ($this->authenticate($username, $api_key, $secret) == false) {
 	            $this->output(null, $format);
 	            return;
@@ -106,7 +106,7 @@ class WebsvcService
     
     protected function authenticate($username, $api_key, $secret=null)
     {
-        $websvcDO = BizSystem::getObject($this->m_WebsvcDO);
+        $websvcDO = BizSystem::getObject($this->websvcDO);
         $searchRule = "[username]='$username' AND [api_key]='$api_key'";
         if ($secret)
             $searchRule .= " AND [secret]='$secret'";
@@ -127,7 +127,7 @@ class WebsvcService
     {
         // check if the method is defined in public methods
         $validMethod = false;
-        foreach ($this->m_PublicMethods as $pmethod)
+        foreach ($this->publicMethods as $pmethod)
         {
             if (strtolower($method) == strtolower($pmethod->objectName)) {
                 $validMethod = true;

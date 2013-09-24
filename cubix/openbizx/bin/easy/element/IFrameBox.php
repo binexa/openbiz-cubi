@@ -5,15 +5,15 @@ class IFrameBox extends Element
 {
 	
     public $link;
-    public $m_Label;
-    public $m_Scrolling;
+    public $label;
+    public $scrolling;
     
     protected function readMetaData(&$xmlArr)
     {
         parent::readMetaData($xmlArr);
         $this->link = isset($xmlArr["ATTRIBUTES"]["LINK"]) ? $xmlArr["ATTRIBUTES"]["LINK"] : null;
-        $this->m_Label = isset($xmlArr["ATTRIBUTES"]["LABEL"]) ? $xmlArr["ATTRIBUTES"]["LABEL"] : null;    
-        $this->m_Scrolling = isset($xmlArr["ATTRIBUTES"]["SCROLLING"]) ? $xmlArr["ATTRIBUTES"]["SCROLLING"] : 'auto';
+        $this->label = isset($xmlArr["ATTRIBUTES"]["LABEL"]) ? $xmlArr["ATTRIBUTES"]["LABEL"] : null;    
+        $this->scrolling = isset($xmlArr["ATTRIBUTES"]["SCROLLING"]) ? $xmlArr["ATTRIBUTES"]["SCROLLING"] : 'auto';
     }    
     protected function getLink()
     {
@@ -39,14 +39,14 @@ class IFrameBox extends Element
     
     public function renderLabel()
     {
-        return $this->m_Label;
+        return $this->label;
     }    	
 	public function render(){	
 		$link = $this->getLink();
 		$text = $this->getText();	
 		$height = $this->getHeight();
 		$width = $this->getWidth();
-		$sHTML = "<iframe  src=\"$link\" width=\"$width\" height=\"$height\" frameborder=\"0\" scrolling=\"".$this->m_Scrolling."\" >
+		$sHTML = "<iframe  src=\"$link\" width=\"$width\" height=\"$height\" frameborder=\"0\" scrolling=\"".$this->scrolling."\" >
 					<p>$text</p></iframe>";        
         return $sHTML;
 		

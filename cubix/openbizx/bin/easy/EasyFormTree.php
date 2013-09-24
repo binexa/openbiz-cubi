@@ -25,16 +25,16 @@
  */
 class EasyFormTree extends EasyForm
 {
-	public $m_TitleField;
-	public $m_RootSearchRule;
-    public $m_TreeDepth;
+	public $titleField;
+	public $rootSearchRule;
+    public $treeDepth;
     
 	protected function readMetadata(&$xmlArr)
     {
         parent::readMetaData($xmlArr);
-        $this->m_TitleField = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["TITLEFIELD"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["TITLEFIELD"] : "title";
-        $this->m_RootSearchRule = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["ROOTSEARCHRULE"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["ROOTSEARCHRULE"] : null;
-        $this->m_TreeDepth = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["TREEDEPTH"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["TREEDEPTH"] : 10;
+        $this->titleField = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["TITLEFIELD"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["TITLEFIELD"] : "title";
+        $this->rootSearchRule = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["ROOTSEARCHRULE"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["ROOTSEARCHRULE"] : null;
+        $this->treeDepth = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["TREEDEPTH"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["TREEDEPTH"] : 10;
     }
     
    public function fetchDataSet()
@@ -50,36 +50,36 @@ class EasyFormTree extends EasyForm
         else
             $dataObj->clearSearchRule();
 
-        if ($this->m_FixSearchRule)
+        if ($this->fixSearchRule)
         {
             if ($this->searchRule)
-                $searchRule = $this->searchRule . " AND " . $this->m_FixSearchRule;
+                $searchRule = $this->searchRule . " AND " . $this->fixSearchRule;
             else
-                $searchRule = $this->m_FixSearchRule;
+                $searchRule = $this->fixSearchRule;
         }
         else
             $searchRule = $this->searchRule;
 
         $dataObj->setSearchRule($searchRule);
-        if($this->m_StartItem>1)
+        if($this->startItem>1)
         {
-            $dataObj->setLimit($this->m_Range, $this->m_StartItem);
+            $dataObj->setLimit($this->range, $this->startItem);
         }
         else
         {
-            $dataObj->setLimit($this->m_Range, ($this->currentPage-1)*$this->m_Range);
+            $dataObj->setLimit($this->range, ($this->currentPage-1)*$this->range);
         }
         //$resultRecords = $dataObj->fetch();
         
-        $resultRecordTree = $dataObj->fetchTree($this->m_RootSearchRule,$this->m_TreeDepth);
+        $resultRecordTree = $dataObj->fetchTree($this->rootSearchRule,$this->treeDepth);
         if(is_array($resultRecordTree)){
 	        foreach ($resultRecordTree as $resultRecordTreeNode){
 	        	$this->tree2array($resultRecordTreeNode, $resultRecords);
 	        }
         }
         $this->totalRecords = $dataObj->count();
-        if ($this->m_Range && $this->m_Range > 0)
-            $this->totalPages = ceil($this->totalRecords/$this->m_Range);
+        if ($this->range && $this->range > 0)
+            $this->totalPages = ceil($this->totalRecords/$this->range);
         $selectedIndex = 0;
         $this->getDataObj()->setActiveRecord($resultRecords[$selectedIndex]);
 
@@ -101,7 +101,7 @@ class EasyFormTree extends EasyForm
     	foreach ($tree->record as $key=>$value){
     		$treeNodeArray[$key] = $value;    		
     	}
-    	$treeNodeArray[$this->m_TitleField] = "+ ".str_repeat("- - - -", $level)." ".$treeNodeArray[$this->m_TitleField];
+    	$treeNodeArray[$this->titleField] = "+ ".str_repeat("- - - -", $level)." ".$treeNodeArray[$this->titleField];
     	
     	array_push($array, $treeNodeArray);
     	$level++;   

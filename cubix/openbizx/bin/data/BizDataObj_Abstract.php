@@ -245,7 +245,7 @@ abstract class BizDataObj_Abstract extends MetaObject implements iSessionObject
         $this->parameters = new MetaIterator($xmlArr["BIZDATAOBJ"]["PARAMETERS"]["PARAMETER"],"Parameter");
 
         $this->messageFile = isset($xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["MESSAGEFILE"]) ? $xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["MESSAGEFILE"] : null;
-        $this->objectMessages = Resource::loadMessage($this->messageFile , $this->m_Package);
+        $this->objectMessages = Resource::loadMessage($this->messageFile , $this->package);
 		
 		$this->eventManagerName = isset($xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["EVENTMANAGER"]) ? $xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["EVENTMANAGER"] : null;
         
@@ -516,7 +516,7 @@ abstract class BizDataObj_Abstract extends MetaObject implements iSessionObject
     {
         $ret = parent::getProperty($propertyName);
         if ($ret) return $ret;
-        if ($propertyName == "Table") return $this->m_Table;
+        if ($propertyName == "Table") return $this->table;
         if ($propertyName == "SearchRule") return $this->searchRule;
         // get control object if propertyName is "Field[fldname]"
         $pos1 = strpos($propertyName, "[");
@@ -586,21 +586,21 @@ abstract class BizDataObj_Abstract extends MetaObject implements iSessionObject
     protected function setAssociation($objRef, $asscObj)
     {
         $this->association["AsscObjName"] = $asscObj->objectName;
-        $this->association["Relationship"] = $objRef->m_Relationship;
-        $this->association["Table"] = $objRef->m_Table;
+        $this->association["Relationship"] = $objRef->relationship;
+        $this->association["Table"] = $objRef->table;
         $this->association["Column"] = $objRef->column;
-        $this->association["FieldRef"] = $objRef->m_FieldRef;
-        $this->association["FieldRefVal"] = $asscObj->getFieldValue($objRef->m_FieldRef);
+        $this->association["FieldRef"] = $objRef->fieldRef;
+        $this->association["FieldRefVal"] = $asscObj->getFieldValue($objRef->fieldRef);
         $this->association["CondColumn"] = $objRef->condColumn;
         $this->association["CondValue"] = $objRef->condValue;
         $this->association["Condition"] = $objRef->condition;        
-        if ($objRef->m_Relationship == "M-M" || $objRef->m_Relationship  == "Self-Self")
+        if ($objRef->relationship == "M-M" || $objRef->relationship  == "Self-Self")
         {
-            $this->association["XTable"] = $objRef->m_XTable;
-            $this->association["XColumn1"] = $objRef->m_XColumn1;
-            $this->association["XColumn2"] = $objRef->m_XColumn2;
-            $this->association["XKeyColumn"] = $objRef->m_XKeyColumn;
-            $this->association["XDataObj"] = $objRef->m_XDataObj;
+            $this->association["XTable"] = $objRef->xTable;
+            $this->association["XColumn1"] = $objRef->xColumn1;
+            $this->association["XColumn2"] = $objRef->xColumn2;
+            $this->association["XKeyColumn"] = $objRef->xKeyColumn;
+            $this->association["XDataObj"] = $objRef->xDataObj;
         }
     }
 

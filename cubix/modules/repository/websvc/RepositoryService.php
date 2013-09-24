@@ -18,17 +18,17 @@ class RepositoryService extends WebsvcService
 	protected $categoryTransDO 	= "repository.category.do.CategoryTranslateDO";
 	protected $applicationDO 		= "repository.application.do.ApplicationDO";
 	protected $applicationTransDO = "repository.application.do.ApplicationTranslateDO";	
-	protected $m_ReleaseDO 			= "repository.release.do.ReleaseDO";
-	protected $m_InstallLogDO 		= "repository.install.do.InstallLogDO";
-	protected $m_PictureDO	 		= "picture.do.PictureDO";
-	protected $m_RepositorySettingDO= "myaccount.do.PreferenceDO";
-	protected $m_RepositorySettingTransDO= "repository.setting.do.SettingTranslateDO";
+	protected $releaseDO 			= "repository.release.do.ReleaseDO";
+	protected $installLogDO 		= "repository.install.do.InstallLogDO";
+	protected $pictureDO	 		= "picture.do.PictureDO";
+	protected $repositorySettingDO= "myaccount.do.PreferenceDO";
+	protected $repositorySettingTransDO= "repository.setting.do.SettingTranslateDO";
 	protected $applicationVersionDO 		= "repository.application.do.ApplicationVersionDO";
 	
     public function fetchRepoInfo()
     {
     	$searchRule = "[user_id]='0' AND [name] LIKE 'repo_%'";   
-    	$dataObj = BizSystem::getObject($this->m_RepositorySettingDO);    	
+    	$dataObj = BizSystem::getObject($this->repositorySettingDO);    	
         $resultRecords = $dataObj->directfetch($searchRule);
         $prefRecord = array();
         foreach($resultRecords as $record){
@@ -37,7 +37,7 @@ class RepositoryService extends WebsvcService
         //try to translate cats        
        	$lang = $_REQUEST['lang'];
        	if($lang){
-       		$settingTransDO = BizSystem::getObject($this->m_RepositorySettingTransDO,1);
+       		$settingTransDO = BizSystem::getObject($this->repositorySettingTransDO,1);
        		$transFields = array('repo_name','repo_desc');
 	    	 
        		$recordId = $record['Id'];
@@ -62,7 +62,7 @@ class RepositoryService extends WebsvcService
     	$logRec['remote_ip'] 	= $remote_ip;
     	$logRec['remote_siteurl'] = $siteurl;
     	$logRec['remote_operator'] = $operator;
-    	$dataObj = BizSystem::getObject($this->m_InstallLogDO);
+    	$dataObj = BizSystem::getObject($this->installLogDO);
     	$dataObj->insertRecord($logRec);
     	return true;
     }
@@ -117,7 +117,7 @@ class RepositoryService extends WebsvcService
     public function fetchAppPics($id=null)
     {
     	$searchRule = "[type]='application' AND [foreign_id]='$id'";   	    	
-    	$dataObj = BizSystem::getObject($this->m_PictureDO,1);  
+    	$dataObj = BizSystem::getObject($this->pictureDO,1);  
     	$resultRecords = $dataObj->directfetch($searchRule);  
         $resultSet = array();
        	foreach($resultRecords as $record)
@@ -131,7 +131,7 @@ class RepositoryService extends WebsvcService
     {
     	$searchRule = "[app_id]='$id'"; 
     	$sortRule = "[Id] DESC";  	    	
-    	$dataObj = BizSystem::getObject($this->m_ReleaseDO,1);  
+    	$dataObj = BizSystem::getObject($this->releaseDO,1);  
     	$results = $dataObj->directfetch($searchRule,null,null,$sortRule);  
     	if($results)
         {

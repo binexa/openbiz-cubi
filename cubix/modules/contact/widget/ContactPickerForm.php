@@ -39,7 +39,7 @@ class ContactPickerForm extends PickerForm
         }
         catch (ValidationException $e)
         {        	
-            $this->processFormObjError($e->m_Errors);
+            $this->processFormObjError($e->errors);
             return;
         }
 
@@ -48,13 +48,13 @@ class ContactPickerForm extends PickerForm
         $selIds[] = $recId;
         
         // if no parent elem or picker map, call AddToParent
-        if (!$this->m_ParentFormElemName)
+        if (!$this->parentFormElemName)
         {
             $this->addToParent($selIds);
         }                
 
         // if has parent elem and picker map, call JoinToParent
-        if ($this->m_ParentFormElemName && $this->m_PickerMap)
+        if ($this->parentFormElemName && $this->pickerMap)
         {
             $this->joinToParent($selIds);
         }

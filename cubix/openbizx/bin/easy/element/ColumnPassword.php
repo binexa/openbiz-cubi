@@ -27,10 +27,10 @@
  */
 class ColumnPassword extends ColumnText
 {
-    public $m_Sortable;
+    public $sortable;
     public $columnStyle;
-    public $m_MaskChar='*';
-    public $m_MaskLength=6;
+    public $maskChar='*';
+    public $maskLength=6;
     
     /**
      * Read array meta data, and store to meta object
@@ -41,8 +41,8 @@ class ColumnPassword extends ColumnText
     protected function readMetaData(&$xmlArr)
     {
         parent::readMetaData($xmlArr);
-        $this->m_MaskChar = isset($xmlArr["ATTRIBUTES"]["MASKCHAR"]) ? $xmlArr["ATTRIBUTES"]["MASKCHAR"] : null;
-        $this->m_MaskLength = isset($xmlArr["ATTRIBUTES"]["MASKLENGTH"]) ? $xmlArr["ATTRIBUTES"]["MASKLENGTH"] : null;
+        $this->maskChar = isset($xmlArr["ATTRIBUTES"]["MASKCHAR"]) ? $xmlArr["ATTRIBUTES"]["MASKCHAR"] : null;
+        $this->maskLength = isset($xmlArr["ATTRIBUTES"]["MASKLENGTH"]) ? $xmlArr["ATTRIBUTES"]["MASKLENGTH"] : null;
     }
 
     /**
@@ -52,7 +52,7 @@ class ColumnPassword extends ColumnText
      */
     public function render()
     {
-        $sHTML = "<span $style $func> ".str_repeat($this->m_MaskChar, $this->m_MaskLength)." </span>";
+        $sHTML = "<span $style $func> ".str_repeat($this->maskChar, $this->maskLength)." </span>";
         return $sHTML;
     }
 

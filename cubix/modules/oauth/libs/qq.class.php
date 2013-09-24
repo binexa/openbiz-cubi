@@ -6,13 +6,13 @@ include_once( 'qq/txwboauth.php' );
 class qq extends oauthClass{
 	protected $type='qq';
 	protected $m_loginUrl;
-	private $m_akey;
+	private $akey;
 	private $m_skey;
 		
 	public function __construct() {
 		parent::__construct();
 		$recArr=$this->getProviderList();
-		$this->m_akey = $recArr['key'];
+		$this->akey = $recArr['key'];
 		$this->m_skey =$recArr['value'];
 	}
 	
@@ -32,12 +32,12 @@ class qq extends oauthClass{
 		$this->check($userInfo);
 	}
 	function getUrl($call_back){
-		if ( empty($this->m_akey) || empty($this->m_skey) )
+		if ( empty($this->akey) || empty($this->m_skey) )
 		{
 			throw new Exception('Unknown qq_akey');
 			return false;
 		}
-		$o = new QqWeiboOAuth( $this->m_akey ,$this->m_skey  );
+		$o = new QqWeiboOAuth( $this->akey ,$this->m_skey  );
 		
 		$keys = $o->getRequestToken($call_back);
 
@@ -76,7 +76,7 @@ class qq extends oauthClass{
 		$tokens=Bizsystem::getSessionContext()->getVar('qq_access_token');
 		$oauth_token = ( $opt['oauth_token'] )? $opt['oauth_token']:$tokens['oauth_token'];
         $oauth_token_secret = ( $opt['oauth_token_secret'] )? $opt['oauth_token_secret']:$tokens['oauth_token_secret'];
-		return new QqWeiboClient( $this->m_akey ,$this->m_skey ,  $oauth_token, $oauth_token_secret  );
+		return new QqWeiboClient( $this->akey ,$this->m_skey ,  $oauth_token, $oauth_token_secret  );
 	}
 
 	function user($opt)
@@ -87,7 +87,7 @@ class qq extends oauthClass{
 	//验证用户
 	function checkUser($oauth_token,$oauth_token_secret){
 		
-        $o = new QqWeiboOAuth($this->m_akey ,$this->m_skey  ,$oauth_token ,$oauth_token_secret );
+        $o = new QqWeiboOAuth($this->akey ,$this->m_skey  ,$oauth_token ,$oauth_token_secret );
         $access_token = $o->getAccessToken(  $_REQUEST['oauth_verifier'] ) ;
 		//$_SESSION['qq']['access_token'] = $access_token;
 		Bizsystem::getSessionContext()->setVar('qq_access_token',$access_token);

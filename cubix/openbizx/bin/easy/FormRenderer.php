@@ -38,7 +38,7 @@ class FormRenderer
         $tplAttributes = FormRenderer::buildTemplateAttributes($formObj); 
         if (isset($formObj->m_jsClass)) {
             $subForms = ($formObj->subForms) ? implode(";", $formObj->subForms) : "";
-            if ($formObj->m_StaticOutput != true) {
+            if ($formObj->staticOutput != true) {
                 $formScript = "\n<script>Openbiz.newFormObject('$formObj->objectName','$formObj->m_jsClass','$subForms'); </script>\n";
             }
             if ($formObj->autoRefresh > 0) {
@@ -64,9 +64,9 @@ class FormRenderer
         // Fill with default viewobj attributes
         $tplAttributes = array();
 
-        $tplAttributes['title'] = $formObj->m_Title;
-        $tplAttributes['errors'] = $formObj->m_Errors;
-        $tplAttributes['notices'] = $formObj->m_Notices;
+        $tplAttributes['title'] = $formObj->title;
+        $tplAttributes['errors'] = $formObj->errors;
+        $tplAttributes['notices'] = $formObj->notices;
         $tplAttributes['formname'] = $formObj->objectName;
         $tplAttributes['module'] = $formObj->getModuleName($formObj->objectName);
         
@@ -82,11 +82,11 @@ class FormRenderer
         if (isset($formObj->searchPanel)) {
             $search_record = $formObj->searchPanelValues;
             foreach ($formObj->searchPanel as $elem) {
-                if (! $elem->m_FieldName)
+                if (! $elem->fieldName)
                     continue;
                 $post_value = BizSystem::clientProxy()->getFormInputs($elem->objectName);
                 if ($post_value) {
-                    $search_record[$elem->m_FieldName] = $post_value;
+                    $search_record[$elem->fieldName] = $post_value;
                 }
             }
             $tplAttributes['searchPanel'] = $formObj->searchPanel->renderRecord($search_record);
@@ -95,9 +95,9 @@ class FormRenderer
         }
         $tplAttributes['actionPanel'] = $formObj->actionPanel->render();
         $tplAttributes['navPanel'] = $formObj->navPanel->render();
-        if($formObj->m_WizardPanel)
+        if($formObj->wizardPanel)
         {
-        	$tplAttributes['wizardPanel'] = $formObj->m_WizardPanel->render();
+        	$tplAttributes['wizardPanel'] = $formObj->wizardPanel->render();
         }
                 
         $tplAttributes['form'] = $formObj->outputAttrs();   
@@ -115,7 +115,7 @@ class FormRenderer
     static protected function renderSmarty ($formObj, $tplAttributes = Array())
     {
         $smarty = BizSystem::getSmartyTemplate();
-        $tplFile = BizSystem::getTplFileWithPath($formObj->templateFile, $formObj->m_Package);
+        $tplFile = BizSystem::getTplFileWithPath($formObj->templateFile, $formObj->package);
                 
         //Translate Array of template variables to Zend template object
         foreach ($tplAttributes as $key => $value) {
@@ -135,7 +135,7 @@ class FormRenderer
     static protected function renderPHP ($formObj, $tplAttributes = Array())
     {
         $form = BizSystem::getZendTemplate();
-        $tplFile = BizSystem::getTplFileWithPath($formObj->templateFile, $formObj->m_Package);
+        $tplFile = BizSystem::getTplFileWithPath($formObj->templateFile, $formObj->package);
         $form->addScriptPath(dirname($tplFile));
         
         /*$formOutput = $formObj->outputAttrs();

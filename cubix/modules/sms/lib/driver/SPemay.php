@@ -5,9 +5,9 @@ require_once dirname(dirname(__FILE__)).'/dll/emay/include/EmayClient.php';
 
 class SPemay extends SPDriver implements iSMS 
 {
-	protected $m_ProviderId = 3;
-	protected $m_type = 'emay';
-	protected $m_WebsvcURL	=	'http://sdkhttp.eucp.b2m.cn/sdk/SDKService?wsdl';
+	protected $providerId = 3;
+	protected $type = 'emay';
+	protected $websvcURL	=	'http://sdkhttp.eucp.b2m.cn/sdk/SDKService?wsdl';
 	protected $clientObj;
 	
 	
@@ -34,7 +34,7 @@ class SPemay extends SPDriver implements iSMS
 		$proxyusername = false;
 		$proxypassword = false; 
 		
-		$client = new EmayClient($this->m_WebsvcURL,$serialNumber,$password,$sessionKey,
+		$client = new EmayClient($this->websvcURL,$serialNumber,$password,$sessionKey,
 							$proxyhost,$proxyport,$proxyusername,$proxypassword,$connectTimeOut,$readTimeOut);
 		$client->setOutgoingEncoding("UTF-8");
 		$this->clientObj = $client;

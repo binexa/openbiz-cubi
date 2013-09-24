@@ -6,8 +6,8 @@ require_once dirname(dirname(__FILE__)).'/dll/c8686/BayouSmsSender.php';
 
 class SPc8686 extends SPDriver implements iSMS 
 {
-	protected $m_ProviderId = 4;
-	protected $m_type = 'c8686';
+	protected $providerId = 4;
+	protected $type = 'c8686';
 
 		
 	public function activeService()

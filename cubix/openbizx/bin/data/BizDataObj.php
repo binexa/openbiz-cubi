@@ -632,22 +632,22 @@ class BizDataObj extends BizDataObj_Lite
     // $action: Delete, Update
     protected function processCascadeAction($objRef, $cascadeType)
     {
-        if (($cascadeType=='Delete' && $objRef->m_OnDelete)
-            || ($cascadeType=='Update' && $objRef->m_OnUpdate))
+        if (($cascadeType=='Delete' && $objRef->onDelete)
+            || ($cascadeType=='Update' && $objRef->onUpdate))
         {
-            if ($objRef->m_Relationship == "1-M" || $objRef->m_Relationship == "1-1") {
-                $table = $objRef->m_Table;
+            if ($objRef->relationship == "1-M" || $objRef->relationship == "1-1") {
+                $table = $objRef->table;
                 $column = $objRef->column;
                 $column2 = $objRef->column2;
             }
-            else if ($objRef->m_Relationship == "M-M" || $objRef->m_Relationship == "Self-Self") {
-                $table = $objRef->m_XTable;
-                $column = $objRef->m_XColumn1;
+            else if ($objRef->relationship == "M-M" || $objRef->relationship == "Self-Self") {
+                $table = $objRef->xTable;
+                $column = $objRef->xColumn1;
             }
-            $refField = $this->getField($objRef->m_FieldRef);
-            $fieldVal = $this->getFieldValue($objRef->m_FieldRef);
+            $refField = $this->getField($objRef->fieldRef);
+            $fieldVal = $this->getFieldValue($objRef->fieldRef);
             
-            $fieldVal2 = $this->getFieldValue($objRef->m_FieldRef2);
+            $fieldVal2 = $this->getFieldValue($objRef->fieldRef2);
             if (!$fieldVal) return;      
             if($column2){     
             	if (!$fieldVal2) return;
@@ -656,19 +656,19 @@ class BizDataObj extends BizDataObj_Lite
             $db = $this->getDBConnection("WRITE");
             // get the cascade action sql
             if ($cascadeType=='Delete') {
-                if ($objRef->m_OnDelete == "Cascade") {
+                if ($objRef->onDelete == "Cascade") {
                     $sql = "DELETE FROM ".$table." WHERE ".$column."='".$fieldVal."'";
                     if($column2 && $fieldVal2){
                     	$sql .= " AND ".$column2."='".$fieldVal2."'"; 	
                     }
                 }
-                else if ($objRef->m_OnDelete == "SetNull") {
+                else if ($objRef->onDelete == "SetNull") {
                     $sql = "UPDATE ".$table." SET $column=null WHERE ".$column."='".$fieldVal."'";
                 	if($column2 && $fieldVal2){
                     	$sql .= " AND ".$column2."='".$fieldVal2."'"; 	
                     }
                 }
-                else if ($objRef->m_OnDelete == "Restrict") {
+                else if ($objRef->onDelete == "Restrict") {
                     // check if objRef has records
                     $refObj = $this->getRefObject($objRef->objectName);  
                 	$sql = "`$column`='".$refField->value."'";
@@ -685,22 +685,22 @@ class BizDataObj extends BizDataObj_Lite
                 // check if the column value is actually changed
                 if ($refField->oldValue == $refField->value) return;
                 
-                if ($objRef->m_OnUpdate == "Cascade") {
+                if ($objRef->onUpdate == "Cascade") {
                     $sql = "UPDATE ".$table." SET $column='".$refField->value."' WHERE ".$column."='".$refField->oldValue."'";
                	 	if($column2 && $fieldVal2){
                     	$sql .= " AND ".$column2."='".$fieldVal2."'"; 	
                     }
                 }
-                else if ($objRef->m_OnUpdate == "SetNull") {
+                else if ($objRef->onUpdate == "SetNull") {
                     $sql = "UPDATE ".$table." SET $column=null WHERE ".$column."='".$refField->oldValue."'";
                 	if($column2 && $fieldVal2){
                     	$sql .= " AND ".$column2."='".$fieldVal2."'"; 	
                     }
                 }
-                else if ($objRef->m_OnUpdate == "Restrict") {
+                else if ($objRef->onUpdate == "Restrict") {
                     // check if objRef has records
                     $refObj = BizSystem::getObject($objRef->objectName);
-					$sql = "[".$objRef->m_FieldRef."]='".$refField->oldValue."'";
+					$sql = "[".$objRef->fieldRef."]='".$refField->oldValue."'";
                     if($column2 && $fieldVal2){
                     	$sql .= " AND ".$column2."='".$fieldVal2."'"; 	
                     }
@@ -796,7 +796,7 @@ class BizDataObj extends BizDataObj_Lite
         // find the proper join according to the maintable
         foreach ($this->tableJoins as $tableJoin)
         {
-            if ($tableJoin->m_Table == $joinTable)
+            if ($tableJoin->table == $joinTable)
             {
                 // populate the column-fieldvalue to columnRef-fieldvalue
                 // get the field mapping to the column, then get the field value
@@ -841,7 +841,7 @@ class BizDataObj extends BizDataObj_Lite
         foreach ($this->tableJoins as $tableJoin)
         {
             if (($joinName == $tableJoin->objectName || $joinName == "")
-                    && $tableJoin->m_Table == $joinTable)
+                    && $tableJoin->table == $joinTable)
             {
                 // populate the column-fieldvalue to columnRef-fieldvalue
                 // get the field mapping to the column, then get the field value

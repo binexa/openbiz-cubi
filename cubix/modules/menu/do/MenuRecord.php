@@ -29,16 +29,16 @@ class MenuRecord
 {
  	public $recordId;
  	public $recordParentId; 
- 	public $m_Key;  
+ 	public $key;  
     public $objectName;
-    public $m_Module;
+    public $module;
     public $objectDescription;
-    public $m_URL;
-    public $m_URL_Match;
-	public $m_Target;
+    public $url;
+    public $url_Match;
+	public $target;
 	public $cssClass;
-	public $m_IconImage;
-	public $m_IconCSSClass;
+	public $iconImage;
+	public $iconCSSClass;
     public $access;
 	public $current = 0;
 	public $childNodes = null;
@@ -54,21 +54,21 @@ class MenuRecord
         $this->recordId = $rec['Id'];
         $this->recordParentId = $rec['PId'];
         $this->objectName = $rec['title'];
-        $this->m_Module = $rec['module'];
+        $this->module = $rec['module'];
         $this->objectDescription = $rec['description'];
-        $this->m_URL = $rec['link'];
-        if (strpos($this->m_URL,'{')===0)
-        	$this->m_URL = Expression::evaluateExpression($this->m_URL, $this);
-        else if (!empty($this->m_URL)) {
-        	if (strpos($this->m_URL,'/')===0)
-        		$this->m_URL = OPENBIZ_APP_INDEX_URL.$this->m_URL;
+        $this->url = $rec['link'];
+        if (strpos($this->url,'{')===0)
+        	$this->url = Expression::evaluateExpression($this->url, $this);
+        else if (!empty($this->url)) {
+        	if (strpos($this->url,'/')===0)
+        		$this->url = OPENBIZ_APP_INDEX_URL.$this->url;
         	else
-        		$this->m_URL = OPENBIZ_APP_INDEX_URL.'/'.$this->m_URL;
+        		$this->url = OPENBIZ_APP_INDEX_URL.'/'.$this->url;
         }
-        $this->m_URL_Match = $rec['alias'];
+        $this->url_Match = $rec['alias'];
         //$this->cssClass = $rec['Id'];
-        $this->m_IconImage = $rec['icon'];
-        $this->m_IconCSSClass = $rec['icon_css'];
+        $this->iconImage = $rec['icon'];
+        $this->iconCSSClass = $rec['icon_css'];
         $this->access = $rec['access'];
         
         $this->translate();	// translate for multi-language support
@@ -85,7 +85,7 @@ class MenuRecord
     
     protected function translate()
     {
-    	$module = $this->m_Module;
+    	$module = $this->module;
     	if (!empty($this->objectName))
     		$this->objectName = I18n::t($this->objectName, $this->getTransKey('Title'), $module);
     	if (!empty($this->objectDescription))

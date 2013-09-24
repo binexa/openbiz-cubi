@@ -31,13 +31,13 @@ class ImageSelector extends OptionElement
         $func = $this->getFunction();
 		
         $formobj = $this->GetFormObj();
-        if($formobj->m_Errors[$this->objectName]){
+        if($formobj->errors[$this->objectName]){
 			$func .= "onclick=\"this.className='$this->cssClass'\"";
 		}else{
 			$func .= "onmouseover=\"this.className='$this->m_cssFocusClass'\" onmouseout=\"this.className='$this->cssClass'\"";
 		} 
 		
-        $sHTML = "<input type=\"hidden\" NAME=\"" . $this->objectName . "\" ID=\"" . $this->objectName ."\" value=\"".$value."\" $disabledStr $this->m_HTMLAttr />";
+        $sHTML = "<input type=\"hidden\" NAME=\"" . $this->objectName . "\" ID=\"" . $this->objectName ."\" value=\"".$value."\" $disabledStr $this->htmlAttr />";
 		$sHTML .= "<ul id=\"image_list_" . $this->objectName ."\" $style $func >";
         if ($this->blankOption) // ADD a blank option
         {

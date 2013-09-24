@@ -47,8 +47,8 @@ class DisplayNameBox extends Listbox
         $style = $this->getStyle();
         $func = $this->getFunction();
 
-        //$sHTML = "<SELECT NAME=\"" . $this->objectName . "[]\" ID=\"" . $this->objectName ."\" $disabledStr $this->m_HTMLAttr $style $func>";
-        $sHTML = "<SELECT NAME=\"" . $this->objectName . "\" ID=\"" . $this->objectName ."\" $disabledStr $this->m_HTMLAttr $style $func>";
+        //$sHTML = "<SELECT NAME=\"" . $this->objectName . "[]\" ID=\"" . $this->objectName ."\" $disabledStr $this->htmlAttr $style $func>";
+        $sHTML = "<SELECT NAME=\"" . $this->objectName . "\" ID=\"" . $this->objectName ."\" $disabledStr $this->htmlAttr $style $func>";
 
         if ($this->blankOption) // ADD a blank option
         {

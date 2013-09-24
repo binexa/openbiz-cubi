@@ -40,7 +40,7 @@ class RowCheckbox extends InputElement
      */
     public function renderLabel()
     {
-        $formName = $this->m_FormName;
+        $formName = $this->formName;
         $name = $this->objectName.'[]';        
         $sHTML = "<INPUT TYPE=\"CHECKBOX\"  onclick=\"Openbiz.Util.checkAll(this, $('$formName').select('input[name=\'$name\']'));\"/>";
         return $sHTML;
@@ -73,7 +73,7 @@ class RowCheckbox extends InputElement
         {
         	$checkStatus = "";
         }
-        $sHTML = "<INPUT TYPE=\"CHECKBOX\" $checkStatus NAME=\"$name\" VALUE='$value' onclick=\"event.cancelBubble=true;\" $this->m_HTMLAttr $style/>";
+        $sHTML = "<INPUT TYPE=\"CHECKBOX\" $checkStatus NAME=\"$name\" VALUE='$value' onclick=\"event.cancelBubble=true;\" $this->htmlAttr $style/>";
         return $sHTML;
     }
 }

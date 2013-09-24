@@ -53,10 +53,10 @@ class ModuleForm extends EasyForm
             $loader = new ModuleLoader($mod);
             $loader->debug = false;
             if (!$loader->loadModule()) {
-            	$this->m_Errors[] = nl2br($this->GetMessage("MODULE_LOAD_ERROR",$mod)."\n".$loader->errors."\n".$loader->logs);
+            	$this->errors[] = nl2br($this->GetMessage("MODULE_LOAD_ERROR",$mod)."\n".$loader->errors."\n".$loader->logs);
             }
             else {
-            	$this->m_Notices[] = $this->GetMessage("MODULE_LOAD_COMPLETE",$mod);	//." ".$loader->logs;
+            	$this->notices[] = $this->GetMessage("MODULE_LOAD_COMPLETE",$mod);	//." ".$loader->logs;
             }
         }
         $this->rerender();
@@ -72,10 +72,10 @@ class ModuleForm extends EasyForm
         $loader = new ModuleLoader($module);
         $loader->debug = false;
     	if (!$loader->loadModule()) {
-            $this->m_Errors[] = nl2br($this->GetMessage("MODULE_LOAD_ERROR")."\n".$loader->errors."\n".$loader->logs);
+            $this->errors[] = nl2br($this->GetMessage("MODULE_LOAD_ERROR")."\n".$loader->errors."\n".$loader->logs);
         }
         else {
-            $this->m_Notices[] = $this->GetMessage("MODULE_LOAD_COMPLETE",$module);	//." ".$loader->logs;
+            $this->notices[] = $this->GetMessage("MODULE_LOAD_COMPLETE",$module);	//." ".$loader->logs;
         }
 		
         $roles = BizSystem::getUserProfile("roles");

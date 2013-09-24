@@ -28,7 +28,7 @@ class RecordFuzzySearchList extends AutoSuggest
         $value = addslashes($value); //escape sql strings
 
         if ($value != '') {
-            $searchStr = " [$this->m_FieldName] LIKE '%$value%' ";
+            $searchStr = " [$this->fieldName] LIKE '%$value%' ";
         } else {
             return "";
         }

@@ -20,7 +20,7 @@ class DashboardView extends EasyView
     {
         parent::readMetaData($xmlArr);
 		$formRefXML = $this->getFormReferences();		
-        $this->m_FormRefs = new MetaIterator($formRefXML,"FormReference",$this);
+        $this->formRefs = new MetaIterator($formRefXML,"FormReference",$this);
 	}
 	
 	protected function getFormReferences()

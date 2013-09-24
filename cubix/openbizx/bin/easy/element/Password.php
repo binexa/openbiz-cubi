@@ -43,17 +43,17 @@ class Password extends InputElement
         $style = $this->getStyle();
         $formobj = $this->GetFormObj();
 		if (OPENBIZ_CLIENT_DEVICE != 'mobile') { 
-			if($formobj->m_Errors[$this->objectName]){
+			if($formobj->errors[$this->objectName]){
 				$func .= "onchange=\"this.className='$this->cssClass'\"";
 			}else{
 				$func .= "onfocus=\"this.className='$this->m_cssFocusClass'\" onblur=\"this.className='$this->cssClass'\"";
 			} 
 		}
-        $sHTML = "<INPUT TYPE=\"PASSWORD\" NAME='$this->objectName' ID=\"" . $this->objectName ."\" VALUE='$this->value' $disabledStr $this->m_HTMLAttr $style $func />";
-    	if($this->m_Hint){
+        $sHTML = "<INPUT TYPE=\"PASSWORD\" NAME='$this->objectName' ID=\"" . $this->objectName ."\" VALUE='$this->value' $disabledStr $this->htmlAttr $style $func />";
+    	if($this->hint){
         	$sHTML.="<script>        	
         	\$j('#" . $this->objectName . "').tbHinter({
-				text: '".$this->m_Hint."'
+				text: '".$this->hint."'
 			});
         	</script>";
         }

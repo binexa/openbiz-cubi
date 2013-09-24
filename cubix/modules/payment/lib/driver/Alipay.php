@@ -6,7 +6,7 @@ require_once dirname(dirname(__FILE__))."/dll/alipay/lib/alipay_notify.class.php
 
 class Alipay extends PaymentAdapter
 {
-	protected $m_ProviderId = 2;
+	protected $providerId = 2;
 	protected $type = 'alipay';
 	
 	protected $aPIURL = 'https://mapi.alipay.com/gateway.do?';
@@ -18,8 +18,8 @@ class Alipay extends PaymentAdapter
 		$alipay_config['partner'] 		= $config['key'];
 		$alipay_config['key'] 			= $config['secret'];
 		$alipay_config['seller_email']	= $config['account'];
-		$alipay_config['return_url']   = $this->m_ReturnURL;
-		$alipay_config['notify_url']   = $this->m_NotifyURL;
+		$alipay_config['return_url']   = $this->returnURL;
+		$alipay_config['notify_url']   = $this->notifyURL;
 		$alipay_config['sign_type']    = 'MD5';
 		$alipay_config['input_charset']= 'utf-8';
 		$alipay_config['transport']    = 'http';
@@ -44,8 +44,8 @@ class Alipay extends PaymentAdapter
 				"partner"			=> trim($alipay_config['partner']),
 				"_input_charset"	=> trim(strtolower($alipay_config['input_charset'])),
 		        "seller_email"		=> trim($alipay_config['seller_email']),        
-		        "return_url"		=> trim($this->m_ReturnURL),
-		        "notify_url"		=> trim($this->m_NotifyURL),
+		        "return_url"		=> trim($this->returnURL),
+		        "notify_url"		=> trim($this->notifyURL),
 				
 				"out_trade_no"		=> $orderId,
 				"subject"			=> $title,

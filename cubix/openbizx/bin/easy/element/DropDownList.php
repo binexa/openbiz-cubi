@@ -27,12 +27,12 @@ include_once("InputElement.php");
 class DropDownList extends InputElement
 {
 	
-	public $m_ReadOnly;
+	public $readOnly;
 	public $defaultDisplayValue;
 	public $m_cssHoverClass;
-    public $m_SelectFrom;
-    public $m_SelectFromSQL;
-    public $m_SelectedList;	
+    public $selectFrom;
+    public $selectFromSQL;
+    public $selectedList;	
 	protected $_listCache;
 	
 	protected function readMetaData(&$xmlArr){
@@ -42,10 +42,10 @@ class DropDownList extends InputElement
 		$this->m_cssFocusClass = isset($xmlArr["ATTRIBUTES"]["CSSFOCUSCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSFOCUSCLASS"] : $this->cssClass."_focus";
 		$this->m_cssHoverClass = isset($xmlArr["ATTRIBUTES"]["CSSHOVERCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSHOVERCLASS"] : $this->cssClass."_hover";
 		//$this->value = isset($xmlArr["ATTRIBUTES"]["DEFAULTVALUE"]) ? $xmlArr["ATTRIBUTES"]["DEFAULTVALUE"] : null;        
-		$this->m_ReadOnly = isset($xmlArr["ATTRIBUTES"]["READONLY"]) ? $xmlArr["ATTRIBUTES"]["READONLY"] : "N";
-        $this->m_SelectFrom = isset($xmlArr["ATTRIBUTES"]["SELECTFROM"]) ? $xmlArr["ATTRIBUTES"]["SELECTFROM"] : null;
-        $this->m_SelectedList = isset($xmlArr["ATTRIBUTES"]["SELECTEDLIST"]) ? $xmlArr["ATTRIBUTES"]["SELECTEDLIST"] : null;
-        $this->m_SelectFromSQL = isset($xmlArr["ATTRIBUTES"]["SELECTFROMSQL"]) ? $xmlArr["ATTRIBUTES"]["SELECTFROMSQL"] : null;
+		$this->readOnly = isset($xmlArr["ATTRIBUTES"]["READONLY"]) ? $xmlArr["ATTRIBUTES"]["READONLY"] : "N";
+        $this->selectFrom = isset($xmlArr["ATTRIBUTES"]["SELECTFROM"]) ? $xmlArr["ATTRIBUTES"]["SELECTFROM"] : null;
+        $this->selectedList = isset($xmlArr["ATTRIBUTES"]["SELECTEDLIST"]) ? $xmlArr["ATTRIBUTES"]["SELECTEDLIST"] : null;
+        $this->selectFromSQL = isset($xmlArr["ATTRIBUTES"]["SELECTFROMSQL"]) ? $xmlArr["ATTRIBUTES"]["SELECTFROMSQL"] : null;
     	$this->blankOption = isset($xmlArr["ATTRIBUTES"]["BLANKOPTION"]) ? $xmlArr["ATTRIBUTES"]["BLANKOPTION"] : null;
 		$this->defaultValueRename = isset($xmlArr["ATTRIBUTES"]["DEFAULTVALUERENAME"]) ? $xmlArr["ATTRIBUTES"]["DEFAULTVALUERENAME"] : "N";  
 		$this->blankOption = $this->translateString($this->blankOption);
@@ -57,7 +57,7 @@ class DropDownList extends InputElement
      */
     public function render()
     {
-    	if($this->m_FormPrefix){
+    	if($this->formPrefix){
     		$formNameStr = str_replace(".","_", $this->getFormObj()->objectName)."_";
     	}        
     	if($this->value!=null){
@@ -81,7 +81,7 @@ class DropDownList extends InputElement
         $htmlClass = "CLASS='$htmlClass'";
         
         $sHTML .= "<div class=\"div_".$this->cssClass."\">";    	                
-        if($this->m_ReadOnly=='Y')
+        if($this->readOnly=='Y')
         {
 	        $display_input = "style=\"display:none;\"";
 	        $display_span = "style=\"position:;\"";
@@ -138,10 +138,10 @@ class DropDownList extends InputElement
 		// jquery $j('a.maxmin').click(function() {...});
 		// jquery $j('a.maxmin').hover(function() {...}, function() {...});
 		if (defined('OPENBIZ_JSLIB_BASE') && OPENBIZ_JSLIB_BASE == 'JQUERY') {
-			$sHTML .= "\n<span ID=\"span_$elem_id\"  $this->m_HTMLAttr $style>$display_value</span>\n";
+			$sHTML .= "\n<span ID=\"span_$elem_id\"  $this->htmlAttr $style>$display_value</span>\n";
 		}
 		else {
-	        $sHTML .= "<span ID=\"span_$elem_id\"  $this->m_HTMLAttr $style
+	        $sHTML .= "<span ID=\"span_$elem_id\"  $this->htmlAttr $style
 						onclick=\"if($('$elem_list_id').visible()){\$('$elem_list_id').hide();\$('$elem_scroll_id').hide();$('$elem_id').className='".$this->cssClass."'}else{\$('$elem_list_id').show();\$('$elem_scroll_id').show();$('$elem_id').className='".$this->m_cssFocusClass."'}\"
 						onmouseover=\"$('span_$elem_id').className='".$this->m_cssHoverClass."'\"
 						onmouseout=\"$('span_$elem_id').className='".$this->cssClass."'\"
@@ -150,10 +150,10 @@ class DropDownList extends InputElement
 		$sHTML .= "</div>";
 		$sHTML .= "<div $display_input>";
 		if (defined('OPENBIZ_JSLIB_BASE') && OPENBIZ_JSLIB_BASE == 'JQUERY') {
-			$sHTML .= "<INPUT NAME=\"$elem_id\" ID=\"$elem_id\" VALUE=\"" . $display_value . "\" $disabledStr $this->m_HTMLAttr $style />\n";
+			$sHTML .= "<INPUT NAME=\"$elem_id\" ID=\"$elem_id\" VALUE=\"" . $display_value . "\" $disabledStr $this->htmlAttr $style />\n";
 		}
 		else {
-			$sHTML .= "<INPUT NAME=\"$elem_id\" ID=\"$elem_id\" VALUE=\"" . $display_value . "\" $disabledStr $this->m_HTMLAttr $style 
+			$sHTML .= "<INPUT NAME=\"$elem_id\" ID=\"$elem_id\" VALUE=\"" . $display_value . "\" $disabledStr $this->htmlAttr $style 
 						onclick=\"if($('$elem_list_id').visible()){\$('$elem_list_id').hide();\$('$elem_scroll_id').hide();$('$elem_id').className='".$this->cssClass."'}else{\$('$elem_list_id').show();\$('$elem_scroll_id').show();$('$elem_id').className='".$this->m_cssFocusClass."'}\"
 							onmouseover=\"$('span_$elem_id').className='".$this->m_cssHoverClass."'\"
 							onmouseout=\"$('span_$elem_id').className='".$this->cssClass."'\"
@@ -204,7 +204,7 @@ else {
     		return null;
     	}
 		$list = $this->getList();
-    	/*$selectFrom = $this->m_SelectFrom;
+    	/*$selectFrom = $this->selectFrom;
     	$selectFrom = substr($selectFrom,0,strpos($selectFrom,','));
         
     	$list= array();        
@@ -243,7 +243,7 @@ else {
     
     protected function renderList(){
     	
-    	if($this->m_FormPrefix){
+    	if($this->formPrefix){
     		$formNameStr = str_replace(".","_", $this->getFormObj()->objectName)."_";
     	} 
     	$onchange_func = $this->getOnChangeFunction();
@@ -352,19 +352,19 @@ else {
     protected function getSelectFrom()
     {
         $formobj = $this->getFormObj();
-        return Expression::evaluateExpression($this->m_SelectFrom, $formobj);
+        return Expression::evaluateExpression($this->selectFrom, $formobj);
     }
 
     protected function getSelectedList()
     {
         $formobj = $this->getFormObj();
-        return Expression::evaluateExpression($this->m_SelectedList, $formobj);
+        return Expression::evaluateExpression($this->selectedList, $formobj);
     }
     
 	protected function getSelectFromSQL()
     {
         $formobj = $this->getFormObj();
-        return Expression::evaluateExpression($this->m_SelectFromSQL, $formobj);
+        return Expression::evaluateExpression($this->selectFromSQL, $formobj);
     }
     
     protected function getXMLFromList(&$list, $selectFrom)
@@ -514,14 +514,14 @@ else {
         // loop through the event handlers
         $func = "";
 
-        if ($this->m_EventHandlers == null)
+        if ($this->eventHandlers == null)
             return null;
         $formobj = $this->getFormObj();
-        foreach ($this->m_EventHandlers as $eventHandler)
+        foreach ($this->eventHandlers as $eventHandler)
         {
             $ehName = $eventHandler->objectName;
-            $event = $eventHandler->m_Event;
-            $type = $eventHandler->m_FunctionType;
+            $event = $eventHandler->event;
+            $type = $eventHandler->functionType;
             if (!$event) continue;
             if($events[$event]!=""){
             	$events[$event]=array_merge(array($events[$event]),array($eventHandler->getFormedFunction()));
@@ -545,9 +545,9 @@ else {
     
 	protected function translateList(&$list, $tag)
     {
-    	$module = $this->getModuleName($this->m_SelectFrom);
+    	$module = $this->getModuleName($this->selectFrom);
         if (empty($module))
-            $module = $this->getModuleName($this->m_FormName);
+            $module = $this->getModuleName($this->formName);
     	for ($i=0; $i<count($list); $i++)
     	{
     		$key = 'SELECTION_'.strtoupper($tag).'_'.$i.'_TEXT';
@@ -557,7 +557,7 @@ else {
     
     protected function getTransLOVPrefix()
     {    	
-    	$nameArr = explode(".",$this->m_SelectFrom);
+    	$nameArr = explode(".",$this->selectFrom);
     	for($i=1;$i<count($nameArr)-1;$i++)
     	{
     		$prefix .= strtoupper($nameArr[$i])."_";

@@ -25,17 +25,17 @@
  */
 class Panel extends MetaIterator implements iUIControl
 { 
-	public $m_FormName;
+	public $formName;
 	
 	public function __construct(&$xmlArr, $childClassName, $parentObj=null)
     {
     	parent::__construct($xmlArr, $childClassName, $parentObj);
-    	$this->m_FormName = $parentObj->objectName;    	
+    	$this->formName = $parentObj->objectName;    	
     }
     
     protected function getFormObj()
     {
-        return BizSystem::objectFactory()->getObject($this->m_FormName);
+        return BizSystem::objectFactory()->getObject($this->formName);
     }	
     /**
      * Render the Panel and return array of rendering element (html text)
@@ -54,12 +54,12 @@ class Panel extends MetaIterator implements iUIControl
                 $panel[$elem->objectName]['element'] = $elem->render();
                 $panel[$elem->objectName]['type'] = $elem->className;
                 $panel[$elem->objectName]['width'] = $elem->width;
-                $panel[$elem->objectName]['elementset'] = $elem->m_ElementSet;
-                $panel[$elem->objectName]['elementsetcode'] = $elem->m_ElementSetCode;
-                $panel[$elem->objectName]['tabset'] = $elem->m_TabSet;
-                $panel[$elem->objectName]['tabsetcode'] = $elem->m_TabSetCode;
-                $panel[$elem->objectName]['extra'] = $elem->m_Extra;                
-                if (isset($elem->m_Label) && $elem->m_Label !== null)
+                $panel[$elem->objectName]['elementset'] = $elem->elementSet;
+                $panel[$elem->objectName]['elementsetcode'] = $elem->elementSetCode;
+                $panel[$elem->objectName]['tabset'] = $elem->tabSet;
+                $panel[$elem->objectName]['tabsetcode'] = $elem->tabSetCode;
+                $panel[$elem->objectName]['extra'] = $elem->extra;                
+                if (isset($elem->label) && $elem->label !== null)
                     $panel[$elem->objectName]['label'] = $elem->renderLabel();
                 if (isset($elem->value) && $elem->value !== null)
                     $panel[$elem->objectName]['value'] = $elem->value;
@@ -148,8 +148,8 @@ class Panel extends MetaIterator implements iUIControl
         {
             //if (!$recArr)
             //    $elem->setValue("");
-            if (key_exists($elem->m_FieldName, $recArr)) {
-                $elem->setValue($recArr[$elem->m_FieldName]);
+            if (key_exists($elem->fieldName, $recArr)) {
+                $elem->setValue($recArr[$elem->fieldName]);
             }
             else if (key_exists($elem->objectName, $recArr)) {
                 $elem->setValue($recArr[$elem->objectName]); 
@@ -170,7 +170,7 @@ class Panel extends MetaIterator implements iUIControl
     	$elems =  $this->varValue;
         foreach ($elems as $elem)
         {
-            if($elem->m_FieldName == $fieldName && $elem->className!='RowCheckbox')
+            if($elem->fieldName == $fieldName && $elem->className!='RowCheckbox')
             {
                 return $elem;
             }

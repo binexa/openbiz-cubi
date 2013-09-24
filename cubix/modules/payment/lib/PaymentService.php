@@ -1,7 +1,7 @@
 <?php 
 class PaymentService
 {
-	protected $m_ProviderDO = "payment.provider.do.ProviderDO";
+	protected $providerDO = "payment.provider.do.ProviderDO";
 	
 	public function goPayment($orderId, $amount, $type, $title=null,$customData=null)
 	{		
@@ -26,7 +26,7 @@ class PaymentService
 	
 	protected function getProviderObj($type)
 	{
-		$providerRec = BizSystem::getObject($this->m_ProviderDO)->fetchOne("[type]='$type'");
+		$providerRec = BizSystem::getObject($this->providerDO)->fetchOne("[type]='$type'");
 		$driver = $providerRec['driver'];
 		$driverFile = OPENBIZ_APP_MODULE_PATH.'/'.str_replace(".", "/", $driver).'.php';
 		$driverName = explode(".", $driver);

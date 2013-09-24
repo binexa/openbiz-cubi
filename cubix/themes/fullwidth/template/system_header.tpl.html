@@ -1,7 +1,7 @@
 {php}
 $widget = Bizsystem::GetObject('menu.widget.MainTabMenu');
-if($widget->m_GlobalSearchRule && $widget->searchRule){
-	$searchRule = $widget->m_GlobalSearchRule ." and ". $widget->searchRule;
+if($widget->globalSearchRule && $widget->searchRule){
+	$searchRule = $widget->globalSearchRule ." and ". $widget->searchRule;
 }else{
 	$searchRule = $widget->searchRule;
 }

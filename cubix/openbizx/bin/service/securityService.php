@@ -26,7 +26,7 @@ include_once (OPENBIZ_PATH."/messages/securityService.msg");
  */
 class securityService
 {  
-    public $m_Mode = 'DISABLED';
+    public $mode = 'DISABLED';
     private $_securityFilters = array();
     private $_messageFile;
     protected $errorMessage = null;
@@ -50,8 +50,8 @@ class securityService
      */
     protected function readMetadata(&$xmlArr)
     {
-        $this->m_Mode =   isset($xmlArr["PLUGINSERVICE"]["SECURITY"]["ATTRIBUTES"]["MODE"]) ? $xmlArr["PLUGINSERVICE"]["SECURITY"]["ATTRIBUTES"]["MODE"] : "DISABLED";
-        if(strtoupper($this->m_Mode) == 'ENABLED' )
+        $this->mode =   isset($xmlArr["PLUGINSERVICE"]["SECURITY"]["ATTRIBUTES"]["MODE"]) ? $xmlArr["PLUGINSERVICE"]["SECURITY"]["ATTRIBUTES"]["MODE"] : "DISABLED";
+        if(strtoupper($this->mode) == 'ENABLED' )
         {
             $this->_securityFilters[] = new securityFilter($xmlArr["PLUGINSERVICE"]["SECURITY"]["URLFILTER"],		"securityFilter",	"URLFilter");
             $this->_securityFilters[] = new securityFilter($xmlArr["PLUGINSERVICE"]["SECURITY"]["DOMAINFILTER"],	"securityFilter",	"DomainFilter");
@@ -104,8 +104,8 @@ class securityService
 class securityFilter extends MetaIterator
 {
     protected $name = null;
-    protected $m_Mode = 'DISABLED';
-    protected $m_Rules = null;
+    protected $mode = 'DISABLED';
+    protected $rules = null;
     protected $errorMessage = null;
 
 
@@ -133,10 +133,10 @@ class securityFilter extends MetaIterator
     protected function readMetadata(&$xmlArr, $filterName, $ruleName)
     {
         $this->objectName = $ruleName;
-        $this->m_Mode =   isset($xmlArr["ATTRIBUTES"]["MODE"]) ? $xmlArr["ATTRIBUTES"]["MODE"] : "DISABLED";
-        if(strtoupper($this->m_Mode) == 'ENABLED' )
+        $this->mode =   isset($xmlArr["ATTRIBUTES"]["MODE"]) ? $xmlArr["ATTRIBUTES"]["MODE"] : "DISABLED";
+        if(strtoupper($this->mode) == 'ENABLED' )
         {
-            $this->m_Rules 	= new MetaIterator($xmlArr["RULE"],	 $ruleName."Rule",	$this);
+            $this->rules 	= new MetaIterator($xmlArr["RULE"],	 $ruleName."Rule",	$this);
         }
     }
 
@@ -157,9 +157,9 @@ class securityFilter extends MetaIterator
      */
     public function processRules()
     {
-        if(is_array($this->m_Rules->varValue))
+        if(is_array($this->rules->varValue))
         {
-            foreach($this->m_Rules->varValue as $name=>$obj)
+            foreach($this->rules->varValue as $name=>$obj)
             {
                 $obj->process();
                 if($obj->getErrorMessage())
@@ -200,9 +200,9 @@ class securityRule_Abstract implements iSecurityRule
 {
     public $objectName      =	null;
     public $action    =	null;
-    public $m_Match     =	null;
-    public $m_Status     =	null;
-    public $m_EffectiveTime =	null;
+    public $match     =	null;
+    public $status     =	null;
+    public $effectiveTime =	null;
     public $errorMessage = null;
 
     /**
@@ -226,9 +226,9 @@ class securityRule_Abstract implements iSecurityRule
     {
         $this->objectName 	= $xmlArr["ATTRIBUTES"]["NAME"];
         $this->action	= $xmlArr["ATTRIBUTES"]["ACTION"];
-        $this->m_Status	= $xmlArr["ATTRIBUTES"]["STATUS"];
-        $this->m_Match 	= $xmlArr["ATTRIBUTES"]["MATCH"];
-        $this->m_EffectiveTime = $xmlArr["ATTRIBUTES"]["EFFECTIVETIME"];
+        $this->status	= $xmlArr["ATTRIBUTES"]["STATUS"];
+        $this->match 	= $xmlArr["ATTRIBUTES"]["MATCH"];
+        $this->effectiveTime = $xmlArr["ATTRIBUTES"]["EFFECTIVETIME"];
     }
 
     /**
@@ -258,7 +258,7 @@ class securityRule_Abstract implements iSecurityRule
      */
     public function checkEffectiveTime()
     {
-        sscanf( $this->m_EffectiveTime, "%2d%2d-%2d%2d",
+        sscanf( $this->effectiveTime, "%2d%2d-%2d%2d",
                 $start_hour, $start_min,
                 $end_hour, $end_min
         );
@@ -311,7 +311,7 @@ class URLFilterRule extends securityRule_Abstract
      */
     public function process()
     {
-    	if(strtoupper($this->m_Status)=='ENABLE')
+    	if(strtoupper($this->status)=='ENABLE')
     	{
 	        parent::process();
 	        if(!$this->checkEffectiveTime())
@@ -321,7 +321,7 @@ class URLFilterRule extends securityRule_Abstract
 	        else
 	        {
 	            $url = $_SERVER['REQUEST_URI'];
-	            if(preg_match("/".$this->m_Match."/si",$url))
+	            if(preg_match("/".$this->match."/si",$url))
 	            {
 	                if(strtoupper($this->action)=='OPENBIZ_DENY')
 	                {
@@ -358,7 +358,7 @@ class DomainFilterRule extends securityRule_Abstract
      */
     public function process()
     {
-    	if(strtoupper($this->m_Status)=='ENABLE')
+    	if(strtoupper($this->status)=='ENABLE')
     	{
 	        parent::process();
 	        if(!$this->checkEffectiveTime())
@@ -368,7 +368,7 @@ class DomainFilterRule extends securityRule_Abstract
 	        else
 	        {
 	            $url = $_SERVER['HTTP_HOST'];
-	            if(preg_match("/".$this->m_Match."/si",$url))
+	            if(preg_match("/".$this->match."/si",$url))
 	            {
 	                if(strtoupper($this->action)=='OPENBIZ_DENY')
 	                {
@@ -405,7 +405,7 @@ class AgentFilterRule extends securityRule_Abstract
      */
     public function process()
     {
-    	if(strtoupper($this->m_Status)=='ENABLE')
+    	if(strtoupper($this->status)=='ENABLE')
     	{
 	        parent::process();
 	        if(!$this->checkEffectiveTime())
@@ -415,7 +415,7 @@ class AgentFilterRule extends securityRule_Abstract
 	        else
 	        {
 	            $url = $_SERVER['HTTP_USER_AGENT'];
-	            if(preg_match("/".$this->m_Match."/si",$url))
+	            if(preg_match("/".$this->match."/si",$url))
 	            {
 	                if(strtoupper($this->action)=='OPENBIZ_DENY')
 	                {
@@ -452,7 +452,7 @@ class IPFilterRule extends securityRule_Abstract
      */
     public function process()
     {
-    	if(strtoupper($this->m_Status)=='ENABLE')
+    	if(strtoupper($this->status)=='ENABLE')
     	{
     		parent::process();
 	        if(!$this->checkEffectiveTime())
@@ -462,7 +462,7 @@ class IPFilterRule extends securityRule_Abstract
 	        else
 	        {
 	            $url = $_SERVER['REMOTE_ADDR'];
-	            if(preg_match("/".$this->m_Match."/si",$url))
+	            if(preg_match("/".$this->match."/si",$url))
 	            {
 	                if(strtoupper($this->action)=='OPENBIZ_DENY')
 	                {
@@ -500,7 +500,7 @@ class PostFilterRule extends securityRule_Abstract
      */
     public function process()
     {
-    	if(strtoupper($this->m_Status)=='ENABLE')
+    	if(strtoupper($this->status)=='ENABLE')
     	{
 	        parent::process();
 	        if(!$this->checkEffectiveTime())
@@ -510,9 +510,9 @@ class PostFilterRule extends securityRule_Abstract
 	        else
 	        {
 	            $post_str = serialize($_POST);
-	            if($this->m_Match!="")
+	            if($this->match!="")
 	            {
-	                if(preg_match("/".$this->m_Match."/si",$post_str))
+	                if(preg_match("/".$this->match."/si",$post_str))
 	                {
 	                    if(strtoupper($this->action)=='OPENBIZ_DENY')
 	                    {
@@ -555,7 +555,7 @@ class GetFilterRule extends securityRule_Abstract
      */
     public function process()
     {
-    	if(strtoupper($this->m_Status)=='ENABLE')
+    	if(strtoupper($this->status)=='ENABLE')
     	{
 	        parent::process();
 	        if(!$this->checkEffectiveTime())
@@ -565,7 +565,7 @@ class GetFilterRule extends securityRule_Abstract
 	        else
 	        {
 	            $get_str = serialize($_GET);
-	            if(preg_match("/".$this->m_Match."/si",$get_str))
+	            if(preg_match("/".$this->match."/si",$get_str))
 	            {
 	                if(strtoupper($this->action)=='OPENBIZ_DENY')
 	                {

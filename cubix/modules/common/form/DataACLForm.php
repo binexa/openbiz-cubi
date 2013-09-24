@@ -24,13 +24,13 @@ class DataACLForm extends DataSharingForm
 	public function fetchDataSet()
 	{
 		$prtRecord = $this->fetchData();
-		$this->m_Editable = $prtRecord['editable'];
+		$this->editable = $prtRecord['editable'];
 		
-		$prtForm = $this->m_ParentFormName;
+		$prtForm = $this->parentFormName;
 		$prtFormObj = BizSystem::GetObject($prtForm);
 		
 		$record_table = $prtFormObj->getDataObj()->mainTableName;
-		$record_id = $this->m_ParentRecordId;
+		$record_id = $this->parentRecordId;
 		$this->searchRule = "[record_table]='$record_table' AND [record_id]='$record_id'";
 		$result =  parent::fetchDataSet();
 		return $result;
@@ -47,10 +47,10 @@ class DataACLForm extends DataSharingForm
 		$userRec = BizSystem::getObject("system.do.UserDO",1)->fetchOne("[username]='$acl_user'");
 		$acl_user_id = $userRec['Id'];
 		
-		$parent_record_id = $this->m_ParentRecordId;
+		$parent_record_id = $this->parentRecordId;
 		
 		//get parent do table
-		$prtForm = $this->m_ParentFormName;
+		$prtForm = $this->parentFormName;
 		$prtFormObj = BizSystem::GetObject($prtForm);
 		$dataObj = $prtFormObj->getDataObj();
 		$parent_record_table = $dataObj->mainTableName;

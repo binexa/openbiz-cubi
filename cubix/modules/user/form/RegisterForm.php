@@ -55,7 +55,7 @@ class RegisterForm extends UserForm
         }
         catch (ValidationException $e)
         {
-            $this->processFormObjError($e->m_Errors);
+            $this->processFormObjError($e->errors);
             return;
         }
         

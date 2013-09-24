@@ -14,13 +14,13 @@
 class AccessLabel extends LabelList
 {
 	public function getSelectFrom(){
-		$formname = $this->getFormObj()->m_ParentFormName;
+		$formname = $this->getFormObj()->parentFormName;
 		if(!$formname)
 		{
 			$formname = "extend.widget.ExtendSettingListEditForm";
 		}		
 		return BizSystem::getObject($formname)
-					->m_ParentFormElementMeta['ATTRIBUTES']['ACCESSSELECTFROM'];
+					->parentFormElementMeta['ATTRIBUTES']['ACCESSSELECTFROM'];
 	}
     protected function translateList(&$list, $tag)
     {	

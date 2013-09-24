@@ -17,7 +17,7 @@
 //include_once("InputElement.php");
 class ColorPicker extends InputText {
 	public $config;
-	public $m_Mode;
+	public $mode;
     /**
      * Read array meta data, and store to meta object
      *
@@ -30,7 +30,7 @@ class ColorPicker extends InputText {
         $this->cssClass = isset($xmlArr["ATTRIBUTES"]["CSSCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSCLASS"] : "input_text_s";
 		$this->cssErrorClass = isset($xmlArr["ATTRIBUTES"]["CSSERRORCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSERRORCLASS"] : $this->cssClass."_error";
 		$this->m_cssFocusClass = isset($xmlArr["ATTRIBUTES"]["CSSFOCUSCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSFOCUSCLASS"] : $this->cssClass."_focus";
-        $this->m_Mode = isset($xmlArr["ATTRIBUTES"]["MODE"]) ? $xmlArr["ATTRIBUTES"]["MODE"] : null;
+        $this->mode = isset($xmlArr["ATTRIBUTES"]["MODE"]) ? $xmlArr["ATTRIBUTES"]["MODE"] : null;
         $this->config = isset($xmlArr["ATTRIBUTES"]["CONFIG"]) ? $xmlArr["ATTRIBUTES"]["CONFIG"] : null;
     }
     
@@ -47,7 +47,7 @@ class ColorPicker extends InputText {
         $func = $this->getFunction();
         $func_org = $func;
         $formobj = $this->GetFormObj();
-    	if($formobj->m_Errors[$this->objectName]){
+    	if($formobj->errors[$this->objectName]){
 			$func .= "onchange=\"this.className='$this->cssClass'\"";
 		}else{
 			$func .= "onfocus=\"this.className='$this->m_cssFocusClass'\" onblur=\"this.className='$this->cssClass'\"";
@@ -61,7 +61,7 @@ class ColorPicker extends InputText {
 			$default_color = "";
 			$value=$this->getDefaultValue() ? $this->getDefaultValue() : "";
 		}        
-		switch(strtolower($this->m_Mode)){
+		switch(strtolower($this->mode)){
 			case "viewonly":				
 				$sHTML .= "<span id=\"colorpreview_$elementName\" $func_org class=\"colorpicker_preview\" style=\"background-color:#$value;width:98px;\" ></span>";
 				$elementTrigger = array();
@@ -105,7 +105,7 @@ class ColorPicker extends InputText {
 							}
 				";
 				$sHTML .= "<span id=\"colorpreview_$elementName\" class=\"colorpicker_preview\" style=\"background-color:#$value;\" ></span>";						
-				$sHTML .= "<INPUT NAME=\"" . $this->objectName . "\" ID=\"" . $this->objectName ."\" VALUE=\"" . $value . "\" $disabledStr $this->m_HTMLAttr $style $func />";
+				$sHTML .= "<INPUT NAME=\"" . $this->objectName . "\" ID=\"" . $this->objectName ."\" VALUE=\"" . $value . "\" $disabledStr $this->htmlAttr $style $func />";
 				$sHTML .= "<div id=\"colorpicker_$elementName\" style=\"float:left\"></div>";
 				$elementTrigger = array("colorpicker_".$elementName);
 				break;
@@ -132,7 +132,7 @@ class ColorPicker extends InputText {
 							}
 							";
 				$sHTML .= "<span id=\"colorpreview_$elementName\" class=\"colorpicker_preview\" style=\"background-color:#$value;\" ></span>";
-				$sHTML .= "<INPUT NAME=\"" . $this->objectName . "\" ID=\"" . $this->objectName ."\" VALUE=\"" . $value . "\" $disabledStr $this->m_HTMLAttr $style $func />";								
+				$sHTML .= "<INPUT NAME=\"" . $this->objectName . "\" ID=\"" . $this->objectName ."\" VALUE=\"" . $value . "\" $disabledStr $this->htmlAttr $style $func />";								
 				$elementTrigger = array($elementName,"colorpreview_$elementName");
 				break;
 		}
@@ -153,19 +153,19 @@ class ColorPicker extends InputText {
         // loop through the event handlers
         $func = "";
 
-        if ($this->m_EventHandlers == null)
+        if ($this->eventHandlers == null)
             return null;
         $formobj = $this->getFormObj();
         
-        foreach($this->m_EventHandlers as $eventHandler){
-        	if($eventHandler->m_Event==$event_name){
+        foreach($this->eventHandlers as $eventHandler){
+        	if($eventHandler->event==$event_name){
         		break;
         	}
         }
                 
         $ehName = $eventHandler->objectName;
-        $event = $eventHandler->m_Event;
-        $type = $eventHandler->m_FunctionType;
+        $event = $eventHandler->event;
+        $type = $eventHandler->functionType;
         if (!$event) return;
         if($events[$event]!=""){
            $events[$event]=array_merge(array($events[$event]),array($eventHandler->getFormedFunction()));

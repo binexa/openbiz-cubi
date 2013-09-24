@@ -28,16 +28,16 @@
  */
 class LabelText extends Element
 {
-    public $m_FieldName;
-    public $m_Label;
+    public $fieldName;
+    public $label;
     public $displayFormat;
     public $text;
     public $link;    
-    public $m_Target;
+    public $target;
     public $maxLength;
     public $percent;
     
-    public $m_StripTags;
+    public $stripTags;
     /**
      * Read array meta data, and store to meta object
      *
@@ -47,16 +47,16 @@ class LabelText extends Element
     protected function readMetaData(&$xmlArr)
     {
         parent::readMetaData($xmlArr);
-        $this->m_FieldName = isset($xmlArr["ATTRIBUTES"]["FIELDNAME"]) ? $xmlArr["ATTRIBUTES"]["FIELDNAME"] : null;
-        $this->m_Label = isset($xmlArr["ATTRIBUTES"]["LABEL"]) ? $xmlArr["ATTRIBUTES"]["LABEL"] : null;
+        $this->fieldName = isset($xmlArr["ATTRIBUTES"]["FIELDNAME"]) ? $xmlArr["ATTRIBUTES"]["FIELDNAME"] : null;
+        $this->label = isset($xmlArr["ATTRIBUTES"]["LABEL"]) ? $xmlArr["ATTRIBUTES"]["LABEL"] : null;
         $this->text = isset($xmlArr["ATTRIBUTES"]["TEXT"]) ? $xmlArr["ATTRIBUTES"]["TEXT"] : null;
         $this->link = isset($xmlArr["ATTRIBUTES"]["LINK"]) ? $xmlArr["ATTRIBUTES"]["LINK"] : null;
-        $this->m_Target = isset($xmlArr["ATTRIBUTES"]["TARGET"]) ? $xmlArr["ATTRIBUTES"]["TARGET"] : null;
+        $this->target = isset($xmlArr["ATTRIBUTES"]["TARGET"]) ? $xmlArr["ATTRIBUTES"]["TARGET"] : null;
         $this->maxLength = isset($xmlArr["ATTRIBUTES"]["MAXLENGHT"]) ? $xmlArr["ATTRIBUTES"]["MAXLENGHT"] : null;
         $this->maxLength = isset($xmlArr["ATTRIBUTES"]["MAXLENGTH"]) ? $xmlArr["ATTRIBUTES"]["MAXLENGTH"] : null;
         $this->percent = isset($xmlArr["ATTRIBUTES"]["PERCENT"]) ? $xmlArr["ATTRIBUTES"]["PERCENT"] : "N";
         $this->displayFormat = isset($xmlArr["ATTRIBUTES"]["DISPLAYFORMAT"]) ? $xmlArr["ATTRIBUTES"]["DISPLAYFORMAT"] : null;
-        $this->m_StripTags = isset($xmlArr["ATTRIBUTES"]["STRIPTAGS"]) ? $xmlArr["ATTRIBUTES"]["STRIPTAGS"] : "N";
+        $this->stripTags = isset($xmlArr["ATTRIBUTES"]["STRIPTAGS"]) ? $xmlArr["ATTRIBUTES"]["STRIPTAGS"] : "N";
     }
 
     /**
@@ -67,10 +67,10 @@ class LabelText extends Element
      */
     protected function getTarget()
     {
-        if ($this->m_Target == null)
+        if ($this->target == null)
             return null;
 
-        return "target='" . $this->m_Target ."'";
+        return "target='" . $this->target ."'";
         ;
     }
 
@@ -107,7 +107,7 @@ class LabelText extends Element
      */
     public function renderLabel()
     {
-        return $this->m_Label;
+        return $this->label;
     }
 
     /**
@@ -125,7 +125,7 @@ class LabelText extends Element
         $id = $this->objectName;
         $func = $this->getFunction();
 
-        if ($this->m_Translatable == 'Y')
+        if ($this->translatable == 'Y')
             $value = $this->translateString($value);
         $value_org = strip_tags($value);
         if((int)$this->maxLength>0){
@@ -150,7 +150,7 @@ class LabelText extends Element
         	{
         		$value = sprintf("%.2f",$value*100).'%';
         	}else{
-        		if(strtoupper($this->m_StripTags) =='Y')
+        		if(strtoupper($this->stripTags) =='Y')
         		{
         			$value = strip_tags($value);
         		}
@@ -165,11 +165,11 @@ class LabelText extends Element
                 $link = $this->getLink();
                 $target = $this->getTarget();
                 //$sHTML = "<a href=\"$link\" onclick=\"SetOnLoadNewView();\" $style>" . $val . "</a>";
-                $sHTML = "<a title=\"$value_org\" id=\"$id\" href=\"$link\" $target $func $style $this->m_HTMLAttr>" . $value . "</a>";
+                $sHTML = "<a title=\"$value_org\" id=\"$id\" href=\"$link\" $target $func $style $this->htmlAttr>" . $value . "</a>";
             }
             else
             {
-                $sHTML = "<span  title=\"$value_org\" $style $func $this->m_HTMLAttr>" . $value . "</span>";
+                $sHTML = "<span  title=\"$value_org\" $style $func $this->htmlAttr>" . $value . "</span>";
             }
             if($this->backgroundColor)
             {

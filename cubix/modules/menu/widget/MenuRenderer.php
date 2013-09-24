@@ -45,7 +45,7 @@ class MenuRenderer
     static public function render($widgetObj)
     {
         $tplEngine = $widgetObj->templateEngine;
-        $tplFile = BizSystem::getTplFileWithPath($widgetObj->templateFile, $widgetObj->m_Package);
+        $tplFile = BizSystem::getTplFileWithPath($widgetObj->templateFile, $widgetObj->package);
 
         if ($tplEngine == "Smarty" || $tplEngine == null)
             return MenuRenderer::renderSmarty($widgetObj, $tplFile);
@@ -68,9 +68,9 @@ class MenuRenderer
         $smarty->assign("form", $attrs);
         $smarty->assign("formname", $widgetObj->objectName);
         $smarty->assign("module", $widgetObj->getModuleName($widgetObj->objectName));
-        $smarty->assign("title", $widgetObj->m_Title);
-        $smarty->assign("errors", $widgetObj->m_Errors);
-        $smarty->assign("notices", $widgetObj->m_Notices);        
+        $smarty->assign("title", $widgetObj->title);
+        $smarty->assign("errors", $widgetObj->errors);
+        $smarty->assign("notices", $widgetObj->notices);        
         return $smarty->fetch($tplFile);
     }
 
@@ -88,9 +88,9 @@ class MenuRenderer
         $view->widget = $widgetObj->OutputAttrs();
         $smarty->assign("formname", $widgetObj->objectName);
         $smarty->assign("module", $view->getModuleName($view->objectName));
-        $smarty->assign("title", $view->m_Title);
-        $smarty->assign("errors", $view->m_Errors);
-        $smarty->assign("notices", $view->m_Notices);
+        $smarty->assign("title", $view->title);
+        $smarty->assign("errors", $view->errors);
+        $smarty->assign("notices", $view->notices);
         return $view->render($view->templateFile);
     }
 }

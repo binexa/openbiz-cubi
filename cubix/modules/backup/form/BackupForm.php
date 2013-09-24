@@ -57,7 +57,7 @@ class BackupForm extends EasyForm
     {
         foreach ($this->searchPanel as $element)
         {
-            if (!$element->m_FieldName)
+            if (!$element->fieldName)
                 continue;
 
             $value = BizSystem::clientProxy()->getFormInputs($element->objectName);                                    
@@ -76,7 +76,7 @@ class BackupForm extends EasyForm
         if ($this->activeRecord != null)
             return $this->activeRecord;		
 		
-		preg_match("/\[Id\]='(.*?)'/si",$this->m_FixSearchRule,$match);
+		preg_match("/\[Id\]='(.*?)'/si",$this->fixSearchRule,$match);
 		$recId = $match[1];
 		
 		$resultRecords = $this->fetchFullDataSet();    
@@ -145,11 +145,11 @@ class BackupForm extends EasyForm
 		$resultRecords = $this->fetchFullDataSet();
 		//paging		
 		if(is_array($resultRecords)){
-			$result = array_slice($resultRecords,($this->currentPage-1)*$this->m_Range,$this->m_Range);
+			$result = array_slice($resultRecords,($this->currentPage-1)*$this->range,$this->range);
 		}			
 		$this->totalRecords = count($resultRecords);
-        if ($this->m_Range && $this->m_Range > 0)
-            $this->totalPages = ceil($this->totalRecords/$this->m_Range);
+        if ($this->range && $this->range > 0)
+            $this->totalPages = ceil($this->totalRecords/$this->range);
 		return $result;
 		
 	}	
@@ -228,7 +228,7 @@ class BackupForm extends EasyForm
         }
         catch (ValidationException $e)
         {
-            $this->processFormObjError($e->m_Errors);
+            $this->processFormObjError($e->errors);
             return;
         }
 
@@ -265,7 +265,7 @@ class BackupForm extends EasyForm
         
 
         // in case of popup form, close it, then rerender the parent form
-        if ($this->m_ParentFormName)
+        if ($this->parentFormName)
         {
             $this->close();
 
@@ -339,7 +339,7 @@ class BackupForm extends EasyForm
         $recArr = $this->readInputRecord();
         $this->setActiveRecord($recArr);	
 		if(!$recArr['filename']){
-			$this->m_Errors = array("fld_name"=>$this->getMessage("FILE_TYPE_INCORRECT"));
+			$this->errors = array("fld_name"=>$this->getMessage("FILE_TYPE_INCORRECT"));
 			$this->updateForm();
 			return;
 		}
@@ -376,7 +376,7 @@ class BackupForm extends EasyForm
 		
 
         $this->recordId = md5($filename);
-        if ($this->m_ParentFormName)
+        if ($this->parentFormName)
         {
             $this->close();
 
@@ -397,11 +397,11 @@ class BackupForm extends EasyForm
 		$this->recordId = $id;
 		$recArr = $this->readInputRecord();
 		
-		$this->m_FixSearchRule="[Id]='$id'";
+		$this->fixSearchRule="[Id]='$id'";
 		$recArrFile = $this->fetchData();
 		
 		if(!$recArr['import']){
-			$this->m_Errors = array("fld_import"=>$this->getMessage("PLEASE_CHECK_AGREEMENT"));
+			$this->errors = array("fld_import"=>$this->getMessage("PLEASE_CHECK_AGREEMENT"));
 			$this->rerender();
 			return;
 		}
@@ -431,7 +431,7 @@ class BackupForm extends EasyForm
 
         }		
 		
-		$this->m_Notices = array($this->getMessage("RESTORE_SUCCESSFUL"));
+		$this->notices = array($this->getMessage("RESTORE_SUCCESSFUL"));
 		$this->rerender();
 		
 		

@@ -111,7 +111,7 @@ class excelService
         }
         /* @var $formObj EasyForm */
         $formObj = BizSystem::objectFactory()->getObject($objName); // get the existing EasyForm object
-        $parentFormObj = BizSystem::objectFactory()->getObject($formObj->m_ParentFormName);
+        $parentFormObj = BizSystem::objectFactory()->getObject($formObj->parentFormName);
         $dataObj = $parentFormObj->getDataObj();
 
         $handle = fopen($tmpFileName, "r");
@@ -127,7 +127,7 @@ class excelService
         // convert form element names to DO field names
         foreach ($parentFormObj->dataPanel as $element)
         {
-            $elem_fields[$element->m_Label] = $element->m_FieldName;
+            $elem_fields[$element->label] = $element->fieldName;
         }
         
         // validate with dataobj fields
@@ -171,7 +171,7 @@ class excelService
         fclose($handle);
 
         // in case of popup form, close it, then rerender the parent form
-        if ($formObj->m_ParentFormName)
+        if ($formObj->parentFormName)
         {
             $formObj->close();
 

@@ -39,7 +39,7 @@ class ChartForm extends EasyForm
 	public function outputAttrs()
     {        
     	$output['name'] = $this->objectName;
-        $output['title'] = $this->m_Title;
+        $output['title'] = $this->title;
         $output['description'] = str_replace('\n', "<br />", $this->objectDescription);
         $output['data'] = $this->draw();
         $output['height'] = $this->height;
@@ -83,29 +83,29 @@ class ChartForm extends EasyForm
             $dataObj->clearSearchRule();
          		
 		//echo "search rule is $this->searchRule"; exit;
-		if ($this->m_FixSearchRule)
+		if ($this->fixSearchRule)
         {
             if ($this->searchRule)
-                $searchRule = $this->searchRule . " AND " . $this->m_FixSearchRule;
+                $searchRule = $this->searchRule . " AND " . $this->fixSearchRule;
             else
-                $searchRule = $this->m_FixSearchRule;
+                $searchRule = $this->fixSearchRule;
         }
         else
         $searchRule = $this->searchRule;
         $dataObj->setSearchRule($searchRule);
-        if($this->m_StartItem>1)
+        if($this->startItem>1)
         {
-            $dataObj->setLimit($this->m_Range, $this->m_StartItem);
+            $dataObj->setLimit($this->range, $this->startItem);
         }
         else
         {
-            $dataObj->setLimit($this->m_Range, ($this->currentPage-1)*$this->m_Range);
+            $dataObj->setLimit($this->range, ($this->currentPage-1)*$this->range);
         }
         QueryStringParam::setBindValues($this->searchRuleBindValues);
         $resultRecords = $dataObj->fetch();
         $this->totalRecords = $dataObj->count();
-        if ($this->m_Range && $this->m_Range > 0)
-            $this->totalPages = ceil($this->totalRecords/$this->m_Range);
+        if ($this->range && $this->range > 0)
+            $this->totalPages = ceil($this->totalRecords/$this->range);
 		//$resultRecords = $dataObj->directFetch($searchRule);
 		$counter = 0;
         while (true)
@@ -311,7 +311,7 @@ class ChartForm extends EasyForm
     	}
         
         # Set chart attributes
-        //$FC->setChartParam('caption',$this->m_Title);
+        //$FC->setChartParam('caption',$this->title);
         $FC->setChartParam('formatNumberScale',1);
         $FC->setChartParam('decimalPrecision',0);
         
@@ -323,7 +323,7 @@ class ChartForm extends EasyForm
 	        $FC->setChartParam('exportHandler',OPENBIZ_APP_URL."/js/FusionChartsPro/FCExporter.php");
 	        $FC->setChartParam('exportFileName',$this->objectName);
         }
-        //$strParam = "caption=".$this->m_Title.";canvasBorderColor=CECECE;baseFontSize=12;".$this->attributes;
+        //$strParam = "caption=".$this->title.";canvasBorderColor=CECECE;baseFontSize=12;".$this->attributes;
         $strParam = "canvasBorderColor=CECECE;baseFontSize=10;".$this->attributes;
         $FC->setChartParams($strParam);
     }

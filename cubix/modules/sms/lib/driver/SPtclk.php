@@ -6,10 +6,10 @@ require_once dirname(dirname(__FILE__)).'/dll/emay/nusoaplib/nusoap.php';
 
 class SPtclk extends SPDriver implements iSMS 
 {
-	protected $m_ProviderId = 5;
-	protected $m_type = 'tclk';
+	protected $providerId = 5;
+	protected $type = 'tclk';
 
-	protected $m_URL = "http://inolink.com/WS/linkWS.asmx/";
+	protected $url = "http://inolink.com/WS/linkWS.asmx/";
 		
 	public function activeService()
 	{
@@ -24,7 +24,7 @@ class SPtclk extends SPDriver implements iSMS
 		$Mobile 	= urlencode(BizSystem::GetUserProfile("profile_mobile"));
 		$Email		= urlencode(BizSystem::GetUserProfile("email"));
 				
-		//$url = $this->m_URL."Reg?CorpID=$CorpID&Pwd=$Pwd&CorpName=$CorpName&LinkMan=$LinkMan&Tel=$Tel&Mobile=$Mobile&Email=$Email";
+		//$url = $this->url."Reg?CorpID=$CorpID&Pwd=$Pwd&CorpName=$CorpName&LinkMan=$LinkMan&Tel=$Tel&Mobile=$Mobile&Email=$Email";
 		//$result = file_get_contents($url);
 
 		if(0 == $result)
@@ -57,7 +57,7 @@ class SPtclk extends SPDriver implements iSMS
 		$mobile  = urlencode($mobile);
 		$content = urlencode(iconv("UTF-8","GBK",$content));
 		
-		$url = $this->m_URL."BatchSend?CorpID=$CorpID&Pwd=$Pwd&Mobile=$mobile&Content=$content&Cell=&SendTime=$schedule";
+		$url = $this->url."BatchSend?CorpID=$CorpID&Pwd=$Pwd&Mobile=$mobile&Content=$content&Cell=&SendTime=$schedule";
 		$result = file_get_contents($url);	
 
 		preg_match("/\">(.*?)<\/int/si", $result,$match);
@@ -83,7 +83,7 @@ class SPtclk extends SPDriver implements iSMS
 		$CorpID = $providerInfo['username'];
 		$Pwd = $providerInfo['password'];
 		
-		$url = $this->m_URL."SelSum?CorpID=$CorpID&Pwd=$Pwd";
+		$url = $this->url."SelSum?CorpID=$CorpID&Pwd=$Pwd";
 		$result = file_get_contents($url);
 			
 		preg_match("/\">(.*?)<\/int/si", $result,$match);

@@ -22,14 +22,14 @@ class ErrorForm extends EasyForm
 	    public function loadSessionVars($sessionContext)
 	    {
 	        parent::loadSessionVars($sessionContext);
-	        $sessionContext->getObjVar($this->objectName, "Errors", $this->m_Errors);	  
+	        $sessionContext->getObjVar($this->objectName, "Errors", $this->errors);	  
 	        $sessionContext->getObjVar($this->objectName, "showError", $this->isShowError);      	          
 	    }    
 	    
 	    public function saveSessionVars($sessionContext)
 	    {
 	    	parent::saveSessionVars($sessionContext);
-	        $sessionContext->setObjVar($this->objectName, "Errors", $this->m_Errors);   
+	        $sessionContext->setObjVar($this->objectName, "Errors", $this->errors);   
 	        $sessionContext->setObjVar($this->objectName, "showError", $this->isShowError);   
 	    }
 	    
@@ -43,7 +43,7 @@ class ErrorForm extends EasyForm
 	    {
 	    	if($_GET['ob_err_msg'])
         	{
-				$this->m_Errors = array("system"=>$_GET['ob_err_msg']);
+				$this->errors = array("system"=>$_GET['ob_err_msg']);
         	}	 
 	    	return parent::fetchData();
 	    }
@@ -73,14 +73,14 @@ class ErrorForm extends EasyForm
         	
         	$report = array(
         		"system_uuid"   =>$system_uuid,
-        		"error_info"	=>$this->m_Errors["system"],
+        		"error_info"	=>$this->errors["system"],
         		"server_info"	=>$_SERVER,
         		"php_version"	=>phpversion(),
         		"php_extension"	=>get_loaded_extensions()
         	);
 
         	$reportId = BizSystem::getObject("common.lib.ErrorReportService")->report($report);
-        	$this->m_Notices = array("status"=>"REPORTED",
+        	$this->notices = array("status"=>"REPORTED",
         							"report_id"=>$reportId);
         	$this->ReRender();
         }

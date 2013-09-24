@@ -13,11 +13,11 @@
 
 class ModuleService
 {
-	protected $m_ModuleDO = "system.do.ModuleCachedDO";
+	protected $moduleDO = "system.do.ModuleCachedDO";
 	
 	public function isModuleInstalled($module)
 	{
-		$do = BizSystem::getObject($this->m_ModuleDO);
+		$do = BizSystem::getObject($this->moduleDO);
 		$modRec = $do->fetchOne("[name]='$module'");
 		if($modRec)
 		{

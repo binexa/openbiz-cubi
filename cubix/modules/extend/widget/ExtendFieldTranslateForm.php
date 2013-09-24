@@ -14,7 +14,7 @@
 class ExtendFieldTranslateForm extends PickerForm
 {
 
-	protected $m_TranslateDO = "extend.do.ExtendSettingTranslationDO";
+	protected $translateDO = "extend.do.ExtendSettingTranslationDO";
 		
 	
 	public function fetchData()
@@ -27,7 +27,7 @@ class ExtendFieldTranslateForm extends PickerForm
 		$lang?$lang:$lang=I18n::getCurrentLangCode();
 		$setting_id = $result["Id"];
 		
-		$transDO = BizSystem::getObject($this->m_TranslateDO,1);
+		$transDO = BizSystem::getObject($this->translateDO,1);
 		$currentRecord = $transDO->fetchOne("[setting_id]='$setting_id' AND [lang]='$lang'");
 		if($currentRecord){
 			$currentRecord = $currentRecord->toArray();
@@ -57,7 +57,7 @@ class ExtendFieldTranslateForm extends PickerForm
 	        }
 	        catch (ValidationException $e)
 	        {
-	            $this->processFormObjError($e->m_Errors);
+	            $this->processFormObjError($e->errors);
 	            return;
 	        }
 	
@@ -66,7 +66,7 @@ class ExtendFieldTranslateForm extends PickerForm
         
         }
 		
-		$this->m_Notices[]=$this->getMessage("TRANS_SAVED_MSG", $recArr['lang']) ;        
+		$this->notices[]=$this->getMessage("TRANS_SAVED_MSG", $recArr['lang']) ;        
 		$this->rerender();
 	}
 	
@@ -75,7 +75,7 @@ class ExtendFieldTranslateForm extends PickerForm
 		
 		$lang = $inputRecord['lang'];
 		$setting_id = $currentRecord["Id"];		
-		$transDO = BizSystem::getObject($this->m_TranslateDO,1);
+		$transDO = BizSystem::getObject($this->translateDO,1);
 		
 		$newRecord = array(
 						"setting_id"=>$setting_id,
@@ -109,11 +109,11 @@ class ExtendFieldTranslateForm extends PickerForm
         }
         catch (ValidationException $e)
         {
-            $errElements = $this->getErrorElements($e->m_Errors);           
-        	if(count($e->m_Errors)==count($errElements)){
+            $errElements = $this->getErrorElements($e->errors);           
+        	if(count($e->errors)==count($errElements)){
             	$this->processFormObjError($errElements);
             }else{            	
-            	$errmsg = implode("<br />",$e->m_Errors);
+            	$errmsg = implode("<br />",$e->errors);
 		        BizSystem::clientProxy()->showErrorMessage($errmsg);
             }
             return false;

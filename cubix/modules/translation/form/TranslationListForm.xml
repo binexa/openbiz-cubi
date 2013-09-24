@@ -25,7 +25,7 @@
         		
     </DataPanel>
     <ActionPanel>
- <Element Name="selector_lang" ReadOnly="Y" Class="translation.form.LanguageSelector" Label="" Text="{@:m_Lang}" CssClass="input_select_w" CssFocusClass="input_select_w_focus" CssHoverClass="input_select_w_hover" >
+ <Element Name="selector_lang" ReadOnly="Y" Class="translation.form.LanguageSelector" Label="" Text="{@:lang}" CssClass="input_select_w" CssFocusClass="input_select_w_focus" CssHoverClass="input_select_w_hover" >
              <EventHandler Name="selector_lang_onchange" Event="onchange" EventLogMsg="" Function="updateLang()"/> 
         </Element>   
         <Element Name="btn_edit" Class="Button" Text="Edit" CssClass="button_gray_m" >

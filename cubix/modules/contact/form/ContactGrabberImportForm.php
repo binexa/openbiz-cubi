@@ -47,17 +47,17 @@ class ContactGrabberImportForm extends EasyForm
         		if($new_type_name=='')
         		{
         			$element = $this->dataPanel->get('fld_type_new');
-		        	if($element->m_Label)
+		        	if($element->label)
 		            {
-		                $elementName = $element->m_Label;
+		                $elementName = $element->label;
 		            }
 		            else
 		            {
 		                $elementName = $element->text;
 		            }
         			$errorMessage = $this->getMessage("FORM_ELEMENT_REQUIRED",array($elementName));
-               		$this->m_ValidateErrors[$element->objectName] = $errorMessage;
-               		$this->processFormObjError($this->m_ValidateErrors);
+               		$this->validateErrors[$element->objectName] = $errorMessage;
+               		$this->processFormObjError($this->validateErrors);
             		return false;
         		}
         		//create a new type with specfied sharing setting
@@ -105,7 +105,7 @@ class ContactGrabberImportForm extends EasyForm
         
 
         
-		if ($this->m_ParentFormName)
+		if ($this->parentFormName)
         {
             $this->close();
             $this->renderParent();

@@ -40,10 +40,10 @@ class InputForm extends BaseForm
             	continue;
             }
             $element->setValue($value);
-            $this->m_FormInputs[$element->objectName] = $value;
+            $this->formInputs[$element->objectName] = $value;
             $value = $element->getValue();
-            if ( $element->m_FieldName)
-                $recArr[$element->m_FieldName] = $value;
+            if ( $element->fieldName)
+                $recArr[$element->fieldName] = $value;
         }
 		$this->activeRecord = $recArr;
 		return $recArr;
@@ -84,16 +84,16 @@ class InputForm extends BaseForm
     {
         if($cleanError == true)
         {
-            $this->m_ValidateErrors = array();
+            $this->validateErrors = array();
         }
         $this->dataPanel->rewind();
         while($this->dataPanel->valid())
         {
             /* @var $element Element */
             $element = $this->dataPanel->current();
-            if($element->m_Label)
+            if($element->label)
             {
-                $elementName = $element->m_Label;
+                $elementName = $element->label;
             }
             else
             {
@@ -103,7 +103,7 @@ class InputForm extends BaseForm
                     ($element->value==null || $element->value == ""))
             {
                 $errorMessage = $this->getMessage("FORM_ELEMENT_REQUIRED",array($elementName));
-                $this->m_ValidateErrors[$element->objectName] = $errorMessage;
+                $this->validateErrors[$element->objectName] = $errorMessage;
                 //return false;
             }
             elseif ($element->value!==null && $element->Validate() == false)
@@ -114,14 +114,14 @@ class InputForm extends BaseForm
                 { //Couldn't get a clear error message so let's try this
                     $errorMessage = $validateService->getErrorMessage($element->validator, $elementName);
                 }
-                $this->m_ValidateErrors[$element->objectName] = $errorMessage;
+                $this->validateErrors[$element->objectName] = $errorMessage;
                 //return false;
             }
             $this->dataPanel->next() ;
         }
-        if (count($this->m_ValidateErrors) > 0)
+        if (count($this->validateErrors) > 0)
         {
-            throw new ValidationException($this->m_ValidateErrors);
+            throw new ValidationException($this->validateErrors);
             return false;
         }
         return true;

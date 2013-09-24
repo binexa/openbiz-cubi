@@ -29,7 +29,7 @@ class chartService
      *
      * @var array
      */
-    public $m_PlotList;
+    public $plotList;
 
     /**
      * Initialize chartService with xml array metadata
@@ -268,7 +268,7 @@ class chartService
             $childList = explode(",",$children);
             foreach($childList as $child)
             {
-                $childPlotList[] = $this->m_PlotList[$child];
+                $childPlotList[] = $this->plotList[$child];
             }
             if ($chartType == 'GroupBar')
                 $plot = new GroupBarPlot($childPlotList);
@@ -276,7 +276,7 @@ class chartService
                 $plot = new AccBarPlot($childPlotList);
         }
 
-        $this->m_PlotList[$id] = $plot;
+        $this->plotList[$id] = $plot;
 
         if ($visible == 1)
             return $plot;

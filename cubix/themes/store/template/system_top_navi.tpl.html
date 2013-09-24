@@ -1,8 +1,8 @@
 <div style="padding-left:20px;">
 <a href="javascript:"><img style="margin-top:5px;" border="0" src="{$image_url}/nav_root_icon.gif" />Cubi System</a>
 	{foreach item=item from=$widget.breadcrumb}
-		{if $item->m_URL !=""}
-		<a href="{$item->m_URL}">
+		{if $item->url !=""}
+		<a href="{$item->url}">
 		{else}
 		<a href="javascript:">
 		{/if}

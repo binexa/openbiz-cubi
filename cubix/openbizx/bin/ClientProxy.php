@@ -324,9 +324,9 @@ class ClientProxy
     {
         if ($this->isRPC) {
             if ($type == 'Form') {
-                $this->m_FormsOutput[] = $this->_callClientFunction($script);
+                $this->formsOutput[] = $this->_callClientFunction($script);
             } elseif ($type == 'Other') {
-                $this->m_OtherOutput[] = $this->_callClientFunction($script);
+                $this->otherOutput[] = $this->_callClientFunction($script);
             }
         } else {
             echo $script;

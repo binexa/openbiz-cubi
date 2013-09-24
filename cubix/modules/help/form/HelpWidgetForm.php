@@ -13,8 +13,8 @@
 
 class HelpWidgetForm extends EasyForm
 {
-	public $m_EncodedURL ;
-	public $m_TutorialId =false;
+	public $encodedURL ;
+	public $tutorialId =false;
 	
 	protected $categoryDO 		= "help.do.HelpCategoryDO";
 	protected $categoryMappingDO 	= "help.do.HelpCategoryMappingDO";
@@ -53,8 +53,8 @@ class HelpWidgetForm extends EasyForm
 			return ;
 		}
 		
-		$this->m_EncodedURL = base64_encode('/'.$url);;		
-		$this->m_TutorialId = BizSystem::getService("help.lib.TutorialService")->getTutorialId('/'.$url);
+		$this->encodedURL = base64_encode('/'.$url);;		
+		$this->tutorialId = BizSystem::getService("help.lib.TutorialService")->getTutorialId('/'.$url);
 	
 		//search cat_id from mapping table
 		$mappingObj  =  BizSystem::GetObject($this->categoryMappingDO,1);
@@ -102,7 +102,7 @@ class HelpWidgetForm extends EasyForm
 	public function render(){		
 		$result = parent::render();				
 		if($result){			
-			$script ="<script>setTimeout(\"Openbiz.CallFunction('".$this->objectName.".AutoShowTutorial($this->m_EncodedURL)')\",1000);</script>";
+			$script ="<script>setTimeout(\"Openbiz.CallFunction('".$this->objectName.".AutoShowTutorial($this->encodedURL)')\",1000);</script>";
 			$result.= $script;
 		}
 		return $result;

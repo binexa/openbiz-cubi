@@ -22,7 +22,7 @@ interface ModuleLoadHandler
 
 class DefaultModuleLoadHandler implements ModuleLoadHandler
 {
-	protected $m_RoleName;
+	protected $roleName;
 	protected $moduleName;
 	
     public function beforeLoadingModule($moduelLoader)
@@ -32,7 +32,7 @@ class DefaultModuleLoadHandler implements ModuleLoadHandler
     public function postLoadingModule($moduelLoader)
     {
 
-    	$roleRec = BizSystem::getObject("system.do.RoleDO")->fetchOne("[name]='{$this->m_RoleName}'");
+    	$roleRec = BizSystem::getObject("system.do.RoleDO")->fetchOne("[name]='{$this->roleName}'");
     	$memberRoleId = $roleRec['Id'];
     	
     	$actionList = BizSystem::getObject("system.do.AclActionDO")->directfetch("[module]='{$this->moduleName}'");
@@ -55,7 +55,7 @@ class DefaultModuleLoadHandler implements ModuleLoadHandler
     
     public function postUnloadModule($moduleLoader)
     {
-    	$roleRec = BizSystem::getObject("system.do.RoleDO")->fetchOne("[name]='{$this->m_RoleName}'");
+    	$roleRec = BizSystem::getObject("system.do.RoleDO")->fetchOne("[name]='{$this->roleName}'");
     	$memberRoleId = $roleRec['Id'];
     	$roleRec->delete();
     	

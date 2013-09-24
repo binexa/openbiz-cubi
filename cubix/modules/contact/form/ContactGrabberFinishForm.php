@@ -47,7 +47,7 @@ class ContactGrabberFinishForm extends EasyForm
         		break;
         }
         
-        if ($this->m_ParentFormName)
+        if ($this->parentFormName)
         {
             $this->close();
             $this->renderParent();

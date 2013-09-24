@@ -28,7 +28,7 @@ class LabelBar extends ColumnBar {
         $func = $this->getFunction();
         $height = $this->height;
         $width = $this->width - 80;        
-        $max_value = Expression::evaluateExpression($this->m_MaxValue, $this->getFormObj());
+        $max_value = Expression::evaluateExpression($this->maxValue, $this->getFormObj());
         
         $width_rate = ($value/$max_value);
         

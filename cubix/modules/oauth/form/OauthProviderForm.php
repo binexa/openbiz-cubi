@@ -1,7 +1,7 @@
 <?php
 class OauthProviderForm extends EasyForm
 {
-	protected $m_type;
+	protected $type;
 	protected $m_key;
 	protected $m_secret;
 
@@ -15,7 +15,7 @@ class OauthProviderForm extends EasyForm
 			$ErrorKey=array();
 			foreach($recArr as $key=>$val)
 			{	
-				$this->m_type=$val['type'];
+				$this->type=$val['type'];
 				$this->m_key=$val['key'];
 				$this->m_secret=$val['value'];
 				if(!$this->GetTestOauth())
@@ -29,11 +29,11 @@ class OauthProviderForm extends EasyForm
 		 {
 			$where=implode(',',$ErrorKey);
 			$do->updateRecords('[status]=0',"[Id] in ($where)"); 
-			$this->m_Errors = array("test"=>$this->getMessage("OAUTH_OFF"));
+			$this->errors = array("test"=>$this->getMessage("OAUTH_OFF"));
 		 }
 		 else
 		 {
-			$this->m_Notices = array("test"=>$this->getMessage("TEST_SUCCESS"));
+			$this->notices = array("test"=>$this->getMessage("TEST_SUCCESS"));
 		 }
 		
 		$this->rerender();
@@ -41,7 +41,7 @@ class OauthProviderForm extends EasyForm
 	
 	public function TestProvider($RecType=false)
 	{	
-		if(!$this->m_type)
+		if(!$this->type)
 		{
 			
 			switch(strtoupper($this->formType))
@@ -56,7 +56,7 @@ class OauthProviderForm extends EasyForm
 					$Record=$this->getActiveRecord();
 					break;
 			}
-			$this->m_type=$Record['type'];
+			$this->type=$Record['type'];
 			$this->m_key=$Record['key'];
 			$this->m_secret=$Record['value'];
 		}
@@ -67,11 +67,11 @@ class OauthProviderForm extends EasyForm
 
 		if($this->GetTestOauth())
 		{
-			$this->m_Notices = array("test"=>$this->getMessage("TEST_SUCCESS"));
+			$this->notices = array("test"=>$this->getMessage("TEST_SUCCESS"));
 		}
 		else
 		{
-			$this->m_Errors = array("test"=>$this->getMessage("TEST_FAILURE"));
+			$this->errors = array("test"=>$this->getMessage("TEST_FAILURE"));
 			$do=BizSystem::getObject('oauth.do.OauthProviderDO');
 			$do->updateRecords('[status]=0',"[Id] ={$Record['Id']}"); 
 
@@ -79,7 +79,7 @@ class OauthProviderForm extends EasyForm
 	
 		if($RecType)
 		{
-			if($this->m_Errors)
+			if($this->errors)
 			{
 				//BizSystem::ClientProxy()->showClientAlert($this->getMessage("TEST_FAILURE"));
 				$this->updateForm();
@@ -99,7 +99,7 @@ class OauthProviderForm extends EasyForm
 	}
 	
 	public function UpdateRecord(){
-		$this->m_type = BizSystem::ClientProxy()->getFormInputs("fld_type");
+		$this->type = BizSystem::ClientProxy()->getFormInputs("fld_type");
 		$this->m_key= BizSystem::ClientProxy()->getFormInputs("fld_key");	
 		$this->m_secret = BizSystem::ClientProxy()->getFormInputs("fld_value");	
 		if($this->TestProvider(true))
@@ -110,7 +110,7 @@ class OauthProviderForm extends EasyForm
 	
 	public function GetTestOauth(){
 
-		$oatuthType=OPENBIZ_APP_MODULE_PATH."/oauth/libs/{$this->m_type}.class.php";
+		$oatuthType=OPENBIZ_APP_MODULE_PATH."/oauth/libs/{$this->type}.class.php";
 		if(!file_exists($oatuthType))
 		{
 			return false;
@@ -120,12 +120,12 @@ class OauthProviderForm extends EasyForm
 		//$whitelist_arr=array('qq','sina','alipay','google','facebook');
 		$whitelist_arr = BizSystem::getService(CUBI_LOV_SERVICE)->getDictionary("oauth.lov.ProviderLOV(Provider)");
 		
-		if(!in_array($this->m_type,$whitelist_arr)){
+		if(!in_array($this->type,$whitelist_arr)){
 			throw new Exception('Unknown service');
 			return;
 		}
 		include_once $oatuthType;
-		$obj = new $this->m_type;
+		$obj = new $this->type;
 		$rec_arr=$obj->test($this->m_key,$this->m_secret);
 		if($rec_arr['oauth_token'])
 		{

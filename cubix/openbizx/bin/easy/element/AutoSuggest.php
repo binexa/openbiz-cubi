@@ -45,19 +45,19 @@ class AutoSuggest extends OptionElement
 			$inputName = $this->objectName;
 			$style = $this->getStyle();
 			$sHTML = "<input type=\"text\" id=\"$inputName\" name=\"$inputName\" value=\"$this->value\"/ $style>\n";
-			$sHTML .= "<script>Openbiz.AutoSuggest.init('$this->m_FormName','AutoSuggest','$inputName');</script>";
+			$sHTML .= "<script>Openbiz.AutoSuggest.init('$this->formName','AutoSuggest','$inputName');</script>";
 			return $sHTML;
 		}
 		
 		BizSystem::clientProxy()->appendScripts("scriptaculous", "scriptaculous.js");
-        $selFrom = $this->m_SelectFrom;
+        $selFrom = $this->selectFrom;
         $pos0 = strpos($selFrom, "[");
         $pos1 = strpos($selFrom, "]");
         $first_half = substr($selFrom, 0, $pos1);
         $inputName = $this->objectName;
         $inputChoice = $this->objectName . '_choices';
         $style = $this->getStyle();
-        if ($formobj->m_Errors[$this->objectName]) {
+        if ($formobj->errors[$this->objectName]) {
             $func .= "onchange=\"this.className='$this->cssClass'\"";
         } else {
             $func .= "onfocus=\"this.className='$this->m_cssFocusClass'\" onblur=\"this.className='$this->cssClass'\"";
@@ -67,12 +67,12 @@ class AutoSuggest extends OptionElement
             $inputChoice = $this->objectName . '_hidden_choices';
             $sHTML = "<input type=\"text\" id=\"$hInputName\" name=\"$hInputName\" value=\"$this->value\" $style $func/>\n";
             $sHTML .= "<div id=\"$inputChoice\" class=\"autocomplete\" style=\"display:none\"></div>\n";
-            $sHTML .= "<script>Openbiz.AutoSuggest.init('$this->m_FormName','AutoSuggest','$hInputName','$inputChoice');</script>";
+            $sHTML .= "<script>Openbiz.AutoSuggest.init('$this->formName','AutoSuggest','$hInputName','$inputChoice');</script>";
             $sHTML .= "<INPUT NAME=\"" . $inputName . "\" ID=\"" . $inputName . "\" VALUE=\"" . $this->value . "\" type=\"hidden\" >";
         } else {
             $sHTML = "<input type=\"text\" id=\"$inputName\" name=\"$inputName\" value=\"$this->value\" $style $func/>\n";
             $sHTML .= "<div id=\"$inputChoice\" class=\"autocomplete\" style=\"display:none\"></div>\n";
-            $sHTML .= "<script>Openbiz.AutoSuggest.init('$this->m_FormName','AutoSuggest','$inputName','$inputChoice');</script>";
+            $sHTML .= "<script>Openbiz.AutoSuggest.init('$this->formName','AutoSuggest','$inputName','$inputChoice');</script>";
         }
         return $sHTML;
     }

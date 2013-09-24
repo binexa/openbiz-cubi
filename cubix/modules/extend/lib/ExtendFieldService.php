@@ -13,8 +13,8 @@
 
 class ExtendFieldService
 {
-	protected $m_ExtendSettingTranslationDO = "extend.do.ExtendSettingTranslationDO";
-	protected $m_ExtendSettingOptionDO 		= "extend.do.ExtendSettingOptionDO";
+	protected $extendSettingTranslationDO = "extend.do.ExtendSettingTranslationDO";
+	protected $extendSettingOptionDO 		= "extend.do.ExtendSettingOptionDO";
 		
 	
 	public function translateElemArr($elemArr,$setting_id)
@@ -26,7 +26,7 @@ class ExtendFieldService
 		}
 		$setting_id = (int)$setting_id;
 		
-		$transDO = BizSystem::getObject($this->m_ExtendSettingTranslationDO,1);
+		$transDO = BizSystem::getObject($this->extendSettingTranslationDO,1);
 		$transRec = $transDO->fetchOne("[setting_id]='$setting_id' AND [lang]='$lang'");
 		if(!$transRec)
 		{
@@ -37,10 +37,10 @@ class ExtendFieldService
 		$elemArr['DEFAULTVALUE'] = $transRec['defaultvalue'];
 		if($elemArr['SELECTFROM'])
 		{
-			$transOptDO = BizSystem::getObject($this->m_ExtendSettingOptionDO,1);
+			$transOptDO = BizSystem::getObject($this->extendSettingOptionDO,1);
 			$opts = $transOptDO->directfetch("[setting_id]='".$setting_id."' AND [lang]='$lang'");			
 			if($opts && $opts->count()>0){
-				$elemArr['SELECTFROM'] = $this->m_ExtendSettingOptionDO."[text:value],[setting_id]='".$setting_id."' AND [lang]='$lang' ";				
+				$elemArr['SELECTFROM'] = $this->extendSettingOptionDO."[text:value],[setting_id]='".$setting_id."' AND [lang]='$lang' ";				
 			}
 		}
 		return $elemArr;		

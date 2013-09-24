@@ -26,7 +26,7 @@
  */
 class ColumnList extends OptionElement
 {
-    public $m_Sortable;
+    public $sortable;
     public $columnStyle;
 
     /**
@@ -38,7 +38,7 @@ class ColumnList extends OptionElement
     protected function readMetaData(&$xmlArr)
     {
         parent::readMetaData($xmlArr);
-        $this->m_Sortable = isset($xmlArr["ATTRIBUTES"]["SORTABLE"]) ? $xmlArr["ATTRIBUTES"]["SORTABLE"] : null;
+        $this->sortable = isset($xmlArr["ATTRIBUTES"]["SORTABLE"]) ? $xmlArr["ATTRIBUTES"]["SORTABLE"] : null;
         $this->link = isset($xmlArr["ATTRIBUTES"]["LINK"]) ? $xmlArr["ATTRIBUTES"]["LINK"] : null;
         $this->columnStyle = $this->style;
     }
@@ -51,7 +51,7 @@ class ColumnList extends OptionElement
      */
     public function setSortFlag($flag=null)
     {
-        $this->m_SortFlag = $flag;
+        $this->sortFlag = $flag;
     }
 
     /**
@@ -75,26 +75,26 @@ class ColumnList extends OptionElement
      */
    public function renderLabel()
     {
-        if ($this->m_Sortable == "Y")
+        if ($this->sortable == "Y")
         {
             $rule = $this->objectName;
 
-            $function = $this->m_FormName . ".SortRecord($rule,$this->m_SortFlag)";
-            if($this->m_SortFlag == "ASC" || $this->m_SortFlag == "DESC"){
+            $function = $this->formName . ".SortRecord($rule,$this->sortFlag)";
+            if($this->sortFlag == "ASC" || $this->sortFlag == "DESC"){
             	$class=" class=\"current\" ";
             }else{
             	$class=" class=\"normal\" ";
             }
-            if ($this->m_SortFlag == "ASC")
+            if ($this->sortFlag == "ASC")
             	$span_class = " class=\"sort_up\" ";
-            else if ($this->m_SortFlag == "DESC")
+            else if ($this->sortFlag == "DESC")
                 $span_class = " class=\"sort_down\" ";
-            $sHTML = "<a href=javascript:Openbiz.CallFunction('" . $function . "') $class ><span $span_class >" . $this->m_Label ."</span>";            
+            $sHTML = "<a href=javascript:Openbiz.CallFunction('" . $function . "') $class ><span $span_class >" . $this->label ."</span>";            
             $sHTML .= "</a>";
         }
         else
         {
-            $sHTML = $this->m_Label;
+            $sHTML = $this->label;
         }
         return $sHTML;
     }

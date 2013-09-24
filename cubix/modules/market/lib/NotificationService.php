@@ -13,12 +13,12 @@
 
 class NotificationService extends MetaObject
 {
-	protected $m_InstalledDO = "market.installed.do.InstalledDO";
-	protected $m_RepositoryDO = "market.repository.do.RepositoryDO";
+	protected $installedDO = "market.installed.do.InstalledDO";
+	protected $repositoryDO = "market.repository.do.RepositoryDO";
 	
 	protected function getRepoInfo($uid)
 	{
-		$repoRec = BizSystem::getObject($this->m_RepositoryDO,1)->fetchOne("[repository_uid]='$uid'");
+		$repoRec = BizSystem::getObject($this->repositoryDO,1)->fetchOne("[repository_uid]='$uid'");
 		return $repoRec;
 	}	
 	
@@ -56,7 +56,7 @@ class NotificationService extends MetaObject
 	protected function _checkAppUpdate()
 	{
 		
-		$resultSet = BizSystem::getObject($this->m_InstalledDO)->directfetch("[install_state]='OK'");
+		$resultSet = BizSystem::getObject($this->installedDO)->directfetch("[install_state]='OK'");
 		//below code copied from appUpdateListFrom
 		$repoAppsArr = array();
 		$repoIdsArr = array();
@@ -138,7 +138,7 @@ class NotificationService extends MetaObject
 		$checkLogRec = BizSystem::getObject("notification.do.NotificationCheckerDO")->fetchOne("[checker]='market_checker'");
 		$lastCheckTime = $checkLogRec['last_checktime'];
 		
-		$installedRepos = BizSystem::getObject($this->m_RepositoryDO)->directFetch();		
+		$installedRepos = BizSystem::getObject($this->repositoryDO)->directFetch();		
 		foreach($installedRepos as $repo)
 		{
 			$repo_id = $repo['Id'];

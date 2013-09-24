@@ -9,7 +9,7 @@ class ColumnSorting extends ColumnText
 		$formobj = $this->getFormObj();		
         
         
-		//$this->m_EventHandlers = null;
+		//$this->eventHandlers = null;
 		$value = $this->text ? $this->getText() : $this->value;
         
         if ($value === null || $value ==="")
@@ -18,7 +18,7 @@ class ColumnSorting extends ColumnText
         $style = $this->getStyle();
         $id = $this->objectName;
 
-        if ($this->m_Translatable == 'Y')
+        if ($this->translatable == 'Y')
             $value = $this->translateString($value);
         
         if((int)$this->maxLength>0){
@@ -69,15 +69,15 @@ class ColumnSorting extends ColumnText
         // loop through the event handlers
         $func = "";
 
-        if ($this->m_EventHandlers == null)
+        if ($this->eventHandlers == null)
             return null;
         $formobj = $this->getFormObj();
         
-        $eventHandler = $this->m_EventHandlers->get($event_name);
+        $eventHandler = $this->eventHandlers->get($event_name);
                 
         $ehName = $eventHandler->objectName;
-        $event = $eventHandler->m_Event;
-        $type = $eventHandler->m_FunctionType;
+        $event = $eventHandler->event;
+        $type = $eventHandler->functionType;
         if (!$event) return;
         if($events[$event]!=""){
            $events[$event]=array_merge(array($events[$event]),array($eventHandler->getFormedFunction()));

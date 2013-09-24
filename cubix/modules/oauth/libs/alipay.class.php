@@ -22,15 +22,15 @@ class alipay extends oauthClass
 {
 	protected $type='alipay';
 	protected $m_loginUrl;
-	private $m_akey;
+	private $akey;
 	private $m_skey;
-	private $m_aliapy_config;
+	private $aliapy_config;
  
 		
 	public function __construct() {
 		parent::__construct();
 		$recArr=$this->getProviderList(); 
-		$this->m_akey = $recArr['key'];
+		$this->akey = $recArr['key'];
 		$this->m_skey =$recArr['value'];
 		$aliapy_config['partner']      = $recArr['key'];
 		//安全检验码，以数字和字母组成的32位字符

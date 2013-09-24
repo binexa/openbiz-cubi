@@ -96,7 +96,7 @@ class doTriggerService extends MetaObject
         /* @var $doTrigger DOTrigger */
         foreach ($this->dOTriggerList as $doTrigger)
         {        	
-            if ($doTrigger->m_TriggerType == $triggerType){            	;
+            if ($doTrigger->triggerType == $triggerType){            	;
                 $this->executeAllActions($doTrigger, $dataObj);
             }
         }
@@ -114,7 +114,7 @@ class doTriggerService extends MetaObject
         if (! $this->matchCondition($doTrigger, $dataObj))
             return;
         /* @var $triggerAction TriggerAction */            
-        foreach ($doTrigger->m_TriggerActions as $triggerAction)
+        foreach ($doTrigger->triggerActions as $triggerAction)
         {
             $this->executeAction($triggerAction, $dataObj);
         }
@@ -130,7 +130,7 @@ class doTriggerService extends MetaObject
     protected function matchCondition($doTrigger, $dataObj)
     {
         // evaluate expression
-        $condExpr = $doTrigger->m_TriggerCondition["Expression"];
+        $condExpr = $doTrigger->triggerCondition["Expression"];
         if ($condExpr)
         {
             $exprVal = Expression::evaluateExpression($condExpr, $dataObj);
@@ -138,7 +138,7 @@ class doTriggerService extends MetaObject
                 return false;
         }
         // do query with extra search rule, check if there's any record returned
-        $extraSearchRule = $doTrigger->m_TriggerCondition["ExtraSearchRule"];
+        $extraSearchRule = $doTrigger->triggerCondition["ExtraSearchRule"];
         if ($extraSearchRule)
         {
             $realSearchRule = Expression::evaluateExpression($extraSearchRule, $dataObj);
@@ -169,14 +169,14 @@ class doTriggerService extends MetaObject
             foreach ($triggerAction->argList as $argName => $argValue)
                 $argList[$argName] = Expression::evaluateExpression($argValue, $dataObj);
             // check the immediate flag
-            if ($triggerAction->m_Immediate == "Y") // call the method if Immediate is "Y"
+            if ($triggerAction->immediate == "Y") // call the method if Immediate is "Y"
                 $this->$methodName($argList);
             else
             { // put it to a passive queue
                 /* $passiveQueueSvc->Push($methodName,
                                       $argList, 
                                       $triggerAction->delayMinutes, 
-                                      $triggerAction->m_RepeatMinutes); */
+                                      $triggerAction->repeatMinutes); */
             }
         }
     }
@@ -194,7 +194,7 @@ class doTriggerService extends MetaObject
         $actionMsg["Method"] = $methodName;
         $actionMsg["ArgList"] = $argList;
         $actionMsg["DelayMinutes"] = $triggerAction->delayMinutes;
-        $actionMsg["RepeatMinutes"] = $triggerAction->m_RepeatMinutes;
+        $actionMsg["RepeatMinutes"] = $triggerAction->repeatMinutes;
         $actionMsg["StartTime"] = strftime("%Y-%m-%d %H:%M:%S");
     }
 
@@ -339,21 +339,21 @@ class doTriggerService extends MetaObject
  */
 class DOTrigger
 {
-    public $m_TriggerType;
+    public $triggerType;
 
     /**
      * Trigger condition
      *
      * @var array
      */
-    public $m_TriggerCondition = array();
+    public $triggerCondition = array();
 
     /**
      * Iterator of TriggerAction
      * 
      * @var MetaIterator
      */
-    public $m_TriggerActions;
+    public $triggerActions;
 
     /**
      * Initialize DOTrigger with xml array metadata
@@ -363,16 +363,16 @@ class DOTrigger
      */
     public function __construct ($xmlArr)
     {
-        $this->m_TriggerType = $xmlArr["ATTRIBUTES"]["TRIGGERTYPE"];
+        $this->triggerType = $xmlArr["ATTRIBUTES"]["TRIGGERTYPE"];
         // read in trigger condition
-        $this->m_TriggerCondition["Expression"] = $xmlArr["TRIGGERCONDITION"]["ATTRIBUTES"]["EXPRESSION"];
-        $this->m_TriggerCondition["ExtraSearchRule"] = $xmlArr["TRIGGERCONDITION"]["ATTRIBUTES"]["EXTRASEARCHRULE"];
+        $this->triggerCondition["Expression"] = $xmlArr["TRIGGERCONDITION"]["ATTRIBUTES"]["EXPRESSION"];
+        $this->triggerCondition["ExtraSearchRule"] = $xmlArr["TRIGGERCONDITION"]["ATTRIBUTES"]["EXTRASEARCHRULE"];
         if($xmlArr["TRIGGERACTIONS"]["TRIGGERACTION"][0]){
         	foreach($xmlArr["TRIGGERACTIONS"]["TRIGGERACTION"] as $key=>$value){	
-        		$this->m_TriggerActions[] = new TriggerAction($xmlArr["TRIGGERACTIONS"]["TRIGGERACTION"][$key]);
+        		$this->triggerActions[] = new TriggerAction($xmlArr["TRIGGERACTIONS"]["TRIGGERACTION"][$key]);
         	}
         }else{
-        	$this->m_TriggerActions = new MetaIterator($xmlArr["TRIGGERACTIONS"]["TRIGGERACTION"], "TriggerAction");
+        	$this->triggerActions = new MetaIterator($xmlArr["TRIGGERACTIONS"]["TRIGGERACTION"], "TriggerAction");
         }
         
     }
@@ -390,9 +390,9 @@ class TriggerAction extends MetaObject
 {
     public $objectName;
     public $action;
-    public $m_Immediate;
+    public $immediate;
     public $delayMinutes;
-    public $m_RepeatMinutes;
+    public $repeatMinutes;
     public $argList = array();
 
     /**
@@ -405,9 +405,9 @@ class TriggerAction extends MetaObject
     {
         $this->objectName = $xmlArr["ATTRIBUTES"]["NAME"];
         $this->action = $xmlArr["ATTRIBUTES"]["ACTION"];
-        $this->m_Immediate = $xmlArr["ATTRIBUTES"]["IMMEDIATE"];
+        $this->immediate = $xmlArr["ATTRIBUTES"]["IMMEDIATE"];
         $this->delayMinutes = $xmlArr["ATTRIBUTES"]["DELAYMINUTES"];
-        $this->m_RepeatMinutes = $xmlArr["ATTRIBUTES"]["REPEATMINUTES"];
+        $this->repeatMinutes = $xmlArr["ATTRIBUTES"]["REPEATMINUTES"];
         $this->readMetaCollection($xmlArr["ACTIONARGUMENT"], $tmpList);
         if (! $tmpList)
             return;

@@ -17,12 +17,12 @@
 
 class EasyFormGrouping extends EasyForm
 {
-	protected $m_GroupBy;
+	protected $groupBy;
 	
 	protected function readMetadata(&$xmlArr)
     {
         parent::readMetaData($xmlArr);
-    	$this->m_GroupBy = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["GROUPBY"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["GROUPBY"] : null;    
+    	$this->groupBy = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["GROUPBY"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["GROUPBY"] : null;    
     }
 	
     public function fetchDataGroup()
@@ -36,14 +36,14 @@ class EasyFormGrouping extends EasyForm
         else
             $dataObj->clearSearchRule();
         
-        if(strpos($this->m_GroupBy,":")){
-        	preg_match("/\[(.*?):(.*?)\]/si",$this->m_GroupBy,$match);        	
+        if(strpos($this->groupBy,":")){
+        	preg_match("/\[(.*?):(.*?)\]/si",$this->groupBy,$match);        	
         	$GroupFieldName = $match[1];
         	$GroupField = $match[2];
 	        
         }else{
 	        
-	        $GroupField = str_replace("[","",$this->m_GroupBy);
+	        $GroupField = str_replace("[","",$this->groupBy);
 	        $GroupField = str_replace("]","",$GroupField);        	
         }
         $GroupSQLRule="GROUP BY [$GroupField]";
@@ -52,12 +52,12 @@ class EasyFormGrouping extends EasyForm
     	//within each group, search records like before
         QueryStringParam::setBindValues($this->searchRuleBindValues);       
 
-        if ($this->m_FixSearchRule)
+        if ($this->fixSearchRule)
         {
             if ($this->searchRule)
-                $searchRule = $this->searchRule . " AND " . $this->m_FixSearchRule;
+                $searchRule = $this->searchRule . " AND " . $this->fixSearchRule;
             else
-                $searchRule = $this->m_FixSearchRule;
+                $searchRule = $this->fixSearchRule;
         }
         else
             $searchRule = $this->searchRule;
@@ -66,8 +66,8 @@ class EasyFormGrouping extends EasyForm
         
         $resultRecords = $dataObj->fetch();
         $this->totalRecords = $dataObj->count();
-        if ($this->m_Range && $this->m_Range > 0)
-            $this->totalPages = ceil($this->totalRecords/$this->m_Range);
+        if ($this->range && $this->range > 0)
+            $this->totalPages = ceil($this->totalRecords/$this->range);
             
         $this->totalPagesBak = $this->totalPages;
         QueryStringParam::ReSet();
@@ -81,12 +81,12 @@ class EasyFormGrouping extends EasyForm
 	            $dataObj->clearSearchRule();
         	QueryStringParam::setBindValues($this->searchRuleBindValues);
         	$group_val = $record[$GroupField];
-	        if ($this->m_FixSearchRule)
+	        if ($this->fixSearchRule)
 	        {
 	            if ($this->searchRule)
-	                $searchRule = $this->searchRule . " AND " . $this->m_FixSearchRule;
+	                $searchRule = $this->searchRule . " AND " . $this->fixSearchRule;
 	            else
-	                $searchRule = $this->m_FixSearchRule;
+	                $searchRule = $this->fixSearchRule;
 	        }
 	        else
 	            $searchRule = $this->searchRule;

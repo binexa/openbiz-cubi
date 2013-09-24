@@ -52,11 +52,11 @@ class FormSelectorWidget extends EasyForm
 		}
 		$viewObj = $this->getViewObject();
 		//$viewObj = $this->getView();
-		if($viewObj->m_LastRenderedForm && 
-			$viewObj->m_LastRenderedForm!='help.form.HelpWidgetListForm' && 
-			$viewObj->m_LastRenderedForm!='notification.widget.NotificationWidgetForm'
+		if($viewObj->lastRenderedForm && 
+			$viewObj->lastRenderedForm!='help.form.HelpWidgetListForm' && 
+			$viewObj->lastRenderedForm!='notification.widget.NotificationWidgetForm'
 			){
-			$this->lastViewMode = $viewObj->m_LastRenderedForm;
+			$this->lastViewMode = $viewObj->lastRenderedForm;
 		}
 		$recArr = $this->readInputRecord();
 		$this->viewMode = $recArr['viewmode'];

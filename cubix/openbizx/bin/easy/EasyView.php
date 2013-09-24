@@ -25,16 +25,16 @@
  */
 class EasyView extends MetaObject implements iSessionObject
 {
-    public $m_Title;
-    public $m_Keywords;
+    public $title;
+    public $keywords;
 	public $templateEngine;
     public $templateFile;
-    public $m_ViewSet;
-    public $m_Tab;
-    public $m_FormRefs;
-    public $m_Widgets;
+    public $viewSet;
+    public $tab;
+    public $formRefs;
+    public $widgets;
 
-    public $m_IsPopup = false;
+    public $isPopup = false;
     public $height;
     public $width;
     public $consoleOutput = true;
@@ -43,7 +43,7 @@ class EasyView extends MetaObject implements iSessionObject
     protected $objectMessages;
     public $cacheLifeTime = 0;
     
-    public $m_LastRenderedForm;
+    public $lastRenderedForm;
 
     /**
      * Initialize EasyView with xml array
@@ -66,58 +66,58 @@ class EasyView extends MetaObject implements iSessionObject
     {
         parent::readMetaData($xmlArr);
         $this->objectName = $this->prefixPackage($this->objectName);
-        $this->m_Title = isset($xmlArr["EASYVIEW"]["ATTRIBUTES"]["TITLE"]) ? $xmlArr["EASYVIEW"]["ATTRIBUTES"]["TITLE"] : null;
-        $this->m_Keywords = isset($xmlArr["EASYVIEW"]["ATTRIBUTES"]["KEYWORDS"]) ? $xmlArr["EASYVIEW"]["ATTRIBUTES"]["KEYWORDS"] : null;
+        $this->title = isset($xmlArr["EASYVIEW"]["ATTRIBUTES"]["TITLE"]) ? $xmlArr["EASYVIEW"]["ATTRIBUTES"]["TITLE"] : null;
+        $this->keywords = isset($xmlArr["EASYVIEW"]["ATTRIBUTES"]["KEYWORDS"]) ? $xmlArr["EASYVIEW"]["ATTRIBUTES"]["KEYWORDS"] : null;
         $this->templateEngine = isset($xmlArr["EASYVIEW"]["ATTRIBUTES"]["TEMPLATEENGINE"]) ? $xmlArr["EASYVIEW"]["ATTRIBUTES"]["TEMPLATEENGINE"] : null;
         $this->templateFile = isset($xmlArr["EASYVIEW"]["ATTRIBUTES"]["TEMPLATEFILE"]) ? $xmlArr["EASYVIEW"]["ATTRIBUTES"]["TEMPLATEFILE"] : null;
-        $this->m_ViewSet = isset($xmlArr["EASYVIEW"]["ATTRIBUTES"]["VIEWSET"]) ? $xmlArr["EASYVIEW"]["ATTRIBUTES"]["VIEWSET"] : null;
-        $this->m_Tab = isset($xmlArr["EASYVIEW"]["ATTRIBUTES"]["TAB"]) ? $xmlArr["EASYVIEW"]["ATTRIBUTES"]["TAB"] : null;
+        $this->viewSet = isset($xmlArr["EASYVIEW"]["ATTRIBUTES"]["VIEWSET"]) ? $xmlArr["EASYVIEW"]["ATTRIBUTES"]["VIEWSET"] : null;
+        $this->tab = isset($xmlArr["EASYVIEW"]["ATTRIBUTES"]["TAB"]) ? $xmlArr["EASYVIEW"]["ATTRIBUTES"]["TAB"] : null;
 
-        $this->m_FormRefs = new MetaIterator($xmlArr["EASYVIEW"]["FORMREFERENCES"]["REFERENCE"],"FormReference",$this);        
+        $this->formRefs = new MetaIterator($xmlArr["EASYVIEW"]["FORMREFERENCES"]["REFERENCE"],"FormReference",$this);        
         if($xmlArr["EASYVIEW"]["FORMREFERENCELIBS"])
         {
-        	$this->m_FormRefLibs = new MetaIterator($xmlArr["EASYVIEW"]["FORMREFERENCELIBS"]["REFERENCE"],"FormReference",$this);
+        	$this->formRefLibs = new MetaIterator($xmlArr["EASYVIEW"]["FORMREFERENCELIBS"]["REFERENCE"],"FormReference",$this);
         }
     	if($xmlArr["EASYVIEW"]["WIDGETS"])
         {
-        	$this->m_Widgets = new MetaIterator($xmlArr["EASYVIEW"]["WIDGETS"]["REFERENCE"],"FormReference",$this);
+        	$this->widgets = new MetaIterator($xmlArr["EASYVIEW"]["WIDGETS"]["REFERENCE"],"FormReference",$this);
         }
         $this->messageFile = isset($xmlArr["EASYVIEW"]["ATTRIBUTES"]["MESSAGEFILE"]) ? $xmlArr["EASYVIEW"]["ATTRIBUTES"]["MESSAGEFILE"] : null;
-        $this->objectMessages = Resource::loadMessage($this->messageFile, $this->m_Package);        
+        $this->objectMessages = Resource::loadMessage($this->messageFile, $this->package);        
         $this->cacheLifeTime = isset($xmlArr["EASYVIEW"]["ATTRIBUTES"]["CACHELIFETIME"]) ? $xmlArr["EASYVIEW"]["ATTRIBUTES"]["CACHELIFETIME"] : "0";
 		
         $this->readTile($xmlArr);	// TODO: is this needed as title supports expression?
         
         $this->translate();	// translate for multi-language support
-        if (empty($this->m_Title))
-        	$this->m_Title = $this->objectDescription;
+        if (empty($this->title))
+        	$this->title = $this->objectDescription;
     }
     
     protected function readTile(&$xmlArr)
     {
     	if (isset($xmlArr["EASYVIEW"]["TILE"]))
         {
-        	$this->m_FormRefs = array();
+        	$this->formRefs = array();
         	if (isset($xmlArr["EASYVIEW"]["TILE"]["ATTRIBUTES"])) 
         	{
         		$tileName = $xmlArr["EASYVIEW"]["TILE"]["ATTRIBUTES"]["NAME"];
-        		$this->m_Tiles[$tileName] = new MetaIterator($xmlArr["EASYVIEW"]["TILE"]["REFERENCE"],"FormReference",$this);
+        		$this->tiles[$tileName] = new MetaIterator($xmlArr["EASYVIEW"]["TILE"]["REFERENCE"],"FormReference",$this);
         	}
         	else 
         	{
         		foreach ($xmlArr["EASYVIEW"]["TILE"] as $child)
         		{
         			$tileName = $child["ATTRIBUTES"]["NAME"];
-	        		$this->m_Tiles[$tileName] = new MetaIterator($child["REFERENCE"],"FormReference",$this);
+	        		$this->tiles[$tileName] = new MetaIterator($child["REFERENCE"],"FormReference",$this);
         		}
         	}
-        	//echo "<pre>"; print_r($this->m_Tiles); echo "</pre>"; 
+        	//echo "<pre>"; print_r($this->tiles); echo "</pre>"; 
         	$tmp = array();
-        	$this->m_FormRefs = new MetaIterator($tmp,"",$this);
-        	foreach ($this->m_Tiles as $tile)
+        	$this->formRefs = new MetaIterator($tmp,"",$this);
+        	foreach ($this->tiles as $tile)
         	{
         		foreach ($tile as $ref)
-        			$this->m_FormRefs->set($ref->objectName, $ref);
+        			$this->formRefs->set($ref->objectName, $ref);
         	}
         }
     }
@@ -130,17 +130,17 @@ class EasyView extends MetaObject implements iSessionObject
      */
     public function isInFormRefLibs($formName)
     {
-    	if($this->m_FormRefLibs)
+    	if($this->formRefLibs)
     	{
-    		$this->m_FormRefLibs->rewind();
-    		while($this->m_FormRefLibs->valid())
+    		$this->formRefLibs->rewind();
+    		while($this->formRefLibs->valid())
     		{
-    			$reference = $this->m_FormRefLibs->current();
+    			$reference = $this->formRefLibs->current();
     			if($reference->objectName == $formName)
     			{
     				return true;
     			}
-    			$this->m_FormRefLibs->next();
+    			$this->formRefLibs->next();
     		}
     		return false;
     	}
@@ -174,7 +174,7 @@ class EasyView extends MetaObject implements iSessionObject
      */
     public function loadSessionVars($sessionContext)
     {
-        $sessionContext->getObjVar($this->objectName, "LastRenderedForm", $this->m_LastRenderedForm);        
+        $sessionContext->getObjVar($this->objectName, "LastRenderedForm", $this->lastRenderedForm);        
     }
     
     /**
@@ -185,7 +185,7 @@ class EasyView extends MetaObject implements iSessionObject
      */
     public function saveSessionVars($sessionContext)
     {       
-        $sessionContext->setObjVar($this->objectName, "LastRenderedForm", $this->m_LastRenderedForm);
+        $sessionContext->setObjVar($this->objectName, "LastRenderedForm", $this->lastRenderedForm);
     }
 
     /**
@@ -195,7 +195,7 @@ class EasyView extends MetaObject implements iSessionObject
      */
     public function getViewSet()
     { 
-        return $this->m_ViewSet;
+        return $this->viewSet;
     }
 
     /**
@@ -345,7 +345,7 @@ class EasyView extends MetaObject implements iSessionObject
      */
     protected function initAllForms()
     {
-        foreach ($this->m_FormRefs as $formRef)
+        foreach ($this->formRefs as $formRef)
         {
             $formRef->setViewName($this->objectName);
             $formName = $formRef->objectName;
@@ -385,7 +385,7 @@ class EasyView extends MetaObject implements iSessionObject
         // get the form object
         if (!$paramForm)
         { // get the first form name if no form is given
-            foreach ($this->m_FormRefs as $formRef)
+            foreach ($this->formRefs as $formRef)
             {
                 $paramForm = $formRef->objectName;
                 break;
@@ -412,9 +412,9 @@ class EasyView extends MetaObject implements iSessionObject
         $out['name'] = $this->objectName;
         $out['module'] = $this->getModuleName($this->objectName);
         $out['description'] = $this->objectDescription;
-        $out["keywords"] = $this->m_Keywords;
-        if ($this->m_Title)
-            $title = Expression::evaluateExpression($this->m_Title,$this);
+        $out["keywords"] = $this->keywords;
+        if ($this->title)
+            $title = Expression::evaluateExpression($this->title,$this);
         else
         	$title = $this->objectDescription;
         $out['title'] = $title;
@@ -424,9 +424,9 @@ class EasyView extends MetaObject implements iSessionObject
     protected function translate()
     {
     	$module = $this->getModuleName($this->objectName);
-    	$trans_string = I18n::t($this->m_Title, $this->getTransKey('Title'), $module, $this->getTransPrefix());
+    	$trans_string = I18n::t($this->title, $this->getTransKey('Title'), $module, $this->getTransPrefix());
     	if($trans_string){
-    		$this->m_Title =  $trans_string;
+    		$this->title =  $trans_string;
     	}
     	$trans_string = I18n::t($this->objectDescription, $this->getTransKey('Description'), $module, $this->getTransPrefix());
     	if($trans_string){
@@ -467,7 +467,7 @@ class FormReference
     public $objectDescription;
     private $_parentForm;
     public $display = true;
-    protected $m_ViewName;
+    protected $viewName;
 
     /**
      * Contructor, store form info from array to variable of class
@@ -499,20 +499,20 @@ class FormReference
     
     public function setViewName($viewName)
     {
-        $this->m_ViewName = $viewName;
+        $this->viewName = $viewName;
         $this->translate();
     }
     
     protected function translate()
     {
-    	$module = substr($this->m_ViewName,0,intval(strpos($this->m_ViewName,'.')));
+    	$module = substr($this->viewName,0,intval(strpos($this->viewName,'.')));
         //echo $this->getTransKey('Description');
         $this->objectDescription = I18n::t($this->objectDescription, $this->getTransKey('Description'), $module);
     }
     
     protected function getTransKey($name)
     {
-    	$shortViewName = substr($this->m_ViewName,intval(strrpos($this->m_ViewName,'.')+1));
+    	$shortViewName = substr($this->viewName,intval(strrpos($this->viewName,'.')+1));
     	return strtoupper($shortViewName.'_'.$this->objectName.'_'.$name);
     }
 }

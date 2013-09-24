@@ -114,9 +114,9 @@ class ViewRenderer
         //Fill other direct view variables
         $tplAttributes["module"] = $viewObj->getModuleName($viewObj->objectName);
         $tplAttributes["description"] = $viewObj->objectDescription;
-        $tplAttributes["keywords"] = $viewObj->m_Keywords;
-        if ($viewObj->m_Tiles) {
-            foreach ($viewObj->m_Tiles as $tname => $tile) {
+        $tplAttributes["keywords"] = $viewObj->keywords;
+        if ($viewObj->tiles) {
+            foreach ($viewObj->tiles as $tname => $tile) {
                 foreach ($tile as $formRef) {
                     if ($formRef->display == false)
                         continue;
@@ -125,7 +125,7 @@ class ViewRenderer
                 }
             }
         } else {
-            foreach ($viewObj->m_FormRefs as $formRef) {
+            foreach ($viewObj->formRefs as $formRef) {
                 if ($formRef->display == false)
                     continue;
                 $forms[$formRef->objectName] = BizSystem::getObject($formRef->objectName)->render();
@@ -133,8 +133,8 @@ class ViewRenderer
             }
         }
         
-        if(count($viewObj->m_Widgets)){
-    		foreach ($viewObj->m_Widgets as $formRef) {
+        if(count($viewObj->widgets)){
+    		foreach ($viewObj->widgets as $formRef) {
                 if ($formRef->display == false)
                     continue;
                 $widgets[$formRef->objectName] = BizSystem::getObject($formRef->objectName)->render();
@@ -151,14 +151,14 @@ class ViewRenderer
         // add clientProxy scripts
         $includedScripts = BizSystem::clientProxy()->getAppendedScripts();
         $tplAttributes["style_sheets"] = BizSystem::clientProxy()->getAppendedStyles();
-        if ($viewObj->m_IsPopup && $bReRender == false) {
+        if ($viewObj->isPopup && $bReRender == false) {
             $moveToCenter = "moveToCenter(self, " . $viewObj->width . ", " . $viewObj->height . ");";
             $tplAttributes["scripts"] = $includedScripts . "\n<script>\n" . $newClntObjs . $moveToCenter . "</script>\n";
         } else
             $tplAttributes["scripts"] = $includedScripts . "\n<script>\n" . $newClntObjs . "</script>\n";
         
-        if ($viewObj->m_Title)
-            $tplAttributes["title"] = Expression::evaluateExpression($viewObj->m_Title, $viewObj);
+        if ($viewObj->title)
+            $tplAttributes["title"] = Expression::evaluateExpression($viewObj->title, $viewObj);
         else
             $tplAttributes["title"] = $viewObj->objectDescription;
             
@@ -191,9 +191,9 @@ class ViewRenderer
             $smarty->assign($key, $value);
         }
         if ($viewObj->consoleOutput)
-            $smarty->display(BizSystem::getTplFileWithPath($viewObj->templateFile, $viewObj->m_Package));
+            $smarty->display(BizSystem::getTplFileWithPath($viewObj->templateFile, $viewObj->package));
         else
-            return $smarty->fetch(BizSystem::getTplFileWithPath($viewObj->templateFile, $viewObj->m_Package));
+            return $smarty->fetch(BizSystem::getTplFileWithPath($viewObj->templateFile, $viewObj->package));
     }
 
     /**
@@ -206,7 +206,7 @@ class ViewRenderer
     static protected function renderPHP ($viewObj, $tplAttributes = Array())
     {
         $view = BizSystem::getZendTemplate();
-        $tplFile = BizSystem::getTplFileWithPath($viewObj->templateFile, $viewObj->m_Package);
+        $tplFile = BizSystem::getTplFileWithPath($viewObj->templateFile, $viewObj->package);
         $view->addScriptPath(dirname($tplFile));
         
         //Translate Array of template variables to Zend template object

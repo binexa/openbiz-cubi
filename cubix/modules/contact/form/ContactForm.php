@@ -37,7 +37,7 @@ class ContactForm extends ChangeLogForm
         }
         catch (ValidationException $e)
         {
-            $this->processFormObjError($e->m_Errors);
+            $this->processFormObjError($e->errors);
             return;
         }
 
@@ -46,7 +46,7 @@ class ContactForm extends ChangeLogForm
         $this->commitFormElements(); // commit change in FormElement
 
         // in case of popup form, close it, then rerender the parent form
-        if ($this->m_ParentFormName)
+        if ($this->parentFormName)
         {
             $this->close();
 
@@ -129,7 +129,7 @@ class ContactForm extends ChangeLogForm
 	        }
 	        catch (ValidationException $e)
 	        {
-	            $this->processFormObjError($e->m_Errors);
+	            $this->processFormObjError($e->errors);
 	            return;
 	        }
 	
@@ -139,7 +139,7 @@ class ContactForm extends ChangeLogForm
 			$this->commitFormElements(); // commit change in FormElement
         }
         // in case of popup form, close it, then rerender the parent form
-        if ($this->m_ParentFormName)
+        if ($this->parentFormName)
         {
             $this->close();
             $this->renderParent();

@@ -27,8 +27,8 @@ class ChangeLogWidgetForm extends EasyForm
 			if(!$messageFile_loaded)
 			{
 				$this->objectMessages = Resource::loadMessage($form['message_file'] , $form['package']);
-				$formObj = BizSystem::getObject($this->m_ParentFormName);				
-				I18n::AddLangData("common",substr($formObj->m_Package,0,intval(strpos($formObj->m_Package,'.'))));
+				$formObj = BizSystem::getObject($this->parentFormName);				
+				I18n::AddLangData("common",substr($formObj->package,0,intval(strpos($formObj->package,'.'))));
 				$messageFile_loaded = true;
 			}
 			if(is_array($data)){
@@ -44,7 +44,7 @@ class ChangeLogWidgetForm extends EasyForm
 				
 				$objName = $elemObjMeta["ATTRIBUTES"]['CLASS'];
 				
-				$formObj = BizSystem::getObject($this->m_ParentFormName);
+				$formObj = BizSystem::getObject($this->parentFormName);
 				$elemObj = new $objName($elemObjMeta,$formObj);
 
 				$data[$key]['label'] = $elemObj->renderLabel(); 

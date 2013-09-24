@@ -70,7 +70,7 @@ class BizDataSql
      **/
     public function addJoinTable($tableJoin, $sqlHelper=null)
     {
-        $table = $tableJoin->m_Table;
+        $table = $tableJoin->table;
         $joinType = $tableJoin->joinType;
         $column = $tableJoin->column;
         $joinRef = $tableJoin->joinRef;
@@ -307,9 +307,9 @@ class BizDataSql
             $ret .= " WHERE " . $this->_sqlWhere;
         }
         /*
-        if ($this->m_OrderBy != null)
+        if ($this->orderBy != null)
         {
-            $ret .= " ORDER BY " . $this->m_OrderBy;
+            $ret .= " ORDER BY " . $this->orderBy;
 	}
         */
         if ($this->_otherSQL != null)

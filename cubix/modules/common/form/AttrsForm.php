@@ -41,7 +41,7 @@ class AttrsForm extends EasyForm
         }
         catch (ValidationException $e)
         {
-            $this->processFormObjError($e->m_Errors);
+            $this->processFormObjError($e->errors);
             return;
         }
 
@@ -50,7 +50,7 @@ class AttrsForm extends EasyForm
         
 
         // in case of popup form, close it, then rerender the parent form
-        if ($this->m_ParentFormName)
+        if ($this->parentFormName)
         {
             $this->close();
 
@@ -91,14 +91,14 @@ class AttrsForm extends EasyForm
         }
         catch (ValidationException $e)
         {
-            $this->processFormObjError($e->m_Errors);
+            $this->processFormObjError($e->errors);
             return;
         }
 
         $this->_doUpdate($newRecArr, $currentRec);
 
         // in case of popup form, close it, then rerender the parent form
-        if ($this->m_ParentFormName)
+        if ($this->parentFormName)
         {
             $this->close();
 
@@ -136,9 +136,9 @@ class AttrsForm extends EasyForm
         $defaultRecArr = array();
         foreach ($this->dataPanel as $element)
         {
-            if ($element->m_FieldName)
+            if ($element->fieldName)
             {
-                $defaultRecArr[$element->m_FieldName] = $element->getDefaultValue();
+                $defaultRecArr[$element->fieldName] = $element->getDefaultValue();
             }
         }
         return $defaultRecArr;

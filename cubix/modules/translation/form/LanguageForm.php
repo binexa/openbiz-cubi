@@ -16,8 +16,8 @@ include_once OPENBIZ_APP_MODULE_PATH."/translation/lib/LangPackCreator.php";
 
 class LanguageForm extends EasyForm
 {
-	public $m_Lang_Region;
-	public $m_Lang_Icon;
+	public $lang_Region;
+	public $lang_Icon;
 
 	public function getActiveRecord($recId=null)
     {
@@ -52,19 +52,19 @@ class LanguageForm extends EasyForm
         try
         {
 	        $lang = $recArr['lang'];
-	        $this->m_ValidateErrors = array();
+	        $this->validateErrors = array();
 	        if(is_dir(OPENBIZ_APP_PATH.DIRECTORY_SEPARATOR."languages".DIRECTORY_SEPARATOR.$lang)){	        			       	
 	        		$errorMessage = $this->getMessage("FORM_LANG_EXIST",array("fld_lang"));
-	                $this->m_ValidateErrors["fld_lang"] = $errorMessage;
+	                $this->validateErrors["fld_lang"] = $errorMessage;
 	        }
-	        if (count($this->m_ValidateErrors) > 0)
+	        if (count($this->validateErrors) > 0)
 	        {
-	            throw new ValidationException($this->m_ValidateErrors);
+	            throw new ValidationException($this->validateErrors);
 	        }
         }
         catch (ValidationException $e)
         {
-            $this->processFormObjError($e->m_Errors);
+            $this->processFormObjError($e->errors);
             return;
         }
 
@@ -81,7 +81,7 @@ class LanguageForm extends EasyForm
         if (count($recArr) == 0)
             return;
 		
-        preg_match("/\[(.*?)\]=\'(.*?)\'/si",$this->m_FixSearchRule,$match);
+        preg_match("/\[(.*?)\]=\'(.*?)\'/si",$this->fixSearchRule,$match);
 		$lang = $match[2];		
         $this->UpdateLangPack($lang , $recArr);
         
@@ -115,7 +115,7 @@ class LanguageForm extends EasyForm
 		if (strtoupper($this->formType) == "NEW")
             return $this->getNewLang();
                         
-		preg_match("/\[(.*?)\]=\'(.*?)\'/si",$this->m_FixSearchRule,$match);
+		preg_match("/\[(.*?)\]=\'(.*?)\'/si",$this->fixSearchRule,$match);
 		$lang = $match[2];
 		$dir = OPENBIZ_APP_PATH.DIRECTORY_SEPARATOR."languages".DIRECTORY_SEPARATOR.$lang;
 		$locale = explode('_', $lang);
@@ -203,9 +203,9 @@ class LanguageForm extends EasyForm
         $defaultRecArr = array();
         foreach ($this->dataPanel as $element)
         {
-            if ($element->m_FieldName)
+            if ($element->fieldName)
             {
-                $defaultRecArr[$element->m_FieldName] = $element->getDefaultValue();
+                $defaultRecArr[$element->fieldName] = $element->getDefaultValue();
             }
         }
 
@@ -312,7 +312,7 @@ class LanguageForm extends EasyForm
 		$smarty->assign("author_email", 	$recArr['authorEmail']);
 		$smarty->assign("author_url", 		$recArr['authorUrl']);
 		$smarty->assign("description",	 	$recArr['description']);
-		$data = $smarty->fetch(BizSystem::getTplFileWithPath("lang.xml.tpl", $this->m_Package));
+		$data = $smarty->fetch(BizSystem::getTplFileWithPath("lang.xml.tpl", $this->package));
 		file_put_contents($lang_dir.DIRECTORY_SEPARATOR.$lang.".xml" ,$data);
 		
 		
@@ -343,7 +343,7 @@ public function UpdateLangPack($lang,$recArr){
 		$smarty->assign("author_email", 	$recArr['authorEmail']);
 		$smarty->assign("author_url", 		$recArr['authorUrl']);
 		$smarty->assign("description",	 	$recArr['description']);
-		$data = $smarty->fetch(BizSystem::getTplFileWithPath("lang.xml.tpl", $this->m_Package));
+		$data = $smarty->fetch(BizSystem::getTplFileWithPath("lang.xml.tpl", $this->package));
 		$lang_dir = OPENBIZ_APP_PATH.DIRECTORY_SEPARATOR."languages".DIRECTORY_SEPARATOR.$lang;
 		$lang_file = $lang_dir.DIRECTORY_SEPARATOR.$lang.".xml";
 		@unlink($lang_file);

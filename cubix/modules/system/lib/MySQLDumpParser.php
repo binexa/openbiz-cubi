@@ -15,14 +15,14 @@
  * the code was ported from phpmyadmin,
  * */
 class MySQLDumpParser{
-	static private $m_Finished;
+	static private $finished;
 	static private $dataBuffer;
 	static private $dataOffset;
 	
 	
 	static private function GetNextChunk($chunkSize=32728){		
 		if (strlen(self::$dataBuffer) < $chunkSize) {
-            self::$m_Finished = TRUE;           
+            self::$finished = TRUE;           
             return self::$dataBuffer;
         } else {
             $r = substr(self::$dataBuffer, 0, $chunkSize);
@@ -50,11 +50,11 @@ class MySQLDumpParser{
 		/**
 		 * will be set in PMA_importGetNextChunk()
 		 *
-		 * @global boolean self::$m_Finished
+		 * @global boolean self::$finished
 		 */
-		self::$m_Finished = false;
+		self::$finished = false;
 		
-		while (!(self::$m_Finished && $i >= $len) && !$error && !$timeout_passed) {
+		while (!(self::$finished && $i >= $len) && !$error && !$timeout_passed) {
 		    $data = self::GetNextChunk();
 		    if ($data === FALSE) {
 		        // subtract data we didn't handle yet and stop processing
@@ -68,7 +68,7 @@ class MySQLDumpParser{
 		        // free memory
 		        unset($data);
 		        // Do not parse string when we're not at the end and don't have ; inside
-		        if ((strpos($buffer, $sql_delimiter, $i) === FALSE) && !self::$m_Finished)  {
+		        if ((strpos($buffer, $sql_delimiter, $i) === FALSE) && !self::$finished)  {
 		            continue;
 		        }
 		    }
@@ -108,7 +108,7 @@ class MySQLDumpParser{
 		            // none of the above was found in the string
 		
 		            $i = $old_i;
-		            if (!self::$m_Finished) {
+		            if (!self::$finished) {
 		                break;
 		            }
 		            // at the end there might be some whitespace...
@@ -134,7 +134,7 @@ class MySQLDumpParser{
 		                // No quote? Too short string
 		                if ($pos === FALSE) {
 		                    // We hit end of string => unclosed quote, but we handle it as end of query
-		                    if (self::$m_Finished) {
+		                    if (self::$finished) {
 		                        $endq = TRUE;
 		                        $i = $len - 1;
 		                    }
@@ -158,7 +158,7 @@ class MySQLDumpParser{
 		            }
 		            $i++;
 		            // Aren't we at the end?
-		            if (self::$m_Finished && $i == $len) {
+		            if (self::$finished && $i == $len) {
 		                $i--;
 		            } else {
 		                continue;
@@ -168,7 +168,7 @@ class MySQLDumpParser{
 		        // Not enough data to decide
 		        if ((($i == ($len - 1) && ($ch == '-' || $ch == '/'))
 		          || ($i == ($len - 2) && (($ch == '-' && $buffer[$i + 1] == '-')
-		            || ($ch == '/' && $buffer[$i + 1] == '*')))) && !self::$m_Finished) {
+		            || ($ch == '/' && $buffer[$i + 1] == '*')))) && !self::$finished) {
 		            break;
 		        }
 		
@@ -176,7 +176,7 @@ class MySQLDumpParser{
 		        if ($ch == '#'
 		         || ($i < ($len - 1) && $ch == '-' && $buffer[$i + 1] == '-'
 		          && (($i < ($len - 2) && $buffer[$i + 2] <= ' ')
-		           || ($i == ($len - 1)  && self::$m_Finished)))
+		           || ($i == ($len - 1)  && self::$finished)))
 		         || ($i < ($len - 1) && $ch == '/' && $buffer[$i + 1] == '*')
 		                ) {
 		            // Copy current string to SQL
@@ -188,7 +188,7 @@ class MySQLDumpParser{
 		            $i = strpos($buffer, $ch == '/' ? '*/' : "\n", $i);
 		            // didn't we hit end of string?
 		            if ($i === FALSE) {
-		                if (self::$m_Finished) {
+		                if (self::$finished) {
 		                    $i = $len - 1;
 		                } else {
 		                    break;
@@ -234,7 +234,7 @@ class MySQLDumpParser{
 		        }
 		
 		        // End of SQL
-		        if ($found_delimiter || (self::$m_Finished && ($i == $len - 1))) {
+		        if ($found_delimiter || (self::$finished && ($i == $len - 1))) {
 		            $tmp_sql = $sql;
 		            if ($start_pos < $len) {
 		                $length_to_grab = $i - $start_pos;
@@ -259,8 +259,8 @@ class MySQLDumpParser{
 		                $i = 0;
 		                $start_pos = 0;
 		                // Any chance we will get a complete query?
-		                //if ((strpos($buffer, ';') === FALSE) && !self::$m_Finished) {
-		                if ((strpos($buffer, $sql_delimiter) === FALSE) && !self::$m_Finished) {
+		                //if ((strpos($buffer, ';') === FALSE) && !self::$finished) {
+		                if ((strpos($buffer, $sql_delimiter) === FALSE) && !self::$finished) {
 		                    break;
 		                }
 		            } else {

@@ -26,7 +26,7 @@ class AccountUserWidgetForm extends EasyForm
 		$userRec = BizSystem::getObject($this->userDO)->fetchOne("[username]='$username'");
 		if(!$userRec)
 		{
-			$this->m_Errors = array("fld_username"=>$this->getMessage("USERNAME_DOES_NOT_EXISTS"));
+			$this->errors = array("fld_username"=>$this->getMessage("USERNAME_DOES_NOT_EXISTS"));
 			$this->updateForm();
 			return ;
 		}
@@ -36,13 +36,13 @@ class AccountUserWidgetForm extends EasyForm
 		$userRec = BizSystem::getObject($this->assocDO)->fetchOne("[user_id]='$userId'");
 		if($userRec)
 		{
-			$this->m_Errors = array("fld_username"=>$this->getMessage("USER_ALREADY_EXISTS"));
+			$this->errors = array("fld_username"=>$this->getMessage("USER_ALREADY_EXISTS"));
 			$this->updateForm();
 			return ;
 		}
 		
 		//insert a new assoc record
-		$accountId = BizSystem::getObject($this->m_ParentFormName)->recordId;
+		$accountId = BizSystem::getObject($this->parentFormName)->recordId;
 		$userAssocArr = array(
 			"account_id" => $accountId,
 			"user_id" => $userId,
@@ -57,7 +57,7 @@ class AccountUserWidgetForm extends EasyForm
 		$resultSet = parent::fetchDataSet();
 		$newResultSet = array();
 		$assocDO = BizSystem::getObject($this->assocDO);
-		$accountId = BizSystem::getObject($this->m_ParentFormName)->recordId;
+		$accountId = BizSystem::getObject($this->parentFormName)->recordId;
 		foreach ($resultSet as $key=>$value){
 			$userId = $value['Id'];
 			$assocRec = $assocDO->fetchOne("[user_id]='$userId' AND [account_id]='$accountId'");

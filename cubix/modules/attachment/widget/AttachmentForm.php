@@ -37,7 +37,7 @@ class AttachmentForm extends PickerForm
 		$upload_dir = "common";
 		
 		try {
-            $parentForm = BizSystem::getObject($this->m_ParentFormName);		
+            $parentForm = BizSystem::getObject($this->parentFormName);		
             $cond_value = $parentForm->getDataObj()->association['CondValue'];
             if($cond_value)
             {
@@ -99,7 +99,7 @@ class AttachmentForm extends PickerForm
         }
         catch (ValidationException $e)
         {
-            $this->processFormObjError($e->m_Errors);
+            $this->processFormObjError($e->errors);
             return;
         }
         
@@ -112,10 +112,10 @@ class AttachmentForm extends PickerForm
         $recArr['url'] = $fileObj['file_url'];
         $recArr['download_count'] = 0;
         
-		if (!$this->m_ParentFormElemName)
+		if (!$this->parentFormElemName)
         {
         	//its only supports 1-m assoc now	        	        
-	        $parentForm = BizSystem::objectFactory()->getObject($this->m_ParentFormName);
+	        $parentForm = BizSystem::objectFactory()->getObject($this->parentFormName);
         	//$parentForm->getDataObj()->clearSearchRule();
 	        $parentDo = $parentForm->getDataObj();
 	        
@@ -133,7 +133,7 @@ class AttachmentForm extends PickerForm
 	    	}    	
         }                
 
-        if ($this->m_ParentFormElemName && $this->m_PickerMap)
+        if ($this->parentFormElemName && $this->pickerMap)
         {
             return ; //not supported yet
         }
@@ -146,7 +146,7 @@ class AttachmentForm extends PickerForm
 	
 	public function allUploadComplete(){
 		$this->close();	
-		$parentForm = BizSystem::getObject($this->m_ParentFormName);
+		$parentForm = BizSystem::getObject($this->parentFormName);
 		usleep(1000000);
 		$parentForm->rerender();
 	}
@@ -211,7 +211,7 @@ class AttachmentForm extends PickerForm
 	}
 	
 	public function close(){
-		$parentForm = BizSystem::getObject($this->m_ParentFormName);
+		$parentForm = BizSystem::getObject($this->parentFormName);
 		$parentForm->rerender();
 		return parent::close();
 	}

@@ -28,15 +28,15 @@ class PickerForm extends EasyForm
      *
      * @var string
      */
-    public $m_ParentFormElemName = "";
+    public $parentFormElemName = "";
 
     /**
      *
      * @var string
      */
-    public $m_PickerMap = "";
+    public $pickerMap = "";
 
-    public $m_ParentFormRecord ;
+    public $parentFormRecord ;
     /**
      * Get/Retrieve Session data of this object
      *
@@ -46,9 +46,9 @@ class PickerForm extends EasyForm
     public function loadSessionVars($sessionContext)
     {
         parent::loadSessionVars($sessionContext);
-        $sessionContext->getObjVar($this->objectName, "ParentFormElemName", $this->m_ParentFormElemName);
-        $sessionContext->getObjVar($this->objectName, "PickerMap", $this->m_PickerMap);
-        $sessionContext->getObjVar($this->objectName, "ParentFormRecord", $this->m_ParentFormRecord);
+        $sessionContext->getObjVar($this->objectName, "ParentFormElemName", $this->parentFormElemName);
+        $sessionContext->getObjVar($this->objectName, "PickerMap", $this->pickerMap);
+        $sessionContext->getObjVar($this->objectName, "ParentFormRecord", $this->parentFormRecord);
     }
 
     /**
@@ -60,9 +60,9 @@ class PickerForm extends EasyForm
     public function saveSessionVars($sessionContext)
     {
         parent::saveSessionVars($sessionContext);
-        $sessionContext->setObjVar($this->objectName, "ParentFormElemName", $this->m_ParentFormElemName);
-        $sessionContext->setObjVar($this->objectName, "PickerMap", $this->m_PickerMap);
-        $sessionContext->setObjVar($this->objectName, "ParentFormRecord", $this->m_ParentFormRecord);
+        $sessionContext->setObjVar($this->objectName, "ParentFormElemName", $this->parentFormElemName);
+        $sessionContext->setObjVar($this->objectName, "PickerMap", $this->pickerMap);
+        $sessionContext->setObjVar($this->objectName, "ParentFormRecord", $this->parentFormRecord);
     }
 
     /**
@@ -75,9 +75,9 @@ class PickerForm extends EasyForm
      */
     public function setParentFormData($formName, $elemName=null, $pickerMap=null)
     {
-        $this->m_ParentFormName = $formName;
-        $this->m_ParentFormElemName = $elemName;
-        $this->m_PickerMap = $pickerMap;
+        $this->parentFormName = $formName;
+        $this->parentFormElemName = $elemName;
+        $this->pickerMap = $pickerMap;
     }
 
     /**
@@ -97,13 +97,13 @@ class PickerForm extends EasyForm
             $selIds[] = $recId;
             
         // if no parent elem or picker map, call AddToParent
-        if (!$this->m_ParentFormElemName)
+        if (!$this->parentFormElemName)
         {        	
             $this->addToParent($selIds);
         }                
 
         // if has parent elem and picker map, call JoinToParent
-        if ($this->m_ParentFormElemName && $this->m_PickerMap)
+        if ($this->parentFormElemName && $this->pickerMap)
         {
             $this->joinToParent($selIds);
         }
@@ -124,15 +124,15 @@ class PickerForm extends EasyForm
         }
         catch (ValidationException $e)
         {
-            $this->processFormObjError($e->m_Errors);
+            $this->processFormObjError($e->errors);
             return;
         }
         
 
-        if (!$this->m_ParentFormElemName)
+        if (!$this->parentFormElemName)
         {
         	//its only supports 1-m assoc now	        	        
-	        $parentForm = BizSystem::objectFactory()->getObject($this->m_ParentFormName);
+	        $parentForm = BizSystem::objectFactory()->getObject($this->parentFormName);
         	//$parentForm->getDataObj()->clearSearchRule();
 	        $parentDo = $parentForm->getDataObj();
 	        
@@ -156,7 +156,7 @@ class PickerForm extends EasyForm
 	    	}
         }                
 
-        if ($this->m_ParentFormElemName && $this->m_PickerMap)
+        if ($this->parentFormElemName && $this->pickerMap)
         {
             return ; //not supported yet
         }
@@ -165,8 +165,8 @@ class PickerForm extends EasyForm
         $selIds[] = $recId;
         
         $this->close();	      
-        if($parentForm->m_ParentFormName){
-        	$parentParentForm = BizSystem::objectFactory()->getObject($parentForm->m_ParentFormName);
+        if($parentForm->parentFormName){
+        	$parentParentForm = BizSystem::objectFactory()->getObject($parentForm->parentFormName);
         	$parentParentForm->rerender();
         }
         else
@@ -191,34 +191,34 @@ class PickerForm extends EasyForm
     		$recIdArr = $recIds;
     	}
     	
-    	$parentForm = BizSystem::objectFactory()->getObject($this->m_ParentFormName);
+    	$parentForm = BizSystem::objectFactory()->getObject($this->parentFormName);
     	$updArray = array();
-    	$updRec = $this->m_ParentFormRecord;
+    	$updRec = $this->parentFormRecord;
 
     	foreach($recIdArr as $recId)
     	{
         	$rec = $this->getDataObj()->fetchById($recId);
               
 	        // get the picker map of the control
-	        if ($this->m_PickerMap)
+	        if ($this->pickerMap)
 	        {
-	            $pickerList = $this->_parsePickerMap($this->m_PickerMap);	            
+	            $pickerList = $this->_parsePickerMap($this->pickerMap);	            
 	            foreach ($pickerList as $ctrlPair)
 	            {
 	                $this_ctrl = $this->getElement($ctrlPair[1]);
 	                if (!$this_ctrl)
 	                    continue;
 	                	                
-	                $this_ctrl_val = $rec[$this_ctrl->m_FieldName];
+	                $this_ctrl_val = $rec[$this_ctrl->fieldName];
 	                $other_ctrl = $parentForm->getElement($ctrlPair[0]);
 	                if ($other_ctrl)
 	                {
 	                	if(!$updArray[$other_ctrl->objectName]){
 	                		$updArray[$other_ctrl->objectName] = $this_ctrl_val;
-	                		$updRec[$other_ctrl->m_FieldName] = $this_ctrl_val;	
+	                		$updRec[$other_ctrl->fieldName] = $this_ctrl_val;	
 	                	}else{
 	                		$updArray[$other_ctrl->objectName] .= ';'.$this_ctrl_val;
-	                		$updRec[$other_ctrl->m_FieldName] .= ';'.$this_ctrl_val;
+	                		$updRec[$other_ctrl->fieldName] .= ';'.$this_ctrl_val;
 	                	}
 	                }
 	            }	            
@@ -228,8 +228,8 @@ class PickerForm extends EasyForm
     	}
     	    	
         $this->close();	                                               
-        $elem = $parentForm->getElement($this->m_ParentFormElemName);
-        if($elem->m_UpdateForm=='Y'){
+        $elem = $parentForm->getElement($this->parentFormElemName);
+        if($elem->updateForm=='Y'){
         	$parentForm->setActiveRecord($updRec);        	
         	$parentForm->rerender();
         }else{
@@ -273,7 +273,7 @@ class PickerForm extends EasyForm
     	}
     	
     	/* @var $parentForm EasyForm */
-    	$parentForm = BizSystem::objectFactory()->getObject($this->m_ParentFormName);
+    	$parentForm = BizSystem::objectFactory()->getObject($this->parentFormName);
     	foreach($recIdArr as $recId)
     	{
 	               	        	
@@ -302,7 +302,7 @@ class PickerForm extends EasyForm
         $this->close();
 
         $parentForm->rerender();
-		if($parentForm->m_ParentFormName){
+		if($parentForm->parentFormName){
 			$parentForm->renderParent();
 		}
     }

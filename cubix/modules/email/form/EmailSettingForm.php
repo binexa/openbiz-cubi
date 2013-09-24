@@ -40,7 +40,7 @@ class EmailSettingForm extends EasyForm
         if ($recId==null || $recId=='')
             return null;
         $this->recordId = $recId;
-		$this->m_FixSearchRule = "[Id]='$recId'";
+		$this->fixSearchRule = "[Id]='$recId'";
         $rec=$this->fetchData();
         $this->dataPanel->setRecordArr($rec);
         $this->activeRecord = $rec;
@@ -59,7 +59,7 @@ class EmailSettingForm extends EasyForm
 		$nodesArr = $configArr["PLUGINSERVICE"]["ACCOUNTS"][strtoupper($this->configNode)];
 		$result = array();
 		
-		preg_match("/\[(.*?)\]=\'(.*?)\'/si",$this->m_FixSearchRule,$match);
+		preg_match("/\[(.*?)\]=\'(.*?)\'/si",$this->fixSearchRule,$match);
 		$name = $match[2];
 		$recordName = $configArr["PLUGINSERVICE"]["ACCOUNTS"][strtoupper($this->configNode)]["ATTRIBUTES"]["NAME"];
 		if(!$recordName){
@@ -119,7 +119,7 @@ class EmailSettingForm extends EasyForm
 			}
 			
 		}else{
-			$this->m_FixSearchRule = "[Id]='$name'";
+			$this->fixSearchRule = "[Id]='$name'";
 			$result[0]=$this->fetchData();
 		}
 		if(!$this->recordId){
@@ -147,9 +147,9 @@ class EmailSettingForm extends EasyForm
         $defaultRecArr = array();
         foreach ($this->dataPanel as $element)
         {
-            if ($element->m_FieldName)
+            if ($element->fieldName)
             {
-                $defaultRecArr[$element->m_FieldName] = $element->getDefaultValue();
+                $defaultRecArr[$element->fieldName] = $element->getDefaultValue();
             }
         }
 
@@ -179,19 +179,19 @@ class EmailSettingForm extends EasyForm
         {
         	$this->ValidateForm();
 	        $name = $recArr['NAME'];
-	        $this->m_ValidateErrors = array();
+	        $this->validateErrors = array();
 	        if($this->checkDupNodeName($name)){	        			       	
 	        		$errorMessage = $this->getMessage("FORM_NODE_EXIST",array("fld_name"));
-	                $this->m_ValidateErrors["fld_name"] = $errorMessage;
+	                $this->validateErrors["fld_name"] = $errorMessage;
 	        }
-	        if (count($this->m_ValidateErrors) > 0)
+	        if (count($this->validateErrors) > 0)
 	        {
-	            throw new ValidationException($this->m_ValidateErrors);
+	            throw new ValidationException($this->validateErrors);
 	        }
         }
         catch (ValidationException $e)
         {
-            $this->processFormObjError($e->m_Errors);
+            $this->processFormObjError($e->errors);
             return;
         }
 		$nodeArr = array(
@@ -213,7 +213,7 @@ class EmailSettingForm extends EasyForm
         if (count($recArr) == 0)
             return;
 		
-        preg_match("/\[(.*?)\]=\'(.*?)\'/si",$this->m_FixSearchRule,$match);
+        preg_match("/\[(.*?)\]=\'(.*?)\'/si",$this->fixSearchRule,$match);
 		$name = $match[2];		
         
 		try
@@ -222,7 +222,7 @@ class EmailSettingForm extends EasyForm
         }
         catch (ValidationException $e)
         {
-            $this->processFormObjError($e->m_Errors);
+            $this->processFormObjError($e->errors);
             return;
         }
         
@@ -429,7 +429,7 @@ class EmailSettingForm extends EasyForm
 	private function saveToXML($data){
 		$smarty = BizSystem::getSmartyTemplate();
 		$smarty->assign("data", $data);
-		$xmldata = $smarty->fetch(BizSystem::getTplFileWithPath("serviceTemplate.xml.tpl", $this->m_Package));
+		$xmldata = $smarty->fetch(BizSystem::getTplFileWithPath("serviceTemplate.xml.tpl", $this->package));
 		$service_dir = OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR."service";
 		$service_file = $service_dir.DIRECTORY_SEPARATOR.$this->configFile;
 		file_put_contents($service_file ,$xmldata);		

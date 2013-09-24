@@ -58,7 +58,7 @@ class ChangeLogForm extends EasyForm
         $elem_mapping = array();
         foreach ($postFields as $elem_name => $value) {
             $elem = $this->dataPanel->get($elem_name);
-            $fld_name = $elem->m_FieldName;
+            $fld_name = $elem->fieldName;
             if ($elem) {
                 $elem_mapping[$fld_name] = $elem;
             }
@@ -82,9 +82,9 @@ class ChangeLogForm extends EasyForm
             if ($oldVal == $fldVal)
                 continue;
 
-            $elem = $elem_mapping[$fldName]->m_XMLMeta;
+            $elem = $elem_mapping[$fldName]->xmlMeta;
             if (!$elem) {
-                $elem = $this->dataPanel->getByField($fldName)->m_XMLMeta;
+                $elem = $this->dataPanel->getByField($fldName)->xmlMeta;
             }
             if ($elem['ATTRIBUTES']['CLASS'] != 'Hidden') {
                 $logRecord[$fldName] = array('old' => $oldVal, 'new' => $fldVal, 'element' => $elem);
@@ -98,7 +98,7 @@ class ChangeLogForm extends EasyForm
 
         $formMetaLite = array(
             "name" => $this->objectName,
-            "package" => $this->m_Package,
+            "package" => $this->package,
             "message_file" => $this->messageFile,
         );
 

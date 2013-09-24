@@ -19,7 +19,7 @@ class cryptService
 {
     protected $defaultKey ;
     public $algorithm;
-    public $m_OperationMode;
+    public $operationMode;
 
     /**
      * Initialize auditService with xml array metadata
@@ -42,7 +42,7 @@ class cryptService
     {
         $this->defaultKey 	= strtolower($xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["DEFAULTKEY"]);
     	$this->algorithm 		= strtolower($xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["ALGORITHM"]);
-        $this->m_OperationMode 	= strtolower($xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["OPERATIONMODE"]);
+        $this->operationMode 	= strtolower($xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["OPERATIONMODE"]);
     }
 
     public function encrypt($data, $key=null)
@@ -56,7 +56,7 @@ class cryptService
     	}
     	if($data==null)
     		return;
-        $td = mcrypt_module_open($this->algorithm, '', $this->m_OperationMode, '');
+        $td = mcrypt_module_open($this->algorithm, '', $this->operationMode, '');
         $iv = mcrypt_create_iv(mcrypt_enc_get_iv_size($td), MCRYPT_RAND);
        // $iv ="jixian";
         $ks = mcrypt_enc_get_key_size($td);
@@ -79,7 +79,7 @@ class cryptService
     	}    	
     	if($data==null)
     		return;
-        $td = mcrypt_module_open($this->algorithm, '', $this->m_OperationMode, '');
+        $td = mcrypt_module_open($this->algorithm, '', $this->operationMode, '');
         $iv = mcrypt_create_iv(mcrypt_enc_get_iv_size($td), MCRYPT_RAND);        
         $ks = mcrypt_enc_get_key_size($td);
         $keystr = substr(md5($key), 0, $ks);

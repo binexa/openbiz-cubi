@@ -30,7 +30,7 @@ class TableJoin extends MetaObject
      *
      * @var string
      */
-    public $m_Table;
+    public $table;
 
     /**
      * Column/field name of table that joined to master table as reference
@@ -73,7 +73,7 @@ class TableJoin extends MetaObject
      * @var <type>
      * @todo what is mean?
      */
-    public $m_OnSaveDataObj;
+    public $onSaveDataObj;
 
     /**
      * Initialize TableJoin with xml array
@@ -85,15 +85,15 @@ class TableJoin extends MetaObject
     function __construct(&$xmlArr, $bizObj)
     {
         $this->objectName = isset($xmlArr["ATTRIBUTES"]["NAME"]) ? $xmlArr["ATTRIBUTES"]["NAME"] : null;
-        $this->m_Package = $bizObj->m_Package;
+        $this->package = $bizObj->package;
         $this->objectDescription= isset($xmlArr["ATTRIBUTES"]["DESCRIPTION"]) ? $xmlArr["ATTRIBUTES"]["DESCRIPTION"] : null;
-        $this->m_Table = isset($xmlArr["ATTRIBUTES"]["TABLE"]) ? $xmlArr["ATTRIBUTES"]["TABLE"] : null;
+        $this->table = isset($xmlArr["ATTRIBUTES"]["TABLE"]) ? $xmlArr["ATTRIBUTES"]["TABLE"] : null;
         $this->column = isset($xmlArr["ATTRIBUTES"]["COLUMN"]) ? $xmlArr["ATTRIBUTES"]["COLUMN"] : null;
         $this->joinRef = isset($xmlArr["ATTRIBUTES"]["JOINREF"]) ? $xmlArr["ATTRIBUTES"]["JOINREF"] : null;
         $this->columnRef = isset($xmlArr["ATTRIBUTES"]["COLUMNREF"]) ? $xmlArr["ATTRIBUTES"]["COLUMNREF"] : null;
         $this->joinType = isset($xmlArr["ATTRIBUTES"]["JOINTYPE"]) ? $xmlArr["ATTRIBUTES"]["JOINTYPE"] : null;
 		$this->joinCondition = isset($xmlArr["ATTRIBUTES"]["JOINCONDITION"]) ? $xmlArr["ATTRIBUTES"]["JOINCONDITION"] : null;
-        $this->m_OnSaveDataObj = isset($xmlArr["ATTRIBUTES"]["ONSAVEDATAOBJ"]) ? $xmlArr["ATTRIBUTES"]["ONSAVEDATAOBJ"] : null;
+        $this->onSaveDataObj = isset($xmlArr["ATTRIBUTES"]["ONSAVEDATAOBJ"]) ? $xmlArr["ATTRIBUTES"]["ONSAVEDATAOBJ"] : null;
 
         $this->bizDataObjName = $this->prefixPackage($this->bizDataObjName);
     }

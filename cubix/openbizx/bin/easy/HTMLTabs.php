@@ -26,10 +26,10 @@
 class HTMLTabs extends MetaObject implements iUIControl
 {
     public $templateFile;
-    public $m_TabViews = null;
+    public $tabViews = null;
     protected $currentTab = null;
     protected $activeCssClassName = null;
-    protected $m_InactiveCssClassName = null;
+    protected $inactiveCssClassName = null;
 
     /**
      * Initialize HTMLTabs with xml array
@@ -50,12 +50,12 @@ class HTMLTabs extends MetaObject implements iUIControl
     protected function readMetadata(&$xmlArr)
     {
         $this->objectName = $xmlArr["TABS"]["ATTRIBUTES"]["NAME"];
-        $this->m_Package = $xmlArr["TABS"]["ATTRIBUTES"]["PACKAGE"];
+        $this->package = $xmlArr["TABS"]["ATTRIBUTES"]["PACKAGE"];
         $this->className = $xmlArr["TABS"]["ATTRIBUTES"]["CLASS"];
         $this->templateFile = $xmlArr["TABS"]["ATTRIBUTES"]["TEMPLATEFILE"];
-        $this->m_TabViews = new MetaIterator($xmlArr["TABS"]["TABVIEWS"]["VIEW"],"TabView");
+        $this->tabViews = new MetaIterator($xmlArr["TABS"]["TABVIEWS"]["VIEW"],"TabView");
         $this->activeCssClassName = "'{$xmlArr["TABS"]["ATTRIBUTES"]["ACTIVECSSCLASSNAME"]}'";
-        $this->m_InactiveCssClassName = "'{$xmlArr["TABS"]["ATTRIBUTES"]["INACTIVECSSCLASSNAME"]}'";
+        $this->inactiveCssClassName = "'{$xmlArr["TABS"]["ATTRIBUTES"]["INACTIVECSSCLASSNAME"]}'";
     }
 
     /**
@@ -101,13 +101,13 @@ class HTMLTabs extends MetaObject implements iUIControl
         {
             $url = "javascript:ChangeTab(this, {$tabView->objectName}_config)";
         }
-        else if($tabView->m_URL)
+        else if($tabView->url)
         {
-            $url = $tabView->m_URL;
+            $url = $tabView->url;
         }
         else
         {
-            $url = "javascript:Openbiz.Net.loadView('{$tabView->m_View}')";
+            $url = "javascript:Openbiz.Net.loadView('{$tabView->view}')";
         }
 
         return $url;
@@ -137,19 +137,19 @@ class HTMLTabs extends MetaObject implements iUIControl
         $currentTab = false; //this variable save 'true' if is the current tab and 'false' in otherwise --jmmz
         if ($this->currentTab)
         {
-            $currentTab = ($this->currentTab == $tabView->objectName || $this->currentTab == $tabView->m_Tab)
+            $currentTab = ($this->currentTab == $tabView->objectName || $this->currentTab == $tabView->tab)
                     ? TRUE
                     : FALSE;
         }
-        elseif ($tabView->m_ViewSet)
+        elseif ($tabView->viewSet)
         {
             if ($curViewObj)
-            // check if current view's viewset == tview->m_ViewSet
-                $currentTab = ($curViewObj->getViewSet() == $tabView->m_ViewSet) ? true : false;
+            // check if current view's viewset == tview->viewSet
+                $currentTab = ($curViewObj->getViewSet() == $tabView->viewSet) ? true : false;
         }
         else
         {
-            $currentTab = ($curViewName == $tabView->m_View || $curViewObj->m_Tab == $tabView->objectName) ? true : false;
+            $currentTab = ($curViewName == $tabView->view || $curViewObj->tab == $tabView->objectName) ? true : false;
         }
 
         return $currentTab;
@@ -207,14 +207,14 @@ class HTMLTabs extends MetaObject implements iUIControl
         $tabs = array();
         $i = 0;
         $hasForms = false;
-        foreach ($this->m_TabViews as $tview)
+        foreach ($this->tabViews as $tview)
         {
             // tab is renderd if  no definition  is found in accessservice.xml (default)
-            if ($svcobj->allowViewAccess($tview->m_View, $role))
+            if ($svcobj->allowViewAccess($tview->view, $role))
             {
 
                 $tabs[$i]['name']=$tview->objectName; //Name of each tab--jmmz
-                $tabs[$i]['forms']=$this->_renderJSCodeForForms($tview->m_Forms);//Configuration of the forms to hide or show--jmmz
+                $tabs[$i]['forms']=$this->_renderJSCodeForForms($tview->forms);//Configuration of the forms to hide or show--jmmz
                 $tabs[$i]['caption'] = $tview->caption;
 
                 $tabs[$i]['url'] = $this->_renderURL($tview); //Call the method to render the url--jmmz
@@ -228,8 +228,8 @@ class HTMLTabs extends MetaObject implements iUIControl
                     $hasForms = TRUE;
                 }
 
-                $tabs[$i]['target'] = $tview->m_Target;
-                $tabs[$i]['icon'] = $tview->m_Icon;
+                $tabs[$i]['target'] = $tview->target;
+                $tabs[$i]['icon'] = $tview->icon;
                 $tabs[$i]['current'] = $this->isCurrentTab($tview,$curViewobj, $curView); //I get the current tab.
                 $i++;
             }
@@ -238,7 +238,7 @@ class HTMLTabs extends MetaObject implements iUIControl
         $smarty->assign("tabs", $tabs);
         $smarty->assign("tabs_Name",$this->objectName);
 
-        return $smarty->fetch(BizSystem::getTplFileWithPath($this->templateFile, $this->m_Package));
+        return $smarty->fetch(BizSystem::getTplFileWithPath($this->templateFile, $this->package));
     }
 
     /**
@@ -273,7 +273,7 @@ class HTMLTabs extends MetaObject implements iUIControl
                 $tab_script .=   'var '.$tab['name'].'_config = '.$tab['forms'].';'.PHP_EOL;
             }
             $tab_script .=   'var '.$this->objectName.'_active = '.$this->activeCssClassName.';'.PHP_EOL;
-            $tab_script .=   'var '.$this->objectName.'_inactive = '.$this->m_InactiveCssClassName.';'.PHP_EOL;
+            $tab_script .=   'var '.$this->objectName.'_inactive = '.$this->inactiveCssClassName.';'.PHP_EOL;
             $tab_script .= '</script>';
             BizSystem::clientProxy()->appendScripts("tab_forms_$this->objectName", $tab_script, FALSE);
         }
@@ -293,13 +293,13 @@ class HTMLTabs extends MetaObject implements iUIControl
 class TabView
 {
     public $objectName;
-    public $m_View;
-    public $m_ViewSet;
+    public $view;
+    public $viewSet;
     public $caption;
-    public $m_URL;
-    public $m_Target;
-    public $m_Icon;
-    public $m_Forms; //Forms for hide or show in a BizView
+    public $url;
+    public $target;
+    public $icon;
+    public $forms; //Forms for hide or show in a BizView
 
     /**
      * Get forms or the form to hide or show.
@@ -333,23 +333,23 @@ class TabView
     function __construct(&$xmlArr)
     {
         $this->objectName = $xmlArr["ATTRIBUTES"]["NAME"];
-        $this->m_View = $xmlArr["ATTRIBUTES"]["VIEW"];
+        $this->view = $xmlArr["ATTRIBUTES"]["VIEW"];
         if(array_key_exists("VIEWSET", $xmlArr["ATTRIBUTES"]))
-            $this->m_ViewSet = $xmlArr["ATTRIBUTES"]["VIEWSET"];
+            $this->viewSet = $xmlArr["ATTRIBUTES"]["VIEWSET"];
         $this->caption = $this->translate($xmlArr["ATTRIBUTES"]["CAPTION"]);
         if(array_key_exists("URL", $xmlArr["ATTRIBUTES"]))
-            $this->m_URL = $xmlArr["ATTRIBUTES"]["URL"];
+            $this->url = $xmlArr["ATTRIBUTES"]["URL"];
         if(array_key_exists("TARGET", $xmlArr["ATTRIBUTES"]))
-            $this->m_Target = $xmlArr["ATTRIBUTES"]["TARGET"];
+            $this->target = $xmlArr["ATTRIBUTES"]["TARGET"];
         if(array_key_exists("ICON", $xmlArr["ATTRIBUTES"]))
-            $this->m_Icon = $xmlArr["ATTRIBUTES"]["ICON"];
+            $this->icon = $xmlArr["ATTRIBUTES"]["ICON"];
 
 
-        $this->m_Forms = NULL;
+        $this->forms = NULL;
         if(array_key_exists("FORM", $xmlArr))
-            $this->m_Forms = $this->_getForms($xmlArr["FORM"]);     //Get form or forms to hide or show
+            $this->forms = $this->_getForms($xmlArr["FORM"]);     //Get form or forms to hide or show
 
-        //$this->m_Forms = (!is_null($xmlArr["FORM"]))?$this->getForms($xmlArr["FORM"]):null;
+        //$this->forms = (!is_null($xmlArr["FORM"]))?$this->getForms($xmlArr["FORM"]):null;
     }
 
     /**
@@ -359,7 +359,7 @@ class TabView
      */
     function hasForms()
     {
-        return (bool) $this->m_Forms;
+        return (bool) $this->forms;
     }
 
     protected function translate($caption)

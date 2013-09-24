@@ -20,15 +20,15 @@
                     
     </DataPanel>
     <ActionPanel>
-    	<Element Name="btn_save" Hidden="{@:m_RepoValidated=='N'?'Y':'N'}" Class="Button" Text="Save" CssClass="button_gray_m">
+    	<Element Name="btn_save" Hidden="{@:repoValidated=='N'?'Y':'N'}" Class="Button" Text="Save" CssClass="button_gray_m">
             <EventHandler Name="save_onclick" EventLogMsg="" Event="onclick" Function="InsertRecord()" RedirectPage="form=market.repository.form.RepositoryDetailForm&amp;fld:Id={@market.repository.do.RepositoryDO:Field[Id].Value}"  ShortcutKey="Ctrl+Enter" ContextMenu="Save" />
         </Element>
-        <Element Name="btn_spacer"  Hidden="{@:m_RepoValidated=='N'?'Y':'N'}"  Class="Spacer" width="10" />	
+        <Element Name="btn_spacer"  Hidden="{@:repoValidated=='N'?'Y':'N'}"  Class="Spacer" width="10" />	
     	<Element Name="btn_check" Class="Button" Text="Check" CssClass="button_gray_m">
             <EventHandler Name="save_onclick" EventLogMsg="" Event="onclick" Function="CheckRepo()" ShortCutKey="Enter"/>
         </Element>
        
-       <Element Name="btn_spacer_2"  Hidden="{@:m_RepoValidated=='N'?'N':'Y'}"  Class="Spacer" width="10" />	
+       <Element Name="btn_spacer_2"  Hidden="{@:repoValidated=='N'?'N':'Y'}"  Class="Spacer" width="10" />	
         <Element Name="btn_cancel" Class="Button" Text="Cancel" CssClass="button_gray_m">
             <EventHandler Name="cancel_onclick" Event="onclick" Function="SwitchForm()"  ShortcutKey="Escape" ContextMenu="Cancel"/>
         </Element>

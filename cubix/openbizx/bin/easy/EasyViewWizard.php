@@ -25,14 +25,14 @@
 class EasyViewWizard extends EasyView
 {
     protected $currentStep;
-    protected $m_FormStates;    // (formname, visited, committed)
+    protected $formStates;    // (formname, visited, committed)
     protected $dropSession = false;
-    protected $m_NaviMethod = 'SwitchPage';
+    protected $naviMethod = 'SwitchPage';
 
     protected function readMetadata(&$xmlArr)
     {
         parent::readMetaData($xmlArr);
-        $this->m_NaviMethod = isset($xmlArr["EASYVIEW"]["ATTRIBUTES"]["NAVIMETHOD"]) ? $xmlArr["EASYVIEW"]["ATTRIBUTES"]["NAVIMETHOD"] :'SwitchPage';
+        $this->naviMethod = isset($xmlArr["EASYVIEW"]["ATTRIBUTES"]["NAVIMETHOD"]) ? $xmlArr["EASYVIEW"]["ATTRIBUTES"]["NAVIMETHOD"] :'SwitchPage';
     }
     /**
      * Get/Retrieve Session data of this object
@@ -42,7 +42,7 @@ class EasyViewWizard extends EasyView
      */
     public function loadSessionVars($sessionContext)
     {
-        $sessionContext->getObjVar($this->objectName, "FormStates", $this->m_FormStates, true);
+        $sessionContext->getObjVar($this->objectName, "FormStates", $this->formStates, true);
         $sessionContext->getObjVar($this->objectName, "CurrentStep", $this->currentStep, true);
     }
 
@@ -57,7 +57,7 @@ class EasyViewWizard extends EasyView
         if ($this->dropSession){
             $sessionContext->cleanObj($this->objectName, true);
         }else{
-            $sessionContext->setObjVar($this->objectName, "FormStates", $this->m_FormStates, true);
+            $sessionContext->setObjVar($this->objectName, "FormStates", $this->formStates, true);
             $sessionContext->setObjVar($this->objectName, "CurrentStep", $this->currentStep, true);
         }
         
@@ -86,7 +86,7 @@ class EasyViewWizard extends EasyView
 
         // only display given step form
         $i = 1;
-        foreach ($this->m_FormRefs as $formRef)
+        foreach ($this->formRefs as $formRef)
         {
             if ($i == $step)
                 $formRef->display = true;
@@ -99,7 +99,7 @@ class EasyViewWizard extends EasyView
     protected function getStepName($step)
     {
 		$i = 1;
-        foreach ($this->m_FormRefs as $formRef){
+        foreach ($this->formRefs as $formRef){
             if($i == $step){            	
             	return $formRef->objectName;
             }        	
@@ -121,8 +121,8 @@ class EasyViewWizard extends EasyView
 	    }
     	elseif($this->currentStep)
     	{
-    		if($this->currentStep > $this->m_FormRefs->count()){    			            			
-    			return $this->m_FormRefs->count();	
+    		if($this->currentStep > $this->formRefs->count()){    			            			
+    			return $this->formRefs->count();	
     		}else{
     			return $this->currentStep;	
     		}    		
@@ -131,7 +131,7 @@ class EasyViewWizard extends EasyView
     	{
 	        $step = isset($_GET['step']) ? $_GET['step'] : 1;
 	        $numForms = 0;
-	        foreach ($this->m_FormRefs as $formRef)
+	        foreach ($this->formRefs as $formRef)
 	            $numForms++;
 	
 	        if ($step < 1)
@@ -158,7 +158,7 @@ class EasyViewWizard extends EasyView
     	}
         if ($currentStep == $step)
             return;            
-		switch(strtoupper($this->m_NaviMethod)){
+		switch(strtoupper($this->naviMethod)){
 			case "SWITCHFORM":
 				$targetForm = $this->getStepName($step);
 				$currentForm = $this->getStepName($currentStep);
@@ -200,7 +200,7 @@ class EasyViewWizard extends EasyView
      */
     public function setFormState($formName, $state, $value)
     {
-        $this->m_FormStates[$formName][$state] = $value;
+        $this->formStates[$formName][$state] = $value;
     }
 
     /**
@@ -211,7 +211,7 @@ class EasyViewWizard extends EasyView
     public function commit()
     {
         // call all step forms Commit method    	
-        foreach ($this->m_FormStates as $formName=>$state)
+        foreach ($this->formStates as $formName=>$state)
         {        	
             if ($state['visited'])
             {
@@ -222,7 +222,7 @@ class EasyViewWizard extends EasyView
                 }
             }
         }              
-        foreach ($this->m_FormStates as $formName=>$state)
+        foreach ($this->formStates as $formName=>$state)
         {
             if ($state['visited'])
             {
@@ -245,8 +245,8 @@ class EasyViewWizard extends EasyView
     public function cancel()
     {
         // call all step forms Cancel method
-        if(is_array($this->m_FormStates)){
-	        foreach ($this->m_FormStates as $formName=>$state)
+        if(is_array($this->formStates)){
+	        foreach ($this->formStates as $formName=>$state)
 	        {
 	            if ($state['visited'])
 	                BizSystem::objectFactory()->getObject($formName)->cancel();
@@ -265,7 +265,7 @@ class EasyViewWizard extends EasyView
     {
         $out = parent::outputAttrs();
         $out['step'] = $this->currentStep;
-        $out['forms'] = $this->m_FormRefs;
+        $out['forms'] = $this->formRefs;
         return $out;
     }
 

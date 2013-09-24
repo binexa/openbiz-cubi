@@ -53,13 +53,13 @@ class BarcodeScanner extends InputElement
         $func = $this->getFunction();
         
         $formobj = $this->GetFormObj();
-    	if($formobj->m_Errors[$this->objectName]){
+    	if($formobj->errors[$this->objectName]){
 			$func .= "onchange=\"this.className='$this->cssClass'\"";
 		}else{
 			$func .= "onfocus=\"this.className='$this->m_cssFocusClass'\" onblur=\"this.className='$this->cssClass'\"";
 		}        
         
-		$sHTML = " <div id=\"" . $this->objectName . "_reader\" $disabledStr $this->m_HTMLAttr $style $func >
+		$sHTML = " <div id=\"" . $this->objectName . "_reader\" $disabledStr $this->htmlAttr $style $func >
         				<span class=\"barcode\" ID=\"" . $this->objectName ."_code\" >$value</span>
         				<div style=\"display:none;\" ><input ReadOnly=\"Enabled\" type=\"hidden\" NAME=\"" . $this->objectName . "\" ID=\"" . $this->objectName ."\" VALUE=\"\" /></div>
         			</div>"; 

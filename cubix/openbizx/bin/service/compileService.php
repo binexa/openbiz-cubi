@@ -9,8 +9,8 @@ $svcobj->compile("document.do.DocumentDO",'Obj');
  */
 class compileService
 {
-	protected $m_ObjTemplateData ;
-	protected $m_XmlTemplateData ;
+	protected $objTemplateData ;
+	protected $xmlTemplateData ;
 	
     function __construct(&$xmlArr)
     {
@@ -19,8 +19,8 @@ class compileService
 
     protected function readMetadata(&$xmlArr)
     {
-        $this->m_ObjTemplateData = $xmlArr["PLUGINSERVICE"]["OBJLOADERTEMPLATE"]["VALUE"];        
-        $this->m_XmlTemplateData = $xmlArr["PLUGINSERVICE"]["XMLLOADERTEMPLATE"]["VALUE"];
+        $this->objTemplateData = $xmlArr["PLUGINSERVICE"]["OBJLOADERTEMPLATE"]["VALUE"];        
+        $this->xmlTemplateData = $xmlArr["PLUGINSERVICE"]["XMLLOADERTEMPLATE"]["VALUE"];
     }
 	
     public function compile($objName,$type)
@@ -28,11 +28,11 @@ class compileService
     	switch(strtoupper($type))
     	{
     		case 'XML':
-    			$template = $this->m_XmlTemplateData;
+    			$template = $this->xmlTemplateData;
     			break;
     		default:
     		case 'OBJ':
-    			$template = $this->m_ObjTemplateData;
+    			$template = $this->objTemplateData;
     			break;
     	}
     	$this->_doCompile($objName, $template);

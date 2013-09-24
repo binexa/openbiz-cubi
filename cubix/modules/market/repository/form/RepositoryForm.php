@@ -13,8 +13,8 @@
 
 class RepositoryForm extends EasyForm
 {
-	public $m_RepoValidated = 'N';
-	protected $m_RepoInfo = array();
+	public $repoValidated = 'N';
+	protected $repoInfo = array();
 	
 	public function checkRepo()
 	{
@@ -24,16 +24,16 @@ class RepositoryForm extends EasyForm
 		$repoInfo = $svc->discoverRepository($repo_uri);
 		if(!count($repoInfo))
 		{
-			$this->m_Errors = array(
+			$this->errors = array(
         		"fld_uri"=> $this->getMessage("REPO_INVALID")
         	);
         	$recArr = $this->readInputRecord();
        		$this->setActiveRecord($recArr);
-        	$this->processFormObjError($this->m_Errors);
+        	$this->processFormObjError($this->errors);
            	return false;
 		}
-		$this->m_RepoInfo = $repoInfo;
-		$this->m_RepoValidated = 'Y';
+		$this->repoInfo = $repoInfo;
+		$this->repoValidated = 'Y';
 		$this->updateForm();
 	}
 	
@@ -41,14 +41,14 @@ class RepositoryForm extends EasyForm
 	{
 		$result = parent::fetchData();
 		
-		if(count($this->m_RepoInfo)==0 && $result['repository_uri']!='' && $result['repository_uri']!='http://'){
+		if(count($this->repoInfo)==0 && $result['repository_uri']!='' && $result['repository_uri']!='http://'){
 			$repo_uri = $result['repository_uri'];
 			$svc = BizSystem::getService("market.lib.PackageService");
-			$this->m_RepoInfo = $svc->discoverRepository($repo_uri);
+			$this->repoInfo = $svc->discoverRepository($repo_uri);
 		}
 		
-		if(is_array($this->m_RepoInfo)){
-			foreach($this->m_RepoInfo as $key => $value)
+		if(is_array($this->repoInfo)){
+			foreach($this->repoInfo as $key => $value)
 			{
 				$result[$key] = $value;
 			}
@@ -84,7 +84,7 @@ class RepositoryForm extends EasyForm
         }
         catch (ValidationException $e)
         {
-            $this->processFormObjError($e->m_Errors);
+            $this->processFormObjError($e->errors);
             return;
         }
 
@@ -98,7 +98,7 @@ class RepositoryForm extends EasyForm
         
 
         // in case of popup form, close it, then rerender the parent form
-        if ($this->m_ParentFormName)
+        if ($this->parentFormName)
         {
             $this->close();
 

@@ -41,7 +41,7 @@ class AclRoleActionsForm extends EasyForm
 
         // change the sort rule and issue the query
         $do = BizSystem::getObject("system.do.AclActionDO");
-        $do->setSortRule("[" . $element->m_FieldName . "] " . $order);
+        $do->setSortRule("[" . $element->fieldName . "] " . $order);
 
         // move to 1st page
         $this->currentPage = 1;
@@ -62,11 +62,11 @@ class AclRoleActionsForm extends EasyForm
         if($this->searchRule){
         	$do->setSearchRule($this->searchRule);
         }
-        $do->setLimit($this->m_Range, ($this->currentPage-1)*$this->m_Range);
+        $do->setLimit($this->range, ($this->currentPage-1)*$this->range);
         $rs = $do->fetch()->toArray();
         $this->totalRecords = $do->count();
-        if ($this->m_Range && $this->m_Range > 0)
-            $this->totalPages = ceil($this->totalRecords/$this->m_Range);
+        if ($this->range && $this->range > 0)
+            $this->totalPages = ceil($this->totalRecords/$this->range);
         
         // fetch role and access
         //$this->getDataObj()->searchRule .= "[role_id]=$roleId ";        

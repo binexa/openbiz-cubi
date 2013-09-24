@@ -45,7 +45,7 @@ class SettingForm extends UserPreferenceForm
         }
         catch (ValidationException $e)
         {
-            $this->processFormObjError($e->m_Errors);
+            $this->processFormObjError($e->errors);
             return;
         }
 		
@@ -55,12 +55,12 @@ class SettingForm extends UserPreferenceForm
         
         foreach ($this->dataPanel as $element)
         {
-            $value = $recArr[$element->m_FieldName];
+            $value = $recArr[$element->fieldName];
             if ($value === null){ 
             	continue;
             } 
-            if(substr($element->m_FieldName,0,1)=='_'){
-	            $name = substr($element->m_FieldName,1);
+            if(substr($element->fieldName,0,1)=='_'){
+	            $name = substr($element->fieldName,1);
             	$recArrParam = array(
             		"user_id" => $user_id,
             		"name"	  => $name,
@@ -81,7 +81,7 @@ class SettingForm extends UserPreferenceForm
 	          
             }
         }
-        if ($this->m_ParentFormName)
+        if ($this->parentFormName)
         {
             $this->close();
 

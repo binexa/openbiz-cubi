@@ -25,10 +25,10 @@ class UserForm extends EasyForm
      *
      * @return void
      */
-	private $m_ProfileDO = "contact.do.ContactDO";
-	private $m_ProfileEditForm = "contact.form.ContactLiteEditForm";
-	private $m_ProfileDetailForm = "contact.form.ContactLiteDetailForm";
-	private $m_UserFormType;
+	private $profileDO = "contact.do.ContactDO";
+	private $profileEditForm = "contact.form.ContactLiteEditForm";
+	private $profileDetailForm = "contact.form.ContactLiteDetailForm";
+	private $userFormType;
 	
 	public function GoDetail()
 	{		
@@ -50,7 +50,7 @@ class UserForm extends EasyForm
         }
         catch (ValidationException $e)
         {
-            $this->processFormObjError($e->m_Errors);
+            $this->processFormObjError($e->errors);
             return;
         }
         $password = BizSystem::ClientProxy()->GetFormInputs("fld_password");            
@@ -60,7 +60,7 @@ class UserForm extends EasyForm
         // if 'notify email' option is checked, send confirmation email to user email address
         // ...
         
-        //$this->m_Notices[] = $this->GetMessage("USER_CREATED");
+        //$this->notices[] = $this->GetMessage("USER_CREATED");
         
         //assign a default role to new user
         $userArr = $this->getActiveRecord();
@@ -210,7 +210,7 @@ class UserForm extends EasyForm
        
        //create a default profile to new user
        $profile_id = BizSystem::getService(PROFILE_SERVICE)->CreateProfile($user_id);
-	   $this->switchForm($this->m_ProfileEditForm,$profile_id);   	
+	   $this->switchForm($this->profileEditForm,$profile_id);   	
        // $this->processPostAction();
     }
     
@@ -277,7 +277,7 @@ class UserForm extends EasyForm
         
         if($this->SmartCardAuthStatus()){
 	        if($this->CheckSmartCard($recArr)){
-	        	$this->m_Errors = array("fld_smartcardcodexx"=> $this->getMessage("SMARTCARD_USED"));
+	        	$this->errors = array("fld_smartcardcodexx"=> $this->getMessage("SMARTCARD_USED"));
 	        	$this->setActiveRecord($currentRec);
 	        	$this->rerender();
 	        	return;
@@ -291,14 +291,14 @@ class UserForm extends EasyForm
         }
         catch (ValidationException $e)
         {
-            $this->processFormObjError($e->m_Errors);
+            $this->processFormObjError($e->errors);
             return;
         }
 
         if (count($recArr) == 0)
             return;		        
             
-        $password_mask = $this->getElement("fld_password")->m_PasswordMask;        
+        $password_mask = $this->getElement("fld_password")->passwordMask;        
         $password = BizSystem::ClientProxy()->GetFormInputs("fld_password");
         if($password!=$password_mask){
         	$recArr['password'] = hash(HASH_ALG, $password);
@@ -317,7 +317,7 @@ class UserForm extends EasyForm
         // if 'notify email' option is checked, send confirmation email to user email address
         // ...
         
-        //$this->m_Notices[] = $this->GetMessage("USER_DATA_UPDATED");
+        //$this->notices[] = $this->GetMessage("USER_DATA_UPDATED");
         $this->processPostAction();
     }
     
@@ -335,7 +335,7 @@ class UserForm extends EasyForm
         // if 'notify email' option is checked, send confirmation email to user email address
         // ...
         
-        //$this->m_Notices[] = $this->GetMessage("USER_DATA_UPDATED");
+        //$this->notices[] = $this->GetMessage("USER_DATA_UPDATED");
         $this->processPostAction();
     }
    
@@ -365,8 +365,8 @@ class UserForm extends EasyForm
 		if(!$validateSvc->betweenLength($username,6,20))
 		{
 			$errorMessage = $this->GetMessage("USERNAME_LENGTH");
-			$this->m_ValidateErrors['fld_username'] = $errorMessage;
-			throw new ValidationException($this->m_ValidateErrors);
+			$this->validateErrors['fld_username'] = $errorMessage;
+			throw new ValidationException($this->validateErrors);
 			return false;
 		}
 		
@@ -376,8 +376,8 @@ class UserForm extends EasyForm
 		if(!$validateSvc->betweenLength($password,6,50))
 		{
 			$errorMessage = $this->GetMessage("PASSWORD_LENGTH");
-			$this->m_ValidateErrors['fld_password'] = $errorMessage;
-			throw new ValidationException($this->m_ValidateErrors);
+			$this->validateErrors['fld_password'] = $errorMessage;
+			throw new ValidationException($this->validateErrors);
 			return false;
 		}
 		
@@ -395,8 +395,8 @@ class UserForm extends EasyForm
 		if(!$validateSvc->email($email))
 		{
 			$errorMessage = $this->GetMessage("EMAIL_INVALID");
-			$this->m_ValidateErrors['fld_email'] = $errorMessage;
-			throw new ValidationException($this->m_ValidateErrors);
+			$this->validateErrors['fld_email'] = $errorMessage;
+			throw new ValidationException($this->validateErrors);
 			return false;
 		}    
     	    
@@ -406,8 +406,8 @@ class UserForm extends EasyForm
     	if ($this->_checkDupUsername())
         {
             $errorMessage = $this->GetMessage("USERNAME_USED");
-			$this->m_ValidateErrors['fld_username'] = $errorMessage;
-			throw new ValidationException($this->m_ValidateErrors);
+			$this->validateErrors['fld_username'] = $errorMessage;
+			throw new ValidationException($this->validateErrors);
 			return false;
 			
         }
@@ -415,17 +415,17 @@ class UserForm extends EasyForm
         if ($this->_checkDupEmail())
         {
             $errorMessage = $this->GetMessage("EMAIL_USED");
-			$this->m_ValidateErrors['fld_email'] = $errorMessage;
-			throw new ValidationException($this->m_ValidateErrors);
+			$this->validateErrors['fld_email'] = $errorMessage;
+			throw new ValidationException($this->validateErrors);
 			return false;
         }  
         
 		if($password != "" && ($password != $password_repeat))
 		{
 			$passRepeatElem = $this->getElement("fld_password_repeat");
-			$errorMessage = $this->GetMessage("PASSOWRD_REPEAT_NOTSAME",array($passRepeatElem->m_Label));
-			$this->m_ValidateErrors['fld_password_repeat'] = $errorMessage;
-			throw new ValidationException($this->m_ValidateErrors);
+			$errorMessage = $this->GetMessage("PASSOWRD_REPEAT_NOTSAME",array($passRepeatElem->label));
+			$this->validateErrors['fld_password_repeat'] = $errorMessage;
+			throw new ValidationException($this->validateErrors);
 			return false;
 		}
 	
@@ -485,14 +485,14 @@ class UserForm extends EasyForm
     		return ;
     	}
 		//looking up profile for this account in ProfileDO
-		$recordSet = BizSystem::getObject($this->m_ProfileDO,1)->fetchOne("[user_id]='$user_id'");
+		$recordSet = BizSystem::getObject($this->profileDO,1)->fetchOne("[user_id]='$user_id'");
 		if(!isset($recordSet)){
 			//create a new profile connected to current profile
 			$profile_id = BizSystem::getService(PROFILE_SERVICE)->CreateProfile($user_id);
-			$this->switchForm($this->m_ProfileEditForm,$profile_id);   					
+			$this->switchForm($this->profileEditForm,$profile_id);   					
 		}else{
 			$profile_id = $recordSet->Id;
-			$this->switchForm($this->m_ProfileDetailForm,$profile_id);   								
+			$this->switchForm($this->profileDetailForm,$profile_id);   								
 		}
     }
     

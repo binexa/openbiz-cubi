@@ -1,7 +1,7 @@
 <?php 
 class TestPaymentForm extends EasyForm
 {
-	public $m_PaymentService = "payment.lib.PaymentService";
+	public $paymentService = "payment.lib.PaymentService";
 	
 	public function MakePayment()
 	{
@@ -11,7 +11,7 @@ class TestPaymentForm extends EasyForm
 		$amount = $rec['amount'];
 		$providerType = $rec['provider_type'];
 
-		BizSystem::GetService($this->m_PaymentService)->goPayment($orderId,$amount,$providerType,$title);		
+		BizSystem::GetService($this->paymentService)->goPayment($orderId,$amount,$providerType,$title);		
 		return true;
 	}
 	

@@ -25,7 +25,7 @@
  */
 class HTMLTree extends MetaObject implements iUIControl
 {
-    protected $m_NodesXml = null;
+    protected $nodesXml = null;
 
     /**
      * Initialize HTMLTree with xml array
@@ -46,10 +46,10 @@ class HTMLTree extends MetaObject implements iUIControl
     protected function readMetadata(&$xmlArr)
     {
         $this->objectName = $xmlArr["TREE"]["ATTRIBUTES"]["NAME"];
-        $this->m_Package = $xmlArr["TREE"]["ATTRIBUTES"]["PACKAGE"];
+        $this->package = $xmlArr["TREE"]["ATTRIBUTES"]["PACKAGE"];
         $this->className = $xmlArr["TREE"]["ATTRIBUTES"]["CLASS"];
 
-        $this->m_NodesXml = $xmlArr["TREE"]["NODE"];
+        $this->nodesXml = $xmlArr["TREE"]["NODE"];
     }
 
     /**
@@ -67,7 +67,7 @@ class HTMLTree extends MetaObject implements iUIControl
 
         // list all views and highlight the current view
         $sHTML .= "<ul class='expanded'>\n";
-        $sHTML .= $this->renderNodeItems($this->m_NodesXml);
+        $sHTML .= $this->renderNodeItems($this->nodesXml);
         $sHTML .= "</ul>";
         return $sHTML;
     }

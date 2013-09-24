@@ -23,15 +23,15 @@ class ArrayListForm extends EasyForm {
             if (method_exists($element, "getSearchRule")) {
                 $searchStr = $element->getSearchRule();
             } else {
-                if (!$element->m_FieldName)
+                if (!$element->fieldName)
                     continue;
 
                 $value = BizSystem::clientProxy()->getFormInputs($element->objectName);
-                if ($element->m_FuzzySearch == "Y") {
+                if ($element->fuzzySearch == "Y") {
                     $value = "*$value*";
                 }
                 if ($value != '') {
-                    $searchStr = inputValToRule($element->m_FieldName, $value, $this);
+                    $searchStr = inputValToRule($element->fieldName, $value, $this);
                     $values[] = $value;
                 }
             }
@@ -105,15 +105,15 @@ class ArrayListForm extends EasyForm {
         //set paging 
         $this->totalRecords = count($result);
 
-        if ($this->m_Range && $this->m_Range > 0)
-            $this->totalPages = ceil($this->totalRecords / $this->m_Range);
+        if ($this->range && $this->range > 0)
+            $this->totalPages = ceil($this->totalRecords / $this->range);
 
         if ($this->currentPage > $this->totalPages) {
             $this->currentPage = $this->totalPages;
         }
 
         if (is_array($result)) {
-            $result = array_slice($result, ($this->currentPage - 1) * $this->m_Range, $this->m_Range);
+            $result = array_slice($result, ($this->currentPage - 1) * $this->range, $this->range);
         }
 
         return $result;

@@ -22,13 +22,13 @@ class PivotTableForm extends EasyForm
 		$this->pivotConfig['datas'] = array();
 		foreach ($this->dataPanel as $elem) {
 			if ($elem->pivotType == 'Column') {
-				$this->pivotConfig['columns'][$elem->m_FieldName] = $elem->m_Label;
+				$this->pivotConfig['columns'][$elem->fieldName] = $elem->label;
 			}
 			else if ($elem->pivotType == 'Row') {
-				$this->pivotConfig['rows'][$elem->m_FieldName] = $elem->m_Label;
+				$this->pivotConfig['rows'][$elem->fieldName] = $elem->label;
 			}
 			else if ($elem->pivotType == 'Data') {
-				$this->pivotConfig['datas'][$elem->m_FieldName] = $elem->m_Label;
+				$this->pivotConfig['datas'][$elem->fieldName] = $elem->label;
 			}
 		}
     }
@@ -55,7 +55,7 @@ class PivotTableForm extends EasyForm
 	public function outputAttrs()
     { 
         $output['name'] = $this->objectName;
-        $output['title'] = $this->m_Title;
+        $output['title'] = $this->title;
         $output['description'] = str_replace('\n', "<br />", $this->objectDescription);
         $output['meta'] = $this->pivotConfig;
 		$data = $this->getPivotData();

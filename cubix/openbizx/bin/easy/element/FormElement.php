@@ -3,21 +3,21 @@
 
 class FormElement extends InputElement
 {
-    protected $m_FormReference;
+    protected $formReference;
 
     protected function readMetaData(&$xmlArr)
     {
         parent::readMetaData($xmlArr);
-        $this->m_FormReference = isset($xmlArr["ATTRIBUTES"]["FORMREFERENCE"]) ? $xmlArr["ATTRIBUTES"]["FORMREFERENCE"] : null;        
-        $this->m_RenameElementSet = isset($xmlArr["ATTRIBUTES"]["RENAMEELEMENTSET"]) ? $xmlArr["ATTRIBUTES"]["RENAMEELEMENTSET"] : 'Y';
+        $this->formReference = isset($xmlArr["ATTRIBUTES"]["FORMREFERENCE"]) ? $xmlArr["ATTRIBUTES"]["FORMREFERENCE"] : null;        
+        $this->renameElementSet = isset($xmlArr["ATTRIBUTES"]["RENAMEELEMENTSET"]) ? $xmlArr["ATTRIBUTES"]["RENAMEELEMENTSET"] : 'Y';
     }
     
     public function FormRecordCount()
     {
-    	if(strtoupper($this->m_RenameElementSet)!='Y'){
+    	if(strtoupper($this->renameElementSet)!='Y'){
     		return;
     	}
-    	$formElementObj = BizSystem::GetObject($this->m_FormReference);
+    	$formElementObj = BizSystem::GetObject($this->formReference);
     	if(strtolower($formElementObj->formType)!='list'){
     		return;
     	}
@@ -40,7 +40,7 @@ class FormElement extends InputElement
    	 	if($count<0){
 	    		return;
 	    }
-    	$my_elementset = $this->m_ElementSet;
+    	$my_elementset = $this->elementSet;
     	
     	//update other elements
     	$panel = $this->getFormObj()->dataPanel;
@@ -48,9 +48,9 @@ class FormElement extends InputElement
         while($panel->valid())    	    	
         {      
         	$elem = $panel->current();
-        	if($elem->m_ElementSet ){     
-        		if($elem->m_ElementSet == $my_elementset && !preg_match("/tab_label_count/si",$elem->m_ElementSet)){
-        			$elem->m_ElementSet.=" <span class=\"tab_label_count\">$count</span>";
+        	if($elem->elementSet ){     
+        		if($elem->elementSet == $my_elementset && !preg_match("/tab_label_count/si",$elem->elementSet)){
+        			$elem->elementSet.=" <span class=\"tab_label_count\">$count</span>";
         		}
         	}     
         	$panel->next();        	                                  
@@ -64,18 +64,18 @@ class FormElement extends InputElement
      */
     public function render()
     {    	
-        if(!$this->m_FormReference)
+        if(!$this->formReference)
         {
         	return null;
         }
         $formObj = $this->getFormObj();   
-        $formElementObj = BizSystem::GetObject($this->m_FormReference);
-        $formElementObj->m_ParentFormName = $formObj->objectName;
-        $formElementObj->m_ParentFormElementMeta = $this->m_XMLMeta;
+        $formElementObj = BizSystem::GetObject($this->formReference);
+        $formElementObj->parentFormName = $formObj->objectName;
+        $formElementObj->parentFormElementMeta = $this->xmlMeta;
 		$formElementObj->canUpdateRecord = $formObj->canUpdateRecord;
         if (method_exists($formObj,"SetSubForms"))
         {
-                $formObj->setSubForms($this->m_FormReference);   
+                $formObj->setSubForms($this->formReference);   
                 if($formObj->dataObjName){             
                 	$formDataObj = BizSystem::getObject($formObj->dataObjName);
                	 	$dataObj = $formDataObj->getRefObject($formElementObj->dataObjName);
@@ -88,11 +88,11 @@ class FormElement extends InputElement
     	$this->FormRecordCount();    
     	if(strlen($sHTML))
     	{
-    		$this->m_Hidden = "N";
+    		$this->hidden = "N";
     	}
     	else
     	{
-    		$this->m_Hidden = "Y";
+    		$this->hidden = "Y";
     	}
         return $sHTML;
     }
@@ -101,7 +101,7 @@ class FormElement extends InputElement
     {
     	if($this->allowAccess())
     	{
-	    	$formElementObj = BizSystem::GetObject($this->m_FormReference);
+	    	$formElementObj = BizSystem::GetObject($this->formReference);
 	    	if(method_exists($formElementObj, "setValue"))
 	    	{
 	    		return $formElementObj->setValue($value);
@@ -113,7 +113,7 @@ class FormElement extends InputElement
     {
     	if($this->allowAccess())
     	{
-	    	$formElementObj = BizSystem::GetObject($this->m_FormReference);
+	    	$formElementObj = BizSystem::GetObject($this->formReference);
 	    	if(method_exists($formElementObj, "getValue"))
 	    	{
 	    		return $formElementObj->getValue();

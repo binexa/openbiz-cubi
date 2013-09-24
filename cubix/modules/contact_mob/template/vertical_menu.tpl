@@ -9,7 +9,7 @@
     	    		{assign var='current' value='1'}
     			{/if}
     	    {/foreach}
-            <li><a href="{if $subitem->m_URL}{$subitem->m_URL}{else}javascript:{/if}">{$subitem->objectName}</a></li>
+            <li><a href="{if $subitem->url}{$subitem->url}{else}javascript:{/if}">{$subitem->objectName}</a></li>
 		{/foreach}	
 		{/if}
 	{/foreach}

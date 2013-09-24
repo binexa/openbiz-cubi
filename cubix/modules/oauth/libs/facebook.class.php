@@ -5,9 +5,9 @@ class facebook extends oauthClass
 {
 	protected $type='facebook';
 	protected $m_loginUrl;
-	private $m_akey;
+	private $akey;
 	private $m_skey;
-	private $m_aliapy_config;
+	private $aliapy_config;
 	private $m_facebook;
  
  
@@ -15,10 +15,10 @@ class facebook extends oauthClass
 	public function __construct() {
 		parent::__construct();
 		$recArr=$this->getProviderList(); 
-		$this->m_akey = $recArr['key'];
+		$this->akey = $recArr['key'];
 		$this->m_skey =$recArr['value']; 
 		$this->m_facebook = new FacebookApi(array(
-		  'appId'  => $this->m_akey,
+		  'appId'  => $this->akey,
 		  'secret' => $this->m_skey,
 		  'CallBack' => $this->callBack,
 		));
@@ -51,7 +51,7 @@ class facebook extends oauthClass
     /*获取登录页*/
     function getUrl($call_back = null) {
 		
-		if ( empty($this->m_akey) || empty($this->m_skey) )
+		if ( empty($this->akey) || empty($this->m_skey) )
 		{
 			throw new Exception('Unknown Facebook_akey');
 			return false;

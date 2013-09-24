@@ -40,7 +40,7 @@ class HTMLBlock extends Element
         $style = $this->getStyle();
         $func = $this->getFunction();
 
-        return "<div ID='$this->objectName' $this->m_HTMLAttr $style $func>".$this->text."</div>";
+        return "<div ID='$this->objectName' $this->htmlAttr $style $func>".$this->text."</div>";
     }
 }
 

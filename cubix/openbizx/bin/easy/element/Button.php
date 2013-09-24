@@ -31,8 +31,8 @@ class Button extends InputElement
      *
      * @var string
      */
-    public $m_Image;
- 	public $m_Sortable;
+    public $image;
+ 	public $sortable;
     /**
      * Read array meta data, and store to meta object
      *
@@ -42,8 +42,8 @@ class Button extends InputElement
     protected function readMetaData(&$xmlArr)
     {
         parent::readMetaData($xmlArr);
-        $this->m_Image = isset($xmlArr["ATTRIBUTES"]["IMAGE"]) ? $xmlArr["ATTRIBUTES"]["IMAGE"] : null;
-        $this->m_Sortable = isset($xmlArr["ATTRIBUTES"]["SORTABLE"]) ? $xmlArr["ATTRIBUTES"]["SORTABLE"] : null;        
+        $this->image = isset($xmlArr["ATTRIBUTES"]["IMAGE"]) ? $xmlArr["ATTRIBUTES"]["IMAGE"] : null;
+        $this->sortable = isset($xmlArr["ATTRIBUTES"]["SORTABLE"]) ? $xmlArr["ATTRIBUTES"]["SORTABLE"] : null;        
         
     }
 
@@ -58,18 +58,18 @@ class Button extends InputElement
         $func = $this->getEnabled() == 'N' ? "" : $this->getFunction();
         $id	   = $this->objectName;
 
-        if ($this->m_Image)
+        if ($this->image)
         {
             $imagesPath = Resource::getImageUrl();
-            $out = "<img src=\"$imagesPath/" . $this->m_Image . "\" border=0 title=\"" . $this->text . "\" />";
+            $out = "<img src=\"$imagesPath/" . $this->image . "\" border=0 title=\"" . $this->text . "\" />";
             if ($func != "")
-                $out = "<a href='javascript:void(0);' $this->m_HTMLAttr $style $func>".$out."</a>";
+                $out = "<a href='javascript:void(0);' $this->htmlAttr $style $func>".$out."</a>";
         }
         else
         {
             $out = $this->getText();
-            //$out = "<input id=\"$id\" type='button' value='$out' $this->m_HTMLAttr $style $func>";
-            $out = "<a href='javascript:void(0);' $this->m_HTMLAttr $style $func>".$out."</a>";
+            //$out = "<input id=\"$id\" type='button' value='$out' $this->htmlAttr $style $func>";
+            $out = "<a href='javascript:void(0);' $this->htmlAttr $style $func>".$out."</a>";
         }
 
         return $out . "\n" . $this->addSCKeyScript();
@@ -83,7 +83,7 @@ class Button extends InputElement
      */
     public function setSortFlag($flag=null)
     {
-        $this->m_SortFlag = $flag;
+        $this->sortFlag = $flag;
     }
 
     /**
@@ -94,33 +94,33 @@ class Button extends InputElement
      */
     public function renderLabel()
     {
-        if ($this->m_Sortable == "Y")
+        if ($this->sortable == "Y")
         {
             $rule = $this->objectName;
 
-            $function = $this->m_FormName . ".SortRecord($rule,$this->m_SortFlag)";
-            if($this->m_SortFlag == "ASC" || $this->m_SortFlag == "DESC"){
+            $function = $this->formName . ".SortRecord($rule,$this->sortFlag)";
+            if($this->sortFlag == "ASC" || $this->sortFlag == "DESC"){
             	$class=" class=\"current\" ";
             }else{
             	$class=" class=\"normal\" ";
             }
-            if ($this->m_SortFlag == "ASC")
+            if ($this->sortFlag == "ASC")
             	$span_class = " class=\"sort_up\" ";
-            else if ($this->m_SortFlag == "DESC")
+            else if ($this->sortFlag == "DESC")
                 $span_class = " class=\"sort_down\" ";
-            $sHTML = "<a href=javascript:Openbiz.CallFunction('" . $function . "') $class ><span $span_class >" . $this->m_Label ."</span>";            
+            $sHTML = "<a href=javascript:Openbiz.CallFunction('" . $function . "') $class ><span $span_class >" . $this->label ."</span>";            
             $sHTML .= "</a>";
         }
         else
         {
-            $sHTML = $this->m_Label;
+            $sHTML = $this->label;
         }
         return $sHTML;
     }
     
     public function matchRemoteMethod($method)
     {
-        return ($this->m_Sortable == "Y" && $method == "sortrecord");
+        return ($this->sortable == "Y" && $method == "sortrecord");
     }    
 }
 

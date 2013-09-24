@@ -26,16 +26,16 @@ class oauthClass extends EasyForm
 	 * Temperary cache provider data
 	 * @var array
 	 */
-	protected $m_ProviderData;
+	protected $providerData;
 		
 	/**
 	 * 
 	 * Data Object for storage users oauth token info
 	 * @var string
 	 */
-	protected $m_UserOAuthDO;
+	protected $userOAuthDO;
  
-	protected $m_Providers;
+	protected $providers;
 	protected $callBack;
  
 	protected $m_oauthProviderDo='oauth.do.OauthProviderDO';
@@ -204,7 +204,7 @@ class oauthClass extends EasyForm
 		$oauth_data=BizSystem::sessionContext()->getVar('_OauthUserInfo');
 		
 		$recArr['username']=$oauth_data['uname'];      
-		$recArr['password'] = hash('sha1',$this->m_UserPass);
+		$recArr['password'] = hash('sha1',$this->userPass);
 		$recArr['create_by']="0";
         $recArr['update_by']="0";
 		$user_id=$userObj->insertRecord($recArr);

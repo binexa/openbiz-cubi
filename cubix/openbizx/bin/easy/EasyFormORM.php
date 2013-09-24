@@ -50,10 +50,10 @@ class EasyFormORM extends EasyForm
 	            	continue;
 	            }
 	            $element->setValue($value);
-	            $this->m_FormInputs[$element->objectName] = $value;
+	            $this->formInputs[$element->objectName] = $value;
 	            $value = $element->getValue();
-            	if ( $element->m_FieldName)
-                	$recArr[$element->m_FieldName] = $value;
+            	if ( $element->fieldName)
+                	$recArr[$element->fieldName] = $value;
             }            
         }
         return $recArr;

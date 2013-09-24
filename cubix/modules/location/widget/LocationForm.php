@@ -62,7 +62,7 @@ class LocationForm extends EasyForm
 		$jsonArray = Zend_Json::decode($jsonValue,true);
 		if ($jsonArray['status']!='OK') {
 			$errorMessage = "Invalid address"; //$this->getMessage("FORM_ELEMENT_REQUIRED",array($elementName));
-			$this->m_ValidateErrors['fld_address'] = $errorMessage;
+			$this->validateErrors['fld_address'] = $errorMessage;
 			return null;
 		}
 		$location = $jsonArray['results'][0]['geometry']['location'];
@@ -71,9 +71,9 @@ class LocationForm extends EasyForm
 	
 	protected function validateForm($cleanError = true)
 	{
-		if (count($this->m_ValidateErrors) > 0)
+		if (count($this->validateErrors) > 0)
         {
-            throw new ValidationException($this->m_ValidateErrors);
+            throw new ValidationException($this->validateErrors);
             return false;
         }
 		parent::validateForm($cleanError);
@@ -82,7 +82,7 @@ class LocationForm extends EasyForm
 	public function deleteLocation($id)
 	{
 		parent::deleteRecord($id);	
-		 $parentForm = BizSystem::getObject($this->m_ParentFormName);
+		 $parentForm = BizSystem::getObject($this->parentFormName);
 		$parentForm->rerender();
 		return parent::close();
 	}
@@ -108,14 +108,14 @@ class LocationForm extends EasyForm
         }
         catch (ValidationException $e)
         {
-            $this->processFormObjError($e->m_Errors);
+            $this->processFormObjError($e->errors);
             return;
         }
         
-		if (!$this->m_ParentFormElemName)
+		if (!$this->parentFormElemName)
         {
         	//its only supports 1-m assoc now	        	        
-	        $parentForm = BizSystem::objectFactory()->getObject($this->m_ParentFormName);
+	        $parentForm = BizSystem::objectFactory()->getObject($this->parentFormName);
         	//$parentForm->getDataObj()->clearSearchRule();
 	        $parentDo = $parentForm->getDataObj();
 	        
@@ -133,13 +133,13 @@ class LocationForm extends EasyForm
 	    	}    	
         }                
 
-        if ($this->m_ParentFormElemName && $this->m_PickerMap)
+        if ($this->parentFormElemName && $this->pickerMap)
         {
             return ; //not supported yet
         }
         $recId = $parentDo->InsertRecord($recArr);
         
-        $parentForm = BizSystem::getObject($this->m_ParentFormName);
+        $parentForm = BizSystem::getObject($this->parentFormName);
 		$parentForm->rerender();
 		return parent::close();
 	}

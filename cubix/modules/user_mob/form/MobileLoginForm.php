@@ -39,7 +39,7 @@ class MobileLoginForm extends LoginForm
         }
         catch (ValidationException $e)
         {        	
-            $this->processFormObjError($e->m_Errors);
+            $this->processFormObjError($e->errors);
             return;
         }
 	  	        
@@ -48,10 +48,10 @@ class MobileLoginForm extends LoginForm
 		$this->password = BizSystem::ClientProxy()->getFormInputs("password");		
 		$this->smartcard = BizSystem::ClientProxy()->getFormInputs("smartcard");
 		
-		if($this->username == $this->getElement("username")->m_Hint){
+		if($this->username == $this->getElement("username")->hint){
 			$this->username = null;
 		}
-    	if($this->password == $this->getElement("password")->m_Hint){
+    	if($this->password == $this->getElement("password")->hint){
 			$this->password = null;
 		}
 		

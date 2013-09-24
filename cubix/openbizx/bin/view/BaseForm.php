@@ -13,17 +13,17 @@ include_once "FormHelper.php";
 class BaseForm extends MetaObject implements iSessionObject
 {
     // metadata vars are public, necessary for metadata inheritance
-    public $m_Title;
-    public $m_Icon;
+    public $title;
+    public $icon;
     public $m_jsClass;
     public $dataObjName;
 	
 	// FormAction handles actions from client
-	public $m_FormAction;
+	public $formAction;
 	// FormRenderer draws data to given format (html/xml) output
-	public $m_FormRenderer;
+	public $formRenderer;
 	// FormEventManager triggers external event observers on certain events
-	public $m_FormEventManager;
+	public $formEventManager;
 
     /**
      * Name of inherited form (meta-form)
@@ -31,7 +31,7 @@ class BaseForm extends MetaObject implements iSessionObject
      */
     public $inheritFrom;
     
-	public $m_Panels; 
+	public $panels; 
     /**
      * Data Panel object
      * @var Panel
@@ -98,8 +98,8 @@ class BaseForm extends MetaObject implements iSessionObject
     {
         parent::readMetaData($xmlArr);
         $this->inheritFrom = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["INHERITFROM"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["INHERITFROM"] : null;        
-        $this->m_Title = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["TITLE"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["TITLE"] : null;
-        $this->m_Icon = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["ICON"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["ICON"] : null;        
+        $this->title = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["TITLE"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["TITLE"] : null;
+        $this->icon = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["ICON"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["ICON"] : null;        
         $this->objectDescription = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["DESCRIPTION"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["DESCRIPTION"] : null;
         $this->m_jsClass = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["JSCLASS"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["JSCLASS"] : null;
         $this->height = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["HEIGHT"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["HEIGHT"] : null;
@@ -117,12 +117,12 @@ class BaseForm extends MetaObject implements iSessionObject
         $this->actionPanel = new Panel($xmlArr["EASYFORM"]["ACTIONPANEL"]["ELEMENT"],"",$this);
         $this->navPanel = new Panel($xmlArr["EASYFORM"]["NAVPANEL"]["ELEMENT"],"",$this);
         $this->searchPanel = new Panel($xmlArr["EASYFORM"]["SEARCHPANEL"]["ELEMENT"],"",$this);
-        $this->m_Panels = array($this->dataPanel, $this->actionPanel, $this->navPanel, $this->searchPanel);
+        $this->panels = array($this->dataPanel, $this->actionPanel, $this->navPanel, $this->searchPanel);
 
-        $this->m_EventName = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["EVENTNAME"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["EVENTNAME"] : null;
+        $this->eventName = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["EVENTNAME"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["EVENTNAME"] : null;
 
         $this->messageFile = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["MESSAGEFILE"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["MESSAGEFILE"] : null;
-        $this->objectMessages = Resource::loadMessage($this->messageFile , $this->m_Package);
+        $this->objectMessages = Resource::loadMessage($this->messageFile , $this->package);
 
         $this->cacheLifeTime = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["CACHELIFETIME"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["CACHELIFETIME"] : "0";
 
@@ -148,8 +148,8 @@ class BaseForm extends MetaObject implements iSessionObject
         if (!$this->inheritFrom) return;
         $parentObj = BizSystem::getObject($this->inheritFrom);
 
-        $this->m_Title = $this->m_Title ? $this->m_Title : $parentObj->m_Title;
-        $this->m_Icon = $this->m_Icon ? $this->m_Icon : $parentObj->m_Icon;        
+        $this->title = $this->title ? $this->title : $parentObj->title;
+        $this->icon = $this->icon ? $this->icon : $parentObj->icon;        
         $this->objectDescription  = $this->objectDescription ? $this->objectDescription : $parentObj->objectDescription;
         $this->m_jsClass   = $this->m_jsClass ? $this->m_jsClass : $parentObj->m_jsClass;
         $this->height   = $this->height ? $this->height : $parentObj->height;
@@ -157,13 +157,13 @@ class BaseForm extends MetaObject implements iSessionObject
         $this->templateEngine   = $this->templateEngine ? $this->templateEngine : $parentObj->templateEngine;
         $this->templateFile   = $this->templateFile ? $this->templateFile : $parentObj->templateFile;        
         $this->formType   = $this->formType ? $this->formType : $parentObj->formType;
-        $this->m_Range   = $this->m_Range ? $this->m_Range : $parentObj->m_Range;
-        $this->m_FixSearchRule   = $this->m_FixSearchRule ? $this->m_FixSearchRule : $parentObj->m_FixSearchRule;
+        $this->range   = $this->range ? $this->range : $parentObj->range;
+        $this->fixSearchRule   = $this->fixSearchRule ? $this->fixSearchRule : $parentObj->fixSearchRule;
         $this->defaultFixSearchRule   = $this->defaultFixSearchRule ? $this->defaultFixSearchRule : $parentObj->defaultFixSearchRule;		        
         $this->dataObjName   = $this->dataObjName ? $this->dataObjName : $parentObj->dataObjName;
-        $this->m_EventName   = $this->m_EventName ? $this->m_EventName : $parentObj->m_EventName;
+        $this->eventName   = $this->eventName ? $this->eventName : $parentObj->eventName;
         $this->messageFile   = $this->messageFile ? $this->messageFile : $parentObj->messageFile;
-        $this->objectMessages = Resource::loadMessage($this->messageFile , $this->m_Package);
+        $this->objectMessages = Resource::loadMessage($this->messageFile , $this->package);
 		$this->cacheLifeTime   = $this->cacheLifeTime ? $this->cacheLifeTime : $parentObj->cacheLifeTime;
         
         $this->dataPanel->merge($parentObj->dataPanel);
@@ -187,7 +187,7 @@ class BaseForm extends MetaObject implements iSessionObject
 	        foreach ($this->searchPanel as $elem)
 	            $elem->adjustFormName($this->objectName);            
         }   
-		$this->m_Panels = array($this->dataPanel, $this->actionPanel, $this->navPanel, $this->searchPanel);            
+		$this->panels = array($this->dataPanel, $this->actionPanel, $this->navPanel, $this->searchPanel);            
     } 
 	
 // -------------------------- Session Methods ---------------------- //
@@ -310,9 +310,9 @@ class BaseForm extends MetaObject implements iSessionObject
         if ($this->actionPanel->get($elementName)) return $this->actionPanel->get($elementName);
         if ($this->navPanel->get($elementName)) return $this->navPanel->get($elementName);
         if ($this->searchPanel->get($elementName)) return $this->searchPanel->get($elementName);
-        if ($this->m_WizardPanel)
+        if ($this->wizardPanel)
         {
-        	if ($this->m_WizardPanel->get($elementName)) return $this->m_WizardPanel->get($elementName);
+        	if ($this->wizardPanel->get($elementName)) return $this->wizardPanel->get($elementName);
         }
     }
 	
@@ -340,7 +340,7 @@ class BaseForm extends MetaObject implements iSessionObject
 	public function setFormInputs($inputArr=null)
     {
         if(!$inputArr){
-    		$inputArr = $this->m_FormInputs;
+    		$inputArr = $this->formInputs;
         } 
     	if(!is_array($inputArr)){
     		$inputArr = array();
@@ -469,8 +469,8 @@ class BaseForm extends MetaObject implements iSessionObject
     public function outputAttrs()
     {
         $output['name'] = $this->objectName;
-        $output['title'] = Expression::evaluateExpression($this->m_Title, $this);
-        $output['icon'] = $this->m_Icon; 
+        $output['title'] = Expression::evaluateExpression($this->title, $this);
+        $output['icon'] = $this->icon; 
         return $output;
     }
 	
@@ -568,18 +568,18 @@ class BaseForm extends MetaObject implements iSessionObject
     protected function translate()
     {
     	$module = $this->getModuleName($this->objectName);
-    	if (!empty($this->m_Title))
+    	if (!empty($this->title))
     	{
-    		$trans_string = I18n::t($this->m_Title, $this->getTransKey('Title'), $module, $this->getTransPrefix());
+    		$trans_string = I18n::t($this->title, $this->getTransKey('Title'), $module, $this->getTransPrefix());
     		if($trans_string){
-    			$this->m_Title = $trans_string;
+    			$this->title = $trans_string;
     		}
     	}
-    	if (!empty($this->m_Icon))
+    	if (!empty($this->icon))
     	{
-    		$trans_string = I18n::t($this->m_Icon, $this->getTransKey('Icon'), $module, $this->getTransPrefix());
+    		$trans_string = I18n::t($this->icon, $this->getTransKey('Icon'), $module, $this->getTransPrefix());
     		if($trans_string){
-    			$this->m_Icon = $trans_string;
+    			$this->icon = $trans_string;
     		}
     	}
     	if (!empty($this->objectDescription))

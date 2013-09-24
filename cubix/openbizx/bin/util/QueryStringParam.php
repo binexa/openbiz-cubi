@@ -24,14 +24,14 @@
  */
 class QueryStringParam
 {
-    //protected $m_QueryString = "";
+    //protected $queryString = "";
 
     /**
      * Array of params
      *
      * @var array
      */
-    protected static $m_Params = array();
+    protected static $params = array();
 
     /**
      * Count of params
@@ -53,7 +53,7 @@ class QueryStringParam
         $key = ":_v".QueryStringParam::$_counter;
         $queryString = "$field  $opr $key";
         QueryStringParam::$_counter++;
-        QueryStringParam::$m_Params[$key] = $value;
+        QueryStringParam::$params[$key] = $value;
 
         return $queryString;
     }
@@ -69,7 +69,7 @@ class QueryStringParam
         $key = ":_v".QueryStringParam::$_counter;
         $queryString = "$key";
         QueryStringParam::$_counter++;
-        QueryStringParam::$m_Params[$key] = $value;
+        QueryStringParam::$params[$key] = $value;
 
         return $queryString;
     }
@@ -84,7 +84,7 @@ class QueryStringParam
     {
         if (!$params)
             return;
-        QueryStringParam::$m_Params = $params;
+        QueryStringParam::$params = $params;
         QueryStringParam::$_counter = count($params)+1;
     }
 
@@ -95,7 +95,7 @@ class QueryStringParam
      */
     public static function getBindValues()
     {
-        return QueryStringParam::$m_Params;
+        return QueryStringParam::$params;
     }
 
     /**
@@ -105,7 +105,7 @@ class QueryStringParam
      */
     public static function getBindValueString()
     {
-        return implode(',', QueryStringParam::$m_Params);
+        return implode(',', QueryStringParam::$params);
     }
 
     /**
@@ -116,7 +116,7 @@ class QueryStringParam
     public static function reset()
     {
         QueryStringParam::$_counter = 1;
-        QueryStringParam::$m_Params = array();
+        QueryStringParam::$params = array();
     }
 }
 

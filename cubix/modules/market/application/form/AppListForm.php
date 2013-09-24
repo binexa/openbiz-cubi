@@ -13,13 +13,13 @@
 
 class AppListForm extends EasyForm
 {
-	public $m_RepoDO = "market.repository.do.RepositoryDO";
-	protected $m_RemoteSearchRule;
-	protected $m_RepoID;
+	public $repoDO = "market.repository.do.RepositoryDO";
+	protected $remoteSearchRule;
+	protected $repoID;
 	
 	protected function getRepoInfo($uid)
 	{
-		$repoRec = BizSystem::getObject($this->m_RepoDO,1)->fetchOne("[repository_uid]='$uid'");
+		$repoRec = BizSystem::getObject($this->repoDO,1)->fetchOne("[repository_uid]='$uid'");
 		return $repoRec;
 	}
 	
@@ -47,24 +47,24 @@ class AppListForm extends EasyForm
         	$repo_uri .= '/';
         }	
         
-        $this->m_RepoID = $repo_id;
+        $this->repoID = $repo_id;
     	return $repo_uri;	
 	}
 	
 	protected function fetchRepoList()
 	{
-		$rs = BizSystem::getObject($this->m_RepoDO)->directFetch("[status]='1'");
+		$rs = BizSystem::getObject($this->repoDO)->directFetch("[status]='1'");
 		return $rs;
 	}
 	
 	public function fetchDataSet()
 	{
-        if ($this->m_FixSearchRule)
+        if ($this->fixSearchRule)
         {
             if ($this->searchRule)
-                $searchRule = $this->searchRule . " AND " . $this->m_FixSearchRule;
+                $searchRule = $this->searchRule . " AND " . $this->fixSearchRule;
             else
-                $searchRule = $this->m_FixSearchRule;
+                $searchRule = $this->fixSearchRule;
         }
         else
             $searchRule = $this->searchRule;        
@@ -79,7 +79,7 @@ class AppListForm extends EasyForm
 	       	} 
         }
        	      	
-       	$this->m_RemoteSearchRule = $searchRule;
+       	$this->remoteSearchRule = $searchRule;
        	BizSystem::getService(ACL_SERVICE)->clearACLCache();
 	}
 	
@@ -101,7 +101,7 @@ class AppListForm extends EasyForm
         $element->setSortFlag($order);
 
         // change the sort rule and issue the query
-        $this->sortRule="[" . $element->m_FieldName . "] $order";
+        $this->sortRule="[" . $element->fieldName . "] $order";
 
         // move to 1st page
         $this->currentPage = 1;

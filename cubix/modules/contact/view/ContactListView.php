@@ -16,9 +16,9 @@ class ContactListView extends EasyView
 	protected function readMetadata(&$xmlArr)
     {
         parent::readMetaData($xmlArr);
-        unset($this->m_FormRefs);
+        unset($this->formRefs);
         $formRefXML = $this->getDefaultMainForm($xmlArr["EASYVIEW"]["FORMREFERENCES"]["REFERENCE"]);
-        $this->m_FormRefs = new MetaIterator($formRefXML,"FormReference",$this);
+        $this->formRefs = new MetaIterator($formRefXML,"FormReference",$this);
     }
     
     public function getDefaultMainForm(&$xmlArr)

@@ -1,10 +1,10 @@
 <?php
 class F_ElementEdit extends EasyForm 
 { 
-    protected $m_MetaFile;
-    protected $m_ElemPath;
+    protected $metaFile;
+    protected $elemPath;
     protected $attrName;
-    protected $m_XmlFile;
+    protected $xmlFile;
     protected $doc;
         
     public function loadSessionVars($sessCtxt) 
@@ -12,16 +12,16 @@ class F_ElementEdit extends EasyForm
         parent::loadSessionVars($sessCtxt);
         
         if (!$_GET['metaName']) 
-            $sessCtxt->getObjVar($this->objectName, "MetaFile", $this->m_MetaFile);
+            $sessCtxt->getObjVar($this->objectName, "MetaFile", $this->metaFile);
         else {
         	$metaFile = OPENBIZ_APP_MODULE_PATH."/".str_replace(".","/",$_GET['metaName']).".xml";
-        	$this->m_MetaFile = $metaFile;
+        	$this->metaFile = $metaFile;
         }
         if (!$_GET['elemPath']) 
-            $sessCtxt->getObjVar($this->objectName, "ElemPath", $this->m_ElemPath);
+            $sessCtxt->getObjVar($this->objectName, "ElemPath", $this->elemPath);
         else
-            $this->m_ElemPath = $this->adjustElemPath($_GET['elemPath']);
-        //echo $_GET['elemPath'].','.$this->m_ElemPath; exit;
+            $this->elemPath = $this->adjustElemPath($_GET['elemPath']);
+        //echo $_GET['elemPath'].','.$this->elemPath; exit;
         if (!$_GET['attrName']) 
             $sessCtxt->getObjVar($this->objectName, "AttrName", $this->attrName);
         else
@@ -44,27 +44,27 @@ class F_ElementEdit extends EasyForm
     public function saveSessionVars($sessCtxt) 
     {
         parent::saveSessionVars($sessCtxt);
-        $sessCtxt->setObjVar($this->objectName, "MetaFile", $this->m_MetaFile);
-        $sessCtxt->setObjVar($this->objectName, "ElemPath", $this->m_ElemPath);
+        $sessCtxt->setObjVar($this->objectName, "MetaFile", $this->metaFile);
+        $sessCtxt->setObjVar($this->objectName, "ElemPath", $this->elemPath);
         $sessCtxt->setObjVar($this->objectName, "AttrName", $this->attrName);
     }
     
     public function getCurrentElement()
     {
-        $xpath = '/'.$this->m_ElemPath;
+        $xpath = '/'.$this->elemPath;
         $elem = $this->QueryXpath($xpath);
         return $elem;
     }
     
     public function GetMetaFileInfo()
     {
-    	$pos = strrpos($this->m_MetaFile, "modules/");
+    	$pos = strrpos($this->metaFile, "modules/");
         if ($pos > 0)
         {
-            $modulesPath = substr($this->m_MetaFile, 0, $pos+8);
-            $pos = strrpos($this->m_MetaFile, "/");
-            $fileName = substr($this->m_MetaFile, $pos+1);
-            $package = str_replace("/",".",str_replace(array($modulesPath, "/".$fileName),"",$this->m_MetaFile));
+            $modulesPath = substr($this->metaFile, 0, $pos+8);
+            $pos = strrpos($this->metaFile, "/");
+            $fileName = substr($this->metaFile, $pos+1);
+            $package = str_replace("/",".",str_replace(array($modulesPath, "/".$fileName),"",$this->metaFile));
             return array('modules_path'=>$modulesPath, 'package'=>$package, 'fileName'=>$fileName);
         }
         return null;
@@ -109,20 +109,20 @@ class F_ElementEdit extends EasyForm
         }
                     
         // get the xml element with xpath xpath('//element[@Name="fld_Id"]')
-        //$this->m_XmlFile = OPENBIZ_APP_MODULE_PATH."/".str_replace(".","/",$this->m_MetaName).".xml";
-        $this->m_XmlFile = $this->m_MetaFile;
-        if (!file_exists($this->m_XmlFile)) 
+        //$this->xmlFile = OPENBIZ_APP_MODULE_PATH."/".str_replace(".","/",$this->metaName).".xml";
+        $this->xmlFile = $this->metaFile;
+        if (!file_exists($this->xmlFile)) 
             return null;
-        $rootElem = simplexml_load_file($this->m_XmlFile);
+        $rootElem = simplexml_load_file($this->xmlFile);
         //print_r($rootElem);
-        $xpathStr = '/'.$this->m_ElemPath.'[@Name="'.$this->attrName.'"]';   // TODO: fix it by full path
+        $xpathStr = '/'.$this->elemPath.'[@Name="'.$this->attrName.'"]';   // TODO: fix it by full path
         $elems = $rootElem->xpath($xpathStr);
         if (!$elems || count($elems)==0)
             return null;
         // give warning if find >1 matching elements
         if (count($elems) > 1)
         {
-            echo "<div class='error'>WARNING: More than 1 '$this->m_ElemPath' elements are found with Name as '".$this->attrName."'. Please change these elements with unique names!</div>";
+            echo "<div class='error'>WARNING: More than 1 '$this->elemPath' elements are found with Name as '".$this->attrName."'. Please change these elements with unique names!</div>";
         }
         // get the attributes of the element
         $elem = $elems[0];
@@ -142,7 +142,7 @@ class F_ElementEdit extends EasyForm
         }
         catch (ValidationException $e)
         {
-        	$this->processFormObjError($e->m_Errors);
+        	$this->processFormObjError($e->errors);
             return;
         }
         $recArr = $this->readInputRecord();
@@ -153,21 +153,21 @@ class F_ElementEdit extends EasyForm
         if (!$this->saveElement($recArr))
             return;
         
-        //BizSystem::clientProxy()->showClientAlert ("Changes of ".$this->m_MetaName." are saved");
-        BizSystem::clientProxy()->updateClientElement("html_msg", "Changes of ".$this->m_ElemPath.": ".$this->attrName." are saved");
+        //BizSystem::clientProxy()->showClientAlert ("Changes of ".$this->metaName." are saved");
+        BizSystem::clientProxy()->updateClientElement("html_msg", "Changes of ".$this->elemPath.": ".$this->attrName." are saved");
     }
     
     protected function GetDocDocument()
     {
         if ($this->doc) 
             return $this->doc;
-        //$this->m_XmlFile = OPENBIZ_APP_MODULE_PATH."/".str_replace(".","/",$this->m_MetaName).".xml";
-        $this->m_XmlFile = $this->m_MetaFile;
+        //$this->xmlFile = OPENBIZ_APP_MODULE_PATH."/".str_replace(".","/",$this->metaName).".xml";
+        $this->xmlFile = $this->metaFile;
         
-        if (!file_exists($this->m_XmlFile)) 
+        if (!file_exists($this->xmlFile)) 
             return null;
         $doc = new DomDocument();
-        $ok = $doc->load($this->m_XmlFile);
+        $ok = $doc->load($this->xmlFile);
         if (!$ok)
             return null;
         $this->doc = $doc;
@@ -200,7 +200,7 @@ class F_ElementEdit extends EasyForm
         
         // save xml file
         $doc->formatOutput = true;
-        $doc->save($this->m_XmlFile);
+        $doc->save($this->xmlFile);
         return true;
     }
     
@@ -225,7 +225,7 @@ class F_ElementEdit extends EasyForm
         
         // save xml file
         $doc->formatOutput = true;
-        $doc->save($this->m_XmlFile);
+        $doc->save($this->xmlFile);
         return true;
     }
     
@@ -263,7 +263,7 @@ class F_ElementEdit extends EasyForm
         
         // save xml file
         $doc->formatOutput = true;
-        $doc->save($this->m_XmlFile);
+        $doc->save($this->xmlFile);
         return true;
     }
     
@@ -276,7 +276,7 @@ class F_ElementEdit extends EasyForm
         }
         
         $xpath = new DOMXPath($doc);
-        $xpathStr = '/'.$this->m_ElemPath.'[@Name="'.$this->attrName.'"]';
+        $xpathStr = '/'.$this->elemPath.'[@Name="'.$this->attrName.'"]';
         $elems = $xpath->query($xpathStr);
         $elem = $elems->item(0);
         
@@ -296,7 +296,7 @@ class F_ElementEdit extends EasyForm
         
         // save xml file
         $doc->formatOutput = true;
-        $doc->save($this->m_XmlFile);
+        $doc->save($this->xmlFile);
         
         // if name is changed, refresh the left tree node name
         if ($recArr['Name'] != $this->attrName)

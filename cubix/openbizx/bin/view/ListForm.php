@@ -17,16 +17,16 @@ class ListForm extends BaseForm
 	//list of method that can directly from browser
 	protected $directMethodList = array('selectrecord','sortrecord','editrecord','copyrecord','deleterecord','removerecord','runsearch','gotopage','setpagesize','gotoselectedpage','switchform','loaddialog'); 
 	
-	public $m_Range = 10;
+	public $range = 10;
 	public $searchRule = null;
-    public $m_FixSearchRule = null; // FixSearchRule is the search rule always applying on the search
+    public $fixSearchRule = null; // FixSearchRule is the search rule always applying on the search
     public $sortRule = null;
     protected $defaultFixSearchRule = null;
 	protected $queryParams = array();
 	
 	// vars for grid(list)
     protected $currentPage = 1;
-    protected $m_StartItem = 1;
+    protected $startItem = 1;
     public $totalPages = 1;
     protected $totalRecords = 0;
     protected $recordSet = null;
@@ -35,8 +35,8 @@ class ListForm extends BaseForm
 	protected function readMetadata($xmlArr)
     {
         parent::readMetaData($xmlArr);
-		$this->m_Range = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["PAGESIZE"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["PAGESIZE"] : $this->m_Range;
-        $this->m_FixSearchRule = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["SEARCHRULE"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["SEARCHRULE"] : null;
+		$this->range = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["PAGESIZE"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["PAGESIZE"] : $this->range;
+        $this->fixSearchRule = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["SEARCHRULE"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["SEARCHRULE"] : null;
         $this->sortRule = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["SORTRULE"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["SORTRULE"] : null;
 		$this->defaultFixSearchRule = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["SEARCHRULE"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["SEARCHRULE"] : null;
 	}
@@ -46,8 +46,8 @@ class ListForm extends BaseForm
         if (!$this->inheritFrom) return;
         $parentObj = BizSystem::getObject($this->inheritFrom);
 		parent::inheritParentObj();
-		$this->m_Range = $this->m_Range ? $this->m_Range : $parentObj->m_Range;
-        $this->m_FixSearchRule = $this->m_FixSearchRule ? $this->m_FixSearchRule : $parentObj->m_FixSearchRule;
+		$this->range = $this->range ? $this->range : $parentObj->range;
+        $this->fixSearchRule = $this->fixSearchRule ? $this->fixSearchRule : $parentObj->fixSearchRule;
         $this->defaultFixSearchRule = $this->defaultFixSearchRule ? $this->defaultFixSearchRule : $parentObj->defaultFixSearchRule;
 	}
 	
@@ -60,12 +60,12 @@ class ListForm extends BaseForm
     public function loadSessionVars($sessionContext)
     {
         $sessionContext->getObjVar($this->objectName, "RecordId", $this->recordId);
-        $sessionContext->getObjVar($this->objectName, "FixSearchRule", $this->m_FixSearchRule);
+        $sessionContext->getObjVar($this->objectName, "FixSearchRule", $this->fixSearchRule);
         $sessionContext->getObjVar($this->objectName, "SearchRule", $this->searchRule);
         $sessionContext->getObjVar($this->objectName, "SearchRuleBindValues", $this->searchRuleBindValues);
         $sessionContext->getObjVar($this->objectName, "SubForms", $this->subForms);
         $sessionContext->getObjVar($this->objectName, "CurrentPage", $this->currentPage);
-        $sessionContext->getObjVar($this->objectName, "PageSize", $this->m_Range);
+        $sessionContext->getObjVar($this->objectName, "PageSize", $this->range);
         $sessionContext->getObjVar($this->objectName, "SearchPanelValues", $this->searchPanelValues);
     }
 
@@ -78,12 +78,12 @@ class ListForm extends BaseForm
     public function saveSessionVars($sessionContext)
     {
         $sessionContext->setObjVar($this->objectName, "RecordId", $this->recordId);
-        $sessionContext->setObjVar($this->objectName, "FixSearchRule", $this->m_FixSearchRule);
+        $sessionContext->setObjVar($this->objectName, "FixSearchRule", $this->fixSearchRule);
         $sessionContext->setObjVar($this->objectName, "SearchRule", $this->searchRule);        
         $sessionContext->setObjVar($this->objectName, "SearchRuleBindValues", $this->searchRuleBindValues);
         $sessionContext->setObjVar($this->objectName, "SubForms", $this->subForms);
         $sessionContext->setObjVar($this->objectName, "CurrentPage", $this->currentPage);
-        $sessionContext->setObjVar($this->objectName, "PageSize", $this->m_Range);
+        $sessionContext->setObjVar($this->objectName, "PageSize", $this->range);
         $sessionContext->setObjVar($this->objectName, "SearchPanelValues", $this->searchPanelValues);        
     }
 	
@@ -103,12 +103,12 @@ class ListForm extends BaseForm
         else
             $dataObj->clearSearchRule();
 /*
-        if ($this->m_FixSearchRule)
+        if ($this->fixSearchRule)
         {
             if ($this->searchRule)
-                $searchRule = $this->searchRule . " AND " . $this->m_FixSearchRule;
+                $searchRule = $this->searchRule . " AND " . $this->fixSearchRule;
             else
-                $searchRule = $this->m_FixSearchRule;
+                $searchRule = $this->fixSearchRule;
         }
         else
             $searchRule = $this->searchRule;
@@ -116,13 +116,13 @@ class ListForm extends BaseForm
         $dataObj->setSearchRule($searchRule);
 		*/
 		$dataObj->setQueryParameters($this->queryParams);
-        if($this->m_StartItem>1)
+        if($this->startItem>1)
         {
-            $dataObj->setLimit($this->m_Range, $this->m_StartItem);
+            $dataObj->setLimit($this->range, $this->startItem);
         }
         else
         {
-            $dataObj->setLimit($this->m_Range, ($this->currentPage-1)*$this->m_Range);
+            $dataObj->setLimit($this->range, ($this->currentPage-1)*$this->range);
         }      
         if($this->sortRule && $this->sortRule != $this->getDataObj()->sortRule)
         {
@@ -130,15 +130,15 @@ class ListForm extends BaseForm
         }          
         $resultRecords = $dataObj->fetch();
         $this->totalRecords = $dataObj->count();
-        if ($this->m_Range && $this->m_Range > 0)
-            $this->totalPages = ceil($this->totalRecords/$this->m_Range);
+        if ($this->range && $this->range > 0)
+            $this->totalPages = ceil($this->totalRecords/$this->range);
         $selectedIndex = 0;
         
         //if current page is large than total pages ,then reset current page to last page
         if($this->currentPage>$this->totalPages && $this->totalPages>0)
         {
         	$this->currentPage = $this->totalPages;
-        	$dataObj->setLimit($this->m_Range, ($this->currentPage-1)*$this->m_Range);
+        	$dataObj->setLimit($this->range, ($this->currentPage-1)*$this->range);
         	$resultRecords = $dataObj->fetch();
         }
         
@@ -289,7 +289,7 @@ class ListForm extends BaseForm
 
         $this->runEventLog();
         $this->rerender();
-		if($this->m_ParentFormName)
+		if($this->parentFormName)
 		{
 			$this->renderParent();
 		}
@@ -316,7 +316,7 @@ class ListForm extends BaseForm
     public function setPageSize($elemName)
     {
         $pagesize = BizSystem::clientProxy()->getFormInputs(str_replace(".","_", $this->objectName).'_'.$elemName);
-    	$this->m_Range=$pagesize;
+    	$this->range=$pagesize;
     	$this->rerender();
     }  
 	
@@ -341,7 +341,7 @@ class ListForm extends BaseForm
         $element->setSortFlag($order);
 
         // change the sort rule and issue the query
-        $this->getDataObj()->setSortRule("[" . $element->m_FieldName . "] " . $order);
+        $this->getDataObj()->setSortRule("[" . $element->fieldName . "] " . $order);
 
         // move to 1st page
         $this->currentPage = 1;
@@ -366,18 +366,18 @@ class ListForm extends BaseForm
 		$queryArray = array();
         foreach ($this->searchPanel as $element)
         {       	
-			if (!$element->m_FieldName)
+			if (!$element->fieldName)
 				continue;
 
 			$value = BizSystem::clientProxy()->getFormInputs($element->objectName);  
-			$this->searchPanelValues[$element->m_FieldName] = $value;	// ??? neede
-			if($element->m_FuzzySearch=="Y")
+			$this->searchPanelValues[$element->fieldName] = $value;	// ??? neede
+			if($element->fuzzySearch=="Y")
 			{
 				$value="*$value*";
 			}
 			if ($value!='')
 			{	               
-				$this->queryParams[$element->m_FieldName] = $value;
+				$this->queryParams[$element->fieldName] = $value;
 			}
         }
 

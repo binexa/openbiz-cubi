@@ -25,7 +25,7 @@ class profileService
 {
 
     protected $name = "ProfileService";
-    protected $m_Profile;
+    protected $profile;
     protected $m_profileObj = "contact.do.ContactSystemDO";
     protected $m_contactObj = "contact.do.ContactSystemDO";
     protected $m_userDataObj = "system.do.UserSystemDO";
@@ -54,41 +54,41 @@ class profileService
         //clear ACL Cache
         BizSystem::getService(ACL_SERVICE)->clearACLCache();
 
-        $this->m_Profile = $this->initDBProfile($userName);
-        BizSystem::sessionContext()->setVar("_USER_PROFILE", $this->m_Profile);
+        $this->profile = $this->initDBProfile($userName);
+        BizSystem::sessionContext()->setVar("_USER_PROFILE", $this->profile);
 
         //load preference
         $preferenceService = BizSystem::getService(OPENBIZ_PREFERENCE_SERVICE);
-        $preferenceService->initPreference($this->m_Profile["Id"]);
+        $preferenceService->initPreference($this->profile["Id"]);
 
-        return $this->m_Profile;
+        return $this->profile;
     }
 
     public function getProfile($attribute = null)
     {
-        if (!$this->m_Profile)
+        if (!$this->profile)
         {
-            $this->m_Profile = BizSystem::sessionContext()->getVar("_USER_PROFILE");
+            $this->profile = BizSystem::sessionContext()->getVar("_USER_PROFILE");
         }
-        if (!$this->m_Profile)
+        if (!$this->profile)
         {
             $this->getProfileByCookie();
-            if (!$this->m_Profile)
+            if (!$this->profile)
                 return null;
         }
 
         if ($attribute)
         {
-            if (isset($this->m_Profile[$attribute]))
+            if (isset($this->profile[$attribute]))
             {
-                return $this->m_Profile[$attribute];
+                return $this->profile[$attribute];
             } else
             {
                 return null;
             }
         }
 
-        return $this->m_Profile;
+        return $this->profile;
     }
 
     /**
@@ -98,7 +98,7 @@ class profileService
      */
     public function setProfile($profile)
     {
-        $this->m_Profile = $profile;
+        $this->profile = $profile;
     }
 
     /**

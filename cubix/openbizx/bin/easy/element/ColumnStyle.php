@@ -5,7 +5,7 @@ class ColumnStyle extends RawData{
 
     public function setSortFlag($flag=null)
     {
-        $this->m_SortFlag = $flag;
+        $this->sortFlag = $flag;
     }
 	
     public function renderLabel()

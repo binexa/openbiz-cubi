@@ -5,7 +5,7 @@ class OauthConnectUserForm extends RegisterForm
 	protected $username;
     protected $password;
 
-    protected $m_OpenRegisterStatus;
+    protected $openRegisterStatus;
     
     public function CreateUser()
     {
@@ -51,7 +51,7 @@ class OauthConnectUserForm extends RegisterForm
 				$OauthUserInfo=BizSystem::sessionContext()->getVar('_OauthUserInfo');
 				if(!$OauthUserInfo || !$profile['Id'])
 				{
-					$this->m_Errors = array($this->getMessage("TEST_FAILURE"));
+					$this->errors = array($this->getMessage("TEST_FAILURE"));
 					$this->updateForm();
 					return false;		
 				}
@@ -60,7 +60,7 @@ class OauthConnectUserForm extends RegisterForm
 				$OauthObj=new oauthClass();
 				if(!$OauthObj->saveUserOAuth($profile['Id'],$OauthUserInfo))
 				{
-					$this->m_Errors = array("fld_password"=>$this->getMessage("ASSOCIATED_USER_FAILS"));
+					$this->errors = array("fld_password"=>$this->getMessage("ASSOCIATED_USER_FAILS"));
 					$this->updateForm();
 					return false;
 				}
@@ -91,7 +91,7 @@ class OauthConnectUserForm extends RegisterForm
     								$_SERVER['REMOTE_ADDR'],
     								$this->password);
 				$eventlog->log("LOGIN", "ASSOCIATED_LOGIN_FAILED", $logComment); 	
-				$this->m_Errors = array(
+				$this->errors = array(
 				"fld_username"=>$this->getMessage("ASSOCIATED_USER_FAILS"),
 				"fld_password"=>" ");
 				$this->updateForm();	
@@ -122,9 +122,9 @@ class OauthConnectUserForm extends RegisterForm
 		$do = BizSystem::getObject("myaccount.do.PreferenceDO");
         $rs = $do->fetchOne("[user_id]='0' AND [name]='open_register'");
         if(!$rs || $rs['value']==0){
-        	$this->m_OpenRegisterStatus = 0;	
+        	$this->openRegisterStatus = 0;	
         }else{
-        	$this->m_OpenRegisterStatus = 1;
+        	$this->openRegisterStatus = 1;
         }
         
         if ($this->activeRecord != null)

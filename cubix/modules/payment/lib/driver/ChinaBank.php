@@ -3,7 +3,7 @@ require_once 'PaymentAdapter.php';
 
 class ChinaBank extends PaymentAdapter
 {
-	protected $m_ProviderId = 4;
+	protected $providerId = 4;
 	protected $type = 'chinabank';
 	
 	protected $currencyCode = 'CNY';
@@ -23,7 +23,7 @@ class ChinaBank extends PaymentAdapter
 		$paramArr = array(
 			"key"		=> $config['secret'],	
 			"v_mid"		=> $config['account'],
-			"v_url"		=> $this->m_ReturnURL,			
+			"v_url"		=> $this->returnURL,			
 			"v_oid"		=> $orderId,
 			"v_amount"	=> $amount,
 			"v_moneytype" => $this->currencyCode,

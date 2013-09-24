@@ -28,12 +28,12 @@
 class ColumnShare extends ColumnText
 {
 
-    public $m_MyPrivateImg = null;
-    public $m_MySharedImg = null;
-    public $m_MyAssignedImg = null;
-    public $m_MyDistributedImg = null;
-    public $m_GroupSharedImg = null;
-    public $m_OtherSharedImg = null;
+    public $myPrivateImg = null;
+    public $mySharedImg = null;
+    public $myAssignedImg = null;
+    public $myDistributedImg = null;
+    public $groupSharedImg = null;
+    public $otherSharedImg = null;
     public $defaultImg = null;
     public $recordOwnerId = null;
     public $recordGroupId = null;
@@ -55,12 +55,12 @@ class ColumnShare extends ColumnText
     protected function readMetaData(&$xmlArr)
     {
         parent::readMetaData($xmlArr);
-        $this->m_MyPrivateImg = isset($xmlArr["ATTRIBUTES"]["MYPRIVATEIMG"]) ? $xmlArr["ATTRIBUTES"]["MYPRIVATEIMG"] : "{OPENBIZ_RESOURCE_URL}/common/images/icon_data_private.gif";
-        $this->m_MySharedImg = isset($xmlArr["ATTRIBUTES"]["MYSHAREDIMG"]) ? $xmlArr["ATTRIBUTES"]["MYSHAREDIMG"] : "{OPENBIZ_RESOURCE_URL}/common/images/icon_data_shared.gif";
-        $this->m_MyAssignedImg = isset($xmlArr["ATTRIBUTES"]["MYASSIGNEDIMG"]) ? $xmlArr["ATTRIBUTES"]["MYASSIGNEDIMG"] : "{OPENBIZ_RESOURCE_URL}/common/images/icon_data_assigned.gif";
-        $this->m_MyDistributedImg = isset($xmlArr["ATTRIBUTES"]["MYDISTRIBUTEDIMG"]) ? $xmlArr["ATTRIBUTES"]["MYDISTRIBUTEDIMG"] : "{OPENBIZ_RESOURCE_URL}/common/images/icon_data_distributed.gif";
-        $this->m_GroupSharedImg = isset($xmlArr["ATTRIBUTES"]["GROUPSHAREDIMG"]) ? $xmlArr["ATTRIBUTES"]["GROUPSHAREDIMG"] : "{OPENBIZ_RESOURCE_URL}/common/images/icon_data_shared_group.gif";
-        $this->m_OtherSharedImg = isset($xmlArr["ATTRIBUTES"]["OTHERSHAREDIMG"]) ? $xmlArr["ATTRIBUTES"]["OTHERSHAREDIMG"] : "{OPENBIZ_RESOURCE_URL}/common/images/icon_data_shared_other.gif";
+        $this->myPrivateImg = isset($xmlArr["ATTRIBUTES"]["MYPRIVATEIMG"]) ? $xmlArr["ATTRIBUTES"]["MYPRIVATEIMG"] : "{OPENBIZ_RESOURCE_URL}/common/images/icon_data_private.gif";
+        $this->mySharedImg = isset($xmlArr["ATTRIBUTES"]["MYSHAREDIMG"]) ? $xmlArr["ATTRIBUTES"]["MYSHAREDIMG"] : "{OPENBIZ_RESOURCE_URL}/common/images/icon_data_shared.gif";
+        $this->myAssignedImg = isset($xmlArr["ATTRIBUTES"]["MYASSIGNEDIMG"]) ? $xmlArr["ATTRIBUTES"]["MYASSIGNEDIMG"] : "{OPENBIZ_RESOURCE_URL}/common/images/icon_data_assigned.gif";
+        $this->myDistributedImg = isset($xmlArr["ATTRIBUTES"]["MYDISTRIBUTEDIMG"]) ? $xmlArr["ATTRIBUTES"]["MYDISTRIBUTEDIMG"] : "{OPENBIZ_RESOURCE_URL}/common/images/icon_data_distributed.gif";
+        $this->groupSharedImg = isset($xmlArr["ATTRIBUTES"]["GROUPSHAREDIMG"]) ? $xmlArr["ATTRIBUTES"]["GROUPSHAREDIMG"] : "{OPENBIZ_RESOURCE_URL}/common/images/icon_data_shared_group.gif";
+        $this->otherSharedImg = isset($xmlArr["ATTRIBUTES"]["OTHERSHAREDIMG"]) ? $xmlArr["ATTRIBUTES"]["OTHERSHAREDIMG"] : "{OPENBIZ_RESOURCE_URL}/common/images/icon_data_shared_other.gif";
         $this->defaultImg = isset($xmlArr["ATTRIBUTES"]["DEFAULTIMG"]) ? $xmlArr["ATTRIBUTES"]["DEFAULTIMG"] : "{OPENBIZ_RESOURCE_URL}/common/images/icon_data_shared_other.gif";
 
         $this->recordCreatorId = isset($xmlArr["ATTRIBUTES"]["CREATORID"]) ? $xmlArr["ATTRIBUTES"]["CREATORID"] : null;
@@ -161,26 +161,26 @@ class ColumnShare extends ColumnText
 
         switch ($this->getValue()) {
             case "0":
-                $image_url = $this->m_MyPrivateImg;
+                $image_url = $this->myPrivateImg;
                 break;
             case "1":
-                $image_url = $this->m_MySharedImg;
+                $image_url = $this->mySharedImg;
                 break;
             case "2":
-                $image_url = $this->m_GroupSharedImg;
+                $image_url = $this->groupSharedImg;
                 break;
             case "3":
-                $image_url = $this->m_OtherSharedImg;
+                $image_url = $this->otherSharedImg;
                 break;
             case "4":
-                $image_url = $this->m_MyAssignedImg;
+                $image_url = $this->myAssignedImg;
                 break;
             case "5":
-                $image_url = $this->m_MyDistributedImg;
+                $image_url = $this->myDistributedImg;
                 break;
             default:
                 if ($this->defaultImg == '{OPENBIZ_RESOURCE_URL}/common/images/icon_data_shared_other.gif') {
-                    $this->defaultImg = $this->m_OtherSharedImg;
+                    $this->defaultImg = $this->otherSharedImg;
                 }
                 $image_url = $this->defaultImg;
                 break;

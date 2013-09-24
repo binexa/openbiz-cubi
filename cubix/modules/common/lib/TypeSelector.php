@@ -16,7 +16,7 @@ class TypeSelector extends DropDownList
 {
 protected function renderList(){
     	
-    	if($this->m_FormPrefix){
+    	if($this->formPrefix){
     		$formNameStr = str_replace(".","_", $this->getFormObj()->objectName)."_";
     	} 
     	$onchange_func = $this->getOnChangeFunction();

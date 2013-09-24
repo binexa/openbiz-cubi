@@ -27,10 +27,10 @@
  */
 class LabelPassword extends LabelText
 {
-    public $m_Sortable;
+    public $sortable;
     public $columnStyle;
-    public $m_MaskChar;
-    public $m_MaskLength;
+    public $maskChar;
+    public $maskLength;
 
     /**
      * Read array meta data, and store to meta object
@@ -41,8 +41,8 @@ class LabelPassword extends LabelText
     protected function readMetaData(&$xmlArr)
     {
         parent::readMetaData($xmlArr);
-        $this->m_MaskChar = isset($xmlArr["ATTRIBUTES"]["MASKCHAR"]) ? $xmlArr["ATTRIBUTES"]["MASKCHAR"] : "*";
-        $this->m_MaskLength = isset($xmlArr["ATTRIBUTES"]["MASKLENGTH"]) ? $xmlArr["ATTRIBUTES"]["MASKLENGTH"] : 6;
+        $this->maskChar = isset($xmlArr["ATTRIBUTES"]["MASKCHAR"]) ? $xmlArr["ATTRIBUTES"]["MASKCHAR"] : "*";
+        $this->maskLength = isset($xmlArr["ATTRIBUTES"]["MASKLENGTH"]) ? $xmlArr["ATTRIBUTES"]["MASKLENGTH"] : 6;
     }
 
     /**
@@ -52,7 +52,7 @@ class LabelPassword extends LabelText
      */
     public function render()
     {
-        $sHTML = "<span $style $func> ".str_repeat($this->m_MaskChar, $this->m_MaskLength)." </span>";
+        $sHTML = "<span $style $func> ".str_repeat($this->maskChar, $this->maskLength)." </span>";
         return $sHTML;
     }
 

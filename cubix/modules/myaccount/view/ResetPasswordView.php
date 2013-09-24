@@ -2,30 +2,30 @@
 class ResetPasswordView extends EasyView
 {
 
-	protected  $m_ForceResetPassword = false;
+	protected  $forceResetPassword = false;
 	
     public function loadSessionVars($sessionContext)
     {
-        $sessionContext->getObjVar($this->objectName, "ForceResetPassword", $this->m_ForceResetPassword);        
+        $sessionContext->getObjVar($this->objectName, "ForceResetPassword", $this->forceResetPassword);        
     }
 
     public function saveSessionVars($sessionContext)
     {       
-        $sessionContext->setObjVar($this->objectName, "ForceResetPassword", $this->m_ForceResetPassword);
+        $sessionContext->setObjVar($this->objectName, "ForceResetPassword", $this->forceResetPassword);
     }	
     
     public function isForceResetPassword()
     {
-    	return $this->m_ForceResetPassword;
+    	return $this->forceResetPassword;
     }
     
     public function render()
     {
     	if(isset($_GET['force']))
     	{
-    		$this->m_ForceResetPassword = true;
+    		$this->forceResetPassword = true;
     	}else{
-    		$this->m_ForceResetPassword = false;
+    		$this->forceResetPassword = false;
     	}
     	return parent::render();
     }

@@ -42,12 +42,12 @@ class GeneralSettingForm extends EasyForm
         if ($this->isRefreshData)   $dataObj->resetRules();
         else $dataObj->clearSearchRule();
 
-        if ($this->m_FixSearchRule)
+        if ($this->fixSearchRule)
         {
             if ($this->searchRule)
-                $searchRule = $this->searchRule . " AND " . $this->m_FixSearchRule;
+                $searchRule = $this->searchRule . " AND " . $this->fixSearchRule;
             else
-                $searchRule = $this->m_FixSearchRule;
+                $searchRule = $this->fixSearchRule;
         }
 
         $dataObj->setSearchRule($searchRule);
@@ -79,7 +79,7 @@ class GeneralSettingForm extends EasyForm
         }
         catch (ValidationException $e)
         {
-            $this->processFormObjError($e->m_Errors);
+            $this->processFormObjError($e->errors);
             return;
         }
 		
@@ -88,16 +88,16 @@ class GeneralSettingForm extends EasyForm
         
         foreach ($this->dataPanel as $element)
         {
-            $value = $recArr[$element->m_FieldName];
+            $value = $recArr[$element->fieldName];
             if ($value === null){ 
             	continue;
             } 
-            if(substr($element->m_FieldName,0,1)=='_'){
-	            $name = substr($element->m_FieldName,1);
+            if(substr($element->fieldName,0,1)=='_'){
+	            $name = substr($element->fieldName,1);
             	$recArrParam = array(
             		"name"	  => $name,
             		"value"   => $value,
-	            	"section" => $element->m_ElementSet,
+	            	"section" => $element->elementSet,
 	            	"type" 	  => $element->className,	            
 	            );
 	            //check if its exsit
@@ -115,7 +115,7 @@ class GeneralSettingForm extends EasyForm
         
                
         // in case of popup form, close it, then rerender the parent form
-        if ($this->m_ParentFormName)
+        if ($this->parentFormName)
         {
             $this->close();
 

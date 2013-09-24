@@ -2,7 +2,7 @@
 class GroupView extends EasyView
 {
 	const MIN_GROUP_COUNT = 3;
-	protected $m_GroupDO = "system.do.GroupDO";
+	protected $groupDO = "system.do.GroupDO";
 	
 	protected function isNeedInitialize()
 	{
@@ -15,7 +15,7 @@ class GroupView extends EasyView
 		{
 			return false;
 		}
-		$do = BizSystem::getObject($this->m_GroupDO);
+		$do = BizSystem::getObject($this->groupDO);
 		$groupList = $do->directFetch();
 		if($groupList->count() > self::MIN_GROUP_COUNT)
 		{

@@ -21,12 +21,12 @@ class DataShareGroupList extends Listbox
     		$groups=BizSystem::getUserProfile("groups");
     		if($groups){
     			$ids = implode(",", $groups);
-    			$selectFrom = $this->m_SelectFrom . ",[Id] IN ($ids)";
+    			$selectFrom = $this->selectFrom . ",[Id] IN ($ids)";
     		}else{
-    			$selectFrom = $this->m_SelectFrom;
+    			$selectFrom = $this->selectFrom;
     		}    		
 		}else{
-			$selectFrom = $this->m_SelectFrom;
+			$selectFrom = $this->selectFrom;
 		}
         return Expression::evaluateExpression($selectFrom, $formobj);
     }	

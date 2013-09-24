@@ -27,7 +27,7 @@
 class RawData extends Element
 {		
 
-    public $m_UnSerialize;
+    public $unSerialize;
 
     /**
      * Read metadata info from metadata array and store to class variable
@@ -38,11 +38,11 @@ class RawData extends Element
     protected function readMetaData(&$xmlArr)
     {
         parent::readMetaData($xmlArr);
-        $this->m_FieldName = isset($xmlArr["ATTRIBUTES"]["FIELDNAME"]) ? $xmlArr["ATTRIBUTES"]["FIELDNAME"] : null;
-        $this->m_Label = isset($xmlArr["ATTRIBUTES"]["LABEL"]) ? $xmlArr["ATTRIBUTES"]["LABEL"] : null;
+        $this->fieldName = isset($xmlArr["ATTRIBUTES"]["FIELDNAME"]) ? $xmlArr["ATTRIBUTES"]["FIELDNAME"] : null;
+        $this->label = isset($xmlArr["ATTRIBUTES"]["LABEL"]) ? $xmlArr["ATTRIBUTES"]["LABEL"] : null;
         $this->text = isset($xmlArr["ATTRIBUTES"]["TEXT"]) ? $xmlArr["ATTRIBUTES"]["TEXT"] : null;
         $this->link = isset($xmlArr["ATTRIBUTES"]["LINK"]) ? $xmlArr["ATTRIBUTES"]["LINK"] : null;
-        $this->m_UnSerialize = isset($xmlArr["ATTRIBUTES"]["UNSERIALIZE"]) ? $xmlArr["ATTRIBUTES"]["UNSERIALIZE"] : null;
+        $this->unSerialize = isset($xmlArr["ATTRIBUTES"]["UNSERIALIZE"]) ? $xmlArr["ATTRIBUTES"]["UNSERIALIZE"] : null;
     }
 
     /**
@@ -65,7 +65,7 @@ class RawData extends Element
      */
     public function renderLabel()
     {
-        return $this->m_Label;
+        return $this->label;
     }
 
     /**
@@ -92,12 +92,12 @@ class RawData extends Element
         if ($value === null || $value == "")
             return $value;
 
-        if($this->m_UnSerialize=="Y")
+        if($this->unSerialize=="Y")
         {
             $value = unserialize($value);
         }
 
-        if($this->m_Translatable=='Y')
+        if($this->translatable=='Y')
         {
             if(is_array($value))
             {

@@ -5,8 +5,8 @@ require_once 'SPDriver.php';
 
 class SPc123 extends SPDriver implements iSMS 
 {
-	protected $m_ProviderId = 2;
-	protected $m_type = 'c123';
+	protected $providerId = 2;
+	protected $type = 'c123';
 	private  $m_url='http://http.c123.com/tx/?';
 	private  $m_url_mm='http://http.c123.com/mm/?';
 	

@@ -24,12 +24,12 @@
 	     <tr>
 	  {/if}
 	  	<td valign="top">
-	  		<div class="{$item->m_IconCSSClass}">
+	  		<div class="{$item->iconCSSClass}">
 				<h3>{$item->objectName}</h3>
 				{if $item->childNodes|@count > 0}
 				<ul>
 				{foreach item=subitem from=$item->childNodes}													
-					<li><a href="{if $subitem->m_URL}{$subitem->m_URL}{else}javascript:{/if}">{$subitem->objectName}</a></li>					
+					<li><a href="{if $subitem->url}{$subitem->url}{else}javascript:{/if}">{$subitem->objectName}</a></li>					
 				{/foreach}	
 				</ul>
 				{assign var='i' value=$i+1}	

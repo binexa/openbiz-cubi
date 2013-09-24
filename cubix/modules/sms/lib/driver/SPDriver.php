@@ -4,9 +4,9 @@ require_once 'iSMS.php';
 
 class SPDriver implements iSMS 
 {
-	protected $m_ProviderId;
-	protected $m_ProviderDo = 'sms.provider.do.ProviderDO';
-	protected $m_LogDo	 	= 'sms.log.do.LogDO';		
+	protected $providerId;
+	protected $providerDo = 'sms.provider.do.ProviderDO';
+	protected $logDo	 	= 'sms.log.do.LogDO';		
 	
 	public function activeService(){}
 	
@@ -16,7 +16,7 @@ class SPDriver implements iSMS
 	
 	public function updateMsgBalance($balance)
 	{
-		$providerRec=BizSystem::getObject($this->m_ProviderDo)->fetchOne("[Id]={$this->m_ProviderId}");
+		$providerRec=BizSystem::getObject($this->providerDo)->fetchOne("[Id]={$this->providerId}");
 		$providerRec['msg_balance']=(int)$balance;
 		$providerRec->save();
 		return $this;
@@ -24,7 +24,7 @@ class SPDriver implements iSMS
 	
 	public function HitMessageCounter()
 	{		
-		$providerRec=BizSystem::getObject($this->m_ProviderDo)->fetchOne("[Id]={$this->m_ProviderId}");
+		$providerRec=BizSystem::getObject($this->providerDo)->fetchOne("[Id]={$this->providerId}");
 		$providerRec['msg_sent_count']=(int)$providerRec['msg_sent_count']+1;
 		$providerRec['msg_last_sendtime']=date("Y-m-d H:i:s");
 		$providerRec->save();
@@ -34,27 +34,27 @@ class SPDriver implements iSMS
 	
 	public function getMessageCounter()
 	{
-		$providerRec=BizSystem::getObject($this->m_ProviderDo)->fetchOne("[Id]={$this->m_ProviderId}");		
+		$providerRec=BizSystem::getObject($this->providerDo)->fetchOne("[Id]={$this->providerId}");		
 		return $providerRec['msg_send_counter'];
 	}
 	
     protected  function _Log($mobile,$content,$schedule=null)
     {
     	$record = array(
-    		"provider_id" 	=> $this->m_ProviderId,
+    		"provider_id" 	=> $this->providerId,
     		"mobile" 		=> $mobile,
     		"content" 		=> $content,
     		"schedule"		=> $schedule,
     		"sent_time"		=> date("Y-m-d H:i:s")
     	);
-    	return BizSystem::getObject($this->m_LogDo)->insertRecord($record);
+    	return BizSystem::getObject($this->logDo)->insertRecord($record);
     }
 	
 	
 	protected  function _getProviderInfo()
 	{
-		$SmsProviderDO = BizSystem::getObject($this->m_ProviderDo);
-		$recObj=$SmsProviderDO->fetchOne("[Id]={$this->m_ProviderId}");
+		$SmsProviderDO = BizSystem::getObject($this->providerDo);
+		$recObj=$SmsProviderDO->fetchOne("[Id]={$this->providerId}");
 		$recArr=array();
 		if($recObj)
 		{

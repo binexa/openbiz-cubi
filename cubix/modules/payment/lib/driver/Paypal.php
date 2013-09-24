@@ -5,7 +5,7 @@ require_once dirname(dirname(__FILE__))."/dll/paypal/paypal_class.php" ;
 
 class Paypal extends PaymentAdapter
 {
-	protected $m_ProviderId = 3;
+	protected $providerId = 3;
 	protected $type = 'paypal';
 	
 	protected $currencyCode = 'USD';
@@ -24,7 +24,7 @@ class Paypal extends PaymentAdapter
 	  	$paypal = new paypal_class();
 		$paypal->add_field("cmd", 			"_xclick");
 		$paypal->add_field("business", 		$config['account']);
-		$paypal->add_field("return", 		$this->m_ReturnURL);
+		$paypal->add_field("return", 		$this->returnURL);
 		$paypal->add_field("cancel_return", $this->cancelURL);
 		$paypal->add_field("quantity",		1);
 		$paypal->add_field("amount",		$amount);

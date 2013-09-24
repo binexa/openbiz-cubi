@@ -1,11 +1,11 @@
 <?php
 class MetaObjExport
 {
-	protected $m_Object;
+	protected $object;
 	protected $doc;
-	protected $m_XmlFile;
-	protected $m_ObjType;
-	protected $m_RelXmlFile;
+	protected $xmlFile;
+	protected $objType;
+	protected $relXmlFile;
 	protected $comments = "<!--\n #object_type# Object '#object_name#', file path #object_file#. Please change the 'myproj' to your own module name. \n-->\n";
 	protected $firstAttrs = array('Name','Class','Description','Title');
 	protected $skipAttrs = array('Package','Percent','TotalPages','OrigFunction','FormName','HTMLAttr','BizObjName','Index','DATAFORMAT');
@@ -13,20 +13,20 @@ class MetaObjExport
 	
 	public function __construct($object)
 	{
-		$this->m_Object = $object;
+		$this->object = $object;
 	}
 	
 	public function GetDocDocument()
     {
         if ($this->doc) 
             return $this->doc;
-        $this->m_XmlFile = OPENBIZ_APP_MODULE_PATH."/".str_replace(".","/",$this->m_Object->objectName).".xml";
-		$this->m_RelXmlFile = "cubi/modules/".str_replace(".","/",$this->m_Object->objectName).".xml";
+        $this->xmlFile = OPENBIZ_APP_MODULE_PATH."/".str_replace(".","/",$this->object->objectName).".xml";
+		$this->relXmlFile = "cubi/modules/".str_replace(".","/",$this->object->objectName).".xml";
 
-        //if (!file_exists($this->m_XmlFile)) 
+        //if (!file_exists($this->xmlFile)) 
         //   return null;
         $doc = new DomDocument();
-        //$ok = $doc->load($this->m_XmlFile);
+        //$ok = $doc->load($this->xmlFile);
         //if (!$ok)
         //    return null;
         $this->doc = $doc;
@@ -36,16 +36,16 @@ class MetaObjExport
 	
 	public function MetaObj2XML()
 	{
-		if (is_a($this->m_Object, "EasyForm")) {
-			$this->m_ObjType = "Form";
+		if (is_a($this->object, "EasyForm")) {
+			$this->objType = "Form";
 			return $this->Form2XML();
 		}
-		else if (is_a($this->m_Object, "EasyView")) {
-			$this->m_ObjType = "View";
+		else if (is_a($this->object, "EasyView")) {
+			$this->objType = "View";
 			return $this->View2XML();
 		}
-		else if (is_a($this->m_Object, "BizDataObj")) {
-			$this->m_ObjType = "DataObject";
+		else if (is_a($this->object, "BizDataObj")) {
+			$this->objType = "DataObject";
 			return $this->DataObj2XML();
 		}
 	}
@@ -53,7 +53,7 @@ class MetaObjExport
 	public function DataObj2XML()
 	{
 		$doc = $this->GetDocDocument();
-		$docElem = $this->DataObj2XMLElement($this->m_Object);
+		$docElem = $this->DataObj2XMLElement($this->object);
 		$doc->appendChild($docElem);
 		$xmlStr = xmlpp($doc->saveXML());
 		return $xmlStr;
@@ -115,11 +115,11 @@ class MetaObjExport
 	
 	public function Form2XML()
 	{
-		//print_r($this->m_Object);
+		//print_r($this->object);
 		$doc = $this->GetDocDocument();
-		$docElem = $this->FormObj2XMLElement($this->m_Object);
+		$docElem = $this->FormObj2XMLElement($this->object);
 		$doc->appendChild($docElem);
-		//$xmlStr = str_replace(array('#object_type#','#object_name#','#object_file#'),array($this->m_ObjType,$this->m_Object->objectName,$this->m_RelXmlFile),$this->comments);
+		//$xmlStr = str_replace(array('#object_type#','#object_name#','#object_file#'),array($this->objType,$this->object->objectName,$this->relXmlFile),$this->comments);
 		$xmlStr = xmlpp($doc->saveXML());
 		return $xmlStr;
 	}
@@ -217,9 +217,9 @@ class MetaObjExport
 	public function View2XML()
 	{
 		$doc = $this->GetDocDocument();
-		$docElem = $this->ViewObj2XMLElement($this->m_Object);
+		$docElem = $this->ViewObj2XMLElement($this->object);
 		$doc->appendChild($docElem);
-		//$xmlStr = str_replace(array('#object_type#','#object_name#','#object_file#'),array($this->m_ObjType,$this->m_Object->objectName,$this->m_RelXmlFile),$this->comments);
+		//$xmlStr = str_replace(array('#object_type#','#object_name#','#object_file#'),array($this->objType,$this->object->objectName,$this->relXmlFile),$this->comments);
 		$xmlStr = xmlpp($doc->saveXML());
 		return $xmlStr;
 	}

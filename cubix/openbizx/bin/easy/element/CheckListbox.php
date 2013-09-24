@@ -44,7 +44,7 @@ class CheckListbox extends OptionElement
             $valueArray[] = $vl['val'];
         }
 
-        $sHTML = "<div name=\"" . $this->objectName . "\" ID=\"" . $this->objectName ."\" $this->m_HTMLAttr $style>";
+        $sHTML = "<div name=\"" . $this->objectName . "\" ID=\"" . $this->objectName ."\" $this->htmlAttr $style>";
 
         foreach ($fromList as $option)
         {

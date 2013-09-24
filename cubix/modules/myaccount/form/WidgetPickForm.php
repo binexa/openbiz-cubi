@@ -25,7 +25,7 @@ class WidgetPickForm extends PickerForm
         foreach ($selIds as $id)
         {
             $rec = $this->getDataObj()->fetchById($id);           
-			$parentForm = BizSystem::objectFactory()->getObject($this->m_ParentFormName);
+			$parentForm = BizSystem::objectFactory()->getObject($this->parentFormName);
 			$parentDo = $parentForm->getDataObj();
 			$user_id = BizSystem::getUserProfile("Id");
 			

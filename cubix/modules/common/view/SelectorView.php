@@ -13,26 +13,26 @@
 
 class SelectorView extends EasyView
 {
-	public $m_FormSelector;
+	public $formSelector;
 	protected function readMetadata(&$xmlArr)
     {
         parent::readMetaData($xmlArr);
-        unset($this->m_FormRefs);
-        $this->m_FormSelector = isset($xmlArr["EASYVIEW"]["ATTRIBUTES"]["FROMSELECOTR"]) ? $xmlArr["EASYVIEW"]["ATTRIBUTES"]["FROMSELECOTR"] : null;
+        unset($this->formRefs);
+        $this->formSelector = isset($xmlArr["EASYVIEW"]["ATTRIBUTES"]["FROMSELECOTR"]) ? $xmlArr["EASYVIEW"]["ATTRIBUTES"]["FROMSELECOTR"] : null;
         $formRefXML = $this->getDefaultMainForm($xmlArr["EASYVIEW"]["FORMREFERENCES"]["REFERENCE"]);
-        $this->m_FormRefs = new MetaIterator($formRefXML,"FormReference",$this);
+        $this->formRefs = new MetaIterator($formRefXML,"FormReference",$this);
     }
     
     public function getDefaultMainForm(&$xmlArr)
     {
     	$newForm = array(
 			"ATTRIBUTES"=>array(
-				"NAME"=>$this->m_FormSelector
+				"NAME"=>$this->formSelector
 				),
 			"VALUE"=>null
 		);
 		$xmlArr = $newForm;
-        $formObj=BizSystem::GetObject($this->m_FormSelector);
+        $formObj=BizSystem::GetObject($this->formSelector);
     	if(!$formObj){
 			return;
 		}

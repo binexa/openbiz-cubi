@@ -17,8 +17,8 @@
 class preferenceService
 {
     protected $name = "ProfileService";    
-    protected $m_PreferenceObj ;    
-    protected $m_Preference;
+    protected $preferenceObj ;    
+    protected $preference;
 
     public function __construct(&$xmlArr)
     {
@@ -27,18 +27,18 @@ class preferenceService
 
     protected function readMetadata(&$xmlArr)
     {
-        $this->m_PreferenceObj = $xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["BIZDATAOBJ"];
+        $this->preferenceObj = $xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["BIZDATAOBJ"];
     }
 
     public function initPreference($userId)
     {
-        $this->m_Preference = $this->InitDBPreference($userId);
-        BizSystem::sessionContext()->setVar("_USER_PREFERENCE", $this->m_Preference);        
-        BizSystem::sessionContext()->setVar("LANG",$this->m_Preference['language']);
-        BizSystem::sessionContext()->setVar("THEME",$this->m_Preference['theme']);
-        BizSystem::sessionContext()->setVar("TIMEZONE",$this->m_Preference['timezone']);
-        date_default_timezone_set($this->m_Preference['timezone']);
-        return $this->m_Preference;
+        $this->preference = $this->InitDBPreference($userId);
+        BizSystem::sessionContext()->setVar("_USER_PREFERENCE", $this->preference);        
+        BizSystem::sessionContext()->setVar("LANG",$this->preference['language']);
+        BizSystem::sessionContext()->setVar("THEME",$this->preference['theme']);
+        BizSystem::sessionContext()->setVar("TIMEZONE",$this->preference['timezone']);
+        date_default_timezone_set($this->preference['timezone']);
+        return $this->preference;
     }
 
     /**
@@ -49,23 +49,23 @@ class preferenceService
      */
     public function getPreference($attribute=null)
     {    	
-        if (!$this->m_Preference)
+        if (!$this->preference)
         {
-            $this->m_Preference = BizSystem::sessionContext()->getVar("_USER_PREFERENCE");
+            $this->preference = BizSystem::sessionContext()->getVar("_USER_PREFERENCE");
         }
-        if (!$this->m_Preference)
+        if (!$this->preference)
         {
         		return null;
         }
         if ($attribute){
-        	if(isset($this->m_Preference[$attribute])){
-        		return $this->m_Preference[$attribute];
+        	if(isset($this->preference[$attribute])){
+        		return $this->preference[$attribute];
         	}else{
         		return null;
         	}
         }
             
-        return $this->m_Preference;
+        return $this->preference;
     }
 
     /**
@@ -75,10 +75,10 @@ class preferenceService
      */
     public function setPreference($attribute,$value=null)
     {    	    	    
-        $this->m_Preference[$attribute] = $value;
-        BizSystem::sessionContext()->setVar("_USER_PREFERENCE", $this->m_Preference);  
+        $this->preference[$attribute] = $value;
+        BizSystem::sessionContext()->setVar("_USER_PREFERENCE", $this->preference);  
         //update user preference to DB 
-        $do = BizSystem::getObject($this->m_PreferenceObj);
+        $do = BizSystem::getObject($this->preferenceObj);
         if (!$do)
             return false;
         $user_id = BizSystem::getUserProfile("Id");
@@ -96,7 +96,7 @@ class preferenceService
      */
     protected function initDbPreference($user_id)
     {
-        $do = BizSystem::getObject($this->m_PreferenceObj);
+        $do = BizSystem::getObject($this->preferenceObj);
         if (!$do)
             return false;
 

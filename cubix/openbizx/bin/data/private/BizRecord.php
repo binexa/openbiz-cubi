@@ -87,7 +87,7 @@ class BizRecord extends MetaIterator
                 $this->columnFieldMap[$field->column] = $key;
             if ($field->column || $field->sqlExpression)
             {
-                $field->m_Index = $i++;
+                $field->index = $i++;
             }
         }
         // create key field column map to support composite key
@@ -299,7 +299,7 @@ class BizRecord extends MetaIterator
         {
             if ($field->column || $field->sqlExpression)
             {
-                $recArr[$key] = $sqlArr[$field->m_Index];
+                $recArr[$key] = $sqlArr[$field->index];
             }
             else
                 $recArr[$key] = "";
@@ -319,7 +319,7 @@ class BizRecord extends MetaIterator
         {
             if ($field->column || $field->sqlExpression)
             {
-                $field->setValue($sqlArr[$field->m_Index]);
+                $field->setValue($sqlArr[$field->index]);
             }
         }
         if (isset($this->varValue["Id"]))
@@ -366,7 +366,7 @@ class BizRecord extends MetaIterator
      */
     public function getJoinSearchRule($tableJoin, $isUseOldValue=false)
     {
-        $joinFieldName = $this->getFieldByColumn($tableJoin->columnRef, $tableJoin->m_Table);
+        $joinFieldName = $this->getFieldByColumn($tableJoin->columnRef, $tableJoin->table);
         $joinField=$this->varValue[$joinFieldName];
         $rhs = $isUseOldValue ? $joinField->oldValue : $joinField->value;
         $retStr = $tableJoin->column . "='" . $rhs . "'";

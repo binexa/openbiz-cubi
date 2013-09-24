@@ -27,7 +27,7 @@
 class InputPicker extends InputText
 {
     public $valuePicker;
-    public $m_PickerMap;
+    public $pickerMap;
 
     /**
      * Read array meta data, and store to meta object
@@ -39,10 +39,10 @@ class InputPicker extends InputText
     {
         parent::readMetaData($xmlArr);
         $this->valuePicker  = isset($xmlArr["ATTRIBUTES"]["VALUEPICKER"]) ? $xmlArr["ATTRIBUTES"]["VALUEPICKER"] : null;
-        $this->m_PickerMap  = isset($xmlArr["ATTRIBUTES"]["PICKERMAP"]) ? $xmlArr["ATTRIBUTES"]["PICKERMAP"] : null;
+        $this->pickerMap  = isset($xmlArr["ATTRIBUTES"]["PICKERMAP"]) ? $xmlArr["ATTRIBUTES"]["PICKERMAP"] : null;
         // if no class name, add default class name. i.e. NewRecord => ObjName.NewRecord
         $this->valuePicker = $this->prefixPackage($this->valuePicker);
-        $this->m_UpdateForm = isset($xmlArr["ATTRIBUTES"]["UPDATEFORM"]) ? $xmlArr["ATTRIBUTES"]["UPDATEFORM"] : "N";
+        $this->updateForm = isset($xmlArr["ATTRIBUTES"]["UPDATEFORM"]) ? $xmlArr["ATTRIBUTES"]["UPDATEFORM"] : "N";
     }
 
     /**
@@ -53,13 +53,13 @@ class InputPicker extends InputText
     public function render()
     {
     	$this->defaultValueRename="N";
-    	$this->m_Enabled='N';
+    	$this->enabled='N';
         $sHTML = parent::render();
 
         // sample picker call CallFunction('easy.f_AttendeeListChild.LoadPicker(view,form,elem)','Prop_Window');
         if ($this->valuePicker != null)
         {
-            $function = $this->m_FormName . ".LoadPicker($this->valuePicker,$this->objectName)";
+            $function = $this->formName . ".LoadPicker($this->valuePicker,$this->objectName)";
             $sHTML .= " <input type=button onClick=\"Openbiz.CallFunction('$function');\" value=\"...\" style='width:20px;' />";
         }
 
@@ -68,7 +68,7 @@ class InputPicker extends InputText
 	
     public function getEvents(){
     	$events = parent::getEvents();
-    	$events['onclick'] .= "Openbiz.CallFunction('".$this->m_FormName . ".LoadPicker($this->valuePicker,$this->objectName)')";
+    	$events['onclick'] .= "Openbiz.CallFunction('".$this->formName . ".LoadPicker($this->valuePicker,$this->objectName)')";
         return $events;
     }
     

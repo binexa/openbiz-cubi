@@ -82,7 +82,7 @@ class ForgetPassForm extends EasyForm
         }
         catch (ValidationException $e)
         {
-            $this->processFormObjError($e->m_Errors);
+            $this->processFormObjError($e->errors);
             return;
         }  
     }
@@ -138,14 +138,14 @@ class ForgetPassForm extends EasyForm
             
 		   	if($userProfile['email'] != $email){
 		   		$errorMessage = $this->getMessage("EMAIL_INVALID");
-                $this->m_ValidateErrors['email'] 	= $errorMessage;                
-				throw new ValidationException($this->m_ValidateErrors);
+                $this->validateErrors['email'] 	= $errorMessage;                
+				throw new ValidationException($this->validateErrors);
 				return false;
 		   	}		   	
 	      } 
 	        catch (ValidationException $e)
 	        {
-	            $this->processFormObjError($e->m_Errors);
+	            $this->processFormObjError($e->errors);
 	            return;
 	        }  
 	      return true;

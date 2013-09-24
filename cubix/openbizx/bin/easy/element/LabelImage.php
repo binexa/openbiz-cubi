@@ -7,13 +7,13 @@
 class LabelImage extends LabelText
 {
 
-	private $m_Prefix ;
+	private $prefix ;
 
     protected function readMetaData(&$xmlArr)
     {
         parent::readMetaData($xmlArr);
-        $this->m_Prefix = isset($xmlArr["ATTRIBUTES"]["URLPREFIX"]) ? $xmlArr["ATTRIBUTES"]["URLPREFIX"] : null;
-        $this->m_Prefix =  Expression::evaluateExpression($this->m_Prefix,$this);
+        $this->prefix = isset($xmlArr["ATTRIBUTES"]["URLPREFIX"]) ? $xmlArr["ATTRIBUTES"]["URLPREFIX"] : null;
+        $this->prefix =  Expression::evaluateExpression($this->prefix,$this);
     }
 	
     /**
@@ -23,7 +23,7 @@ class LabelImage extends LabelText
      */
     public function render()
     {
-    	$this->m_Prefix = Expression::evaluateExpression($this->m_Prefix, $formobj);
+    	$this->prefix = Expression::evaluateExpression($this->prefix, $formobj);
     	$func = $this->getFunction();
     	if($this->width){
     		$width_str = " width=\"".$this->width."\" ";
@@ -38,11 +38,11 @@ class LabelImage extends LabelText
             {
                 $link = $this->getLink();
                 $target = $this->getTarget();
-                $sHTML = "<a href=\"$link\" $target $func $style>" . "<img src=\"".$this->m_Prefix.$value."\"  border=\"0\" $width_str $height_str />" . "</a>";
+                $sHTML = "<a href=\"$link\" $target $func $style>" . "<img src=\"".$this->prefix.$value."\"  border=\"0\" $width_str $height_str />" . "</a>";
             }
             else
             {
-                $sHTML = "<img border=\"0\" src=\"".$this->m_Prefix.$value."\" $func $width_str $height_str />";
+                $sHTML = "<img border=\"0\" src=\"".$this->prefix.$value."\" $func $width_str $height_str />";
             }
     		
         	

@@ -10,7 +10,7 @@
     </DataPanel>
     <ActionPanel>      
     	<Element Name="btn_install" Class="LabelText" Text="Uninstall" CssClass="button_gray_big" Link="javascript:;">
-              <EventHandler Name="btn_install_onclick" Event="onclick" EventLogMsg="" Function="DeleteRecord({(int)$_GET['fld:Id']}:{@:m_RepoID})" RedirectPage="{OPENBIZ_APP_INDEX_URL}/market/app_installed" />        
+              <EventHandler Name="btn_install_onclick" Event="onclick" EventLogMsg="" Function="DeleteRecord({(int)$_GET['fld:Id']}:{@:repoID})" RedirectPage="{OPENBIZ_APP_INDEX_URL}/market/app_installed" />        
         </Element> 
         <Element Name="btn_cancel" Class="LabelText" Link="{OPENBIZ_APP_INDEX_URL}/market/app_installed" Text="Back" CssClass="button_gray_w" />
     </ActionPanel> 

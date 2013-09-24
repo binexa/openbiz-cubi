@@ -15,24 +15,24 @@ include_once OPENBIZ_APP_MODULE_PATH."/translation/lib/LangPackCreator.php";
 
 class TranslationForm extends EasyForm
 {
- public $m_Lang;
+ public $lang;
 
  public function loadSessionVars($sessionContext)
     {
         parent::loadSessionVars($sessionContext);
-    	$sessionContext->getObjVar("Translation", "Lang", $this->m_Lang);
+    	$sessionContext->getObjVar("Translation", "Lang", $this->lang);
         
     }
 
     public function saveSessionVars($sessionContext)
     {
     	parent::saveSessionVars($sessionContext);
-        $sessionContext->setObjVar("Translation", "Lang", $this->m_Lang);      
+        $sessionContext->setObjVar("Translation", "Lang", $this->lang);      
     }	
 
         
     public function fetchData(){
-    	preg_match("/\[([\S]*?)\]=\'file_(.*?)\'/si",$this->m_FixSearchRule,$match);
+    	preg_match("/\[([\S]*?)\]=\'file_(.*?)\'/si",$this->fixSearchRule,$match);
     	$Id = $match[2];
     	$resultArr = $this->fetchDataSet();
     	$record = $resultArr[$Id];
@@ -54,7 +54,7 @@ class TranslationForm extends EasyForm
 	public function fetchDataSet(){
 		$result = array();
 		$lang = $this->getLang();
-		$this->m_Lang = $this->getLang();
+		$this->lang = $this->getLang();
 		$lang_dir = OPENBIZ_APP_PATH.DIRECTORY_SEPARATOR."languages".DIRECTORY_SEPARATOR.$lang;						
 		if(!is_dir($lang_dir))
 		{
@@ -140,8 +140,8 @@ class TranslationForm extends EasyForm
 	}
 	
 	private function getLang(){
-		if($this->m_Lang){
-			$lang = $this->m_Lang;
+		if($this->lang){
+			$lang = $this->lang;
 		}
 		elseif($_GET['lang']){
 			$lang = $_GET['lang'];
@@ -155,7 +155,7 @@ class TranslationForm extends EasyForm
 	
 	public function updateLang(){
 		$lang=BizSystem::clientProxy()->getFormInputs("selector_lang");
-		$this->m_Lang=$lang;
+		$this->lang=$lang;
 		return $this->UpdateForm();
 	}
 	

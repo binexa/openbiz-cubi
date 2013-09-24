@@ -13,7 +13,7 @@
 
 class SwitchUserWidget extends EasyForm
 {
-	public $m_ShowWidget = false;
+	public $showWidget = false;
 	public function fetchData()
 	{		
 		if($this->processUserInit()){
@@ -22,15 +22,15 @@ class SwitchUserWidget extends EasyForm
 		
 		if(!BizSystem::allowUserAccess('Session.Switch_Session'))
 		{
-			$this->m_ShowWidget = false;	
+			$this->showWidget = false;	
 			if(!BizSystem::sessionContext()->getVar("_PREV_USER_PROFILE"))
 			{
 				return ;
 			}else{
-				$this->m_ShowWidget = true;
+				$this->showWidget = true;
 			}
 		}else{			
-			$this->m_ShowWidget = true;
+			$this->showWidget = true;
 		}		
 		$record['username'] = BizSystem::getUserProfile("username");
 		return $record;
@@ -89,7 +89,7 @@ class SwitchUserWidget extends EasyForm
     public function outputAttrs()
     {
     	$output = parent::outputAttrs(); 	
-    	$output['show_widget'] = $this->m_ShowWidget;
+    	$output['show_widget'] = $this->showWidget;
     	return $output;	    
     } 	
 }

@@ -60,7 +60,7 @@ class DynaView extends EasyView
 	            $xmlArr["ATTRIBUTES"]["NAME"] = $paramForm;
 	            $xmlArr["ATTRIBUTES"]["SUBFORMS"] = $paramCForm ? $paramCForm : "";
 	            $formRef = new FormReference($xmlArr);
-	            $this->m_FormRefs->set($paramForm, $formRef);
+	            $this->formRefs->set($paramForm, $formRef);
 	            if ($paramCForm)
 	            {
 	            	if($this->isInFormRefLibs($paramCForm))
@@ -68,7 +68,7 @@ class DynaView extends EasyView
 		                $xmlArr["ATTRIBUTES"]["NAME"] = $paramCForm;
 		                $xmlArr["ATTRIBUTES"]["SUBFORMS"] = "";
 		                $cformRef = new FormReference($xmlArr);
-		                $this->m_FormRefs->set($paramCForm, $cformRef);
+		                $this->formRefs->set($paramCForm, $cformRef);
 	            	}
 	            }
         	}

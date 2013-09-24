@@ -27,7 +27,7 @@
 class PagesizeSelector extends DropDownList
 {
 
-	protected $m_FormPrefix = true;
+	protected $formPrefix = true;
     protected function getList(){
     	$pagesizes = array(5,10,15,20,25,50);
     	$list = array();

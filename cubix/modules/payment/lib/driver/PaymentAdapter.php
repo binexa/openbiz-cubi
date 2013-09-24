@@ -2,19 +2,19 @@
 require_once 'iPayment.php';
 class PaymentAdapter implements iPayment
 {
-	protected $m_ProviderId;
-	protected $m_ReturnURL = "";
+	protected $providerId;
+	protected $returnURL = "";
 	protected $cancelURL = "";
-	protected $m_NotifyURL = "";		
+	protected $notifyURL = "";		
 	protected $type = '';
 		
-	protected $m_ProviderDO = "payment.provider.do.ProviderDO";
+	protected $providerDO = "payment.provider.do.ProviderDO";
 	protected $logDO = "payment.log.do.LogDO";
 	
 	protected function _getProviderInfo()
 	{
-		$ProviderDO = BizSystem::getObject($this->m_ProviderDO);
-		$recObj=$ProviderDO->fetchOne("[Id]={$this->m_ProviderId}");
+		$ProviderDO = BizSystem::getObject($this->providerDO);
+		$recObj=$ProviderDO->fetchOne("[Id]={$this->providerId}");
 		$recArr=array();
 		if($recObj)
 		{
@@ -25,8 +25,8 @@ class PaymentAdapter implements iPayment
 	
 	public function __construct()
 	{
-		$this->m_NotifyURL  = SITE_URL.'ws.php/payment/callback/verify/type_'.$this->type.'/';
-		$this->m_ReturnURL  = SITE_URL.OPENBIZ_APP_INDEX_URL.'/payment/payment_finished/type_'.$this->type.'/';
+		$this->notifyURL  = SITE_URL.'ws.php/payment/callback/verify/type_'.$this->type.'/';
+		$this->returnURL  = SITE_URL.OPENBIZ_APP_INDEX_URL.'/payment/payment_finished/type_'.$this->type.'/';
 		$this->cancelURL  = SITE_URL.OPENBIZ_APP_INDEX_URL.'/payment/payment_cancelled/type_'.$this->type.'/';
 	}
 	
@@ -72,7 +72,7 @@ class PaymentAdapter implements iPayment
 	
 	protected function _MarkLogProcessed($txn_id)
 	{
-		$searchRule = "[txn_id]='$txn_id' AND [provider_id]='".$this->m_ProviderId."' ";
+		$searchRule = "[txn_id]='$txn_id' AND [provider_id]='".$this->providerId."' ";
 		$record = BizSystem::getObject($this->logDO)->fetchOne($searchRule);
 		if($record)
 		{
@@ -86,7 +86,7 @@ class PaymentAdapter implements iPayment
 	
 	public function CheckLogProcessed($txn_id)
 	{
-		$searchRule = "[txn_id]='$txn_id' AND [provider_id]='".$this->m_ProviderId."' AND [processed]=1";
+		$searchRule = "[txn_id]='$txn_id' AND [provider_id]='".$this->providerId."' AND [processed]=1";
 		$record = BizSystem::getObject($this->logDO)->fetchOne($searchRule);
 		if($record)
 		{
@@ -100,7 +100,7 @@ class PaymentAdapter implements iPayment
 	
 	public function CheckLogExists($txn_id)
 	{
-		$searchRule = "[txn_id]='$txn_id' AND [provider_id]='".$this->m_ProviderId."' ";
+		$searchRule = "[txn_id]='$txn_id' AND [provider_id]='".$this->providerId."' ";
 		$record = BizSystem::getObject($this->logDO)->fetchOne($searchRule);
 		if($record)
 		{
@@ -115,7 +115,7 @@ class PaymentAdapter implements iPayment
     protected  function _log()
     {
     	$logArr = $this->GetReturnData();
-    	$logArr['provider_id'] 		= $this->m_ProviderId;
+    	$logArr['provider_id'] 		= $this->providerId;
     	$logArr['payer_email'] 		= $logArr['buyer_account'];
     	$logArr['payer_id'] 		= $logArr['buyer_id'];
     	$logArr['payment_subject'] 	= $logArr['subject'];

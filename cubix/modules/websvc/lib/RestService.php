@@ -157,7 +157,7 @@ class RestService
         }
         catch (ValidationException $e) {
             $response->status(400);
-			$errmsg = implode("\n",$e->m_Errors);
+			$errmsg = implode("\n",$e->errors);
 			$response->body($errmsg);
 			return;
         }
@@ -217,7 +217,7 @@ class RestService
         }
         catch (ValidationException $e) {
             $response->status(400);
-			$errmsg = implode("\n",$e->m_Errors);
+			$errmsg = implode("\n",$e->errors);
 			$response->body($errmsg);
 			return;
         }

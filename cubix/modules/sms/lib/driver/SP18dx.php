@@ -5,8 +5,8 @@ require_once 'SPDriver.php';
 
 class SP18dx extends SPDriver  implements iSMS 
 {
-	protected $m_ProviderId = 1;
-	protected $m_type = '18dx';
+	protected $providerId = 1;
+	protected $type = '18dx';
 	private  $m_url='http://18dx.cn/API/Services.aspx?';
 
  /*

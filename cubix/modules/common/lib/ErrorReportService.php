@@ -3,7 +3,7 @@ include_once(OPENBIZ_APP_MODULE_PATH."/common/lib/httpClient.php");
 
 class ErrorReportService
 {
-	protected $m_ReportServer;
+	protected $reportServer;
 	
   	function __construct(&$xmlArr)
    	{      
@@ -12,7 +12,7 @@ class ErrorReportService
 
    	protected function readMetadata(&$xmlArr)
    	{      
-     	 $this->m_ReportServer 	= $xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["REPORTSERVER"];      
+     	 $this->reportServer 	= $xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["REPORTSERVER"];      
    	}
    
    	public function report($reportData)
@@ -23,7 +23,7 @@ class ErrorReportService
    
 	protected function _remoteCall($method,$params=null)
     {
-    	$uri = $this->m_ReportServer;
+    	$uri = $this->reportServer;
         $cache_id = md5($this->objectName.$uri. $method .serialize($params));         
         $cacheSvc = BizSystem::getService(CACHE_SERVICE,1);
         $cacheSvc->init($this->objectName,$this->cacheLifeTime);        		

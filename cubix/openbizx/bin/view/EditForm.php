@@ -77,7 +77,7 @@ class EditForm extends InputForm
         }
         catch (ValidationException $e)
         {
-            $this->processFormObjError($e->m_Errors);
+            $this->processFormObjError($e->errors);
             return;
         }
 	
@@ -86,7 +86,7 @@ class EditForm extends InputForm
 		//$this->commitFormElements(); // commit change in FormElement
 		
         // in case of popup form, close it, then rerender the parent form
-        /*if ($this->m_ParentFormName)
+        /*if ($this->parentFormName)
         {
             $this->close();
 
@@ -117,11 +117,11 @@ class EditForm extends InputForm
         }
         catch (ValidationException $e)
         {
-            $errElements = $this->getErrorElements($e->m_Errors);           
-        	if(count($e->m_Errors)==count($errElements)){
+            $errElements = $this->getErrorElements($e->errors);           
+        	if(count($e->errors)==count($errElements)){
             	$this->formHelper->processFormObjError($errElements);
             }else{            	
-            	$errmsg = implode("<br />",$e->m_Errors);
+            	$errmsg = implode("<br />",$e->errors);
 		        BizSystem::clientProxy()->showErrorMessage($errmsg);
             }
             return false;

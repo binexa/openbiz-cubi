@@ -16,7 +16,7 @@
 class FormHelper
 {
 	protected $formObj;
-	protected $m_InvokingElement;
+	protected $invokingElement;
 	
 	public function __construct($formObj)
 	{
@@ -111,17 +111,17 @@ class FormHelper
      */
     public function getInvokingElement()
     {
-    	if ($this->m_InvokingElement)
-        	return $this->m_InvokingElement;
+    	if ($this->invokingElement)
+        	return $this->invokingElement;
     	// __this is elementName:eventHandlerName
         $elementAndEventName = BizSystem::clientProxy()->getFormInputs("__this");
         if (! $elementAndEventName)
         	return array(null,null);
         list ($elementName, $eventHandlerName) = explode(":", $elementAndEventName);
         $element = $this->formObj->getElement($elementName);
-        $eventHandler = $element->m_EventHandlers->get($eventHandlerName);
-        $this->m_InvokingElement = array($element, $eventHandler);
-        return $this->m_InvokingElement;
+        $eventHandler = $element->eventHandlers->get($eventHandlerName);
+        $this->invokingElement = array($element, $eventHandler);
+        return $this->invokingElement;
     }
 	
 // -------------------------- Error Handling Methods ---------------------- //
@@ -147,8 +147,8 @@ class FormHelper
      */
     public function processFormObjError($errors)
     {
-        $this->formObj->m_Errors = $errors;
-		//print_r($this->m_Errors); exit;
+        $this->formObj->errors = $errors;
+		//print_r($this->errors); exit;
         //$this->m_hasError = true;
         return $this->formObj->rerender();
     }

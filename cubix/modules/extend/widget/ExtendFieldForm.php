@@ -13,7 +13,7 @@
 
 class ExtendFieldForm extends PickerForm
 {
-	protected $m_SettingOptionDO = "extend.do.ExtendSettingOptionDO";
+	protected $settingOptionDO = "extend.do.ExtendSettingOptionDO";
  	
 	protected function _doUpdate($inputRecord, $currentRecord)
     {
@@ -36,15 +36,15 @@ class ExtendFieldForm extends PickerForm
         }
         catch (ValidationException $e)
         {
-            $this->processFormObjError($e->m_Errors);
+            $this->processFormObjError($e->errors);
             return;
         }
         
 
-        if (!$this->m_ParentFormElemName)
+        if (!$this->parentFormElemName)
         {
         	//its only supports 1-m assoc now	        	        
-	        $parentForm = BizSystem::objectFactory()->getObject($this->m_ParentFormName);
+	        $parentForm = BizSystem::objectFactory()->getObject($this->parentFormName);
         	//$parentForm->getDataObj()->clearSearchRule();
 	        $parentDo = $parentForm->getDataObj();
 	        
@@ -70,7 +70,7 @@ class ExtendFieldForm extends PickerForm
 	    	$this->processOptions($recArr['options'], $recId);
         }                
 
-        if ($this->m_ParentFormElemName && $this->m_PickerMap)
+        if ($this->parentFormElemName && $this->pickerMap)
         {
             return ; //not supported yet
         }
@@ -79,8 +79,8 @@ class ExtendFieldForm extends PickerForm
         $selIds[] = $recId;
         
         $this->close();	      
-        if($parentForm->m_ParentFormName){
-        	$parentParentForm = BizSystem::objectFactory()->getObject($parentForm->m_ParentFormName);
+        if($parentForm->parentFormName){
+        	$parentParentForm = BizSystem::objectFactory()->getObject($parentForm->parentFormName);
         	$parentParentForm->rerender();
         }
         else
@@ -92,7 +92,7 @@ class ExtendFieldForm extends PickerForm
     
     public function processOptions($option_str,$setting_id,$lang=null)
     {
-    	$optDO = BizSystem::getObject($this->m_SettingOptionDO);
+    	$optDO = BizSystem::getObject($this->settingOptionDO);
     	$optionArr = explode(";", $option_str);
     	$i=1;
     	$setting_id = (int)$setting_id;

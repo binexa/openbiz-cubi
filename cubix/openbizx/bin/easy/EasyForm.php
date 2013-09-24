@@ -31,8 +31,8 @@ class EasyForm extends MetaObject implements iSessionObject
     public $DATAFORMAT = 'RECORD';
 
     // metadata vars are public, necessary for metadata inheritance
-    public $m_Title;
-    public $m_Icon;
+    public $title;
+    public $icon;
     public $objectDescription;
     public $m_jsClass;
     public $dataObjName;
@@ -43,7 +43,7 @@ class EasyForm extends MetaObject implements iSessionObject
     public $canUpdateRecord;
     public $directMethodList = null; //list of method that can directly from browser
 
-    public $m_Panels; 
+    public $panels; 
 
     /**
      * Name of inherited form (meta-form)
@@ -78,39 +78,39 @@ class EasyForm extends MetaObject implements iSessionObject
     public $templateFile;
     public $formType;
     public $subForms = null;
-    public $m_EventName;
-    public $m_Range = 10;
+    public $eventName;
+    public $range = 10;
     public $cacheLifeTime = 0;
-    public $m_FormParams;
+    public $formParams;
 
     // parent form is the form that trigger the popup. "this" form is a popup form
-    public $m_ParentFormName;
+    public $parentFormName;
     // the form that drives navigation - the 1st form deplayed in the view
     public $defaultFormName = null;
 
-    public $m_Errors;   // errors array (error_element, error_message)
-    public $m_Notices;  // list of notice messages
+    public $errors;   // errors array (error_element, error_message)
+    public $notices;  // list of notice messages
 
     // basic form vars
     protected $dataObj;
     protected $recordId = null;
     public $activeRecord = null;
-    public $m_FormInputs = null;
+    public $formInputs = null;
     public $searchRule = null;
-    public $m_FixSearchRule = null; // FixSearchRule is the search rule always applying on the search
+    public $fixSearchRule = null; // FixSearchRule is the search rule always applying on the search
     
     public $sortRule = null;
     
     protected $defaultFixSearchRule = null;
-    protected $m_Referer = "";
+    protected $referer = "";
     public $messageFile = null;
     protected $m_hasError = false;
-    protected $m_ValidateErrors = array();
+    protected $validateErrors = array();
 	protected $queryParams = array();
 
     // vars for grid(list)
     protected $currentPage = 1;
-    protected $m_StartItem = 1;
+    protected $startItem = 1;
     public $totalPages = 1;
     protected $totalRecords = 0;
     protected $recordSet = null;
@@ -118,11 +118,11 @@ class EasyForm extends MetaObject implements iSessionObject
     protected $resource = "";
 
     protected $objectMessages;
-    protected $m_InvokingElement = null;
+    protected $invokingElement = null;
     
     public $autoRefresh=0;
     
-    public $m_ReferenceFormName; //switch from which form
+    public $referenceFormName; //switch from which form
     protected $recordAllowAccess = true;
 
     /**
@@ -162,8 +162,8 @@ class EasyForm extends MetaObject implements iSessionObject
     {
         parent::readMetaData($xmlArr);
         $this->inheritFrom = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["INHERITFROM"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["INHERITFROM"] : null;        
-        $this->m_Title = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["TITLE"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["TITLE"] : null;
-        $this->m_Icon = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["ICON"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["ICON"] : null;        
+        $this->title = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["TITLE"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["TITLE"] : null;
+        $this->icon = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["ICON"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["ICON"] : null;        
         $this->objectDescription = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["DESCRIPTION"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["DESCRIPTION"] : null;
         $this->m_jsClass = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["JSCLASS"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["JSCLASS"] : null;
         $this->height = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["HEIGHT"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["HEIGHT"] : null;
@@ -172,8 +172,8 @@ class EasyForm extends MetaObject implements iSessionObject
         $this->templateEngine = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["TEMPLATEENGINE"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["TEMPLATEENGINE"] : null;
         $this->templateFile = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["TEMPLATEFILE"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["TEMPLATEFILE"] : null;
         $this->formType = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["FORMTYPE"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["FORMTYPE"] : null;
-        $this->m_Range = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["PAGESIZE"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["PAGESIZE"] : $this->m_Range;
-        $this->m_FixSearchRule = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["SEARCHRULE"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["SEARCHRULE"] : null;
+        $this->range = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["PAGESIZE"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["PAGESIZE"] : $this->range;
+        $this->fixSearchRule = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["SEARCHRULE"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["SEARCHRULE"] : null;
         $this->sortRule = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["SORTRULE"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["SORTRULE"] : null;
 		$this->defaultFixSearchRule = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["SEARCHRULE"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["SEARCHRULE"] : null;
         
@@ -189,19 +189,19 @@ class EasyForm extends MetaObject implements iSessionObject
         $this->actionPanel = new Panel($xmlArr["EASYFORM"]["ACTIONPANEL"]["ELEMENT"],"",$this);
         $this->navPanel = new Panel($xmlArr["EASYFORM"]["NAVPANEL"]["ELEMENT"],"",$this);
         $this->searchPanel = new Panel($xmlArr["EASYFORM"]["SEARCHPANEL"]["ELEMENT"],"",$this);
-        $this->m_Panels = array($this->dataPanel, $this->actionPanel, $this->navPanel, $this->searchPanel);
+        $this->panels = array($this->dataPanel, $this->actionPanel, $this->navPanel, $this->searchPanel);
 
         $this->formType = strtoupper($this->formType);
 
-        $this->m_EventName = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["EVENTNAME"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["EVENTNAME"] : null;
+        $this->eventName = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["EVENTNAME"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["EVENTNAME"] : null;
 
         $this->messageFile = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["MESSAGEFILE"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["MESSAGEFILE"] : null;
-        $this->objectMessages = Resource::loadMessage($this->messageFile , $this->m_Package);
+        $this->objectMessages = Resource::loadMessage($this->messageFile , $this->package);
 
         $this->cacheLifeTime = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["CACHELIFETIME"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["CACHELIFETIME"] : "0";
 
         $this->currentPage = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["STARTPAGE"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["STARTPAGE"] : 1;
-        $this->m_StartItem = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["STARTITEM"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["STARTITEM"] : 1;
+        $this->startItem = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["STARTITEM"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["STARTITEM"] : 1;
 
         $this->autoRefresh = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["AUTOREFRESH"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["AUTOREFRESH"] : 0;
         
@@ -227,8 +227,8 @@ class EasyForm extends MetaObject implements iSessionObject
         if (!$this->inheritFrom) return;
         $parentObj = BizSystem::getObject($this->inheritFrom);
 
-        $this->m_Title = $this->m_Title ? $this->m_Title : $parentObj->m_Title;
-        $this->m_Icon = $this->m_Icon ? $this->m_Icon : $parentObj->m_Icon;        
+        $this->title = $this->title ? $this->title : $parentObj->title;
+        $this->icon = $this->icon ? $this->icon : $parentObj->icon;        
         $this->objectDescription  = $this->objectDescription ? $this->objectDescription : $parentObj->objectDescription;
         $this->m_jsClass   = $this->m_jsClass ? $this->m_jsClass : $parentObj->m_jsClass;
         $this->height   = $this->height ? $this->height : $parentObj->height;
@@ -237,17 +237,17 @@ class EasyForm extends MetaObject implements iSessionObject
         $this->templateEngine   = $this->templateEngine ? $this->templateEngine : $parentObj->templateEngine;
         $this->templateFile   = $this->templateFile ? $this->templateFile : $parentObj->templateFile;        
         $this->formType   = $this->formType ? $this->formType : $parentObj->formType;
-        $this->m_Range   = $this->m_Range ? $this->m_Range : $parentObj->m_Range;
-        $this->m_FixSearchRule   = $this->m_FixSearchRule ? $this->m_FixSearchRule : $parentObj->m_FixSearchRule;
+        $this->range   = $this->range ? $this->range : $parentObj->range;
+        $this->fixSearchRule   = $this->fixSearchRule ? $this->fixSearchRule : $parentObj->fixSearchRule;
         $this->defaultFixSearchRule   = $this->defaultFixSearchRule ? $this->defaultFixSearchRule : $parentObj->defaultFixSearchRule;		        
         $this->dataObjName   = $this->dataObjName ? $this->dataObjName : $parentObj->dataObjName;
         $this->directMethodList   = $this->directMethodList ? $this->directMethodList : $parentObj->directMethodList;
-        $this->m_EventName   = $this->m_EventName ? $this->m_EventName : $parentObj->m_EventName;
+        $this->eventName   = $this->eventName ? $this->eventName : $parentObj->eventName;
         $this->messageFile   = $this->messageFile ? $this->messageFile : $parentObj->messageFile;
-        $this->objectMessages = Resource::loadMessage($this->messageFile , $this->m_Package);
+        $this->objectMessages = Resource::loadMessage($this->messageFile , $this->package);
 		$this->cacheLifeTime   = $this->cacheLifeTime ? $this->cacheLifeTime : $parentObj->cacheLifeTime;
 		$this->currentPage   = $this->currentPage ? $this->currentPage : $parentObj->currentPage;
-		$this->m_StartItem   = $this->m_StartItem ? $this->m_StartItem : $parentObj->m_StartItem;        
+		$this->startItem   = $this->startItem ? $this->startItem : $parentObj->startItem;        
         
         $this->dataPanel->merge($parentObj->dataPanel);
         $this->actionPanel->merge($parentObj->actionPanel);
@@ -270,7 +270,7 @@ class EasyForm extends MetaObject implements iSessionObject
 	        foreach ($this->searchPanel as $elem)
 	            $elem->adjustFormName($this->objectName);            
         }   
-		$this->m_Panels = array($this->dataPanel, $this->actionPanel, $this->navPanel, $this->searchPanel);            
+		$this->panels = array($this->dataPanel, $this->actionPanel, $this->navPanel, $this->searchPanel);            
     }    
     
     /**
@@ -346,15 +346,15 @@ class EasyForm extends MetaObject implements iSessionObject
     public function loadSessionVars($sessionContext)
     {
         $sessionContext->getObjVar($this->objectName, "RecordId", $this->recordId);
-        $sessionContext->getObjVar($this->objectName, "FixSearchRule", $this->m_FixSearchRule);
+        $sessionContext->getObjVar($this->objectName, "FixSearchRule", $this->fixSearchRule);
         $sessionContext->getObjVar($this->objectName, "SearchRule", $this->searchRule);
         $sessionContext->getObjVar($this->objectName, "QueryParams", $this->queryParams);
         $sessionContext->getObjVar($this->objectName, "SubForms", $this->subForms);
-        $sessionContext->getObjVar($this->objectName, "ParentFormName", $this->m_ParentFormName);
+        $sessionContext->getObjVar($this->objectName, "ParentFormName", $this->parentFormName);
         $sessionContext->getObjVar($this->objectName, "DefaultFormName", $this->defaultFormName);
         $sessionContext->getObjVar($this->objectName, "CurrentPage", $this->currentPage);
-        $sessionContext->getObjVar($this->objectName, "PageSize", $this->m_Range);
-        $sessionContext->getObjVar($this->objectName, "ReferenceFormName", $this->m_ReferenceFormName);
+        $sessionContext->getObjVar($this->objectName, "PageSize", $this->range);
+        $sessionContext->getObjVar($this->objectName, "ReferenceFormName", $this->referenceFormName);
         $sessionContext->getObjVar($this->objectName, "SearchPanelValues", $this->searchPanelValues);
     }
 
@@ -367,15 +367,15 @@ class EasyForm extends MetaObject implements iSessionObject
     public function saveSessionVars($sessionContext)
     {
         $sessionContext->setObjVar($this->objectName, "RecordId", $this->recordId);
-        $sessionContext->setObjVar($this->objectName, "FixSearchRule", $this->m_FixSearchRule);
+        $sessionContext->setObjVar($this->objectName, "FixSearchRule", $this->fixSearchRule);
         $sessionContext->setObjVar($this->objectName, "SearchRule", $this->searchRule);        
         $sessionContext->setObjVar($this->objectName, "QueryParams", $this->queryParams);
         $sessionContext->setObjVar($this->objectName, "SubForms", $this->subForms);
-        $sessionContext->setObjVar($this->objectName, "ParentFormName", $this->m_ParentFormName);
+        $sessionContext->setObjVar($this->objectName, "ParentFormName", $this->parentFormName);
         $sessionContext->setObjVar($this->objectName, "DefaultFormName", $this->defaultFormName);
         $sessionContext->setObjVar($this->objectName, "CurrentPage", $this->currentPage);
-        $sessionContext->setObjVar($this->objectName, "PageSize", $this->m_Range);
-        $sessionContext->setObjVar($this->objectName, "ReferenceFormName", $this->m_ReferenceFormName);
+        $sessionContext->setObjVar($this->objectName, "PageSize", $this->range);
+        $sessionContext->setObjVar($this->objectName, "ReferenceFormName", $this->referenceFormName);
         $sessionContext->setObjVar($this->objectName, "SearchPanelValues", $this->searchPanelValues);        
     }
 
@@ -391,10 +391,10 @@ class EasyForm extends MetaObject implements iSessionObject
         // first one is element:eventhandler
         list ($elementName, $eventHandlerName) = explode(":", $param1);        
         $element = $this->getElement($elementName);
-        $eventHandler = $element->m_EventHandlers->get($eventHandlerName);
-        $this->m_InvokingElement = array($element, $eventHandler);
+        $eventHandler = $element->eventHandlers->get($eventHandlerName);
+        $this->invokingElement = array($element, $eventHandler);
         // find the matching function
-        list($funcName, $funcParams) = $eventHandler->parseFunction($eventHandler->m_OrigFunction);
+        list($funcName, $funcParams) = $eventHandler->parseFunction($eventHandler->origFunction);
         // call the function with rest parameters
         return call_user_func_array(array($this, $funcName), $argList);
     }
@@ -415,11 +415,11 @@ class EasyForm extends MetaObject implements iSessionObject
         list($element, $eventHandler) = $this->getInvokingElement();
         if ($element && $eventHandler)
         {
-            if (stripos($eventHandler->m_OrigFunction, $methodName)===0)
+            if (stripos($eventHandler->origFunction, $methodName)===0)
                 return true;
         }
         // scan elements to match method
-        foreach ($this->m_Panels as $panel)
+        foreach ($this->panels as $panel)
         {
             foreach ($panel as $elem) 
                 if ($elem->matchRemoteMethod($methodName)) return true;
@@ -458,7 +458,7 @@ class EasyForm extends MetaObject implements iSessionObject
             {
 				case 'param':            	
             	case 'params':
-            		$result = $this->m_FormParams[$elementName];
+            		$result = $this->formParams[$elementName];
             		break;
             	default:
             		
@@ -511,8 +511,8 @@ class EasyForm extends MetaObject implements iSessionObject
     public function outputAttrs()
     {
         $output['name'] = $this->objectName;
-        $output['title'] = Expression::evaluateExpression($this->m_Title, $this);
-        $output['icon'] = $this->m_Icon;
+        $output['title'] = Expression::evaluateExpression($this->title, $this);
+        $output['icon'] = $this->icon;
         $output['hasSubform'] = $this->subForms ? 1 : 0;
         $output['currentPage'] = $this->currentPage;
         $output['currentRecordId'] = $this->recordId;
@@ -558,7 +558,7 @@ class EasyForm extends MetaObject implements iSessionObject
      */
     public function processFormObjError($errors)
     {
-        $this->m_Errors = $errors;
+        $this->errors = $errors;
         $this->m_hasError = true;
         return $this->rerender();
     }
@@ -640,9 +640,9 @@ class EasyForm extends MetaObject implements iSessionObject
         if ($this->actionPanel->get($elementName)) return $this->actionPanel->get($elementName);
         if ($this->navPanel->get($elementName)) return $this->navPanel->get($elementName);
         if ($this->searchPanel->get($elementName)) return $this->searchPanel->get($elementName);
-        if($this->m_WizardPanel)
+        if($this->wizardPanel)
         {
-        	if ($this->m_WizardPanel->get($elementName)) return $this->m_WizardPanel->get($elementName);
+        	if ($this->wizardPanel->get($elementName)) return $this->wizardPanel->get($elementName);
         }
     }
     
@@ -657,12 +657,12 @@ class EasyForm extends MetaObject implements iSessionObject
         {      
         	$elem = $panel->current();
         	$panel->next();    
-        	if($elem->m_ElementSet && $elem->canDisplayed()){
+        	if($elem->elementSet && $elem->canDisplayed()){
         		//is it in array
-        		if(in_array($elem->m_ElementSet,$setArr)){
+        		if(in_array($elem->elementSet,$setArr)){
         			continue;
         		}else{
-        			array_push($setArr,$elem->m_ElementSet);
+        			array_push($setArr,$elem->elementSet);
         		}
         	}                          
         }
@@ -681,12 +681,12 @@ class EasyForm extends MetaObject implements iSessionObject
         {      
         	$elem = $panel->current();
         	$panel->next();    
-        	if($elem->m_TabSet && $elem->canDisplayed()){
+        	if($elem->tabSet && $elem->canDisplayed()){
         		//is it in array
-        		if(in_array($elem->m_TabSet,$setArr)){
+        		if(in_array($elem->tabSet,$setArr)){
         			continue;
         		}else{
-         			$setArr[$elem->m_TabSetCode]=$elem->m_TabSet;
+         			$setArr[$elem->tabSetCode]=$elem->tabSet;
         		}
         	}          	                                  
         }
@@ -698,13 +698,13 @@ class EasyForm extends MetaObject implements iSessionObject
 	        {      
 	        	$elem = $panel->current();
 	        	$panel->next();    
-	        	if($elem->m_ElementSet && $elem->canDisplayed()){
+	        	if($elem->elementSet && $elem->canDisplayed()){
 	        		//is it in array
-	        		if( $elem->m_TabSetCode!= $tabsetCode || 
-	        			in_array($elem->m_ElementSet,$elemSetArr)){
+	        		if( $elem->tabSetCode!= $tabsetCode || 
+	        			in_array($elem->elementSet,$elemSetArr)){
 	        			continue;
 	        		}else{
-	        			array_push($elemSetArr,$elem->m_ElementSet);
+	        			array_push($elemSetArr,$elem->elementSet);
 	        		}
 	        	}          	                                  
 	        }
@@ -750,12 +750,12 @@ class EasyForm extends MetaObject implements iSessionObject
         {
             // set the picker map as well
             $element = $this->getElement($elementName);
-            $pickerMap = $element->m_PickerMap;
+            $pickerMap = $element->pickerMap;
         }
 		$currentRecord = $this->readInputRecord();
 		$pickerForm->setParentForm($this->objectName);
         $pickerForm->setParentFormData($this->objectName, $elementName, $pickerMap);
-        $pickerForm->m_ParentFormRecord = $currentRecord;
+        $pickerForm->parentFormRecord = $currentRecord;
         BizSystem::clientProxy()->redrawForm("DIALOG", $pickerForm->render());
     }
     
@@ -771,7 +771,7 @@ class EasyForm extends MetaObject implements iSessionObject
 	
 	public function setParentForm($parentFormName)
 	{
-		$this->m_ParentFormName = $parentFormName;
+		$this->parentFormName = $parentFormName;
 	}
 
     /**
@@ -802,7 +802,7 @@ class EasyForm extends MetaObject implements iSessionObject
     {    	    	
         if ($paramFields)
         {
-        	$this->m_FixSearchRule=null; // reset fixsearchrule to clean the previous one in session
+        	$this->fixSearchRule=null; // reset fixsearchrule to clean the previous one in session
             foreach($paramFields as $fieldName=>$val)
             {
                 $element = $this->dataPanel->getByField($fieldName);
@@ -842,7 +842,7 @@ class EasyForm extends MetaObject implements iSessionObject
     public function renderParent()
     {
         /* @var $parentForm EasyForm */
-        $parentForm = BizSystem::objectFactory()->getObject($this->m_ParentFormName);
+        $parentForm = BizSystem::objectFactory()->getObject($this->parentFormName);
         $parentForm->rerender();
     }
 
@@ -857,17 +857,17 @@ class EasyForm extends MetaObject implements iSessionObject
     public function setFixSearchRule($rule = null, $cleanActualRule = true)
     {
         if ($cleanActualRule)
-            $this->m_FixSearchRule = $this->defaultFixSearchRule;
+            $this->fixSearchRule = $this->defaultFixSearchRule;
             
-        if ($this->m_FixSearchRule && $rule)
+        if ($this->fixSearchRule && $rule)
         {        	
-            if (strpos($this->m_FixSearchRule, $rule) === false)
+            if (strpos($this->fixSearchRule, $rule) === false)
             {
-                $this->m_FixSearchRule = $this->m_FixSearchRule . " AND " . $rule;
+                $this->fixSearchRule = $this->fixSearchRule . " AND " . $rule;
             }
         }
-        if (!$this->m_FixSearchRule && $rule){
-            $this->m_FixSearchRule = $rule;
+        if (!$this->fixSearchRule && $rule){
+            $this->fixSearchRule = $rule;
         }
     }
 
@@ -887,25 +887,25 @@ class EasyForm extends MetaObject implements iSessionObject
         else
             $dataObj->clearSearchRule();
 
-        if ($this->m_FixSearchRule)
+        if ($this->fixSearchRule)
         {
             if ($this->searchRule)
-                $searchRule = $this->searchRule . " AND " . $this->m_FixSearchRule;
+                $searchRule = $this->searchRule . " AND " . $this->fixSearchRule;
             else
-                $searchRule = $this->m_FixSearchRule;
+                $searchRule = $this->fixSearchRule;
         }
         else
             $searchRule = $this->searchRule;
 
 		$dataObj->setQueryParameters($this->queryParams);
         $dataObj->setSearchRule($searchRule);        
-        if($this->m_StartItem>1)
+        if($this->startItem>1)
         {
-            $dataObj->setLimit($this->m_Range, $this->m_StartItem);
+            $dataObj->setLimit($this->range, $this->startItem);
         }
         else
         {
-            $dataObj->setLimit($this->m_Range, ($this->currentPage-1)*$this->m_Range);
+            $dataObj->setLimit($this->range, ($this->currentPage-1)*$this->range);
         }      
         if($this->sortRule && $this->sortRule != $this->getDataObj()->sortRule)
         {
@@ -913,15 +913,15 @@ class EasyForm extends MetaObject implements iSessionObject
         }          
         $resultRecords = $dataObj->fetch();
         $this->totalRecords = $dataObj->count();
-        if ($this->m_Range && $this->m_Range > 0)
-            $this->totalPages = ceil($this->totalRecords/$this->m_Range);
+        if ($this->range && $this->range > 0)
+            $this->totalPages = ceil($this->totalRecords/$this->range);
         $selectedIndex = 0;
         
         //if current page is large than total pages ,then reset current page to last page
         if($this->currentPage>$this->totalPages && $this->totalPages>0)
         {
         	$this->currentPage = $this->totalPages;
-        	$dataObj->setLimit($this->m_Range, ($this->currentPage-1)*$this->m_Range);
+        	$dataObj->setLimit($this->range, ($this->currentPage-1)*$this->range);
         	$resultRecords = $dataObj->fetch();
         }
         
@@ -965,7 +965,7 @@ class EasyForm extends MetaObject implements iSessionObject
         if (strtoupper($this->formType) == "NEW")
             return $this->getNewRecord();
 		
-        if (!$this->m_FixSearchRule && !$this->searchRule){ 
+        if (!$this->fixSearchRule && !$this->searchRule){ 
         	//if its a default sub form,even no search rule, but can still fetch a default record 
         	if(!is_array($this->getDataObj()->association)){
         		//only if its a default sub form and without any association then return emply array
@@ -975,12 +975,12 @@ class EasyForm extends MetaObject implements iSessionObject
 	        if ($this->isRefreshData)   $dataObj->resetRules();
 	        else $dataObj->clearSearchRule();
 	
-	        if ($this->m_FixSearchRule)
+	        if ($this->fixSearchRule)
 	        {
 	            if ($this->searchRule)
-	                $searchRule = $this->searchRule . " AND " . $this->m_FixSearchRule;
+	                $searchRule = $this->searchRule . " AND " . $this->fixSearchRule;
 	            else
-	                $searchRule = $this->m_FixSearchRule;
+	                $searchRule = $this->fixSearchRule;
 	        }
 	        
 	        $dataObj->setSearchRule($searchRule);
@@ -1022,7 +1022,7 @@ class EasyForm extends MetaObject implements iSessionObject
     public function setPageSize($elemName)
     {
         $pagesize = BizSystem::clientProxy()->getFormInputs(str_replace(".","_", $this->objectName).'_'.$elemName);
-    	$this->m_Range=$pagesize;
+    	$this->range=$pagesize;
     	$this->UpdateForm();
     }    
     /**
@@ -1046,7 +1046,7 @@ class EasyForm extends MetaObject implements iSessionObject
         $element->setSortFlag($order);
 
         // change the sort rule and issue the query
-        $this->getDataObj()->setSortRule("[" . $element->m_FieldName . "] " . $order);
+        $this->getDataObj()->setSortRule("[" . $element->fieldName . "] " . $order);
 
         // move to 1st page
         $this->currentPage = 1;
@@ -1075,18 +1075,18 @@ class EasyForm extends MetaObject implements iSessionObject
         	if(method_exists($element,"getSearchRule")){
         		$searchStr = $element->getSearchRule();        		
         	}else{        	
-	            if (!$element->m_FieldName)
+	            if (!$element->fieldName)
 	                continue;
 	
 	            $value = BizSystem::clientProxy()->getFormInputs($element->objectName);            
-	            if($element->m_FuzzySearch=="Y")
+	            if($element->fuzzySearch=="Y")
 	            {
 	                $value="*$value*";
 	            }
 	            if ($value!='')
 	            {
-	                //$searchStr = inputValToRule($element->m_FieldName, $value, $this);	
-	                $this->queryParams[$element->m_FieldName] = $value;			
+	                //$searchStr = inputValToRule($element->fieldName, $value, $this);	
+	                $this->queryParams[$element->fieldName] = $value;			
 	            }
         	}
         	if($searchStr){
@@ -1205,17 +1205,17 @@ class EasyForm extends MetaObject implements iSessionObject
     		$this->defaultFormName = $this->objectName;
     	if ($formName == null)
     	{
-    		if($this->m_ReferenceFormName == null)
+    		if($this->referenceFormName == null)
     		{
     			$formName = $this->defaultFormName;
     		}else{
-    			if($formName = $this->m_ReferenceFormName){
+    			if($formName = $this->referenceFormName){
     				//this judgement is for anti endless loop between swtich forms
-    				$formObj = BizSystem::objectFactory()->getObject($this->m_ReferenceFormName);
-    				if($formObj->m_ReferenceFormName == $this->objectName){    					
+    				$formObj = BizSystem::objectFactory()->getObject($this->referenceFormName);
+    				if($formObj->referenceFormName == $this->objectName){    					
     					$formName = $this->defaultFormName;
     				}else{    				
-    					$formName = $this->m_ReferenceFormName;
+    					$formName = $this->referenceFormName;
     				}
     			}
     		}
@@ -1231,7 +1231,7 @@ class EasyForm extends MetaObject implements iSessionObject
      			if( $this->formType!='EDIT' &&
      				$this->formType!='NEW' &&
      				$this->formType!='COPY' ){
- 	      	     	$formObj->m_ReferenceFormName = $this->objectName;
+ 	      	     	$formObj->referenceFormName = $this->objectName;
     			} 
             }
             
@@ -1244,7 +1244,7 @@ class EasyForm extends MetaObject implements iSessionObject
             	$clearFixSearchRule = true;
             }
             foreach($paramFields as $fieldName=>$val){            	
-            	$formObj->m_FormParams[$fieldName] = $val;
+            	$formObj->formParams[$fieldName] = $val;
                 $formObj->setFixSearchRule("[$fieldName]='$val'",$clearFixSearchRule);                
                 if($fieldName=="Id"){
                 	$formObj->setRecordId($val);
@@ -1355,7 +1355,7 @@ class EasyForm extends MetaObject implements iSessionObject
 
         $this->runEventLog();
         $this->rerender();
-		if($this->m_ParentFormName)
+		if($this->parentFormName)
 		{
 			$this->renderParent();
 		}
@@ -1435,7 +1435,7 @@ class EasyForm extends MetaObject implements iSessionObject
 	        }
 	        catch (ValidationException $e)
 	        {
-	            $this->processFormObjError($e->m_Errors);
+	            $this->processFormObjError($e->errors);
 	            return;
 	        }
 	
@@ -1446,7 +1446,7 @@ class EasyForm extends MetaObject implements iSessionObject
         }
 		
         // in case of popup form, close it, then rerender the parent form
-        if ($this->m_ParentFormName)
+        if ($this->parentFormName)
         {
             $this->close();
 
@@ -1486,7 +1486,7 @@ class EasyForm extends MetaObject implements iSessionObject
     {
     	
 		$element = $this->dataPanel->get($fld_name);
-		$fieldname = $element->m_FieldName;
+		$fieldname = $element->fieldName;
         $currentRec = $this->getActiveRecord($Id);
         $recArr = $this->getActiveRecord($Id);
 		$recArr[$fieldname]=$value;
@@ -1515,11 +1515,11 @@ class EasyForm extends MetaObject implements iSessionObject
         }
         catch (ValidationException $e)
         {
-            $errElements = $this->getErrorElements($e->m_Errors);           
-        	if(count($e->m_Errors)==count($errElements)){
+            $errElements = $this->getErrorElements($e->errors);           
+        	if(count($e->errors)==count($errElements)){
             	$this->processFormObjError($errElements);
             }else{            	
-            	$errmsg = implode("<br />",$e->m_Errors);
+            	$errmsg = implode("<br />",$e->errors);
 		        BizSystem::clientProxy()->showErrorMessage($errmsg);
             }
             return false;
@@ -1564,7 +1564,7 @@ class EasyForm extends MetaObject implements iSessionObject
         }
         catch (ValidationException $e)
         {
-            $this->processFormObjError($e->m_Errors);
+            $this->processFormObjError($e->errors);
             return;
         }
 
@@ -1573,7 +1573,7 @@ class EasyForm extends MetaObject implements iSessionObject
         $this->commitFormElements(); // commit change in FormElement
 
         // in case of popup form, close it, then rerender the parent form
-        if ($this->m_ParentFormName)
+        if ($this->parentFormName)
         {
             $this->close();
 
@@ -1604,11 +1604,11 @@ class EasyForm extends MetaObject implements iSessionObject
         }
         catch (ValidationException $e)
         {
-            $errElements = $this->getErrorElements($e->m_Errors);
-            if(count($e->m_Errors)==count($errElements)){
+            $errElements = $this->getErrorElements($e->errors);
+            if(count($e->errors)==count($errElements)){
             	$this->processFormObjError($errElements);
             }else{            	
-            	$errmsg = implode("<br />",$e->m_Errors);
+            	$errmsg = implode("<br />",$e->errors);
 		        BizSystem::clientProxy()->showErrorMessage($errmsg);
             }
             return;
@@ -1731,16 +1731,16 @@ class EasyForm extends MetaObject implements iSessionObject
     {
         if($cleanError == true)
         {
-            $this->m_ValidateErrors = array();
+            $this->validateErrors = array();
         }
         $this->dataPanel->rewind();
         while($this->dataPanel->valid())
         {
             /* @var $element Element */
             $element = $this->dataPanel->current();
-            if($element->m_Label)
+            if($element->label)
             {
-                $elementName = $element->m_Label;
+                $elementName = $element->label;
             }
             else
             {
@@ -1750,7 +1750,7 @@ class EasyForm extends MetaObject implements iSessionObject
                     ($element->value==null || $element->value == ""))
             {
                 $errorMessage = $this->getMessage("FORM_ELEMENT_REQUIRED",array($elementName));
-                $this->m_ValidateErrors[$element->objectName] = $errorMessage;
+                $this->validateErrors[$element->objectName] = $errorMessage;
                 //return false;
             }
             elseif ($element->value!==null && $element->Validate() == false)
@@ -1761,14 +1761,14 @@ class EasyForm extends MetaObject implements iSessionObject
                 { //Couldn't get a clear error message so let's try this
                     $errorMessage = $validateService->getErrorMessage($element->validator, $elementName);
                 }
-                $this->m_ValidateErrors[$element->objectName] = $errorMessage;
+                $this->validateErrors[$element->objectName] = $errorMessage;
                 //return false;
             }
             $this->dataPanel->next() ;
         }
-        if (count($this->m_ValidateErrors) > 0)
+        if (count($this->validateErrors) > 0)
         {
-            throw new ValidationException($this->m_ValidateErrors);
+            throw new ValidationException($this->validateErrors);
             return false;
         }
         return true;
@@ -1794,20 +1794,20 @@ class EasyForm extends MetaObject implements iSessionObject
             	continue;
             }
             $element->setValue($value);
-            $this->m_FormInputs[$element->objectName] = $value;
+            $this->formInputs[$element->objectName] = $value;
             $value = $element->getValue();
-            if ( $element->m_FieldName)
-                $recArr[$element->m_FieldName] = $value;
+            if ( $element->fieldName)
+                $recArr[$element->fieldName] = $value;
         }
 
         foreach ($this->searchPanel as $element)
         {
             $value = BizSystem::clientProxy()->getFormInputs($element->objectName);
             $element->setValue($value);
-            $this->m_FormInputs[$element->objectName] = $value;
+            $this->formInputs[$element->objectName] = $value;
             $value = $element->getValue();
-            if ($value !== null && $element->m_FieldName)
-                $recArr[$element->m_FieldName] = $value;
+            if ($value !== null && $element->fieldName)
+                $recArr[$element->fieldName] = $value;
         }
         return $recArr;
     }
@@ -1840,7 +1840,7 @@ class EasyForm extends MetaObject implements iSessionObject
     public function setFormInputs($inputArr=null)
     {
         if(!$inputArr){
-    		$inputArr = $this->m_FormInputs;
+    		$inputArr = $this->formInputs;
         } 
     	if(!is_array($inputArr)){
     		$inputArr = array();
@@ -1880,9 +1880,9 @@ class EasyForm extends MetaObject implements iSessionObject
         $defaultRecArr = array();
         foreach ($this->dataPanel as $element)
         {
-            if ($element->m_FieldName)
+            if ($element->fieldName)
             {
-                $defaultRecArr[$element->m_FieldName] = $element->getDefaultValue();
+                $defaultRecArr[$element->fieldName] = $element->getDefaultValue();
             }
         }
         foreach ($recArr as $field => $val)
@@ -1958,7 +1958,7 @@ class EasyForm extends MetaObject implements iSessionObject
     protected function renderContextMenu ()
     {
         $menuList = array();
-        foreach ($this->m_Panels as $panel)
+        foreach ($this->panels as $panel)
         {
             $panel->rewind();
             while ($element = $panel->current())
@@ -2085,10 +2085,10 @@ $('".$this->objectName."').observe('click',Openbiz.Menu.hide);
 				</script>       		
         		";
         	} 
-        if(!$this->m_ParentFormName)
+        if(!$this->parentFormName)
         {
         	if (($viewObj = $this->getViewObject())!=null)
-                $viewObj->m_LastRenderedForm = $this->objectName;
+                $viewObj->lastRenderedForm = $this->objectName;
         }
         return $formHTML ."\n". $otherHTML;
     }
@@ -2101,7 +2101,7 @@ $('".$this->objectName."').observe('click',Openbiz.Menu.hide);
     protected function getEventLogMsg()
     {
         list($element, $eventHandler) = $this->getInvokingElement();
-        $eventLogMsg = $eventHandler->m_EventLogMsg;
+        $eventLogMsg = $eventHandler->eventLogMsg;
         if($eventLogMsg)
         {
             return $eventLogMsg;
@@ -2122,7 +2122,7 @@ $('".$this->objectName."').observe('click',Openbiz.Menu.hide);
         $elementList = array();
         foreach ($this->dataPanel as $element)
         {
-            if ($element->m_OnEventLog=="Y")
+            if ($element->onEventLog=="Y")
                 $elementList[] = $element->value;
         }
         return $elementList;
@@ -2136,7 +2136,7 @@ $('".$this->objectName."').observe('click',Openbiz.Menu.hide);
     protected function runEventLog()
     {
         $logMessage = $this->getEventLogMsg();
-        $eventName = $this->m_EventName;
+        $eventName = $this->eventName;
         if($logMessage && $eventName)
         {
             $logElements = $this->getOnEventElements();
@@ -2192,8 +2192,8 @@ $('".$this->objectName."').observe('click',Openbiz.Menu.hide);
     
     public function parentSwitchForm($formName=null, $id=null, $params=null, $target=null)
     {
-    	if($this->m_ParentFormName){
-    		$formObj = BizSystem::getObject($this->m_ParentFormName);
+    	if($this->parentFormName){
+    		$formObj = BizSystem::getObject($this->parentFormName);
     		return $formObj->switchForm($formName, $id, $params, $target);
     	}
     }
@@ -2214,17 +2214,17 @@ $('".$this->objectName."').observe('click',Openbiz.Menu.hide);
      */
     protected function getInvokingElement()
     {
-    	if ($this->m_InvokingElement)
-        	return $this->m_InvokingElement;
+    	if ($this->invokingElement)
+        	return $this->invokingElement;
     	// __this is elementName:eventHandlerName
         $elementAndEventName = BizSystem::clientProxy()->getFormInputs("__this");
         if (! $elementAndEventName)
         	return array(null,null);
         list ($elementName, $eventHandlerName) = explode(":", $elementAndEventName);
         $element = $this->getElement($elementName);
-        $eventHandler = $element->m_EventHandlers->get($eventHandlerName);
-        $this->m_InvokingElement = array($element, $eventHandler);
-        return $this->m_InvokingElement;
+        $eventHandler = $element->eventHandlers->get($eventHandlerName);
+        $this->invokingElement = array($element, $eventHandler);
+        return $this->invokingElement;
     }
 
     /**
@@ -2357,18 +2357,18 @@ $('".$this->objectName."').observe('click',Openbiz.Menu.hide);
     protected function translate()
     {
     	$module = $this->getModuleName($this->objectName);
-    	if (!empty($this->m_Title))
+    	if (!empty($this->title))
     	{
-    		$trans_string = I18n::t($this->m_Title, $this->getTransKey('Title'), $module, $this->getTransPrefix());
+    		$trans_string = I18n::t($this->title, $this->getTransKey('Title'), $module, $this->getTransPrefix());
     		if($trans_string){
-    			$this->m_Title = $trans_string;
+    			$this->title = $trans_string;
     		}
     	}
-    	if (!empty($this->m_Icon))
+    	if (!empty($this->icon))
     	{
-    		$trans_string = I18n::t($this->m_Icon, $this->getTransKey('Icon'), $module, $this->getTransPrefix());
+    		$trans_string = I18n::t($this->icon, $this->getTransKey('Icon'), $module, $this->getTransPrefix());
     		if($trans_string){
-    			$this->m_Icon = $trans_string;
+    			$this->icon = $trans_string;
     		}
     	}
     	if (!empty($this->objectDescription))

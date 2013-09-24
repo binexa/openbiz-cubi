@@ -26,13 +26,13 @@
  */
 class FileUploader extends FileInput
 {
-    public $m_UploadRoot ;
-    public $m_UploadRootURL ;
-    public $m_UploadFolder ;
-    public $m_UploadFileType ;
-    public $m_Uploaded =false;   	
+    public $uploadRoot ;
+    public $uploadRootURL ;
+    public $uploadFolder ;
+    public $uploadFileType ;
+    public $uploaded =false;   	
     public $deleteable;
-    public $m_UseRawName=false;        
+    public $useRawName=false;        
 
     /**
      * Initialize Element with xml array
@@ -45,14 +45,14 @@ class FileUploader extends FileInput
         parent::__construct($xmlArr, $formObj);
         $this->readMetaData($xmlArr);
         if(defined("OPENBIZ_PUBLIC_UPLOAD_PATH")){
-        	$this->m_UploadRoot= constant("OPENBIZ_PUBLIC_UPLOAD_PATH");
+        	$this->uploadRoot= constant("OPENBIZ_PUBLIC_UPLOAD_PATH");
         }else{
-        	$this->m_UploadRoot= OPENBIZ_APP_PATH."/files/upload";
+        	$this->uploadRoot= OPENBIZ_APP_PATH."/files/upload";
         }
         if(defined("OPENBIZ_PUBLIC_UPLOAD_URL")){
-        	$this->m_UploadRootURL = str_replace(OPENBIZ_APP_URL,"",constant("OPENBIZ_PUBLIC_UPLOAD_URL"));
+        	$this->uploadRootURL = str_replace(OPENBIZ_APP_URL,"",constant("OPENBIZ_PUBLIC_UPLOAD_URL"));
         }else{
-        	$this->m_UploadRootURL = "/files/upload";
+        	$this->uploadRootURL = "/files/upload";
         }
     }
 
@@ -65,10 +65,10 @@ class FileUploader extends FileInput
     protected function readMetaData(&$xmlArr)
     {
         parent::readMetaData($xmlArr);
-        $this->m_UploadFolder = isset($xmlArr["ATTRIBUTES"]["UPLOADFOLDER"]) ? $xmlArr["ATTRIBUTES"]["UPLOADFOLDER"] : null;
-        $this->m_UploadFileType = isset($xmlArr["ATTRIBUTES"]["FILETYPE"]) ? $xmlArr["ATTRIBUTES"]["FILETYPE"] : null;
+        $this->uploadFolder = isset($xmlArr["ATTRIBUTES"]["UPLOADFOLDER"]) ? $xmlArr["ATTRIBUTES"]["UPLOADFOLDER"] : null;
+        $this->uploadFileType = isset($xmlArr["ATTRIBUTES"]["FILETYPE"]) ? $xmlArr["ATTRIBUTES"]["FILETYPE"] : null;
         $this->deleteable = isset($xmlArr["ATTRIBUTES"]["DELETEABLE"]) ? $xmlArr["ATTRIBUTES"]["DELETEABLE"] : "N";
-        $this->m_UseRawName = isset($xmlArr["ATTRIBUTES"]["USERAWNAME"]) ? $xmlArr["ATTRIBUTES"]["USERAWNAME"] : false;
+        $this->useRawName = isset($xmlArr["ATTRIBUTES"]["USERAWNAME"]) ? $xmlArr["ATTRIBUTES"]["USERAWNAME"] : false;
     }
 
     /**
@@ -102,29 +102,29 @@ class FileUploader extends FileInput
     	}
     	if(count($_FILES)>0)
 		{
-			if(!$this->m_Uploaded && $_FILES[$this->objectName]["size"] > 0)
+			if(!$this->uploaded && $_FILES[$this->objectName]["size"] > 0)
 			{
 				$file = $_FILES[$this->objectName];
 
-				if(!is_dir($this->m_UploadRoot.$this->m_UploadFolder))
+				if(!is_dir($this->uploadRoot.$this->uploadFolder))
 				{
-					mkdir($this->m_UploadRoot.$this->m_UploadFolder ,0777,true);
+					mkdir($this->uploadRoot.$this->uploadFolder ,0777,true);
 				}
-				if($this->m_UseRawName){
-					$uploadFile = $this->m_UploadFolder."/".$file['name'];
+				if($this->useRawName){
+					$uploadFile = $this->uploadFolder."/".$file['name'];
 				}else{
-					$uploadFile = $this->m_UploadFolder."/".date("YmdHis")."-".md5($file['name']);
+					$uploadFile = $this->uploadFolder."/".date("YmdHis")."-".md5($file['name']);
 				}
-				if($this->m_UploadFileType){
-					$pattern = "/".$this->m_UploadFileType."$/si";
+				if($this->uploadFileType){
+					$pattern = "/".$this->uploadFileType."$/si";
 					if(!preg_match($pattern,$file['name'])){
 						return;
 					}	                		                	
 				}
-				if(move_uploaded_file($file['tmp_name'], $this->m_UploadRoot.$uploadFile))
+				if(move_uploaded_file($file['tmp_name'], $this->uploadRoot.$uploadFile))
 				{
-					$this->value = $this->m_UploadRootURL.$uploadFile;
-					$this->m_Uploaded=true;
+					$this->value = $this->uploadRootURL.$uploadFile;
+					$this->uploaded=true;
 				}	                	                
 				return $uploadFile;		
 			}
@@ -141,7 +141,7 @@ class FileUploader extends FileInput
         $disabledStr = ($this->getEnabled() == "N") ? "disabled=\"true\"" : "";
         $style = $this->getStyle();
         $func = $this->getFunction();
-        $sHTML .= "<input type=\"file\" name='$this->objectName' id=\"" . $this->objectName ."\" value='$this->value' $disabledStr $this->m_HTMLAttr $style $func />        
+        $sHTML .= "<input type=\"file\" name='$this->objectName' id=\"" . $this->objectName ."\" value='$this->value' $disabledStr $this->htmlAttr $style $func />        
         			$delete_opt";
         return $sHTML;
     }    

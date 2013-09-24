@@ -2,7 +2,7 @@
 class InitializeGroupForm extends EasyForm
 {
 
-	protected $m_GroupDO = "system.do.GroupDO";
+	protected $groupDO = "system.do.GroupDO";
 	
 	public function Initialize()
 	{
@@ -17,11 +17,11 @@ class InitializeGroupForm extends EasyForm
 	        }
 	        catch (ValidationException $e)
 	        {
-	            $this->processFormObjError($e->m_Errors);
+	            $this->processFormObjError($e->errors);
 	            return;
 	        }
 	
-	        $groupDO = BizSystem::getObject($this->m_GroupDO);
+	        $groupDO = BizSystem::getObject($this->groupDO);
 	        //rename default group
 	        if((int)$recArr['rename_default_group']==1)
 	        {

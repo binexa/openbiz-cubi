@@ -24,7 +24,7 @@
  */
 class reportService extends MetaObject
 {
-    public $m_targetReportPath; // = "D:\\Tomcat5\\webapps\\birt-viewer\\report\\";
+    public $targetReportPath; // = "D:\\Tomcat5\\webapps\\birt-viewer\\report\\";
     public $m_rptTemplate; // = "dataobj.rptdesign.tpl";
     public $m_birtViewer; // = "http://localhost:8080/birt-viewer";
 
@@ -48,7 +48,7 @@ class reportService extends MetaObject
     protected function readMetadata(&$xmlArr)
     {
         parent::readMetaData($xmlArr);
-        $this->m_targetReportPath = isset($xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["TARGETREPORTPATH"]) ? $xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["TARGETREPORTPATH"] : null;
+        $this->targetReportPath = isset($xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["TARGETREPORTPATH"]) ? $xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["TARGETREPORTPATH"] : null;
         $this->m_rptTemplate = isset($xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["REPORTTEMPLATE"]) ? $xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["REPORTTEMPLATE"] : null;
         $this->m_birtViewer = isset($xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["BIRTVIEWER"]) ? $xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["BIRTVIEWER"] : null;
     }
@@ -65,15 +65,15 @@ class reportService extends MetaObject
         $bizform = BizSystem::getObject($objName);    // get the existing bizform object
         $bizobj = $bizform->getDataObj();
 
-        $h=opendir($this->m_targetReportPath);
+        $h=opendir($this->targetReportPath);
         if (!$h)
         {
-            echo "cannot read dir ".$this->m_targetReportPath;
+            echo "cannot read dir ".$this->targetReportPath;
             exit;
         }
         // create a tmp csv file for hold the data, then feed csv file to report engine
         $uid = $this->getUniqueString();
-        $tmpfname = $this->m_targetReportPath . $uid . ".csv";
+        $tmpfname = $this->targetReportPath . $uid . ".csv";
         //echo "csv file is at $tmpfname.<br>";
         $fp = fopen($tmpfname, 'w');
 
@@ -111,13 +111,13 @@ class reportService extends MetaObject
         // dataobj.rptdesign.tpl
         // $rpt_data_dir, $rpt_title, $rpt_csv_file, $rpt_fields[](name,type)
         $smarty = BizSystem::getSmartyTemplate();
-        $smarty->assign("rpt_data_dir", $this->m_targetReportPath);
-        $smarty->assign("rpt_title", $bizform->m_Title);
+        $smarty->assign("rpt_data_dir", $this->targetReportPath);
+        $smarty->assign("rpt_title", $bizform->title);
         $smarty->assign("rpt_csv_file", basename($tmpfname));
         $smarty->assign("rpt_fields", $rpt_fields);
         $reportContent = $smarty->fetch($this->m_rptTemplate);
 
-        $tmpRptDsgn = $this->m_targetReportPath . $uid . ".rptdesign";
+        $tmpRptDsgn = $this->targetReportPath . $uid . ".rptdesign";
         //echo "temp rpt design file is at $tmpRptDsgn.<br>";
         $fp = fopen($tmpRptDsgn, 'w');
         fwrite($fp, $reportContent);

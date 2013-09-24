@@ -27,7 +27,7 @@
 class CKEditor extends InputElement
 {
 	public $config;
-	public $m_Mode;
+	public $mode;
     /**
      * Read array meta data, and store to meta object
      *
@@ -37,7 +37,7 @@ class CKEditor extends InputElement
     protected function readMetaData(&$xmlArr)
     {
         parent::readMetaData($xmlArr);
-        $this->m_Mode = isset($xmlArr["ATTRIBUTES"]["MODE"]) ? $xmlArr["ATTRIBUTES"]["MODE"] : null;
+        $this->mode = isset($xmlArr["ATTRIBUTES"]["MODE"]) ? $xmlArr["ATTRIBUTES"]["MODE"] : null;
         $this->config = isset($xmlArr["ATTRIBUTES"]["CONFIG"]) ? $xmlArr["ATTRIBUTES"]["CONFIG"] : null;
     }
 
@@ -61,7 +61,7 @@ class CKEditor extends InputElement
         if(!strlen($value)>0) // fix suggested by smarques
             $value="&nbsp;";
 
-        $type = strtolower($this->m_Mode);
+        $type = strtolower($this->mode);
         $fileBrowserPage = OPENBIZ_APP_URL."/bin/filebrowser/browser.html";
 
         $languageCode = I18n::getCurrentLangCode();

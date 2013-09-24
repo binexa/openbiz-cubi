@@ -17,12 +17,12 @@ class MenuItemObj
  	public $recordParentId;   
     public $objectName;   
     public $objectDescription;
-    public $m_URL;
-    public $m_URL_Match;
-	public $m_Target;
+    public $url;
+    public $url_Match;
+	public $target;
 	public $cssClass;
-	public $m_IconImage;
-	public $m_IconCSSClass;
+	public $iconImage;
+	public $iconCSSClass;
 	public $childNodes = null;
 	 
     function __construct($xmlArr, $pid="0")
@@ -35,13 +35,13 @@ class MenuItemObj
         $this->recordId		 	 = $xmlArr["ATTRIBUTES"]["ID"];        
     	$this->objectName         = $xmlArr["ATTRIBUTES"]["NAME"];
         $this->objectDescription = $xmlArr["ATTRIBUTES"]["DESCRIPTION"];
-        $this->m_URL		 = $xmlArr["ATTRIBUTES"]["URL"];
-        $this->m_URL		 = Expression::evaluateExpression($this->m_URL, $this);
-        $this->m_URL_Match	 = $xmlArr["ATTRIBUTES"]["URLMATCH"];
-        $this->m_Target		 = $xmlArr["ATTRIBUTES"]["TARGET"];        
+        $this->url		 = $xmlArr["ATTRIBUTES"]["URL"];
+        $this->url		 = Expression::evaluateExpression($this->url, $this);
+        $this->url_Match	 = $xmlArr["ATTRIBUTES"]["URLMATCH"];
+        $this->target		 = $xmlArr["ATTRIBUTES"]["TARGET"];        
         $this->cssClass		 = $xmlArr["ATTRIBUTES"]["CSSCLASS"];
-        $this->m_IconImage		 = $xmlArr["ATTRIBUTES"]["ICONIMAGE"];
-        $this->m_IconCSSClass		 = $xmlArr["ATTRIBUTES"]["ICONCSSCLASS"];
+        $this->iconImage		 = $xmlArr["ATTRIBUTES"]["ICONIMAGE"];
+        $this->iconCSSClass		 = $xmlArr["ATTRIBUTES"]["ICONCSSCLASS"];
         if(is_array($xmlArr["MENUITEM"])){
         	$this->childNodes = array();
         	if(isset($xmlArr["MENUITEM"]["ATTRIBUTES"])){

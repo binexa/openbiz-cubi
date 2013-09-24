@@ -41,8 +41,8 @@ class ColumnImage extends ColumnText
      * 
      * @var string
      */
-    public $m_Title;
-    public $m_ImgUrl; // image url prefix to the image path
+    public $title;
+    public $imgUrl; // image url prefix to the image path
 
     /**
      * Read array meta data, and store to meta object
@@ -54,8 +54,8 @@ class ColumnImage extends ColumnText
     {
         parent::readMetaData($xmlArr);
         $this->alt = isset($xmlArr["ATTRIBUTES"]["ALT"]) ? $xmlArr["ATTRIBUTES"]["ALT"] : null;
-        $this->m_Title = isset($xmlArr["ATTRIBUTES"]["TITLE"]) ? $xmlArr["ATTRIBUTES"]["TITLE"] : null;
-        $this->m_ImgUrl = isset($xmlArr["ATTRIBUTES"]["IMGURL"]) ? $xmlArr["ATTRIBUTES"]["IMGURL"] : '';
+        $this->title = isset($xmlArr["ATTRIBUTES"]["TITLE"]) ? $xmlArr["ATTRIBUTES"]["TITLE"] : null;
+        $this->imgUrl = isset($xmlArr["ATTRIBUTES"]["IMGURL"]) ? $xmlArr["ATTRIBUTES"]["IMGURL"] : '';
     }
 
     /**
@@ -78,10 +78,10 @@ class ColumnImage extends ColumnText
      */
     protected function getTitle()
     {
-        if ($this->m_Title == null)
+        if ($this->title == null)
             return null;
         $formobj = $this->getFormObj();
-        return Expression::evaluateExpression($this->m_Title, $formobj);
+        return Expression::evaluateExpression($this->title, $formobj);
     }
 
     /**
@@ -93,7 +93,7 @@ class ColumnImage extends ColumnText
     {
     	if(!$this->getText())
     	{
-    		$val = ($this->m_ImgUrl) ? $this->m_ImgUrl.$this->value : $this->value;
+    		$val = ($this->imgUrl) ? $this->imgUrl.$this->value : $this->value;
     	}else{
     		if(preg_match("/\{OPENBIZ_RESOURCE_URL\}/si",$this->text)){
     			$val = $this->getText();

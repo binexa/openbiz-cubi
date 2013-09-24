@@ -31,13 +31,13 @@ class InputPassword extends Password
      * Mask character for hidden original/real value
      * @var string
      */
-    public $m_MaskChar='*';
+    public $maskChar='*';
 
     /**
      * length of mask character will be displayed
      * @var number
      */
-    public $m_MaskLength=6;
+    public $maskLength=6;
 
     /**
      * Real value of password
@@ -58,9 +58,9 @@ class InputPassword extends Password
         $this->cssErrorClass = isset($xmlArr["ATTRIBUTES"]["CSSERRORCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSERRORCLASS"] : $this->cssClass."_error";
         $this->m_cssFocusClass = isset($xmlArr["ATTRIBUTES"]["CSSFOCUSCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSFOCUSCLASS"] : $this->cssClass."_focus";
 
-        $this->m_MaskChar = isset($xmlArr["ATTRIBUTES"]["MASKCHAR"]) ? $xmlArr["ATTRIBUTES"]["MASKCHAR"] : $this->m_MaskChar;
-        $this->m_MaskLength = isset($xmlArr["ATTRIBUTES"]["MASKLENGTH"]) ? $xmlArr["ATTRIBUTES"]["MASKLENGTH"] : $this->m_MaskLength;
-        $this->m_PasswordMask = str_repeat($this->m_MaskChar, $this->m_MaskLength);
+        $this->maskChar = isset($xmlArr["ATTRIBUTES"]["MASKCHAR"]) ? $xmlArr["ATTRIBUTES"]["MASKCHAR"] : $this->maskChar;
+        $this->maskLength = isset($xmlArr["ATTRIBUTES"]["MASKLENGTH"]) ? $xmlArr["ATTRIBUTES"]["MASKLENGTH"] : $this->maskLength;
+        $this->passwordMask = str_repeat($this->maskChar, $this->maskLength);
     }
 
     /**
@@ -73,7 +73,7 @@ class InputPassword extends Password
         $value = $this->value;
         
         	$this->value_Real = $this->value;
-            $value = $this->m_PasswordMask;
+            $value = $this->passwordMask;
            
         
         $disabledStr = ($this->getEnabled() == "N") ? "DISABLED=\"true\"" : "";
@@ -81,16 +81,16 @@ class InputPassword extends Password
 
         $func = $this->getEnabled() == 'N' ? "" : $this->getFunction();		
         $formobj = $this->GetFormObj();
-        if($formobj->m_Errors[$this->objectName]){
+        if($formobj->errors[$this->objectName]){
 			$func .= "onchange=\"this.className='$this->cssClass'\"";
 		}else{
 			$func .= "onfocus=\"this.className='$this->m_cssFocusClass'\" onblur=\"this.className='$this->cssClass'\"";
 		} 
-        $sHTML = "<INPUT TYPE=\"PASSWORD\" NAME='$this->objectName' ID=\"" . $this->objectName ."\" VALUE='$value' $disabledStr $this->m_HTMLAttr $style $func />";
-    	if($this->m_Hint){
+        $sHTML = "<INPUT TYPE=\"PASSWORD\" NAME='$this->objectName' ID=\"" . $this->objectName ."\" VALUE='$value' $disabledStr $this->htmlAttr $style $func />";
+    	if($this->hint){
         	$sHTML.="<script>        	
         	\$j('#" . $this->objectName . "').tbHinter({
-				text: '".$this->m_Hint."',
+				text: '".$this->hint."',
 			});
         	</script>";
         }
@@ -108,11 +108,11 @@ class InputPassword extends Password
     	if($this->value==null){
     		$this->value = BizSystem::clientProxy()->getFormInputs($this->objectName);
     	}
-        if($this->value==$this->m_PasswordMask)
+        if($this->value==$this->passwordMask)
         {       	
     		$rawDataArr = $this->getFormObj()->getActiveRecord();
-    		$this->value_Real = $rawDataArr[$this->m_FieldName];
-    		$this->value = $rawDataArr[$this->m_FieldName];
+    		$this->value_Real = $rawDataArr[$this->fieldName];
+    		$this->value = $rawDataArr[$this->fieldName];
             return $this->value_Real;
         }
         else
@@ -129,7 +129,7 @@ class InputPassword extends Password
      */
     public function setValue($value)
     {
-        if($value==$this->m_PasswordMask)
+        if($value==$this->passwordMask)
         {
             $this->value = $this->value_Real;
         }

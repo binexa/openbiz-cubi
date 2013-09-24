@@ -29,7 +29,7 @@ include_once (OPENBIZ_PATH."/messages/validateService.msg");
 class validateService
 {
     protected $errorMessage = null;
-    protected $m_FieldNameMask = "%%FIELDNAME%%";
+    protected $fieldNameMask = "%%FIELDNAME%%";
 
     /**
      * Initialize reportService with xml array metadata
@@ -78,7 +78,7 @@ class validateService
         }
         if (!$result)
         {
-            $this->errorMessage= BizSystem::getMessage("VALIDATESVC_SHORTER_THAN",array($this->m_FieldNameMask,$max));
+            $this->errorMessage= BizSystem::getMessage("VALIDATESVC_SHORTER_THAN",array($this->fieldNameMask,$max));
         }
         return $result;
     }
@@ -117,7 +117,7 @@ class validateService
         }
         if (!$result)
         {
-            $this->errorMessage= BizSystem::getMessage("VALIDATESVC_BETWEEN_LENGTH",array($this->m_FieldNameMask,$min,$max));
+            $this->errorMessage= BizSystem::getMessage("VALIDATESVC_BETWEEN_LENGTH",array($this->fieldNameMask,$min,$max));
         }
         return $result;
     }
@@ -149,7 +149,7 @@ class validateService
         }
         if (!$result)
         {
-            $this->errorMessage= BizSystem::getMessage("VALIDATESVC_LONGER_THAN",array($this->m_FieldNameMask,$min));
+            $this->errorMessage= BizSystem::getMessage("VALIDATESVC_LONGER_THAN",array($this->fieldNameMask,$min));
         }
         return $result;
     }
@@ -171,7 +171,7 @@ class validateService
         $result = $validator->isValid($value);
         if(!$result)
         {
-            $this->errorMessage= BizSystem::getMessage("VALIDATESVC_LESS_THAN",array($this->m_FieldNameMask,$max));
+            $this->errorMessage= BizSystem::getMessage("VALIDATESVC_LESS_THAN",array($this->fieldNameMask,$max));
         }
         return $result;
     }
@@ -191,7 +191,7 @@ class validateService
         $result = $validator->isValid($value);
         if(!$result)
         {
-            $this->errorMessage= BizSystem::getMessage("VALIDATESVC_PASSWORD_NOT_STRONG",array($this->m_FieldNameMask));
+            $this->errorMessage= BizSystem::getMessage("VALIDATESVC_PASSWORD_NOT_STRONG",array($this->fieldNameMask));
         }
         return $result;
     }
@@ -213,7 +213,7 @@ class validateService
         $result = $validator->isValid($value);
         if(!$result)
         {
-            $this->errorMessage= BizSystem::getMessage("VALIDATESVC_GREATER_THAN",array($this->m_FieldNameMask, $min));
+            $this->errorMessage= BizSystem::getMessage("VALIDATESVC_GREATER_THAN",array($this->fieldNameMask, $min));
         }
         return $result;
     }
@@ -236,7 +236,7 @@ class validateService
         $result = $validator->isValid($value);
         if(!$result)
         {
-            $this->errorMessage= BizSystem::getMessage("VALIDATESVC_BETWEEN",array($this->m_FieldNameMask ,$min, $max));
+            $this->errorMessage= BizSystem::getMessage("VALIDATESVC_BETWEEN",array($this->fieldNameMask ,$min, $max));
         }
         return $result;
     }
@@ -265,7 +265,7 @@ class validateService
 		};
         if(!$result)
         {
-            $this->errorMessage= BizSystem::getMessage("VALIDATESVC_EMAIL_INVALID",array($this->m_FieldNameMask));
+            $this->errorMessage= BizSystem::getMessage("VALIDATESVC_EMAIL_INVALID",array($this->fieldNameMask));
         }
         return $result;
     }
@@ -284,7 +284,7 @@ class validateService
         $result = $validator->isValid($date);
         if(!$result)
         {
-            $this->errorMessage = BizSystem::getMessage("VALIDATESVC_DATE_INVALID",array($this->m_FieldNameMask));
+            $this->errorMessage = BizSystem::getMessage("VALIDATESVC_DATE_INVALID",array($this->fieldNameMask));
         }
         return $result;
     }
@@ -303,7 +303,7 @@ class validateService
         $result = $validator->isValid($phone);
         if(!$result)
         {
-            $this->errorMessage= BizSystem::getMessage("VALIDATESVC_PHONE_INVALID",array($this->m_FieldNameMask));
+            $this->errorMessage= BizSystem::getMessage("VALIDATESVC_PHONE_INVALID",array($this->fieldNameMask));
         }
         return $result;
     }
@@ -322,7 +322,7 @@ class validateService
         $result = $validator->isValid($zip);
         if(!$result)
         {
-            $this->errorMessage= BizSystem::getMessage("VALIDATESVC_ZIP_INVALID",array($this->m_FieldNameMask));
+            $this->errorMessage= BizSystem::getMessage("VALIDATESVC_ZIP_INVALID",array($this->fieldNameMask));
         }
         return $result;
     }
@@ -341,7 +341,7 @@ class validateService
         $result = $validator->isValid($social);
         if(!$result)
         {
-            $this->errorMessage= BizSystem::getMessage("VALIDATESVC_SOCIAL_INVALID",array($this->m_FieldNameMask));
+            $this->errorMessage= BizSystem::getMessage("VALIDATESVC_SOCIAL_INVALID",array($this->fieldNameMask));
         }
         return $result;
     }
@@ -360,7 +360,7 @@ class validateService
         $result = $validator->isValid($credit);
         if(!$result)
         {
-            $this->errorMessage= BizSystem::getMessage("VALIDATESVC_CREDIT_INVALID",array($this->m_FieldNameMask));
+            $this->errorMessage= BizSystem::getMessage("VALIDATESVC_CREDIT_INVALID",array($this->fieldNameMask));
         }
         return $result;
     }
@@ -379,7 +379,7 @@ class validateService
         $result = $validator->isValid($street);
         if(!$result)
         {
-            $this->errorMessage= BizSystem::getMessage("VALIDATESVC_STREET_INVALID",array($this->m_FieldNameMask));
+            $this->errorMessage= BizSystem::getMessage("VALIDATESVC_STREET_INVALID",array($this->fieldNameMask));
         }
         return $result;
     }
@@ -397,7 +397,7 @@ class validateService
         {
             if($fieldName != "")
             {
-                $this->errorMessage = str_replace($this->m_FieldNameMask,
+                $this->errorMessage = str_replace($this->fieldNameMask,
                         $fieldName,
                         $this->errorMessage);
             }

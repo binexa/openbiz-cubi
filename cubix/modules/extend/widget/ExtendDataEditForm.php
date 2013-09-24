@@ -13,15 +13,15 @@
 
 class ExtendDataEditForm extends EasyForm
 {
-	protected $m_ExtendSettingDO 			= "extend.do.ExtendSettingDO";
-	protected $m_ExtendSettingTranslationDO = "extend.do.ExtendSettingTranslationDO";
-	protected $m_ExtendSettingOptionDO 		= "extend.do.ExtendSettingOptionDO";
+	protected $extendSettingDO 			= "extend.do.ExtendSettingDO";
+	protected $extendSettingTranslationDO = "extend.do.ExtendSettingTranslationDO";
+	protected $extendSettingOptionDO 		= "extend.do.ExtendSettingOptionDO";
 	
 
 	
 	public function getExtendData()
 	{
-		$prtRec = BizSystem::getObject($this->m_ParentFormName)->getActiveRecord();		
+		$prtRec = BizSystem::getObject($this->parentFormName)->getActiveRecord();		
 		$record_id = (int)$prtRec['Id'];		
 		$do = BizSystem::getObject($this->getDataObj()->objectName,1);
 		$searchRule = $this->getSettingSearchRule();
@@ -56,7 +56,7 @@ class ExtendDataEditForm extends EasyForm
 			return $this->searchRule;
 		}
 		
-		$prtFormObj = BizSystem::getObject($this->m_ParentFormName);
+		$prtFormObj = BizSystem::getObject($this->parentFormName);
 		$elem_name = $prtFormObj->dataPanel->getByField($column_name)->objectName;		
 		$type_id = BizSystem::ClientProxy()->getFormInputs($elem_name);
 		if (!$type_id && $elem_name) {
@@ -91,7 +91,7 @@ class ExtendDataEditForm extends EasyForm
 	public function configDataPanel($translate=true)
 	{
 		$searchRule = $this->getSettingSearchRule();
-		$fieldsDO = BizSystem::getObject($this->m_ExtendSettingDO,1);
+		$fieldsDO = BizSystem::getObject($this->extendSettingDO,1);
 		$fieldRecs = $fieldsDO->directfetch($searchRule);
 		
 		if(!$fieldRecs->count()){
@@ -114,7 +114,7 @@ class ExtendDataEditForm extends EasyForm
 			);
 			
 			if($field['options']){
-				$elemArr['SELECTFROM']= $this->m_ExtendSettingOptionDO."[text:value],[setting_id]='".$field['Id']."' AND [lang]='' ";
+				$elemArr['SELECTFROM']= $this->extendSettingOptionDO."[text:value],[setting_id]='".$field['Id']."' AND [lang]='' ";
 			}
 			
 			if($translate){
@@ -154,7 +154,7 @@ class ExtendDataEditForm extends EasyForm
 	{		
 		
 		$searchRule = $this->searchRule;
-		$fieldsDO = BizSystem::getObject($this->m_ExtendSettingDO,1);
+		$fieldsDO = BizSystem::getObject($this->extendSettingDO,1);
 		$fieldRecs = $fieldsDO->directfetch($searchRule);
 		
 		if(!$fieldRecs->count()){
@@ -179,11 +179,11 @@ class ExtendDataEditForm extends EasyForm
 			|| $_GET['P1']==''){
 			return;
 		}
-		if(!$this->m_ParentFormName)
+		if(!$this->parentFormName)
 		{
 			return ;
 		}
-		if($this->m_Saved)
+		if($this->saved)
 		{
 			return ;
 		}
@@ -196,11 +196,11 @@ class ExtendDataEditForm extends EasyForm
 		$column_name	= $do->association['Column'];
 		$column_value	= $do->association['FieldRefVal']; 
 				
-		$elem_name = BizSystem::getObject($this->m_ParentFormName)->dataPanel->getByField($column_name)->objectName;
+		$elem_name = BizSystem::getObject($this->parentFormName)->dataPanel->getByField($column_name)->objectName;
 		if($elem_name){
 			$column_value = BizSystem::ClientProxy()->getFormInputs($elem_name);
 		}
-		$record_id = BizSystem::getObject($this->m_ParentFormName)->recordId;
+		$record_id = BizSystem::getObject($this->parentFormName)->recordId;
 		
 		$recArr[$cond_column] = $cond_value;
 		$recArr[$column_name] = $column_value;
@@ -214,12 +214,12 @@ class ExtendDataEditForm extends EasyForm
 		}else{		
 			$extendId = $this->getDataObj()->insertRecord($recArr);			
 		}
-		$this->m_Saved = true;
+		$this->saved = true;
 		
 		//if installed changelog then save change log
 		
 		if(BizSystem::getService("system.lib.ModuleService")->isModuleInstalled("changelog")){
-			$formObj = BizSystem::getObject($this->m_ParentFormName);
+			$formObj = BizSystem::getObject($this->parentFormName);
 			$panel = new Panel($this->configDataPanel($translate = false),"",$this);
 			if(!is_array($oldRec)){
 				$outputRecord = array();

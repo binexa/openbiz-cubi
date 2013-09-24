@@ -22,7 +22,7 @@ class DataSharingForm extends EasyForm
     {
 
         if ($id) {
-            $this->m_ParentRecordId = $id;
+            $this->parentRecordId = $id;
         }
         return;
     }
@@ -34,7 +34,7 @@ class DataSharingForm extends EasyForm
         }
 
 
-        $prtForm = $this->m_ParentFormName;
+        $prtForm = $this->parentFormName;
         $prtFormObj = BizSystem::GetObject($prtForm);
         if (!$prtForm) {
             return array();
@@ -42,7 +42,7 @@ class DataSharingForm extends EasyForm
 
         $this->SetPrtRecordId($this->recordId);
 
-        $recId = $this->m_ParentRecordId;
+        $recId = $this->parentRecordId;
         $dataObj = $prtFormObj->getDataObj();
         $dataRec = $dataObj->fetchById($recId);
 
@@ -117,7 +117,7 @@ class DataSharingForm extends EasyForm
         $result['creator_name'] = $this->_getOwnerName($dataRec['create_by']);
         $result['hasOwnerField'] = (int) $this->hasOwnerField;
 
-        $result['form_title'] = $prtFormObj->m_Title;
+        $result['form_title'] = $prtFormObj->title;
         $result['action_timestamp'] = date("Y-m-d H:i:s");
         $result['refer_url'] = SITE_URL;
 
@@ -130,7 +130,7 @@ class DataSharingForm extends EasyForm
             $result['has_ref_data'] = 0;
         }
         $this->recordId = $result['Id'];
-        $this->m_ParentRecordId = $result['Id'];
+        $this->parentRecordId = $result['Id'];
         //$this->setActiveRecord($result);
         if (BizSystem::allowUserAccess("data_manage.manage")) {
             $result['editable'] = 1;
@@ -154,12 +154,12 @@ class DataSharingForm extends EasyForm
 
     public function ShareRecord()
     {
-        $prtForm = $this->m_ParentFormName;
+        $prtForm = $this->parentFormName;
         if (!$prtForm) {
             return;
         }
         $prtFormObj = BizSystem::GetObject($prtForm);
-        $recId = $this->m_ParentRecordId;
+        $recId = $this->parentRecordId;
         $dataObj = $prtFormObj->getDataObj();
         $dataRec = $dataObj->fetchById($recId);
 
@@ -235,7 +235,7 @@ class DataSharingForm extends EasyForm
         $elem_mapping = array();
         foreach ($postFields as $elem_name => $value) {
             $elem = $this->dataPanel->get($elem_name);
-            $fld_name = $elem->m_FieldName;
+            $fld_name = $elem->fieldName;
             if ($elem) {
                 $elem_mapping[$fld_name] = $elem;
             }
@@ -263,15 +263,15 @@ class DataSharingForm extends EasyForm
                 if ($oldVal === null || $fldVal === null)
                     continue;
 
-                $elem = $elem_mapping[$fldName]->m_XMLMeta;
+                $elem = $elem_mapping[$fldName]->xmlMeta;
                 if (!$elem) {
-                    $elem = $this->dataPanel->getByField($fldName)->m_XMLMeta;
+                    $elem = $this->dataPanel->getByField($fldName)->xmlMeta;
                 }
                 $logRecord[$fldName] = array('old' => $oldVal, 'new' => $fldVal, 'element' => $elem);
             }
             $formMetaLite = array(
                 "name" => $this->objectName,
-                "package" => $this->m_Package,
+                "package" => $this->package,
                 "message_file" => $this->messageFile,
             );
 
@@ -293,7 +293,7 @@ class DataSharingForm extends EasyForm
         }
 
 
-        if ($this->m_ParentFormName) {
+        if ($this->parentFormName) {
             $this->close();
             $this->renderParent();
         }
@@ -359,7 +359,7 @@ class DataSharingForm extends EasyForm
 
     private function _hasOwnerField()
     {
-        $prtForm = $this->m_ParentFormName;
+        $prtForm = $this->parentFormName;
         $prtFormObj = BizSystem::GetObject($prtForm);
         $field = $prtFormObj->getDataObj()->getField('owner_id');
         if ($field) {
@@ -371,15 +371,15 @@ class DataSharingForm extends EasyForm
 
     public function loadSessionVars($sessionContext)
     {
-        $sessionContext->getObjVar("DataSharingForm", "ParentRecordId", $this->m_ParentRecordId);
-        $sessionContext->getObjVar("DataSharingForm", "ParentFormName", $this->m_ParentFormName);
+        $sessionContext->getObjVar("DataSharingForm", "ParentRecordId", $this->parentRecordId);
+        $sessionContext->getObjVar("DataSharingForm", "ParentFormName", $this->parentFormName);
         return parent::loadSessionVars($sessionContext);
     }
 
     public function saveSessionVars($sessionContext)
     {
-        $sessionContext->setObjVar("DataSharingForm", "ParentRecordId", $this->m_ParentRecordId);
-        $sessionContext->setObjVar("DataSharingForm", "ParentFormName", $this->m_ParentFormName);
+        $sessionContext->setObjVar("DataSharingForm", "ParentRecordId", $this->parentRecordId);
+        $sessionContext->setObjVar("DataSharingForm", "ParentFormName", $this->parentFormName);
         return parent::saveSessionVars($sessionContext);
     }
 

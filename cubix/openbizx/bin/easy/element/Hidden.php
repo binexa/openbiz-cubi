@@ -35,7 +35,7 @@ class Hidden extends Element
     protected function readMetaData(&$xmlArr)
     {
         parent::readMetaData($xmlArr);
-        $this->m_FieldName = isset($xmlArr["ATTRIBUTES"]["FIELDNAME"]) ? $xmlArr["ATTRIBUTES"]["FIELDNAME"] : null;
+        $this->fieldName = isset($xmlArr["ATTRIBUTES"]["FIELDNAME"]) ? $xmlArr["ATTRIBUTES"]["FIELDNAME"] : null;
     }
 
     /**
@@ -51,7 +51,7 @@ class Hidden extends Element
     		$value = $this->getText();
     	} 
         
-    	$sHTML = "<INPUT TYPE=HIDDEN NAME='$this->objectName' ID=\"" . $this->objectName ."\" VALUE='$value' $this->m_HTMLAttr />";
+    	$sHTML = "<INPUT TYPE=HIDDEN NAME='$this->objectName' ID=\"" . $this->objectName ."\" VALUE='$value' $this->htmlAttr />";
         return $sHTML;
     }
 

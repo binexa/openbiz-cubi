@@ -27,7 +27,7 @@
 class PageSelector extends DropDownList
 {
 
-	protected $m_FormPrefix = true; 
+	protected $formPrefix = true; 
     public function getList(){
     	$formobj=$this->getFormObj();
     	$list=array();

@@ -56,20 +56,20 @@ class PreferenceForm extends EasyForm
         }
         catch (ValidationException $e)
         {
-            $this->processFormObjError($e->m_Errors);
+            $this->processFormObjError($e->errors);
             return;
         }
 		
         
         foreach ($this->dataPanel as $element)
         {
-            $value = $recArr[$element->m_FieldName];
+            $value = $recArr[$element->fieldName];
             if ($value === null){ 
             	continue;
             } 
             
-            if(substr($element->m_FieldName,0,1)=='_'){
-	           	$name = substr($element->m_FieldName,1);
+            if(substr($element->fieldName,0,1)=='_'){
+	           	$name = substr($element->fieldName,1);
 	            //update default app_init setting
 	            $config_file = OPENBIZ_APP_PATH.'/bin/app_init.php';
 	            switch($name){
@@ -94,7 +94,7 @@ class PreferenceForm extends EasyForm
        	
 	            		            	
         // in case of popup form, close it, then rerender the parent form
-        if ($this->m_ParentFormName)
+        if ($this->parentFormName)
         {
             $this->close();
             $this->renderParent();

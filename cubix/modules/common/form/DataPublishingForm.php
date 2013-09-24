@@ -16,7 +16,7 @@ class DataPublishingForm extends  DataSharingForm
 {
 	public function ShareRecord()
 	{
-		$prtForm = $this->m_ParentFormName;
+		$prtForm = $this->parentFormName;
 		$prtFormObj = BizSystem::GetObject($prtForm);
 		$recId = $this->recordId;
 		$dataObj = $prtFormObj->getDataObj();
@@ -93,7 +93,7 @@ class DataPublishingForm extends  DataSharingForm
 			}			
 		}
 		
-		if ($this->m_ParentFormName)
+		if ($this->parentFormName)
         {
             $this->close();
             $this->renderParent();

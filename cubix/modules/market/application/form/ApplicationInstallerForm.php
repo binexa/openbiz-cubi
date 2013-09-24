@@ -14,13 +14,13 @@
 class ApplicationInstallerForm extends EasyForm 
 { 
 	
-	public $m_InstallState = false;
-	public $m_InstallStateStr;
+	public $installState = false;
+	public $installStateStr;
 	public $m_hasUpagrade = false;
 	public $appIcon;
 	public $appReleaseDate;
 	
-	public $m_InstallDO = "market.installed.do.InstalledDO";
+	public $installDO = "market.installed.do.InstalledDO";
 	
     public function validateRequest($methodName)
     {
@@ -34,7 +34,7 @@ class ApplicationInstallerForm extends EasyForm
     	$result = parent::outputAttrs();
     	$result['remote_icon'] = $this->appIcon;
     	$result['release_date'] = $this->appReleaseDate;
-    	$result['install_state'] = $this->m_InstallStateStr;
+    	$result['install_state'] = $this->installStateStr;
     	return $result;
     }
 
@@ -54,7 +54,7 @@ class ApplicationInstallerForm extends EasyForm
     	 
     	
     	
-    	$installRec = BizSystem::getObject($this->m_InstallDO)->fetchOne("[app_id]='$app_id'");
+    	$installRec = BizSystem::getObject($this->installDO)->fetchOne("[app_id]='$app_id'");
     	if($installRec)
     	{
     		foreach($installRec as $key=>$value)
@@ -90,7 +90,7 @@ class ApplicationInstallerForm extends EasyForm
     	$result['install_state'] = $result['install_state'] ? $result['install_state'] : "Not start yet";
         $log = $result['install_log'] ? $result['install_log'] : "Click install button to start.";
 
-        $this->m_InstallState = $this->getInstallState($repo_uri,$app_id);
+        $this->installState = $this->getInstallState($repo_uri,$app_id);
         $this->m_hasUpagrade = $this->hasUpgrade($repo_uri,$app_id);
         if($this->m_hasUpagrade)
         {
@@ -99,7 +99,7 @@ class ApplicationInstallerForm extends EasyForm
     		$result['install_state'] = 'Waiting';
     		$result['install_log'] = 'Click upgrade button to start';
         }
-        $this->m_InstallStateStr = $result['install_state'] ;
+        $this->installStateStr = $result['install_state'] ;
         
     	return $result ;
     	

@@ -24,13 +24,13 @@
  */
 class ObjReference extends MetaObject
 {
-    public $m_Relationship;
+    public $relationship;
     /**
      * Table name
      *
      * @var string
      */
-    public $m_Table;
+    public $table;
     /**
      * Column name
      *
@@ -43,21 +43,21 @@ class ObjReference extends MetaObject
      *
      * @var string
      */
-    public $m_FieldRef;
-    public $m_FieldRef2;
-    public $m_XTable;
-    public $m_XColumn1;
-    public $m_XColumn2;
-    public $m_XKeyColumn;   // may not be used any more due to XDataObj
-    public $m_XDataObj;
+    public $fieldRef;
+    public $fieldRef2;
+    public $xTable;
+    public $xColumn1;
+    public $xColumn2;
+    public $xKeyColumn;   // may not be used any more due to XDataObj
+    public $xDataObj;
     /**
      * Is cascade action
      *
      * @var boolean
      */
     public $cascadeDelete=false;
-    public $m_OnDelete;
-    public $m_OnUpdate;
+    public $onDelete;
+    public $onUpdate;
     
     public $condField;
     public $condValue;
@@ -74,29 +74,29 @@ class ObjReference extends MetaObject
     function __construct(&$xmlArr, $bizObj)
     {
         $this->objectName = isset($xmlArr["ATTRIBUTES"]["NAME"]) ? $xmlArr["ATTRIBUTES"]["NAME"] : null;
-        $this->m_Package = $bizObj->m_Package;
+        $this->package = $bizObj->package;
         $this->objectDescription= isset($xmlArr["ATTRIBUTES"]["DESCRIPTION"]) ? $xmlArr["ATTRIBUTES"]["DESCRIPTION"] : null;
-        $this->m_Relationship = isset($xmlArr["ATTRIBUTES"]["RELATIONSHIP"]) ? $xmlArr["ATTRIBUTES"]["RELATIONSHIP"] : null;
-        $this->m_Table = isset($xmlArr["ATTRIBUTES"]["TABLE"]) ? $xmlArr["ATTRIBUTES"]["TABLE"] : null;
+        $this->relationship = isset($xmlArr["ATTRIBUTES"]["RELATIONSHIP"]) ? $xmlArr["ATTRIBUTES"]["RELATIONSHIP"] : null;
+        $this->table = isset($xmlArr["ATTRIBUTES"]["TABLE"]) ? $xmlArr["ATTRIBUTES"]["TABLE"] : null;
         $this->column = isset($xmlArr["ATTRIBUTES"]["COLUMN"]) ? $xmlArr["ATTRIBUTES"]["COLUMN"] : null;
-        $this->m_FieldRef = isset($xmlArr["ATTRIBUTES"]["FIELDREF"]) ? $xmlArr["ATTRIBUTES"]["FIELDREF"] : null;
+        $this->fieldRef = isset($xmlArr["ATTRIBUTES"]["FIELDREF"]) ? $xmlArr["ATTRIBUTES"]["FIELDREF"] : null;
         $this->column2 = isset($xmlArr["ATTRIBUTES"]["COLUMN2"]) ? $xmlArr["ATTRIBUTES"]["COLUMN2"] : null;
-        $this->m_FieldRef2 = isset($xmlArr["ATTRIBUTES"]["FIELDREF2"]) ? $xmlArr["ATTRIBUTES"]["FIELDREF2"] : null;
+        $this->fieldRef2 = isset($xmlArr["ATTRIBUTES"]["FIELDREF2"]) ? $xmlArr["ATTRIBUTES"]["FIELDREF2"] : null;
         $this->cascadeDelete = (isset($xmlArr["ATTRIBUTES"]["CASCADEDELETE"]) && $xmlArr["ATTRIBUTES"]["CASCADEDELETE"] == "Y");
-        $this->m_OnDelete = isset($xmlArr["ATTRIBUTES"]["ONDELETE"]) ? $xmlArr["ATTRIBUTES"]["ONDELETE"] : null;
-        $this->m_OnUpdate = isset($xmlArr["ATTRIBUTES"]["ONUPDATE"]) ? $xmlArr["ATTRIBUTES"]["ONUPDATE"] : null;
+        $this->onDelete = isset($xmlArr["ATTRIBUTES"]["ONDELETE"]) ? $xmlArr["ATTRIBUTES"]["ONDELETE"] : null;
+        $this->onUpdate = isset($xmlArr["ATTRIBUTES"]["ONUPDATE"]) ? $xmlArr["ATTRIBUTES"]["ONUPDATE"] : null;
         $this->condColumn = isset($xmlArr["ATTRIBUTES"]["CONDCOLUMN"]) ? $xmlArr["ATTRIBUTES"]["CONDCOLUMN"] : null;
         $this->condValue = isset($xmlArr["ATTRIBUTES"]["CONDVALUE"]) ? $xmlArr["ATTRIBUTES"]["CONDVALUE"] : null;
         $this->condition = isset($xmlArr["ATTRIBUTES"]["CONDITION"]) ? $xmlArr["ATTRIBUTES"]["CONDITION"] : null;
-        if ($this->cascadeDelete) $this->m_OnDelete = "Cascade";
-        if ($this->m_Relationship == "M-M" || $this->m_Relationship == "Self-Self")
+        if ($this->cascadeDelete) $this->onDelete = "Cascade";
+        if ($this->relationship == "M-M" || $this->relationship == "Self-Self")
         {
-            $this->m_XTable = isset($xmlArr["ATTRIBUTES"]["XTABLE"]) ? $xmlArr["ATTRIBUTES"]["XTABLE"] : null;
-            $this->m_XColumn1 = isset($xmlArr["ATTRIBUTES"]["XCOLUMN1"]) ? $xmlArr["ATTRIBUTES"]["XCOLUMN1"] : null;
-            $this->m_XColumn2 = isset($xmlArr["ATTRIBUTES"]["XCOLUMN2"]) ? $xmlArr["ATTRIBUTES"]["XCOLUMN2"] : null;
-            $this->m_XKeyColumn = isset($xmlArr["ATTRIBUTES"]["XKEYCOLUMN"]) ? $xmlArr["ATTRIBUTES"]["XKEYCOLUMN"] : null;
-            $this->m_XDataObj = isset($xmlArr["ATTRIBUTES"]["XDATAOBJ"]) ? $xmlArr["ATTRIBUTES"]["XDATAOBJ"] : null;
-            $this->m_XDataObj = $this->prefixPackage($this->m_XDataObj);
+            $this->xTable = isset($xmlArr["ATTRIBUTES"]["XTABLE"]) ? $xmlArr["ATTRIBUTES"]["XTABLE"] : null;
+            $this->xColumn1 = isset($xmlArr["ATTRIBUTES"]["XCOLUMN1"]) ? $xmlArr["ATTRIBUTES"]["XCOLUMN1"] : null;
+            $this->xColumn2 = isset($xmlArr["ATTRIBUTES"]["XCOLUMN2"]) ? $xmlArr["ATTRIBUTES"]["XCOLUMN2"] : null;
+            $this->xKeyColumn = isset($xmlArr["ATTRIBUTES"]["XKEYCOLUMN"]) ? $xmlArr["ATTRIBUTES"]["XKEYCOLUMN"] : null;
+            $this->xDataObj = isset($xmlArr["ATTRIBUTES"]["XDATAOBJ"]) ? $xmlArr["ATTRIBUTES"]["XDATAOBJ"] : null;
+            $this->xDataObj = $this->prefixPackage($this->xDataObj);
         }
         //$this->association = @$xmlArr["ATTRIBUTES"]["ASSOCIATION"];
 

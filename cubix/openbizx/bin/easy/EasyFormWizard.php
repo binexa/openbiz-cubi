@@ -31,7 +31,7 @@ class EasyFormWizard extends EasyForm
      *
      * @var Panel
      */
-    public $m_WizardPanel;    
+    public $wizardPanel;    
     
     /**
      * Get/Retrieve Session data of this object
@@ -43,14 +43,14 @@ class EasyFormWizard extends EasyForm
     {
     	parent::loadSessionVars($sessionContext);
         $sessionContext->getObjVar($this->objectName, "ActiveRecord", $this->activeRecord, true);
-        $sessionContext->getObjVar($this->objectName, "FormInputs", $this->m_FormInputs, true);
+        $sessionContext->getObjVar($this->objectName, "FormInputs", $this->formInputs, true);
         $this->setActiveRecord($this->activeRecord);
     }
 
  	protected function readMetadata(&$xmlArr)
     {
         parent::readMetaData($xmlArr);        
-        $this->m_WizardPanel = new Panel($xmlArr["EASYFORM"]["WIZARDPANEL"]["ELEMENT"],"",$this);
+        $this->wizardPanel = new Panel($xmlArr["EASYFORM"]["WIZARDPANEL"]["ELEMENT"],"",$this);
     }    
     
     /**
@@ -66,7 +66,7 @@ class EasyFormWizard extends EasyForm
         else {
         	parent::saveSessionVars($sessionContext);
             $sessionContext->setObjVar($this->objectName, "ActiveRecord", $this->activeRecord, true);
-            $sessionContext->setObjVar($this->objectName, "FormInputs", $this->m_FormInputs, true);
+            $sessionContext->setObjVar($this->objectName, "FormInputs", $this->formInputs, true);
         }
     }
 
@@ -89,7 +89,7 @@ class EasyFormWizard extends EasyForm
             return;
         }catch (ValidationException $e)
         {
-            $this->processFormObjError($e->m_Errors);
+            $this->processFormObjError($e->errors);
             return;
         }
 
@@ -170,7 +170,7 @@ class EasyFormWizard extends EasyForm
         // call ValidateForm()
         $recArr = $this->readInputRecord();
         $this->setActiveRecord($recArr);                
-    	$this->setFormInputs($this->m_FormInputs);
+    	$this->setFormInputs($this->formInputs);
     	
    		 try
         {
@@ -178,7 +178,7 @@ class EasyFormWizard extends EasyForm
             return;
         }catch (ValidationException $e)
         {                    	
-        	$this->processFormObjError($e->m_Errors);
+        	$this->processFormObjError($e->errors);
             return;
         }
 
@@ -282,11 +282,11 @@ class EasyFormWizard extends EasyForm
         $output = parent::outputAttrs();
         $viewobj = $this->getViewObject();
         $forms = array();
-        $viewobj->m_FormRefs->rewind();
-        while($viewobj->m_FormRefs->valid()){
-        	$form=$viewobj->m_FormRefs->current();
+        $viewobj->formRefs->rewind();
+        while($viewobj->formRefs->valid()){
+        	$form=$viewobj->formRefs->current();
         	$forms[$form->objectName] = $form;
-        	$viewobj->m_FormRefs->next();
+        	$viewobj->formRefs->next();
         }        
         $output['forms'] = $forms;                
         $output['step'] = $viewobj->getCurrentStep();        

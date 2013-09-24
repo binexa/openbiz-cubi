@@ -16,13 +16,13 @@ include_once OPENBIZ_APP_MODULE_PATH . DIRECTORY_SEPARATOR . 'menu' . DIRECTORY_
 class MenuWidget extends MetaObject implements iUIControl
 {
 
-    public $m_Title;
+    public $title;
     public $objectDescription;
-    public $m_StartMenuItem;
-    public $m_StartMenuID;
+    public $startMenuItem;
+    public $startMenuID;
     public $searchRule;
-    public $m_GlobalSearchRule;
-    public $m_MenuDeep;
+    public $globalSearchRule;
+    public $menuDeep;
     public $templateEngine;
     public $templateFile;
     public $dataObjName;
@@ -40,16 +40,16 @@ class MenuWidget extends MetaObject implements iUIControl
     {
         parent::readMetaData($xmlArr);
         $this->objectName = $this->prefixPackage($this->objectName);
-        $this->m_Title = isset($xmlArr["MENUWIDGET"]["ATTRIBUTES"]["TITLE"]) ? $xmlArr["MENUWIDGET"]["ATTRIBUTES"]["TITLE"] : null;
+        $this->title = isset($xmlArr["MENUWIDGET"]["ATTRIBUTES"]["TITLE"]) ? $xmlArr["MENUWIDGET"]["ATTRIBUTES"]["TITLE"] : null;
         $this->objectDescription = isset($xmlArr["MENUWIDGET"]["ATTRIBUTES"]["DESCRIPTION"]) ? $xmlArr["MENUWIDGET"]["ATTRIBUTES"]["DESCRIPTION"] : null;
         $this->cssClass = isset($xmlArr["MENUWIDGET"]["ATTRIBUTES"]["CSSCLASS"]) ? $xmlArr["MENUWIDGET"]["ATTRIBUTES"]["CSSCLASS"] : null;
         $this->templateEngine = isset($xmlArr["MENUWIDGET"]["ATTRIBUTES"]["TEMPLATEENGINE"]) ? $xmlArr["MENUWIDGET"]["ATTRIBUTES"]["TEMPLATEENGINE"] : null;
         $this->templateFile = isset($xmlArr["MENUWIDGET"]["ATTRIBUTES"]["TEMPLATEFILE"]) ? $xmlArr["MENUWIDGET"]["ATTRIBUTES"]["TEMPLATEFILE"] : null;
-        $this->m_StartMenuItem = isset($xmlArr["MENUWIDGET"]["ATTRIBUTES"]["STARTMENUITEM"]) ? $xmlArr["MENUWIDGET"]["ATTRIBUTES"]["STARTMENUITEM"] : null;
-        $this->m_StartMenuID = isset($xmlArr["MENUWIDGET"]["ATTRIBUTES"]["STARTMENUID"]) ? $xmlArr["MENUWIDGET"]["ATTRIBUTES"]["STARTMENUID"] : null;
+        $this->startMenuItem = isset($xmlArr["MENUWIDGET"]["ATTRIBUTES"]["STARTMENUITEM"]) ? $xmlArr["MENUWIDGET"]["ATTRIBUTES"]["STARTMENUITEM"] : null;
+        $this->startMenuID = isset($xmlArr["MENUWIDGET"]["ATTRIBUTES"]["STARTMENUID"]) ? $xmlArr["MENUWIDGET"]["ATTRIBUTES"]["STARTMENUID"] : null;
         $this->searchRule = isset($xmlArr["MENUWIDGET"]["ATTRIBUTES"]["SEARCHRULE"]) ? $xmlArr["MENUWIDGET"]["ATTRIBUTES"]["SEARCHRULE"] : null;
-        $this->m_GlobalSearchRule = isset($xmlArr["MENUWIDGET"]["ATTRIBUTES"]["GLOBALSEARCHRULE"]) ? $xmlArr["MENUWIDGET"]["ATTRIBUTES"]["GLOBALSEARCHRULE"] : null;
-        $this->m_MenuDeep = isset($xmlArr["MENUWIDGET"]["ATTRIBUTES"]["MENUDEEP"]) ? $xmlArr["MENUWIDGET"]["ATTRIBUTES"]["MENUDEEP"] : null;
+        $this->globalSearchRule = isset($xmlArr["MENUWIDGET"]["ATTRIBUTES"]["GLOBALSEARCHRULE"]) ? $xmlArr["MENUWIDGET"]["ATTRIBUTES"]["GLOBALSEARCHRULE"] : null;
+        $this->menuDeep = isset($xmlArr["MENUWIDGET"]["ATTRIBUTES"]["MENUDEEP"]) ? $xmlArr["MENUWIDGET"]["ATTRIBUTES"]["MENUDEEP"] : null;
         $this->dataObjName = $this->prefixPackage($xmlArr["MENUWIDGET"]["ATTRIBUTES"]["BIZDATAOBJ"]);
         $this->cacheLifeTime = isset($xmlArr["MENUWIDGET"]["ATTRIBUTES"]["CACHELIFETIME"]) ? $xmlArr["MENUWIDGET"]["ATTRIBUTES"]["CACHELIFETIME"] : "0";
         $this->translate();
@@ -90,11 +90,11 @@ class MenuWidget extends MetaObject implements iUIControl
     {
         $dataObj = $this->getDataObj();
         if ($this->searchRule != "") {
-            $tree = $dataObj->fetchTreeBySearchRule($this->searchRule, $this->m_MenuDeep, $this->m_GlobalSearchRule);
-        } else if ($this->m_StartMenuID != "") {
-            $tree = $dataObj->fetchTree($this->m_StartMenuID, $this->m_MenuDeep);
+            $tree = $dataObj->fetchTreeBySearchRule($this->searchRule, $this->menuDeep, $this->globalSearchRule);
+        } else if ($this->startMenuID != "") {
+            $tree = $dataObj->fetchTree($this->startMenuID, $this->menuDeep);
         } else {
-            $tree = $dataObj->fetchTreeByName($this->m_StartMenuItem, $this->m_MenuDeep);
+            $tree = $dataObj->fetchTreeByName($this->startMenuItem, $this->menuDeep);
         }
         return $tree;
     }
@@ -103,7 +103,7 @@ class MenuWidget extends MetaObject implements iUIControl
     {
         $attrs = array();
         $attrs['name'] = $this->objectName;
-        $attrs['title'] = $this->m_Title;
+        $attrs['title'] = $this->title;
         $attrs['css'] = $this->cssClass;
         $attrs['description'] = $this->objectDescription;
         $attrs['menu'] = $this->fetchMenuTree();
@@ -114,8 +114,8 @@ class MenuWidget extends MetaObject implements iUIControl
 
     protected function prefixPackage($name)
     {
-        if ($name && !strpos($name, ".") && ($this->m_Package)) // no package prefix as package.object, add it
-            $name = $this->m_Package . "." . $name;
+        if ($name && !strpos($name, ".") && ($this->package)) // no package prefix as package.object, add it
+            $name = $this->package . "." . $name;
 
         return $name;
     }
@@ -143,7 +143,7 @@ class MenuWidget extends MetaObject implements iUIControl
     protected function translate()
     {
         $module = $this->getModuleName($this->objectName);
-        $this->m_Title = I18n::t($this->m_Title, $this->getTransKey('Title'), $module);
+        $this->title = I18n::t($this->title, $this->getTransKey('Title'), $module);
         $this->objectDescription = I18n::t($this->objectDescription, $this->getTransKey('Description'), $module);
     }
 

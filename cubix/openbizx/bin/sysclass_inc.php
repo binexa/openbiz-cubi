@@ -45,7 +45,7 @@ abstract class MetaObject
      *
      * @var string
      */
-    public $m_Package;
+    public $package;
 
     /**
      * Description of meta-object
@@ -76,14 +76,14 @@ abstract class MetaObject
         {
             $this->objectName = isset($xmlArr[$rootKey]["ATTRIBUTES"]["NAME"]) ? $xmlArr[$rootKey]["ATTRIBUTES"]["NAME"] : null;
             $this->objectDescription = isset($xmlArr[$rootKey]["ATTRIBUTES"]["DESCRIPTION"]) ? $xmlArr[$rootKey]["ATTRIBUTES"]["DESCRIPTION"] : null;
-            $this->m_Package = isset($xmlArr[$rootKey]["ATTRIBUTES"]["PACKAGE"]) ? $xmlArr[$rootKey]["ATTRIBUTES"]["PACKAGE"] : null;
+            $this->package = isset($xmlArr[$rootKey]["ATTRIBUTES"]["PACKAGE"]) ? $xmlArr[$rootKey]["ATTRIBUTES"]["PACKAGE"] : null;
             $this->className = isset($xmlArr[$rootKey]["ATTRIBUTES"]["CLASS"]) ? $xmlArr[$rootKey]["ATTRIBUTES"]["CLASS"] : null;
             $this->access = isset($xmlArr[$rootKey]["ATTRIBUTES"]["ACCESS"]) ? $xmlArr[$rootKey]["ATTRIBUTES"]["ACCESS"] : null;
         } else
         {
             $this->objectName = isset($xmlArr["ATTRIBUTES"]["NAME"]) ? $xmlArr["ATTRIBUTES"]["NAME"] : null;
             $this->objectDescription = isset($xmlArr["ATTRIBUTES"]["DESCRIPTION"]) ? $xmlArr["ATTRIBUTES"]["DESCRIPTION"] : null;
-            $this->m_Package = isset($xmlArr["ATTRIBUTES"]["PACKAGE"]) ? $xmlArr["ATTRIBUTES"]["PACKAGE"] : null;
+            $this->package = isset($xmlArr["ATTRIBUTES"]["PACKAGE"]) ? $xmlArr["ATTRIBUTES"]["PACKAGE"] : null;
             $this->className = isset($xmlArr["ATTRIBUTES"]["CLASS"]) ? $xmlArr["ATTRIBUTES"]["CLASS"] : null;
             $this->access = isset($xmlArr["ATTRIBUTES"]["ACCESS"]) ? $xmlArr["ATTRIBUTES"]["ACCESS"] : null;
         }
@@ -122,8 +122,8 @@ abstract class MetaObject
      */
     protected function prefixPackage($name)
     {
-        if ($name && !strpos($name, ".") && ($this->m_Package)) // no package prefix as package.object, add it
-            $name = $this->m_Package . "." . $name;
+        if ($name && !strpos($name, ".") && ($this->package)) // no package prefix as package.object, add it
+            $name = $this->package . "." . $name;
 
         return $name;
     }
@@ -257,12 +257,12 @@ class MetaIterator implements Iterator
                         $className = array_pop($a_package_name);
                         //require_once(BizSystem::getLibFileWithPath($className, implode(".", $a_package_name)));
                         $clsLoaded = BizClassLoader::loadMetadataClass($className, implode(".", $a_package_name));
-                    } elseif ($parentObj->m_Package)
+                    } elseif ($parentObj->package)
                     {
-                        /* if(is_file(BizSystem::getLibFileWithPath($className, $parentObj->m_Package))){
-                          require_once(BizSystem::getLibFileWithPath($className, $parentObj->m_Package));
+                        /* if(is_file(BizSystem::getLibFileWithPath($className, $parentObj->package))){
+                          require_once(BizSystem::getLibFileWithPath($className, $parentObj->package));
                           }; */
-                        $clsLoaded = BizClassLoader::loadMetadataClass($className, $parentObj->m_Package);
+                        $clsLoaded = BizClassLoader::loadMetadataClass($className, $parentObj->package);
                     }
                     //if (!$clsLoaded) trigger_error("Cannot find the load class $className", E_USER_ERROR);
                     $obj = new $className($child, $parentObj);
@@ -398,14 +398,14 @@ class MetaIterator implements Iterator
  */
 class Parameter
 {
-    public $objectName, $value, $required, $m_InOut;
+    public $objectName, $value, $required, $inOut;
 
     public function __construct(&$xmlArr)
     {
         $this->objectName = isset($xmlArr["ATTRIBUTES"]["NAME"]) ? $xmlArr["ATTRIBUTES"]["NAME"] : null;
         $this->value = isset($xmlArr["ATTRIBUTES"]["VALUE"]) ? $xmlArr["ATTRIBUTES"]["VALUE"] : null;
         $this->required = isset($xmlArr["ATTRIBUTES"]["REQUIRED"]) ? $xmlArr["ATTRIBUTES"]["REQUIRED"] : null;
-        $this->m_InOut = isset($xmlArr["ATTRIBUTES"]["INOUT"]) ? $xmlArr["ATTRIBUTES"]["INOUT"] : null;
+        $this->inOut = isset($xmlArr["ATTRIBUTES"]["INOUT"]) ? $xmlArr["ATTRIBUTES"]["INOUT"] : null;
     }
 
     /**
@@ -503,11 +503,11 @@ class BSVCException extends Exception
 class ValidationException extends Exception
 {
 
-    public $m_Errors;   // key, errormessage pairs
+    public $errors;   // key, errormessage pairs
 
     public function __construct($errors)
     {
-        $this->m_Errors = $errors;
+        $this->errors = $errors;
         $message = "";
         foreach ($errors as $key => $err)
         {

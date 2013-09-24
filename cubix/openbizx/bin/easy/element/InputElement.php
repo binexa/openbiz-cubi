@@ -26,15 +26,15 @@
  */
 class InputElement extends Element
 {
-    public $m_FieldName;
-    public $m_Label;
+    public $fieldName;
+    public $label;
     public $objectDescription;
     public $defaultValue = "";
     public $defaultValueRename = "Y";
     public $required = "N";
-    public $m_Enabled = "Y";      // support expression
+    public $enabled = "Y";      // support expression
     public $text;
-    public $m_Hint;
+    public $hint;
 
     /**
      * Read array meta data, and store to meta object
@@ -45,16 +45,16 @@ class InputElement extends Element
     protected function readMetaData(&$xmlArr)
     {
         parent::readMetaData($xmlArr);
-        $this->m_FieldName = isset($xmlArr["ATTRIBUTES"]["FIELDNAME"]) ? $xmlArr["ATTRIBUTES"]["FIELDNAME"] : null;
-        $this->m_Label = isset($xmlArr["ATTRIBUTES"]["LABEL"]) ? $xmlArr["ATTRIBUTES"]["LABEL"] : null;
+        $this->fieldName = isset($xmlArr["ATTRIBUTES"]["FIELDNAME"]) ? $xmlArr["ATTRIBUTES"]["FIELDNAME"] : null;
+        $this->label = isset($xmlArr["ATTRIBUTES"]["LABEL"]) ? $xmlArr["ATTRIBUTES"]["LABEL"] : null;
         $this->objectDescription = isset($xmlArr["ATTRIBUTES"]["DESCRIPTION"]) ? $xmlArr["ATTRIBUTES"]["DESCRIPTION"] : null;
         $this->defaultValue = isset($xmlArr["ATTRIBUTES"]["DEFAULTVALUE"]) ? $xmlArr["ATTRIBUTES"]["DEFAULTVALUE"] : null;
         $this->defaultValueRename = isset($xmlArr["ATTRIBUTES"]["DEFAULTVALUERENAME"]) ? $xmlArr["ATTRIBUTES"]["DEFAULTVALUERENAME"] : "Y";
         $this->required = isset($xmlArr["ATTRIBUTES"]["REQUIRED"]) ? $xmlArr["ATTRIBUTES"]["REQUIRED"] : null;
-        $this->m_Enabled = isset($xmlArr["ATTRIBUTES"]["ENABLED"]) ? $xmlArr["ATTRIBUTES"]["ENABLED"] : null;
+        $this->enabled = isset($xmlArr["ATTRIBUTES"]["ENABLED"]) ? $xmlArr["ATTRIBUTES"]["ENABLED"] : null;
         $this->text = isset($xmlArr["ATTRIBUTES"]["TEXT"]) ? $xmlArr["ATTRIBUTES"]["TEXT"] : null;
 
-        $this->m_Hint = isset($xmlArr["ATTRIBUTES"]["HINT"]) ? $xmlArr["ATTRIBUTES"]["HINT"] : null;
+        $this->hint = isset($xmlArr["ATTRIBUTES"]["HINT"]) ? $xmlArr["ATTRIBUTES"]["HINT"] : null;
         
         // if no class name, add default class name. i.e. NewRecord => ObjName.NewRecord
         $this->valuePicker = $this->prefixPackage($this->valuePicker);
@@ -70,7 +70,7 @@ class InputElement extends Element
     protected function getEnabled()
     {
         $formObj = $this->getFormObj();
-        return Expression::evaluateExpression($this->m_Enabled, $formObj);
+        return Expression::evaluateExpression($this->enabled, $formObj);
     }
     
     protected function getRequired()
@@ -82,7 +82,7 @@ class InputElement extends Element
     public function getValue()
     {
     	$value=parent::getValue();
-    	if($value==$this->m_Hint)
+    	if($value==$this->hint)
     	{
     		$this->value = null;
     		return null;
@@ -96,7 +96,7 @@ class InputElement extends Element
      */
     public function renderLabel()
     {
-        $sHTML = $this->translateString($this->m_Label);       
+        $sHTML = $this->translateString($this->label);       
         return $sHTML;
     }
 

@@ -25,7 +25,7 @@
  */
 class HTMLMenus extends MetaObject implements iUIControl
 {
-    protected $m_MenuItemsXml = null;
+    protected $menuItemsXml = null;
 
     /**
      * Initialize HTMLMenus with xml array
@@ -51,9 +51,9 @@ class HTMLMenus extends MetaObject implements iUIControl
     protected function readMetadata(&$xmlArr)
     {
         $this->objectName = $xmlArr["MENU"]["ATTRIBUTES"]["NAME"];
-        $this->m_Package = $xmlArr["MENU"]["ATTRIBUTES"]["PACKAGE"];
+        $this->package = $xmlArr["MENU"]["ATTRIBUTES"]["PACKAGE"];
         $this->className = $xmlArr["MENU"]["ATTRIBUTES"]["CLASS"];
-        $this->m_MenuItemsXml = $xmlArr["MENU"]["MENUITEM"];
+        $this->menuItemsXml = $xmlArr["MENU"]["MENUITEM"];
     }
 
     /**
@@ -65,7 +65,7 @@ class HTMLMenus extends MetaObject implements iUIControl
     {
         // list all views and highlight the current view
         $sHTML = "<ul id='navmenu'>\n";
-        $sHTML .= $this->renderMenuItems($this->m_MenuItemsXml);
+        $sHTML .= $this->renderMenuItems($this->menuItemsXml);
         $sHTML .= "</ul>";
         return $sHTML;
     }

@@ -13,7 +13,7 @@
         <Element Name="fld_oauth_user"  Class="RawData" Label="User" FieldName="oauth_user"/>
         <Element Name="fld_oauth_location"  Class="RawData" Label="Location" FieldName="oauth_location"/>
         
-        <Element Name="fld_action" Hidden="{@:m_OpenRegisterStatus==0?'Y':'N'}" Class="Listbox" SelectFrom="oauth.lov.ConnectUserLOV(Action)" FieldName="action" Label="Action" >
+        <Element Name="fld_action" Hidden="{@:openRegisterStatus==0?'Y':'N'}" Class="Listbox" SelectFrom="oauth.lov.ConnectUserLOV(Action)" FieldName="action" Label="Action" >
         	<EventHandler Name="fld_action_onclick" Event="onchange" Function="UpdateForm()" />
         </Element>
 		<Element Name="fld_username" Class="InputText" FieldName="username" Label="Username" required="Y"  Required="Y" Validator="{@validate:betweenLength([fld_username], 3, 20)}" HTMLAttr="maxlength='20'"/>		

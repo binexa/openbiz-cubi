@@ -94,10 +94,10 @@ class Checkbox extends OptionElement
                 } else {
                     $checkedStr = "CHECKED";
                 }
-                $sHTML .= "<INPUT TYPE=CHECKBOX NAME='" . $this->objectName . "[]' ID=\"" . $this->objectName . "\" DefaultValue=\"$defaultValue\" VALUE=\"" . $opt['val'] . "\" $checkedStr $disabledStr $this->m_HTMLAttr $func /> " . $opt['txt'] . "";
+                $sHTML .= "<INPUT TYPE=CHECKBOX NAME='" . $this->objectName . "[]' ID=\"" . $this->objectName . "\" DefaultValue=\"$defaultValue\" VALUE=\"" . $opt['val'] . "\" $checkedStr $disabledStr $this->htmlAttr $func /> " . $opt['txt'] . "";
             }
         } else {
-            $sHTML = "<INPUT TYPE=\"CHECKBOX\" NAME=\"" . $this->objectName . "\" ID=\"" . $this->objectName . "\" DefaultValue=\"$DefaultValue\" VALUE='$boolValue' $checkedStr $disabledStr $this->m_HTMLAttr $style $func /> " . $text . "";
+            $sHTML = "<INPUT TYPE=\"CHECKBOX\" NAME=\"" . $this->objectName . "\" ID=\"" . $this->objectName . "\" DefaultValue=\"$DefaultValue\" VALUE='$boolValue' $checkedStr $disabledStr $this->htmlAttr $style $func /> " . $text . "";
         }
 
         return $sHTML;

@@ -33,9 +33,9 @@
  */
 class OptionElement extends InputElement
 {
-    public $m_SelectFrom;
-    public $m_SelectFromSQL;
-    public $m_SelectedList;
+    public $selectFrom;
+    public $selectFromSQL;
+    public $selectedList;
 
     /**
      * Read metadata info from metadata array and store to class variable
@@ -46,9 +46,9 @@ class OptionElement extends InputElement
     protected function readMetaData(&$xmlArr)
     {
         parent::readMetaData($xmlArr);
-        $this->m_SelectFrom = isset($xmlArr["ATTRIBUTES"]["SELECTFROM"]) ? $xmlArr["ATTRIBUTES"]["SELECTFROM"] : null;
-        $this->m_SelectedList = isset($xmlArr["ATTRIBUTES"]["SELECTEDLIST"]) ? $xmlArr["ATTRIBUTES"]["SELECTEDLIST"] : null;
-        $this->m_SelectFromSQL = isset($xmlArr["ATTRIBUTES"]["SELECTFROMSQL"]) ? $xmlArr["ATTRIBUTES"]["SELECTFROMSQL"] : null;
+        $this->selectFrom = isset($xmlArr["ATTRIBUTES"]["SELECTFROM"]) ? $xmlArr["ATTRIBUTES"]["SELECTFROM"] : null;
+        $this->selectedList = isset($xmlArr["ATTRIBUTES"]["SELECTEDLIST"]) ? $xmlArr["ATTRIBUTES"]["SELECTEDLIST"] : null;
+        $this->selectFromSQL = isset($xmlArr["ATTRIBUTES"]["SELECTFROMSQL"]) ? $xmlArr["ATTRIBUTES"]["SELECTFROMSQL"] : null;
     }
 
     /**
@@ -59,19 +59,19 @@ class OptionElement extends InputElement
     protected function getSelectFrom()
     {
         $formobj = $this->getFormObj();
-        return Expression::evaluateExpression($this->m_SelectFrom, $formobj);
+        return Expression::evaluateExpression($this->selectFrom, $formobj);
     }
 
     protected function getSelectedList()
     {
         $formobj = $this->getFormObj();
-        return Expression::evaluateExpression($this->m_SelectedList, $formobj);
+        return Expression::evaluateExpression($this->selectedList, $formobj);
     }
     
 	protected function getSelectFromSQL()
     {
         $formobj = $this->getFormObj();
-        return Expression::evaluateExpression($this->m_SelectFromSQL, $formobj);
+        return Expression::evaluateExpression($this->selectFromSQL, $formobj);
     }
 
     /**
@@ -256,9 +256,9 @@ class OptionElement extends InputElement
     
     protected function translateList(&$list, $tag)
     {
-    	$module = $this->getModuleName($this->m_SelectFrom);
+    	$module = $this->getModuleName($this->selectFrom);
         if (empty($module))
-            $module = $this->getModuleName($this->m_FormName);
+            $module = $this->getModuleName($this->formName);
     	for ($i=0; $i<count($list); $i++)
     	{
     		$key = 'SELECTION_'.strtoupper($tag).'_'.$i.'_TEXT';
@@ -268,7 +268,7 @@ class OptionElement extends InputElement
     
     protected function getTransLOVPrefix()
     {    	
-    	$nameArr = explode(".",$this->m_SelectFrom);
+    	$nameArr = explode(".",$this->selectFrom);
     	for($i=1;$i<count($nameArr)-1;$i++)
     	{
     		$prefix .= strtoupper($nameArr[$i])."_";

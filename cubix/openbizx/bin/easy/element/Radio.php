@@ -63,7 +63,7 @@ class Radio extends OptionElement
             {
             	$option_display = $option['txt'];
             }
-            $sHTML .= "<label style=\"text-align:left;width:$width\" class=\"radio_option\"><INPUT TYPE=RADIO NAME='".$this->objectName."' ID=\"" . $this->objectName ."_".$option['val']."\" VALUE=\"" . $option['val'] . "\" $checkedStr $disabledStr $style $this->m_HTMLAttr $func />" . $option_display . "</label>";
+            $sHTML .= "<label style=\"text-align:left;width:$width\" class=\"radio_option\"><INPUT TYPE=RADIO NAME='".$this->objectName."' ID=\"" . $this->objectName ."_".$option['val']."\" VALUE=\"" . $option['val'] . "\" $checkedStr $disabledStr $style $this->htmlAttr $func />" . $option_display . "</label>";
         }
         
         return $sHTML;
@@ -92,7 +92,7 @@ class Radio extends OptionElement
             $style = Expression::evaluateExpression($style, $formobj);
             $style = "STYLE='$style'";
         }
-        if($formobj->m_Errors[$this->objectName])
+        if($formobj->errors[$this->objectName])
         {
       	    $htmlClass = "CLASS='".$this->cssErrorClass."'";
         }

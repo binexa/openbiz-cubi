@@ -6,17 +6,17 @@ class twitter extends oauthClass
 {
 	protected $type='twitter';
 	protected $m_loginUrl;
-	private $m_akey;
+	private $akey;
 	private $m_skey;
-	private $m_aliapy_config;
-	private $m_Twitter;
+	private $aliapy_config;
+	private $twitter;
  
  
 		
 	public function __construct() {
 		parent::__construct();
 		$recArr=$this->getProviderList(); 
-		$this->m_akey = $recArr['key'];
+		$this->akey = $recArr['key'];
 		$this->m_skey =$recArr['value']; 
 		
 	}
@@ -33,7 +33,7 @@ class twitter extends oauthClass
 	
 	function callback(){ 
 		$oauth_token=Bizsystem::getSessionContext()->getVar('twitter_access_token');
-		$Twitter = new TwitterOAuth($this->m_akey ,$this->m_skey,$oauth_token['oauth_token'], $oauth_token['oauth_token_secret']);
+		$Twitter = new TwitterOAuth($this->akey ,$this->m_skey,$oauth_token['oauth_token'], $oauth_token['oauth_token_secret']);
 		$access_token = $Twitter->getAccessToken($_REQUEST['oauth_verifier']);
 		if(!$access_token)
 		{
@@ -49,12 +49,12 @@ class twitter extends oauthClass
     /*获取登录页*/
     function getUrl($call_back = null) {
 		
-		if ( empty($this->m_akey) || empty($this->m_skey) )
+		if ( empty($this->akey) || empty($this->m_skey) )
 		{
 			throw new Exception('Unknown Twitter_akey');
 			return false;
 		}
-		$Twitter = new TwitterOAuth($this->m_akey ,$this->m_skey);
+		$Twitter = new TwitterOAuth($this->akey ,$this->m_skey);
 		$request_token = $Twitter->getRequestToken($this->callBack);
 		
 		if ($Twitter->http_code==200) 
@@ -74,7 +74,7 @@ class twitter extends oauthClass
 
 	//用户资料
 	function userInfo($oauth_token=null,$oauth_token_secret=null){
-		$Twitter = new TwitterOAuth($this->m_akey ,$this->m_skey,$oauth_token, $oauth_token_secret);
+		$Twitter = new TwitterOAuth($this->akey ,$this->m_skey,$oauth_token, $oauth_token_secret);
 		$me =(array)$Twitter->get('account/verify_credentials');
 		$user['id']         = $me['id'];
 		$user['type']         = $this->type;

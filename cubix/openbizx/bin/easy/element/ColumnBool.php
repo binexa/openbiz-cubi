@@ -27,10 +27,10 @@
  */
 class ColumnBool extends ColumnText
 {
-    public $m_TrueImg;    
-    public $m_FlaseImg;
-    public $m_TrueValue;
-    public $m_FlaseValue;
+    public $trueImg;    
+    public $flaseImg;
+    public $trueValue;
+    public $flaseValue;
 
     /**
      * Read array meta data, and store to meta object
@@ -41,10 +41,10 @@ class ColumnBool extends ColumnText
     protected function readMetaData(&$xmlArr)
     {
         parent::readMetaData($xmlArr);
-        $this->m_TrueImg=isset($xmlArr["ATTRIBUTES"]["TRUEIMG"])?$xmlArr["ATTRIBUTES"]["TRUEIMG"]:"flag_y.gif";
-        $this->m_FalseImg=isset($xmlArr["ATTRIBUTES"]["FALSEIMG"])?$xmlArr["ATTRIBUTES"]["FALSEIMG"]:"flag_n.gif";
-        $this->m_TrueValue=isset($xmlArr["ATTRIBUTES"]["TRUEVALUE"])?$xmlArr["ATTRIBUTES"]["TRUEVALUE"]:true;
-        $this->m_FalseValue=isset($xmlArr["ATTRIBUTES"]["FLASEVALUE"])?$xmlArr["ATTRIBUTES"]["FLASEVALUE"]:false;        
+        $this->trueImg=isset($xmlArr["ATTRIBUTES"]["TRUEIMG"])?$xmlArr["ATTRIBUTES"]["TRUEIMG"]:"flag_y.gif";
+        $this->falseImg=isset($xmlArr["ATTRIBUTES"]["FALSEIMG"])?$xmlArr["ATTRIBUTES"]["FALSEIMG"]:"flag_n.gif";
+        $this->trueValue=isset($xmlArr["ATTRIBUTES"]["TRUEVALUE"])?$xmlArr["ATTRIBUTES"]["TRUEVALUE"]:true;
+        $this->falseValue=isset($xmlArr["ATTRIBUTES"]["FLASEVALUE"])?$xmlArr["ATTRIBUTES"]["FLASEVALUE"]:false;        
     }
 
     /**
@@ -60,13 +60,13 @@ class ColumnBool extends ColumnText
         $id = $this->objectName;
         $func = $this->getFunction();        
         
-        if($val==='1' || $val==='true' || strtoupper($val) == 'Y' || $val>0 || $val==$this->m_TrueValue)
+        if($val==='1' || $val==='true' || strtoupper($val) == 'Y' || $val>0 || $val==$this->trueValue)
         {
-        	$image_url  = $this->m_TrueImg;            
+        	$image_url  = $this->trueImg;            
         }
         else
         {
-        	$image_url  = $this->m_FalseImg;            
+        	$image_url  = $this->falseImg;            
         }
         if(preg_match("/\{.*\}/si",$image_url))
         {

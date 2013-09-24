@@ -66,7 +66,7 @@ class SettingForm extends EasyForm
         if ($dataObj == null) return;
 
 		
-        if (!$this->m_FixSearchRule && !$this->searchRule)
+        if (!$this->fixSearchRule && !$this->searchRule)
         	return array();
         
     	QueryStringParam::setBindValues($this->searchRuleBindValues);
@@ -75,12 +75,12 @@ class SettingForm extends EasyForm
         if ($this->isRefreshData)   $dataObj->resetRules();
         else $dataObj->clearSearchRule();
 
-        if ($this->m_FixSearchRule)
+        if ($this->fixSearchRule)
         {
             if ($this->searchRule)
-                $searchRule = $this->searchRule . " AND " . $this->m_FixSearchRule;
+                $searchRule = $this->searchRule . " AND " . $this->fixSearchRule;
             else
-                $searchRule = $this->m_FixSearchRule;
+                $searchRule = $this->fixSearchRule;
         }
 
         $dataObj->setSearchRule($searchRule);
@@ -113,7 +113,7 @@ class SettingForm extends EasyForm
         }
         catch (ValidationException $e)
         {
-            $this->processFormObjError($e->m_Errors);
+            $this->processFormObjError($e->errors);
             return;
         }
 		
@@ -123,17 +123,17 @@ class SettingForm extends EasyForm
         
         foreach ($this->dataPanel as $element)
         {
-            $value = $recArr[$element->m_FieldName];
+            $value = $recArr[$element->fieldName];
             if ($value === null){ 
             	continue;
             } 
-            if(substr($element->m_FieldName,0,1)=='_'){
-	            $name = substr($element->m_FieldName,1);
+            if(substr($element->fieldName,0,1)=='_'){
+	            $name = substr($element->fieldName,1);
             	$recArrParam = array(
             		"user_id" => $user_id,
             		"name"	  => $name,
             		"value"   => $value,
-	            	"section" => $element->m_ElementSetCode,
+	            	"section" => $element->elementSetCode,
 	            	"type" 	  => $element->className,	            
 	            );
 	            //check if its exsit
@@ -151,7 +151,7 @@ class SettingForm extends EasyForm
         
 		
         // in case of popup form, close it, then rerender the parent form
-        if ($this->m_ParentFormName)
+        if ($this->parentFormName)
         {
             $this->close();
 
