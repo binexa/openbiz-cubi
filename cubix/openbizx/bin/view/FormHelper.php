@@ -149,7 +149,7 @@ class FormHelper
     {
         $this->formObj->errors = $errors;
 		//print_r($this->errors); exit;
-        //$this->m_hasError = true;
+        //$this->hasError = true;
         return $this->formObj->rerender();
     }
 

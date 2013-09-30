@@ -13,7 +13,7 @@ class LicenseInitializeForm extends LicenseForm
 		$this->setActiveRecord($rec);
 		if($rec['eula']=="0"){
 			$this->errors = array("fld_eula"=>'You must agree with the license');
-			$this->m_hasError = true;	
+			$this->hasError = true;	
 			BizSystem::clientProxy()->setRPCFlag(true);		
 			return parent::rerender();
 		}
@@ -53,4 +53,3 @@ class LicenseInitializeForm extends LicenseForm
 		return $result;
 	}
 }
-?>

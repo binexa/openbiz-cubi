@@ -34,7 +34,7 @@ class EasyForm extends MetaObject implements iSessionObject
     public $title;
     public $icon;
     public $objectDescription;
-    public $m_jsClass;
+    public $jsClass;
     public $dataObjName;
     public $height;
     public $width;
@@ -104,7 +104,7 @@ class EasyForm extends MetaObject implements iSessionObject
     protected $defaultFixSearchRule = null;
     protected $referer = "";
     public $messageFile = null;
-    protected $m_hasError = false;
+    protected $hasError = false;
     protected $validateErrors = array();
 	protected $queryParams = array();
 
@@ -165,7 +165,7 @@ class EasyForm extends MetaObject implements iSessionObject
         $this->title = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["TITLE"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["TITLE"] : null;
         $this->icon = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["ICON"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["ICON"] : null;        
         $this->objectDescription = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["DESCRIPTION"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["DESCRIPTION"] : null;
-        $this->m_jsClass = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["JSCLASS"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["JSCLASS"] : null;
+        $this->jsClass = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["JSCLASS"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["JSCLASS"] : null;
         $this->height = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["HEIGHT"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["HEIGHT"] : null;
         $this->width = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["WIDTH"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["WIDTH"] : null;
         $this->defaultForm = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["DEFAULTFORM"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["DEFAULTFORM"] : null;
@@ -211,8 +211,8 @@ class EasyForm extends MetaObject implements iSessionObject
             $arr = explode (".", $this->access);
             $this->resource = $arr[0];
         }
-        if ($this->m_jsClass == "jbForm" && strtoupper($this->formType) == "LIST") $this->m_jsClass = "Openbiz.TableForm";
-        if ($this->m_jsClass == "jbForm") $this->m_jsClass = "Openbiz.Form";
+        if ($this->jsClass == "jbForm" && strtoupper($this->formType) == "LIST") $this->jsClass = "Openbiz.TableForm";
+        if ($this->jsClass == "jbForm") $this->jsClass = "Openbiz.Form";
         
 		$this->translate();	// translate for multi-language support
     }
@@ -230,7 +230,7 @@ class EasyForm extends MetaObject implements iSessionObject
         $this->title = $this->title ? $this->title : $parentObj->title;
         $this->icon = $this->icon ? $this->icon : $parentObj->icon;        
         $this->objectDescription  = $this->objectDescription ? $this->objectDescription : $parentObj->objectDescription;
-        $this->m_jsClass   = $this->m_jsClass ? $this->m_jsClass : $parentObj->m_jsClass;
+        $this->jsClass   = $this->jsClass ? $this->jsClass : $parentObj->jsClass;
         $this->height   = $this->height ? $this->height : $parentObj->height;
         $this->width   = $this->width ? $this->width : $parentObj->width;
         $this->defaultForm   = $this->defaultForm ? $this->defaultForm : $parentObj->defaultForm;        
@@ -559,7 +559,7 @@ class EasyForm extends MetaObject implements iSessionObject
     public function processFormObjError($errors)
     {
         $this->errors = $errors;
-        $this->m_hasError = true;
+        $this->hasError = true;
         return $this->rerender();
     }
 
@@ -2238,7 +2238,7 @@ $('".$this->objectName."').observe('click',Openbiz.Menu.hide);
         list($redirectPage,$target) = $this->getRedirectPage();
         if ($redirectPage)
         {
-            if($this->m_hasError==false)
+            if($this->hasError==false)
             {
                 // if the redirectpage start with "form=", render the form to the target which is defined by FuntionType
                 if (strpos($redirectPage,"form=") === 0)
@@ -2345,8 +2345,8 @@ $('".$this->objectName."').observe('click',Openbiz.Menu.hide);
     protected function setClientScripts()
     {
         // load custom js class
-        if ($this->m_jsClass != "Openbiz.Form" && $this->m_jsClass != "Openbiz.TableForm" && $this->m_jsClass != "" )
-            BizSystem::clientProxy()->appendScripts($this->m_jsClass, $this->m_jsClass . ".js");
+        if ($this->jsClass != "Openbiz.Form" && $this->jsClass != "Openbiz.TableForm" && $this->jsClass != "" )
+            BizSystem::clientProxy()->appendScripts($this->jsClass, $this->jsClass . ".js");
         /*
         if ($this->formType == 'LIST')
         {

@@ -4,11 +4,11 @@ require_once ("oauth.class.php");
 class facebook extends oauthClass
 {
 	protected $type='facebook';
-	protected $m_loginUrl;
+	protected $loginUrl;
 	private $akey;
-	private $m_skey;
+	private $skey;
 	private $aliapy_config;
-	private $m_facebook;
+	private $facebook;
  
  
 		
@@ -16,10 +16,10 @@ class facebook extends oauthClass
 		parent::__construct();
 		$recArr=$this->getProviderList(); 
 		$this->akey = $recArr['key'];
-		$this->m_skey =$recArr['value']; 
-		$this->m_facebook = new FacebookApi(array(
+		$this->skey =$recArr['value']; 
+		$this->facebook = new FacebookApi(array(
 		  'appId'  => $this->akey,
-		  'secret' => $this->m_skey,
+		  'secret' => $this->skey,
 		  'CallBack' => $this->callBack,
 		));
 	}
@@ -35,13 +35,13 @@ class facebook extends oauthClass
 	}
 	
 	function callback(){ 
-		$access_token['oauth_token']=$this->m_facebook->getAccessToken();
+		$access_token['oauth_token']=$this->facebook->getAccessToken();
 		if(!$access_token)
 		{
 			throw new Exception('Unknown facebook AccessToken');
 			return false;
 		}
-		$getSigned=$this->m_facebook->getSignedRequest();
+		$getSigned=$this->facebook->getSignedRequest();
 		$access_token['access_token_json']=$_GET;
 		$access_token['oauth_token_secret']=$_GET['code'];
 		Bizsystem::getSessionContext()->setVar($this->type.'_access_token',$access_token);
@@ -51,19 +51,19 @@ class facebook extends oauthClass
     /*获取登录页*/
     function getUrl($call_back = null) {
 		
-		if ( empty($this->akey) || empty($this->m_skey) )
+		if ( empty($this->akey) || empty($this->skey) )
 		{
 			throw new Exception('Unknown Facebook_akey');
 			return false;
 		}
-		$this->loginUrl = $this->m_facebook->getLoginUrl();
+		$this->loginUrl = $this->facebook->getLoginUrl();
 	
 		return $this->loginUrl;
 	} 
 
 	//用户资料
 	function userInfo(){
-		$me = $this->m_facebook->api('/me');
+		$me = $this->facebook->api('/me');
 		$user['id']         = $me['id'];
 		$user['type']         = $this->type;
 		$user['email']         = $me['data']['email'];

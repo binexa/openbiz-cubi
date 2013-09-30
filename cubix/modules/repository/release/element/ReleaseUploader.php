@@ -16,7 +16,7 @@ class ReleaseUploader extends InputText
  public function render() {      
     	$this->cssClass=null;
     	$this->cssErrorClass = null;
-    	$this->m_cssHoverClass = null;   
+    	$this->cssHoverClass = null;   
     	
         $sHTML = "
         <INPUT NAME=\"" . $this->objectName . "\" ID=\"" . $this->objectName ."\" VALUE=\"" . $value . "\"  />

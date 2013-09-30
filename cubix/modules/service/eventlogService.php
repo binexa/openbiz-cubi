@@ -16,7 +16,7 @@
 class eventlogService
 {
    
-   public $m_logDataObj;
+   public $logDataObj;
    public $messageFile;
    public $objectMessages;
    
@@ -27,7 +27,7 @@ class eventlogService
 
    protected function readMetadata(&$xmlArr)
    {      
-      $this->m_logDataObj 	= $xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["BIZDATAOBJ"];      
+      $this->logDataObj 	= $xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["BIZDATAOBJ"];      
       $this->messageFile = isset($xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["MESSAGEFILE"]) ? $xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["MESSAGEFILE"] : null;
       $this->objectMessages = Resource::loadMessage($this->messageFile , "eventlog.");
    }
@@ -36,7 +36,7 @@ class eventlogService
 	public function Log($eventName,$eventMessage,$eventComment=array())
 	{
   		global $g_BizSystem;
-      	$logDataObj = BizSystem::getObject($this->m_logDataObj);
+      	$logDataObj = BizSystem::getObject($this->logDataObj);
       	if (!$logDataObj) return false; 
          
 		$profile = $g_BizSystem->getUserProfile();  
@@ -92,7 +92,7 @@ class eventlogService
     
     protected function getLogData()
     {
-        $logDataObj = BizSystem::getObject($this->m_logDataObj);         
+        $logDataObj = BizSystem::getObject($this->logDataObj);         
 	    $recordList = array();
 	    $logDataObj->fetchRecords("", $recordList);    	    		    
 	    for($i=0;$i<count($recordList);$i++){    	

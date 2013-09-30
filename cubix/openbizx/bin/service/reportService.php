@@ -25,8 +25,8 @@
 class reportService extends MetaObject
 {
     public $targetReportPath; // = "D:\\Tomcat5\\webapps\\birt-viewer\\report\\";
-    public $m_rptTemplate; // = "dataobj.rptdesign.tpl";
-    public $m_birtViewer; // = "http://localhost:8080/birt-viewer";
+    public $rptTemplate; // = "dataobj.rptdesign.tpl";
+    public $birtViewer; // = "http://localhost:8080/birt-viewer";
 
     /**
      * Initialize reportService with xml array metadata
@@ -49,8 +49,8 @@ class reportService extends MetaObject
     {
         parent::readMetaData($xmlArr);
         $this->targetReportPath = isset($xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["TARGETREPORTPATH"]) ? $xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["TARGETREPORTPATH"] : null;
-        $this->m_rptTemplate = isset($xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["REPORTTEMPLATE"]) ? $xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["REPORTTEMPLATE"] : null;
-        $this->m_birtViewer = isset($xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["BIRTVIEWER"]) ? $xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["BIRTVIEWER"] : null;
+        $this->rptTemplate = isset($xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["REPORTTEMPLATE"]) ? $xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["REPORTTEMPLATE"] : null;
+        $this->birtViewer = isset($xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["BIRTVIEWER"]) ? $xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["BIRTVIEWER"] : null;
     }
 
     /**
@@ -115,7 +115,7 @@ class reportService extends MetaObject
         $smarty->assign("rpt_title", $bizform->title);
         $smarty->assign("rpt_csv_file", basename($tmpfname));
         $smarty->assign("rpt_fields", $rpt_fields);
-        $reportContent = $smarty->fetch($this->m_rptTemplate);
+        $reportContent = $smarty->fetch($this->rptTemplate);
 
         $tmpRptDsgn = $this->targetReportPath . $uid . ".rptdesign";
         //echo "temp rpt design file is at $tmpRptDsgn.<br>";
@@ -127,9 +127,9 @@ class reportService extends MetaObject
         $designFileName = $uid . ".rptdesign";
         $content = "<div style='font-family:Arial; font-size:12px; background-color:#FCFCFC;'>";
         $content .= "Reports can be viewed as ";
-        $content .= "<li><a href='".$this->m_birtViewer."/run?__report=report\\$designFileName' target='__blank'>HTML report</a></li>";
-        $content .= "<li><a href='".$this->m_birtViewer."/run?__report=report\\$designFileName&__format=pdf' target='__blank'>PDF report</a></li>";
-        $content .= "<li><a href='".$this->m_birtViewer."/frameset?__report=report\\$designFileName' target='__blank'>Interactive report</a></li>";
+        $content .= "<li><a href='".$this->birtViewer."/run?__report=report\\$designFileName' target='__blank'>HTML report</a></li>";
+        $content .= "<li><a href='".$this->birtViewer."/run?__report=report\\$designFileName&__format=pdf' target='__blank'>PDF report</a></li>";
+        $content .= "<li><a href='".$this->birtViewer."/frameset?__report=report\\$designFileName' target='__blank'>Interactive report</a></li>";
         $content .= "</div>";
 
         echo $content;
@@ -170,4 +170,3 @@ class reportService extends MetaObject
         return md5($rightnow);
     }
 }
-?>

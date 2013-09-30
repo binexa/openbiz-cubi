@@ -32,7 +32,7 @@ class Textarea extends OptionElement
 		parent::readMetaData($xmlArr);
 		$this->cssClass = isset($xmlArr["ATTRIBUTES"]["CSSCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSCLASS"] : "input_textarea";
 		$this->cssErrorClass = isset($xmlArr["ATTRIBUTES"]["CSSERRORCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSERRORCLASS"] : "input_textarea_error";
-		$this->m_cssFocusClass = isset($xmlArr["ATTRIBUTES"]["CSSFOCUSCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSFOCUSCLASS"] : "input_textarea_focus";
+		$this->cssFocusClass = isset($xmlArr["ATTRIBUTES"]["CSSFOCUSCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSFOCUSCLASS"] : "input_textarea_focus";
 		$this->blankOption = isset($xmlArr["ATTRIBUTES"]["BLANKOPTION"]) ? $xmlArr["ATTRIBUTES"]["BLANKOPTION"] : null;
 	}
    /**
@@ -50,7 +50,7 @@ class Textarea extends OptionElement
     	if($formobj->errors[$this->objectName]){
 			$func .= "onchange=\"this.className='$this->cssClass'\"";
 		}else{
-			$func .= "onfocus=\"this.className='$this->m_cssFocusClass'\" onblur=\"this.className='$this->cssClass'\"";
+			$func .= "onfocus=\"this.className='$this->cssFocusClass'\" onblur=\"this.className='$this->cssClass'\"";
 		}        
         $sHTML .= "<TEXTAREA NAME=\"" . $this->objectName . "\" ID=\"" . $this->objectName ."\" $disabledStr $this->htmlAttr $style $func>".$this->value."</TEXTAREA>";        
     	

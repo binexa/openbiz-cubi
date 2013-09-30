@@ -5,11 +5,11 @@ require_once 'google/contrib/apiOauth2Service.php';
 class google extends oauthClass
 {
 	protected $type='google';
-	protected $m_loginUrl;
+	protected $loginUrl;
 	private $akey;
-	private $m_skey;
-	private $m_google;
-	private $m_oauth2;
+	private $skey;
+	private $google;
+	private $oauth2;
 	
  
 		
@@ -17,11 +17,11 @@ class google extends oauthClass
 		parent::__construct();
 		$recArr=$this->getProviderList(); 
 		$this->akey = $recArr['key'];
-		$this->m_skey =$recArr['value'];	
-		$this->m_google= new apiClient();
-		$this->m_google->setClientId($recArr['key']) ;
-		$this->m_google->setClientSecret($recArr['value'] );
-		$this->m_google->setRedirectUri($this->callBack);	
+		$this->skey =$recArr['value'];	
+		$this->google= new apiClient();
+		$this->google->setClientId($recArr['key']) ;
+		$this->google->setClientSecret($recArr['value'] );
+		$this->google->setRedirectUri($this->callBack);	
 	}
 	
   	function login(){	
@@ -35,10 +35,10 @@ class google extends oauthClass
 	}
 	
 	function callback(){  
-		$this->oauth2 = new apiOauth2Service($this->m_google);
-		$this->m_google->authenticate();
+		$this->oauth2 = new apiOauth2Service($this->google);
+		$this->google->authenticate();
 	
-		$access_token_json=$this->m_google->getAccessToken();
+		$access_token_json=$this->google->getAccessToken();
 
 		$access_token=(array)json_decode($access_token_json);	
 		$access_token['oauth_token']=$access_token['access_token'];
@@ -51,30 +51,30 @@ class google extends oauthClass
 	}
 	function logout(){ 
 		Bizsystem::getSessionContext()->clearVar('google_access_token');
-		$this->m_google->revokeToken();
+		$this->google->revokeToken();
 	}
  
     /*获取登录URL*/
     function getUrl($call_back = null) {
  
-		if (!$this->akey || !$this->m_skey )
+		if (!$this->akey || !$this->skey )
 		{
 			throw new Exception('Unknown akey');
 			return false;
 		}
-		$oauth2 = new apiOauth2Service($this->m_google);
+		$oauth2 = new apiOauth2Service($this->google);
 		
-		return $this->m_google->createAuthUrl();
+		return $this->google->createAuthUrl();
 	} 
 
 	//用户资料
 	function userInfo(){
 		$access_token=Bizsystem::getSessionContext()->getVar('google_access_token');
-		$this->m_google->setAccessToken($access_token['access_token_json']);
+		$this->google->setAccessToken($access_token['access_token_json']);
 		
 		if(!$this->oauth2)
 		{
-			$this->oauth2 = new apiOauth2Service($this->m_google); 
+			$this->oauth2 = new apiOauth2Service($this->google); 
 		}	
 		$me = $this->oauth2->userinfo->get();	
 		$user['id']          = $me['id'];

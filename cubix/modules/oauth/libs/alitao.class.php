@@ -9,13 +9,13 @@ class alitao extends oauthClass
 	protected $authorizeUrl='https://oauth.taobao.com/authorize';//登录验证地址
 	protected $loginUrl;
 	private $akey;
-	private $m_skey;
+	private $skey;
 	
 	public function __construct() {
 		parent::__construct();
 		$recArr=$this->getProviderList(); 
 		$this->akey = $recArr['key'];
-		$this->m_skey =$recArr['value']; 
+		$this->skey =$recArr['value']; 
 	}
 	
   	function login(){	
@@ -34,7 +34,7 @@ class alitao extends oauthClass
 		  //请求参数
 		 $postfields= array('grant_type'     => 'authorization_code',
 							 'client_id'     => $this->akey,
-							 'client_secret' => $this->m_skey,
+							 'client_secret' => $this->skey,
 							 'code'          => $_REQUEST['code'],
 							 'redirect_uri'  => $this->callBack
 						);

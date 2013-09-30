@@ -29,7 +29,7 @@ class DropDownList extends InputElement
 	
 	public $readOnly;
 	public $defaultDisplayValue;
-	public $m_cssHoverClass;
+	public $cssHoverClass;
     public $selectFrom;
     public $selectFromSQL;
     public $selectedList;	
@@ -39,8 +39,8 @@ class DropDownList extends InputElement
 		parent::readMetaData($xmlArr);
 		$this->cssClass = isset($xmlArr["ATTRIBUTES"]["CSSCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSCLASS"] : "input_select_w";
 		$this->cssErrorClass = isset($xmlArr["ATTRIBUTES"]["CSSERRORCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSERRORCLASS"] : $this->cssClass."_error";
-		$this->m_cssFocusClass = isset($xmlArr["ATTRIBUTES"]["CSSFOCUSCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSFOCUSCLASS"] : $this->cssClass."_focus";
-		$this->m_cssHoverClass = isset($xmlArr["ATTRIBUTES"]["CSSHOVERCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSHOVERCLASS"] : $this->cssClass."_hover";
+		$this->cssFocusClass = isset($xmlArr["ATTRIBUTES"]["CSSFOCUSCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSFOCUSCLASS"] : $this->cssClass."_focus";
+		$this->cssHoverClass = isset($xmlArr["ATTRIBUTES"]["CSSHOVERCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSHOVERCLASS"] : $this->cssClass."_hover";
 		//$this->value = isset($xmlArr["ATTRIBUTES"]["DEFAULTVALUE"]) ? $xmlArr["ATTRIBUTES"]["DEFAULTVALUE"] : null;        
 		$this->readOnly = isset($xmlArr["ATTRIBUTES"]["READONLY"]) ? $xmlArr["ATTRIBUTES"]["READONLY"] : "N";
         $this->selectFrom = isset($xmlArr["ATTRIBUTES"]["SELECTFROM"]) ? $xmlArr["ATTRIBUTES"]["SELECTFROM"] : null;
@@ -142,8 +142,8 @@ class DropDownList extends InputElement
 		}
 		else {
 	        $sHTML .= "<span ID=\"span_$elem_id\"  $this->htmlAttr $style
-						onclick=\"if($('$elem_list_id').visible()){\$('$elem_list_id').hide();\$('$elem_scroll_id').hide();$('$elem_id').className='".$this->cssClass."'}else{\$('$elem_list_id').show();\$('$elem_scroll_id').show();$('$elem_id').className='".$this->m_cssFocusClass."'}\"
-						onmouseover=\"$('span_$elem_id').className='".$this->m_cssHoverClass."'\"
+						onclick=\"if($('$elem_list_id').visible()){\$('$elem_list_id').hide();\$('$elem_scroll_id').hide();$('$elem_id').className='".$this->cssClass."'}else{\$('$elem_list_id').show();\$('$elem_scroll_id').show();$('$elem_id').className='".$this->cssFocusClass."'}\"
+						onmouseover=\"$('span_$elem_id').className='".$this->cssHoverClass."'\"
 						onmouseout=\"$('span_$elem_id').className='".$this->cssClass."'\"
 						>$display_value</span>";
 		}
@@ -154,8 +154,8 @@ class DropDownList extends InputElement
 		}
 		else {
 			$sHTML .= "<INPUT NAME=\"$elem_id\" ID=\"$elem_id\" VALUE=\"" . $display_value . "\" $disabledStr $this->htmlAttr $style 
-						onclick=\"if($('$elem_list_id').visible()){\$('$elem_list_id').hide();\$('$elem_scroll_id').hide();$('$elem_id').className='".$this->cssClass."'}else{\$('$elem_list_id').show();\$('$elem_scroll_id').show();$('$elem_id').className='".$this->m_cssFocusClass."'}\"
-							onmouseover=\"$('span_$elem_id').className='".$this->m_cssHoverClass."'\"
+						onclick=\"if($('$elem_list_id').visible()){\$('$elem_list_id').hide();\$('$elem_scroll_id').hide();$('$elem_id').className='".$this->cssClass."'}else{\$('$elem_list_id').show();\$('$elem_scroll_id').show();$('$elem_id').className='".$this->cssFocusClass."'}\"
+							onmouseover=\"$('span_$elem_id').className='".$this->cssHoverClass."'\"
 							onmouseout=\"$('span_$elem_id').className='".$this->cssClass."'\"
 						/>";
 		}
@@ -173,7 +173,7 @@ if (defined('OPENBIZ_JSLIB_BASE') && OPENBIZ_JSLIB_BASE == 'JQUERY') {
 	);
 	$('#span_$elem_id, #$elem_id').hover(
 		function () {
-			$(this).attr('class','$this->m_cssHoverClass');
+			$(this).attr('class','$this->cssHoverClass');
 		},
 		function () {
 			$(this).attr('class','$this->cssClass');

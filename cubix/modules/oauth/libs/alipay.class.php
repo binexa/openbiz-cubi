@@ -21,9 +21,9 @@ require_once "oauth.class.php";
 class alipay extends oauthClass
 {
 	protected $type='alipay';
-	protected $m_loginUrl;
+	protected $loginUrl;
 	private $akey;
-	private $m_skey;
+	private $skey;
 	private $aliapy_config;
  
 		
@@ -31,7 +31,7 @@ class alipay extends oauthClass
 		parent::__construct();
 		$recArr=$this->getProviderList(); 
 		$this->akey = $recArr['key'];
-		$this->m_skey =$recArr['value'];
+		$this->skey =$recArr['value'];
 		$aliapy_config['partner']      = $recArr['key'];
 		//安全检验码，以数字和字母组成的32位字符
 		$aliapy_config['key']          = $recArr['value'];

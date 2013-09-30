@@ -5,18 +5,18 @@ include_once( 'sina/saetv2.ex.class.php' );
 class sina extends oauthClass
 {
 	protected $type='sina';
-	protected $m_loginUrl;
-	private $m_sina_akey;
-	private $m_sina_skey;
-	private $m_sina;
+	protected $loginUrl;
+	private $sina_akey;
+	private $sina_skey;
+	private $sina;
  
 		
 	public function __construct() {
 		parent::__construct();
 		$recArr=$this->getProviderList(); 
-		$this->m_sina_akey = $recArr['key'];
-		$this->m_sina_skey =$recArr['value']; 
-		$this->m_sina = new SaeTOAuthV2( $this->m_sina_akey , $this->m_sina_skey);
+		$this->sina_akey = $recArr['key'];
+		$this->sina_skey =$recArr['value']; 
+		$this->sina = new SaeTOAuthV2( $this->sina_akey , $this->sina_skey);
 	}
 	
   	function login(){	
@@ -33,7 +33,7 @@ class sina extends oauthClass
 		$keys = array();
 		$keys['code'] = $_REQUEST['code'];
 		$keys['redirect_uri'] = $this->callBack;
-		$token = $this->m_sina->getAccessToken('code', $keys ) ; 
+		$token = $this->sina->getAccessToken('code', $keys ) ; 
 		if(!$token )
 		{
 			throw new Exception('Unknown sina_access_token');
@@ -47,18 +47,18 @@ class sina extends oauthClass
 	}
     /*获取登录页*/
     function getUrl($call_back = null) {
-		if ( empty($this->m_sina_akey) || empty($this->m_sina_skey) )
+		if ( empty($this->sina_akey) || empty($this->sina_skey) )
 		{
 			throw new Exception('Unknown sina_akey');
 			return false;
 		}
-		$this->loginUrl = $this->m_sina->getAuthorizeURL($this->callBack);
+		$this->loginUrl = $this->sina->getAuthorizeURL($this->callBack);
 		return $this->loginUrl;
 	} 
  
 	//用户资料
 	function userInfo($token){
-		$c = new SaeTClientV2( $this->m_sina_akey , $this->m_sina_skey, $token);
+		$c = new SaeTClientV2( $this->sina_akey , $this->sina_skey, $token);
 		
 		$home  = $c->home_timeline(); // done
 		$uid_get = $c->get_uid(); 

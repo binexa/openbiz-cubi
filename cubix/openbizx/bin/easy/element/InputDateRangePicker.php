@@ -50,7 +50,7 @@ class InputDateRangePicker extends InputText {
     public function render() {      
     	$this->cssClass=null;
     	$this->cssErrorClass = null;
-    	$this->m_cssHoverClass = null;   
+    	$this->cssHoverClass = null;   
     	
    		if($this->value!=null){
     		$value = $this->value;

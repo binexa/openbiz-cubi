@@ -12,7 +12,7 @@ class ImageSelector extends OptionElement
         $this->blankOption = isset($xmlArr["ATTRIBUTES"]["BLANKOPTION"]) ? $xmlArr["ATTRIBUTES"]["BLANKOPTION"] : null;
         $this->cssClass = isset($xmlArr["ATTRIBUTES"]["CSSCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSCLASS"] : 'image_selector';
         $this->cssErrorClass = isset($xmlArr["ATTRIBUTES"]["CSSERRORCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSERRORCLASS"] : $this->cssClass . "_error";
-        $this->m_cssFocusClass = isset($xmlArr["ATTRIBUTES"]["CSSFOCUSCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSFOCUSCLASS"] : $this->cssClass . "_focus";
+        $this->cssFocusClass = isset($xmlArr["ATTRIBUTES"]["CSSFOCUSCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSFOCUSCLASS"] : $this->cssClass . "_focus";
     }
 
    
@@ -34,7 +34,7 @@ class ImageSelector extends OptionElement
         if($formobj->errors[$this->objectName]){
 			$func .= "onclick=\"this.className='$this->cssClass'\"";
 		}else{
-			$func .= "onmouseover=\"this.className='$this->m_cssFocusClass'\" onmouseout=\"this.className='$this->cssClass'\"";
+			$func .= "onmouseover=\"this.className='$this->cssFocusClass'\" onmouseout=\"this.className='$this->cssClass'\"";
 		} 
 		
         $sHTML = "<input type=\"hidden\" NAME=\"" . $this->objectName . "\" ID=\"" . $this->objectName ."\" value=\"".$value."\" $disabledStr $this->htmlAttr />";

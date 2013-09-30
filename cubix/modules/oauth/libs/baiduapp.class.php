@@ -8,20 +8,20 @@ class baiduapp extends oauthClass
 
     protected $type = 'baiduapp';
     protected $tokenUrl = 'https://openapi.baidu.com/oauth/2.0/token';
-    protected $m_userUrl = 'https://openapi.baidu.com/rest/2.0/passport/users/getInfo';
+    protected $userUrl = 'https://openapi.baidu.com/rest/2.0/passport/users/getInfo';
     protected $authorizeUrl = 'https://openapi.baidu.com/oauth/2.0/authorize'; //登录验证地址
     protected $loginUrl;
     protected $userPass = 'www.openbiz.cn';
     private $akey;
-    private $m_skey;
-    private $m_suffix = '@baiduaccount';
+    private $skey;
+    private $suffix = '@baiduaccount';
 
     public function __construct()
     {
         parent::__construct();
         $recArr = $this->getProviderList();
         $this->akey = $recArr['key'];
-        $this->m_skey = $recArr['value'];
+        $this->skey = $recArr['value'];
     }
 
     function login()
@@ -43,7 +43,7 @@ class baiduapp extends oauthClass
         //请求参数
         $postfields = array('grant_type' => 'authorization_code',
             'client_id' => $this->akey,
-            'client_secret' => $this->m_skey,
+            'client_secret' => $this->skey,
             'code' => $_REQUEST['code'],
             'redirect_uri' => $this->callBack
         );
@@ -84,14 +84,14 @@ class baiduapp extends oauthClass
         $recinfo = Bizsystem::getSessionContext()->getVar($this->type . '_access_token');
         $postfields = array('access_token' => $recinfo['oauth_token'], 'format' => 'json');
 
-        $user = json_decode(OAuthUtil::Curl_Post($this->m_userUrl, $postfields), true);
+        $user = json_decode(OAuthUtil::Curl_Post($this->userUrl, $postfields), true);
 
         if (!$user) {
             return false;
         }
         $user['id'] = $user['userid'];
         $user['type'] = $this->type;
-        $user['uname'] = $user['username'] . $this->m_suffix;
+        $user['uname'] = $user['username'] . $this->suffix;
         return $user;
     }
 

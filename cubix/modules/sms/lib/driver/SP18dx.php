@@ -7,7 +7,7 @@ class SP18dx extends SPDriver  implements iSMS
 {
 	protected $providerId = 1;
 	protected $type = '18dx';
-	private  $m_url='http://18dx.cn/API/Services.aspx?';
+	private  $url='http://18dx.cn/API/Services.aspx?';
 
  /*
 	官方网：www.18dx.cn
@@ -43,7 +43,7 @@ class SP18dx extends SPDriver  implements iSMS
 		{
 			unset($Param['time']);
 		}
-		$url=$this->m_url.http_build_query($Param); 
+		$url=$this->url.http_build_query($Param); 
 		$recinfo=BizSystem::getService("sms.lib.SmsUtilService")->getHttpResponse($url);
 		parse_str($recinfo,$recArr);
 		if($recArr['errid']!=1)
@@ -67,7 +67,7 @@ class SP18dx extends SPDriver  implements iSMS
 					'user'=>$ProviderInfo['username'],
 					'hashcode'=>strtoupper(md5($ProviderInfo['password']))
 				);
-		$recinfo=BizSystem::getService("sms.lib.SmsUtilService")->curl($this->m_url,$Param);
+		$recinfo=BizSystem::getService("sms.lib.SmsUtilService")->curl($this->url,$Param);
 		$errorInfo=$this->getMsg($recinfo);
 		if($errorInfo)
 		{			

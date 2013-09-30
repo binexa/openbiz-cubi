@@ -16,7 +16,7 @@ class ApplicationInstallerForm extends EasyForm
 	
 	public $installState = false;
 	public $installStateStr;
-	public $m_hasUpagrade = false;
+	public $hasUpagrade = false;
 	public $appIcon;
 	public $appReleaseDate;
 	
@@ -91,8 +91,8 @@ class ApplicationInstallerForm extends EasyForm
         $log = $result['install_log'] ? $result['install_log'] : "Click install button to start.";
 
         $this->installState = $this->getInstallState($repo_uri,$app_id);
-        $this->m_hasUpagrade = $this->hasUpgrade($repo_uri,$app_id);
-        if($this->m_hasUpagrade)
+        $this->hasUpagrade = $this->hasUpgrade($repo_uri,$app_id);
+        if($this->hasUpagrade)
         {
         	$result['install_progress'] = '0';
     		$result['install_download'] = '0';

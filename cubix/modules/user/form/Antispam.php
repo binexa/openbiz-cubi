@@ -40,7 +40,7 @@ class Antispam extends InputElement{
 		$this->spamLevel = isset($xmlArr["ATTRIBUTES"]["SPAMLEVEL"]) ? $xmlArr["ATTRIBUTES"]["SPAMLEVEL"] : 1;
 		$this->cssClass = isset($xmlArr["ATTRIBUTES"]["CSSCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSCLASS"] : "input_text_s";
 		$this->cssErrorClass = isset($xmlArr["ATTRIBUTES"]["CSSERRORCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSERRORCLASS"] : "input_text_s_error";
-		$this->m_cssFocusClass = isset($xmlArr["ATTRIBUTES"]["CSSFOCUSCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSFOCUSCLASS"] : "input_text_s_focus";        
+		$this->cssFocusClass = isset($xmlArr["ATTRIBUTES"]["CSSFOCUSCLASS"]) ? $xmlArr["ATTRIBUTES"]["CSSFOCUSCLASS"] : "input_text_s_focus";        
 	}
 
 	public function render()
@@ -55,7 +55,7 @@ class Antispam extends InputElement{
     	if($formobj->errors[$this->objectName]){
 			$func .= "onchange=\"this.className='$this->cssClass'\"";
 		}else{
-			$func .= "onfocus=\"this.className='$this->m_cssFocusClass'\" onblur=\"this.className='$this->cssClass'\"";
+			$func .= "onfocus=\"this.className='$this->cssFocusClass'\" onblur=\"this.className='$this->cssClass'\"";
 		}        
         $formObj = $this->getFormObj();       
         $this->antiSpamImage = Expression::evaluateExpression($this->antiSpamImage, $formObj);

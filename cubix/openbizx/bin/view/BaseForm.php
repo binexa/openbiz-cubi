@@ -15,7 +15,7 @@ class BaseForm extends MetaObject implements iSessionObject
     // metadata vars are public, necessary for metadata inheritance
     public $title;
     public $icon;
-    public $m_jsClass;
+    public $jsClass;
     public $dataObjName;
 	
 	// FormAction handles actions from client
@@ -101,7 +101,7 @@ class BaseForm extends MetaObject implements iSessionObject
         $this->title = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["TITLE"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["TITLE"] : null;
         $this->icon = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["ICON"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["ICON"] : null;        
         $this->objectDescription = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["DESCRIPTION"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["DESCRIPTION"] : null;
-        $this->m_jsClass = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["JSCLASS"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["JSCLASS"] : null;
+        $this->jsClass = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["JSCLASS"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["JSCLASS"] : null;
         $this->height = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["HEIGHT"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["HEIGHT"] : null;
         $this->width = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["WIDTH"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["WIDTH"] : null;
         $this->templateEngine = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["TEMPLATEENGINE"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["TEMPLATEENGINE"] : null;
@@ -132,8 +132,8 @@ class BaseForm extends MetaObject implements iSessionObject
             $arr = explode (".", $this->access);
             $this->resource = $arr[0];
         }
-		if ($this->m_jsClass == "jbForm" && strtoupper($this->formType) == "LIST") $this->m_jsClass = "Openbiz.TableForm";
-        if ($this->m_jsClass == "jbForm") $this->m_jsClass = "Openbiz.Form";
+		if ($this->jsClass == "jbForm" && strtoupper($this->formType) == "LIST") $this->jsClass = "Openbiz.TableForm";
+        if ($this->jsClass == "jbForm") $this->jsClass = "Openbiz.Form";
         
 		$this->translate();	// translate for multi-language support
     }
@@ -151,7 +151,7 @@ class BaseForm extends MetaObject implements iSessionObject
         $this->title = $this->title ? $this->title : $parentObj->title;
         $this->icon = $this->icon ? $this->icon : $parentObj->icon;        
         $this->objectDescription  = $this->objectDescription ? $this->objectDescription : $parentObj->objectDescription;
-        $this->m_jsClass   = $this->m_jsClass ? $this->m_jsClass : $parentObj->m_jsClass;
+        $this->jsClass   = $this->jsClass ? $this->jsClass : $parentObj->jsClass;
         $this->height   = $this->height ? $this->height : $parentObj->height;
         $this->width   = $this->width ? $this->width : $parentObj->width;
         $this->templateEngine   = $this->templateEngine ? $this->templateEngine : $parentObj->templateEngine;

@@ -38,7 +38,7 @@ class oauthClass extends EasyForm
 	protected $providers;
 	protected $callBack;
  
-	protected $m_oauthProviderDo='oauth.do.OauthProviderDO';
+	protected $oauthProviderDo='oauth.do.OauthProviderDO';
 	
 	
   public function __construct()  
@@ -59,7 +59,7 @@ class oauthClass extends EasyForm
 	  	 $recArr=false;
 		 if(!$recArr)
 			 {
-			 $do=BizSystem::getObject($this->m_oauthProviderDo);
+			 $do=BizSystem::getObject($this->oauthProviderDo);
 			 $recArr=$do->fetchOne("[status]=1 and [type]='{$this->type}'",1);
 			 if($recArr)
 			 {

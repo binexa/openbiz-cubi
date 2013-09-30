@@ -2,8 +2,8 @@
 class OauthProviderForm extends EasyForm
 {
 	protected $type;
-	protected $m_key;
-	protected $m_secret;
+	protected $key;
+	protected $secret;
 
 	public function testAllProvider()
 	{	
@@ -16,8 +16,8 @@ class OauthProviderForm extends EasyForm
 			foreach($recArr as $key=>$val)
 			{	
 				$this->type=$val['type'];
-				$this->m_key=$val['key'];
-				$this->m_secret=$val['value'];
+				$this->key=$val['key'];
+				$this->secret=$val['value'];
 				if(!$this->GetTestOauth())
 				{
 					$ErrorKey[]=$val['Id'];
@@ -57,8 +57,8 @@ class OauthProviderForm extends EasyForm
 					break;
 			}
 			$this->type=$Record['type'];
-			$this->m_key=$Record['key'];
-			$this->m_secret=$Record['value'];
+			$this->key=$Record['key'];
+			$this->secret=$Record['value'];
 		}
 		if(!$Record['Id'])
 		{
@@ -100,8 +100,8 @@ class OauthProviderForm extends EasyForm
 	
 	public function UpdateRecord(){
 		$this->type = BizSystem::ClientProxy()->getFormInputs("fld_type");
-		$this->m_key= BizSystem::ClientProxy()->getFormInputs("fld_key");	
-		$this->m_secret = BizSystem::ClientProxy()->getFormInputs("fld_value");	
+		$this->key= BizSystem::ClientProxy()->getFormInputs("fld_key");	
+		$this->secret = BizSystem::ClientProxy()->getFormInputs("fld_value");	
 		if($this->TestProvider(true))
 		{
 			parent::UpdateRecord();
@@ -126,7 +126,7 @@ class OauthProviderForm extends EasyForm
 		}
 		include_once $oatuthType;
 		$obj = new $this->type;
-		$rec_arr=$obj->test($this->m_key,$this->m_secret);
+		$rec_arr=$obj->test($this->key,$this->secret);
 		if($rec_arr['oauth_token'])
 		{
 			return true;

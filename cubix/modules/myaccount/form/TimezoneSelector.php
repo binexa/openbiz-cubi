@@ -13,17 +13,17 @@
 
 require_once(OPENBIZ_BIN."easy/element/Listbox.php");
 class TimezoneSelector extends Listbox{
-	public $m_continent;
+	public $continent;
 	
 	protected function readMetaData(&$xmlArr){
 		parent::readMetaData($xmlArr);
-		$this->m_continent = isset($xmlArr["ATTRIBUTES"]["CONTINENT"]) ? $xmlArr["ATTRIBUTES"]["CONTINENT"] : "";		
+		$this->continent = isset($xmlArr["ATTRIBUTES"]["CONTINENT"]) ? $xmlArr["ATTRIBUTES"]["CONTINENT"] : "";		
 	}
 	
 	public function getContinent()
 	{
 		$formobj = $this->getFormObj();
-        return Expression::evaluateExpression($this->m_continent, $formobj);
+        return Expression::evaluateExpression($this->continent, $formobj);
 	}
 	
     //public function getList(){

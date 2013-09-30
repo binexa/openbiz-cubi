@@ -200,7 +200,7 @@ class MetaIterator implements Iterator
      * Parent object
      * @var object
      */
-    protected $m_prtObj = null;
+    protected $prtObj = null;
 
     /**
      * Store value
@@ -219,7 +219,7 @@ class MetaIterator implements Iterator
     public function __construct(&$xmlArr, $childClassName, $parentObj = null)
     {
         //if (is_array($array)) $this->var = $array;
-        $this->m_prtObj = $parentObj;
+        $this->prtObj = $parentObj;
         if (!$xmlArr)
             return;
 

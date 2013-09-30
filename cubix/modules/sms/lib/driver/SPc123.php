@@ -7,8 +7,8 @@ class SPc123 extends SPDriver implements iSMS
 {
 	protected $providerId = 2;
 	protected $type = 'c123';
-	private  $m_url='http://http.c123.com/tx/?';
-	private  $m_url_mm='http://http.c123.com/mm/?';
+	private  $url='http://http.c123.com/tx/?';
+	private  $url_mm='http://http.c123.com/mm/?';
 	
 
  /*
@@ -48,7 +48,7 @@ class SPc123 extends SPDriver implements iSMS
 		{
 			unset($Param['time']);
 		}
-		$recinfo=BizSystem::getService("sms.lib.SmsUtilService")->curl($this->m_url,$Param);
+		$recinfo=BizSystem::getService("sms.lib.SmsUtilService")->curl($this->url,$Param);
 		if($recinfo!=100)
 		{				
 			BizSystem::getService(LOG_SERVICE)->log(LOG_ERR,"SMS","sendMessage: ". $content." c123：".$mobile.':'.$recinfo);
@@ -75,8 +75,8 @@ class SPc123 extends SPDriver implements iSMS
 					'pwd'=>strtoupper(md5($ProviderInfo['password'])),
 					'encode'=>'utf8'
 				);
-		//$url=$this->m_url_mm.http_build_query($Param);
-		$recinfo=BizSystem::getService("sms.lib.SmsUtilService")->curl($this->m_url_mm,$Param);
+		//$url=$this->url_mm.http_build_query($Param);
+		$recinfo=BizSystem::getService("sms.lib.SmsUtilService")->curl($this->url_mm,$Param);
 		$recArr=explode('||',$recinfo);
 		if($recArr[0]!=100)
 		{

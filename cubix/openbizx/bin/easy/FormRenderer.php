@@ -36,10 +36,10 @@ class FormRenderer
     {
         $tplEngine = $formObj->templateEngine;
         $tplAttributes = FormRenderer::buildTemplateAttributes($formObj); 
-        if (isset($formObj->m_jsClass)) {
+        if (isset($formObj->jsClass)) {
             $subForms = ($formObj->subForms) ? implode(";", $formObj->subForms) : "";
             if ($formObj->staticOutput != true) {
-                $formScript = "\n<script>Openbiz.newFormObject('$formObj->objectName','$formObj->m_jsClass','$subForms'); </script>\n";
+                $formScript = "\n<script>Openbiz.newFormObject('$formObj->objectName','$formObj->jsClass','$subForms'); </script>\n";
             }
             if ($formObj->autoRefresh > 0) {
                 $formScript .= "\n<script>setTimeout(\"Openbiz.CallFunction('$formObj->objectName.UpdateForm()');\",\"" . ($formObj->autoRefresh * 1000) . "\") </script>\n";

@@ -2,7 +2,7 @@
 require_once OPENBIZ_APP_MODULE_PATH.'/websvc/lib/WebsvcService.php';
 class callbackService extends  WebsvcService
 {
-	protected $m_oauthProviderDo='oauth.do.OauthProviderDO';
+	protected $oauthProviderDo='oauth.do.OauthProviderDO';
 	public function __call($method,$arguments=null)
 	{		
 		$type=BizSystem::ClientProxy()->getRequestParam("type");  
@@ -20,7 +20,7 @@ class callbackService extends  WebsvcService
 		}
 		
 		// $whitelist_arr = BizSystem::getService(CUBI_LOV_SERVICE)->getDictionary("oauth.lov.ProviderLOV(Provider)");
-		$whitelist_arr=BizSystem::getObject($this->m_oauthProviderDo)->fetchOne("[status]=1 and [type]='{$type}'",1);
+		$whitelist_arr=BizSystem::getObject($this->oauthProviderDo)->fetchOne("[status]=1 and [type]='{$type}'",1);
 		if($whitelist_arr)
 		{
 			$whitelist_arr=$whitelist_arr->toArray();
