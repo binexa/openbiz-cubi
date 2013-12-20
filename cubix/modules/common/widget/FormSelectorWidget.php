@@ -69,13 +69,13 @@ class FormSelectorWidget extends EasyForm
 	
     public function loadSessionVars($sessionContext)
     {
-        $sessionContext->getObjVar($this->objectName, "ViewMode", $this->viewMode);
+        $sessionContext->loadObjVar($this->objectName, "ViewMode", $this->viewMode);
         parent::loadSessionVars($sessionContext);
     }
 
     public function saveSessionVars($sessionContext)
     {
-        $sessionContext->setObjVar($this->objectName, "ViewMode", $this->viewMode);
+        $sessionContext->saveObjVar($this->objectName, "ViewMode", $this->viewMode);
         parent::saveSessionVars($sessionContext);
     }	
 }

@@ -26,6 +26,8 @@ define("OPENBIZ_USE_CUSTOM_SESSION_HANDLER",true);
 
 include 'app_init.php';
 
+
+
 $DEFAULT_VIEW = "LoginView";
 $DEFAULT_MODULE = OPENBIZ_CLIENT_DEVICE=='mobile' ? "user_mob" : "user";
 $DEFAULT_URL = "index.php/$DEFAULT_MODULE/login";

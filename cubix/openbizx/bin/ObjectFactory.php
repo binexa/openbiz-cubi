@@ -48,6 +48,9 @@ class ObjectFactory
      */
     public function getObject($objectName, $new=0)
     {
+
+        //BizSystem::clientProxy()->showClientAlert(__METHOD__ . ' | exist : ' . method_exists($obj, "loadSessionVars") );
+        
         if (array_key_exists($objectName, $this->_objsRefMap) && $new==0)
         {
             return $this->_objsRefMap[$objectName];
@@ -58,9 +61,12 @@ class ObjectFactory
             $this->_objsRefMap[$objectName] = $obj; // save object to cache
         
         if($new!=1){
-	        if (method_exists($obj, "GetSessionVars"))
+	        if (method_exists($obj, "loadSessionVars"))
 	            $obj->loadSessionVars(BizSystem::sessionContext());
         }
+
+        
+
         return $obj;
     }
 

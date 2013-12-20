@@ -371,15 +371,15 @@ class DataSharingForm extends EasyForm
 
     public function loadSessionVars($sessionContext)
     {
-        $sessionContext->getObjVar("DataSharingForm", "ParentRecordId", $this->parentRecordId);
-        $sessionContext->getObjVar("DataSharingForm", "ParentFormName", $this->parentFormName);
+        $sessionContext->loadObjVar("DataSharingForm", "ParentRecordId", $this->parentRecordId);
+        $sessionContext->loadObjVar("DataSharingForm", "ParentFormName", $this->parentFormName);
         return parent::loadSessionVars($sessionContext);
     }
 
     public function saveSessionVars($sessionContext)
     {
-        $sessionContext->setObjVar("DataSharingForm", "ParentRecordId", $this->parentRecordId);
-        $sessionContext->setObjVar("DataSharingForm", "ParentFormName", $this->parentFormName);
+        $sessionContext->saveObjVar("DataSharingForm", "ParentRecordId", $this->parentRecordId);
+        $sessionContext->saveObjVar("DataSharingForm", "ParentFormName", $this->parentFormName);
         return parent::saveSessionVars($sessionContext);
     }
 

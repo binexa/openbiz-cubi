@@ -20,14 +20,14 @@ class TranslationForm extends EasyForm
  public function loadSessionVars($sessionContext)
     {
         parent::loadSessionVars($sessionContext);
-    	$sessionContext->getObjVar("Translation", "Lang", $this->lang);
+    	$sessionContext->loadObjVar("Translation", "Lang", $this->lang);
         
     }
 
     public function saveSessionVars($sessionContext)
     {
     	parent::saveSessionVars($sessionContext);
-        $sessionContext->setObjVar("Translation", "Lang", $this->lang);      
+        $sessionContext->saveObjVar("Translation", "Lang", $this->lang);      
     }	
 
         

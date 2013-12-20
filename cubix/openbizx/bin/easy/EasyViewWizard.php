@@ -42,8 +42,8 @@ class EasyViewWizard extends EasyView
      */
     public function loadSessionVars($sessionContext)
     {
-        $sessionContext->getObjVar($this->objectName, "FormStates", $this->formStates, true);
-        $sessionContext->getObjVar($this->objectName, "CurrentStep", $this->currentStep, true);
+        $sessionContext->loadObjVar($this->objectName, "FormStates", $this->formStates, true);
+        $sessionContext->loadObjVar($this->objectName, "CurrentStep", $this->currentStep, true);
     }
 
     /**
@@ -57,8 +57,8 @@ class EasyViewWizard extends EasyView
         if ($this->dropSession){
             $sessionContext->cleanObj($this->objectName, true);
         }else{
-            $sessionContext->setObjVar($this->objectName, "FormStates", $this->formStates, true);
-            $sessionContext->setObjVar($this->objectName, "CurrentStep", $this->currentStep, true);
+            $sessionContext->saveObjVar($this->objectName, "FormStates", $this->formStates, true);
+            $sessionContext->saveObjVar($this->objectName, "CurrentStep", $this->currentStep, true);
         }
         
     }

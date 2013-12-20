@@ -28,17 +28,17 @@ class BackupForm extends EasyForm
 	
 	public function loadSessionVars($sessionContext)
     {
-        $sessionContext->getObjVar("backup.form.BackupForms", "LocationId", $this->locationId);
-        $sessionContext->getObjVar("backup.form.BackupForms", "LocationName", $this->locationName);
-        $sessionContext->getObjVar("backup.form.BackupForms", "Folder", $this->folder);
+        $sessionContext->loadObjVar("backup.form.BackupForms", "LocationId", $this->locationId);
+        $sessionContext->loadObjVar("backup.form.BackupForms", "LocationName", $this->locationName);
+        $sessionContext->loadObjVar("backup.form.BackupForms", "Folder", $this->folder);
         return parent::loadSessionVars($sessionContext);
     }
  
     public function saveSessionVars($sessionContext)
     {
-        $sessionContext->setObjVar("backup.form.BackupForms", "LocationId", $this->locationId);
-        $sessionContext->setObjVar("backup.form.BackupForms", "LocationName", $this->locationName);
-        $sessionContext->setObjVar("backup.form.BackupForms", "Folder", $this->folder);
+        $sessionContext->saveObjVar("backup.form.BackupForms", "LocationId", $this->locationId);
+        $sessionContext->saveObjVar("backup.form.BackupForms", "LocationName", $this->locationName);
+        $sessionContext->saveObjVar("backup.form.BackupForms", "Folder", $this->folder);
         return parent::saveSessionVars($sessionContext);
     }
     

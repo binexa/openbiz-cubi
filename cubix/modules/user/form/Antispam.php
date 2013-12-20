@@ -24,7 +24,7 @@ class Antispam extends InputElement{
     		return true;
     	}
     	$formobj = $this->GetFormObj();       	     
-        BizSystem::sessionContext()->getObjVar($formobj->objectName, $this->objectName,$orgValue);
+        BizSystem::sessionContext()->loadObjVar($formobj->objectName, $this->objectName,$orgValue);
         $inputValue = strtoupper($this->getValue());
 		if($inputValue==$orgValue) {
 			return true;

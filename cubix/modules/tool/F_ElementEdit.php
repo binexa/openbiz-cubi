@@ -12,18 +12,18 @@ class F_ElementEdit extends EasyForm
         parent::loadSessionVars($sessCtxt);
         
         if (!$_GET['metaName']) 
-            $sessCtxt->getObjVar($this->objectName, "MetaFile", $this->metaFile);
+            $sessCtxt->loadObjVar($this->objectName, "MetaFile", $this->metaFile);
         else {
         	$metaFile = OPENBIZ_APP_MODULE_PATH."/".str_replace(".","/",$_GET['metaName']).".xml";
         	$this->metaFile = $metaFile;
         }
         if (!$_GET['elemPath']) 
-            $sessCtxt->getObjVar($this->objectName, "ElemPath", $this->elemPath);
+            $sessCtxt->loadObjVar($this->objectName, "ElemPath", $this->elemPath);
         else
             $this->elemPath = $this->adjustElemPath($_GET['elemPath']);
         //echo $_GET['elemPath'].','.$this->elemPath; exit;
         if (!$_GET['attrName']) 
-            $sessCtxt->getObjVar($this->objectName, "AttrName", $this->attrName);
+            $sessCtxt->loadObjVar($this->objectName, "AttrName", $this->attrName);
         else
             $this->attrName = $_GET['attrName'];
     }
@@ -44,9 +44,9 @@ class F_ElementEdit extends EasyForm
     public function saveSessionVars($sessCtxt) 
     {
         parent::saveSessionVars($sessCtxt);
-        $sessCtxt->setObjVar($this->objectName, "MetaFile", $this->metaFile);
-        $sessCtxt->setObjVar($this->objectName, "ElemPath", $this->elemPath);
-        $sessCtxt->setObjVar($this->objectName, "AttrName", $this->attrName);
+        $sessCtxt->saveObjVar($this->objectName, "MetaFile", $this->metaFile);
+        $sessCtxt->saveObjVar($this->objectName, "ElemPath", $this->elemPath);
+        $sessCtxt->saveObjVar($this->objectName, "AttrName", $this->attrName);
     }
     
     public function getCurrentElement()

@@ -54,6 +54,7 @@ class BizSystem
     private static $_instance = null;
     
     private static $_classNameCache = array();
+    public $isInitialized = false;
 
     /**
      * Create instant of BizSystem

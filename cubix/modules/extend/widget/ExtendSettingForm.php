@@ -18,13 +18,13 @@ class ExtendSettingForm extends EasyForm
 	
 	public function loadSessionVars($sessionContext)
     {
-        $sessionContext->getObjVar($this->objectName, "ParentFormElementMeta", $this->parentFormElementMeta);
+        $sessionContext->loadObjVar($this->objectName, "ParentFormElementMeta", $this->parentFormElementMeta);
         return parent::loadSessionVars($sessionContext);
     }
 
     public function saveSessionVars($sessionContext)
     {
-        $sessionContext->setObjVar($this->objectName, "ParentFormElementMeta", $this->parentFormElementMeta);
+        $sessionContext->saveObjVar($this->objectName, "ParentFormElementMeta", $this->parentFormElementMeta);
         return parent::saveSessionVars($sessionContext);       
     }
 

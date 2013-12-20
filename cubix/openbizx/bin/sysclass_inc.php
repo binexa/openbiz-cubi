@@ -424,7 +424,7 @@ class Parameter
 }
 
 /**
- * iSessionObject interface - stateful metadata-driven classed need to implement SetSessionVars and GetSessionVars
+ * iSessionObject interface - stateful metadata-driven classed need to implement saveSessionVars and loadSessionVars
  *
  * @package   openbiz.bin
  * @author    Rocky Swen

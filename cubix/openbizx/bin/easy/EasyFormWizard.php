@@ -42,8 +42,8 @@ class EasyFormWizard extends EasyForm
     public function loadSessionVars($sessionContext)
     {
     	parent::loadSessionVars($sessionContext);
-        $sessionContext->getObjVar($this->objectName, "ActiveRecord", $this->activeRecord, true);
-        $sessionContext->getObjVar($this->objectName, "FormInputs", $this->formInputs, true);
+        $sessionContext->loadObjVar($this->objectName, "ActiveRecord", $this->activeRecord, true);
+        $sessionContext->loadObjVar($this->objectName, "FormInputs", $this->formInputs, true);
         $this->setActiveRecord($this->activeRecord);
     }
 
@@ -65,8 +65,8 @@ class EasyFormWizard extends EasyForm
             $sessionContext->cleanObj($this->objectName, true);
         else {
         	parent::saveSessionVars($sessionContext);
-            $sessionContext->setObjVar($this->objectName, "ActiveRecord", $this->activeRecord, true);
-            $sessionContext->setObjVar($this->objectName, "FormInputs", $this->formInputs, true);
+            $sessionContext->saveObjVar($this->objectName, "ActiveRecord", $this->activeRecord, true);
+            $sessionContext->saveObjVar($this->objectName, "FormInputs", $this->formInputs, true);
         }
     }
 

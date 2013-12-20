@@ -37,18 +37,18 @@ class LicenseForm extends EasyForm
     public function saveSessionVars($sessionContext)
     {
         if ($this->errorParams) {
-            $sessionContext->setObjVar("common.form.LicenseForm", "SourceURL", $this->sourceURL);
-            $sessionContext->setObjVar("common.form.LicenseForm", "ErrorCode", $this->errorCode);
-            $sessionContext->setObjVar("common.form.LicenseForm", "ErrorParams", $this->errorParams);
+            $sessionContext->saveObjVar("common.form.LicenseForm", "SourceURL", $this->sourceURL);
+            $sessionContext->saveObjVar("common.form.LicenseForm", "ErrorCode", $this->errorCode);
+            $sessionContext->saveObjVar("common.form.LicenseForm", "ErrorParams", $this->errorParams);
         }
         parent::saveSessionVars($sessionContext);
     }
 
     public function loadSessionVars($sessionContext)
     {
-        $sessionContext->getObjVar("common.form.LicenseForm", "SourceURL", $this->sourceURL);
-        $sessionContext->getObjVar("common.form.LicenseForm", "ErrorCode", $this->errorCode);
-        $sessionContext->getObjVar("common.form.LicenseForm", "ErrorParams", $this->errorParams);
+        $sessionContext->loadObjVar("common.form.LicenseForm", "SourceURL", $this->sourceURL);
+        $sessionContext->loadObjVar("common.form.LicenseForm", "ErrorCode", $this->errorCode);
+        $sessionContext->loadObjVar("common.form.LicenseForm", "ErrorParams", $this->errorParams);
         parent::loadSessionVars($sessionContext);
     }
 

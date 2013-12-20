@@ -278,6 +278,8 @@ class ClientProxy
      */
     public function showErrorMessage ($errMsg, $flush=false)
     {
+        echo $errMsg;
+        return;
         if(!$errMsg){    		
     		return;
     	}
@@ -344,7 +346,8 @@ class ClientProxy
     private function _errorOutput ($errMsg)
     {
         //ob_clean();
-        if(defined('OPENBIZ_INTERNAL_ERROR_VIEW')){
+        //BizSystem::instance()->isInitialized = false;
+        if (defined('OPENBIZ_INTERNAL_ERROR_VIEW') && BizSystem::instance()->isInitialized ){
         	//render the view
         	$_GET['ob_err_msg']=$errMsg; 
         	ob_end_clean();

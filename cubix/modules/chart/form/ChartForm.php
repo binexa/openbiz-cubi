@@ -24,15 +24,15 @@ class ChartForm extends EasyForm
 
     public function loadSessionVars($sessionContext)
     {    	
-    	$sessionContext->getObjVar($this->objectName, "CategoryId", $this->categoryId);
-        $sessionContext->getObjVar($this->objectName, "SubType", $this->subType);
+    	$sessionContext->loadObjVar($this->objectName, "CategoryId", $this->categoryId);
+        $sessionContext->loadObjVar($this->objectName, "SubType", $this->subType);
         return parent::loadSessionVars($sessionContext);
     }
 
     public function saveSessionVars($sessionContext)
     {
-    	$sessionContext->setObjVar($this->objectName, "CategoryId", $this->categoryId);
-        $sessionContext->setObjVar($this->objectName, "SubType", $this->subType);
+    	$sessionContext->saveObjVar($this->objectName, "CategoryId", $this->categoryId);
+        $sessionContext->saveObjVar($this->objectName, "SubType", $this->subType);
         return parent::saveSessionVars($sessionContext);        
     }    
 	

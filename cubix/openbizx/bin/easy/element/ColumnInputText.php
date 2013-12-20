@@ -41,7 +41,7 @@ class ColumnInputText extends InputElement
 	
 	public function setValue($value)
 	{
-		BizSystem::sessionContext()->getObjVar($this->getFormObj()->objectName, $this->objectName, $this->value);
+		BizSystem::sessionContext()->loadObjVar($this->getFormObj()->objectName, $this->objectName, $this->value);
 		$valueArr = $_POST[$this->objectName];
 		if(is_array($valueArr))
 		{
@@ -50,7 +50,7 @@ class ColumnInputText extends InputElement
 				$this->value[$key] = $value;
 			}
 		}
-		BizSystem::sessionContext()->setObjVar($this->getFormObj()->objectName, $this->objectName, $this->value);
+		BizSystem::sessionContext()->saveObjVar($this->getFormObj()->objectName, $this->objectName, $this->value);
 	}
 	
 	public function renderLabel()

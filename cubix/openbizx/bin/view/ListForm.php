@@ -59,14 +59,14 @@ class ListForm extends BaseForm
      */
     public function loadSessionVars($sessionContext)
     {
-        $sessionContext->getObjVar($this->objectName, "RecordId", $this->recordId);
-        $sessionContext->getObjVar($this->objectName, "FixSearchRule", $this->fixSearchRule);
-        $sessionContext->getObjVar($this->objectName, "SearchRule", $this->searchRule);
-        $sessionContext->getObjVar($this->objectName, "SearchRuleBindValues", $this->searchRuleBindValues);
-        $sessionContext->getObjVar($this->objectName, "SubForms", $this->subForms);
-        $sessionContext->getObjVar($this->objectName, "CurrentPage", $this->currentPage);
-        $sessionContext->getObjVar($this->objectName, "PageSize", $this->range);
-        $sessionContext->getObjVar($this->objectName, "SearchPanelValues", $this->searchPanelValues);
+        $sessionContext->loadObjVar($this->objectName, "RecordId", $this->recordId);
+        $sessionContext->loadObjVar($this->objectName, "FixSearchRule", $this->fixSearchRule);
+        $sessionContext->loadObjVar($this->objectName, "SearchRule", $this->searchRule);
+        $sessionContext->loadObjVar($this->objectName, "SearchRuleBindValues", $this->searchRuleBindValues);
+        $sessionContext->loadObjVar($this->objectName, "SubForms", $this->subForms);
+        $sessionContext->loadObjVar($this->objectName, "CurrentPage", $this->currentPage);
+        $sessionContext->loadObjVar($this->objectName, "PageSize", $this->range);
+        $sessionContext->loadObjVar($this->objectName, "SearchPanelValues", $this->searchPanelValues);
     }
 
     /**
@@ -77,14 +77,14 @@ class ListForm extends BaseForm
      */
     public function saveSessionVars($sessionContext)
     {
-        $sessionContext->setObjVar($this->objectName, "RecordId", $this->recordId);
-        $sessionContext->setObjVar($this->objectName, "FixSearchRule", $this->fixSearchRule);
-        $sessionContext->setObjVar($this->objectName, "SearchRule", $this->searchRule);        
-        $sessionContext->setObjVar($this->objectName, "SearchRuleBindValues", $this->searchRuleBindValues);
-        $sessionContext->setObjVar($this->objectName, "SubForms", $this->subForms);
-        $sessionContext->setObjVar($this->objectName, "CurrentPage", $this->currentPage);
-        $sessionContext->setObjVar($this->objectName, "PageSize", $this->range);
-        $sessionContext->setObjVar($this->objectName, "SearchPanelValues", $this->searchPanelValues);        
+        $sessionContext->saveObjVar($this->objectName, "RecordId", $this->recordId);
+        $sessionContext->saveObjVar($this->objectName, "FixSearchRule", $this->fixSearchRule);
+        $sessionContext->saveObjVar($this->objectName, "SearchRule", $this->searchRule);        
+        $sessionContext->saveObjVar($this->objectName, "SearchRuleBindValues", $this->searchRuleBindValues);
+        $sessionContext->saveObjVar($this->objectName, "SubForms", $this->subForms);
+        $sessionContext->saveObjVar($this->objectName, "CurrentPage", $this->currentPage);
+        $sessionContext->saveObjVar($this->objectName, "PageSize", $this->range);
+        $sessionContext->saveObjVar($this->objectName, "SearchPanelValues", $this->searchPanelValues);        
     }
 	
 	/**

@@ -18,13 +18,13 @@ class MenuForm extends EasyForm
    
    	public function loadSessionVars($sessCtxt)
 	{
-      $sessCtxt->getObjVar($this->objectName, "DirectParent", $this->_directParentId);
+      $sessCtxt->loadObjVar($this->objectName, "DirectParent", $this->_directParentId);
       parent::loadSessionVars($sessCtxt);
 	}
 	
    	public function saveSessionVars($sessCtxt)
 	{
-      $sessCtxt->setObjVar($this->objectName, "DirectParent", $this->_directParentId);
+      $sessCtxt->saveObjVar($this->objectName, "DirectParent", $this->_directParentId);
       parent::saveSessionVars($sessCtxt);
 	}
 	

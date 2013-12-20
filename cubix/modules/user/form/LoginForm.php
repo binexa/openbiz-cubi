@@ -104,7 +104,7 @@ class LoginForm extends EasyForm
 
     public function loadSessionVars($sessionContext)
     {
-        $sessionContext->getObjVar("SYSTEM", "LastViewedPage", $this->lastViewedPage);
+        $sessionContext->loadObjVar("SYSTEM", "LastViewedPage", $this->lastViewedPage);
         parent::loadSessionVars($sessionContext);
     }
 

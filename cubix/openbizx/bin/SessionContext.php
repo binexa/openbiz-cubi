@@ -24,7 +24,7 @@ define('OB_TRANSIENT_DATA_SESSION_INDEX', 'ob_transient_data');
 /**
  * SessionContext class is Session management class that has additional methods
  * to save/get session variables of metadata based stateful objects
- * through their GetSessionVars|SetSessionVars interfaces
+ * through their loadSessionVars|saveSessionVars interfaces
  *
  * @package   openbiz.bin
  * @author    Rocky Swen <rocky@phpopenbiz.org>
@@ -172,7 +172,7 @@ class SessionContext
      * @param boolean $stateful - is stateful?
      * @return void
      **/
-    public function setObjVar($objName, $varName, &$value, $stateful=false )
+    public function saveObjVar($objName, $varName, &$value, $stateful=false )
     {
     	if(preg_match('/\./si',$objName)){
         	$objName = $this->getNamespace().'#'.$objName;
@@ -210,9 +210,12 @@ class SessionContext
      * @param boolean $stateful - is stateful?
      * @return void
      */
-    public function getObjVar($objName, $varName, &$value, $stateful=false)
+    public function loadObjVar($objName, $varName, &$value, $stateful=false)
     {
-    	if(preg_match('/\./si',$objName)){
+        //BizSystem::log(LOG_ALERT, __METHOD__, ' | name : ' . $varName . ' | value : ' . $value);
+        //BizSystem::clientProxy()->showClientAlert( __METHOD__ . ' | name : ' . $varName . ' | value : ' . $value);
+
+        if(preg_match('/\./si',$objName)){
         	$objName = $this->getNamespace().'#'.$objName;
     	}
         if (!$stateful)
@@ -229,6 +232,7 @@ class SessionContext
             if (isset($this->_statefulSessObjArr[$objName][$varName]))
                 $value = $this->_statefulSessObjArr[$objName][$varName];
         }
+        
     }
 
     /**
@@ -242,7 +246,7 @@ class SessionContext
         $allobjs = BizSystem::objectFactory()->getAllObjects();
         foreach ($allobjs as $obj)
         {
-            if (method_exists($obj, "SetSessionVars"))
+            if (method_exists($obj, "saveSessionVars"))
             {
                 //after calling $obj->saveSessionVars SessObjArr and StatefulSessObjArr are filled
                 $obj->saveSessionVars($this);

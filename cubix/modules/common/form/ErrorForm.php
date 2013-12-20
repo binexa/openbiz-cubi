@@ -16,21 +16,22 @@ class ErrorForm extends EasyForm
 		protected $isShowError = false;
 	    function __construct(&$xmlArr)
 	    {
-	        parent::readMetadata($xmlArr);     
+	        parent::readMetadata($xmlArr);
+
 	    }        
 
 	    public function loadSessionVars($sessionContext)
 	    {
 	        parent::loadSessionVars($sessionContext);
-	        $sessionContext->getObjVar($this->objectName, "Errors", $this->errors);	  
-	        $sessionContext->getObjVar($this->objectName, "showError", $this->isShowError);      	          
+	        $sessionContext->loadObjVar($this->objectName, "Errors", $this->errors);	  
+	        $sessionContext->loadObjVar($this->objectName, "showError", $this->isShowError);      	          
 	    }    
 	    
 	    public function saveSessionVars($sessionContext)
 	    {
 	    	parent::saveSessionVars($sessionContext);
-	        $sessionContext->setObjVar($this->objectName, "Errors", $this->errors);   
-	        $sessionContext->setObjVar($this->objectName, "showError", $this->isShowError);   
+	        $sessionContext->saveObjVar($this->objectName, "Errors", $this->errors);   
+	        $sessionContext->saveObjVar($this->objectName, "showError", $this->isShowError);   
 	    }
 	    
 	    public function getViewObject()
@@ -44,6 +45,7 @@ class ErrorForm extends EasyForm
 	    	if($_GET['ob_err_msg'])
         	{
 				$this->errors = array("system"=>$_GET['ob_err_msg']);
+               // $this->errors['system']="asas a ";
         	}	 
 	    	return parent::fetchData();
 	    }
@@ -85,4 +87,4 @@ class ErrorForm extends EasyForm
         	$this->ReRender();
         }
 }
-?>
+

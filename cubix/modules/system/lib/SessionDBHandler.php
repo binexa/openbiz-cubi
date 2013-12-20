@@ -184,4 +184,4 @@ CREATE TABLE IF NOT EXISTS `session` (
   KEY `expiration` (`expiration`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 */
-?>
+

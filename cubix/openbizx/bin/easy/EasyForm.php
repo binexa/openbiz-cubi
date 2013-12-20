@@ -178,13 +178,13 @@ class EasyForm extends MetaObject implements iSessionObject
 		$this->defaultFixSearchRule = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["SEARCHRULE"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["SEARCHRULE"] : null;
         
         $this->objectName = $this->prefixPackage($this->objectName);
-        if ($this->inheritFrom == '@sourceMeta') $this->inheritFrom = '@'.$this->objectName;
+        if ($this->inheritFrom == '@sourceMeta') { $this->inheritFrom = '@'.$this->objectName; }
         else $this->inheritFrom = $this->prefixPackage($this->inheritFrom);
         $this->dataObjName = $this->prefixPackage($xmlArr["EASYFORM"]["ATTRIBUTES"]["BIZDATAOBJ"]);
 
-        if (isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["DIRECTMETHOD"]))
+        if (isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["DIRECTMETHOD"])) {
             $this->directMethodList = explode(",", strtolower(str_replace(" ", "",$xmlArr["EASYFORM"]["ATTRIBUTES"]["DIRECTMETHOD"])));
-
+        }
         $this->dataPanel = new Panel($xmlArr["EASYFORM"]["DATAPANEL"]["ELEMENT"],"",$this);
         $this->actionPanel = new Panel($xmlArr["EASYFORM"]["ACTIONPANEL"]["ELEMENT"],"",$this);
         $this->navPanel = new Panel($xmlArr["EASYFORM"]["NAVPANEL"]["ELEMENT"],"",$this);
@@ -204,6 +204,7 @@ class EasyForm extends MetaObject implements iSessionObject
         $this->startItem = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["STARTITEM"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["STARTITEM"] : 1;
 
         $this->autoRefresh = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["AUTOREFRESH"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["AUTOREFRESH"] : 0;
+        $this->stateless = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["AUTOREFRESH"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["STATELESS"] : 0;
         
         // parse access
         if ($this->access)
@@ -211,8 +212,10 @@ class EasyForm extends MetaObject implements iSessionObject
             $arr = explode (".", $this->access);
             $this->resource = $arr[0];
         }
-        if ($this->jsClass == "jbForm" && strtoupper($this->formType) == "LIST") $this->jsClass = "Openbiz.TableForm";
-        if ($this->jsClass == "jbForm") $this->jsClass = "Openbiz.Form";
+        if ($this->jsClass == "jbForm" && strtoupper($this->formType) == "LIST") {
+            $this->jsClass = "Openbiz.TableForm";
+        }
+        if ($this->jsClass == "jbForm") { $this->jsClass = "Openbiz.Form"; }
         
 		$this->translate();	// translate for multi-language support
     }
@@ -345,17 +348,17 @@ class EasyForm extends MetaObject implements iSessionObject
      */
     public function loadSessionVars($sessionContext)
     {
-        $sessionContext->getObjVar($this->objectName, "RecordId", $this->recordId);
-        $sessionContext->getObjVar($this->objectName, "FixSearchRule", $this->fixSearchRule);
-        $sessionContext->getObjVar($this->objectName, "SearchRule", $this->searchRule);
-        $sessionContext->getObjVar($this->objectName, "QueryParams", $this->queryParams);
-        $sessionContext->getObjVar($this->objectName, "SubForms", $this->subForms);
-        $sessionContext->getObjVar($this->objectName, "ParentFormName", $this->parentFormName);
-        $sessionContext->getObjVar($this->objectName, "DefaultFormName", $this->defaultFormName);
-        $sessionContext->getObjVar($this->objectName, "CurrentPage", $this->currentPage);
-        $sessionContext->getObjVar($this->objectName, "PageSize", $this->range);
-        $sessionContext->getObjVar($this->objectName, "ReferenceFormName", $this->referenceFormName);
-        $sessionContext->getObjVar($this->objectName, "SearchPanelValues", $this->searchPanelValues);
+        $sessionContext->loadObjVar($this->objectName, "RecordId", $this->recordId);
+        $sessionContext->loadObjVar($this->objectName, "FixSearchRule", $this->fixSearchRule);
+        $sessionContext->loadObjVar($this->objectName, "SearchRule", $this->searchRule);
+        $sessionContext->loadObjVar($this->objectName, "QueryParams", $this->queryParams);
+        $sessionContext->loadObjVar($this->objectName, "SubForms", $this->subForms);
+        $sessionContext->loadObjVar($this->objectName, "ParentFormName", $this->parentFormName);
+        $sessionContext->loadObjVar($this->objectName, "DefaultFormName", $this->defaultFormName);
+        $sessionContext->loadObjVar($this->objectName, "CurrentPage", $this->currentPage);
+        $sessionContext->loadObjVar($this->objectName, "PageSize", $this->range);
+        $sessionContext->loadObjVar($this->objectName, "ReferenceFormName", $this->referenceFormName);
+        $sessionContext->loadObjVar($this->objectName, "SearchPanelValues", $this->searchPanelValues);
     }
 
     /**
@@ -366,17 +369,17 @@ class EasyForm extends MetaObject implements iSessionObject
      */
     public function saveSessionVars($sessionContext)
     {
-        $sessionContext->setObjVar($this->objectName, "RecordId", $this->recordId);
-        $sessionContext->setObjVar($this->objectName, "FixSearchRule", $this->fixSearchRule);
-        $sessionContext->setObjVar($this->objectName, "SearchRule", $this->searchRule);        
-        $sessionContext->setObjVar($this->objectName, "QueryParams", $this->queryParams);
-        $sessionContext->setObjVar($this->objectName, "SubForms", $this->subForms);
-        $sessionContext->setObjVar($this->objectName, "ParentFormName", $this->parentFormName);
-        $sessionContext->setObjVar($this->objectName, "DefaultFormName", $this->defaultFormName);
-        $sessionContext->setObjVar($this->objectName, "CurrentPage", $this->currentPage);
-        $sessionContext->setObjVar($this->objectName, "PageSize", $this->range);
-        $sessionContext->setObjVar($this->objectName, "ReferenceFormName", $this->referenceFormName);
-        $sessionContext->setObjVar($this->objectName, "SearchPanelValues", $this->searchPanelValues);        
+        $sessionContext->saveObjVar($this->objectName, "RecordId", $this->recordId);
+        $sessionContext->saveObjVar($this->objectName, "FixSearchRule", $this->fixSearchRule);
+        $sessionContext->saveObjVar($this->objectName, "SearchRule", $this->searchRule);        
+        $sessionContext->saveObjVar($this->objectName, "QueryParams", $this->queryParams);
+        $sessionContext->saveObjVar($this->objectName, "SubForms", $this->subForms);
+        $sessionContext->saveObjVar($this->objectName, "ParentFormName", $this->parentFormName);
+        $sessionContext->saveObjVar($this->objectName, "DefaultFormName", $this->defaultFormName);
+        $sessionContext->saveObjVar($this->objectName, "CurrentPage", $this->currentPage);
+        $sessionContext->saveObjVar($this->objectName, "PageSize", $this->range);
+        $sessionContext->saveObjVar($this->objectName, "ReferenceFormName", $this->referenceFormName);
+        $sessionContext->saveObjVar($this->objectName, "SearchPanelValues", $this->searchPanelValues);        
     }
 
     /**
@@ -1069,6 +1072,7 @@ class EasyForm extends MetaObject implements iSessionObject
             $isSearchHelperLoaded = true;
         }
         $searchRule = "";
+        $this->queryParams = array();
         foreach ($this->searchPanel as $element)
         {
             $searchStr = '';

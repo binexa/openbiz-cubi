@@ -6,12 +6,12 @@ class MyProfileView extends EasyView
 
     public function loadSessionVars($sessionContext)
     {
-        $sessionContext->getObjVar($this->objectName, "ForceCompeleteProfile", $this->forceCompeleteProfile);        
+        $sessionContext->loadObjVar($this->objectName, "ForceCompeleteProfile", $this->forceCompeleteProfile);        
     }
 
     public function saveSessionVars($sessionContext)
     {       
-        $sessionContext->setObjVar($this->objectName, "ForceCompeleteProfile", $this->forceCompeleteProfile);
+        $sessionContext->saveObjVar($this->objectName, "ForceCompeleteProfile", $this->forceCompeleteProfile);
     }	
     
     public function isForceCompeleteProfile()

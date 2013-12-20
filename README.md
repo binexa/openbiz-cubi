@@ -20,7 +20,7 @@ Roadmap
   - change Constants:
         + give prefix OPENBIZ if use in framework directory (openbizx)
         + give prefix CUBI if only used in CUBI (out side of openbiz directory)
-        + give PATH (word) for file system and URL for web system.
+        + give PATH for file system and URL for web system.
   - Remove "m_" character from variable name
         + $varName
         + ->varName
@@ -40,7 +40,7 @@ Roadmap
 
 
 
-We are still looking for more good architecture for Openbizx CubiX.
+We are still looking for more good architecture for Openbizx Cubi.
 
 Of course , contributor welcome.
 

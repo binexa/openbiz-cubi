@@ -18,7 +18,7 @@ class AccessDenyForm extends EasyForm
     public function saveSessionVars($sessionContext)
     {
     	$current_url = $this->getUrlAddress();
-		$sessionContext->setObjVar("SYSTEM", "LastViewedPage", $current_url);
+		$sessionContext->saveObjVar("SYSTEM", "LastViewedPage", $current_url);
 		parent::saveSessionVars($sessionContext);
     }
     

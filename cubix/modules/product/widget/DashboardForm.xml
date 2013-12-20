@@ -10,7 +10,7 @@
 		Description="Product manage module is a shared module of Cubi Platform. \nYou can use this module manage product class information" 
 		Class="menu.widget.MenuWidget" 
 		CssCLass="product" 
-		BizDataObj="menu.do.MenuTreeDO" 
+		BizDataObj="xmenu.do.MenuTreeDO"
 		SearchRule="[PId]='product'" 
 		GlobalSearchRule="[published] = 1" 
 		MenuDeep="2" 

@@ -72,11 +72,11 @@ class BizDataObj_Lite extends BizDataObj_Abstract
     {
         if ($this->stateless == "Y")
             return;
-        $sessionContext->getObjVar($this->objectName, "RecordId", $this->recordId);
-        $sessionContext->getObjVar($this->objectName, "SearchRule", $this->searchRule);
-        $sessionContext->getObjVar($this->objectName, "SortRule", $this->sortRule);
-        $sessionContext->getObjVar($this->objectName, "OtherSqlRule", $this->otherSQLRule);
-        $sessionContext->getObjVar($this->objectName, "Association", $this->association);
+        $sessionContext->loadObjVar($this->objectName, "RecordId", $this->recordId);
+        $sessionContext->loadObjVar($this->objectName, "SearchRule", $this->searchRule);
+        $sessionContext->loadObjVar($this->objectName, "SortRule", $this->sortRule);
+        $sessionContext->loadObjVar($this->objectName, "OtherSqlRule", $this->otherSQLRule);
+        $sessionContext->loadObjVar($this->objectName, "Association", $this->association);
     }
 
     /**
@@ -89,12 +89,12 @@ class BizDataObj_Lite extends BizDataObj_Abstract
     {
         if ($this->stateless == "Y")
             return;
-        $sessionContext->setObjVar($this->objectName, "RecordId", $this->recordId);
-        $sessionContext->setObjVar($this->objectName, "SearchRule", $this->searchRule);
-        $sessionContext->setObjVar($this->objectName, "SortRule", $this->sortRule);
-        $sessionContext->setObjVar($this->objectName, "OtherSqlRule", $this->otherSQLRule);
+        $sessionContext->saveObjVar($this->objectName, "RecordId", $this->recordId);
+        $sessionContext->saveObjVar($this->objectName, "SearchRule", $this->searchRule);
+        $sessionContext->saveObjVar($this->objectName, "SortRule", $this->sortRule);
+        $sessionContext->saveObjVar($this->objectName, "OtherSqlRule", $this->otherSQLRule);
         if(is_array($this->association)){
-        	$sessionContext->setObjVar($this->objectName, "Association", $this->association);
+        	$sessionContext->saveObjVar($this->objectName, "Association", $this->association);
         }
     }
 

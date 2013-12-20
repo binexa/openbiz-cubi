@@ -46,9 +46,9 @@ class PickerForm extends EasyForm
     public function loadSessionVars($sessionContext)
     {
         parent::loadSessionVars($sessionContext);
-        $sessionContext->getObjVar($this->objectName, "ParentFormElemName", $this->parentFormElemName);
-        $sessionContext->getObjVar($this->objectName, "PickerMap", $this->pickerMap);
-        $sessionContext->getObjVar($this->objectName, "ParentFormRecord", $this->parentFormRecord);
+        $sessionContext->loadObjVar($this->objectName, "ParentFormElemName", $this->parentFormElemName);
+        $sessionContext->loadObjVar($this->objectName, "PickerMap", $this->pickerMap);
+        $sessionContext->loadObjVar($this->objectName, "ParentFormRecord", $this->parentFormRecord);
     }
 
     /**
@@ -60,9 +60,9 @@ class PickerForm extends EasyForm
     public function saveSessionVars($sessionContext)
     {
         parent::saveSessionVars($sessionContext);
-        $sessionContext->setObjVar($this->objectName, "ParentFormElemName", $this->parentFormElemName);
-        $sessionContext->setObjVar($this->objectName, "PickerMap", $this->pickerMap);
-        $sessionContext->setObjVar($this->objectName, "ParentFormRecord", $this->parentFormRecord);
+        $sessionContext->saveObjVar($this->objectName, "ParentFormElemName", $this->parentFormElemName);
+        $sessionContext->saveObjVar($this->objectName, "PickerMap", $this->pickerMap);
+        $sessionContext->saveObjVar($this->objectName, "ParentFormRecord", $this->parentFormRecord);
     }
 
     /**

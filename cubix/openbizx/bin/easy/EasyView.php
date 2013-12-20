@@ -174,7 +174,7 @@ class EasyView extends MetaObject implements iSessionObject
      */
     public function loadSessionVars($sessionContext)
     {
-        $sessionContext->getObjVar($this->objectName, "LastRenderedForm", $this->lastRenderedForm);        
+        $sessionContext->loadObjVar($this->objectName, "LastRenderedForm", $this->lastRenderedForm);
     }
     
     /**
@@ -185,7 +185,7 @@ class EasyView extends MetaObject implements iSessionObject
      */
     public function saveSessionVars($sessionContext)
     {       
-        $sessionContext->setObjVar($this->objectName, "LastRenderedForm", $this->lastRenderedForm);
+        $sessionContext->saveObjVar($this->objectName, "LastRenderedForm", $this->lastRenderedForm);
     }
 
     /**

@@ -18,13 +18,13 @@ class AclRoleActionsForm extends EasyForm
 	public function loadSessionVars($sessionContext)
     {
         parent::loadSessionVars($sessionContext);
-        $sessionContext->getObjVar($this->objectName, "_roleId", $this->_roleId);
+        $sessionContext->loadObjVar($this->objectName, "_roleId", $this->_roleId);
     }
 
     public function saveSessionVars($sessionContext)
     {
         parent::saveSessionVars($sessionContext);
-        $sessionContext->setObjVar($this->objectName, "_roleId", $this->_roleId);
+        $sessionContext->saveObjVar($this->objectName, "_roleId", $this->_roleId);
     }
     
 	public function sortRecord($sortCol, $order='asc')
@@ -52,19 +52,23 @@ class AclRoleActionsForm extends EasyForm
     
 	public function fetchDataSet()
     {
-        $roleId = $this->GetRoleId();        
+        $roleId = $this->GetRoleId();
+
+        //BizSystem::clientProxy()->showClientAlert( 'ROLE_ID : ' . $roleId );
+        //return null;
+
         if($this->searchRuleBindValues){
         	QueryStringParam::setBindValues($this->searchRuleBindValues);
         }
         // fetch acl_action records
-        $do = BizSystem::getObject("system.do.AclActionDO",1);
+        $aclActionDO = BizSystem::getObject("system.do.AclActionDO",1);
         //var_dump($this->searchRuleBindValues);
-        if($this->searchRule){
-        	$do->setSearchRule($this->searchRule);
-        }
-        $do->setLimit($this->range, ($this->currentPage-1)*$this->range);
-        $rs = $do->fetch()->toArray();
-        $this->totalRecords = $do->count();
+        
+        $aclActionDO->setQueryParameters($this->queryParams);
+
+        $aclActionDO->setLimit($this->range, ($this->currentPage-1)*$this->range);
+        $rs = $aclActionDO->fetch()->toArray();
+        $this->totalRecords = $aclActionDO->count();
         if ($this->range && $this->range > 0)
             $this->totalPages = ceil($this->totalRecords/$this->range);
         
@@ -140,6 +144,7 @@ class AclRoleActionsForm extends EasyForm
     {
     	if ($_GET['fld:Id'])
         	$this->_roleId = $_GET['fld:Id'];
+
         return $this->_roleId;
     }
 }

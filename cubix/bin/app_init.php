@@ -284,5 +284,9 @@ $DefaultTimezone = BizSystem::sessionContext()->getVar("TIMEZONE");
 if ($DefaultTimezone == "") {
     $DefaultTimezone = CUBI_DEFAULT_TIMEZONE;
 }
+
+BizSystem::instance()->isInitialized = false;
+
 date_default_timezone_set($DefaultTimezone);
+
 
