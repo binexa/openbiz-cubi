@@ -1,2 +1,0 @@
-Openbiz Specification Reques
-============================
