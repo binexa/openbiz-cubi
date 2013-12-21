@@ -12,6 +12,10 @@ This repo initialized from Openbiz Cubi project, version r5369.
 This project not yet have name as brand, "OpenbizX CubiX" is only as "project code". 
 Maybe this project be created as next version of original Openbiz Cubi.
 
+Specification
+-------------
+For keep quality, we create Openbiz Specification Request, please learn [here] (https://github.com/binexa/openbizx-cubix/blob/master/docs/osr/OSR-001-metaobject.md).
+
 Roadmap
 -------
 
