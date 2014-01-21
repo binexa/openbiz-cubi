@@ -13,7 +13,7 @@
 		</Element>	 
 		<Element Name="fld_Id" Class="Hidden" Hidden="Y" FieldName="Id" Label="ID" Sortable="Y"/>
 		 
-        <Element Name="fld_display_name" Class="ColumnText" Text="{BizSystem::GetProfileName(@:Elem[fld_Id].Value)}" FieldName="Id" Label="Display Name" Sortable="Y" Link="javascript:;" >
+        <Element Name="fld_display_name" Class="ColumnText" Text="{\Openbiz\Openbiz::$app->getProfile()->getProfileName(@:Elem[fld_Id].Value)}" FieldName="Id" Label="Display Name" Sortable="Y" Link="javascript:;" >
         </Element>
 		<Element Name="fld_access_level" Class="ColumnList" SelectFrom="account.lov.AccountLOV(AdminPermission)" FieldName="account_access_level" Label="Access Level" Sortable="N"/>
         <Element Name="fld_status" Class="ColumnBool" FieldName="account_status" Label="Status" Sortable="N"/>

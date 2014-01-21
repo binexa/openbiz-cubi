@@ -1,5 +1,8 @@
 <?php
 
+use Openbiz\Openbiz;
+use Openbiz\Data\Helpers\QueryStringParam;
+
 class ChartForm extends EasyForm
 {
 	public $chartCategory;
@@ -22,18 +25,18 @@ class ChartForm extends EasyForm
     }
     
 
-    public function loadSessionVars($sessionContext)
+    public function loadStatefullVars($sessionContext)
     {    	
     	$sessionContext->loadObjVar($this->objectName, "CategoryId", $this->categoryId);
         $sessionContext->loadObjVar($this->objectName, "SubType", $this->subType);
-        return parent::loadSessionVars($sessionContext);
+        return parent::loadStatefullVars($sessionContext);
     }
 
-    public function saveSessionVars($sessionContext)
+    public function saveStatefullVars($sessionContext)
     {
     	$sessionContext->saveObjVar($this->objectName, "CategoryId", $this->categoryId);
         $sessionContext->saveObjVar($this->objectName, "SubType", $this->subType);
-        return parent::saveSessionVars($sessionContext);        
+        return parent::saveStatefullVars($sessionContext);        
     }    
 	
 	public function outputAttrs()
@@ -212,7 +215,7 @@ class ChartForm extends EasyForm
     protected function drawSingleSeries()
     {
     	//load color styles
-    	$colorObj = BizSystem::getObject("chart.do.ChartColorDO");
+    	$colorObj = Openbiz::getObject("chart.do.ChartColorDO");
     	$colorList = $colorObj->directFetch("");
     	
         $FC = new FusionCharts($this->subType, $this->width, $this->height); 
@@ -260,7 +263,7 @@ class ChartForm extends EasyForm
             return;
         }
         //load color styles
-    	$colorObj = BizSystem::getObject("chart.do.ChartColorDO");
+    	$colorObj = Openbiz::getObject("chart.do.ChartColorDO");
     	$colorList = $colorObj->directFetch("");
     	    	
         $FC = new FusionCharts($this->subType, $this->width, $this->height); 
@@ -356,4 +359,3 @@ class ChartForm extends EasyForm
     
 
 }
-?>

@@ -30,7 +30,7 @@ global $Config ;
 // authenticate user with logined user role
 function authUser()
 {
-	$userProfile = BizSystem::getUserProfile();
+	$userProfile = Openbiz::$app->getUserProfile();
 	if ($userProfile && isset($userProfile['roleNames']))
 	{
 		return true;	// return true if user profile is found. 

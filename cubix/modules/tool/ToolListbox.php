@@ -1,5 +1,7 @@
 <?PHP
 
+use Openbiz\Openbiz;
+
 /**
  * FieldControl - class FieldControl is the base class of field control who binds with a bizfield
  *
@@ -45,7 +47,7 @@ class ToolListbox extends Listbox
     
     protected function dbs()
     {
-        $dbinfo = BizSystem::configuration()->getDatabaseInfo();
+        $dbinfo = Openbiz::$app->getConfiguration()->getDatabaseInfo();
         $i = 0;
         foreach ($dbinfo as $db)
         {
@@ -79,8 +81,7 @@ class ToolListbox extends Listbox
             }
         }
         
-        global $g_BizSystem;
-        $db = $g_BizSystem->getDBConnection($dbName);
+        $db = Openbiz::$app->getDBConnection($dbName);
         $tables = $db->listTables();
         $i = 0;
         foreach ($tables as $t)
@@ -131,8 +132,7 @@ class ToolListbox extends Listbox
             $list[$i]['txt'] = "";
             return $list;
         }
-        global $g_BizSystem;
-        $db = $g_BizSystem->getDBConnection($dbName);
+        $db = Openbiz::$app->getDBConnection($dbName);
         
         $tblCols = $db->describeTable($table);
         $i = 0;
@@ -317,4 +317,4 @@ function php_grep($q, $path)
     }
 }
 
-?>
+

@@ -1,4 +1,7 @@
-<?php 
+<?php
+
+use Openbiz\Openbiz;
+
 require_once 'iSMS.php';
 require_once 'SPDriver.php';
 require_once dirname(dirname(__FILE__)).'/dll/emay/nusoaplib/nusoap.php';
@@ -18,11 +21,11 @@ class SPtclk extends SPDriver implements iSMS
 		$CorpID = $providerInfo['username'];
 		$Pwd = $providerInfo['password'];
 		
-		$CropName 	= urlencode(BizSystem::GetUserProfile("profile_company"));
-		$LinkMan 	= urlencode(BizSystem::GetUserProfile("profile_display_name"));
-		$Tel 		= urlencode(BizSystem::GetUserProfile("profile_phone"));
-		$Mobile 	= urlencode(BizSystem::GetUserProfile("profile_mobile"));
-		$Email		= urlencode(BizSystem::GetUserProfile("email"));
+		$CropName 	= urlencode(Openbiz::$app->getUserProfile("profile_company"));
+		$LinkMan 	= urlencode(Openbiz::$app->getUserProfile("profile_display_name"));
+		$Tel 		= urlencode(Openbiz::$app->getUserProfile("profile_phone"));
+		$Mobile 	= urlencode(Openbiz::$app->getUserProfile("profile_mobile"));
+		$Email		= urlencode(Openbiz::$app->getUserProfile("email"));
 				
 		//$url = $this->url."Reg?CorpID=$CorpID&Pwd=$Pwd&CorpName=$CorpName&LinkMan=$LinkMan&Tel=$Tel&Mobile=$Mobile&Email=$Email";
 		//$result = file_get_contents($url);
@@ -65,7 +68,7 @@ class SPtclk extends SPDriver implements iSMS
 				
 		if($result<0)
 		{				
-			BizSystem::getService(LOG_SERVICE)->log(LOG_ERR,"SMS","sendMessage: ". $content." TCLK：".$mobile.':'.$result['msg']);
+			Openbiz::getService(LOG_SERVICE)->log(LOG_ERR,"SMS","sendMessage: ". $content." TCLK：".$mobile.':'.$result['msg']);
 			return false;
 		}
 		else
@@ -94,7 +97,3 @@ class SPtclk extends SPDriver implements iSMS
     	
   
 }
-
-
-
-?>

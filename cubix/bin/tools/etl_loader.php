@@ -67,7 +67,7 @@ if(!is_file($conf_file)){
 	echo "Config file not found! ";
 	exit;
 }
-$xmlArr = BizSystem::getXmlArray($conf_file);
+$xmlArr = use Openbiz\Resource::getXmlArray($conf_file);
 if(is_array($xmlArr["ETL"]["QUEUE"][0]["ATTRIBUTES"])){
 	$etlQueuesArr = $xmlArr["ETL"]["QUEUE"];	
 }else{

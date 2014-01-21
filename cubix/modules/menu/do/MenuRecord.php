@@ -1,6 +1,6 @@
 <?PHP
 /**
- * PHPOpenBiz Framework
+ * Openbiz Framework
  *
  * LICENSE
  *
@@ -14,6 +14,9 @@
  * @version   $Id: MenuRecord.php 3364 2012-05-31 06:06:21Z rockyswen@gmail.com $
  */
 
+use Openbiz\Openbiz;
+use Openbiz\Core\Expression;
+use Openbiz\i18n\I18n;
 /**
  * MenuRecord class, for tree structure
  *
@@ -79,7 +82,7 @@ class MenuRecord
     	$access = $this->access;
         if (!$access) $access = $this->access;
         if ($access)
-        	return BizSystem::allowUserAccess($access);
+        	return Openbiz::$app->allowUserAccess($access);
         return OPENBIZ_ALLOW;
     }
     
@@ -99,4 +102,3 @@ class MenuRecord
         return strtoupper($k);
     }
 }
-?>

@@ -11,20 +11,23 @@
  * @version   $Id: LanguageListbox.php 3374 2012-05-31 06:22:06Z rockyswen@gmail.com $
  */
 
-require_once(OPENBIZ_BIN."easy/element/Listbox.php");
+use Openbiz\Openbiz;
+use Openbiz\i18n\I18n;
+
+
 class LanguageListbox extends EditCombobox{
 	public function getFromList(&$list)
     {    	
    	    $current_locale = I18n::getCurrentLangCode();
     	
-    	$country = BizSystem::clientProxy()->getFormInputs("fld_region");    	
+    	$country = Openbiz::$app->getClientProxy()->getFormInputs("fld_region");    	
     	$country = strtoupper($country);  
     	if(!$country){    		
     		$locale = explode('_', $current_locale);
     		$country = strtoupper($locale[0]);
     	}  	
-		require_once('Zend/Locale.php');
-		$locale = new Zend_Locale($current_locale);
+		//require_once('Zend/Locale.php');
+		$locale = new \Zend_Locale($current_locale);
 		$code2name = $locale->getTranslationList('territorytolanguage',$locale);
 		$list = array();
 		$i=0;
@@ -42,4 +45,3 @@ class LanguageListbox extends EditCombobox{
 		return $list;
     }
 }
-?>

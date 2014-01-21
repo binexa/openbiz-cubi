@@ -20,4 +20,3 @@ class CustomHeaderForm extends EasyForm
 		$this->processPostAction();
 	}
 }
-?>

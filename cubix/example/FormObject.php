@@ -17,11 +17,10 @@ require_once dirname(dirname(__FILE__)).'/bin/app_init.php';
 $objectName = "system.form.UserListForm";
  
 //get the form object instance
-$userForm = BizSystem::getFormObject($objectName);
+$userForm = Openbiz::getFormObject($objectName);
  
 //render the form to a html string
 $formHTML = $userForm->render();
  
 //output the html string
 echo $formHTML;
-?>

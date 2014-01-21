@@ -6,4 +6,3 @@ class ContactLoadHandler extends DefaultModuleLoadHandler
 	protected $roleName = 'Contact Member';
 	protected $moduleName = 'contact';   
 }
-?>

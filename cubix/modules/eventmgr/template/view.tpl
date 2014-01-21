@@ -3,16 +3,16 @@ $js_url = $this->_tpl_vars['js_url'];
 $theme_js_url = $this->_tpl_vars['theme_js_url'];
 $css_url = $this->_tpl_vars['css_url'];
 
-BizSystem::clientProxy()->includeCalendarScripts();
-BizSystem::clientProxy()->includeCKEditorScripts();
-$includedScripts = BizSystem::clientProxy()->getAppendedScripts();
+Openbiz\Openbiz::$app->getClientProxy()->includeCalendarScripts();
+Openbiz\Openbiz::$app->getClientProxy()->includeCKEditorScripts();
+$includedScripts = Openbiz\Openbiz::$app->getClientProxy()->getAppendedScripts();
 $includedScripts .= "
 <script type=\"text/javascript\" src=\"$js_url/cookies.js\"></script>
 <script type=\"text/javascript\" src=\"$theme_js_url/general_ui.js\"></script>
 ";
 $this->_tpl_vars['scripts'] = $includedScripts;
 
-$appendStyle = BizSystem::clientProxy()->getAppendedStyles();
+$appendStyle = Openbiz\Openbiz::$app->getClientProxy()->getAppendedStyles();
 $appendStyle .= "\n"."
 <link rel=\"stylesheet\" href=\"$css_url/general.css\" type=\"text/css\" />
 <link rel=\"stylesheet\" href=\"$css_url/system_backend.css\" type=\"text/css\" />

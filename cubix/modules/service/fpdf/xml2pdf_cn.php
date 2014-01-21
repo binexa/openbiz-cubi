@@ -676,4 +676,3 @@ class XML2PDF extends PDF_Unicode
 
 }
 
-?>

@@ -12,7 +12,7 @@
 				Text="{OPENBIZ_RESOURCE_URL}/contact/images/icon_contact.gif"
 				FieldName="" Label="Type"  Sortable="N" AllowURLParam="N" Translatable="N" OnEventLog="N" Link="javascript:;">							
 		</Element>        
-        <Element Name="fld_user_id" Class="ColumnText" FieldName="user_id" Text="{BizSystem::GetProfileName(@:Elem[fld_user_id].Value)}"  Label="Name" Sortable="Y" AllowURLParam="N" Translatable="N" OnEventLog="N" ></Element>		
+        <Element Name="fld_user_id" Class="ColumnText" FieldName="user_id" Text="{\Openbiz\Openbiz::$app->getProfile()->getProfileName(@:Elem[fld_user_id].Value)}"  Label="Name" Sortable="Y" AllowURLParam="N" Translatable="N" OnEventLog="N" ></Element>		
         <Element Name="fld_timestamp" Class="ColumnText" FieldName="timestamp" Label="Timestamp"  Sortable="Y" AllowURLParam="N" Translatable="N" OnEventLog="N" ></Element>
     </DataPanel>
     <ActionPanel>

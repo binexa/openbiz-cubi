@@ -9,8 +9,13 @@
  * @copyright Copyright (c) 2005-2011, Openbiz Technology LLC
  * @license   http://code.google.com/p/openbiz-cubi/wiki/CubiLicense
  * @link      http://code.google.com/p/openbiz-cubi/
- * @version   $Id: ChangeLogForm.php 3464 2012-06-16 08:58:52Z hellojixian@gmail.com $
+ * @version   $Id$
  */
+
+use Openbiz\Openbiz;
+use Openbiz\i18n\I18n;
+use Openbiz\Resource;
+
 class ChangeLogForm extends EasyForm
 {
 
@@ -91,7 +96,7 @@ class ChangeLogForm extends EasyForm
             }
         }
 
-        $comment = BizSystem::clientProxy()->getFormInputs("fld_changelog_comment");
+        $comment = Openbiz::$app->getClientProxy()->getFormInputs("fld_changelog_comment");
 
         if (empty($logRecord) && empty($comment))
             return true;
@@ -113,8 +118,8 @@ class ChangeLogForm extends EasyForm
 
         try {
             $dataRec->save();
-        } catch (BDOException $e) {
-            $this->processBDOException($e);
+        } catch (Openbiz\data\Exception $e) {
+            $this->processDataException($e);
             return true;
         }
 
@@ -124,4 +129,3 @@ class ChangeLogForm extends EasyForm
 
 }
 
-?>

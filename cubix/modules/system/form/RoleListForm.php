@@ -11,14 +11,15 @@
  * @version   $Id: RoleListForm.php 3372 2012-05-31 06:19:06Z rockyswen@gmail.com $
  */
 
+use Openbiz\Openbiz;
+
 class RoleListForm extends  EasyForm
 {
 	public function SetPermission()
 	{		
-        $id = BizSystem::clientProxy()->getFormInputs('_selectedId');
+        $id = Openbiz::$app->getClientProxy()->getFormInputs('_selectedId');
 		$redirectPage = OPENBIZ_APP_INDEX_URL."/system/role_detail/".$id;
-		BizSystem::clientProxy()->ReDirectPage($redirectPage);
+		Openbiz::$app->getClientProxy()->ReDirectPage($redirectPage);
 	}
 	
 }
-?>

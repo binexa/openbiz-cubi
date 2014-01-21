@@ -14,6 +14,8 @@
 //$ali_service_timestamp = new AlipayService($aliapy_config);
 //$anti_phishing_key = $ali_service_timestamp->query_timestamp();//获取防钓鱼时间戳函数
 
+use Openbiz\Openbiz;
+
 /************************************************************/
 require_once("alipay/alipay_service.class.php");
 require_once("alipay/alipay_notify.class.php");
@@ -60,7 +62,7 @@ class alipay extends oauthClass
 	
   	function login(){	
 		$redirectPage=$this->getUrl();
-		BizSystem::clientProxy()->ReDirectPage($redirectPage);
+		Openbiz::$app->getClientProxy()->ReDirectPage($redirectPage);
 	} 
 	
 	function test($akey,$skey){
@@ -78,7 +80,7 @@ class alipay extends oauthClass
 			$recinfo['oauth_token']=$_GET['token'];
 			$recinfo['oauth_token_secret']=$_GET['token'];
 			$recinfo['access_token_json']=$_GET;
-			Bizsystem::getSessionContext()->setVar('alipay_access_token',$recinfo);
+			Openbiz::$app->getSessionContext()->setVar('alipay_access_token',$recinfo);
 			$userInfo=$this->userInfo(); 
 			$this->check($userInfo);
 		}
@@ -113,4 +115,3 @@ class alipay extends oauthClass
   
  
 }
-?>

@@ -11,6 +11,9 @@
  * @version   $Id: CacheForm.php 5301 2013-02-26 07:38:43Z hellojixian@gmail.com $
  */
 
+use Openbiz\Openbiz;
+use Openbiz\Resource;
+
 class CacheForm extends EasyFormGrouping
 {
 	public $modeStatus;
@@ -18,9 +21,9 @@ class CacheForm extends EasyFormGrouping
 	public function clear()
 	{
 		if ($id==null || $id=='')
-            $id = BizSystem::clientProxy()->getFormInputs('_selectedId');
+            $id = Openbiz::$app->getClientProxy()->getFormInputs('_selectedId');
 
-        $selIds = BizSystem::clientProxy()->getFormInputs('row_selections', false);
+        $selIds = Openbiz::$app->getClientProxy()->getFormInputs('row_selections', false);
         if ($selIds == null)
             $selIds[] = $id;
         foreach ($selIds as $id)
@@ -67,7 +70,7 @@ class CacheForm extends EasyFormGrouping
 		if(!is_file($file)){
 			return;
 		}
-		$configArr=BizSystem::getXmlArray($file);
+		$configArr=Resource::getXmlArray($file);
 		
    		$this->modeStatus = $configArr["PLUGINSERVICE"]["CACHESETTING"]["ATTRIBUTES"]["MODE"];
    		if($this->modeStatus == 'Enabled'){
@@ -85,7 +88,7 @@ class CacheForm extends EasyFormGrouping
 		if(!is_file($file)){
 			return;
 		}
-		$configArr=BizSystem::getXmlArray($file);
+		$configArr=Resource::getXmlArray($file);
 		
    		$this->modeStatus = $configArr["PLUGINSERVICE"]["CACHESETTING"]["ATTRIBUTES"]["MODE"];
    		if($this->modeStatus == 'Enabled'){   			   		

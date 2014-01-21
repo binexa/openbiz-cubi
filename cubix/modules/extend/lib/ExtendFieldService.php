@@ -11,6 +11,9 @@
  * @version   $Id: ExtendFieldService.php 3360 2012-05-31 06:00:17Z rockyswen@gmail.com $
  */
 
+use Openbiz\Openbiz;
+use Openbiz\i18n\I18n;
+
 class ExtendFieldService
 {
 	protected $extendSettingTranslationDO = "extend.do.ExtendSettingTranslationDO";
@@ -26,7 +29,7 @@ class ExtendFieldService
 		}
 		$setting_id = (int)$setting_id;
 		
-		$transDO = BizSystem::getObject($this->extendSettingTranslationDO,1);
+		$transDO = Openbiz::getObject($this->extendSettingTranslationDO,1);
 		$transRec = $transDO->fetchOne("[setting_id]='$setting_id' AND [lang]='$lang'");
 		if(!$transRec)
 		{
@@ -37,7 +40,7 @@ class ExtendFieldService
 		$elemArr['DEFAULTVALUE'] = $transRec['defaultvalue'];
 		if($elemArr['SELECTFROM'])
 		{
-			$transOptDO = BizSystem::getObject($this->extendSettingOptionDO,1);
+			$transOptDO = Openbiz::getObject($this->extendSettingOptionDO,1);
 			$opts = $transOptDO->directfetch("[setting_id]='".$setting_id."' AND [lang]='$lang'");			
 			if($opts && $opts->count()>0){
 				$elemArr['SELECTFROM'] = $this->extendSettingOptionDO."[text:value],[setting_id]='".$setting_id."' AND [lang]='$lang' ";				
@@ -46,4 +49,3 @@ class ExtendFieldService
 		return $elemArr;		
 	}
 }
-?>

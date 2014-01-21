@@ -11,7 +11,7 @@ if(!defined("CLI")){
 
 $packageService = "package.lib.PackageService";
 // get package service 
-$pkgsvc = BizSystem::GetObject($packageService);
+$pkgsvc = Openbiz::getObject($packageService);
 
 $categories = $pkgsvc->discoverCategories();
 print_r($categories);

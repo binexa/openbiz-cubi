@@ -13,8 +13,8 @@ var Openbiz =
 
     init: function()
     {
-        if (OPENBIZ_APP_URL!=null && APP_CONTROLLER!=null) {
-            Openbiz.appUrl = OPENBIZ_APP_URL;
+        if (APP_URL!=null && APP_CONTROLLER!=null) {
+            Openbiz.appUrl = APP_URL;
             Openbiz.appHome = APP_CONTROLLER;
             Openbiz.currentView = APP_VIEWNAME;
             return;
@@ -34,18 +34,26 @@ var Openbiz =
     {
         if (Openbiz.formInstances[formName])
             return Openbiz.formInstances[formName];
-        if (window.opener && window.opener.window.Openbiz)     // check opener window
-        {
-            if (formObj = window.opener.window.Openbiz.formInstances[formName])
+
+        // check opener window
+        if (window.opener && window.opener.window.Openbiz) {
+            formObj = window.opener.window.Openbiz.formInstances[formName]
+            if (formObj) {
                 return formObj;
+            }
         }
-        try{
-        if (window.top.window.Openbiz)  // check top window
-        {
-            if (formObj = window.top.window.Openbiz.formInstances[formName])
-                return formObj;
-        }
-        }catch(e){};
+        try {
+            // check top window
+            
+            if (window.top.window.Openbiz) {
+                formObj = window.top.window.Openbiz.formInstances[formName]
+                if (formObj) {
+                    return formObj;
+                }
+            }
+        } catch(e){
+            alert("Unable to get object from class "+className+". "+e);
+        };
     },
     newFormObject: function(formName, className, subForms)
     {
@@ -60,12 +68,14 @@ var Openbiz =
             if (newobj)
                 this.formInstances[formName] = newobj;
         }
-        catch(e) {alert("Unable to create object from class "+className+". "+e); }
+        catch(e) {
+            alert("Unable to create object from class "+className+". "+e);
+        }
     },
     CallFunction: function(form_method_params, options)
     {
         functionArray = Openbiz.Util.parseCallFunction(form_method_params);
-		formObj = Openbiz.getFormObject(functionArray[0]);
+		formObj = Openbiz.getFormObject(functionArray[0]);        
 		if (formObj)
 		{
 			method = functionArray[1];
@@ -188,10 +198,11 @@ Openbiz.Form = jQuery.Class(
         // does AJAX call
         var url = Openbiz.appHome;
         var formData = this.collectData();
-        if (type == Openbiz.ActionType.RPC || type == Openbiz.ActionType.DIALOG || type == Openbiz.ActionType.AIM)
+        if (type === Openbiz.ActionType.RPC || type === Openbiz.ActionType.DIALOG || type === Openbiz.ActionType.AIM) {
             requestString = Openbiz.Util.composeRequestString("RPCInvoke", paramArray);
-        else
+        } else {
             requestString = Openbiz.Util.composeRequestString("Invoke", paramArray);
+        }
         url += "?"+requestString;
         if (options && options['evthdl'])
             url += "&__this="+options['evthdl'];

@@ -11,6 +11,10 @@
  * @link      http://code.google.com/p/openbiz-cubi/
  * @version   $Id: EmailTemplateForm.php 3358 2012-05-31 05:57:58Z rockyswen@gmail.com $
  */
+
+use Openbiz\Openbiz;
+use Openbiz\Resource;
+
 class EmailTemplateForm extends EasyForm
 {
 
@@ -33,10 +37,12 @@ class EmailTemplateForm extends EasyForm
             }
         }
 
-        if ($recId == null || $recId == '')
-            $recId = BizSystem::clientProxy()->getFormInputs('_selectedId');
-        if ($recId == null || $recId == '')
+        if ($recId == null || $recId == '') {
+            $recId = Openbiz::$app->getClientProxy()->getFormInputs('_selectedId');
+        }
+        if ($recId == null || $recId == '') {
             return null;
+        }
         $this->recordId = $recId;
         $this->fixSearchRule = "[Id]='$recId'";
         $rec = $this->fetchData();
@@ -47,14 +53,15 @@ class EmailTemplateForm extends EasyForm
 
     public function fetchData()
     {
-        if (strtoupper($this->formType) == "NEW")
+        if (strtoupper($this->formType) == "NEW") {
             return $this->getNewRule();
+        }
 
         $file = OPENBIZ_APP_MODULE_PATH . DIRECTORY_SEPARATOR . "service" . DIRECTORY_SEPARATOR . $this->configFile;
         if (!is_file($file)) {
             return;
         }
-        $configArr = BizSystem::getXmlArray($file);
+        $configArr = Resource::getXmlArray($file);
         $nodesArr = $configArr["PLUGINSERVICE"][strtoupper($this->configNode)];
         $result = array();
 
@@ -105,7 +112,7 @@ class EmailTemplateForm extends EasyForm
             return;
         }
 
-        $configArr = BizSystem::getXmlArray($file);
+        $configArr = Resource::getXmlArray($file);
         $nodesArr = $configArr["PLUGINSERVICE"][strtoupper($this->configNode)];
         $result = array();
 
@@ -136,7 +143,7 @@ class EmailTemplateForm extends EasyForm
         if (!is_file($file)) {
             return;
         }
-        $configArr = BizSystem::getXmlArray($file);
+        $configArr = Resource::getXmlArray($file);
         $this->modeStatus = $configArr["PLUGINSERVICE"][strtoupper($this->configNode)]["ATTRIBUTES"]["MODE"];
         $result['status'] = $this->modeStatus;
         return $result;
@@ -169,9 +176,9 @@ class EmailTemplateForm extends EasyForm
     {
         $recArr = $this->readInputRecord();
         $this->setActiveRecord($recArr);
-        if (count($recArr) == 0)
+        if (count($recArr) == 0) {
             return;
-
+        }
 
         try {
             $this->ValidateForm();
@@ -182,9 +189,9 @@ class EmailTemplateForm extends EasyForm
                 $this->validateErrors["fld_name"] = $errorMessage;
             }
             if (count($this->validateErrors) > 0) {
-                throw new ValidationException($this->validateErrors);
+                throw new Openbiz\validation\Exception($this->validateErrors);
             }
-        } catch (ValidationException $e) {
+        } catch (Openbiz\validation\Exception $e) {
             $this->processFormObjError($e->errors);
             return;
         }
@@ -212,7 +219,7 @@ class EmailTemplateForm extends EasyForm
 
         try {
             $this->ValidateForm();
-        } catch (ValidationException $e) {
+        } catch (Openbiz\validation\Exception $e) {
             $this->processFormObjError($e->errors);
             return;
         }
@@ -244,7 +251,7 @@ class EmailTemplateForm extends EasyForm
         if (!is_file($file)) {
             return;
         }
-        $configArr = BizSystem::getXmlArray($file);
+        $configArr = Resource::getXmlArray($file);
 
         $this->modeStatus = $configArr["PLUGINSERVICE"][strtoupper($this->configNode)]["ATTRIBUTES"]["MODE"];
         if ($this->modeStatus == 'Enabled') {
@@ -262,22 +269,26 @@ class EmailTemplateForm extends EasyForm
 
     public function deleteRecord($id = null)
     {
-        if ($this->resource != "" && !$this->allowAccess($this->resource . ".delete"))
-            return BizSystem::clientProxy()->redirectView(OPENBIZ_ACCESS_DENIED_VIEW);
+        if ($this->resource != "" && !$this->allowAccess($this->resource . ".delete")) {
+            return Openbiz::$app->getClientProxy()->redirectView(OPENBIZ_ACCESS_DENIED_VIEW);
+        }
 
-        if ($id == null || $id == '')
-            $id = BizSystem::clientProxy()->getFormInputs('_selectedId');
+        if ($id == null || $id == '') {
+            $id = Openbiz::$app->getClientProxy()->getFormInputs('_selectedId');
+        }
 
-        $selIds = BizSystem::clientProxy()->getFormInputs('row_selections', false);
-        if ($selIds == null)
+        $selIds = Openbiz::$app->getClientProxy()->getFormInputs('row_selections', false);
+        if ($selIds == null) {
             $selIds[] = $id;
+        }
 
         //check prehabit to delete default theme
         foreach ($selIds as $id) {
             $this->removeNode($id);
         }
-        if (strtoupper($this->formType) == "LIST")
+        if (strtoupper($this->formType) == "LIST") {
             $this->rerender();
+        }
 
         $this->runEventLog();
         $this->processPostAction();
@@ -289,7 +300,7 @@ class EmailTemplateForm extends EasyForm
         if (!is_file($file)) {
             return;
         }
-        $configArr = BizSystem::getXmlArray($file);
+        $configArr = Resource::getXmlArray($file);
         $recordName = $configArr["PLUGINSERVICE"][strtoupper($this->configNode)]["ATTRIBUTES"]["NAME"];
         $recordCount = count($configArr["PLUGINSERVICE"][strtoupper($this->configNode)]);
         if (!$recordName && $recordCount) {
@@ -311,7 +322,7 @@ class EmailTemplateForm extends EasyForm
         if (!is_file($file)) {
             return;
         }
-        $configArr = BizSystem::getXmlArray($file);
+        $configArr = Resource::getXmlArray($file);
         $recordName = $configArr["PLUGINSERVICE"][strtoupper($this->configNode)]["ATTRIBUTES"]["NAME"];
         if (!$recordName) {
             $nodesArr = $configArr["PLUGINSERVICE"][strtoupper($this->configNode)];
@@ -335,7 +346,7 @@ class EmailTemplateForm extends EasyForm
         if (!is_file($file)) {
             return;
         }
-        $configArr = BizSystem::getXmlArray($file);
+        $configArr = Resource::getXmlArray($file);
         $recordName = $configArr["PLUGINSERVICE"][strtoupper($this->configNode)]["ATTRIBUTES"]["NAME"];
         if (!$recordName) {
             $nodesArr = $configArr["PLUGINSERVICE"][strtoupper($this->configNode)];
@@ -358,7 +369,7 @@ class EmailTemplateForm extends EasyForm
         if (!is_file($file)) {
             return;
         }
-        $configArr = BizSystem::getXmlArray($file);
+        $configArr = Resource::getXmlArray($file);
         $recordName = $configArr["PLUGINSERVICE"][strtoupper($this->configNode)]["ATTRIBUTES"]["NAME"];
         if (!$recordName) {
             $nodesArr = $configArr["PLUGINSERVICE"][strtoupper($this->configNode)];
@@ -381,9 +392,9 @@ class EmailTemplateForm extends EasyForm
 
     private function saveToXML($data)
     {
-        $smarty = BizSystem::getSmartyTemplate();
+        $smarty = Resource::getSmartyTemplate();
         $smarty->assign("data", $data);
-        $xmldata = $smarty->fetch(BizSystem::getTplFileWithPath("userEmailTemplate.xml.tpl", $this->package));
+        $xmldata = $smarty->fetch(Resource::getTplFileWithPath("userEmailTemplate.xml.tpl", $this->package));
         $service_dir = OPENBIZ_APP_MODULE_PATH . DIRECTORY_SEPARATOR . "service";
         $service_file = $service_dir . DIRECTORY_SEPARATOR . $this->configFile;
         file_put_contents($service_file, $xmldata);

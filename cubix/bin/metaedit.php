@@ -6,7 +6,7 @@ if (!CUBI_APPBUILDER)
     exit;
 }
 
-$modsvc = BizSystem::getObject("system.lib.ModuleService");
+$modsvc = Openbiz::getObject("system.lib.ModuleService");
 if(!$modsvc->isModuleInstalled('appbuilder'))
 {
     echo "Sorry, AppBuilder is not installed.";

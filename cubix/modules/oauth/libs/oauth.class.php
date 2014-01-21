@@ -11,6 +11,8 @@
  * @version   $Id: oauthService.php 3371 2012-05-31 06:17:21Z rockyswen@gmail.com $
  */
 
+use Openbiz\Openbiz;
+
 class oauthClass extends EasyForm
 {
 	/**
@@ -55,17 +57,17 @@ class oauthClass extends EasyForm
 	
 	public function getProviderList()
 	{
-	  	 $recArr=BizSystem::sessionContext()->getVar("_OAUTH_{$this->type}");
+	  	 $recArr=Openbiz::$app->getSessionContext()->getVar("_OAUTH_{$this->type}");
 	  	 $recArr=false;
 		 if(!$recArr)
 			 {
-			 $do=BizSystem::getObject($this->oauthProviderDo);
+			 $do=Openbiz::getObject($this->oauthProviderDo);
 			 $recArr=$do->fetchOne("[status]=1 and [type]='{$this->type}'",1);
 			 if($recArr)
 			 {
 				$recArr=$recArr->toArray();
 			 }
-			 BizSystem::sessionContext()->setVar("_OAUTH_{$this->type}",$recArr);
+			 Openbiz::$app->getSessionContext()->setVar("_OAUTH_{$this->type}",$recArr);
 		 }
 		 $recArr['key']=trim($recArr['key']);
 		 $recArr['value']=trim($recArr['value']);
@@ -97,14 +99,14 @@ class oauthClass extends EasyForm
 			return;
 		}
 	
-		$UserTokenObj = BizSystem::getObject('oauth.do.UserTokenDO');
+		$UserTokenObj = Openbiz::getObject('oauth.do.UserTokenDO');
 		$UserToken=$UserTokenObj->fetchOne("[oauth_uid]='".$oauth_data['id']."'");
-		$access_token=Bizsystem::getSessionContext()->getVar($this->type.'_access_token');
+		$access_token=Openbiz::$app->getSessionContext()->getVar($this->type.'_access_token');
 		$oauth_data['oauth_token']=$access_token['oauth_token'] ; 
 		$oauth_data['oauth_token_secret']=$access_token['oauth_token_secret']; 
 		$oauth_data['access_token_json']=$access_token['access_token_json']; 
 		
-		BizSystem::sessionContext()->setVar('_OauthUserInfo',$oauth_data);
+		Openbiz::$app->getSessionContext()->setVar('_OauthUserInfo',$oauth_data);
 
 		if($UserToken)
 		{
@@ -115,13 +117,13 @@ class oauthClass extends EasyForm
 		    // $dataRec = new DataRecord($UserOAuthArr, $UserTokenObj);
 			// $dataRec->id =$UserToken['Id'];
 			//$dataRec->save( ); 
-			$eventlog 	= BizSystem::getService(OPENBIZ_EVENTLOG_SERVICE);
+			$eventlog 	= Openbiz::getService(OPENBIZ_EVENTLOG_SERVICE);
 			$logComment=array(	$userinfo['username'], $_SERVER['REMOTE_ADDR']);
     		$eventlog->log("LOGIN", "MSG_LOGIN_SUCCESSFUL", $logComment);
 			
 			 
 			$UserTokenObj->updateRecords($UserOAuthArr,"[Id]={$UserToken['Id']}"); 
-			$userObj = BizSystem::getObject('system.do.UserDO');
+			$userObj = Openbiz::getObject('system.do.UserDO');
 			$userinfo=$userObj->fetchOne("[Id]='".$UserToken['user_id']."'");
 			if($userinfo){
 				
@@ -132,7 +134,7 @@ class oauthClass extends EasyForm
 			}else{
 				//found a isolate oauth account
 				$UserTokenObj->deleteRecords("[Id]={$UserToken['Id']}");
-				BizSystem::clientProxy()->ReDirectPage(OPENBIZ_APP_INDEX_URL.'/user/logout');
+				Openbiz::$app->getClientProxy()->ReDirectPage(OPENBIZ_APP_INDEX_URL.'/user/logout');
 			}
 		}
 		elseif (method_exists($this,'autoCreateUser'))
@@ -143,7 +145,7 @@ class oauthClass extends EasyForm
 		{	
 			//未找到用户，跳转到注册页
 			
-			$assocURL = BizSystem::sessionContext()->getVar("oauth_assoc_url");
+			$assocURL = Openbiz::$app->getSessionContext()->getVar("oauth_assoc_url");
 			if($assocURL){
 				header("Location: ".$assocURL);
 			}
@@ -158,17 +160,17 @@ class oauthClass extends EasyForm
 	
 	public function RunJumpPage($username)
 	{
-		$profile=BizSystem::instance()->InituserProfile($username);
+		$profile = Openbiz::$app->InituserProfile($username);
 		//获取当前用户角色的默认页
 		$index=$profile['roles'][0];  
 		$roleStartpage=$rec_info['roleStartpage'][$index];
 		$redirectPage = OPENBIZ_APP_INDEX_URL.$roleStartpage;
-		$redirectURL = BizSystem::sessionContext()->getVar("oauth_redirect_url");
+		$redirectURL = Openbiz::$app->getSessionContext()->getVar("oauth_redirect_url");
 		if($redirectURL){
 			$redirectPage = $redirectURL;
 		}
 	 
-		BizSystem::clientProxy()->ReDirectPage($redirectPage);
+		Openbiz::$app->getClientProxy()->ReDirectPage($redirectPage);
 	}
 	public function saveUserOAuth($user_id, $OauthUserInfo)
 	{
@@ -178,7 +180,7 @@ class oauthClass extends EasyForm
 			return;
 		}
  
-		 $UserTokenObj = BizSystem::getObject('oauth.do.UserTokenDO');
+		 $UserTokenObj = Openbiz::getObject('oauth.do.UserTokenDO');
 		 $UserTokenArr=array(
 							"user_id"=>$user_id,
 							"oauth_uid"=>$OauthUserInfo['id'],
@@ -199,9 +201,8 @@ class oauthClass extends EasyForm
 	}
 	public function CreateUser()
 	{
-		global $g_BizSystem;   
-		$userObj = BizSystem::getObject('system.do.UserDO');
-		$oauth_data=BizSystem::sessionContext()->getVar('_OauthUserInfo');
+		$userObj = Openbiz::getObject('system.do.UserDO');
+		$oauth_data=Openbiz::$app->getSessionContext()->getVar('_OauthUserInfo');
 		
 		$recArr['username']=$oauth_data['uname'];      
 		$recArr['password'] = hash('sha1',$this->userPass);
@@ -215,8 +216,8 @@ class oauthClass extends EasyForm
 		$RoleDOName = "system.do.RoleDO";
 		$UserRoleDOName = "system.do.UserRoleDO";
 		
-		$roleDo = BizSystem::getObject($RoleDOName,1);
-		$userRoleDo = BizSystem::getObject($UserRoleDOName,1);
+		$roleDo = Openbiz::getObject($RoleDOName,1);
+		$userRoleDo = Openbiz::getObject($UserRoleDOName,1);
 		
 		$roleDo->setSearchRule("[default]=1");
 		$defaultRoles = $roleDo->fetch();
@@ -233,8 +234,8 @@ class oauthClass extends EasyForm
 		$GroupDOName = "system.do.GroupDO";
 		$UserGroupDOName = "system.do.UserGroupDO";
 		
-		$groupDo = BizSystem::getObject($GroupDOName,1);
-		$userGroupDo = BizSystem::getObject($UserGroupDOName,1);
+		$groupDo = Openbiz::getObject($GroupDOName,1);
+		$userGroupDo = Openbiz::getObject($UserGroupDOName,1);
 		
 		$groupDo->setSearchRule("[default]=1");
 		$defaultGroups = $groupDo->fetch();
@@ -247,7 +248,7 @@ class oauthClass extends EasyForm
 			$userGroupDo->insertRecord($userGroupArr);
 		}        
 			
-		$userRoleObj = BizSystem::getObject('system.do.UserRoleDO');
+		$userRoleObj = Openbiz::getObject('system.do.UserRoleDO');
 		$uesrRoloArr =array(
 						"user_id"=>$userinfo['Id'],
 						"role_id"=>"2",  //role 2 is Member
@@ -255,21 +256,21 @@ class oauthClass extends EasyForm
 		$userRoleObj->insertRecord($uesrRoloArr);
 		//record event log   
 		    
-		$eventlog 	= BizSystem::getService(OPENBIZ_EVENTLOG_SERVICE);
+		$eventlog 	= Openbiz::getService(OPENBIZ_EVENTLOG_SERVICE);
 		$logComment=array($userinfo['username'],$_SERVER['REMOTE_ADDR']);
 		$eventlog->log("USER_MANAGEMENT", "MSG_USER_REGISTERED", $logComment);   
 		//init profile for future use like redirect to my account view
 	
-		//$profile_id = BizSystem::getService(PROFILE_SERVICE)->CreateProfile($userinfo['Id']);
+		//$profile_id = Openbiz::getService(PROFILE_SERVICE)->CreateProfile($userinfo['Id']);
 		 //send user email
-		$emailObj 	= BizSystem::getService(CUBI_USER_EMAIL_SERVICE);
+		$emailObj 	= Openbiz::getService(CUBI_USER_EMAIL_SERVICE);
 		$emailObj->UserWelcomeEmail($userinfo['Id']);
 	
 		if($userinfo['Id'])
 		{	
 			$this->saveUserOAuth($userinfo['Id'],$oauth_data);
 		}
-		if($g_BizSystem->InituserProfile($userinfo['username']))
+		if(Openbiz::$app->InituserProfile($userinfo['username']))
 		{
 			$this->RunJumpPage($userinfo['username']);
 		}
@@ -303,4 +304,3 @@ class oauthClass extends EasyForm
 	}
 
 }
-?>

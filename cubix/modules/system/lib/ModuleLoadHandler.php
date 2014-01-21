@@ -11,6 +11,8 @@
  * @version   $Id: ModuleLoadHandler.php 4963 2012-12-28 08:35:35Z hellojixian@gmail.com $
  */
 
+use Openbiz\Openbiz;
+
 include_once (OPENBIZ_APP_MODULE_PATH."/system/lib/ModuleLoader.php");
 
 interface ModuleLoadHandler
@@ -32,10 +34,10 @@ class DefaultModuleLoadHandler implements ModuleLoadHandler
     public function postLoadingModule($moduelLoader)
     {
 
-    	$roleRec = BizSystem::getObject("system.do.RoleDO")->fetchOne("[name]='{$this->roleName}'");
+    	$roleRec = Openbiz::getObject("system.do.RoleDO")->fetchOne("[name]='{$this->roleName}'");
     	$memberRoleId = $roleRec['Id'];
     	
-    	$actionList = BizSystem::getObject("system.do.AclActionDO")->directfetch("[module]='{$this->moduleName}'");
+    	$actionList = Openbiz::getObject("system.do.AclActionDO")->directfetch("[module]='{$this->moduleName}'");
     	foreach ($actionList as $actionRec){
 	    	$actionId = $actionRec["Id"];
 	    	
@@ -44,7 +46,7 @@ class DefaultModuleLoadHandler implements ModuleLoadHandler
 	    		"action_id" => $actionId,
 	    		"access_level" => 1
 	    	);
-	    	BizSystem::getObject("system.do.AclRoleActionDO")->insertRecord($aclRecord);
+	    	Openbiz::getObject("system.do.AclRoleActionDO")->insertRecord($aclRecord);
 
     	}    	
     }
@@ -55,17 +57,16 @@ class DefaultModuleLoadHandler implements ModuleLoadHandler
     
     public function postUnloadModule($moduleLoader)
     {
-    	$roleRec = BizSystem::getObject("system.do.RoleDO")->fetchOne("[name]='{$this->roleName}'");
+    	$roleRec = Openbiz::getObject("system.do.RoleDO")->fetchOne("[name]='{$this->roleName}'");
     	$memberRoleId = $roleRec['Id'];
     	$roleRec->delete();
     	
-    	$actionList = BizSystem::getObject("system.do.AclActionDO")->directfetch("[module]='{$this->moduleName}'");
+    	$actionList = Openbiz::getObject("system.do.AclActionDO")->directfetch("[module]='{$this->moduleName}'");
     	foreach ($actionList as $actionRec){
 	    	$actionId = $actionRec["Id"];	    		    
-	    	BizSystem::getObject("system.do.AclRoleActionDO")->deleteRecords("[action_id]='$actionId' AND [role_id]='$memberRoleId'");
+	    	Openbiz::getObject("system.do.AclRoleActionDO")->deleteRecords("[action_id]='$actionId' AND [role_id]='$memberRoleId'");
     	}
     	
-    	BizSystem::getObject("system.do.AclActionDO")->deleteRecords("[module]='{$this->moduleName}'");
+    	Openbiz::getObject("system.do.AclActionDO")->deleteRecords("[module]='{$this->moduleName}'");
     }
 }
-?>

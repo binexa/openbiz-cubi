@@ -11,6 +11,8 @@
  * @version   $Id: LoginForm.php 3569 2012-07-10 03:06:09Z hellojixian@gmail.com $
  */
 
+use Openbiz\Openbiz;
+
 /**
  * LoginForm class - implement the logic of login form
  *
@@ -37,16 +39,16 @@ class MobileLoginForm extends LoginForm
         {
             $this->ValidateForm();
         }
-        catch (ValidationException $e)
+        catch (Openbiz\validation\Exception $e)
         {        	
             $this->processFormObjError($e->errors);
             return;
         }
 	  	        
 	  	// get the username and password	
-		$this->username = BizSystem::ClientProxy()->getFormInputs("username");
-		$this->password = BizSystem::ClientProxy()->getFormInputs("password");		
-		$this->smartcard = BizSystem::ClientProxy()->getFormInputs("smartcard");
+		$this->username = Openbiz::$app->getClientProxy()->getFormInputs("username");
+		$this->password = Openbiz::$app->getClientProxy()->getFormInputs("password");		
+		$this->smartcard = Openbiz::$app->getClientProxy()->getFormInputs("smartcard");
 		
 		if($this->username == $this->getElement("username")->hint){
 			$this->username = null;
@@ -55,13 +57,12 @@ class MobileLoginForm extends LoginForm
 			$this->password = null;
 		}
 		
-		global $g_BizSystem;		
-		$eventlog 	= BizSystem::getService(OPENBIZ_EVENTLOG_SERVICE);
+		$eventlog 	= Openbiz::getService(OPENBIZ_EVENTLOG_SERVICE);
 		try {
     		if ($this->authUser()) 
     		{
                 // after authenticate user: 1. init profile
-    			$profile = $g_BizSystem->InitUserProfile($this->username);
+    			$profile = Openbiz::$app->InitUserProfile($this->username);
     	   	   
     			// after authenticate user: 2. insert login event
     			$logComment=array(	$this->username, $_SERVER['REMOTE_ADDR']);
@@ -72,21 +73,21 @@ class MobileLoginForm extends LoginForm
     	   	        return false;
     	   	            	   	        
     	   	    // after authenticate user: 3. update current theme and language
-       			$currentLanguage = BizSystem::ClientProxy()->getFormInputs("current_language");
+       			$currentLanguage = Openbiz::$app->getClientProxy()->getFormInputs("current_language");
    				if($currentLanguage!=''){
    				   	if($currentLanguage=='user_default'){
 		   				$currentTheme = OPENBIZ_DEFAULT_LANGUAGE;
 		   			}else{
-       					BizSystem::sessionContext()->setVar("LANG",$currentLanguage );
+       					Openbiz::$app->getSessionContext()->setVar("LANG",$currentLanguage );
 		   			}
    				}
 
-				$currentTheme = BizSystem::ClientProxy()->getFormInputs("current_theme");
+				$currentTheme = Openbiz::$app->getClientProxy()->getFormInputs("current_theme");
 				if($currentTheme!=''){
 					if($currentTheme=='user_default'){
 		   				$currentTheme = CUBI_DEFAULT_THEME_NAME;
 		   			}else{
-   						BizSystem::sessionContext()->setVar("THEME",$currentTheme );
+   						Openbiz::$app->getSessionContext()->setVar("THEME",$currentTheme );
 		   			}
 				}
     	   	   		
@@ -98,7 +99,7 @@ class MobileLoginForm extends LoginForm
     				$this->processFormObjError($errorMessage);
     				return;
     	   	   	}
-    	   	    $cookies = BizSystem::ClientProxy()->getFormInputs("session_timeout");
+    	   	    $cookies = Openbiz::$app->getClientProxy()->getFormInputs("session_timeout");
     	   	    if($cookies)
     	   	    {
     	   	    	$password = $this->password;    	   	    	
@@ -108,10 +109,10 @@ class MobileLoginForm extends LoginForm
     	   	    }
     	   	    
     	   	    if($this->lastViewedPage!=""){
-    	   	    	BizSystem::clientProxy()->ReDirectPage($this->lastViewedPage);
+    	   	    	Openbiz::$app->getClientProxy()->ReDirectPage($this->lastViewedPage);
     	   	    }
        	        else{
-       	        	BizSystem::clientProxy()->ReDirectPage($this->MOBILE_STARTPAGE);    	        	
+       	        	Openbiz::$app->getClientProxy()->ReDirectPage($this->MOBILE_STARTPAGE);    	        	
        	        }       	        
     		    return true;
     		}
@@ -140,9 +141,8 @@ class MobileLoginForm extends LoginForm
     	catch (Exception $e) {    	
     		$errorMessage['login_status'] = $this->getMessage("LOGIN_FAILED");    			    			
     		$this->processFormObjError($errorMessage);    				
-    	    //BizSystem::ClientProxy()->showErrorMessage($e->getMessage());
+    	    //Openbiz::$app->getClientProxy()->showErrorMessage($e->getMessage());
     	}
     }
 
 }  
-?>

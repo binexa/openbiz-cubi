@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Openbiz Cubi Application Platform
  *
@@ -10,61 +11,58 @@
  * @link      http://code.google.com/p/openbiz-cubi/
  * @version   $Id: ContactGrabberForm.php 3356 2012-05-31 05:47:51Z rockyswen@gmail.com $
  */
+use Openbiz\Openbiz;
 
 class ContactGrabberForm extends EasyForm
 {
-	public function FetchContact()
-	{
+
+    public function fetchContact()
+    {
         $recArr = $this->readInputRecord();
         $this->setActiveRecord($recArr);
-        if (count($recArr) == 0)
+        if (count($recArr) == 0) {
             return;
-
-       
-        try
-        {
-            $this->ValidateForm();
         }
-        catch (ValidationException $e)
-        {
+
+        try {
+            $this->ValidateForm();
+        } catch (Openbiz\validation\Exception $e) {
             $this->processFormObjError($e->errors);
             return;
         }
-	
+
         $provider = $recArr['provider'];
         $username = $recArr['username'];
         $password = $recArr['password'];
         $credential = array(
-        	"username"=>$username,
-        	"password"=>$password
+            "username" => $username,
+            "password" => $password
         );
-        
-        $contactSvc = BizSystem::getObject("contact.lib.ContactGrabberService");
-        try{
-	        if(!$contactSvc->ValidateCredential($recArr,$provider)){	        	
-	        	$credential_invaild = BizSystem::getService($provider)->getValidateError();
-	        	$this->processFormObjError($credential_invaild);
-	            return;
-	        }
-        }
-        catch (Exception $e)
-        {
-        	$credential_invaild = BizSystem::getService($provider)->getValidateError();
-        	$this->processFormObjError($credential_invaild);
+
+        $contactSvc = Openbiz::getObject("contact.lib.ContactGrabberService");
+        try {
+            if (!$contactSvc->ValidateCredential($recArr, $provider)) {
+                $credential_invaild = Openbiz::getService($provider)->getValidateError();
+                $this->processFormObjError($credential_invaild);
+                return;
+            }
+        } catch (Exception $e) {
+            $credential_invaild = Openbiz::getService($provider)->getValidateError();
+            $this->processFormObjError($credential_invaild);
             return;
         }
-        $contacts = $contactSvc->fetchContacts($credential,$provider);        
+        $contacts = $contactSvc->fetchContacts($credential, $provider);
         //save contacts to import db
-        $contactImportDO = BizSystem::GetObject("contact.do.ContactImportDO");                
-        $user_id = BizSystem::GetUserProfile("Id");
-        
+        $contactImportDO = Openbiz::getObject("contact.do.ContactImportDO");
+        $user_id = Openbiz::$app->getUserProfile("Id");
+
         $contactImportDO->deleteRecords("[user_id]='$user_id'");
-        foreach ($contacts as $contactRec)
-        {
-        	$contactRec['user_id'] = $user_id;
-        	$contactImportDO->insertRecord($contactRec);
+        foreach ($contacts as $contactRec) {
+            $contactRec['user_id'] = $user_id;
+            $contactImportDO->insertRecord($contactRec);
         }
         $this->switchForm("contact.form.ContactGrabberListForm");
-	}
+    }
+
 }
-?>
+

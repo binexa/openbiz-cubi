@@ -90,4 +90,4 @@ function SendErrorNode(  $number, $text )
 {
 	echo '<Error number="' . $number . '" text="' . htmlspecialchars( $text ) . '" />' ;
 }
-?>
+

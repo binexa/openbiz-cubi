@@ -21,7 +21,7 @@ include_once (OPENBIZ_APP_MODULE_PATH."/system/lib/ModuleLoader.php");
 
 $cubiInstallDb = "CubiInstall";
 
-$db = BizSystem::dbConnection($cubiInstallDb);
+$db = Openbiz::$app->getDbConnection($cubiInstallDb);
 if (!$db) {
 	echo "Please create a CubiInstall database in cubi/Config.xml.".PHP_EOL;
 }
@@ -65,13 +65,13 @@ function giveActionAccess($where, $role_id)
 			$sql = "SELECT * FROM acl_action";
 		else
 			$sql = "SELECT * FROM acl_action WHERE $where";
-	    BizSystem::log(LOG_DEBUG, "DATAOBJ", $sql);
+	    Openbiz::$app->getLog()->log(LOG_DEBUG, "DATAOBJ", $sql);
 	    $rs = $db->fetchAll($sql);
 	    
 	    $sql = "";
 		foreach ($rs as $r) {
 			$sql = "INSERT INTO acl_role_action (role_id, action_id, access_level) VALUES ($role_id,$r[0],1)";
-			BizSystem::log(LOG_DEBUG, "DATAOBJ", $sql);
+			Openbiz::$app->getLog()->log(LOG_DEBUG, "DATAOBJ", $sql);
 	    	$db->query($sql);
 		}
 	}

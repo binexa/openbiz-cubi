@@ -1,4 +1,9 @@
-<?php 
+<?php
+
+use Openbiz\Openbiz;
+use Openbiz\Data\Helpers\QueryStringParam;
+
+
 require_once dirname(__FILE__)."/UserForm.php";
 
 class InitializeForm extends EasyForm
@@ -15,7 +20,7 @@ class InitializeForm extends EasyForm
         {
             $this->ValidateForm();
         }
-        catch (ValidationException $e)
+        catch (Openbiz\validation\Exception $e)
         {
             $this->processFormObjError($e->errors);
             return;
@@ -34,8 +39,8 @@ class InitializeForm extends EasyForm
             if($element->fieldName=='password')
             {
             	//update admin password
-            	$currentUserId = BizSystem::getUserProfile("Id");
-            	$userRec = BizSystem::getObject("system.do.UserSystemDO")->fetchById($currentUserId);
+            	$currentUserId = Openbiz::$app->getUserProfile("Id");
+            	$userRec = Openbiz::getObject("system.do.UserSystemDO")->fetchById($currentUserId);
             	$userRec['password'] = hash(HASH_ALG, $value);
             	$userRec->save();            	
             	continue;
@@ -94,7 +99,7 @@ class InitializeForm extends EasyForm
 	            			@file_put_contents($config_file,$data);	    
 
 	            			//make changes now
-	            			BizSystem::sessionContext()->setVar("LANG",$value );
+	            			Openbiz::$app->getSessionContext()->setVar("LANG",$value );
 	            		}
 	            		break;
 	            	            			            			            		        		
@@ -115,7 +120,7 @@ class InitializeForm extends EasyForm
 		if(is_file($initLock))
 		{
 			$pageURL = OPENBIZ_APP_INDEX_URL."/system/general_default";
-			BizSystem::clientProxy()->redirectPage($pageURL);
+			Openbiz::$app->getClientProxy()->redirectPage($pageURL);
 			return;
 		}
 		return parent::allowAccess($access);
@@ -166,4 +171,3 @@ class InitializeForm extends EasyForm
     
     
 }
-?>

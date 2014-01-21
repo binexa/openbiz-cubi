@@ -11,12 +11,14 @@
  * @version   $Id: CategoryListbox.php 3363 2012-05-31 06:04:56Z rockyswen@gmail.com $
  */
 
+use Openbiz\Openbiz;
+
 class RepositoryListbox extends Listbox
 {
 	public function getFromList(&$list, $selectFrom=null)
     {
     	parent::getFromList($list,$selectFrom);
-    	$svc = BizSystem::getService("market.lib.PackageService");
+    	$svc = Openbiz::getService("market.lib.PackageService");
     	foreach($list as $key=>$record)
     	{    		
     		$repo_uri = $record['pic']; 
@@ -28,4 +30,3 @@ class RepositoryListbox extends Listbox
         return;
     }	
 }
-?>

@@ -35,4 +35,4 @@ class CronjobForm extends EasyForm
 		print "</textarea>";
 	}
 }
-?>
+

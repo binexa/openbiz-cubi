@@ -1,4 +1,7 @@
 <?php
+
+use Openbiz\Openbiz;
+
 require_once ('facebook/facebook.php');
 require_once ("oauth.class.php");
 class facebook extends oauthClass
@@ -26,7 +29,7 @@ class facebook extends oauthClass
 	
   	function login(){	
 		$redirectPage=$this->getUrl();
-		BizSystem::clientProxy()->ReDirectPage($redirectPage);
+		Openbiz::$app->getClientProxy()->ReDirectPage($redirectPage);
 	} 
 	
 	function test($akey,$skey){
@@ -44,7 +47,7 @@ class facebook extends oauthClass
 		$getSigned=$this->facebook->getSignedRequest();
 		$access_token['access_token_json']=$_GET;
 		$access_token['oauth_token_secret']=$_GET['code'];
-		Bizsystem::getSessionContext()->setVar($this->type.'_access_token',$access_token);
+		Openbiz::$app->getSessionContext()->setVar($this->type.'_access_token',$access_token);
 		$userInfo=$this->userInfo();
 		$this->check($userInfo);
 	}
@@ -80,4 +83,3 @@ class facebook extends oauthClass
 	}
  
 }
-?>

@@ -11,6 +11,8 @@
  * @version   $Id: LogoutView.php 3375 2012-05-31 06:23:11Z rockyswen@gmail.com $
  */
 
+use Openbiz\Openbiz;
+
 class LogoutView extends EasyView
 {
     public function __construct(&$xmlArr)
@@ -20,15 +22,14 @@ class LogoutView extends EasyView
     
     public function Logout()
     {
-		global $g_BizSystem;
-		$eventlog 	= $g_BizSystem->GetService(OPENBIZ_EVENTLOG_SERVICE);
-		$profile = $g_BizSystem->getUserProfile();  
+		$eventlog 	= Openbiz::getService(OPENBIZ_EVENTLOG_SERVICE);
+		$profile = Openbiz::$app->getUserProfile();  
 		$logComment=array($profile["username"], $_SERVER['REMOTE_ADDR']);
 		
 		$eventlog->log("LOGIN", "MSG_LOGOUT_SUCCESSFUL", $logComment);
 		
 		// destroy all data associated with current session:
-		BizSystem::SessionContext()->destroy();
+		Openbiz::$app->getSessionContext()->destroy();
 		
 		//clean cookies
 		setcookie("SYSTEM_SESSION_USERNAME",null,time()-100,"/");
@@ -40,4 +41,3 @@ class LogoutView extends EasyView
 		exit;
     }
 }
-?>

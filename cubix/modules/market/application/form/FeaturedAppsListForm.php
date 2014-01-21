@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Openbiz Cubi Application Platform
  *
@@ -10,39 +11,40 @@
  * @link      http://code.google.com/p/openbiz-cubi/
  * @version   $Id: FeaturedAppsListForm.php 3363 2012-05-31 06:04:56Z rockyswen@gmail.com $
  */
+use Openbiz\Openbiz;
 
 include_once 'AppListForm.php';
+
 class FeaturedAppsListForm extends AppListForm
 {
-	
-	
-	public function fetchDataSet()
-	{
-		parent::fetchDataSet();				
-		$svc = BizSystem::getService("market.lib.PackageService");
-		$resultSet = array();
-				
-		$repo_uri = $this->getDefaultRepoURI();	
-		$params=array(
-			"sortRule" => $this->sortRule,
-			"searchRule" => $this->remoteSearchRule,
-			"range" => $this->range,
-			"startItem" => ($this->currentPage-1)*$this->range
-		);		
-		
-		$appList = $svc->discoverFeaturedApps($repo_uri,$params);	
-		if(is_array($appList['data'])){
-			foreach($appList['data'] as $appInfo)
-			{
-				$appInfo['icon'] = $repo_uri.$appInfo['icon'];
-				$resultSet[] = $appInfo;
-			}
-		}		
+
+    public function fetchDataSet()
+    {
+        parent::fetchDataSet();
+        $svc = Openbiz::getService("market.lib.PackageService");
+        $resultSet = array();
+
+        $repo_uri = $this->getDefaultRepoURI();
+        $params = array(
+            "sortRule" => $this->sortRule,
+            "searchRule" => $this->remoteSearchRule,
+            "range" => $this->range,
+            "startItem" => ($this->currentPage - 1) * $this->range
+        );
+
+        $appList = $svc->discoverFeaturedApps($repo_uri, $params);
+        if (is_array($appList['data'])) {
+            foreach ($appList['data'] as $appInfo) {
+                $appInfo['icon'] = $repo_uri . $appInfo['icon'];
+                $resultSet[] = $appInfo;
+            }
+        }
         $this->totalRecords = $appList['totalRecords'];
         if ($this->range && $this->range > 0)
-            $this->totalPages = ceil($this->totalRecords/$this->range);
-		
-		return $resultSet;
-	}
+            $this->totalPages = ceil($this->totalRecords / $this->range);
+
+        return $resultSet;
+    }
+
 }
-?>
+

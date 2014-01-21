@@ -22,4 +22,3 @@ class CustomLogoForm extends EasyForm
 		$this->processPostAction();
 	}	
 }
-?>

@@ -12,8 +12,12 @@
  */
 
 
+use Openbiz\Openbiz;
+use Openbiz\Resource;
+
 include_once 'WebsvcError.php';
 include_once 'WebsvcResponse.php';
+
 
 class WebsvcService
 {   
@@ -106,7 +110,7 @@ class WebsvcService
     
     protected function authenticate($username, $api_key, $secret=null)
     {
-        $websvcDO = BizSystem::getObject($this->websvcDO);
+        $websvcDO = Openbiz::getObject($this->websvcDO);
         $searchRule = "[username]='$username' AND [api_key]='$api_key'";
         if ($secret)
             $searchRule .= " AND [secret]='$secret'";
@@ -148,10 +152,10 @@ class WebsvcService
         if (!$access) return true;
         // check user ACL 
         // load user profile first and check profile against public method Access
-        $profileSvc = BizSystem::getService(PROFILE_SERVICE);
+        $profileSvc = Openbiz::getService(PROFILE_SERVICE);
         $profile = $profileSvc->InitProfile($username);
         //echo $access; print_r($profile); exit;
-        $aclSvc = BizSystem::getService(ACL_SERVICE);
+        $aclSvc = Openbiz::getService(ACL_SERVICE);
         if (!$aclSvc->checkUserPerm($profile, $access)) {
             $this->errorCode = WebsvcError::NOT_AUTH;
             return false;
@@ -193,4 +197,3 @@ class PublicMethod
         $this->access = $xmlArr["ATTRIBUTES"]["ACCESS"];
     }
 }
-?>

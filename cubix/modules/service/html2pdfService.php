@@ -98,4 +98,3 @@ class html2pdfService
         closedir($h);
     }
 }
-?>

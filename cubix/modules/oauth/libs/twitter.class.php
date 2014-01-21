@@ -1,4 +1,7 @@
 <?php
+
+use Openbiz\Openbiz;
+
 include_once('_OAuth/oauth.php');
 require_once ('twitter/twitteroauth.php');
 require_once ("oauth.class.php");
@@ -23,7 +26,7 @@ class twitter extends oauthClass
 	
   	function login(){	
 		$redirectPage=$this->getUrl();
-		BizSystem::clientProxy()->ReDirectPage($redirectPage);
+		Openbiz::$app->getClientProxy()->ReDirectPage($redirectPage);
 	} 
 	
 	function test($akey,$skey){
@@ -32,7 +35,7 @@ class twitter extends oauthClass
 	}
 	
 	function callback(){ 
-		$oauth_token=Bizsystem::getSessionContext()->getVar('twitter_access_token');
+		$oauth_token=Openbiz::$app->getSessionContext()->getVar('twitter_access_token');
 		$Twitter = new TwitterOAuth($this->akey ,$this->skey,$oauth_token['oauth_token'], $oauth_token['oauth_token_secret']);
 		$access_token = $Twitter->getAccessToken($_REQUEST['oauth_verifier']);
 		if(!$access_token)
@@ -41,7 +44,7 @@ class twitter extends oauthClass
 			return false;
 		}
 		
-		Bizsystem::getSessionContext()->setVar($this->type.'_access_token',$access_token);
+		Openbiz::$app->getSessionContext()->setVar($this->type.'_access_token',$access_token);
 	
 		$userInfo=$this->userInfo($access_token['oauth_token'],$access_token['oauth_token_secret']);
 		$this->check($userInfo);
@@ -61,7 +64,7 @@ class twitter extends oauthClass
 		{
 			/* Build authorize URL and redirect user to Twitter. */
 			
-			Bizsystem::getSessionContext()->setVar('twitter_access_token',$request_token); 
+			Openbiz::$app->getSessionContext()->setVar('twitter_access_token',$request_token); 
 			$this->loginUrl = $Twitter->getAuthorizeURL($request_token);
 		}
 		else
@@ -86,4 +89,3 @@ class twitter extends oauthClass
 	}
  
 }
-?>

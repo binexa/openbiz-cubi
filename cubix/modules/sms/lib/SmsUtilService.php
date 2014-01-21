@@ -107,6 +107,3 @@ public  function db_create_in($item_list, $field_name = '')
 			return $file_contents;
 	}
 }
-
-
-?>

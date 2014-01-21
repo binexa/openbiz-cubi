@@ -1,5 +1,7 @@
 <?php
 
+use Openbiz\Openbiz;
+
 class AccountService
 {
 
@@ -8,10 +10,10 @@ class AccountService
     public function getDefaultAccountId($userId = null)
     {
         if (!$userId) {
-            $userId = BizSystem::getUserProfile("Id");
+            $userId = Openbiz::$app->getUserProfile("Id");
         }
 
-        $assocRec = BizSystem::getObject("account.do.AccountUserDO")->fetchOne("[user_id]='$userId' AND [default]='1'");
+        $assocRec = Openbiz::getObject("account.do.AccountUserDO")->fetchOne("[user_id]='$userId' AND [default]='1'");
         $accountId = $assocRec['account_id'];
         return $accountId;
     }
@@ -23,7 +25,7 @@ class AccountService
             $searchRule.= " AND [access_level] >= '$access_level' ";
         }
         $users = array();
-        foreach (BizSystem::getObject("account.do.AccountUserDO")->directFetch($searchRule) as $rec) {
+        foreach (Openbiz::getObject("account.do.AccountUserDO")->directFetch($searchRule) as $rec) {
             $users[] = $rec['user_id'];
         }
         return $users;
@@ -34,7 +36,7 @@ class AccountService
         if (!$accountId) {
             return "-- Not available --";
         }
-        $name = BizSystem::getObject($this->accountDO)->fetchById($accountId)->objectName;
+        $name = Openbiz::getObject($this->accountDO)->fetchById($accountId)->objectName;
         if ($name) {
             return $name;
         } else {
@@ -45,7 +47,7 @@ class AccountService
     public function genAccountCode()
     {
         $code = "ACCT-" . date('ym') . '-' . rand(111111, 999999);
-        $rec = BizSystem::getObject($this->accountDO)->fetchOne("[code]='$code'");
+        $rec = Openbiz::getObject($this->accountDO)->fetchOne("[code]='$code'");
         if ($rec) {
             return $this->genAccountCode();
         } else {
@@ -62,13 +64,13 @@ class AccountService
             "default" => '1',
             "status" => '1'
         );
-        return BizSystem::getObject("account.do.AccountUserDO")->insertRecord($assocRec);
+        return Openbiz::getObject("account.do.AccountUserDO")->insertRecord($assocRec);
     }
 
     public function createAccount($rec)
     {
         $rec['code'] = $this->GenAccountCode();
-        return BizSystem::getObject($this->accountDO)->insertRecord($rec);
+        return Openbiz::getObject($this->accountDO)->insertRecord($rec);
     }
 
     public function validateAccountToken($accountCode, $tokenCode)

@@ -41,10 +41,10 @@ if(!defined("CLI")){
 $moduleDir = OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR.str_replace(".",DIRECTORY_SEPARATOR,$module);
 
 // read do1 
-$do1 = BizSystem::getObject($do1name);
+$do1 = Openbiz::getObject($do1name);
 $do1Table = $do1->mainTableName;
 // read do2 
-$do2 = BizSystem::getObject($do2name);
+$do2 = Openbiz::getObject($do2name);
 $do2Table = $do2->mainTableName;
 
 $fkCol = "";

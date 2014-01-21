@@ -1,5 +1,5 @@
 <?php
-require_once OPENBIZ_BIN.'/easy/element/LabelText.php';
+//require_once OPENBIZ_BIN.'/easy/element/LabelText.php';
  
 class RawDataDisplay extends LabelText
 {
@@ -33,4 +33,3 @@ class RawDataDisplay extends LabelText
 		return $html;
 	}
 }
-?>

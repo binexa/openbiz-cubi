@@ -79,4 +79,3 @@ class ChinaBank extends PaymentAdapter
 		return $result;	
 	}	
 }
-?>

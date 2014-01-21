@@ -1,6 +1,6 @@
 <?PHP
 /**
- * PHPOpenBiz Framework
+ * Openbiz Framework
  *
  * LICENSE
  *
@@ -13,6 +13,8 @@
  * @link      http://www.phpopenbiz.org/
  * @version   $Id: MenuTreeDO.php 5171 2013-01-18 10:36:59Z rockyswen@gmail.com $
  */
+
+use Openbiz\Openbiz;
 
 include_once(OPENBIZ_BIN.'data/BizDataObj.php');
 include_once('MenuRecord.php');
@@ -121,9 +123,6 @@ class MenuTreeDO extends BizDataObj
     	$uri = str_replace("//","/",str_replace(OPENBIZ_APP_INDEX_URL,'',$uri));
     	
     	$pathArray = array();
-    	//global $g_BizSystem;
-    	//$currentView = $g_BizSystem->getCurrentViewName();
-		//$this->fetchNodePath("[link]='$uri' OR [view]='$currentView'", $pathArray);
 
     	// first find the exact uri match
     	$this->fetchNodePath("[link]='$uri'", $pathArray);
@@ -211,7 +210,7 @@ class MenuTreeDO extends BizDataObj
     	foreach($rs as $record)
     	{
     		$access = $record['access'];
-    		if(empty($access) || BizSystem::allowUserAccess($access))
+    		if(empty($access) || Openbiz::$app->allowUserAccess($access))
     		{
 				$counter++;
     		}
@@ -262,7 +261,7 @@ class MenuTreeDO extends BizDataObj
 	{
 		if (self::$fullMenuTree != null) return;
 		$cache_id = 'FULL_MENU_LIST';
-		$cacheSvc = BizSystem::getService(CACHE_SERVICE,1);
+		$cacheSvc = Openbiz::getService(CACHE_SERVICE,1);
 		$cacheSvc->init($this->objectName, 600);	// cache for 10 mins
 		if($cacheSvc->test($cache_id))
 		{
@@ -290,4 +289,3 @@ class MenuTreeDO extends BizDataObj
 	}
 }
 
-?>

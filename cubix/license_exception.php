@@ -18,8 +18,8 @@ function ioncube_event_handler($err_code, $params)
 	preg_match("|[\\\/]?(.*?)[\\\/]{1}|si",$current_file,$matches);
 	$moduleName = $matches[1];	
 	
-	BizSystem::instance()->getSessionContext()->setVar("LIC_SOURCE_URL", $_SERVER['REQUEST_URI']);
-	BizSystem::instance()->getSessionContext()->setVar("LIC_MODULE", $moduleName);
+	Openbiz::$app->getSessionContext()->setVar("LIC_SOURCE_URL", $_SERVER['REQUEST_URI']);
+	Openbiz::$app->getSessionContext()->setVar("LIC_MODULE", $moduleName);
 	
 	
 	$rh_file = OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR.$moduleName.DIRECTORY_SEPARATOR.'register_handler.php';
@@ -35,18 +35,18 @@ function ioncube_event_handler($err_code, $params)
 	$lic_file = OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR.$moduleName.DIRECTORY_SEPARATOR.'license.key';
 	if(!is_file($lic_file) && $rh_func)
 	{
-		$formObj = BizSystem::getObject("common.form.LicenseInitializeForm");
+		$formObj = Openbiz::getObject("common.form.LicenseInitializeForm");
 		$formObj->sourceURL = $_SERVER['REQUEST_URI'];
 		$formObj->errorCode = $err_code;
 		$formObj->errorParams = $params;		
-		$viewObj = BizSystem::getObject("common.view.LicenseInitializeView");
+		$viewObj = Openbiz::getObject("common.view.LicenseInitializeView");
 		$viewObj->render();
 	}else{
-		$formObj = BizSystem::getObject("common.form.LicenseInvalidForm");
+		$formObj = Openbiz::getObject("common.form.LicenseInvalidForm");
 		$formObj->sourceURL = $_SERVER['REQUEST_URI'];
 		$formObj->errorCode = $err_code;
 		$formObj->errorParams = $params;
-		$viewObj = BizSystem::getObject("common.view.LicenseInvalidView");
+		$viewObj = Openbiz::getObject("common.view.LicenseInvalidView");
 		$viewObj->render();	
 
 	}	

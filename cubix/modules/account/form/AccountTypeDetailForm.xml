@@ -16,9 +16,9 @@
     <Element Name="btn_manage_price" Tabset="Extra Information" Hidden="{@:canUpdateRecord=='1'?'N':'Y'}" TabSet="Extra Information" ElementSet="Price Book" Class="Button" CssClass="button_gray_w" Text="Manage" Style="color:#666666;margin-left:5px;margin-top:2px;" Access="store.Access">
       <EventHandler Name="btn_manage_price_onclick" Event="onclick" Function="SwitchForm(account.form.AccountTypeEditPriceForm,{@:Elem[fld_Id].Value})"/>
     </Element>
-    <Element Name="fld_create_by" Tabset="Extra Information" ElementSet="Miscellaneous" Class="LabelText" FieldName="create_by" Label="Create By" Text="{BizSystem::GetProfileName(@:Elem[fld_create_by].Value)}" Link="{OPENBIZ_APP_INDEX_URL}/collab/contact_detail/{BizSystem::GetProfileId(@:Elem[fld_create_by].Value)}" AllowURLParam="N"/>
+    <Element Name="fld_create_by" Tabset="Extra Information" ElementSet="Miscellaneous" Class="LabelText" FieldName="create_by" Label="Create By" Text="{\Openbiz\Openbiz::$app->getProfile()->getProfileName(@:Elem[fld_create_by].Value)}" Link="{OPENBIZ_APP_INDEX_URL}/collab/contact_detail/{\Openbiz\Openbiz::$app->getProfile()->getProfileId(@:Elem[fld_create_by].Value)}" AllowURLParam="N"/>
     <Element Name="fld_create_time" Tabset="Extra Information" ElementSet="Miscellaneous" Class="LabelText" FieldName="create_time" Label="Create Time" AllowURLParam="N"/>
-    <Element Name="fld_update_by" Tabset="Extra Information" ElementSet="Miscellaneous" Class="LabelText" FieldName="update_by" Label="Update By" Text="{BizSystem::GetProfileName(@:Elem[fld_update_by].Value)}" Link="{OPENBIZ_APP_INDEX_URL}/collab/contact_detail/{BizSystem::GetProfileId(@:Elem[fld_update_by].Value)}" AllowURLParam="N"/>
+    <Element Name="fld_update_by" Tabset="Extra Information" ElementSet="Miscellaneous" Class="LabelText" FieldName="update_by" Label="Update By" Text="{\Openbiz\Openbiz::$app->getProfile()->getProfileName(@:Elem[fld_update_by].Value)}" Link="{OPENBIZ_APP_INDEX_URL}/collab/contact_detail/{\Openbiz\Openbiz::$app->getProfile()->getProfileId(@:Elem[fld_update_by].Value)}" AllowURLParam="N"/>
     <Element Name="fld_update_time" Tabset="Extra Information" ElementSet="Miscellaneous" Class="LabelText" FieldName="update_time" Label="Update Time" AllowURLParam="N"/>
   </DataPanel>
   <ActionPanel>

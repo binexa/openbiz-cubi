@@ -29,9 +29,8 @@ foreach ($mods as $mod=>$modfile)
 function installModule($mod, $modfile)
 {
     $xml = simplexml_load_file($modfile);
-    
-    global $g_BizSystem;
-    $db = $g_BizSystem->getDBConnection();
+
+    $db =  Openbiz::$app->getDBConnection();
     
     // write mod info in module table
     $modName = $xml['Name'];

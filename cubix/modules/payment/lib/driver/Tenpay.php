@@ -7,4 +7,3 @@ class Tenpay extends PaymentAdapter
 	protected $type = 'tenpay';
 	
 }
-?>

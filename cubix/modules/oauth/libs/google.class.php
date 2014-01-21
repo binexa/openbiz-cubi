@@ -1,4 +1,7 @@
 <?php
+
+use Openbiz\Openbiz;
+
 require_once "oauth.class.php";
 require_once 'google/apiClient.php';
 require_once 'google/contrib/apiOauth2Service.php';
@@ -26,7 +29,7 @@ class google extends oauthClass
 	
   	function login(){	
 		$redirectPage=$this->getUrl(); 
-		BizSystem::clientProxy()->ReDirectPage($redirectPage);
+		Openbiz::$app->getClientProxy()->ReDirectPage($redirectPage);
 	} 
 
 	function test($akey,$skey){
@@ -44,13 +47,13 @@ class google extends oauthClass
 		$access_token['oauth_token']=$access_token['access_token'];
 		$access_token['oauth_token_secret']=$access_token['id_token'];
 		$access_token['access_token_json']=$access_token_json;
-		Bizsystem::getSessionContext()->setVar('google_access_token',$access_token);
+		Openbiz::$app->getSessionContext()->setVar('google_access_token',$access_token);
 		
 		$userInfo=$this->userInfo();  
 		$this->check($userInfo);
 	}
 	function logout(){ 
-		Bizsystem::getSessionContext()->clearVar('google_access_token');
+		Openbiz::$app->getSessionContext()->clearVar('google_access_token');
 		$this->google->revokeToken();
 	}
  
@@ -69,7 +72,7 @@ class google extends oauthClass
 
 	//用户资料
 	function userInfo(){
-		$access_token=Bizsystem::getSessionContext()->getVar('google_access_token');
+		$access_token=Openbiz::$app->getSessionContext()->getVar('google_access_token');
 		$this->google->setAccessToken($access_token['access_token_json']);
 		
 		if(!$this->oauth2)
@@ -96,4 +99,3 @@ class google extends oauthClass
  
  
 }
-?>

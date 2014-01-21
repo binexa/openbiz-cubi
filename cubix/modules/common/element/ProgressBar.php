@@ -16,4 +16,3 @@ class ProgessBar extends LabelText
 {
 
 }
-?>

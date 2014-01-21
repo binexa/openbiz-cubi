@@ -11,6 +11,10 @@
  * @version   $Id: BackupForm.php 3351 2012-05-31 05:33:35Z rockyswen@gmail.com $
  */
 
+use Openbiz\Openbiz;
+use Openbiz\Core\Expression;
+
+
 class BackupForm extends EasyForm
 {
 	protected $folder;
@@ -26,25 +30,25 @@ class BackupForm extends EasyForm
 		$this->folder = OPENBIZ_APP_FILE_PATH.DIRECTORY_SEPARATOR."backup";
 	}
 	
-	public function loadSessionVars($sessionContext)
+	public function loadStatefullVars($sessionContext)
     {
         $sessionContext->loadObjVar("backup.form.BackupForms", "LocationId", $this->locationId);
         $sessionContext->loadObjVar("backup.form.BackupForms", "LocationName", $this->locationName);
         $sessionContext->loadObjVar("backup.form.BackupForms", "Folder", $this->folder);
-        return parent::loadSessionVars($sessionContext);
+        return parent::loadStatefullVars($sessionContext);
     }
  
-    public function saveSessionVars($sessionContext)
+    public function saveStatefullVars($sessionContext)
     {
         $sessionContext->saveObjVar("backup.form.BackupForms", "LocationId", $this->locationId);
         $sessionContext->saveObjVar("backup.form.BackupForms", "LocationName", $this->locationName);
         $sessionContext->saveObjVar("backup.form.BackupForms", "Folder", $this->folder);
-        return parent::saveSessionVars($sessionContext);
+        return parent::saveStatefullVars($sessionContext);
     }
     
     public function getLocationInfo($id)
     {
-    	$locationRec = BizSystem::GetObject("backup.do.BackupDeviceDO")->fetchById($id);
+    	$locationRec = Openbiz::getObject("backup.do.BackupDeviceDO")->fetchById($id);
     	if($locationRec){
 	    	$this->locationId = $locationRec["Id"];
     		$this->locationName =  $locationRec["name"];            
@@ -60,7 +64,7 @@ class BackupForm extends EasyForm
             if (!$element->fieldName)
                 continue;
 
-            $value = BizSystem::clientProxy()->getFormInputs($element->objectName);                                    
+            $value = Openbiz::$app->getClientProxy()->getFormInputs($element->objectName);                                    
             $this->getLocationInfo($value);
         }
 
@@ -158,9 +162,9 @@ class BackupForm extends EasyForm
 	
 	public function deleteRecord($id=null){
 		if ($id==null || $id=='')
-            $id = BizSystem::clientProxy()->getFormInputs('_selectedId');
+            $id = Openbiz::$app->getClientProxy()->getFormInputs('_selectedId');
 
-        $selIds = BizSystem::clientProxy()->getFormInputs('row_selections', false);
+        $selIds = Openbiz::$app->getClientProxy()->getFormInputs('row_selections', false);
         if ($selIds == null)
             $selIds[] = $id;
 
@@ -185,9 +189,9 @@ class BackupForm extends EasyForm
 	
 	public function Download($id=null){
 		if(!$id){
-			$id = BizSystem::clientProxy()->getFormInputs('_selectedId');
+			$id = Openbiz::$app->getClientProxy()->getFormInputs('_selectedId');
 
-			$selIds = BizSystem::clientProxy()->getFormInputs('row_selections', false);
+			$selIds = Openbiz::$app->getClientProxy()->getFormInputs('row_selections', false);
 			if($id==null){
 				$id=$selIds[0];
 			}
@@ -226,7 +230,7 @@ class BackupForm extends EasyForm
         {
             $this->ValidateForm();
         }
-        catch (ValidationException $e)
+        catch (Openbiz\validation\Exception $e)
         {
             $this->processFormObjError($e->errors);
             return;
@@ -389,7 +393,7 @@ class BackupForm extends EasyForm
 	public function Restore($id=null){
 		
 		if(!$id){
-			$id = BizSystem::clientProxy()->getFormInputs('_selectedId');
+			$id = Openbiz::$app->getClientProxy()->getFormInputs('_selectedId');
 			if(!$id){
 				return;
 			}
@@ -440,7 +444,7 @@ class BackupForm extends EasyForm
 	
 	
 	public function gotoRestore(){
-		$this->recordId = BizSystem::clientProxy()->getFormInputs('_selectedId');
+		$this->recordId = Openbiz::$app->getClientProxy()->getFormInputs('_selectedId');
 		$this->switchForm("backup.form.BackupRestoreForm",$this->recordId);
 	}
 	
@@ -449,7 +453,7 @@ class BackupForm extends EasyForm
 		if (empty($query))
         	return true;
         	
-		$db = BizSystem::dbConnection($db);
+		$db = Openbiz::$app->getDbConnection($db);
 		if($charset){
 			$db->exec("SET NAMES '$charset';");
 		}
@@ -507,4 +511,3 @@ class BackupForm extends EasyForm
 		return file_put_contents($filename,$data);		
 	}
 }
-?>

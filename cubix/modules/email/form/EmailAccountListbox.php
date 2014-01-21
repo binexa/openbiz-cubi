@@ -11,7 +11,9 @@
  * @version   $Id: EmailAccountListbox.php 3358 2012-05-31 05:57:58Z rockyswen@gmail.com $
  */
 
-require_once(OPENBIZ_BIN."easy/element/Listbox.php");
+use Openbiz\Resource;
+
+//require_once(OPENBIZ_BIN."easy/element/Listbox.php");
 class EmailAccountListbox extends Listbox{
 	
 	public $configFile = "emailService.xml";
@@ -25,7 +27,7 @@ class EmailAccountListbox extends Listbox{
 			return;
 		}
 		
-		$configArr=BizSystem::getXmlArray($file);
+		$configArr=Resource::getXmlArray($file);
 		$nodesArr = $configArr["PLUGINSERVICE"]["ACCOUNTS"][strtoupper($this->configNode)];
 		
     	
@@ -47,4 +49,3 @@ class EmailAccountListbox extends Listbox{
 		return $list;
     }
 }
-?>

@@ -1,12 +1,15 @@
 <?php
+
+use Openbiz\Openbiz;
+
 class OauthSelector extends Element
 {
 	public function render()
 	{
 		$sHTML = "";
-		if(BizSystem::getService('system.lib.ModuleService')->isModuleInstalled('oauth'))
+		if(Openbiz::getService('system.lib.ModuleService')->isModuleInstalled('oauth'))
 		{
-			 $do=BizSystem::getObject('oauth.do.OauthProviderDO');
+			 $do=Openbiz::getObject('oauth.do.OauthProviderDO');
 			 $recArr=$do->directFetch ("[status]=1",30);
 			 $recArr=$recArr->toArray();
 			 if(count($recArr))
@@ -23,4 +26,3 @@ class OauthSelector extends Element
 		return $sHTML;
 	}
 }
-?>

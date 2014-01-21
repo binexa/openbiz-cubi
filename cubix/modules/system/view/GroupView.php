@@ -1,4 +1,7 @@
-<?php 
+<?php
+
+use Openbiz\Openbiz;
+
 class GroupView extends EasyView
 {
 	const MIN_GROUP_COUNT = 3;
@@ -15,7 +18,7 @@ class GroupView extends EasyView
 		{
 			return false;
 		}
-		$do = BizSystem::getObject($this->groupDO);
+		$do = Openbiz::getObject($this->groupDO);
 		$groupList = $do->directFetch();
 		if($groupList->count() > self::MIN_GROUP_COUNT)
 		{
@@ -28,15 +31,14 @@ class GroupView extends EasyView
 	{
 		if($this->isNeedInitialize())
 		{
-			BizSystem::sessionContext()->setVar("_GROUP_INITIALIZE_LASTVIEW", $_SERVER['REQUEST_URI']);
-			BizSystem::clientProxy()->redirectPage(OPENBIZ_APP_INDEX_URL.'/system/initialize_group');
+			Openbiz::$app->getSessionContext()->setVar("_GROUP_INITIALIZE_LASTVIEW", $_SERVER['REQUEST_URI']);
+			Openbiz::$app->getClientProxy()->redirectPage(OPENBIZ_APP_INDEX_URL.'/system/initialize_group');
 		}
 		return parent::allowAccess($access);
 	}
 	
 	public function getLastViewURL()
 	{
-		return BizSystem::sessionContext()->getVar("_GROUP_INITIALIZE_LASTVIEW");
+		return Openbiz::$app->getSessionContext()->getVar("_GROUP_INITIALIZE_LASTVIEW");
 	}
 }
-?>

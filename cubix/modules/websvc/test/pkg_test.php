@@ -51,4 +51,3 @@ function testSvc($url, $query=null, $cookie=null)
 	return $out;
 }
 
-?>

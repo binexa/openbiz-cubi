@@ -1,6 +1,6 @@
 {php}
 $theme_js_url = $this->_tpl_vars['theme_js_url'];
-$includedScripts = BizSystem::clientProxy()->getAppendedScripts();
+$includedScripts = Openbiz\Openbiz::$app->getClientProxy()->getAppendedScripts();
 $includedScripts.="\n"."
 <script src=\"".OPENBIZ_JS_URL."/cookies.js\"></script>
 <script src=\"".OPENBIZ_JS_URL."/grouping.js\"></script>
@@ -19,7 +19,7 @@ if (OPENBIZ_JSLIB_BASE!='JQUERY') {
 $this->_tpl_vars['scripts'] = $includedScripts; 
 
 $css_url = $this->_tpl_vars['css_url'];
-$appendStyle = BizSystem::clientProxy()->getAppendedStyles();
+$appendStyle = Openbiz\Openbiz::$app->getClientProxy()->getAppendedStyles();
 $appendStyle .= "\n"."
 <link rel=\"stylesheet\" href=\"$css_url/general.css\" type=\"text/css\" />
 <link rel=\"stylesheet\" href=\"$css_url/system_backend.css\" type=\"text/css\" />

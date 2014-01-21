@@ -54,7 +54,7 @@ class PreferenceForm extends EasyForm
         {
             $this->ValidateForm();
         }
-        catch (ValidationException $e)
+        catch (Openbiz\validation\Exception $e)
         {
             $this->processFormObjError($e->errors);
             return;
@@ -105,4 +105,3 @@ class PreferenceForm extends EasyForm
     }
 
 }  
-?>

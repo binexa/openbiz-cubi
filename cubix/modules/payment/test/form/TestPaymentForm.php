@@ -1,4 +1,7 @@
-<?php 
+<?php
+
+use Openbiz\Openbiz;
+
 class TestPaymentForm extends EasyForm
 {
 	public $paymentService = "payment.lib.PaymentService";
@@ -11,7 +14,7 @@ class TestPaymentForm extends EasyForm
 		$amount = $rec['amount'];
 		$providerType = $rec['provider_type'];
 
-		BizSystem::GetService($this->paymentService)->goPayment($orderId,$amount,$providerType,$title);		
+		Openbiz::getService($this->paymentService)->goPayment($orderId,$amount,$providerType,$title);		
 		return true;
 	}
 	
@@ -21,4 +24,3 @@ class TestPaymentForm extends EasyForm
 		return $orderId;
 	}
 }
-?>

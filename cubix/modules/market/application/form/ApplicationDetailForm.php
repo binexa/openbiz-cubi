@@ -11,6 +11,8 @@
  * @version   $Id: ApplicationDetailForm.php 4679 2012-11-12 08:46:20Z hellojixian@gmail.com $
  */
 
+use Openbiz\Openbiz;
+
 require_once 'AppListForm.php';
 class ApplicationDetailForm extends AppListForm
 {
@@ -19,8 +21,8 @@ class ApplicationDetailForm extends AppListForm
 		$app_id = (int)$_GET['fld:Id'];
 		$repo_uri = $this->getDefaultRepoURI();
 		
-		$svc = BizSystem::getService("market.lib.PackageService");
-		$util = BizSystem::getService(OPENBIZ_UTIL_SERVICE);
+		$svc = Openbiz::getService("market.lib.PackageService");
+		$util = Openbiz::getService(OPENBIZ_UTIL_SERVICE);
 		
 		$appInfo = $svc->discoverAppInfo($repo_uri,$app_id);
 		$this->recordId = $appInfo['Id'];
@@ -35,7 +37,7 @@ class ApplicationDetailForm extends AppListForm
 			$appInfo['version_description'] = $releaseInfo['description'];
 		}
 		
-		BizSystem::getService(ACL_SERVICE)->clearACLCache();
+		Openbiz::getService(ACL_SERVICE)->clearACLCache();
 		return $appInfo;
 	}
 	
@@ -49,8 +51,8 @@ class ApplicationDetailForm extends AppListForm
 	}
 	
 	public function uninstall($repo_id,$app_id){
-		$svc = BizSystem::getService("market.lib.PackageService");
-   		$repoInfo = BizSystem::getObject("market.repository.do.RepositoryDO")->fetchById($repo_id);
+		$svc = Openbiz::getService("market.lib.PackageService");
+   		$repoInfo = Openbiz::getObject("market.repository.do.RepositoryDO")->fetchById($repo_id);
    		$repo_uri = $repoInfo->repository_uri;
    		$repo_uid = $repoInfo->repository_uid;
    		
@@ -69,13 +71,13 @@ class ApplicationDetailForm extends AppListForm
    		
 	   		//delete installed record
 	   		$searchRule = "[app_id]='$app_id' AND [repository_uid]='$repo_uid'";
-			BizSystem::getObject("market.installed.do.InstalledDO")->deleteRecords($searchRule);		
+			Openbiz::getObject("market.installed.do.InstalledDO")->deleteRecords($searchRule);		
    		}		
 	}
 	
 	public function allowUninstall($repo_id,$app_id){
-		$svc = BizSystem::getService("market.lib.PackageService");
-   		$repoInfo = BizSystem::getObject("market.repository.do.RepositoryDO")->fetchById($repo_id);
+		$svc = Openbiz::getService("market.lib.PackageService");
+   		$repoInfo = Openbiz::getObject("market.repository.do.RepositoryDO")->fetchById($repo_id);
    		$repo_uri = $repoInfo->repository_uri;
    		$repo_uid = $repoInfo->repository_uid;
    		
@@ -101,4 +103,3 @@ class ApplicationDetailForm extends AppListForm
 		}
 	}
 }
-?>

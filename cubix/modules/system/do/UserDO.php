@@ -14,4 +14,4 @@ class UserDO extends BizDataObj
 {
     
 }  
-?>
+

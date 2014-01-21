@@ -123,4 +123,3 @@ class chineseService
 	        return $_Res; 
 	} 	
 }
-?>

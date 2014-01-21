@@ -15,6 +15,8 @@
  * @version   $Id$
  */
 
+use Openbiz\Resource;
+
 /**
  * MetaGenerator class
  *
@@ -87,7 +89,7 @@ class MetaGenerator
         $this->dbname = $dbname;
         $this->table = $table;
         $this->opts = $opts;
-        $this->dbConfig = BizSystem::configuration()->getDatabaseInfo($dbname);
+        $this->dbConfig = Openbiz::$app->getConfiguration()->getDatabaseInfo($dbname);
     }
 
     /**
@@ -226,7 +228,7 @@ class DashboardGenerator
 			return ; 
         }            
         
-        $smarty = BizSystem::getSmartyTemplate();
+        $smarty = Resource::getSmartyTemplate();
 
         $smarty->assign_by_ref("module_name", getModuleName($this->module));
         $smarty->assign_by_ref("module", $this->module);
@@ -256,7 +258,7 @@ class DashboardGenerator
 			return ; 
         }    
                 
-        $smarty = BizSystem::getSmartyTemplate();
+        $smarty = Resource::getSmartyTemplate();
 
         $smarty->assign_by_ref("module_name", getModuleName($this->module));
         $smarty->assign_by_ref("module", $this->module);
@@ -287,7 +289,7 @@ class DashboardGenerator
 			return ; 
         }        
         
-        $smarty = BizSystem::getSmartyTemplate();
+        $smarty = Resource::getSmartyTemplate();
 
         $smarty->assign_by_ref("module_name", getModuleName($this->module));
         $smarty->assign_by_ref("module", $this->module);
@@ -412,7 +414,7 @@ class DOGenerator
      */
     public function prepareData()
     {
-        $db = BizSystem::dbConnection($this->db_name);
+        $db = Openbiz::$app->getDbConnection($this->db_name);
         if (!$db)
         {
             if(CLI){echo "ERROR: Cannot connect to database $this->db_name" . PHP_EOL;}
@@ -436,7 +438,7 @@ class DOGenerator
             mkdir($targetPath, 0777, true);
         }
 
-        $smarty = BizSystem::getSmartyTemplate();
+        $smarty = Resource::getSmartyTemplate();
 
         $smarty->assign_by_ref("do_name", $this->do_name);
         $smarty->assign_by_ref("do_short_name", $this->do_short_name);
@@ -466,7 +468,7 @@ class DOGenerator
      */
     protected function getDOFields()
     {
-        $db = BizSystem::dbConnection($this->db_name);
+        $db = Openbiz::$app->getDbConnection($this->db_name);
         $tblCols = $db->describeTable($this->table_name);
         $db_config = $this->db_config;
         $i = 0;
@@ -512,7 +514,7 @@ class DOGenerator
      */
     protected function getTableIndex()
     {
-        $db = BizSystem::dbConnection($this->db_name);
+        $db = Openbiz::$app->getDbConnection($this->db_name);
         $db_driver = $this->db_config['Driver'];
         switch (strtoupper($db_driver))
         {
@@ -739,7 +741,7 @@ class FormGenerator
             mkdir($targetPath, 0777, true);
         }
 
-        $smarty = BizSystem::getSmartyTemplate();
+        $smarty = Resource::getSmartyTemplate();
 		
         $module_name = $this->opts[2];
         $smarty->assign_by_ref("do_name", $this->doGenerator->do_name);
@@ -845,7 +847,7 @@ class ViewGenerator
             mkdir($targetPath, 0777, true);
         }
 
-        $smarty = BizSystem::getSmartyTemplate();
+        $smarty = Resource::getSmartyTemplate();
 
         $smarty->assign_by_ref("view_name", $this->view_name);
         $smarty->assign_by_ref("view_short_name", $view_short_name);
@@ -930,7 +932,7 @@ class ModGenerator
 		$module = $this->module;    //.".".$this->opts[1];
         $comp = $this->opts[2];
 		
-        $smarty = BizSystem::getSmartyTemplate();
+        $smarty = Resource::getSmartyTemplate();
 
         $smarty->assign_by_ref("module_name", $module_name);
         $smarty->assign_by_ref("module", $module );
@@ -958,7 +960,7 @@ class ModGenerator
        
         $content = file_get_contents($targetFile);
         
-        $smarty = BizSystem::getSmartyTemplate();
+        $smarty = Resource::getSmartyTemplate();
 
         $listview_uri = strtolower(str_replace(" ","_",$this->opts[2])) . "_list";
         //$listview_uri = strtolower(getSubModuleName($this->module)) . "_list";

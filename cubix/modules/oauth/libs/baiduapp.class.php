@@ -1,5 +1,7 @@
 <?php
 
+use Openbiz\Openbiz;
+
 require_once('_OAuth/oauth.php');
 require_once "oauth.class.php";
 
@@ -28,7 +30,7 @@ class baiduapp extends oauthClass
     {
 
         $redirectPage = $this->getUrl();
-        BizSystem::clientProxy()->ReDirectPage($redirectPage);
+        Openbiz::$app->getClientProxy()->ReDirectPage($redirectPage);
     }
 
     function test($akey, $skey)
@@ -56,7 +58,7 @@ class baiduapp extends oauthClass
             $recinfo['oauth_token'] = $token['access_token'];
             $recinfo['oauth_token_secret'] = $token['session_secret'];
             $recinfo['access_token_json'] = $token;
-            Bizsystem::getSessionContext()->setVar($this->type . '_access_token', $recinfo);
+            Openbiz::$app->getSessionContext()->setVar($this->type . '_access_token', $recinfo);
             $userInfo = $this->userInfo();
             $this->check($userInfo);
         } else {
@@ -81,7 +83,7 @@ class baiduapp extends oauthClass
     //用户资料
     public function userInfo()
     {
-        $recinfo = Bizsystem::getSessionContext()->getVar($this->type . '_access_token');
+        $recinfo = Openbiz::$app->getSessionContext()->getVar($this->type . '_access_token');
         $postfields = array('access_token' => $recinfo['oauth_token'], 'format' => 'json');
 
         $user = json_decode(OAuthUtil::Curl_Post($this->userUrl, $postfields), true);
@@ -102,4 +104,3 @@ class baiduapp extends oauthClass
 
 }
 
-?>

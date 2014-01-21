@@ -11,6 +11,8 @@
  * @version   $Id: dataPermService.php 3371 2012-05-31 06:17:21Z rockyswen@gmail.com $
  */
 
+use Openbiz\Openbiz;
+
 if(!defined('CUBI_GROUP_DATA_SHARE')){ define('CUBI_GROUP_DATA_SHARE','0'); }
 
 class dataPermService
@@ -18,10 +20,10 @@ class dataPermService
 	
 	public function CheckDataOwner($rec)
 	{
-		if(BizSystem::allowUserAccess("data_manage.manage")){
+		if(Openbiz::$app->allowUserAccess("data_manage.manage")){
 			return true;
 		}
-		$user_id = BizSystem::GetUserProfile('Id');
+		$user_id = Openbiz::$app->getUserProfile('Id');
 		if($rec['owner_id'])
 		{
 			if($rec['create_by']==$user_id ||
@@ -39,15 +41,15 @@ class dataPermService
 	
 	public function CheckDataPerm($rec,$permCode,$dataObj=null)
 	{
-		if(BizSystem::allowUserAccess("data_manage.manage")){
+		if(Openbiz::$app->allowUserAccess("data_manage.manage")){
 			return true;
 		}
 		if($rec==null)
 		{
 			return true;
 		}
-		$user_id = BizSystem::GetUserProfile('Id');
-		$user_groups = BizSystem::GetUserProfile('groups');
+		$user_id = Openbiz::$app->getUserProfile('Id');
+		$user_groups = Openbiz::$app->getUserProfile('groups');
 		$data_owner = $rec['create_by'];
 		$data_group = $rec['group_id'];
 		$group_perm = $rec['group_perm'];
@@ -88,7 +90,7 @@ class dataPermService
 		
 		
 		//merge acl user list into this list
-		$aclDO = BizSystem::getObject("common.do.DataACLDO");
+		$aclDO = Openbiz::getObject("common.do.DataACLDO");
 		if($aclDO && $dataObj  && CUBI_DATA_ACL){
 			$acl_table = $aclDO->mainTableName;
 			$record_table = $dataObj->mainTableName;
@@ -111,12 +113,12 @@ class dataPermService
 	
 	public function BuildSQLRule($dataObj,$type,$hasOwnerField=false,$alias=false)
 	{
-		if(BizSystem::allowUserAccess("data_manage.manage")){
+		if(Openbiz::$app->allowUserAccess("data_manage.manage")){
 			return " TRUE ";
 		}
 		$sql_where = null;
-		$user_id = BizSystem::GetUserProfile('Id');
-		$user_groups = BizSystem::GetUserProfile('groups');
+		$user_id = Openbiz::$app->getUserProfile('Id');
+		$user_groups = Openbiz::$app->getUserProfile('groups');
 		
 		if($hasOwnerField){
 			$sql_where = " ( ([create_by]='$user_id' OR [owner_id]='$user_id') ";
@@ -154,7 +156,7 @@ class dataPermService
 		$sql_where .= " OR [other_perm] $perm_limit ";
 
 		
-		$aclDO = BizSystem::getObject("common.do.DataACLDO");
+		$aclDO = Openbiz::getObject("common.do.DataACLDO");
 		if($aclDO && CUBI_DATA_ACL){			
 			$acl_table = $aclDO->mainTableName;
 			if($type=='select' || $alias==true)
@@ -226,7 +228,7 @@ class dataPermService
 		}
 		
 		//merge acl user list into this list
-		$aclDO = BizSystem::getObject("common.do.DataACLDO");
+		$aclDO = Openbiz::getObject("common.do.DataACLDO");
 		if($aclDO && $dataObj  && CUBI_DATA_ACL){
 			$acl_table = $aclDO->mainTableName;
 			$record_table = $dataObj->mainTableName;
@@ -295,7 +297,7 @@ class dataPermService
 		}
 		
 		//merge acl user list into this list
-		$aclDO = BizSystem::getObject("common.do.DataACLDO");
+		$aclDO = Openbiz::getObject("common.do.DataACLDO");
 		if($aclDO && $dataObj  && CUBI_DATA_ACL){
 			$acl_table = $aclDO->mainTableName;
 			$record_table = $dataObj->mainTableName;
@@ -317,7 +319,7 @@ class dataPermService
 		
 	}
 	protected function _getGroupList(){
-		$rs = BizSystem::getObject("system.do.GroupDO")->directFetch("");
+		$rs = Openbiz::getObject("system.do.GroupDO")->directFetch("");
 		$group_ids = array();
 		foreach($rs as $group){
 			$group_ids[]=$group['Id'];
@@ -326,7 +328,7 @@ class dataPermService
 	}
 	
 	protected function _getGroupUserList($group_id){
-		$rs = BizSystem::getObject("system.do.UserGroupDO")->directFetch("[group_id]='$group_id'");
+		$rs = Openbiz::getObject("system.do.UserGroupDO")->directFetch("[group_id]='$group_id'");
 		$user_ids = array();
 		foreach($rs as $user){
 			$user_ids[]=$user['user_id'];
@@ -334,4 +336,3 @@ class dataPermService
 		return $user_ids;
 	}		
 }
-?>

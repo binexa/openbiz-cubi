@@ -11,7 +11,11 @@
  * @version   $Id: Antispam.php 3375 2012-05-31 06:23:11Z rockyswen@gmail.com $
  */
 
-include_once (OPENBIZ_BIN."/easy/element/InputElement.php");
+use Openbiz\Openbiz;
+use Openbiz\Data\Helpers\QueryStringParam;
+
+// include_once (OPENBIZ_BIN."/easy/element/InputElement.php");
+
 class Antispam extends InputElement{
 
 	public $antiSpamImage ;
@@ -24,7 +28,7 @@ class Antispam extends InputElement{
     		return true;
     	}
     	$formobj = $this->GetFormObj();       	     
-        BizSystem::sessionContext()->loadObjVar($formobj->objectName, $this->objectName,$orgValue);
+        Openbiz::$app->getSessionContext()->loadObjVar($formobj->objectName, $this->objectName,$orgValue);
         $inputValue = strtoupper($this->getValue());
 		if($inputValue==$orgValue) {
 			return true;
@@ -65,4 +69,3 @@ class Antispam extends InputElement{
         return $sHTML;
     }
 }
-?>

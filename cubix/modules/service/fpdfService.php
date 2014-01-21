@@ -62,4 +62,3 @@ class fpdfService
         return $xml2pdf->Output( $pdfName, $dest );
     }
 }
-?>

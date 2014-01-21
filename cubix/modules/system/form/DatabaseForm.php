@@ -11,6 +11,9 @@
  * @version   $Id: DatabaseForm.php 4550 2012-11-02 06:07:21Z hellojixian@gmail.com $
  */
 
+use Openbiz\Openbiz;
+use Openbiz\Resource;
+
 class DatabaseForm extends EasyForm
 {
 	public $configFile;
@@ -36,7 +39,7 @@ class DatabaseForm extends EasyForm
         }
 
         if ($recId==null || $recId=='')
-            $recId = BizSystem::clientProxy()->getFormInputs('_selectedId');
+            $recId = Openbiz::$app->getClientProxy()->getFormInputs('_selectedId');
         if ($recId==null || $recId=='')
             return null;
         $this->recordId = $recId;
@@ -58,7 +61,7 @@ class DatabaseForm extends EasyForm
 		if(!is_file($file)){
 			return;
 		}
-		$configArr=BizSystem::getXmlArray($file);
+		$configArr=Resource::getXmlArray($file);
 		$nodesArr = $configArr["APPLICATION"][strtoupper($this->configNode)]["DATABASE"];
 		$result = array();
 		
@@ -116,7 +119,7 @@ class DatabaseForm extends EasyForm
 		if(!is_file($file)){
 			return;
 		}
-		$configArr=BizSystem::getXmlArray($file);
+		$configArr=Resource::getXmlArray($file);
 		$nodesArr = $configArr["APPLICATION"][strtoupper($this->configNode)]["DATABASE"];
 		$result = array();				
 		
@@ -147,7 +150,7 @@ class DatabaseForm extends EasyForm
 		if(!is_file($file)){
 			return;
 		}
-		$configArr=BizSystem::getXmlArray($file);
+		$configArr=Resource::getXmlArray($file);
    		$this->modeStatus = $configArr["APPLICATION"][strtoupper($this->configNode)]["ATTRIBUTES"]["MODE"];
    		$result['status'] = $this->modeStatus;
    		return $result;   	
@@ -199,10 +202,10 @@ class DatabaseForm extends EasyForm
 	        }
 	        if (count($this->validateErrors) > 0)
 	        {
-	            throw new ValidationException($this->validateErrors);
+	            throw new Openbiz\validation\Exception($this->validateErrors);
 	        }
         }
-        catch (ValidationException $e)
+        catch (Openbiz\validation\Exception $e)
         {
             $this->processFormObjError($e->errors);
             return;
@@ -240,7 +243,7 @@ class DatabaseForm extends EasyForm
         {
         	$this->ValidateForm();
         }
-        catch (ValidationException $e)
+        catch (Openbiz\validation\Exception $e)
         {
             $this->processFormObjError($e->errors);
             return;
@@ -269,9 +272,9 @@ class DatabaseForm extends EasyForm
    public function deleteRecord($id=null)
     {
         if ($id==null || $id=='')
-            $id = BizSystem::clientProxy()->getFormInputs('_selectedId');
+            $id = Openbiz::$app->getClientProxy()->getFormInputs('_selectedId');
 
-        $selIds = BizSystem::clientProxy()->getFormInputs('row_selections', false);
+        $selIds = Openbiz::$app->getClientProxy()->getFormInputs('row_selections', false);
         if ($selIds == null)
             $selIds[] = $id;
             
@@ -292,9 +295,9 @@ class DatabaseForm extends EasyForm
     
     public function TestConnection($id=null){
         if ($id==null || $id=='')
-            $id = BizSystem::clientProxy()->getFormInputs('_selectedId');
+            $id = Openbiz::$app->getClientProxy()->getFormInputs('_selectedId');
 
-        $selIds = BizSystem::clientProxy()->getFormInputs('row_selections', false);
+        $selIds = Openbiz::$app->getClientProxy()->getFormInputs('row_selections', false);
         if ($selIds == null)
             $selIds[] = $id;
             
@@ -315,7 +318,7 @@ class DatabaseForm extends EasyForm
 		if(!is_file($file)){
 			return;
 		}
-		$configArr=BizSystem::getXmlArray($file);
+		$configArr=Resource::getXmlArray($file);
 		$recordName = $configArr["APPLICATION"][strtoupper($this->configNode)]["DATABASE"]["ATTRIBUTES"]["NAME"];
 		if(!$recordName)
 		{
@@ -382,7 +385,7 @@ class DatabaseForm extends EasyForm
 		if(!is_file($file)){
 			return;
 		}
-		$configArr=BizSystem::getXmlArray($file);		
+		$configArr=Resource::getXmlArray($file);		
 		$recordName = $configArr["APPLICATION"][strtoupper($this->configNode)]["DATABASE"]["ATTRIBUTES"]["NAME"];
 		$recordCount = count($configArr["APPLICATION"][strtoupper($this->configNode)]["DATABASE"]);
 		if(!$recordName && $recordCount){
@@ -406,7 +409,7 @@ class DatabaseForm extends EasyForm
 		if(!is_file($file)){
 			return;
 		}
-		$configArr=BizSystem::getXmlArray($file);
+		$configArr=Resource::getXmlArray($file);
 		$recordName = $configArr["APPLICATION"][strtoupper($this->configNode)]["DATABASE"]["ATTRIBUTES"]["NAME"];
 		if(!$recordName){
 			$nodesArr = $configArr["APPLICATION"][strtoupper($this->configNode)]["DATABASE"];
@@ -432,7 +435,7 @@ class DatabaseForm extends EasyForm
 		if(!is_file($file)){
 			return;
 		}
-		$configArr=BizSystem::getXmlArray($file);
+		$configArr=Resource::getXmlArray($file);
 		$recordName = $configArr["APPLICATION"][strtoupper($this->configNode)]["DATABASE"]["ATTRIBUTES"]["NAME"];
 		if(!$recordName)
 		{
@@ -457,7 +460,7 @@ class DatabaseForm extends EasyForm
 		if(!is_file($file)){
 			return;
 		}
-		$configArr=BizSystem::getXmlArray($file);
+		$configArr=Resource::getXmlArray($file);
 		$recordName = $configArr["APPLICATION"][strtoupper($this->configNode)]["DATABASE"]["ATTRIBUTES"]["NAME"];
 		if(!$recordName)
 		{
@@ -482,13 +485,12 @@ class DatabaseForm extends EasyForm
 	}
 	
 	private function saveToXML($data){
-		$smarty = BizSystem::getSmartyTemplate();
+		$smarty = Resource::getSmartyTemplate();
 		$smarty->assign("data", $data);
-		$xmldata = $smarty->fetch(BizSystem::getTplFileWithPath("applicationTemplate.xml.tpl", $this->package));
+		$xmldata = $smarty->fetch(Resource::getTplFileWithPath("applicationTemplate.xml.tpl", $this->package));
 		$service_dir = OPENBIZ_APP_PATH;
 		$service_file = $service_dir.DIRECTORY_SEPARATOR.$this->configFile;
 		file_put_contents($service_file ,$xmldata);		
 		return true;
 	}	
 }
-?>

@@ -18,4 +18,3 @@ function readElement($elementXsdFile)
     print_r($rootElem);
 }
 
-?>

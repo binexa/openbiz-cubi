@@ -11,6 +11,9 @@
  * @version   $Id: AccessList.php 3360 2012-05-31 06:00:17Z rockyswen@gmail.com $
  */
 
+use Openbiz\Openbiz;
+use Openbiz\i18n\I18n;
+
 class AccessList extends Listbox
 {
 	public function getSelectFrom(){
@@ -19,7 +22,7 @@ class AccessList extends Listbox
 		{
 			$formname = "extend.widget.ExtendSettingListEditForm";
 		}			
-		return BizSystem::getObject($formname)
+		return Openbiz::getObject($formname)
 					->parentFormElementMeta['ATTRIBUTES']['ACCESSSELECTFROM'];
 	}
     protected function translateList(&$list, $tag)
@@ -29,4 +32,3 @@ class AccessList extends Listbox
     	parent::translateList($list, $tag);
     }
 }
-?>

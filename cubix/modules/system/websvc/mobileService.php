@@ -1,4 +1,7 @@
-<?php 
+<?php
+
+use Openbiz\Openbiz;
+
 require_once OPENBIZ_APP_MODULE_PATH.'/websvc/lib/WebsvcService.php';
 class mobileService extends  WebsvcService
 {
@@ -15,20 +18,20 @@ class mobileService extends  WebsvcService
 	{
 		$username = $_GET['username'];
 		$password = $_GET['password'];
-		$svcobj 	= BizSystem::getService(AUTH_SERVICE);
+		$svcobj 	= Openbiz::getService(AUTH_SERVICE);
 		
 		if ($svcobj->authenticateUser($username,$password)) 
     	{
                 // after authenticate user: 1. init profile
-    			$profile = BizSystem::instance()->InitUserProfile($username);
+    			$profile = Openbiz::$app->InitUserProfile($username);
     			
     			// after authenticate user: 2. insert login event
-    			$eventlog 	= BizSystem::getService(OPENBIZ_EVENTLOG_SERVICE);
+    			$eventlog 	= Openbiz::getService(OPENBIZ_EVENTLOG_SERVICE);
     			$logComment=array(	$username, $_SERVER['REMOTE_ADDR']);
     			$eventlog->log("LOGIN", "MSG_LOGIN_SUCCESSFUL", $logComment);
     			
     			// after authenticate user: 3. update login time in user record
-    	 		$userObj = BizSystem::getObject('system.do.UserDO');
+    	 		$userObj = Openbiz::getObject('system.do.UserDO');
     	 		        
             	$userRec = $userObj->fetchOne("[username]='$username'");
             	$userRec['lastlogin'] = date("Y-m-d H:i:s");
@@ -43,4 +46,3 @@ class mobileService extends  WebsvcService
 		return $result;
 	}
 }
-?>

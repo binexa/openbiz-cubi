@@ -1,4 +1,8 @@
-<?php 
+<?php
+
+use Openbiz\Openbiz;
+use Openbiz\i18n\I18n;
+
 require_once "SettingForm.php";
 class SettingTranslateForm extends SettingForm
 {
@@ -18,11 +22,11 @@ class SettingTranslateForm extends SettingForm
 			$result[$key]=$value;
 		}
 		
-		$lang = BizSystem::ClientProxy()->getFormInputs("fld_lang");
+		$lang = Openbiz::$app->getClientProxy()->getFormInputs("fld_lang");
 		$lang?$lang:$lang=I18n::getCurrentLangCode();
 		$record_id = $result["Id"];
 		
-		$transDO = BizSystem::getObject($this->translateDO,1);
+		$transDO = Openbiz::getObject($this->translateDO,1);
 		$currentRecord = $transDO->fetchOne("[lang]='$lang'");
 		if($currentRecord){
 			$currentRecord = $currentRecord->toArray();
@@ -48,7 +52,7 @@ class SettingTranslateForm extends SettingForm
 	        {
 	            $this->ValidateForm();
 	        }
-	        catch (ValidationException $e)
+	        catch (Openbiz\validation\Exception $e)
 	        {
 	            $this->processFormObjError($e->errors);
 	            return;
@@ -68,7 +72,7 @@ class SettingTranslateForm extends SettingForm
 		
 		$lang = $inputRecord['lang'];
 		$record_id = $currentRecord["Id"];		
-		$transDO = BizSystem::getObject($this->translateDO,1);
+		$transDO = Openbiz::getObject($this->translateDO,1);
 		
 		$newRecord = array(
 						"lang"=>$lang,
@@ -100,20 +104,20 @@ class SettingTranslateForm extends SettingForm
         	//var_dump($dataRec->toArray());exit;
             $dataRec->save();
         }
-        catch (ValidationException $e)
+        catch (Openbiz\validation\Exception $e)
         {
             $errElements = $this->getErrorElements($e->errors);           
         	if(count($e->errors)==count($errElements)){
             	$this->processFormObjError($errElements);
             }else{            	
             	$errmsg = implode("<br />",$e->errors);
-		        BizSystem::clientProxy()->showErrorMessage($errmsg);
+		        Openbiz::$app->getClientProxy()->showErrorMessage($errmsg);
             }
             return false;
         }
-        catch (BDOException $e)
+        catch (Openbiz\data\Exception $e)
         {
-            $this->processBDOException($e);
+            $this->processDataException($e);
             return false;
         }
 		$this->activeRecord = null;
@@ -123,4 +127,3 @@ class SettingTranslateForm extends SettingForm
         return true;
     }
 }
-?>

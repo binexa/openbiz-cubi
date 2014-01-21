@@ -27,6 +27,9 @@
  */
 
 
+use Openbiz\Openbiz;
+use Openbiz\Data\Helpers\QueryStringParam;
+
 /**
  * AccountEditForm class - implement the logic of edit my account form
  *
@@ -42,13 +45,13 @@ class PreferenceForm extends EasyForm
     function __construct(&$xmlArr)
     {
         parent::__construct($xmlArr);        
-        $this->_userId = BizSystem::getUserProfile("Id");
+        $this->_userId = Openbiz::$app->getUserProfile("Id");
     }
     
     public function allowAccess(){
     	parent::allowAccess();
 
-    	if(BizSystem::getUserProfile("Id"))
+    	if(Openbiz::$app->getUserProfile("Id"))
     	{
   	 		return 1;
     	}
@@ -111,14 +114,14 @@ class PreferenceForm extends EasyForm
         {
             $this->ValidateForm();
         }
-        catch (ValidationException $e)
+        catch (Openbiz\validation\Exception $e)
         {
             $this->processFormObjError($e->errors);
             return;
         }
 		
         // new save logic
-        $user_id = BizSystem::getUserProfile("Id");
+        $user_id = Openbiz::$app->getUserProfile("Id");
         $prefDo = $this->getDataObj();
         
         foreach ($this->dataPanel as $element)
@@ -150,7 +153,7 @@ class PreferenceForm extends EasyForm
         }
         
 		//reload profile
-		BizSystem::getService(PROFILE_SERVICE)->InitProfile(BizSystem::getUserProfile("username"));
+		Openbiz::getService(PROFILE_SERVICE)->InitProfile(Openbiz::$app->getUserProfile("username"));
         
 
         // in case of popup form, close it, then rerender the parent form
@@ -167,4 +170,3 @@ class PreferenceForm extends EasyForm
 
 
 }  
-?>

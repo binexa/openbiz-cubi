@@ -331,4 +331,3 @@ class FCIMGGenerator
 //needed to validate inclusion of this resource file in main file - FCExporter.php	
 return 'true';
 
-?>

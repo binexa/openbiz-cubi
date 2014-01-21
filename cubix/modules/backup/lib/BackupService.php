@@ -5,15 +5,17 @@
  *
  * LICENSE http://code.google.com/p/openbiz-cubi/wiki/CubiLicense
  *
- * @package   cubi.backup.lib
- * @copyright Copyright (c) 2005-2011, Openbiz Technology LLC
+ * @package   cubi.modules.backup.lib
+ * @copyright Copyright (c) 2005-2014, Openbiz Technology LLC
  * @license   http://code.google.com/p/openbiz-cubi/wiki/CubiLicense
  * @link      http://code.google.com/p/openbiz-cubi/
- * @version   $Id: BackupService.php 3351 2012-05-31 05:33:35Z rockyswen@gmail.com $
+ * @version   $Id$
  */
+
+use Openbiz\Core\Expression;
+
 class BackupService
 {
-
     function __construct(&$xmlArr)
     {
         $this->readMetadata($xmlArr);
@@ -29,7 +31,7 @@ class BackupService
 
     public function getLocationInfo($id)
     {
-        $locationRec = BizSystem::GetObject("backup.do.BackupDeviceDO")->fetchById($id);
+        $locationRec = Openbiz::getObject("backup.do.BackupDeviceDO")->fetchById($id);
         if ($locationRec) {
             $this->folder = Expression::evaluateExpression($locationRec['location'], null);
             $this->folder = Expression::evaluateExpression($locationRec['location'], null);

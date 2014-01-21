@@ -11,6 +11,9 @@
  * @link      http://code.google.com/p/openbiz-cubi/
  * @version   $Id: RecordFuzzySearchList.php 3355 2012-05-31 05:43:33Z rockyswen@gmail.com $
  */
+
+use Openbiz\Openbiz;
+
 class RecordFuzzySearchList extends AutoSuggest
 {
 
@@ -24,7 +27,7 @@ class RecordFuzzySearchList extends AutoSuggest
 
     public function getSearchRule()
     {
-        $value = BizSystem::clientProxy()->getFormInputs($this->objectName);
+        $value = Openbiz::$app->getClientProxy()->getFormInputs($this->objectName);
         $value = addslashes($value); //escape sql strings
 
         if ($value != '') {
@@ -34,7 +37,7 @@ class RecordFuzzySearchList extends AutoSuggest
         }
 
         if ($this->searchFields) { //process other search fields
-            $fields = $lovService = BizSystem::getService(CUBI_LOV_SERVICE)->getList($this->searchFields);
+            $fields = $lovService = Openbiz::getService(CUBI_LOV_SERVICE)->getList($this->searchFields);
             foreach ($fields as $opt) {
                 $field = $opt['val'];
                 $searchStr.= " OR [$field] LIKE '%$value%' ";

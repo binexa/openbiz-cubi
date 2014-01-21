@@ -13,8 +13,8 @@ var Openbiz =
 
     init: function()
     {
-        if (OPENBIZ_APP_URL!=null && APP_CONTROLLER!=null) {
-            Openbiz.appUrl = OPENBIZ_APP_URL;
+        if (APP_URL !== null && APP_CONTROLLER !== null) {
+            Openbiz.appUrl = APP_URL;
             Openbiz.appHome = APP_CONTROLLER;
             Openbiz.currentView = APP_VIEWNAME;
             return;
@@ -28,10 +28,11 @@ var Openbiz =
 	        	Openbiz.appHome = Openbiz.appUrl + "/bin/controller.php";
 	        	return;
 	        }
-		});
-    },    
+        });
+    },  
     getFormObject: function(formName)
     {
+        //alert('getFormObject : ' + formName);
         if (Openbiz.formInstances[formName])
             return Openbiz.formInstances[formName];
         if (window.opener && window.opener.window.Openbiz)     // check opener window
@@ -40,11 +41,11 @@ var Openbiz =
                 return formObj;
         }
         try{
-        if (window.top.window.Openbiz)  // check top window
-        {
-            if (formObj = window.top.window.Openbiz.formInstances[formName])
-                return formObj;
-        }
+            if (window.top.window.Openbiz)  // check top window
+            {
+                if (formObj = window.top.window.Openbiz.formInstances[formName])
+                    return formObj;
+            }
         }catch(e){};
     },
     newFormObject: function(formName, className, subForms)
@@ -66,9 +67,9 @@ var Openbiz =
     {
 		// TODO: block same ajax call 
         functionArray = Openbiz.Util.parseCallFunction(form_method_params);
+        //alert(functionArray[0]);
 		formObj = Openbiz.getFormObject(functionArray[0]);
-		if (formObj)
-		{
+		if (formObj) {
 			method = functionArray[1];
 			functionArray.shift();
 			functionArray.shift();
@@ -595,9 +596,11 @@ Openbiz.Util =
     	url = Openbiz.appHome + "?" + Openbiz.Util.composeRequestString("Invoke", functionArray);
     	return url;
     },
+
     // obj_method_params is obj.method(p1,p2,..). Should use regexp instead
 	parseCallFunction: function(obj_method_params)
 	{
+        //alert(obj_method_params);
 		// find the first "("
 		var pos0 = obj_method_params.indexOf("(");
 		var obj_method = obj_method_params.substring (0,pos0);
@@ -606,12 +609,12 @@ Openbiz.Util =
 		// parse object name
 		var obj = "NULL";
 		var attachData= null;
-		if (pos0>0)
+		if ( pos0 > 0 )
 			obj = obj_method.substring(0,pos0);
 	
 		// parse method/function name
 		var pos1 = obj_method_params.indexOf("(");
-		if (pos1>pos0)
+		if ( pos1>pos0 )
 		{
 			var method = obj_method_params.substring(pos0+1,pos1);
 			var pos2 = obj_method_params.indexOf(")");

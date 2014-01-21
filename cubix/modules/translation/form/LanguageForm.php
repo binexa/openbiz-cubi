@@ -11,6 +11,10 @@
  * @version   $Id: LanguageForm.php 3374 2012-05-31 06:22:06Z rockyswen@gmail.com $
  */
 
+use Openbiz\Openbiz;
+use Openbiz\i18n\I18n;
+use Openbiz\Resource;
+
 include_once OPENBIZ_APP_MODULE_PATH."/translation/lib/LangPackCreator.php";
 
 
@@ -30,7 +34,7 @@ class LanguageForm extends EasyForm
         }
 
         if ($recId==null || $recId=='')
-            $recId = BizSystem::clientProxy()->getFormInputs('_selectedId');
+            $recId = Openbiz::$app->getClientProxy()->getFormInputs('_selectedId');
         if ($recId==null || $recId=='')
             return null;
         $this->recordId = $recId;
@@ -59,10 +63,10 @@ class LanguageForm extends EasyForm
 	        }
 	        if (count($this->validateErrors) > 0)
 	        {
-	            throw new ValidationException($this->validateErrors);
+	            throw new Openbiz\validation\Exception($this->validateErrors);
 	        }
         }
-        catch (ValidationException $e)
+        catch (Openbiz\validation\Exception $e)
         {
             $this->processFormObjError($e->errors);
             return;
@@ -92,12 +96,12 @@ class LanguageForm extends EasyForm
    public function deleteRecord($id=null)
     {
         if ($this->resource != "" && !$this->allowAccess($this->resource.".delete"))
-            return BizSystem::clientProxy()->redirectView(OPENBIZ_ACCESS_DENIED_VIEW);
+            return Openbiz::$app->getClientProxy()->redirectView(OPENBIZ_ACCESS_DENIED_VIEW);
 
         if ($id==null || $id=='')
-            $id = BizSystem::clientProxy()->getFormInputs('_selectedId');
+            $id = Openbiz::$app->getClientProxy()->getFormInputs('_selectedId');
 
-        $selIds = BizSystem::clientProxy()->getFormInputs('row_selections', false);
+        $selIds = Openbiz::$app->getClientProxy()->getFormInputs('row_selections', false);
         if ($selIds == null)
             $selIds[] = $id;
         foreach ($selIds as $id)
@@ -219,7 +223,7 @@ class LanguageForm extends EasyForm
         if(count($recArr)==0){
         	$recArr=$defaultRecArr;
         }
-        $selected_lang = BizSystem::clientProxy()->getFormInputs("fld_region");
+        $selected_lang = Openbiz::$app->getClientProxy()->getFormInputs("fld_region");
         if(!$selected_lang)
         {
 			$selected_lang = "en_ad";
@@ -231,8 +235,8 @@ class LanguageForm extends EasyForm
 	    		$locale = explode('_', $current_locale);
 	    		$country = strtoupper($locale[0]);
 	    	}  	
-			require_once('Zend/Locale.php');
-			$locale = new Zend_Locale($current_locale);
+
+			$locale = new \Zend_Locale($current_locale);
 			$code2name = $locale->getTranslationList('territorytolanguage',$locale);
 			$list = array();
 			$i=0;
@@ -267,8 +271,8 @@ class LanguageForm extends EasyForm
 	
 	public function Code2Language($code,$locale=null){
 		$code=strtolower($code);
-		require_once('Zend/Locale.php');
-		$locale = new Zend_Locale(I18n::getCurrentLangCode());
+		//require_once('Zend/Locale.php');
+		$locale = new \Zend_Locale(I18n::getCurrentLangCode());
 		$code2name = $locale->getTranslationList('language',$locale);
 		$result = $code2name[$code];
 		$locale = null;
@@ -278,8 +282,8 @@ class LanguageForm extends EasyForm
 
 	public function Code2Region($code,$locale=null){
 		$code=strtoupper($code);
-		require_once('Zend/Locale.php');
-		$locale = new Zend_Locale(I18n::getCurrentLangCode());
+		//require_once('Zend/Locale.php');
+		$locale = new \Zend_Locale(I18n::getCurrentLangCode());
 		$code2name = $locale->getTranslationList('territory',$locale);
 		$result = $code2name[$code];
 		$locale = null;
@@ -303,7 +307,7 @@ class LanguageForm extends EasyForm
 		}
 		
 		//create lang.xml metainfo
-		$smarty = BizSystem::getSmartyTemplate();
+		$smarty = Resource::getSmartyTemplate();
 		$smarty->assign("language", 		$this->Code2Language($lang_code));
 		$smarty->assign("lang_code", 		$lang);
 		$smarty->assign("version", 			$recArr['version']);
@@ -312,7 +316,7 @@ class LanguageForm extends EasyForm
 		$smarty->assign("author_email", 	$recArr['authorEmail']);
 		$smarty->assign("author_url", 		$recArr['authorUrl']);
 		$smarty->assign("description",	 	$recArr['description']);
-		$data = $smarty->fetch(BizSystem::getTplFileWithPath("lang.xml.tpl", $this->package));
+		$data = $smarty->fetch(Resource::getTplFileWithPath("lang.xml.tpl", $this->package));
 		file_put_contents($lang_dir.DIRECTORY_SEPARATOR.$lang.".xml" ,$data);
 		
 		
@@ -334,7 +338,7 @@ public function UpdateLangPack($lang,$recArr){
 		}
 		
 		//create lang.xml metainfo
-		$smarty = BizSystem::getSmartyTemplate();
+		$smarty = Resource::getSmartyTemplate();
 		$smarty->assign("language", 		$this->Code2Language($lang_code));
 		$smarty->assign("lang_code", 		$lang);
 		$smarty->assign("version", 			$recArr['version']);
@@ -343,7 +347,7 @@ public function UpdateLangPack($lang,$recArr){
 		$smarty->assign("author_email", 	$recArr['authorEmail']);
 		$smarty->assign("author_url", 		$recArr['authorUrl']);
 		$smarty->assign("description",	 	$recArr['description']);
-		$data = $smarty->fetch(BizSystem::getTplFileWithPath("lang.xml.tpl", $this->package));
+		$data = $smarty->fetch(Resource::getTplFileWithPath("lang.xml.tpl", $this->package));
 		$lang_dir = OPENBIZ_APP_PATH.DIRECTORY_SEPARATOR."languages".DIRECTORY_SEPARATOR.$lang;
 		$lang_file = $lang_dir.DIRECTORY_SEPARATOR.$lang.".xml";
 		@unlink($lang_file);
@@ -393,4 +397,4 @@ public function UpdateLangPack($lang,$recArr){
 	}
 		
 }
-?>
+

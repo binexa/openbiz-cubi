@@ -1,4 +1,7 @@
-<?php 
+<?php
+
+use Openbiz\Openbiz;
+
 class PaymentService
 {
 	protected $providerDO = "payment.provider.do.ProviderDO";
@@ -10,7 +13,7 @@ class PaymentService
 		$url = $providerObj->GetPaymentURL($orderId, $amount,  $title , $customData);
 		if($url)
 		{			
-			BizSystem::ClientProxy()->redirectPage($url);		
+			Openbiz::$app->getClientProxy()->redirectPage($url);		
 			return true;
 		}
 		return false;
@@ -26,7 +29,7 @@ class PaymentService
 	
 	protected function getProviderObj($type)
 	{
-		$providerRec = BizSystem::getObject($this->providerDO)->fetchOne("[type]='$type'");
+		$providerRec = Openbiz::getObject($this->providerDO)->fetchOne("[type]='$type'");
 		$driver = $providerRec['driver'];
 		$driverFile = OPENBIZ_APP_MODULE_PATH.'/'.str_replace(".", "/", $driver).'.php';
 		$driverName = explode(".", $driver);
@@ -49,4 +52,3 @@ class PaymentService
 	}
 	
 }
-?>

@@ -11,6 +11,10 @@
  * @version   $Id: ChangeLogWidgetForm.php 3872 2012-08-09 11:30:28Z hellojixian@gmail.com $
  */
 
+use Openbiz\Openbiz;
+use Openbiz\i18n\I18n;
+use Openbiz\Resource;
+
 class ChangeLogWidgetForm extends EasyForm
 {
 
@@ -27,7 +31,7 @@ class ChangeLogWidgetForm extends EasyForm
 			if(!$messageFile_loaded)
 			{
 				$this->objectMessages = Resource::loadMessage($form['message_file'] , $form['package']);
-				$formObj = BizSystem::getObject($this->parentFormName);				
+				$formObj = Openbiz::getObject($this->parentFormName);				
 				I18n::AddLangData("common",substr($formObj->package,0,intval(strpos($formObj->package,'.'))));
 				$messageFile_loaded = true;
 			}
@@ -39,12 +43,12 @@ class ChangeLogWidgetForm extends EasyForm
 				if($elemObjMeta["ATTRIBUTES"]['FIELDTYPE']=='ExtendField')
 				{					
 					$extendSettingId = (int)str_replace("extend_field_", $replace, $elemObjMeta["ATTRIBUTES"]['NAME']);
-					$elemObjMeta["ATTRIBUTES"] = BizSystem::getService("extend.lib.ExtendFieldService")->translateElemArr($elemObjMeta["ATTRIBUTES"],$extendSettingId);					
+					$elemObjMeta["ATTRIBUTES"] = Openbiz::getService("extend.lib.ExtendFieldService")->translateElemArr($elemObjMeta["ATTRIBUTES"],$extendSettingId);					
 				}
 				
 				$objName = $elemObjMeta["ATTRIBUTES"]['CLASS'];
 				
-				$formObj = BizSystem::getObject($this->parentFormName);
+				$formObj = Openbiz::getObject($this->parentFormName);
 				$elemObj = new $objName($elemObjMeta,$formObj);
 
 				$data[$key]['label'] = $elemObj->renderLabel(); 
@@ -120,4 +124,3 @@ class ChangeLogWidgetForm extends EasyForm
 		return $metaArr;
 	}
 }
-?>

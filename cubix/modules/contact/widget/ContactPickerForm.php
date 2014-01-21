@@ -11,6 +11,8 @@
  * @version   $Id: ContactPickerForm.php 3356 2012-05-31 05:47:51Z rockyswen@gmail.com $
  */
 
+use Openbiz\Openbiz;
+
 class ContactPickerForm extends PickerForm
 {
 	public function insertToParent()
@@ -21,7 +23,7 @@ class ContactPickerForm extends PickerForm
             return;
 		
         //generate fast_index
-        $svcobj=BizSystem::getService("service.chineseService");
+        $svcobj=  Openbiz::getService("service.chineseService");
         if($svcobj->isChinese($recArr['first_name'])){
         	$fast_index = $svcobj->Chinese2Pinyin($recArr['first_name']);
         }else{
@@ -37,7 +39,7 @@ class ContactPickerForm extends PickerForm
         {
             $this->ValidateForm();
         }
-        catch (ValidationException $e)
+        catch (Openbiz\validation\Exception $e)
         {        	
             $this->processFormObjError($e->errors);
             return;
@@ -61,4 +63,3 @@ class ContactPickerForm extends PickerForm
         
     }    
 }
-?>

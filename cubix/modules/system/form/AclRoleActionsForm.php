@@ -11,19 +11,22 @@
  * @version   $Id: AclRoleActionsForm.php 3372 2012-05-31 06:19:06Z rockyswen@gmail.com $
  */
 
+use Openbiz\Openbiz;
+use Openbiz\Data\Helpers\QueryStringParam;
+
 class AclRoleActionsForm extends EasyForm
 {
 	protected $_roleId;
 	
-	public function loadSessionVars($sessionContext)
+	public function loadStatefullVars($sessionContext)
     {
-        parent::loadSessionVars($sessionContext);
+        parent::loadStatefullVars($sessionContext);
         $sessionContext->loadObjVar($this->objectName, "_roleId", $this->_roleId);
     }
 
-    public function saveSessionVars($sessionContext)
+    public function saveStatefullVars($sessionContext)
     {
-        parent::saveSessionVars($sessionContext);
+        parent::saveStatefullVars($sessionContext);
         $sessionContext->saveObjVar($this->objectName, "_roleId", $this->_roleId);
     }
     
@@ -40,7 +43,7 @@ class AclRoleActionsForm extends EasyForm
         $element->setSortFlag($order);
 
         // change the sort rule and issue the query
-        $do = BizSystem::getObject("system.do.AclActionDO");
+        $do = Openbiz::getObject("system.do.AclActionDO");
         $do->setSortRule("[" . $element->fieldName . "] " . $order);
 
         // move to 1st page
@@ -52,33 +55,41 @@ class AclRoleActionsForm extends EasyForm
     
 	public function fetchDataSet()
     {
-        $roleId = $this->GetRoleId();
-
-        //BizSystem::clientProxy()->showClientAlert( 'ROLE_ID : ' . $roleId );
-        //return null;
-
+        $roleId = $this->getRoleId();
+        
         if($this->searchRuleBindValues){
         	QueryStringParam::setBindValues($this->searchRuleBindValues);
         }
         // fetch acl_action records
-        $aclActionDO = BizSystem::getObject("system.do.AclActionDO",1);
+        $aclActionDO = Openbiz::getObject("system.do.AclActionDO",1);
         //var_dump($this->searchRuleBindValues);
         
         $aclActionDO->setQueryParameters($this->queryParams);
 
         $aclActionDO->setLimit($this->range, ($this->currentPage-1)*$this->range);
         $rs = $aclActionDO->fetch()->toArray();
+
+        //echo '<pre>';
+        //DebugLine::show(__METHOD__.__LINE__);
+        //DebugLine::show(var_dump($rs));
+        //return;
+
         $this->totalRecords = $aclActionDO->count();
-        if ($this->range && $this->range > 0)
-            $this->totalPages = ceil($this->totalRecords/$this->range);
-        
+
+        if ($this->range && $this->range > 0) {
+            $this->totalPages = ceil($this->totalRecords / $this->range);
+        }
+
         // fetch role and access
         //$this->getDataObj()->searchRule .= "[role_id]=$roleId ";        
         $this->getDataObj()->setSearchRule("[role_id]=$roleId");
         if($this->searchRule){
         	$this->getDataObj()->setSearchRule($this->searchRule);
         }
+        //DebugLine::show(' -- ' . $this->searchRule);
+        //return;
         $rs1 = $this->getDataObj()->fetch();
+        
         $this->getDataObj()->clearSearchRule();
         foreach ($rs1 as $rec)
         {
@@ -99,10 +110,10 @@ class AclRoleActionsForm extends EasyForm
     
 	public function saveAccessLevel()
 	{
-        $roleId = $this->GetRoleId();
+        $roleId = $this->getRoleId();
         // read the all access_level-actionid
-        $accessLevels = BizSystem::clientProxy()->getFormInputs('access_level', false);
-        $actionIds = BizSystem::clientProxy()->getFormInputs('action_id', false);
+        $accessLevels = Openbiz::$app->getClientProxy()->getFormInputs('access_level', false);
+        $actionIds = Openbiz::$app->getClientProxy()->getFormInputs('action_id', false);
         
         for ($i=0; $i<count($actionIds); $i++)
         {
@@ -129,23 +140,22 @@ class AclRoleActionsForm extends EasyForm
                     }
                 }
             }
-            catch (BDOException $e) {
-                $this->processBDOException($e);
+            catch (Openbiz\data\Exception $e) {
+                $this->processDataException($e);
                 return;
             }
         }
         //reload current profile
-		$svcobj = BizSystem::getService(PROFILE_SERVICE);		
-		$svcobj->InitProfile(BizSystem::getUserProfile("username"));	
-        BizSystem::clientProxy()->showClientAlert($this->getMessage("ACCESS_SAVED"));
+		$svcobj = Openbiz::getService(PROFILE_SERVICE);		
+		$svcobj->InitProfile(Openbiz::$app->getUserProfile("username"));	
+        Openbiz::$app->getClientProxy()->showClientAlert($this->getMessage("ACCESS_SAVED"));
     }
     
-    protected function GetRoleId()
+    protected function getRoleId()
     {
-    	if ($_GET['fld:Id'])
-        	$this->_roleId = $_GET['fld:Id'];
-
+    	if ($_GET['fld:Id']) {
+            $this->_roleId = $_GET['fld:Id'];
+        }
         return $this->_roleId;
     }
 }
-?>

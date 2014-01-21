@@ -1,8 +1,10 @@
 <?php
 
+use Openbiz\Resource;
+
 include_once ("../app_init.php");
 
-include_once(OPENBIZ_BIN . "util/xmltoarray.src.php");
+include_once(OPENBIZ_BIN . "Helper/xmltoarray.src.php");
 
 $dir = OPENBIZ_APP_PATH . '/modules';
 

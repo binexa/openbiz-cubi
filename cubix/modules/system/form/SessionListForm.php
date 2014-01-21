@@ -47,4 +47,3 @@ class SessionListForm extends EasyForm
 		 return ;
 	}
 }
-?>

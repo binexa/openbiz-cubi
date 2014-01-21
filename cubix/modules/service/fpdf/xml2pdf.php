@@ -673,4 +673,3 @@ class XML2PDF extends FPDF
 
 }
 
-?>

@@ -11,6 +11,8 @@
  * @version   $Id: ExtendDataEditForm.php 5010 2012-12-31 15:28:59Z hellojixian@gmail.com $
  */
 
+use Openbiz\Openbiz;
+
 class ExtendDataEditForm extends EasyForm
 {
 	protected $extendSettingDO 			= "extend.do.ExtendSettingDO";
@@ -21,9 +23,9 @@ class ExtendDataEditForm extends EasyForm
 	
 	public function getExtendData()
 	{
-		$prtRec = BizSystem::getObject($this->parentFormName)->getActiveRecord();		
+		$prtRec = Openbiz::getObject($this->parentFormName)->getActiveRecord();		
 		$record_id = (int)$prtRec['Id'];		
-		$do = BizSystem::getObject($this->getDataObj()->objectName,1);
+		$do = Openbiz::getObject($this->getDataObj()->objectName,1);
 		$searchRule = $this->getSettingSearchRule();
 		$do->clearSearchRule();
 		if(!$searchRule){
@@ -40,7 +42,7 @@ class ExtendDataEditForm extends EasyForm
 	
 	public function translateElemArr($elemArr,$setting_id)
 	{		
-		return BizSystem::getService("extend.lib.ExtendFieldService")->translateElemArr($elemArr,$setting_id);
+		return Openbiz::getService("extend.lib.ExtendFieldService")->translateElemArr($elemArr,$setting_id);
 	}
 	
 	public function getSettingSearchRule()
@@ -56,9 +58,9 @@ class ExtendDataEditForm extends EasyForm
 			return $this->searchRule;
 		}
 		
-		$prtFormObj = BizSystem::getObject($this->parentFormName);
+		$prtFormObj = Openbiz::getObject($this->parentFormName);
 		$elem_name = $prtFormObj->dataPanel->getByField($column_name)->objectName;		
-		$type_id = BizSystem::ClientProxy()->getFormInputs($elem_name);
+		$type_id = Openbiz::$app->getClientProxy()->getFormInputs($elem_name);
 		if (!$type_id && $elem_name) {
 			$type_id = $prtFormObj->getElement($elem_name)->getValue();
 		}
@@ -91,7 +93,7 @@ class ExtendDataEditForm extends EasyForm
 	public function configDataPanel($translate=true)
 	{
 		$searchRule = $this->getSettingSearchRule();
-		$fieldsDO = BizSystem::getObject($this->extendSettingDO,1);
+		$fieldsDO = Openbiz::getObject($this->extendSettingDO,1);
 		$fieldRecs = $fieldsDO->directfetch($searchRule);
 		
 		if(!$fieldRecs->count()){
@@ -126,7 +128,7 @@ class ExtendDataEditForm extends EasyForm
 			);
 			
 			$fieldArr = $this->configElemArr($fieldArr);			
-			if(BizSystem::allowUserAccess($elemArr['ACCESS'])){
+			if(Openbiz::$app->allowUserAccess($elemArr['ACCESS'])){
 				$xmlArr[] = $fieldArr;
 			}
 			
@@ -154,7 +156,7 @@ class ExtendDataEditForm extends EasyForm
 	{		
 		
 		$searchRule = $this->searchRule;
-		$fieldsDO = BizSystem::getObject($this->extendSettingDO,1);
+		$fieldsDO = Openbiz::getObject($this->extendSettingDO,1);
 		$fieldRecs = $fieldsDO->directfetch($searchRule);
 		
 		if(!$fieldRecs->count()){
@@ -163,10 +165,10 @@ class ExtendDataEditForm extends EasyForm
 		
 		$rec = array();
 		foreach ($fieldRecs as $field){
-			if(BizSystem::allowUserAccess($field['access'])){
+			if(Openbiz::$app->allowUserAccess($field['access'])){
 				$elem_name = "extend_field_".$field['Id'];
 				$field_name = $field['field'];
-				$field_value = BizSystem::ClientProxy()->getFormInputs($elem_name);
+				$field_value = Openbiz::$app->getClientProxy()->getFormInputs($elem_name);
 				$rec[$field_name]=$field_value;
 			}
 		}
@@ -196,17 +198,17 @@ class ExtendDataEditForm extends EasyForm
 		$column_name	= $do->association['Column'];
 		$column_value	= $do->association['FieldRefVal']; 
 				
-		$elem_name = BizSystem::getObject($this->parentFormName)->dataPanel->getByField($column_name)->objectName;
+		$elem_name = Openbiz::getObject($this->parentFormName)->dataPanel->getByField($column_name)->objectName;
 		if($elem_name){
-			$column_value = BizSystem::ClientProxy()->getFormInputs($elem_name);
+			$column_value = Openbiz::$app->getClientProxy()->getFormInputs($elem_name);
 		}
-		$record_id = BizSystem::getObject($this->parentFormName)->recordId;
+		$record_id = Openbiz::getObject($this->parentFormName)->recordId;
 		
 		$recArr[$cond_column] = $cond_value;
 		$recArr[$column_name] = $column_value;
 		$recArr['record_id'] = $record_id;				
 		
-		$oldRec = BizSystem::getObject($do->objectName,1)->fetchOne($this->searchRule." AND [record_id]='$record_id'" );
+		$oldRec = Openbiz::getObject($do->objectName,1)->fetchOne($this->searchRule." AND [record_id]='$record_id'" );
 		if($oldRec){
 			$oldRec = $oldRec->toArray();						
 			$recArr['Id'] = $oldRec['Id'];
@@ -218,8 +220,8 @@ class ExtendDataEditForm extends EasyForm
 		
 		//if installed changelog then save change log
 		
-		if(BizSystem::getService("system.lib.ModuleService")->isModuleInstalled("changelog")){
-			$formObj = BizSystem::getObject($this->parentFormName);
+		if(Openbiz::getService("system.lib.ModuleService")->isModuleInstalled("changelog")){
+			$formObj = Openbiz::getObject($this->parentFormName);
 			$panel = new Panel($this->configDataPanel($translate = false),"",$this);
 			if(!is_array($oldRec)){
 				$outputRecord = array();
@@ -243,7 +245,7 @@ class ExtendDataEditForm extends EasyForm
 				}	
 			}
 			$outputRecord['Id'] = $record_id;			
-			BizSystem::getService("changelog.lib.ChangeLogService")
+			Openbiz::getService("changelog.lib.ChangeLogService")
 						->LogDataChanges($formObj,$inputRecord,$outputRecord,null,$panel);
 			
 		}
@@ -256,4 +258,3 @@ class ExtendDataEditForm extends EasyForm
 		return null;
 	}
 }
-?>

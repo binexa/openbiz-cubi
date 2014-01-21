@@ -56,6 +56,8 @@
   38.  md2 *
  */
 
+use Openbiz\Openbiz;
+
 class authService
 {
 
@@ -87,8 +89,9 @@ class authService
      */
     public function authenticateUser($username, $password)
     {
-        if ($this->authticationType == "database")
+        if ($this->authticationType == "database") {
             return $this->authDbUser($username, $password);
+        }
         return false;
     }
 
@@ -102,10 +105,10 @@ class authService
     public function authenticateUserByCookies($username, $password)
     {
         /* @var $authDO BizDataObj */
-        $authDO = BizSystem::getObject($this->authticationDataObj);
+        $authDO = Openbiz::getObject($this->authticationDataObj);
         if (!$authDO)
             return false;
-        
+
         $searchRule = "[username]='$username' and status='1'";
         $recordList = array();
 
@@ -115,8 +118,7 @@ class authService
         $realPassword = $recordList[0]["password"];
 
         $realPasswordEnc = md5(md5($realPassword . $username) . md5($recordList[0]["create_time"]));
-        if ($realPassword == $realPasswordEnc)
-        {
+        if ($realPassword == $realPasswordEnc) {
             return true;
         }
         return false;
@@ -131,7 +133,7 @@ class authService
     public function authenticateUserBySmartCard($smartcard)
     {
         /* @var $authDO BizDataObj */
-        $authDO = BizSystem::getObject($this->authticationDataObj);
+        $authDO = Openbiz::getObject($this->authticationDataObj);
         if (!$authDO)
             return false;
         $searchRule = "[smartcard]='$smartcard' and status='1'";
@@ -139,8 +141,7 @@ class authService
 
         $authDO->fetchRecords($searchRule, $recordList, 1);
 
-        if (count($recordList) > 0)
-        {
+        if (count($recordList) > 0) {
             $username = $recordList[0]["username"];
             return $username;
         }
@@ -150,23 +151,22 @@ class authService
     protected function authDbUser($username, $password)
     {
         /* @var $authDO BizDataObj */
-        $authDO = BizSystem::getObject($this->authticationDataObj);
-        if (!$authDO)
+        $authDO = Openbiz::getObject($this->authticationDataObj);
+        if (!$authDO) {
             return false;
+        }
         $searchRule = "[username]='$username' and status='1'";
         $recordList = array();
 
         $authDO->fetchRecords($searchRule, $recordList, 1);
 
-        if (count($recordList) == 0)
-        {
+        if (count($recordList) == 0) {
             return false;
         }
         $encType = $recordList[0]["enctype"];
         $realPassword = $recordList[0]["password"];
 
-        if ($this->checkPassword($encType, $password, $realPassword))
-        {
+        if ($this->checkPassword($encType, $password, $realPassword)) {
             return true;
         }
         return false;
@@ -174,24 +174,19 @@ class authService
 
     protected function checkPassword($encType, $password, $realPassword)
     {
-        foreach (hash_algos() as $algos)
-        {
-            if (strtoupper($encType) == strtoupper($algos))
-            {
+        foreach (hash_algos() as $algos) {
+            if (strtoupper($encType) == strtoupper($algos)) {
                 $password = hash($algos, $password);
                 break;
             }
         }
         //echo "$password , $realPassword";
-        if ($password == $realPassword)
-        {
+        if ($password == $realPassword) {
             return true;
-        } else
-        {
+        } else {
             return false;
         }
     }
 
 }
 
-?>

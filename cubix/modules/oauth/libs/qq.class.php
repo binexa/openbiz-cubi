@@ -1,4 +1,7 @@
 <?php
+
+use Openbiz\Openbiz;
+
 include_once('_OAuth/oauth.php');
 include_once('_OAuth/WeiboOAuth.php');
 require_once "oauth.class.php";
@@ -18,7 +21,7 @@ class qq extends oauthClass{
 	
   	function login(){
 		$redirectPage=$this->getUrl($this->callBack);
-		BizSystem::clientProxy()->ReDirectPage($redirectPage);
+		Openbiz::$app->getClientProxy()->ReDirectPage($redirectPage);
 	} 
 	function test($akey,$skey){
 		$o = new QqWeiboOAuth( $akey,$skey );
@@ -26,7 +29,7 @@ class qq extends oauthClass{
 	}
 	
 	function callback(){ 
-		$keys=Bizsystem::getSessionContext()->getVar('qq_keys');
+		$keys=Openbiz::$app->getSessionContext()->getVar('qq_keys');
 		$this->checkUser($keys['oauth_token'],$keys['oauth_token_secret']);
 		$userInfo=$this->userInfo();
 		$this->check($userInfo);
@@ -49,7 +52,7 @@ class qq extends oauthClass{
 	
 		$this->loginUrl = $o->getAuthorizeURL( $keys['oauth_token'] ,false , $call_back);
 		$this->loginUrl .= '&oauth_token_secret='.$keys['oauth_token_secret'];;
-		Bizsystem::getSessionContext()->setVar('qq_keys',$keys);
+		Openbiz::$app->getSessionContext()->setVar('qq_keys',$keys);
 		//$_SESSION['qq']['keys'] = $keys;
 		return $this->loginUrl;
 	}
@@ -73,7 +76,7 @@ class qq extends oauthClass{
 	}
 
 	private function doClient($opt=''){
-		$tokens=Bizsystem::getSessionContext()->getVar('qq_access_token');
+		$tokens=Openbiz::$app->getSessionContext()->getVar('qq_access_token');
 		$oauth_token = ( $opt['oauth_token'] )? $opt['oauth_token']:$tokens['oauth_token'];
         $oauth_token_secret = ( $opt['oauth_token_secret'] )? $opt['oauth_token_secret']:$tokens['oauth_token_secret'];
 		return new QqWeiboClient( $this->akey ,$this->skey ,  $oauth_token, $oauth_token_secret  );
@@ -90,7 +93,7 @@ class qq extends oauthClass{
         $o = new QqWeiboOAuth($this->akey ,$this->skey  ,$oauth_token ,$oauth_token_secret );
         $access_token = $o->getAccessToken(  $_REQUEST['oauth_verifier'] ) ;
 		//$_SESSION['qq']['access_token'] = $access_token;
-		Bizsystem::getSessionContext()->setVar('qq_access_token',$access_token);
+		Openbiz::$app->getSessionContext()->setVar('qq_access_token',$access_token);
 	}
 
 	//发布一条微博
@@ -110,4 +113,4 @@ class qq extends oauthClass{
  
 
 }
-?>
+

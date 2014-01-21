@@ -303,4 +303,3 @@ function xmlpp($xml, $html_output=false) {
     $xml = implode("\n", $pretty);     
     return ($html_output) ? htmlentities($xml) : $xml;  
 } 
-?>

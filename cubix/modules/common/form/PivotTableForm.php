@@ -64,4 +64,3 @@ class PivotTableForm extends EasyForm
         return $output;
     }
 }
-?>

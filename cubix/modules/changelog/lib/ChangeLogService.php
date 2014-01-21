@@ -83,12 +83,11 @@ class ChangeLogService
 		try {
 			$dataRec->save();
 		}
-        catch (BDOException $e)
+        catch (Openbiz\data\Exception $e)
         {
-            $this->processBDOException($e);
+            $this->processDataException($e);
             return true;
         }	
         return true;	
 	}
 }
-?>

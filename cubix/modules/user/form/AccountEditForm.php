@@ -11,20 +11,7 @@
  * @version   $Id: AccountEditForm.php 3375 2012-05-31 06:23:11Z rockyswen@gmail.com $
  */
 
-/**
- * Openbiz Cubi 
- *
- * LICENSE
- *
- * This source file is subject to the BSD license that is bundled
- * with this package in the file LICENSE.txt.
- *
- * @package   user.form
- * @copyright Copyright (c) 2005-2011, Rocky Swen
- * @license   http://www.opensource.org/licenses/bsd-license.php
- * @link      http://www.phpopenbiz.org/
- * @version   $Id: AccountEditForm.php 3375 2012-05-31 06:23:11Z rockyswen@gmail.com $
- */
+use Openbiz\Openbiz;
 
 include_once OPENBIZ_APP_MODULE_PATH."/system/form/UserForm.php";
 
@@ -45,8 +32,7 @@ class AccountEditForm extends UserForm
         parent::__construct($xmlArr);
         
         // read user profile and set fix search rule
-        global $g_BizSystem;
-        $profile = $g_BizSystem->getUserProfile();
+         $profile = Openbiz::$app->getUserProfile();
         if ($profile && $profile['Id'])
             $this->_userId = $profile['Id'];
     }
@@ -55,7 +41,7 @@ class AccountEditForm extends UserForm
     {
         // set fix search rule
         if (!$this->_userId)
-            return BizSystem::clientProxy()->redirectView(OPENBIZ_ACCESS_DENIED_VIEW);
+            return Openbiz::$app->getClientProxy()->redirectView(OPENBIZ_ACCESS_DENIED_VIEW);
         $this->fixSearchRule = "[Id]=".$this->_userId;
         return parent::render();
     }
@@ -66,7 +52,7 @@ class AccountEditForm extends UserForm
         $this->activeRecord = null;
         // set fix search rule
         if (!$this->_userId)
-            return BizSystem::clientProxy()->redirectView(OPENBIZ_ACCESS_DENIED_VIEW);
+            return Openbiz::$app->getClientProxy()->redirectView(OPENBIZ_ACCESS_DENIED_VIEW);
         $this->fixSearchRule = "[Id]=".$this->_userId;
         return parent::rerender();
     }
@@ -86,7 +72,7 @@ class AccountEditForm extends UserForm
         {
             $this->ValidateForm();
         }
-        catch (ValidationException $e)
+        catch (Openbiz\validation\Exception $e)
         {
             $this->processFormObjError($e->errors);
             return;
@@ -103,11 +89,10 @@ class AccountEditForm extends UserForm
         $this->notices[] = $this->GetMessage("USER_DATA_UPDATED");
 
        	//run eventlog        
-        $eventlog 	= BizSystem::getService(OPENBIZ_EVENTLOG_SERVICE);        
+        $eventlog 	= Openbiz::getService(OPENBIZ_EVENTLOG_SERVICE);        
     	$eventlog->log("USER_MANAGEMENT", "MSG_USER_RESET_PASSWORD");        
         
         $this->rerender();
     }
    
 }  
-?>

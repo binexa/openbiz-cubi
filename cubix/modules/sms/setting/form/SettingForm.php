@@ -43,7 +43,7 @@ class SettingForm extends UserPreferenceForm
         {
             $this->ValidateForm();
         }
-        catch (ValidationException $e)
+        catch (Openbiz\validation\Exception $e)
         {
             $this->processFormObjError($e->errors);
             return;
@@ -91,4 +91,3 @@ class SettingForm extends UserPreferenceForm
         $this->processPostAction(); 
     }   
 }  
-?>

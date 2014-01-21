@@ -11,6 +11,8 @@
  * @version   $Id$
  */
 
+use Openbiz\Openbiz;
+
 include_once 'Array2Xml.php';
 
 /**
@@ -70,7 +72,7 @@ class RestService
 		$sort = $request->params('sort');
 		$sorder = $request->params('sorder');
 		
-		$dataObj = BizSystem::getObject($DOName);
+		$dataObj = Openbiz::getObject($DOName);
 		//$dataObj->stateless = 'N';
 		$dataObj->setQueryParameters($queryParams);
 		$dataObj->setLimit($rows, $page*$rows);
@@ -112,7 +114,7 @@ class RestService
 			$response->body("Resource '$resource' is not found.");
 			return;
 		}
-		$dataObj = BizSystem::getObject($DOName);
+		$dataObj = Openbiz::getObject($DOName);
 		$rec = $dataObj->fetchById($id);
 		$format = strtolower($request->params('format'));
 		
@@ -146,7 +148,7 @@ class RestService
 			$response->body("Resource '$resource' is not found.");
 			return;
 		}
-		$dataObj = BizSystem::getObject($DOName);
+		$dataObj = Openbiz::getObject($DOName);
 		$dataRec = new DataRecord(null, $dataObj);
 		$inputRecord = json_decode($request->getBody());
         foreach ($inputRecord as $k => $v) {
@@ -155,13 +157,13 @@ class RestService
         try {
            $dataRec->save();
         }
-        catch (ValidationException $e) {
+        catch (Openbiz\validation\Exception $e) {
             $response->status(400);
 			$errmsg = implode("\n",$e->errors);
 			$response->body($errmsg);
 			return;
         }
-        catch (BDOException $e) {
+        catch (Openbiz\data\Exception $e) {
             $response->status(400);
 			$response->body($e->getMessage());
 			return;
@@ -200,7 +202,7 @@ class RestService
 			$response->body("Resource '$resource' is not found.");
 			return;
 		}
-		$dataObj = BizSystem::getObject($DOName);
+		$dataObj = Openbiz::getObject($DOName);
 		$rec = $dataObj->fetchById($id);
 		if (empty($rec)) {
 			$response->status(400);
@@ -215,13 +217,13 @@ class RestService
         try {
            $dataRec->save();
         }
-        catch (ValidationException $e) {
+        catch (Openbiz\validation\Exception $e) {
             $response->status(400);
 			$errmsg = implode("\n",$e->errors);
 			$response->body($errmsg);
 			return;
         }
-        catch (BDOException $e) {
+        catch (Openbiz\data\Exception $e) {
             $response->status(400);
 			$response->body($e->getMessage());
 			return;
@@ -259,7 +261,7 @@ class RestService
 			$response->body("Resource '$resource' is not found.");
 			return;
 		}
-		$dataObj = BizSystem::getObject($DOName);
+		$dataObj = Openbiz::getObject($DOName);
 		$rec = $dataObj->fetchById($id);
 		if (empty($rec)) {
 			$response->status(400);
@@ -270,7 +272,7 @@ class RestService
         try {
            $dataRec->delete();
         }
-        catch (BDOException $e) {
+        catch (Openbiz\data\Exception $e) {
             $response->status(400);
 			$response->body($e->getMessage());
 			return;
@@ -292,4 +294,3 @@ class RestService
     }
 }
 
-?>

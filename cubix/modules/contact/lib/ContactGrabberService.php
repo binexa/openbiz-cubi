@@ -11,29 +11,31 @@
  * @version   $Id: ContactGrabberService.php 3356 2012-05-31 05:47:51Z rockyswen@gmail.com $
  */
 
+use Openbiz\Openbiz;
+
 class ContactGrabberService
 {
 	public function __construct()
 	{
 		require_once 'Zend/Loader.php';
-	    Zend_Loader::loadClass('Zend_Gdata');
-	    Zend_Loader::loadClass('Zend_Gdata_ClientLogin');
-	    Zend_Loader::loadClass('Zend_Http_Client');
-	    Zend_Loader::loadClass('Zend_Gdata_Query');
-	    Zend_Loader::loadClass('Zend_Gdata_Feed');
+	    \Zend_Loader::loadClass('Zend_Gdata');
+	    \Zend_Loader::loadClass('Zend_Gdata_ClientLogin');
+	    \Zend_Loader::loadClass('Zend_Http_Client');
+	    \Zend_Loader::loadClass('Zend_Gdata_Query');
+	    \Zend_Loader::loadClass('Zend_Gdata_Feed');
 	}
 	
 	public static function ValidateCredential($credential, $provider){
-		$dataSource = BizSystem::GetObject($provider);
+		$dataSource = Openbiz::getObject($provider);
 		$result = $dataSource->ValidateCredential($credential);
 		return $result;
 	}
 	
 	public static function FetchContacts($credential, $provider)
 	{
-		$dataSource = BizSystem::GetObject($provider);
+		$dataSource = Openbiz::getObject($provider);
 		$result = $dataSource->FetchContacts($credential);
-		$svcobj=BizSystem::getService("service.chineseService");
+		$svcobj=Openbiz::getService("service.chineseService");
 		
 		for($i=0;$i<count($result);$i++)
 		{	        
@@ -50,4 +52,3 @@ class ContactGrabberService
 		return $result;
 	}
 }
-?>

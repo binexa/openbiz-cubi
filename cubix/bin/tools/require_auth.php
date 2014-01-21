@@ -13,7 +13,7 @@ foreach($argv as $arg)
 
 echo "Authentication Required: ".PHP_EOL;
 $do = "system.do.UserDO";
-$do = BizSystem::getObject($do);
+$do = Openbiz::getObject($do);
 $adminRec = $do->fetchById(1);
 
 $username = $adminRec['username'];
@@ -28,7 +28,7 @@ $auth_counter =1;
 while(1) {
 	if(isset($password_preset) && $password_preset!=''){
 		echo "".PHP_EOL;
-		$svcobj 	= BizSystem::getService(AUTH_SERVICE);   
+		$svcobj 	= Openbiz::getService(AUTH_SERVICE);   
 		$result = $svcobj->authenticateUser($username,$password_preset);
 		if($result){		
 			echo "Authentication Sucessed! ".PHP_EOL;	
@@ -47,7 +47,7 @@ while(1) {
 	system('stty echo');
 	echo PHP_EOL;
 	
-	$svcobj 	= BizSystem::getService(AUTH_SERVICE);   
+	$svcobj 	= Openbiz::getService(AUTH_SERVICE);   
 	$result = $svcobj->authenticateUser($username,$password_input);
 	if($result){		
 		echo "Authentication Sucessed! ".PHP_EOL;	

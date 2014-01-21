@@ -1,4 +1,7 @@
 <?php
+
+use Openbiz\Openbiz;
+
 include_once('_OAuth/oauth.php');
 require_once "oauth.class.php";
 include_once( 'sina/saetv2.ex.class.php' );
@@ -21,7 +24,7 @@ class sina extends oauthClass
 	
   	function login(){	
 		$redirectPage=$this->getUrl();
-		BizSystem::clientProxy()->ReDirectPage($redirectPage);
+		Openbiz::$app->getClientProxy()->ReDirectPage($redirectPage);
 	} 
  
 	function test($akey,$skey){
@@ -41,7 +44,7 @@ class sina extends oauthClass
 		}
 		$token['oauth_token']=$token['access_token'] ; 
 		$token['access_token_json']=$token; 
-		Bizsystem::getSessionContext()->setVar('sina_access_token',$token);
+		Openbiz::$app->getSessionContext()->setVar('sina_access_token',$token);
 		$userInfo=$this->userInfo($token['access_token']); 
 		$this->check($userInfo);
 	}
@@ -80,4 +83,3 @@ class sina extends oauthClass
 	 
  
 }
-?>

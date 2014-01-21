@@ -1,4 +1,7 @@
-<?php 
+<?php
+
+use Openbiz\Openbiz;
+
 require_once 'iSMS.php';
 require_once 'SPDriver.php';
 require_once dirname(dirname(__FILE__)).'/dll/emay/include/EmayClient.php';
@@ -66,7 +69,7 @@ class SPemay extends SPDriver implements iSMS
 		
 		if($result)
 		{				
-			BizSystem::getService(LOG_SERVICE)->log(LOG_ERR,"SMS","sendMessage: ". $content." emay：".$mobile.':'.$result);
+			Openbiz::getService(LOG_SERVICE)->log(LOG_ERR,"SMS","sendMessage: ". $content." emay：".$mobile.':'.$result);
 			return false;
 		}
 		else
@@ -89,7 +92,3 @@ class SPemay extends SPDriver implements iSMS
     	
   
 }
-
-
-
-?>

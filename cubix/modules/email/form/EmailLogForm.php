@@ -11,11 +11,13 @@
  * @version   $Id: EmailLogForm.php 3358 2012-05-31 05:57:58Z rockyswen@gmail.com $
  */
 
+use Openbiz\Openbiz;
+
 class EmailLogForm extends EasyForm
 {
 	public function fetchDataSet(){
 		$resultRecords = parent::fetchDataSet()->toArray();
-		$emailSvc = BizSystem::getService(EMAIL_SERVICE);
+		$emailSvc = Openbiz::getService(EMAIL_SERVICE);
 		for($i=0;$i<count($resultRecords);$i++)
 		{
 			$account = $emailSvc->accounts->get($resultRecords[$i]['sender']);						
@@ -42,7 +44,7 @@ class EmailLogForm extends EasyForm
 
 	public function fetchData(){
 		$resultRecords = parent::fetchData();
-		$emailSvc = BizSystem::getService(EMAIL_SERVICE);
+		$emailSvc = Openbiz::getService(EMAIL_SERVICE);
 		$account = $emailSvc->accounts->get($resultRecords['sender']);						
 		
 		$resultRecords['sender_email'] = $resultRecords['sender'];
@@ -66,7 +68,7 @@ class EmailLogForm extends EasyForm
 	
 	public function ExportCSV()
 	{
-		$excelSvc = BizSystem::getService(EXCEL_SERVICE);	
+		$excelSvc = Openbiz::getService(EXCEL_SERVICE);	
 		$excelSvc->renderCSV($this->objectName);
 		$this->runEventLog();
 		return true;
@@ -75,15 +77,15 @@ class EmailLogForm extends EasyForm
     public function ClearLog()	
 	{
        if ($this->resource != "" && !$this->allowAccess($this->resource.".delete"))
-            return BizSystem::clientProxy()->redirectView(OPENBIZ_ACCESS_DENIED_VIEW);
+            return Openbiz::$app->getClientProxy()->redirectView(OPENBIZ_ACCESS_DENIED_VIEW);
 
         try
         {
           $this->getDataObj()->deleteRecords();
         } 
-        catch (BDOException $e)
+        catch (Openbiz\data\Exception $e)
         {
-           $this->processBDOException($e);
+           $this->processDataException($e);
            return;
         }
        
@@ -96,4 +98,3 @@ class EmailLogForm extends EasyForm
 	}   
 		
 }
-?>

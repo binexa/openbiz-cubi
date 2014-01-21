@@ -1,4 +1,19 @@
-<?php 
+<?php
+
+/**
+ * Openbiz Cubi Application Platform
+ *
+ * LICENSE http://code.google.com/p/openbiz-cubi/wiki/CubiLicense
+ *
+ * @package   cubi.common.lib
+ * @copyright Copyright (c) 2005-2011, Openbiz Technology LLC
+ * @license   http://code.google.com/p/openbiz-cubi/wiki/CubiLicense
+ * @link      http://code.google.com/p/openbiz-cubi/
+ * @version   $Id$
+ */
+
+use Openbiz\Openbiz;
+
 include_once(OPENBIZ_APP_MODULE_PATH."/common/lib/httpClient.php");
 
 class ErrorReportService
@@ -25,7 +40,7 @@ class ErrorReportService
     {
     	$uri = $this->reportServer;
         $cache_id = md5($this->objectName.$uri. $method .serialize($params));         
-        $cacheSvc = BizSystem::getService(CACHE_SERVICE,1);
+        $cacheSvc = Openbiz::getService(CACHE_SERVICE,1);
         $cacheSvc->init($this->objectName,$this->cacheLifeTime);        		
     	if(substr($uri,strlen($uri)-1,1)!='/'){
         	$uri .= '/';
@@ -58,4 +73,3 @@ class ErrorReportService
         return $resultSetArray;
     }
 }
-?>

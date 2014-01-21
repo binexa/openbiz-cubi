@@ -11,6 +11,8 @@
  * @version   $Id: DataACLForm.php 3355 2012-05-31 05:43:33Z rockyswen@gmail.com $
  */
 
+use Openbiz\Openbiz;
+
 require_once('DataSharingForm.php');
 class DataACLForm extends DataSharingForm
 {
@@ -27,7 +29,7 @@ class DataACLForm extends DataSharingForm
 		$this->editable = $prtRecord['editable'];
 		
 		$prtForm = $this->parentFormName;
-		$prtFormObj = BizSystem::GetObject($prtForm);
+		$prtFormObj = Openbiz::getObject($prtForm);
 		
 		$record_table = $prtFormObj->getDataObj()->mainTableName;
 		$record_id = $this->parentRecordId;
@@ -44,18 +46,18 @@ class DataACLForm extends DataSharingForm
 		$acl_perm = $inputs['fld_acl_perm'];
 		
 		//get UserID
-		$userRec = BizSystem::getObject("system.do.UserDO",1)->fetchOne("[username]='$acl_user'");
+		$userRec = Openbiz::getObject("system.do.UserDO",1)->fetchOne("[username]='$acl_user'");
 		$acl_user_id = $userRec['Id'];
 		
 		$parent_record_id = $this->parentRecordId;
 		
 		//get parent do table
 		$prtForm = $this->parentFormName;
-		$prtFormObj = BizSystem::GetObject($prtForm);
+		$prtFormObj = Openbiz::getObject($prtForm);
 		$dataObj = $prtFormObj->getDataObj();
 		$parent_record_table = $dataObj->mainTableName;
 		
-		$aclDO = BizSystem::getObject("common.do.DataACLDO");
+		$aclDO = Openbiz::getObject("common.do.DataACLDO");
 		$sql = "
 			[record_table]='$parent_record_table' AND 
 			[record_id]='$parent_record_id' AND
@@ -78,4 +80,3 @@ class DataACLForm extends DataSharingForm
 	
 	
 }
-?>

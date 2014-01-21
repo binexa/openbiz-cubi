@@ -39,7 +39,7 @@ class AttrsForm extends EasyForm
         {
             $this->ValidateForm();
         }
-        catch (ValidationException $e)
+        catch (Openbiz\validation\Exception $e)
         {
             $this->processFormObjError($e->errors);
             return;
@@ -89,7 +89,7 @@ class AttrsForm extends EasyForm
         {
             $this->ValidateForm();
         }
-        catch (ValidationException $e)
+        catch (Openbiz\validation\Exception $e)
         {
             $this->processFormObjError($e->errors);
             return;
@@ -144,4 +144,3 @@ class AttrsForm extends EasyForm
         return $defaultRecArr;
     }	
 }
-?>

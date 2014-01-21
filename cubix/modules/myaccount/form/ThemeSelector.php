@@ -11,7 +11,7 @@
  * @version   $Id: ThemeSelector.php 3365 2012-05-31 06:07:55Z rockyswen@gmail.com $
  */
 
-require_once(OPENBIZ_BIN."easy/element/DropDownList.php");
+//require_once(OPENBIZ_BIN."easy/element/DropDownList.php");
 class ThemeSelector extends DropDownList{
     function getList(){
     	$list=array();
@@ -68,4 +68,3 @@ class ThemeSelector extends DropDownList{
 		}
 	}    
 }
-?>

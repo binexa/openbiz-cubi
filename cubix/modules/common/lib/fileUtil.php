@@ -59,4 +59,3 @@ function recurse_delete($dir) {
      rmdir($dir);
    }
 }
-?>

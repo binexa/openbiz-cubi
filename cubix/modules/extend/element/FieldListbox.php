@@ -39,4 +39,3 @@ class FieldListbox extends Listbox
     	return $fields;    	
     }
 }
-?>

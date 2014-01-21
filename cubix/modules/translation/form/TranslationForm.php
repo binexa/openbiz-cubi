@@ -11,22 +11,25 @@
  * @version   $Id: TranslationForm.php 3374 2012-05-31 06:22:06Z rockyswen@gmail.com $
  */
 
+use Openbiz\Openbiz;
+use Openbiz\i18n\I18n;
+
 include_once OPENBIZ_APP_MODULE_PATH."/translation/lib/LangPackCreator.php";
 
 class TranslationForm extends EasyForm
 {
  public $lang;
 
- public function loadSessionVars($sessionContext)
+ public function loadStatefullVars($sessionContext)
     {
-        parent::loadSessionVars($sessionContext);
+        parent::loadStatefullVars($sessionContext);
     	$sessionContext->loadObjVar("Translation", "Lang", $this->lang);
         
     }
 
-    public function saveSessionVars($sessionContext)
+    public function saveStatefullVars($sessionContext)
     {
-    	parent::saveSessionVars($sessionContext);
+    	parent::saveStatefullVars($sessionContext);
         $sessionContext->saveObjVar("Translation", "Lang", $this->lang);      
     }	
 
@@ -37,8 +40,8 @@ class TranslationForm extends EasyForm
     	$resultArr = $this->fetchDataSet();
     	$record = $resultArr[$Id];
     	
-    	require_once('Zend/Locale.php');
-		$locale = new Zend_Locale(I18n::getCurrentLangCode());
+    	//require_once('Zend/Locale.php');
+		$locale = new \Zend_Locale(I18n::getCurrentLangCode());
 		$code2name = $locale->getTranslationList('language',$locale);
 		$lang_code = $this->getLang();
     	$locale = explode('_', $lang_code);
@@ -107,12 +110,12 @@ class TranslationForm extends EasyForm
 	
 	public function Delete(){
 		if ($this->resource != "" && !$this->allowAccess($this->resource.".delete"))
-            return BizSystem::clientProxy()->redirectView(OPENBIZ_ACCESS_DENIED_VIEW);
+            return Openbiz::$app->getClientProxy()->redirectView(OPENBIZ_ACCESS_DENIED_VIEW);
 
         if ($id==null || $id=='')
-            $id = BizSystem::clientProxy()->getFormInputs('_selectedId');
+            $id = Openbiz::$app->getClientProxy()->getFormInputs('_selectedId');
 
-        $selIds = BizSystem::clientProxy()->getFormInputs('row_selections', false);
+        $selIds = Openbiz::$app->getClientProxy()->getFormInputs('row_selections', false);
         if ($selIds == null)
             $selIds[] = $id;
             
@@ -154,7 +157,7 @@ class TranslationForm extends EasyForm
 	}
 	
 	public function updateLang(){
-		$lang=BizSystem::clientProxy()->getFormInputs("selector_lang");
+		$lang=Openbiz::$app->getClientProxy()->getFormInputs("selector_lang");
 		$this->lang=$lang;
 		return $this->UpdateForm();
 	}
@@ -168,4 +171,4 @@ class TranslationForm extends EasyForm
 		return (int)$count;
 	}
 }
-?>
+

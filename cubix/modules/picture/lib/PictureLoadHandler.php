@@ -11,6 +11,8 @@
  * @version   $Id: PictureLoadHandler.php 3367 2012-05-31 06:10:21Z rockyswen@gmail.com $
  */
 
+use Openbiz\Openbiz;
+
 include_once (OPENBIZ_APP_MODULE_PATH."/system/lib/ModuleLoadHandler.php");
 
 class PictureLoadHandler implements ModuleLoadHandler
@@ -22,10 +24,10 @@ class PictureLoadHandler implements ModuleLoadHandler
     public function postLoadingModule($moduelLoader)
     {
     	
-    	$roleRec = BizSystem::getObject("system.do.RoleDO")->fetchOne("[name]='Cubi Member'");
+    	$roleRec = Openbiz::getObject("system.do.RoleDO")->fetchOne("[name]='Cubi Member'");
     	$roleId = $roleRec['Id'];
 
-    	$actionRec = BizSystem::getObject("system.do.AclActionDO")->fetchOne("[module]='picture' AND [resource]='picture' AND [action]='access'");
+    	$actionRec = Openbiz::getObject("system.do.AclActionDO")->fetchOne("[module]='picture' AND [resource]='picture' AND [action]='access'");
     	$actionId = $actionRec["Id"];
     	
     	$aclRecord = array(
@@ -33,8 +35,7 @@ class PictureLoadHandler implements ModuleLoadHandler
     		"action_id" => $actionId,
     		"access_level" => 1
     	);
-    	BizSystem::getObject("system.do.AclRoleActionDO")->insertRecord($aclRecord);
+    	Openbiz::getObject("system.do.AclRoleActionDO")->insertRecord($aclRecord);
     }
 }
 
-?>

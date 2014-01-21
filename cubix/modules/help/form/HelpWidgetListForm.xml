@@ -5,9 +5,19 @@
   Copyright (c) 2005-2011, Openbiz Technology LLC
   Version $Id: HelpWidgetListForm.xml 4463 2012-10-26 04:44:57Z hellojixian@gmail.com $
 -->
-<EasyForm Name="HelpWidgetListForm" Class="HelpWidgetForm" FormType="List" jsClass="jbForm" Title="Help" Description="" BizDataObj="help.do.HelpDO" PageSize="10" DefaultForm="Y" TemplateEngine="Smarty" TemplateFile="widget_list.tpl.html" EventName="HELP" MessageFile="Help.msg" Access="Help.Access_Widget">
-    <DataPanel>
-        
+<EasyForm Name="HelpWidgetListForm"
+          Class="HelpWidgetForm"
+          FormType="List" jsClass="jbForm"
+          Title="Help" Description=""
+          BizDataObj="help.do.HelpDO"
+          PageSize="10"
+          DefaultForm="Y"
+          TemplateEngine="Smarty"
+          TemplateFile="widget_list.tpl.html"
+          EventName="HELP"
+          MessageFile="Help.msg"
+          Access="Help.Access_Widget">
+    <DataPanel>        
         <Element Name="row_selections" Class="RowCheckbox"  Label="" FieldName="Id"/>
         <Element Name="fld_Id" Class="common.element.ColumnTitle" FieldName="Id" Label="ID" Sortable="Y" AllowURLParam="N"/>                  	        	
         <Element Name="fld_title" Class="ColumnText" FieldName="title" Label="Title"  Sortable="Y" AllowURLParam="N" Translatable="N" OnEventLog="N"  Link="javascript:">
@@ -15,9 +25,19 @@
         </Element>	
     </DataPanel>
     <ActionPanel>
-         <Element Name="btn_show_tutorial" Hidden="{@:tutorialId!=0?'N':'Y'}" Class="LabelText" Text="Show Tutorial" Style="float:left;color:#999999;text-decoration:none" Link="javascript:;" CssClass="btn_tutorial" >
-            <EventHandler Name="btn_show_tutorial_onclick" Event="onclick" Function="ShowTutorial({@:tutorialId})" />
-        </Element>    
+        
+         <Element Name="btn_show_tutorial" 
+                  Hidden="{@:tutorialId!=0?'N':'Y'}"
+                  Class="LabelText"
+                  Text="Show Tutorial"
+                  Style="float:left;color:#999999;text-decoration:none"
+                  Link="javascript:;"
+                  CssClass="btn_tutorial" >
+            <EventHandler Name="btn_show_tutorial_onclick" 
+                          Event="onclick"
+                          Function="ShowTutorial({@:tutorialId})" />
+        </Element>
+        
     </ActionPanel> 
     <NavPanel>
         <Element Name="page_selector" Class="PageSelector" Text="{@:currentPage}" Label="Go to Page" CssClass="input_select" cssFocusClass="input_select_focus">
@@ -42,13 +62,26 @@
         </Element>
     </NavPanel> 
     <SearchPanel>
-        <Element Name="qry_help_title"  Class="AutoSuggest" FuzzySearch="Y" SelectFrom="help.do.HelpDO[title],[title] like '%{$_POST['qry_help_title']}%' GROUP BY [title]" FieldName="title" cssFocusClass="input_text_search_focus" CssClass="input_text_search"/>
-        <Element Name="btn_dosearch" Class="Button" text="Go" CssClass="button_gray">
+        <Element Name="qry_help_title"  
+                 Class="AutoSuggest"
+                 FuzzySearch="Y"
+                 SelectFrom="help.do.HelpDO[title],[title] like '%{$_POST['qry_help_title']}%' GROUP BY [title]"
+                 FieldName="title"
+                 cssFocusClass="input_text_search_focus"
+                 CssClass="input_text_search"/>
+        <Element Name="btn_dosearch"
+                 Class="Button"
+                 text="Go"
+                 CssClass="button_gray">
             <EventHandler Name="search_js_onclick" Event="onclick" Function="js:var c = new Cookies();c.set('help_form','shown');" />
             <EventHandler Name="search_onclick" Event="onclick" Function="RunSearch()" />
         </Element>   
-        <Element Name="btn_autoshow_tutorial"  Class="Hidden" Text="Show Tutorial"  >
-            <EventHandler Name="btn_autoshow_tutorial_onclick" Event="onclick" Function="AutoShowTutorial()" />
+        <Element Name="btn_autoshow_tutorial"
+                 Class="Hidden"
+                 Text="Show Tutorial"  >
+            <EventHandler Name="btn_autoshow_tutorial_onclick" 
+                          Event="onclick"
+                          Function="AutoShowTutorial()" />
         </Element>
     </SearchPanel>
 </EasyForm>

@@ -11,22 +11,7 @@
  * @version   $Id: GeneralSettingForm.php 3355 2012-05-31 05:43:33Z rockyswen@gmail.com $
  */
 
-/**
- * Openbiz Cubi 
- *
- * LICENSE
- *
- * This source file is subject to the BSD license that is bundled
- * with this package in the file LICENSE.txt.
- *
- * @package   user.form
- * @copyright Copyright (c) 2005-2011, Rocky Swen
- * @license   http://www.opensource.org/licenses/bsd-license.php
- * @link      http://www.phpopenbiz.org/
- * @version   $Id: GeneralSettingForm.php 3355 2012-05-31 05:43:33Z rockyswen@gmail.com $
- */
-
-
+use Openbiz\Data\Helpers\QueryStringParam;
 
 class GeneralSettingForm extends EasyForm
 {        
@@ -77,7 +62,7 @@ class GeneralSettingForm extends EasyForm
         {
             $this->ValidateForm();
         }
-        catch (ValidationException $e)
+        catch (Openbiz\validation\Exception $e)
         {
             $this->processFormObjError($e->errors);
             return;
@@ -128,4 +113,3 @@ class GeneralSettingForm extends EasyForm
 
 
 }  
-?>

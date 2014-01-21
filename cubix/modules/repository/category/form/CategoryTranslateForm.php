@@ -11,6 +11,9 @@
  * @version   $Id: ExtendFieldTranslateForm.php 3360 2012-05-31 06:00:17Z rockyswen@gmail.com $
  */
 
+use Openbiz\Openbiz;
+use Openbiz\i18n\I18n;
+
 class CategoryTranslateForm extends PickerForm
 {
 
@@ -24,11 +27,11 @@ class CategoryTranslateForm extends PickerForm
 		$this->activeRecord = null;
 		$result = parent::fetchData();
 		
-		$lang = BizSystem::ClientProxy()->getFormInputs("fld_lang");
+		$lang = Openbiz::$app->getClientProxy()->getFormInputs("fld_lang");
 		$lang?$lang:$lang=I18n::getCurrentLangCode();
 		$record_id = $result["Id"];
 		
-		$transDO = BizSystem::getObject($this->translateDO,1);
+		$transDO = Openbiz::getObject($this->translateDO,1);
 		$currentRecord = $transDO->fetchOne("[{$this->recordFKField}]='$record_id' AND [lang]='$lang'");
 		if($currentRecord){
 			$currentRecord = $currentRecord->toArray();
@@ -54,7 +57,7 @@ class CategoryTranslateForm extends PickerForm
 	        {
 	            $this->ValidateForm();
 	        }
-	        catch (ValidationException $e)
+	        catch (Openbiz\validation\Exception $e)
 	        {
 	            $this->processFormObjError($e->errors);
 	            return;
@@ -74,7 +77,7 @@ class CategoryTranslateForm extends PickerForm
 		
 		$lang = $inputRecord['lang'];
 		$record_id = $currentRecord["Id"];		
-		$transDO = BizSystem::getObject($this->translateDO,1);
+		$transDO = Openbiz::getObject($this->translateDO,1);
 		
 		$newRecord = array(
     					"{$this->recordFKField}" =>$record_id,
@@ -107,20 +110,20 @@ class CategoryTranslateForm extends PickerForm
         	//var_dump($dataRec->toArray());exit;
             $dataRec->save();
         }
-        catch (ValidationException $e)
+        catch (Openbiz\validation\Exception $e)
         {
             $errElements = $this->getErrorElements($e->errors);           
         	if(count($e->errors)==count($errElements)){
             	$this->processFormObjError($errElements);
             }else{            	
             	$errmsg = implode("<br />",$e->errors);
-		        BizSystem::clientProxy()->showErrorMessage($errmsg);
+		        Openbiz::$app->getClientProxy()->showErrorMessage($errmsg);
             }
             return false;
         }
-        catch (BDOException $e)
+        catch (Openbiz\data\Exception $e)
         {
-            $this->processBDOException($e);
+            $this->processDataException($e);
             return false;
         }
 		$this->activeRecord = null;
@@ -131,4 +134,3 @@ class CategoryTranslateForm extends PickerForm
     }
     
 }
-?>

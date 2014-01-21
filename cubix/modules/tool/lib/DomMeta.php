@@ -153,4 +153,3 @@ class DomMeta {
         $doc->save($this->xmlFile);
     }
 }
-?>

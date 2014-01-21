@@ -11,6 +11,8 @@
  * @version   $Id: RepositoryService.php 5076 2013-01-07 09:27:31Z hellojixian@gmail.com $
  */
 
+use Openbiz\Openbiz;
+
 include_once OPENBIZ_APP_MODULE_PATH.'/websvc/lib/WebsvcService.php';
 class RepositoryService extends WebsvcService
 {
@@ -28,7 +30,7 @@ class RepositoryService extends WebsvcService
     public function fetchRepoInfo()
     {
     	$searchRule = "[user_id]='0' AND [name] LIKE 'repo_%'";   
-    	$dataObj = BizSystem::getObject($this->repositorySettingDO);    	
+    	$dataObj = Openbiz::getObject($this->repositorySettingDO);    	
         $resultRecords = $dataObj->directfetch($searchRule);
         $prefRecord = array();
         foreach($resultRecords as $record){
@@ -37,7 +39,7 @@ class RepositoryService extends WebsvcService
         //try to translate cats        
        	$lang = $_REQUEST['lang'];
        	if($lang){
-       		$settingTransDO = BizSystem::getObject($this->repositorySettingTransDO,1);
+       		$settingTransDO = Openbiz::getObject($this->repositorySettingTransDO,1);
        		$transFields = array('repo_name','repo_desc');
 	    	 
        		$recordId = $record['Id'];
@@ -62,7 +64,7 @@ class RepositoryService extends WebsvcService
     	$logRec['remote_ip'] 	= $remote_ip;
     	$logRec['remote_siteurl'] = $siteurl;
     	$logRec['remote_operator'] = $operator;
-    	$dataObj = BizSystem::getObject($this->installLogDO);
+    	$dataObj = Openbiz::getObject($this->installLogDO);
     	$dataObj->insertRecord($logRec);
     	return true;
     }
@@ -71,7 +73,7 @@ class RepositoryService extends WebsvcService
     {
     	$appIds = implode(",",$ids);
     	$searchRule = "[status]=1 AND [Id] IN ($appIds)";
-    	$dataObj = BizSystem::getObject($this->applicationVersionDO,1);  
+    	$dataObj = Openbiz::getObject($this->applicationVersionDO,1);  
         $resultRecords = $dataObj->directFetch($searchRule);
         $resultSet=array();
        	foreach($resultRecords as $record)
@@ -85,7 +87,7 @@ class RepositoryService extends WebsvcService
 	public function fetchNewAppRelease($timestamp)
     {
     	$searchRule = "[release_time] > '$timestamp' AND [status]='1' ";
-    	$dataObj = BizSystem::getObject($this->applicationDO,1);  
+    	$dataObj = Openbiz::getObject($this->applicationDO,1);  
         $resultRecords = $dataObj->directFetch($searchRule);
         $resultSet=array();
        	foreach($resultRecords as $record)
@@ -100,7 +102,7 @@ class RepositoryService extends WebsvcService
     public function fetchAppInfo($id=null)
     {
     	$searchRule = "[status]=1 AND [release_time] < NOW() AND [Id]='$id'";   	    	
-    	$dataObj = BizSystem::getObject($this->applicationDO,1);  
+    	$dataObj = Openbiz::getObject($this->applicationDO,1);  
         $result = $dataObj->fetchOne($searchRule);  
         if($result)
         {
@@ -117,7 +119,7 @@ class RepositoryService extends WebsvcService
     public function fetchAppPics($id=null)
     {
     	$searchRule = "[type]='application' AND [foreign_id]='$id'";   	    	
-    	$dataObj = BizSystem::getObject($this->pictureDO,1);  
+    	$dataObj = Openbiz::getObject($this->pictureDO,1);  
     	$resultRecords = $dataObj->directfetch($searchRule);  
         $resultSet = array();
        	foreach($resultRecords as $record)
@@ -131,7 +133,7 @@ class RepositoryService extends WebsvcService
     {
     	$searchRule = "[app_id]='$id'"; 
     	$sortRule = "[Id] DESC";  	    	
-    	$dataObj = BizSystem::getObject($this->releaseDO,1);  
+    	$dataObj = Openbiz::getObject($this->releaseDO,1);  
     	$results = $dataObj->directfetch($searchRule,null,null,$sortRule);  
     	if($results)
         {
@@ -158,7 +160,7 @@ class RepositoryService extends WebsvcService
     	if($userSearchRule){
     		$searchRule .= " AND ".$userSearchRule;
     	}    	    	
-    	$dataObj = BizSystem::getObject($this->applicationDO,1);  
+    	$dataObj = Openbiz::getObject($this->applicationDO,1);  
     	$dataObj->setSearchRule($searchRule);
     	$dataObj->setSortRule($sortRule);
     	$dataObj->setLimit($range, $startItem);  
@@ -191,7 +193,7 @@ class RepositoryService extends WebsvcService
     	if($userSearchRule){
     		$searchRule .= " AND ".$userSearchRule;
     	}    	
-    	$dataObj = BizSystem::getObject($this->applicationDO,1);  
+    	$dataObj = Openbiz::getObject($this->applicationDO,1);  
     	$dataObj->setSearchRule($searchRule);
     	$dataObj->setSortRule($sortRule);
     	$dataObj->setLimit($range, $startItem);  
@@ -226,7 +228,7 @@ class RepositoryService extends WebsvcService
     {
     	$lang = $_REQUEST['lang'];
        	if($lang){       		       	
-	    	$applicationTransDO = BizSystem::getObject($this->applicationTransDO,1);
+	    	$applicationTransDO = Openbiz::getObject($this->applicationTransDO,1);
 	       	$transFields = array('name','description','author','type');
 	       	$recordId = $result['Id'];
 	    	$transRec = $applicationTransDO->fetchOne("[repo_app_id]='$recordId' AND [lang]='$lang'");
@@ -237,7 +239,7 @@ class RepositoryService extends WebsvcService
 	       		}	       		
 	       	}
 	       	//translate cate name
-	       	$categoryTransDO = BizSystem::getObject($this->categoryTransDO,1);
+	       	$categoryTransDO = Openbiz::getObject($this->categoryTransDO,1);
 	       	$catId = $result['category_id']; 
 	       	$categoryTransRec = $categoryTransDO->fetchOne("[repo_cat_id]='$catId' AND [lang]='$lang'");
 	       	if($categoryTransRec)     	 
@@ -251,7 +253,7 @@ class RepositoryService extends WebsvcService
     public function fetchCategories()
     {
     	$searchRule = "[publish]=1";    	
-    	$dataObj = BizSystem::getObject($this->categoryDO,1);      	    	  
+    	$dataObj = Openbiz::getObject($this->categoryDO,1);      	    	  
         $resultRecords = $dataObj->directfetch($searchRule);  
         $resultSet = array();        
        	foreach($resultRecords as $record)
@@ -263,7 +265,7 @@ class RepositoryService extends WebsvcService
        	if($lang){
        		$resultSetTrans  = $resultSet;
        		$resultSet = array();
-       		$categoryTransDO = BizSystem::getObject($this->categoryTransDO,1);
+       		$categoryTransDO = Openbiz::getObject($this->categoryTransDO,1);
        		$transFields = array('name','description');
 	    	foreach($resultSetTrans as $record)
 	       	{
@@ -282,4 +284,3 @@ class RepositoryService extends WebsvcService
     }        
     
 }
-?>

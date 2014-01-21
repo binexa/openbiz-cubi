@@ -11,6 +11,10 @@
  * @link      http://code.google.com/p/openbiz-cubi/
  * @version   $Id: WidgetForm.php 3355 2012-05-31 05:43:33Z rockyswen@gmail.com $
  */
+
+use Openbiz\Openbiz;
+
+
 class WidgetForm extends EasyForm
 {
 
@@ -46,9 +50,9 @@ class WidgetForm extends EasyForm
 
     protected function fetchRawData()
     {
-        $user_id = BizSystem::GetUserProfile("Id");
+        $user_id = Openbiz::$app->getUserProfile("Id");
         $searchRule = "[widget]='$this->widgetForm' AND [user_id]='$user_id'";
-        $do = BizSystem::GetObject($this->userWidgetDOName);
+        $do = Openbiz::getObject($this->userWidgetDOName);
         $rawRec = $do->fetchOne($searchRule);
         return $rawRec;
     }
@@ -63,7 +67,7 @@ class WidgetForm extends EasyForm
 
         try {
             $this->ValidateForm();
-        } catch (ValidationException $e) {
+        } catch (Openbiz\validation\Exception $e) {
             $this->processFormObjError($e->errors);
             return;
         }
@@ -73,7 +77,7 @@ class WidgetForm extends EasyForm
             "Id" => $currentRec["Id"],
             "config" => $config
         );
-        $do = BizSystem::GetObject($this->userWidgetDOName);
+        $do = Openbiz::getObject($this->userWidgetDOName);
         if ($do->updateRecord($newArr, $currentRec) == false)
             return;
 
@@ -103,9 +107,9 @@ class WidgetForm extends EasyForm
                 $widget = $this->objectName;
             }
         }
-        $userId = BizSystem::GetUserProfile("Id");
+        $userId = Openbiz::$app->getUserProfile("Id");
         $searchRule = "[widget]='$widget' AND [user_id]='$userId'";
-        $do = BizSystem::GetObject($this->userWidgetDOName);
+        $do = Openbiz::getObject($this->userWidgetDOName);
         $configRec = $do->fetchOne($searchRule);
         $config = $configRec['config'];
         $configArr = unserialize($config);
@@ -114,4 +118,3 @@ class WidgetForm extends EasyForm
 
 }
 
-?>

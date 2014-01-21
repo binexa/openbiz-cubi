@@ -3,14 +3,14 @@ $js_url = $this->_tpl_vars['js_url'];
 $theme_js_url = $this->_tpl_vars['theme_js_url'];
 $css_url = $this->_tpl_vars['css_url'];
 
-BizSystem::clientProxy()->includeColorPickerScripts();
+Openbiz\Openbiz::$app->getClientProxy()->includeColorPickerScripts();
 
-BizSystem::clientProxy()->includeCalendarScripts(); 
-$includedScripts = BizSystem::clientProxy()->getAppendedScripts();
+Openbiz\Openbiz::$app->getClientProxy()->includeCalendarScripts(); 
+$includedScripts = Openbiz\Openbiz::$app->getClientProxy()->getAppendedScripts();
 $includedScripts .= "
 <script type=\"text/javascript\" src=\"$js_url/cookies.js\"></script>
 <script type=\"text/javascript\" src=\"$js_url/general_ui.js\"></script>
-<script type='text/javascript' src='".Resource::getJsUrl()."/Openbiz.PackageForm.js'></script>
+<script type='text/javascript' src='".Openbiz\Resource::getJsUrl()."/Openbiz.PackageForm.js'></script>
 <script type='text/javascript' src='$js_url/uploadify/swfobject.js'></script>
 <script type='text/javascript' src='$js_url/uploadify/jquery.uploadify.v2.1.4.js'></script>
 <style>
@@ -30,7 +30,7 @@ if (OPENBIZ_JSLIB_BASE!='JQUERY') {
 }
 $this->_tpl_vars['scripts'] = $includedScripts;
 
-$appendStyle = BizSystem::clientProxy()->getAppendedStyles();
+$appendStyle = Openbiz\Openbiz::$app->getClientProxy()->getAppendedStyles();
 $appendStyle .= "\n"."
 <link rel=\"stylesheet\" href=\"$css_url/general.css\" type=\"text/css\" />
 <link rel=\"stylesheet\" href=\"$css_url/system_backend.css\" type=\"text/css\" />

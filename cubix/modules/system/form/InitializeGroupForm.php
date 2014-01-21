@@ -1,4 +1,7 @@
-<?php 
+<?php
+
+use Openbiz\Openbiz;
+
 class InitializeGroupForm extends EasyForm
 {
 
@@ -15,13 +18,13 @@ class InitializeGroupForm extends EasyForm
 	        {
 	            $this->ValidateForm();
 	        }
-	        catch (ValidationException $e)
+	        catch (Openbiz\validation\Exception $e)
 	        {
 	            $this->processFormObjError($e->errors);
 	            return;
 	        }
 	
-	        $groupDO = BizSystem::getObject($this->groupDO);
+	        $groupDO = Openbiz::getObject($this->groupDO);
 	        //rename default group
 	        if((int)$recArr['rename_default_group']==1)
 	        {
@@ -49,7 +52,7 @@ class InitializeGroupForm extends EasyForm
 	        }
 	        
 	        //default data sharing setting
-	        $prefDo = BizSystem::getObject("myaccount.do.PreferenceDO");
+	        $prefDo = Openbiz::getObject("myaccount.do.PreferenceDO");
 	        $config_file = OPENBIZ_APP_PATH.'/bin/app_init.php';
         	$value = $recArr['_data_acl'];
 			//update default theme CUBI_DATA_ACL
@@ -108,7 +111,7 @@ class InitializeGroupForm extends EasyForm
 	        
 			//redirect back to last view
 	        $lastViewURL = $this->getViewObject()->getLastViewURL();
-	        BizSystem::clientProxy()->redirectPage($lastViewURL);
+	        Openbiz::$app->getClientProxy()->redirectPage($lastViewURL);
 	        return;
         }		
 	}

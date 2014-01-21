@@ -1,4 +1,7 @@
-<?php 
+<?php
+
+use Openbiz\Openbiz;
+
 require_once 'iSMS.php';
 //SP = Service Provider 18dx
 
@@ -16,7 +19,7 @@ class SPDriver implements iSMS
 	
 	public function updateMsgBalance($balance)
 	{
-		$providerRec=BizSystem::getObject($this->providerDo)->fetchOne("[Id]={$this->providerId}");
+		$providerRec=Openbiz::getObject($this->providerDo)->fetchOne("[Id]={$this->providerId}");
 		$providerRec['msg_balance']=(int)$balance;
 		$providerRec->save();
 		return $this;
@@ -24,7 +27,7 @@ class SPDriver implements iSMS
 	
 	public function HitMessageCounter()
 	{		
-		$providerRec=BizSystem::getObject($this->providerDo)->fetchOne("[Id]={$this->providerId}");
+		$providerRec=Openbiz::getObject($this->providerDo)->fetchOne("[Id]={$this->providerId}");
 		$providerRec['msg_sent_count']=(int)$providerRec['msg_sent_count']+1;
 		$providerRec['msg_last_sendtime']=date("Y-m-d H:i:s");
 		$providerRec->save();
@@ -34,7 +37,7 @@ class SPDriver implements iSMS
 	
 	public function getMessageCounter()
 	{
-		$providerRec=BizSystem::getObject($this->providerDo)->fetchOne("[Id]={$this->providerId}");		
+		$providerRec=Openbiz::getObject($this->providerDo)->fetchOne("[Id]={$this->providerId}");		
 		return $providerRec['msg_send_counter'];
 	}
 	
@@ -47,13 +50,13 @@ class SPDriver implements iSMS
     		"schedule"		=> $schedule,
     		"sent_time"		=> date("Y-m-d H:i:s")
     	);
-    	return BizSystem::getObject($this->logDo)->insertRecord($record);
+    	return Openbiz::getObject($this->logDo)->insertRecord($record);
     }
 	
 	
 	protected  function _getProviderInfo()
 	{
-		$SmsProviderDO = BizSystem::getObject($this->providerDo);
+		$SmsProviderDO = Openbiz::getObject($this->providerDo);
 		$recObj=$SmsProviderDO->fetchOne("[Id]={$this->providerId}");
 		$recArr=array();
 		if($recObj)

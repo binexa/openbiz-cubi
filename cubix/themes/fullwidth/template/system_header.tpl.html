@@ -1,5 +1,5 @@
 {php}
-$widget = Bizsystem::GetObject('menu.widget.MainTabMenu');
+$widget = Openbiz\Openbiz::getObject('menu.widget.MainTabMenu');
 if($widget->globalSearchRule && $widget->searchRule){
 	$searchRule = $widget->globalSearchRule ." and ". $widget->searchRule;
 }else{
@@ -61,9 +61,9 @@ var top_menu_play_speed=1000;
 					<div id="top_menu_list" style="width:{php}echo $menu_width;{/php};">
 					<!-- top menu start -->
 					{php}
-					$temp = Bizsystem::GetObject('menu.widget.MainTabMenu')->render();
+					$temp = Openbiz\Openbiz::getObject('menu.widget.MainTabMenu')->render();
 					unset($temp);
-					echo Bizsystem::GetObject('menu.widget.MainTabMenu')->render();
+					echo Openbiz\Openbiz::getObject('menu.widget.MainTabMenu')->render();
 					{/php}
 					<!-- top menu end -->	
 					</div>
@@ -81,13 +81,13 @@ var top_menu_play_speed=1000;
 </div>
 	<div id="header_navi">
 		<div id="navi">
-		{php}echo Bizsystem::GetObject('menu.widget.BreadcrumbMenu')->render();{/php}
+		{php}echo Openbiz\Openbiz::getObject('menu.widget.BreadcrumbMenu')->render();{/php}
 		</div>
 		<div id="current_user_info">
 		<a class="screen_switch_min_btn" title="{t}Switch Theme{/t}"  href="javascript:;" onclick="Openbiz.switchTheme('default')" style="float:right;margin-left:5px; margin-top:6px;  " ></a>
 			{include file="system_appbuilder_btn.tpl.html"}
 			<div>
-			{php}echo Bizsystem::GetObject('system.widget.SwitchUserWidget')->render();{/php}
+			{php}echo Openbiz\Openbiz::getObject('system.widget.SwitchUserWidget')->render();{/php}
 			</div>
 		</div>			
 	</div>

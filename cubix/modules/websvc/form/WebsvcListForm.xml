@@ -11,7 +11,7 @@
         <Element Name="fld_Id" Class="common.element.ColumnTitle" FieldName="Id" Label="ID" Sortable="Y" AllowURLParam="N" Link="javascript:">         
         </Element>     
 		 
-        <Element Name="fld_user_id" Class="ColumnText" FieldName="user_id" Label="User"  Text="{BizSystem::GetProfileName(@:Elem[fld_user_id].Value,'short')}"  Sortable="Y"  Link="javascript:">
+        <Element Name="fld_user_id" Class="ColumnText" FieldName="user_id" Label="User"  Text="{\Openbiz\Openbiz::$app->getProfile()->getProfileName(@:Elem[fld_user_id].Value,'short')}"  Sortable="Y"  Link="javascript:">
                  	<EventHandler Name="fld_Id_onclick" Event="onclick" Function="SwitchForm(websvc.form.WebsvcDetailForm,{@:Elem[fld_Id].Value})"  />        
         </Element>
       

@@ -1,4 +1,7 @@
-<?php 
+<?php
+
+use Openbiz\Openbiz;
+
 require_once dirname(__FILE__)."/UserForm.php";
 
 class InitializeProfileForm extends EasyForm
@@ -15,7 +18,7 @@ class InitializeProfileForm extends EasyForm
         {
             $this->ValidateForm();
         }
-        catch (ValidationException $e)
+        catch (Openbiz\validation\Exception $e)
         {
             $this->processFormObjError($e->errors);
             return;
@@ -24,18 +27,18 @@ class InitializeProfileForm extends EasyForm
         
         $name = $this->parseName($recArr['fullname']);        
 
-		if(BizSystem::getUserPreference("Id")!=0)
+		if(Openbiz::$app->getUserPreference("Id")!=0)
         {
-        	$user_email = BizSystem::getObject("system.do.UserDO",1)->fetchById($currentRec['user_id'])->email;
+        	$user_email = Openbiz::getObject("system.do.UserDO",1)->fetchById($currentRec['user_id'])->email;
         }
         
         if($user_email!=$recArr['email'] 
-        	&& BizSystem::getUserPreference("Id")!=0
+        	&& Openbiz::$app->getUserPreference("Id")!=0
         	&& $recArr['email']!=''
         	)
         {
         	//check if email address duplicate
-        	if ($this->_checkDupEmail($recArr['email'],BizSystem::getUserPreference("Id")))
+        	if ($this->_checkDupEmail($recArr['email'],Openbiz::$app->getUserPreference("Id")))
 	        {
 	        	$this->setActiveRecord($recArr);
 	            $errorMessage = $this->GetMessage("EMAIL_USED");
@@ -46,13 +49,13 @@ class InitializeProfileForm extends EasyForm
 	        
 			//auto update user's email
 			$email = $currentRec['email'];
-			$userRec = BizSystem::getObject("system.do.UserDO",1)->fetchById($currentRec['user_id']);
+			$userRec = Openbiz::getObject("system.do.UserDO",1)->fetchById($currentRec['user_id']);
 			$userRec['email'] = $recArr['email'];
 			$userRec->save();
         }
         
-        $profileId = BizSystem::getUserProfile("profile_Id");
-        $contactRec = BizSystem::getObject("contact.do.ContactDO")->fetchById($profileId);
+        $profileId = Openbiz::$app->getUserProfile("profile_Id");
+        $contactRec = Openbiz::getObject("contact.do.ContactDO")->fetchById($profileId);
         $contactRec['first_name'] 	= $name['first_name'];
         $contactRec['last_name'] 	= $name['last_name'];
         $contactRec['display_name'] = $name['display_name'];
@@ -64,7 +67,7 @@ class InitializeProfileForm extends EasyForm
         $contactRec->save();
         
         //send user data to Openbiz 
-        BizSystem::getService("system.lib.CubiService")->collectUserData($recArr['subscribe']);
+        Openbiz::getService("system.lib.CubiService")->collectUserData($recArr['subscribe']);
        
         //set initialized.lock 
         $initLock = OPENBIZ_APP_PATH.'/files/initialize_profile.lock';
@@ -76,8 +79,8 @@ class InitializeProfileForm extends EasyForm
 	
 	public function fetchData()
 	{
-		$profileId = BizSystem::getUserProfile("profile_Id");
-        $contactRec = BizSystem::getObject("contact.do.ContactDO")->fetchById($profileId);
+		$profileId = Openbiz::$app->getUserProfile("profile_Id");
+        $contactRec = Openbiz::getObject("contact.do.ContactDO")->fetchById($profileId);
         $contactRec['fullname'] = $contactRec['display_name'];
         if($contactRec && $contactRec['display_name']!='System, Admin'){
         	$result =  $contactRec->toArray();
@@ -95,7 +98,7 @@ class InitializeProfileForm extends EasyForm
 		if(is_file($initLock))
 		{
 			$pageURL = OPENBIZ_APP_INDEX_URL."/system/general_default";
-			BizSystem::clientProxy()->redirectPage($pageURL);
+			Openbiz::$app->getClientProxy()->redirectPage($pageURL);
 			return;
 		}
 		return parent::allowAccess($access);
@@ -103,7 +106,7 @@ class InitializeProfileForm extends EasyForm
 	
     protected function parseName($name)
     {
-    	$svcobj=BizSystem::getService("service.chineseService");
+    	$svcobj=Openbiz::getService("service.chineseService");
     	if($svcobj->isChinese($name)){
         	$fast_index = $svcobj->Chinese2Pinyin($name);
         }else{
@@ -139,4 +142,3 @@ class InitializeProfileForm extends EasyForm
     }
     
 }
-?>

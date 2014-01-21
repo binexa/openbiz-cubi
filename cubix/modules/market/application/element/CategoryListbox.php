@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Openbiz Cubi Application Platform
  *
@@ -10,32 +11,33 @@
  * @link      http://code.google.com/p/openbiz-cubi/
  * @version   $Id: CategoryListbox.php 3363 2012-05-31 06:04:56Z rockyswen@gmail.com $
  */
+use Openbiz\Openbiz;
 
 class CategoryListbox extends Listbox
 {
-	public function getFromList(&$list, $selectFrom=null)
+
+    public function getFromList(&$list, $selectFrom = null)
     {
 
-    	if($_POST['fld_repo_id'])
-    	{
-    		$repoRec = BizSystem::getObject("market.repository.do.RepositoryDO")->fetchById((int)$_POST['fld_repo_id']);
-    	}else
-    	{
-    		$repoRec = BizSystem::getObject("market.repository.do.RepositoryDO")->fetchOne("[status]=1");    	
-    	}
-    	$repo_uri = $repoRec['repository_uri'];
-    	
-    	$svc = BizSystem::getService("market.lib.PackageService");
-		$catList = $svc->discoverCategory($repo_uri);
-		if(is_array($catList)){
-			foreach($catList as $cat){
-				$list[] = array(
-					"val" => $cat['Id'],
-					"txt" => $cat['name'],
-				);
-			}
-		}
+        if ($_POST['fld_repo_id']) {
+            $repoRec = Openbiz::getObject("market.repository.do.RepositoryDO")->fetchById((int) $_POST['fld_repo_id']);
+        } else {
+            $repoRec = Openbiz::getObject("market.repository.do.RepositoryDO")->fetchOne("[status]=1");
+        }
+        $repo_uri = $repoRec['repository_uri'];
+
+        $svc = Openbiz::getService("market.lib.PackageService");
+        $catList = $svc->discoverCategory($repo_uri);
+        if (is_array($catList)) {
+            foreach ($catList as $cat) {
+                $list[] = array(
+                    "val" => $cat['Id'],
+                    "txt" => $cat['name'],
+                );
+            }
+        }
         return;
-    }	
+    }
+
 }
-?>
+

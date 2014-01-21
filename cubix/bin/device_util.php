@@ -6,7 +6,11 @@ class DeviceUtil
 	public static $DEVICE_STYLE = '';
 	public static $DEVICE_TYPE = '';
 	public static $PHONE_TOUCH = 0;
-	
+
+    public function __construct()
+    {
+        self::init();
+    }
 	public static function init()
 	{
 		self::get_device_info();
@@ -23,7 +27,8 @@ class DeviceUtil
 		if( stristr($_SERVER['HTTP_USER_AGENT'],'ipad') ) {
 			$device = "ipad";
 			$style = "touch";
-		} else if( stristr($_SERVER['HTTP_USER_AGENT'],'iphone') || strstr($_SERVER['HTTP_USER_AGENT'],'ipod') ) {
+		} else if( stristr($_SERVER['HTTP_USER_AGENT'],'iphone')
+                || strstr($_SERVER['HTTP_USER_AGENT'],'ipod') ) {
 			$device = "iphone";
 			$style = "touch";
 		} else if( stristr($_SERVER['HTTP_USER_AGENT'],'blackberry') ) {
@@ -43,5 +48,3 @@ class DeviceUtil
 	}
 }
 
-DeviceUtil::init();
-?>

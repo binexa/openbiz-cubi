@@ -11,6 +11,15 @@
  * @version   $Id: lovService.php 4761 2012-11-16 10:12:30Z hellojixian@gmail.com $
  */
 
+use Openbiz\Openbiz;
+use Openbiz\Resource;
+
+use Openbiz\Core\Expression;
+use Openbiz\Data\Helpers\QueryStringParam;
+use Openbiz\I18n\I18n;
+
+
+
 class lovService extends MetaObject
 {
 	
@@ -85,10 +94,10 @@ class lovService extends MetaObject
             $xmlFile = substr($selectFrom, 0, $pos0);
             $tag = substr($selectFrom, $pos0 + 1, $pos1 - $pos0-1);
             $tag = strtoupper($tag);
-            $xmlFile = BizSystem::GetXmlFileWithPath ($xmlFile);
+            $xmlFile = Resource::GetXmlFileWithPath($xmlFile);
             if (!$xmlFile) return false;
 
-            $xmlArr = &BizSystem::getXmlArray($xmlFile);
+            $xmlArr = &Resource::getXmlArray($xmlFile);
             if ($xmlArr)
             {
                 $i = 0;
@@ -149,7 +158,7 @@ class lovService extends MetaObject
                 $searchRule = trim(substr($selectFrom, $commaPos + 1));
             
             /* @var $bizObj BizDataObj */
-            $bizObj = BizSystem::getObject($bizObjName);
+            $bizObj = Openbiz::getObject($bizObjName);
             if (!$bizObj)
                 return false;
 
@@ -208,9 +217,9 @@ class lovService extends MetaObject
     	}
     	catch (Exception $e)
         {
-            BizSystem::log(LOG_ERR, "DATAOBJ", "Query Error: ".$e->getMessage());
+            Openbiz::$app->getLog()->log(LOG_ERR, "DATAOBJ", "Query Error: ".$e->getMessage());
             $this->errorMessage = "Error in SQL query: ".$sql.". ".$e->getMessage();
-            throw new BDOException($this->errorMessage);
+            throw new Openbiz\data\Exception($this->errorMessage);
             return null;
         }
         return $list;
@@ -241,4 +250,3 @@ class lovService extends MetaObject
     }       
 
 }
-?>

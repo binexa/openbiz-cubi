@@ -11,6 +11,8 @@
  * @version   $Id: ModuleForm.php 4677 2012-11-12 08:39:42Z hellojixian@gmail.com $
  */
 
+use Openbiz\Openbiz;
+
 include_once OPENBIZ_APP_MODULE_PATH."/system/lib/ModuleLoader.php";
 
 /**
@@ -27,7 +29,7 @@ class ModuleForm extends EasyForm
      */
     public function loadNewModules($skipOld = true)
     {        
-		BizSystem::getService(ACL_SERVICE)->clearACLCache();
+		Openbiz::getService(ACL_SERVICE)->clearACLCache();
        	$mods = array();
         $dir = OPENBIZ_APP_MODULE_PATH;
         if ($dh = opendir($dir)) {
@@ -78,34 +80,34 @@ class ModuleForm extends EasyForm
             $this->notices[] = $this->GetMessage("MODULE_LOAD_COMPLETE",$module);	//." ".$loader->logs;
         }
 		
-        $roles = BizSystem::getUserProfile("roles");
+        $roles = Openbiz::$app->getUserProfile("roles");
 		$role_id = $roles[0];
 		$this->giveActionAccess($module, $role_id);        
         
         //reload current profile
-        BizSystem::getService(ACL_SERVICE)->clearACLCache();
+        Openbiz::getService(ACL_SERVICE)->clearACLCache();
 
         $this->rerender();
     }
     
     private function giveActionAccess($module,$role_id){
     	$where = " `module`='$module' ";    	
-    	$db = BizSystem::dbConnection();
+    	$db = Openbiz::$app->getDbConnection();
 		try {
 			if (empty($where))
 				$sql = "SELECT * FROM acl_action";
 			else
 				$sql = "SELECT * FROM acl_action WHERE $where";
-		    BizSystem::log(LOG_DEBUG, "DATAOBJ", $sql);
+		    Openbiz::$app->getLog()->log(LOG_DEBUG, "DATAOBJ", $sql);
 		    $rs = $db->fetchAll($sql);
 		    
 		    $sql = "";
 			foreach ($rs as $r) {
 				$sql = "DELETE FROM acl_role_action WHERE role_id=$role_id AND action_id=$r[0]; ";
-				BizSystem::log(LOG_DEBUG, "DATAOBJ", $sql);
+				Openbiz::$app->getLog()->log(LOG_DEBUG, "DATAOBJ", $sql);
 				$db->query($sql);
 				$sql = "INSERT INTO acl_role_action (role_id, action_id, access_level) VALUES ($role_id,$r[0],1)";
-				BizSystem::log(LOG_DEBUG, "DATAOBJ", $sql);
+				Openbiz::$app->getLog()->log(LOG_DEBUG, "DATAOBJ", $sql);
 		    	$db->query($sql);
 			}
 		}
@@ -133,12 +135,12 @@ class ModuleForm extends EasyForm
     public function DeleteRecord($id=null, $deleteFiles=false){
     	//delete menu items
         if ($this->resource != "" && !$this->allowAccess($this->resource.".delete"))
-            return BizSystem::clientProxy()->redirectView(OPENBIZ_ACCESS_DENIED_VIEW);
+            return Openbiz::$app->getClientProxy()->redirectView(OPENBIZ_ACCESS_DENIED_VIEW);
 
         if ($id==null || $id=='')
-            $id = BizSystem::clientProxy()->getFormInputs('_selectedId');
+            $id = Openbiz::$app->getClientProxy()->getFormInputs('_selectedId');
 
-        $selIds = BizSystem::clientProxy()->getFormInputs('row_selections', false);
+        $selIds = Openbiz::$app->getClientProxy()->getFormInputs('row_selections', false);
         if ($selIds == null)
             $selIds[] = $id;
         foreach ($selIds as $id)
@@ -148,7 +150,7 @@ class ModuleForm extends EasyForm
             try
             {
                 //also delete menu items                
-                BizSystem::getObject("menu.do.MenuDO",1)->deleteRecords("[module]='".$dataRec->objectName."'");
+                Openbiz::getObject("menu.do.MenuDO",1)->deleteRecords("[module]='".$dataRec->objectName."'");
                 $dataRec->delete();
                 
                 //unload module      	                
@@ -161,10 +163,10 @@ class ModuleForm extends EasyForm
 	        		$this->rrmdir($modPath);
 	        	}
                 
-            } catch (BDOException $e)
+            } catch (Openbiz\data\Exception $e)
             {
-                // call $this->processBDOException($e);
-                $this->processBDOException($e);
+                // call $this->processDataException($e);
+                $this->processDataException($e);
                 return;
             }
         }
@@ -176,4 +178,3 @@ class ModuleForm extends EasyForm
     	
     }
 }  
-?>

@@ -12,7 +12,7 @@
  */
 
 /**
- * PHPOpenBiz Framework
+ * Openbiz Framework
  *
  * LICENSE
  *
@@ -25,6 +25,9 @@
  * @link      http://www.phpopenbiz.org/
  * @version   $Id: excelService.php 3371 2012-05-31 06:17:21Z rockyswen@gmail.com $
  */
+
+use Openbiz\Openbiz;
+use Openbiz\Resource;
 
 include_once (OPENBIZ_PATH."/messages/excelService.msg");
 
@@ -61,7 +64,7 @@ class excelService
         $this->render($objName, ",", "csv");
 
         //Log This Export
-        BizSystem::log(LOG_INFO, "ExcelService", "Export CSV file.");
+        Openbiz::$app->getLog()->log(LOG_INFO, "ExcelService", "Export CSV file.");
     }
 
     /**
@@ -74,7 +77,7 @@ class excelService
     {
         $this->render($objName, "\t", "tsv");
         //Log This Export
-        BizSystem::log(LOG_INFO, "ExcelService", "Export TSV file.");
+        Openbiz::$app->getLog()->log(LOG_INFO, "ExcelService", "Export TSV file.");
     }
 
     /**
@@ -104,23 +107,23 @@ class excelService
         $filename = $file['name'];
         if (strpos($filename,".csv")===false)
         {
-        	$errorMsg = BizSystem::getMessage("EXCELSVC_INVALID_FILE",array($filename));
-        	BizSystem::log(LOG_ERR, "EXCEL SERVICE", "Import error = ".$errorMsg);
-            BizSystem::clientProxy()->showClientAlert($errorMsg);
+        	$errorMsg = Resource::getMessage("EXCELSVC_INVALID_FILE",array($filename));
+        	Openbiz::$app->getLog()->log(LOG_ERR, "EXCEL SERVICE", "Import error = ".$errorMsg);
+            Openbiz::$app->getClientProxy()->showClientAlert($errorMsg);
             return;
         }
         /* @var $formObj EasyForm */
-        $formObj = BizSystem::objectFactory()->getObject($objName); // get the existing EasyForm object
-        $parentFormObj = BizSystem::objectFactory()->getObject($formObj->parentFormName);
+        $formObj = Openbiz::getObject($objName); // get the existing EasyForm object
+        $parentFormObj = Openbiz::getObject($formObj->parentFormName);
         $dataObj = $parentFormObj->getDataObj();
 
         $handle = fopen($tmpFileName, "r");
         $fields = fgetcsv($handle, 2000, ",");
         if (!$fields || count($fields)<2)
         {
-        	$errorMsg = BizSystem::getMessage("EXCELSVC_INVALID_FILE",array($filename));
-        	BizSystem::log(LOG_ERR, "EXCEL SERVICE", "Import error = ".$errorMsg);
-            BizSystem::clientProxy()->showClientAlert($errorMsg);
+        	$errorMsg = Resource::getMessage("EXCELSVC_INVALID_FILE",array($filename));
+        	Openbiz::$app->getLog()->log(LOG_ERR, "EXCEL SERVICE", "Import error = ".$errorMsg);
+            Openbiz::$app->getClientProxy()->showClientAlert($errorMsg);
             return;
         }
 
@@ -137,9 +140,9 @@ class excelService
             $field = $fields[$i];
             if (!$dataObj->getField($field))
             {
-                $errorMsg = BizSystem::getMessage("EXCELSVC_INVALID_COLUMN",array($field, $dataObj->objectName));
-                BizSystem::log(LOG_ERR, "EXCEL SERVICE", "Import error = ".$errorMsg);
-                BizSystem::clientProxy()->showClientAlert($errorMsg);
+                $errorMsg = Resource::getMessage("EXCELSVC_INVALID_COLUMN",array($field, $dataObj->objectName));
+                Openbiz::$app->getLog()->log(LOG_ERR, "EXCEL SERVICE", "Import error = ".$errorMsg);
+                Openbiz::$app->getClientProxy()->showClientAlert($errorMsg);
                 return;
             }
         }
@@ -231,7 +234,7 @@ class excelService
     protected function getDataTable($objName)
     {
         /* @var $formObj EasyForm */
-        $formObj = BizSystem::objectFactory()->getObject($objName); // get the existing EasyForm|BizForm object
+        $formObj = Openbiz::getObject($objName); // get the existing EasyForm|BizForm object
 
         // if BizForm, call BizForm::renderTable
         if ($formObj instanceof BizForm)
@@ -287,7 +290,6 @@ class excelService
         else
             $errorStr = "Error in file upload";
 
-        BizSystem::clientProxy()->showErrorMessage($errorStr);
+        Openbiz::$app->getClientProxy()->showErrorMessage($errorStr);
     }
 }
-?>

@@ -11,6 +11,9 @@
  * @link      http://code.google.com/p/openbiz-cubi/
  * @version   $Id: HelpCategoryForm.php 3345 2012-05-31 05:04:56Z rockyswen@gmail.com $
  */
+
+use Openbiz\Openbiz;
+
 class HelpCategoryForm extends EasyFormTree
 {
 
@@ -19,7 +22,7 @@ class HelpCategoryForm extends EasyFormTree
     public function UpdateRecord()
     {
         $result = parent::UpdateRecord();
-        $mappingObj = BizSystem::GetObject($this->categoryMappingDO, 1);
+        $mappingObj = Openbiz::getObject($this->categoryMappingDO, 1);
         $Id = $this->recordId;
         $mappingObj->deleteRecords("[cat_id]='$Id'");
         return $result;
@@ -52,7 +55,7 @@ class HelpCategoryForm extends EasyFormTree
              */
 
             if (count($this->validateErrors) > 0) {
-                throw new ValidationException($this->validateErrors);
+                throw new Openbiz\validation\Exception($this->validateErrors);
                 return false;
             }
         }

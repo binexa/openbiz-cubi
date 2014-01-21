@@ -11,6 +11,9 @@
  * @version   $Id: LangPackCreator.php 5068 2013-01-07 07:12:09Z hellojixian@gmail.com $
  */
 
+use Openbiz\Openbiz;
+use Openbiz\Resource;
+
 class LangPackCreator
 {
 	public $module = '*';
@@ -592,7 +595,7 @@ class LangPackCreator
     				$this->analyzeModXML($xml, $module);
     			}
     			else {
-					$xmlArr = BizSystem::getXmlArray($file);
+					$xmlArr = Resource::getXmlArray($file);
 		    		$tmp = $this->analystXML($xmlArr);
 		    		$tmpNew = array();
     				if(is_array($tmp))
@@ -739,7 +742,7 @@ class LangPackCreator
     {
     	$strings = array();
     	$menuDoName = "menu.do.MenuDO";	
-    	$menuDO = BizSystem::getObject($menuDoName,1);
+    	$menuDO = Openbiz::getObject($menuDoName,1);
     	$result = $menuDO->directFetch();
     	
     	for($i=0;$i<count($result);$i++){
@@ -756,7 +759,7 @@ class LangPackCreator
     {
     	$strings = array();
     	$ACLDoName = "system.do.AclActionDO";	
-    	$ACLDO = BizSystem::getObject($ACLDoName,1);
+    	$ACLDO = Openbiz::getObject($ACLDoName,1);
     	$result = $ACLDO->directFetch();
     	
     	for($i=0;$i<count($result);$i++){
@@ -830,4 +833,4 @@ class LangPackCreator
      
 }
 
-?>
+

@@ -1,5 +1,5 @@
 {php}
-$widget = Bizsystem::GetObject('menu.widget.MainTabMenu');
+$widget = Openbiz\Openbiz::getObject('menu.widget.MainTabMenu');
 $widget->searchRule = "[PId]='MobileRoot'";
 if($widget->globalSearchRule && $widget->searchRule){
 	$searchRule = $widget->globalSearchRule ." and ". $widget->searchRule;
@@ -18,7 +18,7 @@ $this->assign('menu_count', $menu_count);
 
 <div data-role="content">
 	{php}
-	echo Bizsystem::GetObject('menu.widget.MainTabMenu')->render();
+	echo Openbiz\Openbiz::getObject('menu.widget.MainTabMenu')->render();
 	{/php}
 	<div style="height:5px; display:block"></div>
 	<ul data-role="listview" data-inset="true">

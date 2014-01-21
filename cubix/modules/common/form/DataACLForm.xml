@@ -8,9 +8,9 @@
 <EasyForm Name="DataACLForm" Icon="{OPENBIZ_RESOURCE_URL}/common/images/icon_data_sharing.gif" Pagesize="6" Class="DataACLForm" FormType="List" jsClass="jbForm" Title="Data Access Control List" Description="You can setup access permission for specified list of users." BizDataObj="common.do.DataACLDO" TemplateEngine="Smarty" TemplateFile="data_acl_form.tpl.html" >
     <DataPanel>
     	<Element Name="row_selections" 	Class="RowCheckbox"  Label="" FieldName="Id"/>
-    	<Element Name="fld_user"  		Class="ColumnText"	Sortable="Y"   FieldName="user_id" Text="{BizSystem::GetProfileName(@:Elem[fld_user].Value,'short')}" Link="{OPENBIZ_APP_INDEX_URL}/collab/contact_detail/{BizSystem::GetProfileId(@:Elem[fld_user].Value)}" Label="User" />
+    	<Element Name="fld_user"  		Class="ColumnText"	Sortable="Y"   FieldName="user_id" Text="{\Openbiz\Openbiz::$app->getProfile()->getProfileName(@:Elem[fld_user].Value,'short')}" Link="{OPENBIZ_APP_INDEX_URL}/collab/contact_detail/{\Openbiz\Openbiz::$app->getProfile()->getProfileId(@:Elem[fld_user].Value)}" Label="User" />
     	<Element Name="fld_perm"  		Class="ColumnList"	Sortable="Y"   FieldName="user_perm" SelectFrom="system.lov.DataPermLOV(AclPerm)" Label="Permission" />
-    	<Element Name="fld_create_by"  	Class="ColumnText"	Sortable="Y"   FieldName="create_by" Text="{BizSystem::GetProfileName(@:Elem[fld_create_by].Value,'short')}" Link="{OPENBIZ_APP_INDEX_URL}/collab/contact_detail/{BizSystem::GetProfileId(@:Elem[fld_create_by].Value)}" Label="Create by" />
+    	<Element Name="fld_create_by"  	Class="ColumnText"	Sortable="Y"   FieldName="create_by" Text="{\Openbiz\Openbiz::$app->getProfile()->getProfileName(@:Elem[fld_create_by].Value,'short')}" Link="{OPENBIZ_APP_INDEX_URL}/collab/contact_detail/{\Openbiz\Openbiz::$app->getProfile()->getProfileId(@:Elem[fld_create_by].Value)}" Label="Create by" />
     	<Element Name="fld_create_time" Class="ColumnText"	Sortable="Y"   FieldName="create_time" Label="Create Time"  />
     </DataPanel>
     <ActionPanel>

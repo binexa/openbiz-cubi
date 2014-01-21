@@ -20,7 +20,7 @@ for($i=3; $i<$argc; $i++) {
 }
 
 // get service object
-$obj = BizSystem::getService($svcName);
+$obj = Openbiz::getService($svcName);
 if ($obj) {
 	if (method_exists($obj, $methodName))
     {
@@ -50,4 +50,3 @@ else {
 	echo "ERROR: Cannot get the object from service '$svcName'\n";
 	exit;
 }
-?>

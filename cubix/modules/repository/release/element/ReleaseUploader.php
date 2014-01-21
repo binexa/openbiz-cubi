@@ -58,4 +58,3 @@ class ReleaseUploader extends InputText
         return $sHTML;
     }	
 }
-?>

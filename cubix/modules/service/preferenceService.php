@@ -11,6 +11,8 @@
  * @version   $Id: preferenceService.php 5071 2013-01-07 08:15:03Z hellojixian@gmail.com $
  */
 
+use Openbiz\Openbiz;
+
 /**
  * User preference service 
  */
@@ -33,10 +35,10 @@ class preferenceService
     public function initPreference($userId)
     {
         $this->preference = $this->InitDBPreference($userId);
-        BizSystem::sessionContext()->setVar("_USER_PREFERENCE", $this->preference);        
-        BizSystem::sessionContext()->setVar("LANG",$this->preference['language']);
-        BizSystem::sessionContext()->setVar("THEME",$this->preference['theme']);
-        BizSystem::sessionContext()->setVar("TIMEZONE",$this->preference['timezone']);
+        Openbiz::$app->getSessionContext()->setVar("_USER_PREFERENCE", $this->preference);        
+        Openbiz::$app->getSessionContext()->setVar("LANG",$this->preference['language']);
+        Openbiz::$app->getSessionContext()->setVar("THEME",$this->preference['theme']);
+        Openbiz::$app->getSessionContext()->setVar("TIMEZONE",$this->preference['timezone']);
         date_default_timezone_set($this->preference['timezone']);
         return $this->preference;
     }
@@ -51,7 +53,7 @@ class preferenceService
     {    	
         if (!$this->preference)
         {
-            $this->preference = BizSystem::sessionContext()->getVar("_USER_PREFERENCE");
+            $this->preference = Openbiz::$app->getSessionContext()->getVar("_USER_PREFERENCE");
         }
         if (!$this->preference)
         {
@@ -76,12 +78,12 @@ class preferenceService
     public function setPreference($attribute,$value=null)
     {    	    	    
         $this->preference[$attribute] = $value;
-        BizSystem::sessionContext()->setVar("_USER_PREFERENCE", $this->preference);  
+        Openbiz::$app->getSessionContext()->setVar("_USER_PREFERENCE", $this->preference);  
         //update user preference to DB 
-        $do = BizSystem::getObject($this->preferenceObj);
+        $do = Openbiz::getObject($this->preferenceObj);
         if (!$do)
             return false;
-        $user_id = BizSystem::getUserProfile("Id");
+        $user_id = Openbiz::$app->getUserProfile("Id");
         $prefRec = $do->fetchOne("[user_id]='$user_id' AND [name]='$attribute'");
         $prefRec['value'] = (string) $value;
         return $prefRec->save();
@@ -96,7 +98,7 @@ class preferenceService
      */
     protected function initDbPreference($user_id)
     {
-        $do = BizSystem::getObject($this->preferenceObj);
+        $do = Openbiz::getObject($this->preferenceObj);
         if (!$do)
             return false;
 

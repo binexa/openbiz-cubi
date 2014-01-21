@@ -11,6 +11,8 @@
  * @version   $Id: PictureForm.php 3363 2012-05-31 06:04:56Z rockyswen@gmail.com $
  */
 
+use Openbiz\Openbiz;
+
 require_once(dirname(dirname(__FILE__)).'/form/AppListForm.php');
 class PictureForm extends AppListForm
 {
@@ -20,7 +22,7 @@ class PictureForm extends AppListForm
 		$app_id = (int)$_GET['fld:Id'];
 		$repo_uri = $this->getDefaultRepoURI();
 		
-		$svc = BizSystem::getService("market.lib.PackageService");
+		$svc = Openbiz::getService("market.lib.PackageService");
 		$resultRecords = $svc->discoverAppPics($repo_uri,$app_id);
 		foreach($resultRecords as $record)
        	{
@@ -30,4 +32,3 @@ class PictureForm extends AppListForm
 		return $resultSet;
 	}
 }
-?>

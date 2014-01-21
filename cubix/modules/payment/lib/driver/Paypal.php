@@ -68,4 +68,3 @@ class Paypal extends PaymentAdapter
 		return $result;	
 	}	
 }
-?>

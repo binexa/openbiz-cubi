@@ -11,13 +11,15 @@
  * @version   $Id: DataPublishingForm.php 3355 2012-05-31 05:43:33Z rockyswen@gmail.com $
  */
 
+use Openbiz\Openbiz;
+
 include_once (OPENBIZ_APP_MODULE_PATH.'/common/form/DataSharingForm.php');
 class DataPublishingForm extends  DataSharingForm
 {
 	public function ShareRecord()
 	{
 		$prtForm = $this->parentFormName;
-		$prtFormObj = BizSystem::GetObject($prtForm);
+		$prtFormObj = Openbiz::getObject($prtForm);
 		$recId = $this->recordId;
 		$dataObj = $prtFormObj->getDataObj();
 		$dataRec = $dataObj->fetchById($recId);
@@ -31,9 +33,9 @@ class DataPublishingForm extends  DataSharingForm
 			$data = $this->fetchData();			
 			$data['app_index'] = OPENBIZ_APP_INDEX_URL;
 			$data['app_url'] = OPENBIZ_APP_URL;
-			$data['operator_name'] = BizSystem::GetProfileName(BizSystem::getUserProfile("Id"));
+			$data['operator_name'] = Openbiz::$app->getProfile()->getProfileName(Openbiz::$app->getUserProfile("Id"));
 			
-			$emailSvc = BizSystem::getService(CUBI_USER_EMAIL_SERVICE);
+			$emailSvc = Openbiz::getService(CUBI_USER_EMAIL_SERVICE);
 			
 			//test if changes for group level visiable
 			if($recArr['group_perm']>=1)
@@ -101,4 +103,3 @@ class DataPublishingForm extends  DataSharingForm
         $this->processPostAction();
 	}	
 }
-?>

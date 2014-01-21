@@ -18,4 +18,3 @@ class HelpModuleLoader extends ModuleLoader
     // implement install logic by overriding the methods in ModuleLoader
 }
 
-?>

@@ -67,4 +67,4 @@ class ToolInputText extends InputText
     }
 }
 
-?>
+

@@ -1,5 +1,7 @@
 <?php
 
+use Openbiz\Openbiz;
+
 require_once('_OAuth/oauth.php');
 require_once "oauth.class.php";
 class alitao extends oauthClass
@@ -20,7 +22,7 @@ class alitao extends oauthClass
 	
   	function login(){	
 		$redirectPage=$this->getUrl();
-		BizSystem::clientProxy()->ReDirectPage($redirectPage);
+		Openbiz::$app->getClientProxy()->ReDirectPage($redirectPage);
 
 	} 
 	
@@ -45,7 +47,7 @@ class alitao extends oauthClass
 			$recinfo['oauth_token']=$token['access_token'];
 			$recinfo['oauth_token_secret']='';
 			$recinfo['access_token_json']=$token;
-			Bizsystem::getSessionContext()->setVar('alitao_access_token',$recinfo);
+			Openbiz::$app->getSessionContext()->setVar('alitao_access_token',$recinfo);
 			$userInfo=$this->userInfo(); 
 			$this->check($userInfo);
 		}
@@ -66,7 +68,7 @@ class alitao extends oauthClass
 
 	//用户资料
 	function userInfo(){
-		$recinfo=Bizsystem::getSessionContext()->getVar('alitao_access_token');
+		$recinfo=Openbiz::$app->getSessionContext()->getVar('alitao_access_token');
 	
 		$user['id']          = $recinfo['access_token_json']['taobao_user_id'];
 		$user['type']        = $this->type;
@@ -77,4 +79,3 @@ class alitao extends oauthClass
  
  
 }
-?>

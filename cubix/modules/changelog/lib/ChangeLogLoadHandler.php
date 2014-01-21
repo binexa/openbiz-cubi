@@ -11,6 +11,8 @@
  * @version   $Id: ChangeLogLoadHandler.php 3354 2012-05-31 05:39:37Z rockyswen@gmail.com $
  */
 
+use Openbiz\Openbiz;
+
 include_once (OPENBIZ_APP_MODULE_PATH."/system/lib/ModuleLoadHandler.php");
 
 class ChangelogLoadHandler implements ModuleLoadHandler
@@ -22,10 +24,10 @@ class ChangelogLoadHandler implements ModuleLoadHandler
     public function postLoadingModule($moduelLoader)
     {
     	
-    	$roleRec = BizSystem::getObject("system.do.RoleDO")->fetchOne("[name]='Cubi Member'");
+    	$roleRec = Openbiz::getObject("system.do.RoleDO")->fetchOne("[name]='Cubi Member'");
     	$roleId = $roleRec['Id'];
     	
-    	$actionRec = BizSystem::getObject("system.do.AclActionDO")->fetchOne("[module]='changelog' AND [resource]='changelog' AND [action]='access'");
+    	$actionRec = Openbiz::getObject("system.do.AclActionDO")->fetchOne("[module]='changelog' AND [resource]='changelog' AND [action]='access'");
     	$actionId = $actionRec["Id"];
     	
     	$aclRecord = array(
@@ -33,8 +35,7 @@ class ChangelogLoadHandler implements ModuleLoadHandler
     		"action_id" => $actionId,
     		"access_level" => 1
     	);
-    	BizSystem::getObject("system.do.AclRoleActionDO")->insertRecord($aclRecord);
+    	Openbiz::getObject("system.do.AclRoleActionDO")->insertRecord($aclRecord);
     }
 }
 
-?>

@@ -14,4 +14,3 @@ class LoaderNotInstalledView extends EasyView
 	}
 	
 }
-?>

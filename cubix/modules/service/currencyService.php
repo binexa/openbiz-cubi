@@ -11,21 +11,23 @@
  * @version   $Id: currencyService.php 4579 2012-11-03 13:22:25Z hellojixian@gmail.com $
  */
 
+use Openbiz\i18n\I18n;
+
 class currencyService 
 {
 	public function getName($currency_code,$type='full')
 	{
 		$current_locale = I18n::getCurrentLangCode();		
-		require_once('Zend/Locale.php');
-		$locale = new Zend_Locale($current_locale);
-		require_once('Zend/Currency.php');
+		//require_once('Zend/Locale.php');
+		$locale = new \Zend_Locale($current_locale);
+		//require_once('Zend/Currency.php');
 		
 		$current_currency = CUBI_DEFAULT_CURRENCY;		
 		if(!$current_currency){
 			$current_currency = "USD";
 		}
 		
-		$currency = new Zend_Currency($current_currency,$current_locale);
+		$currency = new \Zend_Currency($current_currency,$current_locale);
 		
 		$display_name = $currency->getName($currency_code,$current_locale);
 		switch ($type){
@@ -46,13 +48,13 @@ class currencyService
 	public function getDefaultCurrencySymbol()
 	{
 		$current_locale = I18n::getCurrentLangCode();		
-		require_once('Zend/Currency.php');
+		//require_once('Zend/Currency.php');
 		$current_currency = CUBI_DEFAULT_CURRENCY;		
 		if(!$current_currency){
 			$current_currency = "USD";
 		}
 		
-		$currency = new Zend_Currency($current_currency,$current_locale);
+		$currency = new \Zend_Currency($current_currency,$current_locale);
 		$currency->getSymbol($current_currency,$current_locale);
 		return $display_name;
 	}	
@@ -101,11 +103,10 @@ class currencyService
 		if(!$current_currency){
 			$current_currency = "USD";
 		}				
-		$currency = new Zend_Currency($current_currency,$current_locale);	
+		$currency = new \Zend_Currency($current_currency,$current_locale);	
 		$amount = floatval($amount);
 		$display_name = $currency->toCurrency($prefix.$amount);
 		return $display_name;
 		*/
 	}	
 }
-?>

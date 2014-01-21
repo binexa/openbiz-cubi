@@ -11,4 +11,3 @@ interface iSMS
     
     public function activeService();
 }
-?>

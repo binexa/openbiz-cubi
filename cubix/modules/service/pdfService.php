@@ -11,9 +11,10 @@
  * @link      http://code.google.com/p/openbiz-cubi/
  * @version   $Id: pdfService.php 3506 2012-06-25 06:32:24Z agus.suhartono@gmail.com $
  */
-/**
- * @package PluginService
- */
+
+
+use Openbiz\Openbiz;
+
 require_once(OPENBIZ_APP_MODULE_PATH . "/pdf/lib/mpdf50/mpdf.php");
 define('_MPDF_PATH', OPENBIZ_APP_MODULE_PATH . "/pdf/lib/mpdf50/");
 
@@ -55,40 +56,32 @@ class pdfService
      */
     public function setConfig($config = null)
     {
-        if ($config == null)
-        {
+        if ($config == null) {
             $config = $this->GetDefaultConfig();
         }
 
-        if ($config['url'])
-        {
+        if ($config['url']) {
             $this->pdfObj->setBasePath($config['url']);
-        } else
-        {
+        } else {
             $this->pdfObj->setBasePath(SITE_URL);
         }
 
         $this->_setPageHeader($config);
         $this->_setPageFooter($config);
-        
+
         //set protection
-        if ($config['password'] || $config['readonly_password'])
-        {
+        if ($config['password'] || $config['readonly_password']) {
             $protect_array = array();
-            if ($config['protect_copy'])
-            {
+            if ($config['protect_copy']) {
                 array_push($protect_array, "copy");
             }
-            if ($config['protect_print'])
-            {
+            if ($config['protect_print']) {
                 array_push($protect_array, "print");
             }
-            if ($config['protect_modify'])
-            {
+            if ($config['protect_modify']) {
                 array_push($protect_array, "modify");
             }
-            if ($config['protect_annot'])
-            {
+            if ($config['protect_annot']) {
                 array_push($protect_array, "annot-forms");
             }
             $this->pdfObj->SetProtection($protect_array, $config['readonly_password'], $config['password']);
@@ -98,10 +91,8 @@ class pdfService
         $this->_setWatermark($config);
 
         //meta setting
-        if ($config['meta_title'])
-        {
-            switch ($config['meta_title'])
-            {
+        if ($config['meta_title']) {
+            switch ($config['meta_title']) {
                 case "DEFAULT":
                     break;
                 case "NONE":
@@ -113,15 +104,13 @@ class pdfService
             }
         }
 
-        if ($config['meta_author'])
-        {
-            switch ($config['meta_author'])
-            {
+        if ($config['meta_author']) {
+            switch ($config['meta_author']) {
                 case "DEFAULT_USERNAME":
-                    $this->pdfObj->setAuthor(BizSystem::getUserProfile("username"));
+                    $this->pdfObj->setAuthor(Openbiz::$app->getUserProfile("username"));
                     break;
                 case "DEFAULT_DISPLAY_NAME":
-                    $this->pdfObj->setAuthor(BizSystem::getUserProfile("profile_display_name"));
+                    $this->pdfObj->setAuthor(Openbiz::$app->getUserProfile("profile_display_name"));
                     break;
                 case "DEFAULT":
                     $this->pdfObj->setAuthor("Openbiz Cubi");
@@ -135,10 +124,8 @@ class pdfService
             }
         }
 
-        if ($config['meta_creator'])
-        {
-            switch ($config['meta_creator'])
-            {
+        if ($config['meta_creator']) {
+            switch ($config['meta_creator']) {
                 case "DEFAULT":
                     $this->pdfObj->SetAuthor("Openbiz PDF Printer");
                     break;
@@ -151,13 +138,11 @@ class pdfService
             }
         }
 
-        if ($config['meta_subject'])
-        {
+        if ($config['meta_subject']) {
             $this->pdfObj->SetSubject($config['meta_subject']);
         }
 
-        if ($config['meta_keywords'])
-        {
+        if ($config['meta_keywords']) {
             $this->pdfObj->SetKeywords($config['meta_keywords']);
         }
     }
@@ -179,15 +164,12 @@ class pdfService
      */
     public function Output($filename = null)
     {
-        if ($filename)
-        {
+        if ($filename) {
             $file = $filename;
             touch($file);
-        } else
-        {
+        } else {
             $tmpfile = OPENBIZ_APP_FILE_PATH . "/tmpfiles";
-            if (!is_dir($tmpfile))
-            {
+            if (!is_dir($tmpfile)) {
                 mkdir($tmpfile);
             }
 
@@ -215,10 +197,8 @@ class pdfService
         //Delete temporary files
         $t = time();
         $directoryHandler = opendir($directory);
-        while ($file = readdir($directoryHandler))
-        {
-            if (substr($file, 0, 3) == 'tmp' && substr($file, -4) == '.pdf')
-            {
+        while ($file = readdir($directoryHandler)) {
+            if (substr($file, 0, 3) == 'tmp' && substr($file, -4) == '.pdf') {
                 $path = $directory . '/' . $file;
                 if ($t - filemtime($path) > $seconds)
                     unlink($path);
@@ -237,9 +217,8 @@ class pdfService
         $system_config = array();
         $config = array();
 
-        $systemConfigArr = BizSystem::getObject("pdf.do.PdfDO", 1)->directfetch();
-        foreach ($systemConfigArr as $item)
-        {
+        $systemConfigArr = Openbiz::getObject("pdf.do.PdfDO", 1)->directfetch();
+        foreach ($systemConfigArr as $item) {
             $system_config[$item['name']] = $item['value'];
         }
         return $config;
@@ -251,17 +230,13 @@ class pdfService
      */
     private function _setWatermark($config)
     {
-        if ($config['watermark_type'])
-        {
-            if ($config['watermark_alpha'] > 1)
-            {
+        if ($config['watermark_type']) {
+            if ($config['watermark_alpha'] > 1) {
                 $alpha = (float) ("0." . $config['watermark_alpha']);
-            } else
-            {
+            } else {
                 $alpha = $config['watermark_alpha'];
             }
-            switch ($config['watermark_type'])
-            {
+            switch ($config['watermark_type']) {
                 case "Picture":
                     $this->pdfObj->SetWatermarkImage("file://" . OPENBIZ_APP_PATH . $config['watermark_picture'], $alpha, $config['watermark_size'], $config['watermark_position']);
                     $this->pdfObj->showWatermarkImage = true;
@@ -280,13 +255,10 @@ class pdfService
      */
     private function _setPageHeader($config)
     {
-        if ($config['page_header_type'])
-        {
-            switch ($config['page_header_type'])
-            {
+        if ($config['page_header_type']) {
+            switch ($config['page_header_type']) {
                 case "Html":
-                    switch ($config['page_header_html_even_type'])
-                    {
+                    switch ($config['page_header_html_even_type']) {
                         case "CUSTOM":
                             $this->pdfObj->SetHTMLHeader($config['page_header_html_odd'], "O");
                             $this->pdfObj->SetHTMLHeader($config['page_header_html_even'], "E");
@@ -325,8 +297,7 @@ class pdfService
                     $header_even["R"] = $header_odd["L"];
                     $header_even["line"] = $header_odd["line"];
 
-                    switch ($config['page_header_text_even_type'])
-                    {
+                    switch ($config['page_header_text_even_type']) {
                         case "MIRROR":
                             $this->pdfObj->SetHeader($header_odd, "O");
                             $this->pdfObj->SetHeader($header_even, "E");
@@ -347,13 +318,10 @@ class pdfService
      */
     private function _setPageFooter($config)
     {
-        if ($config['page_footer_type'])
-        {
-            switch ($config['page_footer_type'])
-            {
+        if ($config['page_footer_type']) {
+            switch ($config['page_footer_type']) {
                 case "Html":
-                    switch ($config['page_footer_html_even_type'])
-                    {
+                    switch ($config['page_footer_html_even_type']) {
                         case "CUSTOM":
                             $this->pdfObj->SetHTMLFooter($config['page_footer_html_odd'], "O");
                             $this->pdfObj->SetHTMLFooter($config['page_footer_html_even'], "E");
@@ -392,8 +360,7 @@ class pdfService
                     $footer_even["R"] = $footer_odd["L"];
                     $footer_even["line"] = $footer_odd["line"];
 
-                    switch ($config['page_footer_text_even_type'])
-                    {
+                    switch ($config['page_footer_text_even_type']) {
                         case "MIRROR":
                             $this->pdfObj->SetFooter($footer_odd, "O");
                             $this->pdfObj->SetFooter($footer_even, "E");

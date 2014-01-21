@@ -13,7 +13,7 @@ $licenseClient = "service.licenseClient";
 
 // get package service 
 //echo "get license client service";
-$licsvc = BizSystem::GetObject($licenseClient);
+$licsvc = Openbiz::getObject($licenseClient);
 
 $activationCode = "hacq2b";
 $contactEmail = "rocky@gmail.com";

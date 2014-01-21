@@ -12,12 +12,15 @@
  * @version   $Id: profileService.php 5003 2012-12-31 14:09:07Z hellojixian@gmail.com $
  */
 
+
+use Openbiz\Openbiz;
+
 /**
  * profileService is class that handle user profile information.
- * this service accessed by BizSystem::getService( PROFILE_SERVICE ),
+ * this service accessed by Openbiz::getService( PROFILE_SERVICE ),
  * example :
  * <code>
- *      $profileService = BizSystem::getService( PROFILE_SERVICE );
+ *      $profileService = Openbiz::getService( PROFILE_SERVICE );
  *      $profileName = $profileService->GetProfileName( $accountId, $type );
  * </code> 
  */
@@ -46,19 +49,17 @@ class profileService
     /**
      * Initialize user profile
      * 
-     * @param type $userName
-     * @return type 
+     * @param string $username
+     * @return array
      */
-    public function initProfile($userName)
+    public function initProfile($username)
     {
         //clear ACL Cache
-        BizSystem::getService(ACL_SERVICE)->clearACLCache();
-
-        $this->profile = $this->initDBProfile($userName);
-        BizSystem::sessionContext()->setVar("_USER_PROFILE", $this->profile);
-
+        Openbiz::getService(ACL_SERVICE)->clearACLCache();
+        $this->profile = $this->initDBProfile($username);
+        Openbiz::$app->getSessionContext()->setVar("_USER_PROFILE", $this->profile);
         //load preference
-        $preferenceService = BizSystem::getService(OPENBIZ_PREFERENCE_SERVICE);
+        $preferenceService = Openbiz::getService(OPENBIZ_PREFERENCE_SERVICE);
         $preferenceService->initPreference($this->profile["Id"]);
 
         return $this->profile;
@@ -66,28 +67,23 @@ class profileService
 
     public function getProfile($attribute = null)
     {
-        if (!$this->profile)
-        {
-            $this->profile = BizSystem::sessionContext()->getVar("_USER_PROFILE");
-        }
-        if (!$this->profile)
-        {
-            $this->getProfileByCookie();
-            if (!$this->profile)
-                return null;
+        if (!$this->profile) {
+            $this->profile = Openbiz::$app->getSessionContext()->getVar("_USER_PROFILE");
         }
 
-        if ($attribute)
-        {
-            if (isset($this->profile[$attribute]))
-            {
-                return $this->profile[$attribute];
-            } else
-            {
+        if (!$this->profile) {
+            $this->getProfileByCookie();
+            if (!$this->profile) {
                 return null;
             }
         }
-
+        if ($attribute) {
+            if (isset($this->profile[$attribute])) {
+                return $this->profile[$attribute];
+            } else {
+                return null;
+            }
+        }
         return $this->profile;
     }
 
@@ -109,13 +105,12 @@ class profileService
      */
     public function createProfile($userId = null)
     {
-        if (!$userId)
-        {
+        if (!$userId) {
             $userId = $this->getProfile("Id");
         }
 
-        $profileDo = BizSystem::getObject($this->profileObj, 1);
-        $userInfo = BizSystem::getObject($this->userDataObj, 1)->fetchById($userId);
+        $profileDo = Openbiz::getObject($this->profileObj, 1);
+        $userInfo = Openbiz::getObject($this->userDataObj, 1)->fetchById($userId);
         $profileArray = array(
             "first_name" => $userInfo['username'],
             "last_name" => $userInfo['username'],
@@ -124,7 +119,7 @@ class profileService
             "email" => $userInfo['email'],
             "company" => "N/A",
             "user_id" => $userId,
-        	"owner_id" => $userId,
+            "owner_id" => $userId,
             "group_perm" => '1',
             "type_id" => '1',
             "other_perm" => '1',
@@ -135,14 +130,12 @@ class profileService
 
     public function checkExist($profileId)
     {
-        $profileDo = BizSystem::getObject($this->profileObj, 1);
+        $profileDo = Openbiz::getObject($this->profileObj, 1);
         $profile = $profileDo->fetchById($profileId);
 
-        if ($profile)
-        {
+        if ($profile) {
             return true;
-        } else
-        {
+        } else {
             return false;
         }
     }
@@ -150,17 +143,14 @@ class profileService
     protected function getProfileByCookie()
     {
         //print_r($_COOKIE);
-        if (isset($_COOKIE["SYSTEM_SESSION_USERNAME"]) && isset($_COOKIE["SYSTEM_SESSION_PASSWORD"]))
-        {
+        if (isset($_COOKIE["SYSTEM_SESSION_USERNAME"]) && isset($_COOKIE["SYSTEM_SESSION_PASSWORD"])) {
             $username = $_COOKIE["SYSTEM_SESSION_USERNAME"];
             $password = $_COOKIE["SYSTEM_SESSION_PASSWORD"];
 
-            $svcobj = BizSystem::getService(AUTH_SERVICE);
-            if ($svcobj->authenticateUserByCookies($username, $password))
-            {
+            $svcobj = Openbiz::getService(AUTH_SERVICE);
+            if ($svcobj->authenticateUserByCookies($username, $password)) {
                 $this->InitProfile($username);
-            } else
-            {
+            } else {
                 setcookie("SYSTEM_SESSION_USERNAME", null, time() - 100, "/");
                 setcookie("SYSTEM_SESSION_PASSWORD", null, time() - 100, "/");
             }
@@ -168,72 +158,72 @@ class profileService
         return null;
     }
 
-    protected function InitDBProfile($username)
+    protected function initDBProfile($username)
     {
         // fetch user record
-        $userDo = BizSystem::getObject($this->userDataObj);
-        if (!$userDo)
+        $userDo = Openbiz::getObject($this->userDataObj);
+        if (!$userDo) {
             return false;
-
-        $recordSet = $userDo->directFetch("[username]='$username'", 1);
-        if (!$recordSet)
+        }
+        $userSet = $userDo->directFetch("[username]='$username'", 1);
+        if (!$userSet) {
             return null;
+        }
 
         // set the profile array
-        $userId = $recordSet[0]['Id'];
-        $profile = $recordSet[0];
+        $userId = $userSet[0]['Id'];
+        
+        //$profile = $userSet[0];
+        $profile = array();
         $profile['password'] = null;
         $profile['enctype'] = null;
 
-        $userDo = BizSystem::getObject($this->profileObj, 1);
-        if (!$userDo)
+        $profileDo = Openbiz::getObject($this->profileObj, 1);
+        if (!$profileDo) {
             return false;
+        }
 
-        $recordSet = $userDo->directFetch("[user_id]='$userId'", 1);
-        if ($recordSet)
-        {
-            $recordSet = $recordSet[0];
-            if ($recordSet != null)
-            {
-                foreach ($recordSet as $key => $value)
-                {
+        $profileSet = $profileDo->directFetch("[user_id]='$userId'", 1);
+        if ($profileSet) {
+            $profileSet = $profileSet[0];
+            if ($profileSet != null) {
+                foreach ($profileSet as $key => $value) {
                     $profile["profile_" . $key] = $value;
                 }
             }
         }
+
+        
         // fetch roles and set profile roles
-        $userDo = BizSystem::getObject($this->user_roleDataObj);
-        $recordSet = $userDo->directFetch("[user_id]='$userId'");
-        if ($recordSet)
-        {
-            foreach ($recordSet as $record)
-            {
+        $userRoleDo = Openbiz::getObject($this->user_roleDataObj);
+        $userRoleSet = $userRoleDo->directFetch("[user_id]='$userId'");
+
+
+        if ($userRoleSet) {
+            foreach ($userRoleSet as $record) {
                 $profile['roles'][] = $record['role_id'];
                 $profile['roleNames'][] = $record['role_name'];
                 $profile['roleStartpage'][] = $record['role_startpage'];
             }
         }
+        
         // fetch groups and set profile groups
-        $userGroupDo = BizSystem::getObject($this->user_groupDataObj);
-        $recordSet = $userGroupDo->directFetch("[user_id]='$userId'");
-        if ($recordSet)
-        {
+        $userGroupDo = Openbiz::getObject($this->user_groupDataObj);
+        $userGroupSet = $userGroupDo->directFetch("[user_id]='$userId'");
+        if ($userGroupSet) {
             $profile['default_group'] = null;
-            foreach ($recordSet as $record)
-            {
+            foreach ($userGroupSet as $record) {
                 $profile['groups'][] = $record['group_id'];
                 $profile['groupNames'][] = $record['group_name'];
-                if ($record['default'] == 1 && $profile['default_group'] == null)
-                {
+                if ($record['default'] == 1 && $profile['default_group'] == null) {
                     $profile['default_group'] = $record['group_id'];
                     $profile['default_group_name'] = $record['group_name'];
                 }
             }
         }
-        if ($profile['default_group'] == null)
-        {
-            $profile['default_group'] = $recordSet[0]['group_id'];
-            $profile['default_group_name'] = $recordSet[0]['group_name'];
+        if ($profile['default_group'] == null) {
+            $profile['default_group'] = $userGroupSet[0]['group_id'];
+            $profile['default_group_name'] = $userGroupSet[0]['group_name'];
         }
         return $profile;
     }
@@ -245,111 +235,96 @@ class profileService
     public function switchUserProfile($userId)
     {
         //get previously profile
-        if (!BizSystem::sessionContext()->getVar("_PREV_USER_PROFILE"))
-        {
-            $prevProfile = BizSystem::sessionContext()->getVar("_USER_PROFILE");
-            BizSystem::sessionContext()->clearVar("_USER_PROFILE");
-            BizSystem::sessionContext()->setVar("_PREV_USER_PROFILE", $prevProfile);
+        if (!Openbiz::$app->getSessionContext()->getVar("_PREV_USER_PROFILE")) {
+            $prevProfile = Openbiz::$app->getSessionContext()->getVar("_USER_PROFILE");
+            Openbiz::$app->getSessionContext()->clearVar("_USER_PROFILE");
+            Openbiz::$app->getSessionContext()->setVar("_PREV_USER_PROFILE", $prevProfile);
         }
-        BizSystem::initUserProfile($userId);
+        Openbiz::$app->initUserProfile($userId);
     }
 
-    public function GetGroupName($group_id, $type = 'full')
+    public function getGroupName($group_id, $type = 'full')
     {
-        $groupName = BizSystem::getObject($this->groupDataObj)->fetchById($group_id)->objectName;
-        if($groupName)
-        {
-        	return $groupName;
-        }
-        else
-        {
-        	return "-- Not Available --";
+        $groupName = Openbiz::getObject($this->groupDataObj)->fetchById($group_id)->objectName;
+        if ($groupName) {
+            return $groupName;
+        } else {
+            return "-- Not Available --";
         }
     }
-    
-    public function GetProfileName($account_id, $type = 'full')
+
+    public function getProfileName($account_id, $type = 'full')
     {
-        $do = BizSystem::getObject($this->userDataObj);
+        $do = Openbiz::getObject($this->userDataObj);
         if (!$do)
             return "";
-        if ($account_id == 0)
-        {
+        if ($account_id == 0) {
             $msg = "-- Not Available --";
             return $msg;
         }
 
         $rs = $do->fetchById($account_id);
-        if (!$rs)
-        {
+        if (!$rs) {
             $msg = "-- Deleted User ( UID:$account_id ) --";
             return $msg;
         }
-        $contact_do = BizSystem::getObject($this->contactObj);
+        $contact_do = Openbiz::getObject($this->contactObj);
         $contact_rs = $contact_do->directFetch("[user_id]='$account_id'", 1);
-        if (count($contact_rs) == 0)
-        {
+        if (count($contact_rs) == 0) {
             //$name = $rs['username']." &lt;".$rs['email']."&gt;";
             $name = $rs['username'];
             $email = $rs['email'];
-            if ($email)
-            {
+            if ($email) {
                 $name.=" <$email>";
             }
-        } else
-        {
+        } else {
             $contact_rs = $contact_rs[0];
-            if ($contact_rs['email'])
-            {
+            if ($contact_rs['email']) {
                 $email = $contact_rs['email'];
-            } else
-            {
+            } else {
                 $email = $rs['email'];
             }
             $name = $contact_rs['display_name'];
-            if ($email && $type == 'full')
-            {
+            if ($email && $type == 'full') {
                 $name.=" <$email>";
             }
         }
         return $name;
     }
 
-    public function GetProfileId($account_id)
+    public function getProfileId($account_id)
     {
-        $do = BizSystem::getObject($this->userDataObj);
-        if (!$do)
+        $do = Openbiz::getObject($this->userDataObj);
+        if (!$do) {
             return "";
-        if ($account_id == 0)
-        {
+        }
+        if ($account_id == 0) {
             $profile_id = 0;
             return $profile_id;
         }
         $rs = $do->fetchById($account_id);
-        if (!$rs)
-        {
+        if (!$rs) {
             $profile_id = 0;
             return $profile_id;
         }
-        $contact_do = BizSystem::getObject($this->contactObj);
+        $contact_do = Openbiz::getObject($this->contactObj);
         $contact_rs = $contact_do->directFetch("[user_id]='$account_id'", 1);
-        if (count($contact_rs) > 0)
-        {
+        if (count($contact_rs) > 0) {
             $contact_rs = $contact_rs[0];
             $profile_id = $contact_rs['Id'];
         }
         return $profile_id;
     }
 
-    public function GetProfileEmail($account_id)
+    public function getProfileEmail($account_id)
     {
-        $do = BizSystem::getObject($this->userDataObj);
+        $do = Openbiz::getObject($this->userDataObj);
         if (!$do)
             return "";
 
 
         $rs = $do->fetchById($account_id);
-        if (!$rs)
-        {
+        if (!$rs) {
             $msg = "-- Deleted User ( UID:$account_id ) --";
             return $msg;
         }

@@ -1,4 +1,7 @@
 <?php
+
+use Openbiz\Core\Expression;
+
 include_once ("CronParser.php");
 
 class CronService
@@ -12,7 +15,7 @@ class CronService
 	public function run()
 	{
 		// read cronjob record 
-		$this->cronjobDo = BizSystem::getObject(self::cronjobDO);
+		$this->cronjobDo = Openbiz::getObject(self::cronjobDO);
 		if (!$this->cronjobDo) {
 			print "Cannot get cronjob DO".nl;
 			return false;
@@ -45,7 +48,7 @@ class CronService
 	
 	public function runJob($jobId)
 	{
-		$this->cronjobDo = BizSystem::getObject(self::cronjobDO);
+		$this->cronjobDo = Openbiz::getObject(self::cronjobDO);
 		if (!$this->cronjobDo) {
 			print "Cannot get cronjob DO".nl;
 			return false;
@@ -90,7 +93,7 @@ class CronService
 		$emails = trim($cronRecord['sendmail']);
 		if ($emails != "") {
 			$this->log($cronRecord, "Send job output to '$emails'");
-			$emailService = BizSystem::getObject(self::emailService);
+			$emailService = Openbiz::getObject(self::emailService);
 			$emailService->CronJobEmail($emails,$name,$outputStr);
 		}
 	}
@@ -163,4 +166,3 @@ class CronService
 		}
 	}
 }
-?>

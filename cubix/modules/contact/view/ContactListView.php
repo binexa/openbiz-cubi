@@ -11,6 +11,8 @@
  * @version   $Id: ContactListView.php 3356 2012-05-31 05:47:51Z rockyswen@gmail.com $
  */
 
+use Openbiz\Openbiz;
+
 class ContactListView extends EasyView
 {
 	protected function readMetadata(&$xmlArr)
@@ -23,7 +25,7 @@ class ContactListView extends EasyView
     
     public function getDefaultMainForm(&$xmlArr)
     {
-        $formObj=BizSystem::GetObject("contact.widget.ViewSelectorLeftWidget");
+        $formObj=Openbiz::getObject("contact.widget.ViewSelectorLeftWidget");
         $targetForm = $formObj->getViewMode();
         $newForm = array(
 			"ATTRIBUTES"=>array(

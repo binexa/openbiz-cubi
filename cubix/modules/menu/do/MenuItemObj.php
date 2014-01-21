@@ -11,6 +11,8 @@
  * @version   $Id: MenuItemObj.php 3364 2012-05-31 06:06:21Z rockyswen@gmail.com $
  */
 
+use Openbiz\Core\Expression;
+
 class MenuItemObj
 {
  	public $recordId;
@@ -58,4 +60,3 @@ class MenuItemObj
     
     
 }
-?>

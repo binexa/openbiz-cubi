@@ -11,7 +11,8 @@
  * @version   $Id: DBListbox.php 3372 2012-05-31 06:19:06Z rockyswen@gmail.com $
  */
 
-include_once (OPENBIZ_BIN."/easy/element/InputElement.php");
+use Openbiz\Openbiz;
+
 class DBListbox extends InputElement{
     public $blankOption;
    
@@ -90,11 +91,11 @@ class DBListbox extends InputElement{
     	//get DB list from setting
     	$formobj = $this->getFormObj();
     	$rec = $formobj->getActiveRecord();    	
-    	$server = BizSystem::clientProxy()->getFormInputs('fld_server')?BizSystem::clientProxy()->getFormInputs('fld_server'):$rec['server'];
-    	$port = BizSystem::clientProxy()->getFormInputs('fld_port')?BizSystem::clientProxy()->getFormInputs('fld_port'):$rec['port'];
-    	$driver = BizSystem::clientProxy()->getFormInputs('fld_driver')?BizSystem::clientProxy()->getFormInputs('fld_driver'):$rec['driver'];
-    	$username = BizSystem::clientProxy()->getFormInputs('fld_username')?BizSystem::clientProxy()->getFormInputs('fld_username'):$rec['username'];
-    	$password = BizSystem::clientProxy()->getFormInputs('fld_password')?BizSystem::clientProxy()->getFormInputs('fld_password'):$rec['password'];
+    	$server = Openbiz::$app->getClientProxy()->getFormInputs('fld_server')?Openbiz::$app->getClientProxy()->getFormInputs('fld_server'):$rec['server'];
+    	$port = Openbiz::$app->getClientProxy()->getFormInputs('fld_port')?Openbiz::$app->getClientProxy()->getFormInputs('fld_port'):$rec['port'];
+    	$driver = Openbiz::$app->getClientProxy()->getFormInputs('fld_driver')?Openbiz::$app->getClientProxy()->getFormInputs('fld_driver'):$rec['driver'];
+    	$username = Openbiz::$app->getClientProxy()->getFormInputs('fld_username')?Openbiz::$app->getClientProxy()->getFormInputs('fld_username'):$rec['username'];
+    	$password = Openbiz::$app->getClientProxy()->getFormInputs('fld_password')?Openbiz::$app->getClientProxy()->getFormInputs('fld_password'):$rec['password'];
     	$charset = 'UTF8';
     	
     	if(!$server)
@@ -130,4 +131,3 @@ class DBListbox extends InputElement{
     
   
 }
-?>

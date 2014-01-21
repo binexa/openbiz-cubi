@@ -11,6 +11,8 @@
  * @version   $Id: ExtendFieldForm.php 3360 2012-05-31 06:00:17Z rockyswen@gmail.com $
  */
 
+use Openbiz\Openbiz;
+
 class ExtendFieldForm extends PickerForm
 {
 	protected $settingOptionDO = "extend.do.ExtendSettingOptionDO";
@@ -34,7 +36,7 @@ class ExtendFieldForm extends PickerForm
         {
             $this->ValidateForm();
         }
-        catch (ValidationException $e)
+        catch (Openbiz\validation\Exception $e)
         {
             $this->processFormObjError($e->errors);
             return;
@@ -44,7 +46,7 @@ class ExtendFieldForm extends PickerForm
         if (!$this->parentFormElemName)
         {
         	//its only supports 1-m assoc now	        	        
-	        $parentForm = BizSystem::objectFactory()->getObject($this->parentFormName);
+	        $parentForm = Openbiz::getObject($this->parentFormName);
         	//$parentForm->getDataObj()->clearSearchRule();
 	        $parentDo = $parentForm->getDataObj();
 	        
@@ -80,7 +82,7 @@ class ExtendFieldForm extends PickerForm
         
         $this->close();	      
         if($parentForm->parentFormName){
-        	$parentParentForm = BizSystem::objectFactory()->getObject($parentForm->parentFormName);
+        	$parentParentForm = Openbiz::getObject($parentForm->parentFormName);
         	$parentParentForm->rerender();
         }
         else
@@ -92,7 +94,7 @@ class ExtendFieldForm extends PickerForm
     
     public function processOptions($option_str,$setting_id,$lang=null)
     {
-    	$optDO = BizSystem::getObject($this->settingOptionDO);
+    	$optDO = Openbiz::getObject($this->settingOptionDO);
     	$optionArr = explode(";", $option_str);
     	$i=1;
     	$setting_id = (int)$setting_id;
@@ -110,4 +112,3 @@ class ExtendFieldForm extends PickerForm
     	}
     } 	
 }
-?>

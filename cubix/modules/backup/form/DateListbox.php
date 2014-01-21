@@ -11,7 +11,7 @@
  * @version   $Id: DateListbox.php 3351 2012-05-31 05:33:35Z rockyswen@gmail.com $
  */
 
-include_once OPENBIZ_BIN."/easy/element/Listbox.php";
+//include_once OPENBIZ_BIN."/easy/element/Listbox.php";
 
 class DateListbox extends Listbox
 {
@@ -48,4 +48,3 @@ class DateListbox extends Listbox
     }    
     
 }
-?>

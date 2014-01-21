@@ -11,11 +11,13 @@
  * @version   $Id: UserRegisterView.php 3375 2012-05-31 06:23:11Z rockyswen@gmail.com $
  */
 
+use Openbiz\Openbiz;
+
 class UserRegisterView extends EasyView
 {
 	public function allowAccess(){
 		$result = parent::allowAccess();
-        $do = BizSystem::getObject("myaccount.do.PreferenceDO");
+        $do = Openbiz::getObject("myaccount.do.PreferenceDO");
         $rs = $do->fetchOne("[user_id]='0' AND  [section]='Register' AND [name]='open_register'");
       
         $value = $rs->value;
@@ -28,4 +30,3 @@ class UserRegisterView extends EasyView
     
 
 }
-?>

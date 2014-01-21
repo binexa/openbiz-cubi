@@ -11,6 +11,8 @@
  * @version   $Id: checkerService.php 3366 2012-05-31 06:09:02Z rockyswen@gmail.com $
  */
 
+use Openbiz\Openbiz;
+
 class checkerService extends MetaObject
 {
 	protected $checkerList;
@@ -47,7 +49,7 @@ class checkerService extends MetaObject
 	
 	public function checkNotification()
 	{
-		$checkerDO = BizSystem::getObject($this->checkerDO);
+		$checkerDO = Openbiz::getObject($this->checkerDO);
 		$checkerRecs = $checkerDO->directfetch();
 		$checkerLogList = array();
 		foreach($checkerRecs as $checker)
@@ -60,7 +62,7 @@ class checkerService extends MetaObject
 			if( $checkerLogList[$checker['NAME']] + (int)$checker['MININTERVAL'] < time() ){
 			
 				$method_name = $checker['MEHTOD'];
-				$obj = BizSystem::getObject($checker['SERVICEOBJ']);
+				$obj = Openbiz::getObject($checker['SERVICEOBJ']);
 				$notificationList = call_user_func(array($obj,$method_name));
 				$this->saveNotificationList($notificationList);				
 				
@@ -87,7 +89,7 @@ class checkerService extends MetaObject
 	
 	public function saveNotificationList($notificationList)
 	{
-		$notiDO = BizSystem::getObject($this->notificationDO);
+		$notiDO = Openbiz::getObject($this->notificationDO);
 		$counter = 0;
 		foreach ($notificationList as $notiRec)
 		{		
@@ -112,4 +114,3 @@ class checkerService extends MetaObject
 		return $counter;
 	}
 }
-?>

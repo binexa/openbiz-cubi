@@ -8,7 +8,7 @@
 <EasyForm Name="SettingTranslateForm" Class="SettingTranslateForm" FormType="Edit" Icon="{OPENBIZ_RESOURCE_URL}/repository/images/icon_repo_setting.png" jsClass="jbForm"  SearchRule="[user_id]='0'" Title="Translate Repository Setting" Description="You can setup yoru repository setting for publish your apps." BizDataObj="myaccount.do.PreferenceDO" TemplateEngine="Smarty" TemplateFile="detail_elementset.tpl"  MessageFile="repository.ini">
     <DataPanel>
         <Element Name="fld_Id" Hidden="Y" Class="Hidden" ElementSet="General" FieldName="Id" Label="User Id"/>
-		<Element Name="fld_lang" ElementSet="General" DefaultValue="{I18n::getCurrentLangCode()}" ReadOnly="Y"  FieldName="lang" Label="Language" Class="myaccount.form.LanguageSelector"  >
+		<Element Name="fld_lang" ElementSet="General" DefaultValue="{Openbiz\i18n\I18n::getCurrentLangCode()}" ReadOnly="Y"  FieldName="lang" Label="Language" Class="myaccount.form.LanguageSelector"  >
 	        <EventHandler Name="lang_onchange" Event="onchange" Function="UpdateForm()" />	        	
 	  	</Element>
 	  	

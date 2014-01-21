@@ -11,6 +11,8 @@
  * @version   $Id: DashboardConfigWidget.php 3355 2012-05-31 05:43:33Z rockyswen@gmail.com $
  */
 
+use Openbiz\Openbiz;
+
 class DashboardConfigWidget extends EasyForm
 {
 	protected $userWidgetDOName = "common.do.UserWidgetDO";
@@ -21,18 +23,18 @@ class DashboardConfigWidget extends EasyForm
 		// remove "_widget" from the widget name
 		$widgetName = str_replace("_widget", "", $widgetName);
 		// add widget to user_widget table
-		$userWidgetDo = BizSystem::getObject($this->userWidgetDOName);
+		$userWidgetDo = Openbiz::getObject($this->userWidgetDOName);
 		$userWidgetTable = $userWidgetDo->mainTableName;
 		$db = $userWidgetDo->getDbConnection();
 		
-		$myProfile = BizSystem::getUserProfile();
+		$myProfile = Openbiz::$app->getUserProfile();
 		$myUserId = $myProfile['Id'];
-		$currentView = BizSystem::instance()->getCurrentViewName();
+		$currentView = Openbiz::$app->getCurrentViewName();
 		
 		$searchRule = "[user_id]=$myUserId and [widget]='$widgetName' and [view]='$currentView'";
 		$record = $userWidgetDo->fetchOne($searchRule);
 		if ($record) {
-			BizSystem::clientProxy()->showClientAlert("The widget $widgetName is already on the page.");
+			Openbiz::$app->getClientProxy()->showClientAlert("The widget $widgetName is already on the page.");
 		}
 		else {
 			$data = array('user_id'=>$myUserId, 'widget'=>$widgetName, 'view'=>$currentView, 'ordering'=>0);
@@ -46,13 +48,13 @@ class DashboardConfigWidget extends EasyForm
 		// remove "_widget" from the widget name
 		$widgetName = str_replace("_widget", "", $widgetName);
 		// remove widget from the user_widget table
-		$userWidgetDo = BizSystem::getObject($this->userWidgetDOName);
+		$userWidgetDo = Openbiz::getObject($this->userWidgetDOName);
 		$userWidgetTable = $userWidgetDo->mainTableName;
 		$db = $userWidgetDo->getDbConnection();
 		
-		$myProfile = BizSystem::getUserProfile();
+		$myProfile = Openbiz::$app->getUserProfile();
 		$myUserId = $myProfile['Id'];
-		$currentView = BizSystem::instance()->getCurrentViewName();
+		$currentView = Openbiz::$app->getCurrentViewName();
 		
 		$searchRule = "[user_id]=$myUserId and [widget]='$widgetName' and [view]='$currentView'";
 		$record = $userWidgetDo->fetchOne($searchRule);
@@ -61,14 +63,14 @@ class DashboardConfigWidget extends EasyForm
 			$db->delete($userWidgetTable, "id=".$record['Id']);
 		}
 		 // reload current page
-		BizSystem::clientProxy()->runClientFunction("window.location.reload()");
+		Openbiz::$app->getClientProxy()->runClientFunction("window.location.reload()");
 	}
 	
 	// reoder widgets on current dashboard view
 	//  column_1=item_2,item_1&column_2=&
 	public function reorderWidgets()
 	{
-		$sortorder = BizSystem::clientProxy()->getFormInputs('_widgets');
+		$sortorder = Openbiz::$app->getClientProxy()->getFormInputs('_widgets');
 		
 		// get the widgets ordering of columns
 		parse_str($sortorder, $output);
@@ -85,13 +87,13 @@ class DashboardConfigWidget extends EasyForm
 		//print_r($columns);
 		
 		// update ordering of all user_widget records
-		$userWidgetDo = BizSystem::getObject($this->userWidgetDOName);
+		$userWidgetDo = Openbiz::getObject($this->userWidgetDOName);
 		$userWidgetTable = $userWidgetDo->mainTableName;
 		$db = $userWidgetDo->getDbConnection();
 		
-		$myProfile = BizSystem::getUserProfile();
+		$myProfile = Openbiz::$app->getUserProfile();
 		$myUserId = $myProfile['Id'];
-		$currentView = BizSystem::instance()->getCurrentViewName();
+		$currentView = Openbiz::$app->getCurrentViewName();
 		
 		$m = 1;
 		foreach ($columns as $column) {
@@ -118,4 +120,3 @@ class DashboardConfigWidget extends EasyForm
 		}
 	}
 }
-?>

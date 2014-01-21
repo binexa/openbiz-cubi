@@ -11,6 +11,20 @@
  * @version   $Id: DashboardView.php 3365 2012-05-31 06:07:55Z rockyswen@gmail.com $
  */
 
+/**
+ * Openbiz Cubi Application Platform
+ *
+ * LICENSE http://code.google.com/p/openbiz-cubi/wiki/CubiLicense
+ *
+ * @package   cubi.common.lib
+ * @copyright Copyright (c) 2005-2011, Openbiz Technology LLC
+ * @license   http://code.google.com/p/openbiz-cubi/wiki/CubiLicense
+ * @link      http://code.google.com/p/openbiz-cubi/
+ * @version   $Id$
+ */
+
+use Openbiz\Openbiz;
+
 class DashboardView extends EasyView
 {
 	protected $userWidgetDO = "common.do.UserWidgetDO";	
@@ -26,10 +40,10 @@ class DashboardView extends EasyView
 	protected function getFormReferences()
 	{
 		// get user widgets of this view
-		$user_id = BizSystem::GetUserProfile("Id");
+		$user_id = Openbiz::$app->getUserProfile("Id");
 		$viewName = $this->objectName;
 		$searchRule="[user_id]='$user_id' AND [view]='$viewName'";
-		$do = BizSystem::GetObject($this->userWidgetDO);
+		$do = Openbiz::getObject($this->userWidgetDO);
 		$formRecs = $do->directfetch($searchRule);
 		// if no user widgets found, get system widgets of this view
 		if (count($formRecs)==0) {
@@ -61,8 +75,7 @@ class DashboardView extends EasyView
 	public function loadWidgetPicker()
 	{
 		$widgetPickerForm = "myaccount.form.WidgetPickForm";
-		$formObj = BizSystem::getObject($widgetPickerForm);
-		BizSystem::clientProxy()->redrawForm("DIALOG", $formObj->render());
+		$formObj = Openbiz::getObject($widgetPickerForm);
+		Openbiz::$app->getClientProxy()->redrawForm("DIALOG", $formObj->render());
 	}
 }
-?>

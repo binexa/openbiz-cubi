@@ -1,4 +1,7 @@
-<?php 
+<?php
+
+use Openbiz\Openbiz;
+
 class TutorialForm extends EasyForm
 {
 	public function closeTutorial()
@@ -13,9 +16,8 @@ class TutorialForm extends EasyForm
 		{
 			$showOnNextLogin = 0;
 		}
-		BizSystem::getService("help.lib.TutorialService")->SetTutorialShown($tutorailId,$showOnNextLogin);
+		Openbiz::getService("help.lib.TutorialService")->SetTutorialShown($tutorailId,$showOnNextLogin);
 		$this->close();
 	}
 	
 }
-?>

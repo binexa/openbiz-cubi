@@ -3,7 +3,7 @@ $js_url = $this->_tpl_vars['js_url'];
 $theme_js_url = $this->_tpl_vars['theme_js_url'];
 $css_url = $this->_tpl_vars['css_url'];
 
-$includedScripts = BizSystem::clientProxy()->getAppendedScripts();
+$includedScripts = Openbiz\Openbiz::$app->getClientProxy()->getAppendedScripts();
 $includedScripts .= "
 <script type='text/javascript' src='//maps.googleapis.com/maps/api/js?sensor=false'></script>
 <script type=\"text/javascript\" src=\"$js_url/cookies.js\"></script>
@@ -18,7 +18,7 @@ if (OPENBIZ_JSLIB_BASE!='JQUERY') {
 }
 $this->_tpl_vars['scripts'] = $includedScripts;
 
-$appendStyle = BizSystem::clientProxy()->getAppendedStyles();
+$appendStyle = Openbiz\Openbiz::$app->getClientProxy()->getAppendedStyles();
 $appendStyle .= "\n"."
 <link rel=\"stylesheet\" <link rel=\"stylesheet\" href=\"$css_url/general.css\" type=\"text/css\" />
 <link rel=\"stylesheet\" href=\"$css_url/system_backend.css\" type=\"text/css\" />

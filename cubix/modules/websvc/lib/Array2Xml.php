@@ -110,4 +110,3 @@ class array2xml extends DomDocument
     }
 
 } // end of class
-?>

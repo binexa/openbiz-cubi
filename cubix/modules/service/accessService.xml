@@ -5,7 +5,9 @@
   Copyright (c) 2005-2011, Openbiz Technology LLC
   Version $Id: accessService.xml 3371 2012-05-31 06:17:21Z rockyswen@gmail.com $
 -->
-<PluginService Name="accessService" Package="service" Class="accessService">
+<PluginService Name="accessService" 
+               Package="service"
+               Class="accessService">
    <access-constraint>
      <view-collection>
    

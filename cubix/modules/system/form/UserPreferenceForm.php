@@ -11,6 +11,9 @@
  * @version   $Id: UserPreferenceForm.php 4746 2012-11-15 08:52:16Z hellojixian@gmail.com $
  */
 
+use Openbiz\Openbiz;
+use Openbiz\Data\Helpers\QueryStringParam;
+
 /**
  * UserPreferenceForm class - implement the logic of setting user preferences
  *
@@ -94,7 +97,7 @@ class UserPreferenceForm extends EasyForm
         {
             $this->ValidateForm();
         }
-        catch (ValidationException $e)
+        catch (Openbiz\validation\Exception $e)
         {
             $this->processFormObjError($e->errors);
             return;
@@ -187,7 +190,7 @@ class UserPreferenceForm extends EasyForm
 	            			@file_put_contents($config_file,$data);	   
 
 	            			//make changes now
-	            			BizSystem::sessionContext()->setVar("LANG",$value );
+	            			Openbiz::$app->getSessionContext()->setVar("LANG",$value );
 	            		}
 	            		break;
 	            	case "currency":
@@ -264,4 +267,3 @@ class UserPreferenceForm extends EasyForm
 
     }
 }  
-?>

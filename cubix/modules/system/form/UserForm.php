@@ -11,6 +11,8 @@
  * @version   $Id: UserForm.php 5284 2013-01-28 06:05:58Z fsliit@gmail.com $
  */
 
+use Openbiz\Openbiz;
+
 define ('HASH_ALG','sha1');
 
 /**
@@ -32,9 +34,9 @@ class UserForm extends EasyForm
 	
 	public function GoDetail()
 	{		
-        $id = BizSystem::clientProxy()->getFormInputs('_selectedId');
+        $id = Openbiz::$app->getClientProxy()->getFormInputs('_selectedId');
 		$redirectPage = OPENBIZ_APP_INDEX_URL."/system/user_detail/".$id;
-		BizSystem::clientProxy()->ReDirectPage($redirectPage);
+		Openbiz::$app->getClientProxy()->ReDirectPage($redirectPage);
 	}
 	
     public function CreateUser()
@@ -48,12 +50,12 @@ class UserForm extends EasyForm
         {
             $this->ValidateForm();
         }
-        catch (ValidationException $e)
+        catch (Openbiz\validation\Exception $e)
         {
             $this->processFormObjError($e->errors);
             return;
         }
-        $password = BizSystem::ClientProxy()->GetFormInputs("fld_password");            
+        $password = Openbiz::$app->getClientProxy()->GetFormInputs("fld_password");            
 		$recArr['password'] = hash(HASH_ALG, $password);
         $this->_doInsert($recArr);
 
@@ -69,8 +71,8 @@ class UserForm extends EasyForm
         $RoleDOName = "system.do.RoleDO";
         $UserRoleDOName = "system.do.UserRoleDO";
         
-        $roleDo = BizSystem::getObject($RoleDOName,1);
-        $userRoleDo = BizSystem::getObject($UserRoleDOName,1);
+        $roleDo = Openbiz::getObject($RoleDOName,1);
+        $userRoleDo = Openbiz::getObject($UserRoleDOName,1);
         
         $default_role_id = (int)$recArr['default_role'];
         if($default_role_id)
@@ -101,8 +103,8 @@ class UserForm extends EasyForm
         $GroupDOName = "system.do.GroupDO";
         $UserGroupDOName = "system.do.UserGroupDO";
         
-        $groupDo = BizSystem::getObject($GroupDOName,1);
-        $userGroupDo = BizSystem::getObject($UserGroupDOName,1);
+        $groupDo = Openbiz::getObject($GroupDOName,1);
+        $userGroupDo = Openbiz::getObject($UserGroupDOName,1);
         
         $default_group_id = (int)$recArr['default_group'];
         if($default_group_id)
@@ -130,7 +132,7 @@ class UserForm extends EasyForm
         }        
         
        //setup user default preference
-       $prefDo = BizSystem::getObject("myaccount.do.PreferenceDO");
+       $prefDo = Openbiz::getObject("myaccount.do.PreferenceDO");
        //language 
        if(isset($recArr['default_lang'])){
        		$recArrParam = array(
@@ -209,7 +211,7 @@ class UserForm extends EasyForm
        }
        
        //create a default profile to new user
-       $profile_id = BizSystem::getService(PROFILE_SERVICE)->CreateProfile($user_id);
+       $profile_id = Openbiz::getService(PROFILE_SERVICE)->CreateProfile($user_id);
 	   $this->switchForm($this->profileEditForm,$profile_id);   	
        // $this->processPostAction();
     }
@@ -228,8 +230,8 @@ class UserForm extends EasyForm
         $RoleDOName = "system.do.RoleDO";
         $UserRoleDOName = "system.do.UserRoleDO";
         
-        $roleDo = BizSystem::getObject($RoleDOName,1);
-        $userRoleDo = BizSystem::getObject($UserRoleDOName,1);
+        $roleDo = Openbiz::getObject($RoleDOName,1);
+        $userRoleDo = Openbiz::getObject($UserRoleDOName,1);
         
         $roleDo->setSearchRule("[default]=1");
         $defaultRoles = $roleDo->fetch();
@@ -246,8 +248,8 @@ class UserForm extends EasyForm
         $GroupDOName = "system.do.GroupDO";
         $UserGroupDOName = "system.do.UserGroupDO";
         
-        $groupDo = BizSystem::getObject($GroupDOName,1);
-        $userGroupDo = BizSystem::getObject($UserGroupDOName,1);
+        $groupDo = Openbiz::getObject($GroupDOName,1);
+        $userGroupDo = Openbiz::getObject($UserGroupDOName,1);
         
         $groupDo->setSearchRule("[default]=1");
         $defaultGroups = $groupDo->fetch();
@@ -261,7 +263,7 @@ class UserForm extends EasyForm
         }        
         
        //create a default profile to new user
-       $profile_id = BizSystem::getService(PROFILE_SERVICE)->CreateProfile($user_id);
+       $profile_id = Openbiz::getService(PROFILE_SERVICE)->CreateProfile($user_id);
        // $this->processPostAction();
     }    
     
@@ -289,7 +291,7 @@ class UserForm extends EasyForm
         {
             $this->ValidateForm();
         }
-        catch (ValidationException $e)
+        catch (Openbiz\validation\Exception $e)
         {
             $this->processFormObjError($e->errors);
             return;
@@ -299,7 +301,7 @@ class UserForm extends EasyForm
             return;		        
             
         $password_mask = $this->getElement("fld_password")->passwordMask;        
-        $password = BizSystem::ClientProxy()->GetFormInputs("fld_password");
+        $password = Openbiz::$app->getClientProxy()->GetFormInputs("fld_password");
         if($password!=$password_mask){
         	$recArr['password'] = hash(HASH_ALG, $password);
 		}
@@ -307,7 +309,7 @@ class UserForm extends EasyForm
             return;
         
         //also update users profile 
-        $profileDO = BizSystem::getObject("contact.do.ContactSystemDO",1);
+        $profileDO = Openbiz::getObject("contact.do.ContactSystemDO",1);
         $UserProfiles = $profileDO->directFetch("[user_id]='".$currentRec['Id']."'");
         foreach($UserProfiles as $Profile)
         {        	
@@ -360,43 +362,43 @@ class UserForm extends EasyForm
     {	
         
    	 	//validate User
-        $username = BizSystem::ClientProxy()->GetFormInputs("fld_username");
-    	$validateSvc = BizSystem::getService(VALIDATE_SERVICE);
+        $username = Openbiz::$app->getClientProxy()->GetFormInputs("fld_username");
+    	$validateSvc = Openbiz::getService(VALIDATE_SERVICE);
 		if(!$validateSvc->betweenLength($username,6,20))
 		{
 			$errorMessage = $this->GetMessage("USERNAME_LENGTH");
 			$this->validateErrors['fld_username'] = $errorMessage;
-			throw new ValidationException($this->validateErrors);
+			throw new Openbiz\validation\Exception($this->validateErrors);
 			return false;
 		}
 		
     	//validate password
-    	$password = BizSystem::ClientProxy()->GetFormInputs("fld_password");
-		$validateSvc = BizSystem::getService(VALIDATE_SERVICE);
+    	$password = Openbiz::$app->getClientProxy()->GetFormInputs("fld_password");
+		$validateSvc = Openbiz::getService(VALIDATE_SERVICE);
 		if(!$validateSvc->betweenLength($password,6,50))
 		{
 			$errorMessage = $this->GetMessage("PASSWORD_LENGTH");
 			$this->validateErrors['fld_password'] = $errorMessage;
-			throw new ValidationException($this->validateErrors);
+			throw new Openbiz\validation\Exception($this->validateErrors);
 			return false;
 		}
 		
     	// disable password validation if they are empty
-    	$password = BizSystem::ClientProxy()->GetFormInputs("fld_password");
-		$password_repeat = BizSystem::ClientProxy()->GetFormInputs("fld_password_repeat");
+    	$password = Openbiz::$app->getClientProxy()->GetFormInputs("fld_password");
+		$password_repeat = Openbiz::$app->getClientProxy()->GetFormInputs("fld_password_repeat");
     	if (!$password_repeat)
     	    $this->getElement("fld_password")->validator = null;
     	if (!$password)
     	    $this->getElement("fld_password_repeat")->validator = null;
 
     	//validate email
-    	$email = BizSystem::ClientProxy()->GetFormInputs("fld_email");
-		$validateSvc = BizSystem::getService(VALIDATE_SERVICE);
+    	$email = Openbiz::$app->getClientProxy()->GetFormInputs("fld_email");
+		$validateSvc = Openbiz::getService(VALIDATE_SERVICE);
 		if(!$validateSvc->email($email))
 		{
 			$errorMessage = $this->GetMessage("EMAIL_INVALID");
 			$this->validateErrors['fld_email'] = $errorMessage;
-			throw new ValidationException($this->validateErrors);
+			throw new Openbiz\validation\Exception($this->validateErrors);
 			return false;
 		}    
     	    
@@ -407,7 +409,7 @@ class UserForm extends EasyForm
         {
             $errorMessage = $this->GetMessage("USERNAME_USED");
 			$this->validateErrors['fld_username'] = $errorMessage;
-			throw new ValidationException($this->validateErrors);
+			throw new Openbiz\validation\Exception($this->validateErrors);
 			return false;
 			
         }
@@ -416,7 +418,7 @@ class UserForm extends EasyForm
         {
             $errorMessage = $this->GetMessage("EMAIL_USED");
 			$this->validateErrors['fld_email'] = $errorMessage;
-			throw new ValidationException($this->validateErrors);
+			throw new Openbiz\validation\Exception($this->validateErrors);
 			return false;
         }  
         
@@ -425,7 +427,7 @@ class UserForm extends EasyForm
 			$passRepeatElem = $this->getElement("fld_password_repeat");
 			$errorMessage = $this->GetMessage("PASSOWRD_REPEAT_NOTSAME",array($passRepeatElem->label));
 			$this->validateErrors['fld_password_repeat'] = $errorMessage;
-			throw new ValidationException($this->validateErrors);
+			throw new Openbiz\validation\Exception($this->validateErrors);
 			return false;
 		}
 	
@@ -439,7 +441,7 @@ class UserForm extends EasyForm
      */
     protected function _checkDupUsername()
     {    	
-        $username = BizSystem::ClientProxy()->GetFormInputs("fld_username");
+        $username = Openbiz::$app->getClientProxy()->GetFormInputs("fld_username");
         $searchTxt = "[username]='$username'";        
         
         // query UserDO by the username
@@ -462,7 +464,7 @@ class UserForm extends EasyForm
      */
     protected function _checkDupEmail()
     {
-        $email = BizSystem::ClientProxy()->GetFormInputs("fld_email");
+        $email = Openbiz::$app->getClientProxy()->GetFormInputs("fld_email");
         $searchTxt = "[email]='$email'";           
         // query UserDO by the email
         $userDO = $this->getDataObj();        
@@ -479,16 +481,16 @@ class UserForm extends EasyForm
 
     public function profile($user_id = null){
     	if(!$user_id){    		
-   			$user_id = (int)BizSystem::clientProxy()->getFormInputs('_selectedId');
+   			$user_id = (int)Openbiz::$app->getClientProxy()->getFormInputs('_selectedId');
     	}    	
     	if(!$user_id){
     		return ;
     	}
 		//looking up profile for this account in ProfileDO
-		$recordSet = BizSystem::getObject($this->profileDO,1)->fetchOne("[user_id]='$user_id'");
+		$recordSet = Openbiz::getObject($this->profileDO,1)->fetchOne("[user_id]='$user_id'");
 		if(!isset($recordSet)){
 			//create a new profile connected to current profile
-			$profile_id = BizSystem::getService(PROFILE_SERVICE)->CreateProfile($user_id);
+			$profile_id = Openbiz::getService(PROFILE_SERVICE)->CreateProfile($user_id);
 			$this->switchForm($this->profileEditForm,$profile_id);   					
 		}else{
 			$profile_id = $recordSet->Id;
@@ -498,7 +500,7 @@ class UserForm extends EasyForm
     
 	public function SmartCardAuthStatus()
 	{
-		$do = BizSystem::getObject("myaccount.do.PreferenceDO");
+		$do = Openbiz::getObject("myaccount.do.PreferenceDO");
         $rs = $do->directFetch("[user_id]='0' AND ([section]='Login' OR [section]='Register' )");
       
         if ($rs)
@@ -512,4 +514,3 @@ class UserForm extends EasyForm
         return $preference['smartcard_auth'];        		
 	}
 }  
-?>

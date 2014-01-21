@@ -11,6 +11,8 @@
  * @version   $Id: RegisterForm.php 4303 2012-09-26 05:48:29Z hellojixian@gmail.com $
  */
 
+use Openbiz\Openbiz;
+
 include_once(OPENBIZ_APP_MODULE_PATH."/system/form/UserForm.php");
 
 class RegisterForm extends UserForm
@@ -53,7 +55,7 @@ class RegisterForm extends UserForm
         {
             $this->ValidateForm();
         }
-        catch (ValidationException $e)
+        catch (Openbiz\validation\Exception $e)
         {
             $this->processFormObjError($e->errors);
             return;
@@ -62,15 +64,15 @@ class RegisterForm extends UserForm
         $recArr['create_by']="0";
         $recArr['update_by']="0";
 
-        $password = BizSystem::ClientProxy()->GetFormInputs("fld_password");            
+        $password = Openbiz::$app->getClientProxy()->GetFormInputs("fld_password");            
 		$recArr['password'] = hash(HASH_ALG, $password);
         
         $this->_doInsert($recArr);
                 
         //set default user role to member
 		$userinfo = $this->getActiveRecord();
-        $userRoleObj = BizSystem::getObject('system.do.UserRoleDO');
-        foreach( BizSystem::getObject('system.do.RoleDO')->directfetch("[default]='1'") as $roleRec)
+        $userRoleObj = Openbiz::getObject('system.do.UserRoleDO');
+        foreach( Openbiz::getObject('system.do.RoleDO')->directfetch("[default]='1'") as $roleRec)
         {
         	$roleId = $roleRec['Id'];
         	$uesrRoleArr =array(
@@ -81,8 +83,8 @@ class RegisterForm extends UserForm
         }
 		
         //set default group to member
-        $userGroupObj = BizSystem::getObject('system.do.UserGroupDO');
-        foreach( BizSystem::getObject('system.do.GroupDO')->directfetch("[default]='1'") as $groupRec)
+        $userGroupObj = Openbiz::getObject('system.do.UserGroupDO');
+        foreach( Openbiz::getObject('system.do.GroupDO')->directfetch("[default]='1'") as $groupRec)
         {
 			$groupId = $groupRec['Id'];
 			$uesrGroupArr =array(
@@ -94,20 +96,18 @@ class RegisterForm extends UserForm
         
         
         //record event log   
-        global $g_BizSystem;     
-        $eventlog 	= BizSystem::getService(OPENBIZ_EVENTLOG_SERVICE);
+        $eventlog 	= Openbiz::getService(OPENBIZ_EVENTLOG_SERVICE);
         $logComment=array($userinfo['username'],$_SERVER['REMOTE_ADDR']);
     	$eventlog->log("USER_MANAGEMENT", "MSG_USER_REGISTERED", $logComment);   
     	     
         //send user email
-        $emailObj 	= BizSystem::getService(CUBI_USER_EMAIL_SERVICE);
+        $emailObj 	= Openbiz::getService(CUBI_USER_EMAIL_SERVICE);
         $emailObj->UserWelcomeEmail($userinfo['Id']);
         
         //init profile for future use like redirect to my account view
-        $profile = $g_BizSystem->InituserProfile($userinfo['username']);    	
+        $profile = Openbiz::$app->InituserProfile($userinfo['username']);    	
         
         return $userinfo;
     }
 }
 
-?>

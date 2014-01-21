@@ -1,5 +1,5 @@
 <?php 
-include_once(OPENBIZ_BIN.'/easy/element/Radio.php');
+//include_once(OPENBIZ_BIN.'/easy/element/Radio.php');
 
 class ProviderSelector extends Radio
 {
@@ -14,4 +14,3 @@ class ProviderSelector extends Radio
 	}
 	
 }
-?>

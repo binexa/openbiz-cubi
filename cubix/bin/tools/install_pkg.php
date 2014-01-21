@@ -15,7 +15,7 @@ $pkgname = $argv[1];
 
 $packageService = "package.lib.PackageService";
 // get package service 
-$pkgsvc = BizSystem::GetObject($packageService);
+$pkgsvc = Openbiz::getObject($packageService);
 
 $pkgfile = $pkgsvc->downloadPackage($pkgname);
 

@@ -11,23 +11,25 @@
  * @version   $Id: WidgetPickForm.php 3365 2012-05-31 06:07:55Z rockyswen@gmail.com $
  */
 
+use Openbiz\Openbiz;
+
 class WidgetPickForm extends PickerForm
 {
 	public function PicktoParent()
 	{
 	 	if ($id==null || $id=='')
-            $id = BizSystem::clientProxy()->getFormInputs('_selectedId');
+            $id = Openbiz::$app->getClientProxy()->getFormInputs('_selectedId');
 
-        $selIds = BizSystem::clientProxy()->getFormInputs('row_selections', false);
+        $selIds = Openbiz::$app->getClientProxy()->getFormInputs('row_selections', false);
         if ($selIds == null)
             $selIds[] = $id;
                     
         foreach ($selIds as $id)
         {
             $rec = $this->getDataObj()->fetchById($id);           
-			$parentForm = BizSystem::objectFactory()->getObject($this->parentFormName);
+			$parentForm = Openbiz::getObject($this->parentFormName);
 			$parentDo = $parentForm->getDataObj();
-			$user_id = BizSystem::getUserProfile("Id");
+			$user_id = Openbiz::$app->getUserProfile("Id");
 			
 			$newRec = array(
 				"user_id" => $user_id,
@@ -44,4 +46,3 @@ class WidgetPickForm extends PickerForm
         $parentForm->rerender();
 	}
 }
-?>

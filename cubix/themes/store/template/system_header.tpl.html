@@ -7,9 +7,9 @@
 	</div>
 	
 		{php}
-		$profile_id = BizSystem::getUserProfile("Id");
-		$profile_display = BizSystem::GetProfileName($profile_id,'short');
-		$profile_email = BizSystem::GetProfileEmail($profile_id);
+		$profile_id = Openbiz\Openbiz::$app->getUserProfile("Id");
+		$profile_display = Openbiz\Openbiz::$app->getProfile()->getProfileName($profile_id,'short');
+		$profile_email = Openbiz\Openbiz::$app->getProfile()->getProfileEmail($profile_id);
 		
 		$this->assign('profile', $profile_display);
 		$this->assign('profile_email', $profile_email);

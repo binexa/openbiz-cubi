@@ -5,7 +5,19 @@
   Copyright (c) 2005-2011, Openbiz Technology LLC
   Version $Id: SessionDO.xml 3372 2012-05-31 06:19:06Z rockyswen@gmail.com $
 -->
-<BizDataObj Name="SessionDO" Description="" DataPermControl="N"  Class="BizDataObj" DBName="Default" Table="session" SearchRule="" SortRule="[create_time] DESC" OtherSQLRule="" Uniqueness="" Stateless="N" IdGeneration="Identity" CacheLifeTime="0">
+<BizDataObj Name="SessionDO" 
+            Description=""
+            DataPermControl="N"
+            Class="BizDataObj"
+            DBName="Default"
+            Table="session"
+            SearchRule=""
+            SortRule="[create_time] DESC"
+            OtherSQLRule=""
+            Uniqueness=""
+            Stateless="N"
+            IdGeneration="Identity"
+            CacheLifeTime="0">
 	<BizFieldList>
         <BizField Name="Id" Column="id" Length="32" Type="Text"/>
         <BizField Name="user_id" Column="user_id" Type="Number"/>

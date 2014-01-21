@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Openbiz Cubi Application Platform
  *
@@ -11,8 +12,10 @@
  * @version   $Id: accessService.php 3485 2012-06-18 23:41:37Z agus.suhartono@gmail.com $
  */
 
+
+
 /**
- * PHPOpenBiz Framework
+ * Openbiz Framework
  *
  * LICENSE
  *
@@ -25,20 +28,21 @@
  * @link      http://www.phpopenbiz.org/
  * @version   $Id: accessService.php 3485 2012-06-18 23:41:37Z agus.suhartono@gmail.com $
  */
-
 /* configuration
-<PluginService ...>
-   <access-constraint>
-     <view-collection>
-       <view name="view1">
-         <role name="admin"/>
-         <role name="member"/>
-       </view>
-       <view name="reg_expr"/>
-     </view-collection>
-   </access-constraint>
-</PluginService ...>
-*/
+  <PluginService ...>
+  <access-constraint>
+  <view-collection>
+  <view name="view1">
+  <role name="admin"/>
+  <role name="member"/>
+  </view>
+  <view name="reg_expr"/>
+  </view-collection>
+  </access-constraint>
+  </PluginService ...>
+ */
+
+use Openbiz\Openbiz;
 
 /**
  * accessService class is the plug-in service of handling role based view access control
@@ -73,7 +77,7 @@ class accessService
     protected function readMetadata(&$xmlArr)
     {
         $viewCollection = $xmlArr["PLUGINSERVICE"]["ACCESS-CONSTRAINT"]["VIEW-COLLECTION"];
-        $this->_restrictedViewList = new MetaIterator($xmlArr["PLUGINSERVICE"]["ACCESS-CONSTRAINT"]["VIEW-COLLECTION"]["VIEW"],"RestrictedView");
+        $this->_restrictedViewList = new MetaIterator($xmlArr["PLUGINSERVICE"]["ACCESS-CONSTRAINT"]["VIEW-COLLECTION"]["VIEW"], "RestrictedView");
     }
 
     /**
@@ -83,21 +87,19 @@ class accessService
      * @param <type> $role
      * @return boolean
      */
-    public function allowViewAccess($viewName, $role=null)
+    public function allowViewAccess($viewName, $role = null)
     {
-        if ($role != null)
+        if ($role != null) {
             $roles[] = $role;
-        else
-        {
-            //global $g_BizSystem;
-            $bizSystem = BizSystem::instance();
+        } else {
             // TODO: get user profile
-            $userProfile = $bizSystem->getUserProfile();
+            $userProfile = Openbiz::$app->getUserProfile();
             //print_r($profile);
-            if ($userProfile && isset($userProfile['roleNames']))
+            if ($userProfile && isset($userProfile['roleNames'])) {
                 $roles = $userProfile['roleNames'];
-            else
+            } else {
                 $roles[] = "";
+            }
         }
 
         $view = $this->getMatchView($viewName);
@@ -107,8 +109,7 @@ class accessService
         $roleList = $view->getRoleList();
         if (!$roleList)
             return true;
-        foreach ($roles as $r)
-        {
+        foreach ($roles as $r) {
             if ($roleList->get($r))
                 return true;
         }
@@ -127,16 +128,15 @@ class accessService
         $viewobj = $this->_restrictedViewList->get($viewName);
         if ($viewobj)
             return $viewobj;
-        foreach ($this->_restrictedViewList as $view => $viewobj)
-        {
-            $preg_view = "/".$view."/";
-            if (preg_match($preg_view, $viewName))
-            {
+        foreach ($this->_restrictedViewList as $view => $viewobj) {
+            $preg_view = "/" . $view . "/";
+            if (preg_match($preg_view, $viewName)) {
                 return $viewobj;
             }
         }
         return null;
     }
+
 }
 
 /**
@@ -149,6 +149,7 @@ class accessService
  */
 class RestrictedView
 {
+
     /**
      * Name of view
      *
@@ -172,7 +173,7 @@ class RestrictedView
     public function __construct($xmlArr)
     {
         $this->objectName = $xmlArr["ATTRIBUTES"]["NAME"];
-        $this->_roleList = new MetaIterator($xmlArr["ROLE"],"RestrictedRole");
+        $this->_roleList = new MetaIterator($xmlArr["ROLE"], "RestrictedRole");
     }
 
     /**
@@ -194,6 +195,7 @@ class RestrictedView
     {
         return $this->_roleList;
     }
+
 }
 
 /**
@@ -206,6 +208,7 @@ class RestrictedView
  */
 class RestrictedRole
 {
+
     /**
      * Role name
      *
@@ -233,5 +236,6 @@ class RestrictedRole
     {
         return $this->objectName;
     }
+
 }
-?>
+

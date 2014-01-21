@@ -11,6 +11,8 @@
  * @version   $Id: ExtendLoadHandler.php 3360 2012-05-31 06:00:17Z rockyswen@gmail.com $
  */
 
+use Openbiz\Openbiz;
+
 include_once (OPENBIZ_APP_MODULE_PATH."/system/lib/ModuleLoadHandler.php");
 
 class ExtendLoadHandler implements ModuleLoadHandler
@@ -22,10 +24,10 @@ class ExtendLoadHandler implements ModuleLoadHandler
     public function postLoadingModule($moduelLoader)
     {
     	
-    	$roleRec = BizSystem::getObject("system.do.RoleDO")->fetchOne("[name]='Cubi Member'");
+    	$roleRec = Openbiz::getObject("system.do.RoleDO")->fetchOne("[name]='Cubi Member'");
     	$roleId = $roleRec['Id'];
     	
-    	$actionRec = BizSystem::getObject("system.do.AclActionDO")->fetchOne("[module]='extend' AND [resource]='extend' AND [action]='access'");
+    	$actionRec = Openbiz::getObject("system.do.AclActionDO")->fetchOne("[module]='extend' AND [resource]='extend' AND [action]='access'");
     	$actionId = $actionRec["Id"];
     	
     	$aclRecord = array(
@@ -33,8 +35,7 @@ class ExtendLoadHandler implements ModuleLoadHandler
     		"action_id" => $actionId,
     		"access_level" => 1
     	);
-    	BizSystem::getObject("system.do.AclRoleActionDO")->insertRecord($aclRecord);
+    	Openbiz::getObject("system.do.AclRoleActionDO")->insertRecord($aclRecord);
     }
 }
 
-?>

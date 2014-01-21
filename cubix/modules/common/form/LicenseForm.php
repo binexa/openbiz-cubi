@@ -11,6 +11,9 @@
  * @link      http://code.google.com/p/openbiz-cubi/
  * @version   $Id: LicenseForm.php 4992 2012-12-31 06:43:41Z hellojixian@gmail.com $
  */
+
+use Openbiz\Openbiz;
+
 class LicenseForm extends EasyForm
 {
 
@@ -30,26 +33,26 @@ class LicenseForm extends EasyForm
 
     public function getViewObject()
     {
-        $viewObj = BizSystem::getObject("common.view.LicenseInvalidView");
+        $viewObj = Openbiz::getObject("common.view.LicenseInvalidView");
         return $viewObj;
     }
 
-    public function saveSessionVars($sessionContext)
+    public function saveStatefullVars($sessionContext)
     {
         if ($this->errorParams) {
             $sessionContext->saveObjVar("common.form.LicenseForm", "SourceURL", $this->sourceURL);
             $sessionContext->saveObjVar("common.form.LicenseForm", "ErrorCode", $this->errorCode);
             $sessionContext->saveObjVar("common.form.LicenseForm", "ErrorParams", $this->errorParams);
         }
-        parent::saveSessionVars($sessionContext);
+        parent::saveStatefullVars($sessionContext);
     }
 
-    public function loadSessionVars($sessionContext)
+    public function loadStatefullVars($sessionContext)
     {
         $sessionContext->loadObjVar("common.form.LicenseForm", "SourceURL", $this->sourceURL);
         $sessionContext->loadObjVar("common.form.LicenseForm", "ErrorCode", $this->errorCode);
         $sessionContext->loadObjVar("common.form.LicenseForm", "ErrorParams", $this->errorParams);
-        parent::loadSessionVars($sessionContext);
+        parent::loadStatefullVars($sessionContext);
     }
 
     public function getAppInfo()

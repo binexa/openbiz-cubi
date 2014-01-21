@@ -11,8 +11,11 @@
  * @version   $Id: SessionDBHandler.php 3372 2012-05-31 06:19:06Z rockyswen@gmail.com $
  */
 
+use Openbiz\Openbiz;
+
 define("SESSION_DBNAME","Default");
 define("SESSION_TABLE","session");
+
 
 class SessionDBHandler {
     protected $lifeTime;
@@ -28,7 +31,7 @@ class SessionDBHandler {
     function open($savePath,$sessionName) {
         // echo "session open".nl;
         // connect to session db
-        $this->sessionDb = BizSystem::dbConnection(SESSION_DBNAME);
+        $this->sessionDb = Openbiz::$app->getDbConnection(SESSION_DBNAME);
         
         $sessionID = session_id();
         if ($sessionID !== "") {

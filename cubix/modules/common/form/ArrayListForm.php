@@ -11,6 +11,9 @@
  * @link      http://code.google.com/p/openbiz-cubi/
  * @version   $Id: ArrayListForm.php 5327 2013-03-25 05:09:15Z agus.suhartono@gmail.com $
  */
+
+use Openbiz\Openbiz;
+
 class ArrayListForm extends EasyForm {
 
     public $totalRecords;
@@ -26,7 +29,7 @@ class ArrayListForm extends EasyForm {
                 if (!$element->fieldName)
                     continue;
 
-                $value = BizSystem::clientProxy()->getFormInputs($element->objectName);
+                $value = Openbiz::$app->getClientProxy()->getFormInputs($element->objectName);
                 if ($element->fuzzySearch == "Y") {
                     $value = "*$value*";
                 }
@@ -49,7 +52,7 @@ class ArrayListForm extends EasyForm {
 
         $this->currentPage = 1;
 
-        BizSystem::log(LOG_DEBUG, "FORMOBJ", $this->objectName . "::runSearch(), SearchRule=" . $this->searchRule);
+        Openbiz::$app->getLog()->log(LOG_DEBUG, "FORMOBJ", $this->objectName . "::runSearch(), SearchRule=" . $this->searchRule);
 
         $recArr = $this->readInputRecord();
 
@@ -125,4 +128,3 @@ class ArrayListForm extends EasyForm {
 
 }
 
-?>

@@ -11,20 +11,8 @@
  * @link      http://code.google.com/p/openbiz-cubi/
  * @version   $Id: LoginForm.php 4931 2012-12-26 15:41:56Z hellojixian@gmail.com $
  */
-/**
- * Openbiz Cubi 
- *
- * LICENSE
- *
- * This source file is subject to the BSD license that is bundled
- * with this package in the file LICENSE.txt.
- *
- * @package   user.form
- * @copyright Copyright (c) 2005-2011, Rocky Swen
- * @license   http://www.opensource.org/licenses/bsd-license.php
- * @link      http://www.phpopenbiz.org/
- * @version   $Id: LoginForm.php 4931 2012-12-26 15:41:56Z hellojixian@gmail.com $
- */
+
+use Openbiz\Openbiz;
 
 /**
  * LoginForm class - implement the logic of login form
@@ -45,7 +33,7 @@ class LoginForm extends EasyForm
 
     protected function readMetadata(&$xmlArr)
     {
-        $do = BizSystem::getObject("myaccount.do.PreferenceDO");
+        $do = Openbiz::getObject("myaccount.do.PreferenceDO");
         $rs = $do->directFetch("[user_id]='0' AND ([section]='Login' OR [section]='Register' )");
 
         if ($rs) {
@@ -84,7 +72,6 @@ class LoginForm extends EasyForm
                         unset($xmlArr["EASYFORM"]["DATAPANEL"]["ELEMENT"][$i]);
                     }
                     break;
-
                 case "register_new":
                     if ($preference['open_register'] == 0) {
                         unset($xmlArr["EASYFORM"]["DATAPANEL"]["ELEMENT"][$i]);
@@ -102,10 +89,10 @@ class LoginForm extends EasyForm
         return $result;
     }
 
-    public function loadSessionVars($sessionContext)
+    public function loadStatefullVars($sessionContext)
     {
         $sessionContext->loadObjVar("SYSTEM", "LastViewedPage", $this->lastViewedPage);
-        parent::loadSessionVars($sessionContext);
+        parent::loadStatefullVars($sessionContext);
     }
 
     public function fetchData()
@@ -114,34 +101,34 @@ class LoginForm extends EasyForm
             $this->username = $_COOKIE["SYSTEM_SESSION_USERNAME"];
             $this->password = $_COOKIE["SYSTEM_SESSION_PASSWORD"];
 
-            global $g_BizSystem;
-            $svcobj = BizSystem::getService(AUTH_SERVICE);
-            $eventlog = BizSystem::getService(OPENBIZ_EVENTLOG_SERVICE);
+            $svcobj = Openbiz::getService(AUTH_SERVICE);
+            $eventlog = Openbiz::getService(OPENBIZ_EVENTLOG_SERVICE);
             if ($svcobj->authenticateUserByCookies($this->username, $this->password)) {
                 // after authenticate user: 1. init profile
-                $profile = $g_BizSystem->InitUserProfile($this->username);
+                $profile = Openbiz::$app->InitUserProfile($this->username);
 
                 // after authenticate user: 2. insert login event
                 $logComment = array($this->username, $_SERVER['REMOTE_ADDR']);
                 $eventlog->log("LOGIN", "MSG_LOGIN_SUCCESSFUL", $logComment);
 
                 // after authenticate user: 3. update login time in user record
-                if (!$this->UpdateloginTime())
+                if (!$this->UpdateloginTime()) {
                     return false;
-
-
+                }
                 if ($profile['roleStartpage'][0]) {
                     $redirectPage = OPENBIZ_APP_INDEX_URL . $profile['roleStartpage'][0];
-                    BizSystem::clientProxy()->ReDirectPage($redirectPage);
+                    Openbiz::$app->getClientProxy()->ReDirectPage($redirectPage);
                 } else {
                     parent::processPostAction();
                 }
                 return;
             }
-        } elseif (BizSystem::getUserProfile("Id")) {
-            $profile = BizSystem::getUserProfile();
+        } elseif (Openbiz::$app->getUserProfile("Id")) {
+            $profile = Openbiz::$app->getUserProfile();
             $redirectPage = OPENBIZ_APP_INDEX_URL . $profile['roleStartpage'][0];
-            BizSystem::clientProxy()->ReDirectPage($redirectPage);
+            echo __METHOD__ . '--' . __LINE__ . '--' . $redirectPage;
+            exit;
+            Openbiz::$app->getClientProxy()->ReDirectPage($redirectPage);
         }
     }
 
@@ -161,19 +148,24 @@ class LoginForm extends EasyForm
      */
     public function Login()
     {
-        $recArr = $this->readInputRecord();
+        $this->readInputRecord();
         try {
-            $this->ValidateForm();
-        } catch (ValidationException $e) {
+            $this->validateForm();
+        } catch (Openbiz\validation\Exception $e) {
+            DebugLine::show(__METHOD__ . __LINE__);
             $this->processFormObjError($e->errors);
             return;
         }
 
-        // get the username and password
-        $this->username = BizSystem::ClientProxy()->getFormInputs("username");
-        $this->password = BizSystem::ClientProxy()->getFormInputs("password");
-        $this->smartcard = BizSystem::ClientProxy()->getFormInputs("smartcard");
+        
 
+        // get the username and password
+        $this->username = Openbiz::$app->getClientProxy()->getFormInputs("username");
+        $this->password = Openbiz::$app->getClientProxy()->getFormInputs("password");
+        $this->smartcard = Openbiz::$app->getClientProxy()->getFormInputs("smartcard");
+
+        
+        
         if ($this->username == $this->getElement("username")->hint) {
             $this->username = null;
         }
@@ -181,48 +173,44 @@ class LoginForm extends EasyForm
             $this->password = null;
         }
 
-        global $g_BizSystem;
-        $eventlog = BizSystem::getService(OPENBIZ_EVENTLOG_SERVICE);
-        try {
-            if ($this->authUser()) {
-                // after authenticate user: 1. init profile
-                $profile = $g_BizSystem->InitUserProfile($this->username);
+        $eventlog = Openbiz::getService(OPENBIZ_EVENTLOG_SERVICE);
 
+        try {
+
+            $authUser = $this->authUser();
+            if ($authUser) {
+                
+                // after authenticate user: 1. init profile
+                $profile = Openbiz::$app->initUserProfile($this->username);
+                                
+                //DebugLine::show(var_dump($profile));
                 // after authenticate user: 2. insert login event
                 $logComment = array($this->username, $_SERVER['REMOTE_ADDR']);
                 $eventlog->log("LOGIN", "MSG_LOGIN_SUCCESSFUL", $logComment);
 
                 // after authenticate user: 3. update login time in user record
-                if (!$this->UpdateloginTime())
+                if (!$this->updateloginTime()) {
                     return false;
+                }
 
                 // after authenticate user: 3. update current theme and language
-                $currentLanguage = BizSystem::ClientProxy()->getFormInputs("current_language");
-                if ($currentLanguage != '') {
-                    if ($currentLanguage == 'user_default') {
-                        $currentLanguage = OPENBIZ_DEFAULT_LANGUAGE;
-                    } else {
-                        BizSystem::sessionContext()->setVar("LANG", $currentLanguage);
-                    }
-                }
+                $this->updateLanguage();
 
-                $currentTheme = BizSystem::ClientProxy()->getFormInputs("current_theme");
-                if ($currentTheme != '') {
-                    if ($currentTheme == 'user_default') {
-                        $currentTheme = CUBI_DEFAULT_THEME_NAME;
-                    } else {
-                        BizSystem::sessionContext()->setVar("THEME", $currentTheme);
-                    }
-                }
+                $this->updateTheme();
 
+               
                 $redirectPage = OPENBIZ_APP_INDEX_URL . $profile['roleStartpage'][0];
+
                 if (!$profile['roleStartpage'][0]) {
                     $errorMessage['password'] = $this->getMessage("PERM_INCORRECT");
                     $errorMessage['login_status'] = $this->getMessage("LOGIN_FAILED");
                     $this->processFormObjError($errorMessage);
                     return;
                 }
-                $cookies = BizSystem::ClientProxy()->getFormInputs("session_timeout");
+
+                
+                
+                $cookies = Openbiz::$app->getClientProxy()->getFormInputs("session_timeout");
                 if ($cookies) {
                     $password = $this->password;
                     $password = md5(md5($password . $this->username) . md5($profile['create_time']));
@@ -234,7 +222,7 @@ class LoginForm extends EasyForm
                 $initLock = OPENBIZ_APP_PATH . '/files/initialize.lock';
                 if ($profile['Id'] == 1 && !is_file($initLock)) {
                     $redirectPage = OPENBIZ_APP_INDEX_URL . "/system/initialize";
-                    BizSystem::clientProxy()->ReDirectPage($redirectPage);
+                    Openbiz::$app->getClientProxy()->ReDirectPage($redirectPage);
                     return true;
                 }
 
@@ -242,14 +230,16 @@ class LoginForm extends EasyForm
                 $initLock = OPENBIZ_APP_PATH . '/files/initialize_profile.lock';
                 if ($profile['Id'] == 1 && !is_file($initLock)) {
                     $redirectPage = OPENBIZ_APP_INDEX_URL . "/system/initialize_profile";
-                    BizSystem::clientProxy()->ReDirectPage($redirectPage);
+                    Openbiz::$app->getClientProxy()->ReDirectPage($redirectPage);
                     return true;
                 }
 
+                $profile = Openbiz::$app->getSessionContext()->getVar("_USER_PROFILE");
+
                 if ($this->lastViewedPage != "") {
-                    BizSystem::clientProxy()->ReDirectPage($this->lastViewedPage);
+                    Openbiz::$app->getClientProxy()->redirectPage($this->lastViewedPage);
                 } elseif ($profile['roleStartpage'][0]) {
-                    BizSystem::clientProxy()->ReDirectPage($redirectPage);
+                    Openbiz::$app->getClientProxy()->redirectPage($redirectPage);
                 } else {
                     parent::processPostAction();
                 }
@@ -270,30 +260,29 @@ class LoginForm extends EasyForm
                         $errorMessage['password'] = $this->getMessage("PASSWORD_INCORRECT");
                         break;
                 }
-
                 $errorMessage['login_status'] = $this->getMessage("LOGIN_FAILED");
                 $this->processFormObjError($errorMessage);
             }
         } catch (Exception $e) {
             $errorMessage['login_status'] = $this->getMessage("LOGIN_FAILED");
             $this->processFormObjError($errorMessage);
-            //BizSystem::ClientProxy()->showErrorMessage($e->getMessage());
+            //Openbiz::$app->getClientProxy()->showErrorMessage($e->getMessage());
         }
     }
 
     protected function authUser()
     {
-        $svcobj = BizSystem::getService(AUTH_SERVICE);
+        $authService = Openbiz::getService(AUTH_SERVICE);
         switch ($this->auth_method) {
             case "smartcard":
-                $result = $svcobj->authenticateUserBySmartCard($this->smartcard);
+                $result = $authService->authenticateUserBySmartCard($this->smartcard);
                 if ($result != false) {
                     $this->username = $result;
                     $result = true;
                 }
                 break;
             default:
-                $result = $svcobj->authenticateUser($this->username, $this->password);
+                $result = $authService->authenticateUser($this->username, $this->password);
                 break;
         }
         return $result;
@@ -306,7 +295,7 @@ class LoginForm extends EasyForm
      */
     protected function UpdateloginTime()
     {
-        $userObj = BizSystem::getObject('system.do.UserDO');
+        $userObj = Openbiz::getObject('system.do.UserDO');
         try {
             $curRecs = $userObj->directFetch("[username]='" . $this->username . "'", 1);
             if (count($curRecs) == 0) {
@@ -317,14 +306,14 @@ class LoginForm extends EasyForm
             $ok = $dataRec->save();
             if (!$ok) {
                 $errorMsg = $userObj->getErrorMessage();
-                BizSystem::log(LOG_ERR, "DATAOBJ", "DataObj error = " . $errorMsg);
-                BizSystem::ClientProxy()->showErrorMessage($errorMsg);
+                Openbiz::$app->getLog()->log(LOG_ERR, "DATAOBJ", "DataObj error = " . $errorMsg);
+                Openbiz::$app->getClientProxy()->showErrorMessage($errorMsg);
                 return false;
             }
-        } catch (BDOException $e) {
+        } catch (Openbiz\data\Exception $e) {
             $errorMsg = $e->getMessage();
-            BizSystem::log(LOG_ERR, "DATAOBJ", "DataObj error = " . $errorMsg);
-            BizSystem::ClientProxy()->showErrorMessage($errorMsg);
+            Openbiz::$app->getLog()->log(LOG_ERR, "DATAOBJ", "DataObj error = " . $errorMsg);
+            Openbiz::$app->getClientProxy()->showErrorMessage($errorMsg);
             return false;
         }
         return true;
@@ -332,12 +321,12 @@ class LoginForm extends EasyForm
 
     public function ChangeLanguage()
     {
-        $currentLanguage = BizSystem::ClientProxy()->getFormInputs("current_language");
+        $currentLanguage = Openbiz::$app->getClientProxy()->getFormInputs("current_language");
         if ($currentLanguage != '') {
             if ($currentLanguage == 'user_default') {
                 $currentTheme = OPENBIZ_DEFAULT_LANGUAGE;
             } else {
-                BizSystem::sessionContext()->setVar("LANG", $currentLanguage);
+                Openbiz::$app->getSessionContext()->setVar("LANG", $currentLanguage);
                 $this->notices[] = "<script>window.location.reload()</script>";
                 $this->UpdateForm();
             }
@@ -347,12 +336,12 @@ class LoginForm extends EasyForm
 
     public function ChangeTheme()
     {
-        $currentTheme = BizSystem::ClientProxy()->getFormInputs("current_theme");
+        $currentTheme = Openbiz::$app->getClientProxy()->getFormInputs("current_theme");
         if ($currentTheme != '') {
             if ($currentTheme == 'user_default') {
                 $currentTheme = CUBI_DEFAULT_THEME_NAME;
             } else {
-                BizSystem::sessionContext()->setVar("THEME", $currentTheme);
+                Openbiz::$app->getSessionContext()->setVar("THEME", $currentTheme);
                 $recArr = $this->readInputRecord();
                 $this->setActiveRecord($recArr);
                 $this->notices[] = "<script>window.location.reload()</script>";
@@ -362,5 +351,31 @@ class LoginForm extends EasyForm
         return;
     }
 
-}
+    /**
+     * Update language that selected by user
+     */
+    protected function updateLanguage()
+    {
+        $currentLanguage = Openbiz::$app->getClientProxy()->getFormInputs("current_language");
+        if ($currentLanguage != '') {
+            if ($currentLanguage == 'user_default') {
+                $currentLanguage = OPENBIZ_DEFAULT_LANGUAGE;
+            } else {
+                Openbiz::$app->getSessionContext()->setVar("LANG", $currentLanguage);
+            }
+        }
+    }
 
+    protected function updateTheme()
+    {
+        $currentTheme = Openbiz::$app->getClientProxy()->getFormInputs("current_theme");
+        if ($currentTheme != '') {
+            if ($currentTheme == 'user_default') {
+                $currentTheme = CUBI_DEFAULT_THEME_NAME;
+            } else {
+                Openbiz::$app->getSessionContext()->setVar("THEME", $currentTheme);
+            }
+        }
+    }
+
+}

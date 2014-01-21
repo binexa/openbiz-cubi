@@ -1,6 +1,6 @@
 <?php
 $cubiPath = dirname(dirname(dirname(dirname(__FILE__))));
-// defined Zend framework library home as ZEND_FRWK_HOME
+// defined \Zend framework library home as ZEND_FRWK_HOME
 define('ZEND_FRWK_HOME', $cubiPath."/openbiz/others/");
 // add zend framework to include path
 set_include_path(get_include_path() . PATH_SEPARATOR . ZEND_FRWK_HOME);
@@ -17,7 +17,7 @@ class ContactRestTest
 {
 	public function testQuery($queryFields, $format='xml')
 	{
-		$client = new Zend_Http_Client(REST_URL_QUERY.'?format='.$format);
+		$client = new \Zend_Http_Client(REST_URL_QUERY.'?format='.$format);
 		$client->setParameterGet(queryFields);
 		$response = $client->request('GET');
 		print $response->getBody();
@@ -25,14 +25,14 @@ class ContactRestTest
 	
 	public function testGet($id, $format='xml')
 	{
-		$client = new Zend_Http_Client(REST_URL_GET.'/'.$id.'?format='.$format);
+		$client = new \Zend_Http_Client(REST_URL_GET.'/'.$id.'?format='.$format);
 		$response = $client->request('GET');
 		print $response->getBody();
 	}
 	
 	public function testPost($record, $format='xml')
 	{
-		$client = new Zend_Http_Client(REST_URL_POST.'?format='.$format);
+		$client = new \Zend_Http_Client(REST_URL_POST.'?format='.$format);
 		$client->setRawData(json_encode($record));
 		$response = $client->request('POST');
 		print $response->getBody();
@@ -40,7 +40,7 @@ class ContactRestTest
 	
 	public function testPut($record, $id, $format='xml')
 	{
-		$client = new Zend_Http_Client(REST_URL_PUT.'/'.$id.'?format='.$format);
+		$client = new \Zend_Http_Client(REST_URL_PUT.'/'.$id.'?format='.$format);
 		$client->setRawData(json_encode($record));
 		$response = $client->request('PUT');
 		print $response->getBody();
@@ -48,7 +48,7 @@ class ContactRestTest
 	
 	public function testDelete($id, $format='xml')
 	{
-		$client = new Zend_Http_Client(REST_URL_DELETE.'/'.$id.'?format='.$format);
+		$client = new \Zend_Http_Client(REST_URL_DELETE.'/'.$id.'?format='.$format);
 		$response = $client->request('DELETE');
 		print $response->getBody();
 	}
@@ -72,4 +72,3 @@ $restTest->testPut($contactRec, 11, 'json');
 
 $restTest->testDelete(10);
 $restTest->testDelete(11,'json');
-?>

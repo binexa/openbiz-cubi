@@ -11,15 +11,16 @@
  * @version   $Id: AccessColumnList.php 3360 2012-05-31 06:00:17Z rockyswen@gmail.com $
  */
 
+use Openbiz\i18n\I18n;
+
 class AccessColumnList extends ColumnList
 {
 	
     protected function translateList(&$list, $tag)
     {	
 		$package = $this->getSelectFrom();		
-    	I18n::AddLangData(substr($package,0,intval(strpos($package,'.'))),"extend");
+    	I18n::addLangData(substr($package,0,intval(strpos($package,'.'))),"extend");
     	parent::translateList($list, $tag);
     }
 
 }
-?>

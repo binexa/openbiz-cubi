@@ -1,4 +1,7 @@
-<?php 
+<?php
+
+use Openbiz\Openbiz;
+
 require_once 'iSMS.php';
 require_once 'SPDriver.php';
 require_once dirname(dirname(__FILE__)).'/dll/c8686/BayouSmsSender.php';
@@ -34,7 +37,7 @@ class SPc8686 extends SPDriver implements iSMS
 		
 		if($result['status']==0)
 		{				
-			BizSystem::getService(LOG_SERVICE)->log(LOG_ERR,"SMS","sendMessage: ". $content." Bayou：".$mobile.':'.$result['msg']);
+			Openbiz::getService(LOG_SERVICE)->log(LOG_ERR,"SMS","sendMessage: ". $content." Bayou：".$mobile.':'.$result['msg']);
 			return false;
 		}
 		else
@@ -61,4 +64,3 @@ class SPc8686 extends SPDriver implements iSMS
 
 
 
-?>

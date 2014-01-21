@@ -11,15 +11,16 @@
  * @version   $Id: ShareDataFilter.php 3355 2012-05-31 05:43:33Z rockyswen@gmail.com $
  */
 
-include_once (OPENBIZ_BIN."/easy/element/DropDownList.php");
+use Openbiz\Openbiz;
+
 class ShareDataFilter extends DropDownList
 {
 	public function getSearchRule()
 	{
-		$value = BizSystem::clientProxy()->getFormInputs($this->objectName);
+		$value = Openbiz::$app->getClientProxy()->getFormInputs($this->objectName);
 		$searchRule = "";
-		$my_user_id = BizSystem::getUserProfile("Id");
-		$user_groups = BizSystem::GetUserProfile('groups');
+		$my_user_id = Openbiz::$app->getUserProfile("Id");
+		$user_groups = Openbiz::$app->getUserProfile('groups');
 		
 		if(count($user_groups)){			
 			$group_id_range = implode(",",$user_groups);			
@@ -82,4 +83,3 @@ class ShareDataFilter extends DropDownList
     	return $list;
     }
 }
-?>

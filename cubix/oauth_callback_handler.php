@@ -15,23 +15,23 @@ include_once 'bin/app_init.php';
 
 include_once OPENBIZ_PATH."/bin/ErrorHandler.php";
 
-$type=BizSystem::ClientProxy()->getRequestParam("type");  
-$service=BizSystem::ClientProxy()->getRequestParam("service");
+$type=Openbiz::$app->getClientProxy()->getRequestParam("type");  
+$service=Openbiz::$app->getClientProxy()->getRequestParam("service");
 
-$redirectURL=BizSystem::ClientProxy()->getRequestParam("redirect_url");
+$redirectURL=Openbiz::$app->getClientProxy()->getRequestParam("redirect_url");
 if($redirectURL)
 {
-	BizSystem::sessionContext()->setVar("oauth_redirect_url", $redirectURL);
+	Openbiz::$app->getSessionContext()->setVar("oauth_redirect_url", $redirectURL);
 }
 
-$assocURL	=BizSystem::ClientProxy()->getRequestParam("assoc_url");
+$assocURL	=Openbiz::$app->getClientProxy()->getRequestParam("assoc_url");
 if($assocURL)
 {
-	BizSystem::sessionContext()->setVar("oauth_assoc_url", $assocURL);
+	Openbiz::$app->getSessionContext()->setVar("oauth_assoc_url", $assocURL);
 }
 
 //$whitelist_arr=array('qq','sina','alipay','google','facebook','qzone','twitter');
-$whitelist_arr = BizSystem::getService(CUBI_LOV_SERVICE)->getDictionary("oauth.lov.ProviderLOV(Provider)");
+$whitelist_arr = Openbiz::getService(CUBI_LOV_SERVICE)->getDictionary("oauth.lov.ProviderLOV(Provider)");
 
 if(!in_array($type,$whitelist_arr)){
 	throw new Exception('Unknown service');

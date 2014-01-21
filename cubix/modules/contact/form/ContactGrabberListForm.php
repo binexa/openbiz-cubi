@@ -11,25 +11,27 @@
  * @version   $Id: ContactGrabberListForm.php 3356 2012-05-31 05:47:51Z rockyswen@gmail.com $
  */
 
+use Openbiz\Openbiz;
+
 class ContactGrabberListForm extends EasyForm
 {
 	public function Reimport($formName)
 	{
-        $user_id = BizSystem::GetUserProfile("Id");		
+        $user_id = Openbiz::$app->getUserProfile("Id");		
 		$do = $this->getDataObj()->deleteRecords("[user_id]=$user_id");
 		$this->switchForm($formName);		
 	}
 	
 	public function SelectAll()
 	{
-		$user_id = BizSystem::GetUserProfile("Id");		
+		$user_id = Openbiz::$app->getUserProfile("Id");		
 		$do = $this->getDataObj()->updateRecords("[selected]='1'","[user_id]=$user_id");
 		$this->updateForm();
 	}
 	
 	public function UnSelectAll()
 	{
-		$user_id = BizSystem::GetUserProfile("Id");		
+		$user_id = Openbiz::$app->getUserProfile("Id");		
 		$do = $this->getDataObj()->updateRecords("[selected]='0'","[user_id]=$user_id");
 		$this->updateForm();
 	}
@@ -42,7 +44,7 @@ class ContactGrabberListForm extends EasyForm
 			$contact_id = $this->recordId;
 		}
 		
-		$user_id = BizSystem::GetUserProfile("Id");		
+		$user_id = Openbiz::$app->getUserProfile("Id");		
 		$do = $this->getDataObj();
 		$contactRec = $do->fetchById($contact_id);
 		switch($contactRec['selected'])
@@ -59,4 +61,3 @@ class ContactGrabberListForm extends EasyForm
 		$this->updateForm();	
 	}
 }
-?>

@@ -10,6 +10,9 @@
  * @link      http://code.google.com/p/openbiz-cubi/
  * @version   $Id: SmsService.php 3506 2012-06-05  fsliit@gmail.com $
  */
+
+use Openbiz\Openbiz;
+
 /**
  * User sms service 
  */
@@ -81,7 +84,7 @@ class SmsService extends MetaObject
      */
     public function UpdateProviderCounter()
     {
-		 foreach(BizSystem::getObject($this->smsProviderDO)->directFetch("[status]=1") as $providerRec)
+		 foreach(Openbiz::getObject($this->smsProviderDO)->directFetch("[status]=1") as $providerRec)
 		 {	
 			$this->getMsgBalance($providerRec['type']); 
 		 }
@@ -95,7 +98,7 @@ class SmsService extends MetaObject
 	 * 发送队列中的短信;
 	 */
 	public function SendSmsFromQueue($SmsQueue=null,$limit=10){
-		$SmsProviderDO = BizSystem::getObject($this->smsProviderDO);
+		$SmsProviderDO = Openbiz::getObject($this->smsProviderDO);
 		$Provider=$this->_getProvider();
 		$return=false;
 		if(!$SmsQueue)
@@ -169,16 +172,16 @@ class SmsService extends MetaObject
 		switch($action)
 		{
 			case 'pending':
-				$return=BizSystem::getObject($this->smsQueueDO)->updateRecords("[status]='pending'","[Id]={$id}");
+				$return=Openbiz::getObject($this->smsQueueDO)->updateRecords("[status]='pending'","[Id]={$id}");
 				 break;
 			case 'sending':
-				$return=BizSystem::getObject($this->smsQueueDO)->updateRecords("[status]='sending'","[Id]={$id}");
+				$return=Openbiz::getObject($this->smsQueueDO)->updateRecords("[status]='sending'","[Id]={$id}");
 				 break;
 			case 'sent':
-				$return=BizSystem::getObject($this->smsQueueDO)->updateRecords("[status]='sent'","[Id]={$id}");
+				$return=Openbiz::getObject($this->smsQueueDO)->updateRecords("[status]='sent'","[Id]={$id}");
 				 break;
 			case 'batch_sending':	 			    
-				$return=BizSystem::getObject($this->smsQueueDO)->updateRecords("[status]='sending'","[Id] ".BizSystem::getService("sms.lib.SmsUtilService")->db_create_in($sms_ids));
+				$return=Openbiz::getObject($this->smsQueueDO)->updateRecords("[status]='sending'","[Id] ".Openbiz::getService("sms.lib.SmsUtilService")->db_create_in($sms_ids));
 				 break;
 		}
 		return $return;
@@ -188,7 +191,7 @@ class SmsService extends MetaObject
 	 */
 	protected function _addSmsQueueInfo($mobile,$content,$defer)
 	{
-		$SmsQueueDO = BizSystem::getObject($this->smsQueueDO);
+		$SmsQueueDO = Openbiz::getObject($this->smsQueueDO);
 		if(!$this->validateMobile($mobile))
 		{
 			return false;
@@ -206,7 +209,7 @@ class SmsService extends MetaObject
 	 */
 	protected function _getSmsQueue($limit=1)
 	{
-		$SmsQueueDO = BizSystem::getObject($this->smsQueueDO);
+		$SmsQueueDO = Openbiz::getObject($this->smsQueueDO);
 		$SmsQueueArr=$SmsQueueDO->directFetch("[status]='pending' AND [mobile] IS NOT NULL",$limit,0,"[Id] ASC");
 		 if($SmsQueueArr)
 		 {
@@ -225,7 +228,7 @@ class SmsService extends MetaObject
 			return $this->smsPreference;
 		}
 		
-		$PreferenceDO = BizSystem::getObject($this->preferenceDO);
+		$PreferenceDO = Openbiz::getObject($this->preferenceDO);
 		$PreferenceArr=$PreferenceDO->directFetch("[section]='SMS'");
 		 if($PreferenceArr)
 		 {
@@ -246,7 +249,7 @@ class SmsService extends MetaObject
  */
 	protected function _getProvider(){
 
-		$SmsProviderDO = BizSystem::getObject($this->smsProviderDO);
+		$SmsProviderDO = Openbiz::getObject($this->smsProviderDO);
 		$SmsPreference=$this->_getSmsPreference();
 		switch($SmsPreference['dispatch'])
 		{
@@ -264,7 +267,7 @@ class SmsService extends MetaObject
 		}
 		if(!$SmsProviderInfo)
 		{
-			BizSystem::getService(LOG_SERVICE)->log(LOG_ERR,"SMS","No available provider found");
+			Openbiz::getService(LOG_SERVICE)->log(LOG_ERR,"SMS","No available provider found");
 			return false;
 		}
 		$SmsProviderArr['type']=$SmsProviderInfo['type'];
@@ -273,7 +276,7 @@ class SmsService extends MetaObject
 		$obj=$this->_loadProviderDriver($SmsProviderArr['type'],$SmsProviderArr['driver']);	
 		if(!is_object($obj))
 		{
-			BizSystem::getService(LOG_SERVICE)->log(LOG_ERR,"SMS","Cannot load provider driver :".$SmsProviderArr['driver']);			
+			Openbiz::getService(LOG_SERVICE)->log(LOG_ERR,"SMS","Cannot load provider driver :".$SmsProviderArr['driver']);			
 			return false;
 		}		
 		return $obj;
@@ -293,12 +296,12 @@ class SmsService extends MetaObject
 		}
 		else
 		{
-			$SmsProviderDO = BizSystem::getObject($this->smsProviderDO);
+			$SmsProviderDO = Openbiz::getObject($this->smsProviderDO);
 			$ProvidersInfo =$SmsProviderDO->fetchOne
 			("[status]=1 AND [type]='{$providerCode}'");
 			if(!$ProvidersInfo)
 			{
-				BizSystem::getService(LOG_SERVICE)->log(LOG_ERR,"SMS","No available provider found");				
+				Openbiz::getService(LOG_SERVICE)->log(LOG_ERR,"SMS","No available provider found");				
 				return false;
 			}
 			$FileName=str_replace('.','/', $ProvidersInfo['driver']);
@@ -308,7 +311,7 @@ class SmsService extends MetaObject
 		$driverrFile=OPENBIZ_APP_MODULE_PATH.'/'.$FileName.'.php';
 		if(!file_exists($driverrFile))
 		{
-			BizSystem::getService(LOG_SERVICE)->log(LOG_ERR,"SMS","Cannot load provider driver :".$ProvidersInfo['driver']);			
+			Openbiz::getService(LOG_SERVICE)->log(LOG_ERR,"SMS","Cannot load provider driver :".$ProvidersInfo['driver']);			
 			return false;
 		}
 		else
@@ -344,6 +347,3 @@ class SmsService extends MetaObject
 		return $return;
 	}
 }
-
-
-?>

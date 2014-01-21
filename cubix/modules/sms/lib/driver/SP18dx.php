@@ -1,4 +1,7 @@
-<?php 
+<?php
+
+use Openbiz\Openbiz;
+
 require_once 'iSMS.php';
 require_once 'SPDriver.php';
 //SP = Service Provider 18dx
@@ -44,11 +47,11 @@ class SP18dx extends SPDriver  implements iSMS
 			unset($Param['time']);
 		}
 		$url=$this->url.http_build_query($Param); 
-		$recinfo=BizSystem::getService("sms.lib.SmsUtilService")->getHttpResponse($url);
+		$recinfo=Openbiz::getService("sms.lib.SmsUtilService")->getHttpResponse($url);
 		parse_str($recinfo,$recArr);
 		if($recArr['errid']!=1)
 		{	
-			BizSystem::getService(LOG_SERVICE)->log(LOG_ERR,"SMS","sendMessage: ". $recArr['msg'].' 18dx:'.$mobile.':'.$recinfo);
+			Openbiz::getService(LOG_SERVICE)->log(LOG_ERR,"SMS","sendMessage: ". $recArr['msg'].' 18dx:'.$mobile.':'.$recinfo);
 			return false;
 		}
 		else
@@ -67,11 +70,11 @@ class SP18dx extends SPDriver  implements iSMS
 					'user'=>$ProviderInfo['username'],
 					'hashcode'=>strtoupper(md5($ProviderInfo['password']))
 				);
-		$recinfo=BizSystem::getService("sms.lib.SmsUtilService")->curl($this->url,$Param);
+		$recinfo=Openbiz::getService("sms.lib.SmsUtilService")->curl($this->url,$Param);
 		$errorInfo=$this->getMsg($recinfo);
 		if($errorInfo)
 		{			
-			BizSystem::getService(LOG_SERVICE)->log(LOG_ERR,"SMS","getSentMessageCount 18dx:".$errorInfo);
+			Openbiz::getService(LOG_SERVICE)->log(LOG_ERR,"SMS","getSentMessageCount 18dx:".$errorInfo);
 			return false;
 		}
 		else
@@ -101,4 +104,3 @@ class SP18dx extends SPDriver  implements iSMS
 		return $msg[$recinfo];
 	}
 }
-?>

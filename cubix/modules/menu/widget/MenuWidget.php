@@ -11,9 +11,13 @@
  * @link      http://code.google.com/p/openbiz-cubi/
  * @version   $Id: MenuWidget.php 5327 2013-03-25 05:09:15Z agus.suhartono@gmail.com $
  */
+
+use Openbiz\Openbiz;
+use Openbiz\i18n\I18n;
+
 include_once OPENBIZ_APP_MODULE_PATH . DIRECTORY_SEPARATOR . 'menu' . DIRECTORY_SEPARATOR . 'widget' . DIRECTORY_SEPARATOR . 'MenuRenderer.php';
 
-class MenuWidget extends MetaObject implements iUIControl
+class MenuWidget extends MetaObject implements UIControlInterface
 {
 
     public $title;
@@ -62,14 +66,14 @@ class MenuWidget extends MetaObject implements iUIControl
         if ($this->cacheLifeTime > 0) {
             $cache_id = md5($this->objectName);
             //try to process cache service.
-            $cacheSvc = BizSystem::getService(CACHE_SERVICE, 1);
+            $cacheSvc = Openbiz::getService(CACHE_SERVICE, 1);
             $cacheSvc->init($this->objectName, $this->cacheLifeTime);
 
             if ($cacheSvc->test($cache_id)) {
-                BizSystem::log(LOG_DEBUG, "MENU", "Cache Hit. menu widget name = " . $this->objectName);
+                Openbiz::$app->getLog()->log(LOG_DEBUG, "MENU", "Cache Hit. menu widget name = " . $this->objectName);
                 $output = $cacheSvc->load($cache_id);
             } else {
-                BizSystem::log(LOG_DEBUG, "MENU", "Set cache. menu widget = " . $this->objectName);
+                Openbiz::$app->getLog()->log(LOG_DEBUG, "MENU", "Set cache. menu widget = " . $this->objectName);
                 $output = $this->renderHTML();
                 $cacheSvc->save($output, $cache_id);
             }
@@ -123,12 +127,15 @@ class MenuWidget extends MetaObject implements iUIControl
     final public function getDataObj()
     {
         if (!$this->dataObj) {
-            if ($this->dataObjName)
-                $this->dataObj = BizSystem::getObject($this->dataObjName, 1);
-            if ($this->dataObj)
-                $this->dataObj->bizFormName = $this->objectName;
-            else {
-                //BizSystem::clientProxy()->showErrorMessage("Cannot get DataObj of ".$this->dataObjName.", please check your metadata file.");
+            if ($this->dataObjName) {
+                $this->dataObj = Openbiz::getObject($this->dataObjName, 1);
+            }
+            if ($this->dataObj) {
+                // @todo : need inspect
+                // note: maybe use parent or caller
+                //$this->dataObj->bizFormName = $this->objectName;
+            } else {
+                //Openbiz::$app->getClientProxy()->showErrorMessage("Cannot get DataObj of ".$this->dataObjName.", please check your metadata file.");
                 return null;
             }
         }
@@ -159,5 +166,3 @@ class MenuWidget extends MetaObject implements iUIControl
     }
 
 }
-
-?>

@@ -15,4 +15,4 @@ class ContactTypeForm extends EasyForm
 {
 	
 }
-?>
+

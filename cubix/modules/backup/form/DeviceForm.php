@@ -39,4 +39,3 @@ class DeviceForm extends EasyForm
         
     }
 }
-?>

@@ -30,7 +30,7 @@ $app->get('/:module/:resource/:id', function ($module,$resource,$id) {
 	$app = \Slim\Slim::getInstance();
 	// forward to module rest service implementation
 	$restServiceName = $module.".websvc."."RestService";
-	$restSvc = BizSystem::getObject($restServiceName);
+	$restSvc = Openbiz::getObject($restServiceName);
 	$restSvc->get($resource, $id, $app->request(), $app->response());
 });
 
@@ -39,7 +39,7 @@ $app->post('/:module/:resource',  function ($module,$resource) {
 	$app = \Slim\Slim::getInstance();
 	// forward to module rest service implementation
 	$restServiceName = $module.".websvc."."RestService";
-	$restSvc = BizSystem::getObject($restServiceName);
+	$restSvc = Openbiz::getObject($restServiceName);
 	$restSvc->post($resource, $app->request(), $app->response());
 });
 
@@ -48,7 +48,7 @@ $app->put('/:module/:resource/:id',  function ($module,$resource,$id) {
 	$app = \Slim\Slim::getInstance();
 	// forward to module rest service implementation
 	$restServiceName = $module.".websvc."."RestService";
-	$restSvc = BizSystem::getObject($restServiceName);
+	$restSvc = Openbiz::getObject($restServiceName);
 	$restSvc->put($resource, $id, $app->request(), $app->response());
 });
 
@@ -57,7 +57,7 @@ $app->delete('/:module/:resource/:id',  function ($module,$resource,$id) {
 	$app = \Slim\Slim::getInstance();
 	// forward to module rest service implementation
 	$restServiceName = $module.".websvc."."RestService";
-	$restSvc = BizSystem::getObject($restServiceName);
+	$restSvc = Openbiz::getObject($restServiceName);
 	$restSvc->delete($resource, $id, $app->request(), $app->response());
 });
 

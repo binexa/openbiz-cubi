@@ -90,6 +90,4 @@ class Google_Translate_API {
 }
 
 
-?>
-
 

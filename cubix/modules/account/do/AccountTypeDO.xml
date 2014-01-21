@@ -7,7 +7,7 @@
     <BizField Name="color" Column="color" Description="Color Code" Type="Text"/>
     <BizField Name="sortorder" Column="sortorder" Description="Sort Order" Required="Y"/>
     <BizField Name="group_id" Column="group_id" Description="Group Id" ValueOnCreate="{@profile:default_group}" Required="N" Type="Number"/>
-    <BizField Name="group_perm" Column="group_perm" Description="Group Permission" ValueOnCreate="{BizSystem::GetDefaultPerm(group)}" Required="N" Type="Number"/>
+    <BizField Name="group_perm" Column="group_perm" Description="Group Permission" ValueOnCreate="{\Openbiz\Openbiz::$app->getDefaultPerm(group)}" Required="N" Type="Number"/>
     <BizField Name="other_perm" Column="other_perm" Description="Other Group Permission" ValueOnCreate="1" Required="N" Type="Number"/>
     <BizField Name="create_by" Column="create_by" Description="Create By" Type="Number" ValueOnCreate="{@profile:Id}"/>
     <BizField Name="create_time" Column="create_time" Description="Create Time" Type="Datetime" ValueOnCreate="{date('Y-m-d H:i:s')}"/>

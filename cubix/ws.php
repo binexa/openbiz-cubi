@@ -5,12 +5,13 @@
  * LICENSE http://code.google.com/p/openbiz-cubi/wiki/CubiLicense
  *
  * @package   \
- * @copyright Copyright (c) 2005-2011, Openbiz Technology LLC
+ * @copyright Copyright (c) 2005-2014, Openbiz Technology LLC
  * @license   http://code.google.com/p/openbiz-cubi/wiki/CubiLicense
  * @link      http://code.google.com/p/openbiz-cubi/
- * @version   $Id: ws.php 5272 2013-01-25 10:43:42Z hellojixian@gmail.com $
+ * @version   $Id$
  */
 
+use Openbiz\Core\ErrorHandler;
 
 /* cubi web service entry point
   request example:
@@ -27,7 +28,7 @@
 */
 define("OPENBIZ_USE_CUSTOM_SESSION_HANDLER",true);     
 include_once 'bin/app_init.php';
-include_once OPENBIZ_PATH."/bin/ErrorHandler.php";
+//include_once OPENBIZ_PATH."/bin/ErrorHandler.php";
 
 // find the module name and service name
 $script = preg_quote("\\".$_SERVER['SCRIPT_NAME'],'/');
@@ -69,14 +70,14 @@ if(count($inputs)>=3)
 	}
 }
 
-OB_ErrorHandler::$errorMode = 'text';
+ErrorHandler::$errorMode = 'text';
 if($module && $service){
 if(!preg_match("/Service$/s",$service)){
 	$service.="Service";
 }
 $websvc = $module.".websvc.".$service;
 // get service object
-$svcObj = BizSystem::getObject($websvc);
+$svcObj = Openbiz::getObject($websvc);
 
 // invoke the method 
 $svcObj->invoke();

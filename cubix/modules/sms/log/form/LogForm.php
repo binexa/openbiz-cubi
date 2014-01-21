@@ -11,21 +11,22 @@
  * @version   $Id: SmsQueueForm.php 3358 2012-08-15 fsliit@gmail.com $
  */
 
+use Openbiz\Openbiz;
 
 class LogForm extends EasyForm
 {
 	 public function ClearLog()	
 	{
        if ($this->resource != "" && !$this->allowAccess("sms.Manage"))
-            return BizSystem::clientProxy()->redirectView(OPENBIZ_ACCESS_DENIED_VIEW);
+            return Openbiz::$app->getClientProxy()->redirectView(OPENBIZ_ACCESS_DENIED_VIEW);
 
         try
         {
           $this->getDataObj()->deleteRecords();
         } 
-        catch (BDOException $e)
+        catch (Openbiz\data\Exception $e)
         {
-           $this->processBDOException($e);
+           $this->processDataException($e);
            return;
         }
        
@@ -39,11 +40,10 @@ class LogForm extends EasyForm
 	
 	public function ExportCSV()
 	{
-		$excelSvc = BizSystem::getService(EXCEL_SERVICE);	
+		$excelSvc = Openbiz::getService(EXCEL_SERVICE);	
 		$excelSvc->renderCSV($this->objectName);
 		$this->runEventLog();
 		return true;
 	}	
 	
 }
-?>

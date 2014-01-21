@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Openbiz Cubi Application Platform
  *
@@ -11,20 +12,7 @@
  * @version   $Id: ForgetPassForm.php 3375 2012-05-31 06:23:11Z rockyswen@gmail.com $
  */
 
-/**
- * Openbiz Cubi 
- *
- * LICENSE
- *
- * This source file is subject to the BSD license that is bundled
- * with this package in the file LICENSE.txt.
- *
- * @package   user.form
- * @copyright Copyright (c) 2005-2011, Rocky Swen
- * @license   http://www.opensource.org/licenses/bsd-license.php
- * @link      http://www.phpopenbiz.org/
- * @version   $Id: ForgetPassForm.php 3375 2012-05-31 06:23:11Z rockyswen@gmail.com $
- */
+use Openbiz\Openbiz;
 
 /**
  * ForgetPassForm class - implement the logic of forget password form
@@ -36,6 +24,7 @@
  */
 class ForgetPassForm extends EasyForm
 {
+
     /**
      * Reset the password
      *
@@ -43,50 +32,45 @@ class ForgetPassForm extends EasyForm
      */
     public function resetPassword()
     {
-    	global $g_BizSystem;
         $recArr = $this->readInputs();
 
         $this->setActiveRecord($recArr);
         if (count($recArr) == 0)
             return;
 
-        try
-        {
+        try {
             $this->ValidateForm();
-	        if($this->ValidateEmail($recArr['username'], $recArr['email']))
-	        {
-	        	//Init user profile for event logging
-	        	$profile = $g_BizSystem->InituserProfile($recArr['username']);
-	        }else{
-	        	return;
-	        }
-	        
-	        //generate pass_token
-	        $token = $this->GenerateToken($profile);
-	        
-	        if($token){
-	        	//event log	        		        	
-	        	
-	        	$eventlog 	= BizSystem::getService(OPENBIZ_EVENTLOG_SERVICE);
-	        	$logComment=array($username,$_SERVER['REMOTE_ADDR']);
-	    		$eventlog->log("USER_MANAGEMENT", "MSG_GET_PASSWORD_TOKEN", $logComment);
-					    		
-	        	//send user email
-	        	$emailObj 	= BizSystem::getService(CUBI_USER_EMAIL_SERVICE);
-	        	$emailObj->UserResetPassword($token['Id']);
+            if ($this->ValidateEmail($recArr['username'], $recArr['email'])) {
+                //Init user profile for event logging
+                $profile = Openbiz::$app->InituserProfile($recArr['username']);
+            } else {
+                return;
+            }
 
-	        	BizSystem::SessionContext()->destroy();
-	    		//goto URL
-	    		$this->processPostAction();
-	        }
-        }
-        catch (ValidationException $e)
-        {
+            //generate pass_token
+            $token = $this->GenerateToken($profile);
+
+            if ($token) {
+                //event log
+
+                $eventlog = Openbiz::getService(OPENBIZ_EVENTLOG_SERVICE);
+                $logComment = array($username, $_SERVER['REMOTE_ADDR']);
+                $eventlog->log("USER_MANAGEMENT", "MSG_GET_PASSWORD_TOKEN", $logComment);
+
+                //send user email
+                $emailObj = Openbiz::getService(CUBI_USER_EMAIL_SERVICE);
+                $emailObj->UserResetPassword($token['Id']);
+
+                Openbiz::$app->getSessionContext()->destroy();
+                //goto URL
+                $this->processPostAction();
+            }
+        } catch (Openbiz\validation\Exception $e) {
             $this->processFormObjError($e->errors);
             return;
-        }  
+        }
     }
-   
+
     /**
      * Generate an unique token for future validation
      *
@@ -94,31 +78,27 @@ class ForgetPassForm extends EasyForm
      * @return mixed $token array or false
      */
     protected function GenerateToken($userProfile)
-    {   		   	
-   		$token = uniqid();
-   		$recArr = array(
-   					"user_id" => $userProfile['Id'],
-   					"token" => $token,
-   					"expiration" => date("Y-m-d H:i:s", time()+86400*2),   					
-   					);
-   		$tokenObj = BizSystem::getObject('system.do.UserPassTokenDO');
-   		try
-        {
-   			if($tokenObj->insertRecord($recArr))
-   			{
-   				$recArr = $tokenObj->getActiveRecord();
-   				return $recArr;   					
-   			}else{
-   				return false;
-   			}
-   		} 
-        catch (BDOException $e) 
-        {
-	          $errorMsg = $e->getMessage();
-	          BizSystem::log(LOG_ERR, "DATAOBJ", "DataObj error = ".$errorMsg);
-	          BizSystem::ClientProxy()->showErrorMessage($errorMsg);
-	          return false;
-	    }
+    {
+        $token = uniqid();
+        $recArr = array(
+            "user_id" => $userProfile['Id'],
+            "token" => $token,
+            "expiration" => date("Y-m-d H:i:s", time() + 86400 * 2),
+        );
+        $tokenObj = Openbiz::getObject('system.do.UserPassTokenDO');
+        try {
+            if ($tokenObj->insertRecord($recArr)) {
+                $recArr = $tokenObj->getActiveRecord();
+                return $recArr;
+            } else {
+                return false;
+            }
+        } catch (Openbiz\data\Exception $e) {
+            $errorMsg = $e->getMessage();
+            Openbiz::$app->getLog()->log(LOG_ERR, "DATAOBJ", "DataObj error = " . $errorMsg);
+            Openbiz::$app->getClientProxy()->showErrorMessage($errorMsg);
+            return false;
+        }
     }
 
     /**
@@ -130,25 +110,22 @@ class ForgetPassForm extends EasyForm
      */
     protected function validateEmail($username, $email)
     {
-		$userObj = BizSystem::getObject('system.do.UserDO');
-		try 
-        {
-		   	$userProfile = $userObj->directFetch("[username]='".$username."' and status='1'", 1);
-		   	$userProfile = $userProfile[0];
-            
-		   	if($userProfile['email'] != $email){
-		   		$errorMessage = $this->getMessage("EMAIL_INVALID");
-                $this->validateErrors['email'] 	= $errorMessage;                
-				throw new ValidationException($this->validateErrors);
-				return false;
-		   	}		   	
-	      } 
-	        catch (ValidationException $e)
-	        {
-	            $this->processFormObjError($e->errors);
-	            return;
-	        }  
-	      return true;
-	}
-}  
-?>   
+        $userObj = Openbiz::getObject('system.do.UserDO');
+        try {
+            $userProfile = $userObj->directFetch("[username]='" . $username . "' and status='1'", 1);
+            $userProfile = $userProfile[0];
+
+            if ($userProfile['email'] != $email) {
+                $errorMessage = $this->getMessage("EMAIL_INVALID");
+                $this->validateErrors['email'] = $errorMessage;
+                throw new Openbiz\validation\Exception($this->validateErrors);
+                return false;
+            }
+        } catch (Openbiz\validation\Exception $e) {
+            $this->processFormObjError($e->errors);
+            return;
+        }
+        return true;
+    }
+
+}

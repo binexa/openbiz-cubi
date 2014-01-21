@@ -6,4 +6,3 @@ class ContactRestService extends RestService
 {
 	protected $resourceDOMap = array('contacts'=>'contact.do.ContactDO');
 }
-?>

@@ -100,7 +100,7 @@ class EtlListbox extends EditCombobox
                 'dbname'   => $db_name,
                 'port'     => $port
         );
-        $db = Zend_Db::factory($driver, $params);
+        $db = \Zend_Db::factory($driver, $params);
         return $db;
     }
     
@@ -132,4 +132,4 @@ class EtlListbox extends EditCombobox
     }
 }
 
-?>
+

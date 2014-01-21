@@ -11,14 +11,16 @@
  * @version   $Id: UserGroupsForm.php 3372 2012-05-31 06:19:06Z rockyswen@gmail.com $
  */
 
+use Openbiz\Openbiz;
+
 class UserGroupsForm extends EasyForm{
 	public function SetDefault($group_id=null){
 		if($group_id==null){
-			$group_id =  (int)BizSystem::clientProxy()->getFormInputs('_selectedId');
+			$group_id =  (int)Openbiz::$app->getClientProxy()->getFormInputs('_selectedId');
 		}
-		$user_id = (int)BizSystem::objectFactory()->getObject('system.form.UserDetailForm')->recordId;
+		$user_id = (int)Openbiz::getObject('system.form.UserDetailForm')->recordId;
 		
-		$groupDo = BizSystem::getObject("system.do.UserGroupDO",1);
+		$groupDo = Openbiz::getObject("system.do.UserGroupDO",1);
 		$groupDo->updateRecords("[default]=0","[user_id]='$user_id'");		
 		$groupDo->updateRecords("[default]=1","[user_id]='$user_id' and [group_id]='$group_id'");
 		
@@ -26,4 +28,3 @@ class UserGroupsForm extends EasyForm{
 		$this->UpdateForm();
 	}
 }
-?>

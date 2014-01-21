@@ -26,6 +26,8 @@
  * @version   $Id: ResetPasswordForm.php 5285 2013-01-28 06:06:35Z fsliit@gmail.com $
  */
 
+use Openbiz\Openbiz;
+
 /**
  * ForgetPassForm class - implement the logic of forget password form
  *
@@ -62,7 +64,7 @@ class ResetPasswordForm extends UserForm
         {
             $this->ValidateForm();
         }
-        catch (ValidationException $e)
+        catch (Openbiz\validation\Exception $e)
         {
         	$this->processFormObjError($e->errors);
             return;
@@ -71,7 +73,7 @@ class ResetPasswordForm extends UserForm
         if (count($recArr) == 0)
             return;
 
-        $password = BizSystem::ClientProxy()->GetFormInputs("fld_password");            
+        $password = Openbiz::$app->getClientProxy()->GetFormInputs("fld_password");            
         if($password){
         	$recArr['password'] = hash(HASH_ALG, $password);
 		}        
@@ -85,11 +87,10 @@ class ResetPasswordForm extends UserForm
         // ...
 
 		// init profile
-	    global $g_BizSystem;
-	    $profile = $g_BizSystem->InitUserProfile($currentRec['username']);
+	    $profile = Openbiz::$app->InitUserProfile($currentRec['username']);
     				       	
        	//run eventlog
-        $eventlog 	= BizSystem::getService(OPENBIZ_EVENTLOG_SERVICE);
+        $eventlog 	= Openbiz::getService(OPENBIZ_EVENTLOG_SERVICE);
         $logComment=array($currentRec['username']);
     	$eventlog->log("USER_MANAGEMENT", "MSG_RESET_PASSWORD_BY_TOKEN", $logComment);       	
 	    
@@ -111,7 +112,7 @@ class ResetPasswordForm extends UserForm
     		return false;
     	}
     	
-    	$tokenObj = BizSystem::getObject('system.do.UserPassTokenDO');
+    	$tokenObj = Openbiz::getObject('system.do.UserPassTokenDO');
         $tokenArr = $tokenObj->directFetch("[token]='$token'", 1);
         if(count($tokenArr)==1)
         {
@@ -135,19 +136,19 @@ class ResetPasswordForm extends UserForm
     {	
     
     	//validate password
-    	$password = BizSystem::ClientProxy()->GetFormInputs("fld_password");
-		$validateSvc = BizSystem::getService(VALIDATE_SERVICE);
+    	$password = Openbiz::$app->getClientProxy()->GetFormInputs("fld_password");
+		$validateSvc = Openbiz::getService(VALIDATE_SERVICE);
 		if(!$validateSvc->betweenLength($password,6,50))
 		{
 			$errorMessage = $this->GetMessage("PASSWORD_LENGTH");
 			$this->validateErrors['fld_password'] = $errorMessage;
-			throw new ValidationException($this->validateErrors);
+			throw new Openbiz\validation\Exception($this->validateErrors);
 			return false;
 		}
 		
     	// disable password validation if they are empty
-    	$password = BizSystem::ClientProxy()->GetFormInputs("fld_password");
-		$password_repeat = BizSystem::ClientProxy()->GetFormInputs("fld_password_repeat");
+    	$password = Openbiz::$app->getClientProxy()->GetFormInputs("fld_password");
+		$password_repeat = Openbiz::$app->getClientProxy()->GetFormInputs("fld_password_repeat");
     	if (!$password_repeat)
     	    $this->getElement("fld_password")->validator = null;
     	if (!$password)
@@ -160,11 +161,11 @@ class ResetPasswordForm extends UserForm
 			$passRepeatElem = $this->getElement("fld_password_repeat");
 			$errorMessage = $this->GetMessage("PASSOWRD_REPEAT_NOTSAME",array($passRepeatElem->label));
 			$this->validateErrors['fld_password_repeat'] = $errorMessage;
-			throw new ValidationException($this->validateErrors);
+			throw new Openbiz\validation\Exception($this->validateErrors);
 			return false;
 		}
 	
         return true;
     }     
 }  
-?>   
+ 

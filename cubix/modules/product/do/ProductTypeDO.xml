@@ -49,7 +49,7 @@
 		<BizField Name="group_perm" 
 				Column="group_perm"	
 				Description="Group Permission" 
-				ValueOnCreate="{BizSystem::GetDefaultPerm(group)}"   
+				ValueOnCreate="{\Openbiz\Openbiz::$app->getDefaultPerm(group)}"   
 				Required="N" 
 				Type="Number"/>
 		<BizField Name="other_perm" 

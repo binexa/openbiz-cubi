@@ -456,4 +456,3 @@ function _putType0($font)
 	$this->_out('endobj');
 }
 }
-?>

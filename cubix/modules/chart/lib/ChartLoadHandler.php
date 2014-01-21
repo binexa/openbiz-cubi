@@ -1,4 +1,7 @@
 <?php
+
+use Openbiz\Openbiz;
+
 include_once (OPENBIZ_APP_MODULE_PATH."/system/lib/ModuleLoadHandler.php");
 
 class ChartLoadHandler implements ModuleLoadHandler
@@ -10,10 +13,10 @@ class ChartLoadHandler implements ModuleLoadHandler
     public function postLoadingModule($moduelLoader)
     {
     	
-    	$roleRec = BizSystem::getObject("system.do.RoleDO")->fetchOne("[name]='Cubi Member'");
+    	$roleRec = Openbiz::getObject("system.do.RoleDO")->fetchOne("[name]='Cubi Member'");
     	$roleId = $roleRec['Id'];
     	
-    	$actionRec = BizSystem::getObject("system.do.AclActionDO")->fetchOne("[module]='chart' AND [resource]='Chart' AND [action]='View_Chart'");
+    	$actionRec = Openbiz::getObject("system.do.AclActionDO")->fetchOne("[module]='chart' AND [resource]='Chart' AND [action]='View_Chart'");
     	$actionId = $actionRec["Id"];
     	
     	$aclRecord = array(
@@ -21,8 +24,7 @@ class ChartLoadHandler implements ModuleLoadHandler
     		"action_id" => $actionId,
     		"access_level" => 1
     	);
-    	BizSystem::getObject("system.do.AclRoleActionDO")->insertRecord($aclRecord);
+    	Openbiz::getObject("system.do.AclRoleActionDO")->insertRecord($aclRecord);
     }
 }
 
-?>

@@ -11,21 +11,23 @@
  * @version   $Id: AccessDenyForm.php 5053 2013-01-05 06:30:02Z hellojixian@gmail.com $
  */
 
+use Openbiz\Openbiz;
+
 class AccessDenyForm extends EasyForm
 {
 	public $isDefaultPage = 0;
 	
-    public function saveSessionVars($sessionContext)
+    public function saveStatefullVars($sessionContext)
     {
     	$current_url = $this->getUrlAddress();
 		$sessionContext->saveObjVar("SYSTEM", "LastViewedPage", $current_url);
-		parent::saveSessionVars($sessionContext);
+		parent::saveStatefullVars($sessionContext);
     }
     
     public function fetchData()
     {
 		$url = $_SERVER['REQUEST_URI'];
-		$roleStartpages = BizSystem::getUserProfile("roleStartpage");
+		$roleStartpages = Openbiz::$app->getUserProfile("roleStartpage");
 		$default_url = OPENBIZ_APP_INDEX_URL.$roleStartpages[0];		
 		if($url == $default_url)
 		{
@@ -44,4 +46,3 @@ class AccessDenyForm extends EasyForm
 	    return $url .'://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
 	}
 }
-?>

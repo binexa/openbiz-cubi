@@ -699,4 +699,3 @@ function raise_error ( $code, $halt = false )
 }
 
 
-?>

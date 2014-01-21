@@ -4,12 +4,12 @@ class ResetPasswordView extends EasyView
 
 	protected  $forceResetPassword = false;
 	
-    public function loadSessionVars($sessionContext)
+    public function loadStatefullVars($sessionContext)
     {
         $sessionContext->loadObjVar($this->objectName, "ForceResetPassword", $this->forceResetPassword);        
     }
 
-    public function saveSessionVars($sessionContext)
+    public function saveStatefullVars($sessionContext)
     {       
         $sessionContext->saveObjVar($this->objectName, "ForceResetPassword", $this->forceResetPassword);
     }	
@@ -30,4 +30,3 @@ class ResetPasswordView extends EasyView
     	return parent::render();
     }
 }
-?>

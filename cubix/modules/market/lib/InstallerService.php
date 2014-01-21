@@ -10,6 +10,9 @@
  * @link      http://code.google.com/p/openbiz-cubi/
  * @version   $Id: InstallerService.php 4740 2012-11-15 07:43:52Z hellojixian@gmail.com $
  */
+
+use Openbiz\Openbiz;
+
 set_time_limit(0);
 require_once "PackageService.php";
 
@@ -23,7 +26,7 @@ class InstallerService extends PackageService
 	public function getRepoUID($uri)
 	{
 		$uri = addslashes($uri);
-		$repoRec = BizSystem::getObject("market.repository.do.RepositoryDO")->fetchOne("[repository_uri]='$uri'");
+		$repoRec = Openbiz::getObject("market.repository.do.RepositoryDO")->fetchOne("[repository_uri]='$uri'");
 		if($repoRec)
 		{
 			
@@ -102,7 +105,7 @@ class InstallerService extends PackageService
         }
         $total = 0;
         $contents = '';
-        $utilService = BizSystem::getService("service.utilService");
+        $utilService = Openbiz::getService("service.utilService");
         while (!feof($handle)) {
             $contents = fread($handle, 8192);
             $result = fwrite($fp, $contents);
@@ -201,7 +204,7 @@ class InstallerService extends PackageService
         $this->setInstallInfo($package, array("state"=>"Install","log"=>"Installing ..."));
 
 		//trigger remote log action      
-        $operator = BizSystem::GetProfileName(BizSystem::getUserProfile("Id"),'short');  
+        $operator = Openbiz::$app->getProfile()->getProfileName(Openbiz::$app->getUserProfile("Id"),'short');  
         $app_id = $package['app_id'];
         $release_id = $package['Id'];
         $this->recordInstallLog($uri,$app_id,$release_id,SITE_URL,$operator);              
@@ -247,7 +250,7 @@ class InstallerService extends PackageService
         $time = date('Y-m-d H:i:s');
 
         //reload current profile
-        BizSystem::getService(ACL_SERVICE)->clearACLCache();
+        Openbiz::getService(ACL_SERVICE)->clearACLCache();
 
         $this->setInstallInfo($package, array("time"=>$time,"version"=>$package['version'],"state"=>"OK","log"=>"Completed"));
     }    
@@ -263,7 +266,7 @@ class InstallerService extends PackageService
     
     protected function setInstallInfo($pkgArr,$installInfo)
     {	                                	
-        $pkgDo = BizSystem::GetObject(self::INSTALLED_DO);        
+        $pkgDo = Openbiz::getObject(self::INSTALLED_DO);        
         $searchRule = " [app_id]='".$pkgArr['app_id']."' AND         				
         				[repository_uid]='".$pkgArr['repository_uid']."' 
         				";
@@ -299,7 +302,7 @@ class InstallerService extends PackageService
 	function pkg_log($text)
 	{
 	    if (CLI) echo $text.nl;
-	    //BizSystem::log(LO_ERR, "ECHO", $text);
+	    //Openbiz::$app->getLog()->log(LO_ERR, "ECHO", $text);
 	    $logfile = OPENBIZ_LOG_PATH."/INSTALL_PKG.log";
 	    $fp = fopen($logfile, "a+");
 	    fwrite($fp, date('c')." ".$text);
@@ -309,4 +312,3 @@ class InstallerService extends PackageService
 }
 
 
-?>

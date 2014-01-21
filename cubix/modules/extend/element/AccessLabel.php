@@ -11,6 +11,9 @@
  * @version   $Id: AccessLabel.php 3360 2012-05-31 06:00:17Z rockyswen@gmail.com $
  */
 
+use Openbiz\Openbiz;
+use Openbiz\i18n\I18n;
+
 class AccessLabel extends LabelList
 {
 	public function getSelectFrom(){
@@ -19,7 +22,7 @@ class AccessLabel extends LabelList
 		{
 			$formname = "extend.widget.ExtendSettingListEditForm";
 		}		
-		return BizSystem::getObject($formname)
+		return Openbiz::getObject($formname)
 					->parentFormElementMeta['ATTRIBUTES']['ACCESSSELECTFROM'];
 	}
     protected function translateList(&$list, $tag)
@@ -30,4 +33,3 @@ class AccessLabel extends LabelList
     }
 
 }
-?>

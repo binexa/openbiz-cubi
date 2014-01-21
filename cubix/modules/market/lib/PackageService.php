@@ -11,12 +11,16 @@
  * @version   $Id: PackageService.php 5038 2013-01-04 08:46:28Z hellojixian@gmail.com $
  */
 
+use Openbiz\Openbiz;
+use Openbiz\i18n\I18n;
+
 include_once(OPENBIZ_APP_MODULE_PATH."/common/lib/fileUtil.php");
 include_once(OPENBIZ_APP_MODULE_PATH."/common/lib/httpClient.php");
 include_once(OPENBIZ_APP_MODULE_PATH."/system/lib/ModuleLoader.php");
 
 class PackageService extends MetaObject
 {
+    public $cacheLifeTime=0;
 	
 	public function discoverFeaturedApps($uri,$formParams=array())
 	{
@@ -95,7 +99,7 @@ class PackageService extends MetaObject
 	protected function _remoteCall($uri,$method,$params=null)
     {
         $cache_id = md5($this->objectName.$uri. $method .serialize($params));         
-        $cacheSvc = BizSystem::getService(CACHE_SERVICE,1);
+        $cacheSvc = Openbiz::getService(CACHE_SERVICE,1);
         $cacheSvc->init($this->objectName,$this->cacheLifeTime);        		
     	if(substr($uri,strlen($uri)-1,1)!='/'){
         	$uri .= '/';
@@ -109,7 +113,7 @@ class PackageService extends MetaObject
         }else{
         	try{        		
 		        $argsJson = urlencode(json_encode($params));
-		        $lang = i18n::getCurrentLangCode();
+		        $lang = I18n::getCurrentLangCode();
         		$query = array(	"method=$method","format=json","argsJson=$argsJson","lang=$lang");
 		        
 		        $httpClient = new HttpClient('POST');
@@ -131,4 +135,3 @@ class PackageService extends MetaObject
     
  
 }
-?>

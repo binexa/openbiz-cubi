@@ -26,6 +26,8 @@
  * @version   $Id: SettingForm.php 3369 2012-05-31 06:13:56Z rockyswen@gmail.com $
  */
 
+use Openbiz\Openbiz;
+use Openbiz\Data\Helpers\QueryStringParam;
 
 /**
  * AccountEditForm class - implement the logic of edit my account form
@@ -42,13 +44,13 @@ class SettingForm extends EasyForm
     function __construct(&$xmlArr)
     {
         parent::__construct($xmlArr);        
-        $this->_userId = BizSystem::getUserProfile("Id");
+        $this->_userId = Openbiz::$app->getUserProfile("Id");
     }
     
     public function allowAccess(){
     	parent::allowAccess();
 
-    	if(BizSystem::getUserProfile("Id"))
+    	if(Openbiz::$app->getUserProfile("Id"))
     	{
   	 		return 1;
     	}
@@ -111,7 +113,7 @@ class SettingForm extends EasyForm
         {
             $this->ValidateForm();
         }
-        catch (ValidationException $e)
+        catch (Openbiz\validation\Exception $e)
         {
             $this->processFormObjError($e->errors);
             return;
@@ -164,4 +166,3 @@ class SettingForm extends EasyForm
 
 
 }  
-?>

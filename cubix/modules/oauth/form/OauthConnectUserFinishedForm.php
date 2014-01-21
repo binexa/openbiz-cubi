@@ -1,19 +1,22 @@
-<?php 
+<?php
+
+use Openbiz\Openbiz;
+
 class OauthConnectUserFinishedForm extends EasyForm
 {
 	public $backURL;
 	
 	public function fetchData()
 	{
-		$oauth_data=BizSystem::sessionContext()->getVar('_OauthUserInfo');
+		$oauth_data=Openbiz::$app->getSessionContext()->getVar('_OauthUserInfo');
 		$record['oauth_data'] = $oauth_data;
 		$record['oauth_user'] = $oauth_data['uname'];
 		$record['oauth_location'] = $oauth_data['location'];	
 
-		$record['local_user'] = BizSystem::getUserProfile("username");
-		$record['local_email'] = BizSystem::getUserProfile("email");
+		$record['local_user'] = Openbiz::$app->getUserProfile("username");
+		$record['local_email'] = Openbiz::$app->getUserProfile("email");
 		
-		$redirectURL = BizSystem::sessionContext()->getVar("oauth_redirect_url");
+		$redirectURL = Openbiz::$app->getSessionContext()->getVar("oauth_redirect_url");
 		if($redirectURL)
 		{
 			$this->backURL = $redirectURL;
@@ -28,4 +31,3 @@ class OauthConnectUserFinishedForm extends EasyForm
 	
 	
 }
-?>

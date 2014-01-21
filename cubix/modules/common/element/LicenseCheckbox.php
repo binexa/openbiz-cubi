@@ -1,5 +1,5 @@
 <?php
-include_once OPENBIZ_BIN.'/easy/element/Checkbox.php'; 
+//include_once OPENBIZ_BIN.'/easy/element/Checkbox.php';
 class LicenseCheckbox extends Checkbox
 {
     protected function getText()
@@ -14,4 +14,3 @@ class LicenseCheckbox extends Checkbox
     	return $text;
     }
 }
-?>

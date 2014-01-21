@@ -1654,4 +1654,3 @@ class FusionCharts{
     }
 
 }
-?>

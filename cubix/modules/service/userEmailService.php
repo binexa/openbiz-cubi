@@ -11,6 +11,9 @@
  * @version   $Id: userEmailService.php 4380 2012-09-28 09:45:42Z hellojixian@gmail.com $
  */
 
+use Openbiz\Openbiz;
+use Openbiz\Resource;
+
 /**
  * User email service 
  */
@@ -50,7 +53,7 @@ class userEmailService extends MetaObject
 		$sender   = $this->tempaltes["WelcomeEmail"]["EMAILACCOUNT"];
 		
 		//prepare data     
-        $userDO = BizSystem::getObject("system.do.UserDO");
+        $userDO = Openbiz::getObject("system.do.UserDO");
         $data = $userDO->directFetch("[Id]='".$userId."'", 1);
 
         if(!count($data))
@@ -60,11 +63,11 @@ class userEmailService extends MetaObject
         $data 	  = array("userinfo"=>$userData);
         $data['app_index'] = OPENBIZ_APP_INDEX_URL;
 		$data['app_url'] = OPENBIZ_APP_URL;
-		$data['operator_name'] = BizSystem::GetProfileName(BizSystem::getUserProfile("Id"));
+		$data['operator_name'] = Openbiz::$app->getProfile()->getProfileName(Openbiz::$app->getUserProfile("Id"));
 		$data['refer_url'] = SITE_URL;
 		       
 		//render the email tempalte
-		$tplFile = BizSystem::getTplFileWithPath($template, "email");
+		$tplFile = Resource::getTplFileWithPath($template, "email");
 		$content = $this->renderEmail($data, $tplFile);
 
 		//prepare recipient info
@@ -84,7 +87,7 @@ class userEmailService extends MetaObject
 		
 		//prepare data
         /* @var $tokenDO BizDataObj */
-		$tokenDO = BizSystem::getObject("system.do.UserPassTokenDO");
+		$tokenDO = Openbiz::getObject("system.do.UserPassTokenDO");
         $data = $tokenDO->directFetch("[Id]='".$tokenId."'", 1);
 		if(!count($data))
         	return false;        
@@ -92,10 +95,10 @@ class userEmailService extends MetaObject
 		$data 	 = $data[0];
 		$data['app_index'] = OPENBIZ_APP_INDEX_URL;
 		$data['app_url'] = OPENBIZ_APP_URL;
-		$data['operator_name'] = BizSystem::GetProfileName(BizSystem::getUserProfile("Id"));
+		$data['operator_name'] = Openbiz::$app->getProfile()->getProfileName(Openbiz::$app->getUserProfile("Id"));
 		$data['refer_url'] = SITE_URL;
 		
-        $userObj = BizSystem::getObject("system.do.UserDO");
+        $userObj = Openbiz::getObject("system.do.UserDO");
         $userData = $userObj->directFetch("[Id]='".$userId."'", 1);                	        
         if(!count($data))
         	return false;
@@ -105,7 +108,7 @@ class userEmailService extends MetaObject
         				"token"=>$data	);
         
 		//render the email tempalte
-		$tplFile = BizSystem::getTplFileWithPath($template, "email");
+		$tplFile = Resource::getTplFileWithPath($template, "email");
 		$content = $this->renderEmail($data, $tplFile);
 		
 		//prepare recipient info
@@ -131,11 +134,11 @@ class userEmailService extends MetaObject
 		$sender   = $this->tempaltes["DataSharingEmail"]["EMAILACCOUNT"];
 				        
 		//render the email tempalte
-		$tplFile = BizSystem::getTplFileWithPath($template, "email");
+		$tplFile = Resource::getTplFileWithPath($template, "email");
 		$content = $this->renderEmail($data, $tplFile);
 		
 		//prepare recipient info
-		$userObj = BizSystem::getObject("system.do.UserDO");
+		$userObj = Openbiz::getObject("system.do.UserDO");
         $userData = $userObj->directFetch("[Id]='".$recipient_user_id."'", 1);                	        
         if(!count($data))
         	return false;
@@ -157,11 +160,11 @@ class userEmailService extends MetaObject
 		$sender   = $this->tempaltes["TaskUpdateEmail"]["EMAILACCOUNT"];
 				        
 		//render the email tempalte
-		$tplFile = BizSystem::getTplFileWithPath($template, "email");
+		$tplFile = Resource::getTplFileWithPath($template, "email");
 		$content = $this->renderEmail($data, $tplFile);
 		
 		//prepare recipient info
-		$userObj = BizSystem::getObject("system.do.UserDO");
+		$userObj = Openbiz::getObject("system.do.UserDO");
         $userData = $userObj->directFetch("[Id]='".$recipient_user_id."'", 1);                	        
         if(!count($data))
         	return false;
@@ -183,11 +186,11 @@ class userEmailService extends MetaObject
 		$sender   = $this->tempaltes["NewMessageEmail"]["EMAILACCOUNT"];
 				        
 		//render the email tempalte
-		$tplFile = BizSystem::getTplFileWithPath($template, "email");
+		$tplFile = Resource::getTplFileWithPath($template, "email");
 		$content = $this->renderEmail($data, $tplFile);
 		
 		//prepare recipient info
-		$userObj = BizSystem::getObject("system.do.UserDO");
+		$userObj = Openbiz::getObject("system.do.UserDO");
         $userData = $userObj->directFetch("[Id]='".$recipient_user_id."'", 1);                	        
         if(!count($data))
         	return false;
@@ -209,11 +212,11 @@ class userEmailService extends MetaObject
 		$sender   = $this->tempaltes["DataAssignedEmail"]["EMAILACCOUNT"];
 				        
 		//render the email tempalte
-		$tplFile = BizSystem::getTplFileWithPath($template, "email");
+		$tplFile = Resource::getTplFileWithPath($template, "email");
 		$content = $this->renderEmail($data, $tplFile);
 		
 		//prepare recipient info
-		$userObj = BizSystem::getObject("system.do.UserDO");
+		$userObj = Openbiz::getObject("system.do.UserDO");
         $userData = $userObj->directFetch("[Id]='".$recipient_user_id."'", 1);                	        
         if(!count($data))
         	return false;
@@ -235,11 +238,11 @@ class userEmailService extends MetaObject
 		$sender   = $this->tempaltes["DataPublishEmail"]["EMAILACCOUNT"];
 				        
 		//render the email tempalte
-		$tplFile = BizSystem::getTplFileWithPath($template, "email");
+		$tplFile = Resource::getTplFileWithPath($template, "email");
 		$content = $this->renderEmail($data, $tplFile);
 		
 		//prepare recipient info
-		$userObj = BizSystem::getObject("system.do.UserDO");
+		$userObj = Openbiz::getObject("system.do.UserDO");
         $userData = $userObj->directFetch("[Id]='".$recipient_user_id."'", 1);                	        
         if(!count($data))
         	return false;
@@ -263,14 +266,14 @@ class userEmailService extends MetaObject
 		//render the email tempalte		
 		$data['app_index'] = OPENBIZ_APP_INDEX_URL;
 		$data['app_url'] = OPENBIZ_APP_URL;
-		$data['operator_name'] = BizSystem::GetProfileName(BizSystem::getUserProfile("Id"));
+		$data['operator_name'] = Openbiz::$app->getProfile()->getProfileName(Openbiz::$app->getUserProfile("Id"));
 		$data['refer_url'] = SITE_URL;
 		
-		$tplFile = BizSystem::getTplFileWithPath($template, "email");
+		$tplFile = Resource::getTplFileWithPath($template, "email");
 		$content = $this->renderEmail($data, $tplFile);
 		
 		//prepare recipient info
-		$userObj = BizSystem::getObject("system.do.UserDO");
+		$userObj = Openbiz::getObject("system.do.UserDO");
         $userData = $userObj->directFetch("[Id]='".$recipient_user_id."'", 1);                	        
         if(!count($data))
         	return false;
@@ -296,12 +299,12 @@ class userEmailService extends MetaObject
 		$data['app_url'] = OPENBIZ_APP_URL;
 
 		
-		$data['operator_name'] = BizSystem::GetProfileName($data['create_by']);
-		$data['operator_email'] = BizSystem::GetProfileEmail($data['create_by']);
+		$data['operator_name'] = Openbiz::$app->getProfile()->getProfileName($data['create_by']);
+		$data['operator_email'] = Openbiz::$app->getProfile()->getProfileEmail($data['create_by']);
 		$data['refer_url'] = SITE_URL;
 		
 		//prepare recipient info
-		$userObj = BizSystem::getObject("contact.do.ContactSystemDO");
+		$userObj = Openbiz::getObject("contact.do.ContactSystemDO");
         $userData = $userObj->directFetch("[Id]='".$recipient_contact_id."'", 1);                	        
         if(!count($data))
         	return false;
@@ -314,7 +317,7 @@ class userEmailService extends MetaObject
 		$data['contact_display_name'] = $userData['display_name'];
 		
 		
-		$tplFile = BizSystem::getTplFileWithPath($template, "email");
+		$tplFile = Resource::getTplFileWithPath($template, "email");
 		$content = $this->renderEmail($data, $tplFile);
 		if($userData['email']==''){
 			//if no email address , then do nothing
@@ -338,7 +341,7 @@ class userEmailService extends MetaObject
 		$data		=  array("system"=>$system);
         
 		//render the email tempalte
-		$tplFile = BizSystem::getTplFileWithPath($template, "email");
+		$tplFile = Resource::getTplFileWithPath($template, "email");
 		$content = $this->renderEmail($data, $tplFile);
 				
 		//send it to the queue		
@@ -358,7 +361,7 @@ class userEmailService extends MetaObject
 		$data["job_output"] = $output;
         
 		//render the email tempalte
-		$tplFile = BizSystem::getTplFileWithPath($template, "email");
+		$tplFile = Resource::getTplFileWithPath($template, "email");
 		$content = $this->renderEmail($data, $tplFile);
 		
 		//prepare recipient info
@@ -372,7 +375,7 @@ class userEmailService extends MetaObject
 	
 	protected function renderEmail($content, $tplFile)
 	{
-        $smarty  = BizSystem::getSmartyTemplate();
+        $smarty  = Resource::getSmartyTemplate();
         foreach ($content as $key=>$value){
         	$smarty->assign($key, $value);
         }
@@ -382,7 +385,7 @@ class userEmailService extends MetaObject
 	protected function sendEmail($sender,$recipient,$subject,$content)
 	{		
 
-		$dataObj = BizSystem::getObject($this->emailDataObj);
+		$dataObj = Openbiz::getObject($this->emailDataObj);
 		
 		if(is_array($recipient)){
 			$recipient_name = $recipient['name'];
@@ -417,7 +420,7 @@ class userEmailService extends MetaObject
 //	or called by SendEmail
 	public function sendEmailNow($email_id){
 		//prepare email data				
-		$dataObj = BizSystem::getObject($this->emailDataObj);				
+		$dataObj = Openbiz::getObject($this->emailDataObj);				
 		$dataObj->setSearchRule("[Id]='".$email_id."' and [status]!='sending' ", true);	
 		$data = $dataObj->fetch();
 		$dataObj->setActiveRecord($data[0]);	
@@ -438,7 +441,7 @@ class userEmailService extends MetaObject
 		$dataObj->updateRecord($recArr);
 		
 		//init email service
-		$emailObj 	= BizSystem::getService(EMAIL_SERVICE);
+		$emailObj 	= Openbiz::getService(EMAIL_SERVICE);
 		$emailObj->useAccount($sender);
 	    $emailObj->sendEmail ($recipient, null,null, $subject, $content, null, true);
 
@@ -450,7 +453,7 @@ class userEmailService extends MetaObject
 	
 	public function sendEmailFromQueue()
 	{
-		$dataObj = BizSystem::getObject($this->emailDataObj);
+		$dataObj = Openbiz::getObject($this->emailDataObj);
 		$dataObj->setSortRule("[Id] ASC");
 		$dataObj->setSearchRule("[status]='pending'", true);
 		$data = $dataObj->fetch();
@@ -462,4 +465,3 @@ class userEmailService extends MetaObject
 	}
 }
 
-?>

@@ -436,4 +436,3 @@ Function XMLParseFile(&$parser,$file,$store_positions,$cache="",$case_folding=0,
 	return($error);
 }
 
-?>

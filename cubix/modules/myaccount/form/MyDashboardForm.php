@@ -11,18 +11,20 @@
  * @version   $Id: MyDashboardForm.php 3365 2012-05-31 06:07:55Z rockyswen@gmail.com $
  */
 
+use Openbiz\Openbiz;
+
 class MyDashboardForm extends EasyForm
 {
 	public function ConfigWidget($id=null){
 		if(!$id)
 		{
 			if ($id==null || $id=='')
-            $id = BizSystem::clientProxy()->getFormInputs('_selectedId');
+            $id = Openbiz::$app->getClientProxy()->getFormInputs('_selectedId');
 		}
 		$dataRec = $this->getDataObj()->fetchById($id);
 		$widget = $dataRec['widget'];
 		
-		$widgetObj = BizSystem::GetObject($widget);
+		$widgetObj = Openbiz::getObject($widget);
 		if($widgetObj->configable)
 		{
 			$configForm = $widgetObj->configForm;
@@ -31,4 +33,3 @@ class MyDashboardForm extends EasyForm
 	}
 	
 }
-?>

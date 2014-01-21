@@ -36,4 +36,3 @@ class ColumnTitle extends ColumnText
 		return $sHTML;
 	}
 }
-?>

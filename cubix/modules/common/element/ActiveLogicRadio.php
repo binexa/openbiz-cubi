@@ -1,5 +1,5 @@
 <?php
-include_once OPENBIZ_BIN.'/easy/element/Radio.php'; 
+//include_once OPENBIZ_BIN.'/easy/element/Radio.php';
 class ActiveLogicRadio extends Radio
 {
     public function getFromList(&$list, $selectFrom=null)
@@ -23,4 +23,3 @@ class ActiveLogicRadio extends Radio
     	}    	
     }
 }
-?>

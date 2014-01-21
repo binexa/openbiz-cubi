@@ -85,4 +85,4 @@ session_set_save_handler(
     array (&$sessionHandler,"destroy"),
     array (&$sessionHandler,"gc"));
 
-?>
+

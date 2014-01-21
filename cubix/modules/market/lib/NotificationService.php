@@ -11,6 +11,8 @@
  * @version   $Id: NotificationService.php 3363 2012-05-31 06:04:56Z rockyswen@gmail.com $
  */
 
+use Openbiz\Openbiz;
+
 class NotificationService extends MetaObject
 {
 	protected $installedDO = "market.installed.do.InstalledDO";
@@ -18,7 +20,7 @@ class NotificationService extends MetaObject
 	
 	protected function getRepoInfo($uid)
 	{
-		$repoRec = BizSystem::getObject($this->repositoryDO,1)->fetchOne("[repository_uid]='$uid'");
+		$repoRec = Openbiz::getObject($this->repositoryDO,1)->fetchOne("[repository_uid]='$uid'");
 		return $repoRec;
 	}	
 	
@@ -56,7 +58,7 @@ class NotificationService extends MetaObject
 	protected function _checkAppUpdate()
 	{
 		
-		$resultSet = BizSystem::getObject($this->installedDO)->directfetch("[install_state]='OK'");
+		$resultSet = Openbiz::getObject($this->installedDO)->directfetch("[install_state]='OK'");
 		//below code copied from appUpdateListFrom
 		$repoAppsArr = array();
 		$repoIdsArr = array();
@@ -65,7 +67,7 @@ class NotificationService extends MetaObject
 		{
 			return ;
 		}
-		$svc = BizSystem::getService("market.lib.PackageService");
+		$svc = Openbiz::getService("market.lib.PackageService");
 		
 		foreach ($resultSet as $record)
 		{
@@ -135,15 +137,15 @@ class NotificationService extends MetaObject
 	{
 		$msgList = array();
 		//get last check timestamp
-		$checkLogRec = BizSystem::getObject("notification.do.NotificationCheckerDO")->fetchOne("[checker]='market_checker'");
+		$checkLogRec = Openbiz::getObject("notification.do.NotificationCheckerDO")->fetchOne("[checker]='market_checker'");
 		$lastCheckTime = $checkLogRec['last_checktime'];
 		
-		$installedRepos = BizSystem::getObject($this->repositoryDO)->directFetch();		
+		$installedRepos = Openbiz::getObject($this->repositoryDO)->directFetch();		
 		foreach($installedRepos as $repo)
 		{
 			$repo_id = $repo['Id'];
 			$repo_uri = $repo['repository_uri'];
-			$svc = BizSystem::getService("market.lib.PackageService");
+			$svc = Openbiz::getService("market.lib.PackageService");
 			$appList = $svc->discoverNewAppRelease($repo_uri,$lastCheckTime);
 			$update_count = count($appList);
 			if($update_count)
@@ -172,4 +174,3 @@ class NotificationService extends MetaObject
 	}
 	
 }
-?>

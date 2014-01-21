@@ -55,7 +55,7 @@ for ($i = 0; $i < 100; $i++) {
 }
 
 $vcodes = strtoupper($vcodes);
-BizSystem::sessionContext()->saveObjVar($_GET['form'], $_GET['name'], $vcodes);
+Openbiz::$app->getSessionContext()->saveObjVar($_GET['form'], $_GET['name'], $vcodes);
 
 header("Content-type: image/PNG");
 ImagePNG($im);

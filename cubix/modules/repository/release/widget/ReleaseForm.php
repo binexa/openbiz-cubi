@@ -11,6 +11,8 @@
  * @version   $Id: ReleaseForm.php 3369 2012-05-31 06:13:56Z rockyswen@gmail.com $
  */
 
+use Openbiz\Openbiz;
+
 class ReleaseForm extends PickerForm
 {
 	
@@ -20,7 +22,7 @@ class ReleaseForm extends PickerForm
 	{
 		if (empty($_FILES)) return;
 		
-		$upload_user_dir = BizSystem::getUserProfile("Id");						
+		$upload_user_dir = Openbiz::$app->getUserProfile("Id");						
 		$upload_user_dir = (int)$upload_user_dir;
 		$upload_dir = "app_release";
 		
@@ -80,7 +82,7 @@ class ReleaseForm extends PickerForm
         {
             $this->ValidateForm();
         }
-        catch (ValidationException $e)
+        catch (Openbiz\validation\Exception $e)
         {
             $this->processFormObjError($e->errors);
             return;
@@ -98,7 +100,7 @@ class ReleaseForm extends PickerForm
 		if (!$this->parentFormElemName)
         {
         	//its only supports 1-m assoc now	        	        
-	        $parentForm = BizSystem::objectFactory()->getObject($this->parentFormName);
+	        $parentForm = Openbiz::getObject($this->parentFormName);
         	//$parentForm->getDataObj()->clearSearchRule();
 	        $parentDo = $parentForm->getDataObj();
 	        
@@ -129,7 +131,7 @@ class ReleaseForm extends PickerForm
 	
 	public function allUploadComplete(){
 		$this->close();	
-		$parentForm = BizSystem::getObject($this->parentFormName);
+		$parentForm = Openbiz::getObject($this->parentFormName);
 		usleep(1000000);
 		$parentForm->rerender();
 	}
@@ -148,9 +150,9 @@ class ReleaseForm extends PickerForm
 	
 	public function DeleteRecord($id=null){		
         if ($id==null || $id=='')
-            $id = BizSystem::clientProxy()->getFormInputs('_selectedId');
+            $id = Openbiz::$app->getClientProxy()->getFormInputs('_selectedId');
 
-        $selIds = BizSystem::clientProxy()->getFormInputs('row_selections', false);
+        $selIds = Openbiz::$app->getClientProxy()->getFormInputs('row_selections', false);
         if ($selIds == null)
             $selIds[] = $id;
         foreach ($selIds as $id)
@@ -167,8 +169,8 @@ class ReleaseForm extends PickerForm
             {
             	$this->errorMessage = $this->getMessage("FORM_OPEATION_NOT_PERMITTED",$this->objectName);         
         		if (strtoupper($this->formType) == "LIST"){
-        			BizSystem::log(LOG_ERR, "DATAOBJ", "DataObj error = ".$errorMsg);
-        			BizSystem::clientProxy()->showClientAlert($this->errorMessage);
+        			Openbiz::$app->getLog()->log(LOG_ERR, "DATAOBJ", "DataObj error = ".$errorMsg);
+        			Openbiz::$app->getClientProxy()->showClientAlert($this->errorMessage);
         		}else{
         			$this->processFormObjError(array($this->errorMessage));	
         		}	
@@ -179,10 +181,10 @@ class ReleaseForm extends PickerForm
             try
             {
                 $dataRec->delete();
-            } catch (BDOException $e)
+            } catch (Openbiz\data\Exception $e)
             {
-                // call $this->processBDOException($e);
-                $this->processBDOException($e);
+                // call $this->processDataException($e);
+                $this->processDataException($e);
                 return;
             }
         }
@@ -194,7 +196,7 @@ class ReleaseForm extends PickerForm
 	}
 	
 	public function close(){
-		$parentForm = BizSystem::getObject($this->parentFormName);
+		$parentForm = Openbiz::getObject($this->parentFormName);
 		$parentForm->rerender();
 		return parent::close();
 	}
@@ -202,7 +204,7 @@ class ReleaseForm extends PickerForm
 	public function FileDownload($id=null){
 		include_once (OPENBIZ_APP_MODULE_PATH.'/attachment/lib/class.httpdownload.php');
 		if ($id==null || $id=='')
-            $id = BizSystem::clientProxy()->getFormInputs('_selectedId');
+            $id = Openbiz::$app->getClientProxy()->getFormInputs('_selectedId');
         if(!$id)
         	$id=$this->recordId;
 		$dataRec = $this->getDataObj()->fetchById($id);
@@ -221,4 +223,3 @@ class ReleaseForm extends PickerForm
 	}
 
 }
-?>

@@ -37,4 +37,3 @@ class ExtendDataDetailForm extends ExtendDataEditForm
 		return $elemArr;
 	}	
 }
-?>

@@ -3,4 +3,3 @@ class CancelledForm extends EasyForm
 {
 	
 }
-?>

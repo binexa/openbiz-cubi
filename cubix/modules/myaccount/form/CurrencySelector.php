@@ -11,21 +11,22 @@
  * @version   $Id: CurrencySelector.php 3365 2012-05-31 06:07:55Z rockyswen@gmail.com $
  */
 
-require_once(OPENBIZ_BIN."easy/element/DropDownList.php");
+use Openbiz\i18n\I18n;
+
 class CurrencySelector extends Listbox{
     function getFromList(&$list){
 
-		$current_locale = I18n::getCurrentLangCode();		
-		require_once('Zend/Locale.php');
-		$locale = new Zend_Locale($current_locale);
+		$current_locale = I18n::getCurrentLangCode();
+		//require_once('Zend/Locale.php');
+		$locale = new \Zend_Locale($current_locale);
 			
 		$current_currency = CUBI_DEFAULT_CURRENCY;		
 		if(!$current_currency){
 			$current_currency = "USD";
 		}
-		require_once('Zend/Currency.php');
+		//require_once('Zend/Currency.php');
 		
-		$currency = new Zend_Currency($current_currency,$current_locale);
+		$currency = new \Zend_Currency($current_currency,$current_locale);
 		$currencyList = $currency->getCurrencyList();
     	foreach ($currencyList as $currency_code => $country){
     		
@@ -40,4 +41,3 @@ class CurrencySelector extends Listbox{
     	return $list;
     }
 }
-?>

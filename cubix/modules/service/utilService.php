@@ -95,4 +95,3 @@ class utilService
 	    return $password;
 	  }
 }
-?>

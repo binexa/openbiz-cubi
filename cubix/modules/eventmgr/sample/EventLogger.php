@@ -11,6 +11,8 @@
  * @version   $Id$
  */
 
+use Openbiz\Openbiz;
+
 class EventLogger
 {
 	public function observe($event)
@@ -19,10 +21,9 @@ class EventLogger
 		$triggerEvent = $event->getName();
 		$params = $event->getParams();
 		// get eventlog service
-		$eventLog = BizSystem::getService(OPENBIZ_EVENTLOG_SERVICE);
+		$eventLog = Openbiz::getService(OPENBIZ_EVENTLOG_SERVICE);
 		// log message
 		$eventLog->Log($triggerEvent,"triggered by ".$triggerObj->objectName);
 	}
 }
 
-?>

@@ -1,7 +1,7 @@
 <?PHP
 
 /**
- * PHPOpenBiz Framework
+ * Openbiz Framework
  *
  * LICENSE
  *
@@ -14,6 +14,8 @@
  * @link      http://www.phpopenbiz.org/
  * @version   $Id$
  */
+
+use Openbiz\i18n\I18n;
 
 /**
  * ChartBase class is base class of all charts
@@ -154,4 +156,3 @@ class ChartElement extends Element
 
 }
 
-?>

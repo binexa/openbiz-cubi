@@ -11,25 +11,29 @@
  * @link      http://code.google.com/p/openbiz-cubi/
  * @version   $Id: app_init.php 3815 2012-08-02 16:07:17Z rockyswen@gmail.com $
  */
+if (!defined("OPENBIZ_USE_CUSTOM_SESSION_HANDLER")) {
+    define("OPENBIZ_USE_CUSTOM_SESSION_HANDLER", true);
+}
+
 include_once ('device_util.php');
 
-/* define xhprof setting */
-define('XHPROF', 0);
-define('XHPROF_ROOT', '/Users/jixian/xhprof/'); /* Path to xhPorf libs root */
-define('XHPROF_URL', 'http://localhost/xhprof/xhprof_html/index.php?source=xhprof_testing&run=');
 
 
 /* ============== CUBI CONFIG PRE-CORE ============================== */
-define('CUBI_FORCE_DEFAULT_THEME', 0);
-define('CUBI_FUSION_CHART_VERSION', "Pro");
-define('CUBI_GROUP_DATA_SHARE', '1');
-define('CUBI_DATA_ACL', '1');
-//I18n
-define('CUBI_DEFAULT_CURRENCY', 'CNY');
 
 //{$row.fld_latitude},{$row.fld_longtitude}
 define('CUBI_DEFAULT_LATITUDE', '39.92');
 define('CUBI_DEFAULT_LONGTITUDE', '116.46');
+
+define('CUBI_FUSION_CHART_VERSION', "Pro");
+
+define('CUBI_FORCE_DEFAULT_THEME', 0);
+
+define('CUBI_GROUP_DATA_SHARE', '1');
+define('CUBI_DATA_ACL', '1');
+//I18n
+define('CUBI_DEFAULT_CURRENCY', 'IDR');
+
 
 //session strict
 //0=allow concurrent session
@@ -44,15 +48,8 @@ define('CUBI_USER_EMAIL_SERVICE', "userEmailService");
 define('CUBI_VISIBILITY_SERVICE', "visService");
 define('CUBI_LOV_SERVICE', "lovService");
 
-define('CUBI_APPBUILDER', '1'); // 0: hidden, 1: show
+define('CUBI_APPBUILDER', '0'); // 0: hidden, 1: show
 
-//init default timezone setting
-define('CUBI_DEFAULT_TIMEZONE', 'Asia/Chongqing');
-
-if (DeviceUtil::$PHONE_TOUCH)
-    define('CUBI_DEFAULT_THEME_NAME', 'touch'); // default theme for touch screen phone
-else
-    define('CUBI_DEFAULT_THEME_NAME', 'default');     // name of the theme. theme files are under themes/theme_name
 
 
 
@@ -63,12 +60,14 @@ else
   openbiz core path
  * ************************************************************************** */
 //define('OPENBIZ_PATH', 'absolute_dir/Openbiz');
-define('OPENBIZ_PATH', dirname(dirname(__FILE__)) . "/openbizx");
+//define('OPENBIZ_PATH', dirname(dirname(__FILE__)) . "/openbizx");
 
 /* * **************************************************************************
   application related path
  * ************************************************************************** */
 define('OPENBIZ_APP_PATH', dirname(dirname(__FILE__)));
+
+//echo OPENBIZ_APP_PATH;
 
 //enable minify 
 define('OPENBIZ_PAGE_MINIFY', 0);
@@ -108,6 +107,9 @@ if ($appPath == '/') {
     }
 }
 
+
+//echo OPENBIZ_APP_URL;
+//exit;
 /* OPENBIZ_APP_INDEX_URL is /a/b/index.php in case of http://host/a/b/index.php?... */
 $indexScript = "/index.php"; // or "", or "/?"
 define('OPENBIZ_APP_INDEX_URL', OPENBIZ_APP_URL . $indexScript);
@@ -121,9 +123,7 @@ define('OPENBIZ_APP_MODULE_PATH', OPENBIZ_APP_PATH . DIRECTORY_SEPARATOR . "modu
 /* define messages files path */
 define('OPENBIZ_APP_MESSAGE_PATH', OPENBIZ_APP_PATH . DIRECTORY_SEPARATOR . "messages");
 
-/* device */
-if (DeviceUtil::$DEVICE)
-    define('OPENBIZ_CLIENT_DEVICE', DeviceUtil::$DEVICE);
+
 
 /* define themes const */
 define('OPENBIZ_USE_THEME', 1);
@@ -133,16 +133,21 @@ define('OPENBIZ_THEME_PATH', OPENBIZ_APP_PATH . DIRECTORY_SEPARATOR . "themes");
 
 define('OPENBIZ_SMARTY_CPL_PATH', OPENBIZ_APP_PATH . DIRECTORY_SEPARATOR . "files/tpl_cpl");    // smarty template compiling path
 
+
 /* js lib base, prototype (old) or jquery (new) */
-if (DeviceUtil::$PHONE_TOUCH)
+if (DeviceUtil::$PHONE_TOUCH) {
     define('OPENBIZ_JSLIB_BASE', "JQUERY");
-else /* define('OPENBIZ_JSLIB_BASE', "JQUERY"); */
+} else  {
+    //define('OPENBIZ_JSLIB_BASE', "JQUERY");
     define('OPENBIZ_JSLIB_BASE', "PROTOTYPE");
+}
+
 /* define javascript path */
-if (OPENBIZ_JSLIB_BASE == 'JQUERY')
+if (OPENBIZ_JSLIB_BASE == 'JQUERY') {
     define('OPENBIZ_JS_URL', OPENBIZ_APP_URL . "/js/jq");
-else
+} else {
     define('OPENBIZ_JS_URL', OPENBIZ_APP_URL . "/js");
+}
 
 // define('OTHERS_URL', OPENBIZ_APP_URL . "/others");
 /* Log file path */
@@ -226,33 +231,13 @@ define('OPENBIZ_PREFERENCE_SERVICE', "preferenceService");
 define('OPENBIZ_DATAPERM_SERVICE', "dataPermService");
 define('OPENBIZ_UTIL_SERVICE', "utilService");
 
-
 define('OPENBIZ_DENY', 0);
 define('OPENBIZ_ALLOW', 1);
 define('OPENBIZ_ALLOW_OWNER', 2);
 
-
-// load default theme
-if (CUBI_FORCE_DEFAULT_THEME == 1) {
-    define('OPENBIZ_THEME_NAME', CUBI_DEFAULT_THEME_NAME);
-} else {
-    if (@isset($_GET['theme'])) {
-        //$_GET
-        define('OPENBIZ_THEME_NAME', $_GET['theme']);
-        //save cookies
-        setcookie("OPENBIZ_THEME_NAME", $_GET['theme'], time() + 86400 * 365, "/");
-    } elseif (@isset($_COOKIE['OPENBIZ_THEME_NAME'])) {
-        define('OPENBIZ_THEME_NAME', $_COOKIE['OPENBIZ_THEME_NAME']);
-    } else {
-        //default
-        define('OPENBIZ_THEME_NAME', CUBI_DEFAULT_THEME_NAME);
-    }
-}
-
 define('OPENBIZ_DEFAULT_OWNER_PERM', '3');
 define('OPENBIZ_DEFAULT_GROUP_PERM', '1');
 define('OPENBIZ_DEFAULT_OTHER_PERM', '0');
-
 
 /* ============== CUBI CONSTANTS after CORE CONSTANTS======================== */
 /* ============== CUBI CONFIG POST-CORE ============================== */
@@ -264,29 +249,10 @@ define('CUBI_TEMPFILE_PATH', OPENBIZ_APP_PATH . DIRECTORY_SEPARATOR . "files" . 
 /* data cache files directory */
 define('CUBI_CACHE_DATA_PATH', OPENBIZ_APP_PATH . DIRECTORY_SEPARATOR . "files" . DIRECTORY_SEPARATOR . "cache" . DIRECTORY_SEPARATOR . "data");
 
+include_once(__DIR__. "/../../cubix/vendors/Openbiz/bin/sysheader_inc.php");
 
-// service alias. used in expression engine
-$g_ServiceAlias = array(
-    'validate' => VALIDATE_SERVICE,
-    'query' => QUERY_SERVICE,
-    'vis' => CUBI_VISIBILITY_SERVICE,
-    'preference' => OPENBIZ_PREFERENCE_SERVICE,
-    'util' => OPENBIZ_UTIL_SERVICE
-);
 
-include_once(OPENBIZ_PATH . "/bin/sysheader_inc.php");
 
-//please keep below code , the DEFAULT timezone sett could be change in your admin's preference setting panel,
-//if remove below may cause error, which break entire system, php will generate a warning level error and our handler will end up the script. 
-$DefaultTimezone = BizSystem::sessionContext()->getVar("TIMEZONE");
 
-// default language
-if ($DefaultTimezone == "") {
-    $DefaultTimezone = CUBI_DEFAULT_TIMEZONE;
-}
-
-BizSystem::instance()->isInitialized = false;
-
-date_default_timezone_set($DefaultTimezone);
 
 

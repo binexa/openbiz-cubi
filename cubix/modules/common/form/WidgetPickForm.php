@@ -11,6 +11,9 @@
  * @version   $Id: WidgetPickForm.php 3365 2012-05-31 06:07:55Z rockyswen@gmail.com $
  */
 
+
+use Openbiz\Openbiz;
+
 class WidgetPickForm extends PickerForm
 {
 	protected $userWidgetDOName = "common.do.UserWidgetDO";
@@ -18,9 +21,9 @@ class WidgetPickForm extends PickerForm
 	public function PicktoParent()
 	{
 	 	if ($id==null || $id=='')
-            $id = BizSystem::clientProxy()->getFormInputs('_selectedId');
+            $id = Openbiz::$app->getClientProxy()->getFormInputs('_selectedId');
 
-        $selIds = BizSystem::clientProxy()->getFormInputs('row_selections', false);
+        $selIds = Openbiz::$app->getClientProxy()->getFormInputs('row_selections', false);
         if ($selIds == null)
             $selIds[] = $id;
         
@@ -33,25 +36,25 @@ class WidgetPickForm extends PickerForm
 
 		$this->close();
         // reload current page
-		BizSystem::clientProxy()->runClientFunction("window.location.reload()");
+		Openbiz::$app->getClientProxy()->runClientFunction("window.location.reload()");
 	}
 	
 	// add a widget to current dashboard view
 	protected function addWidget($widgetName)
 	{
 		// add widget to user_widget table
-		$userWidgetDo = BizSystem::getObject($this->userWidgetDOName);
+		$userWidgetDo = Openbiz::getObject($this->userWidgetDOName);
 		$userWidgetTable = $userWidgetDo->mainTableName;
 		$db = $userWidgetDo->getDbConnection();
 		
-		$myProfile = BizSystem::getUserProfile();
+		$myProfile = Openbiz::$app->getUserProfile();
 		$myUserId = $myProfile['Id'];
-		$currentView = BizSystem::instance()->getCurrentViewName();
+		$currentView = Openbiz::$app->getCurrentViewName();
 		
 		$searchRule = "[user_id]=$myUserId and [widget]='$widgetName' and [view]='$currentView'";
 		$record = $userWidgetDo->fetchOne($searchRule);
 		if ($record) {
-			BizSystem::clientProxy()->showClientAlert("The widget $widgetName is already on the page.");
+			Openbiz::$app->getClientProxy()->showClientAlert("The widget $widgetName is already on the page.");
 		}
 		else {
 			$data = array('user_id'=>$myUserId, 'widget'=>$widgetName, 'view'=>$currentView, 'ordering'=>0);
@@ -59,4 +62,3 @@ class WidgetPickForm extends PickerForm
 		}
 	}
 }
-?>

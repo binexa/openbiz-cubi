@@ -104,4 +104,3 @@ class ContactService{
 		return $credential_invaild;
 	}
 }
-?>

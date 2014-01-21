@@ -32,4 +32,3 @@ class AppUpdateListForm extends InstalledAppListForm
 		return $newResultSet;
 	}		
 }
-?>

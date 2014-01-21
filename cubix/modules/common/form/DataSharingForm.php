@@ -11,6 +11,9 @@
  * @link      http://code.google.com/p/openbiz-cubi/
  * @version   $Id: DataSharingForm.php 4612 2012-11-06 04:34:26Z hellojixian@gmail.com $
  */
+
+use Openbiz\Openbiz;
+
 class DataSharingForm extends EasyForm
 {
 
@@ -35,7 +38,7 @@ class DataSharingForm extends EasyForm
 
 
         $prtForm = $this->parentFormName;
-        $prtFormObj = BizSystem::GetObject($prtForm);
+        $prtFormObj = Openbiz::getObject($prtForm);
         if (!$prtForm) {
             return array();
         }
@@ -46,8 +49,8 @@ class DataSharingForm extends EasyForm
         $dataObj = $prtFormObj->getDataObj();
         $dataRec = $dataObj->fetchById($recId);
 
-        $user_id = BizSystem::GetUserProfile("Id");
-        $group_id = BizSystem::GetUserProfile("default_group");
+        $user_id = Openbiz::$app->getUserProfile("Id");
+        $group_id = Openbiz::$app->getUserProfile("default_group");
 
 
         $this->hasOwnerField = $this->_hasOwnerField();
@@ -122,7 +125,7 @@ class DataSharingForm extends EasyForm
         $result['refer_url'] = SITE_URL;
 
         if ($result['editable'] == 0) {
-            $svcObj = BizSystem::GetService(OPENBIZ_DATAPERM_SERVICE);
+            $svcObj = Openbiz::getService(OPENBIZ_DATAPERM_SERVICE);
             $result['editable'] = (int) $svcObj->checkDataPerm($dataRec, 3, $dataObj);
         }
 
@@ -132,7 +135,7 @@ class DataSharingForm extends EasyForm
         $this->recordId = $result['Id'];
         $this->parentRecordId = $result['Id'];
         //$this->setActiveRecord($result);
-        if (BizSystem::allowUserAccess("data_manage.manage")) {
+        if (Openbiz::$app->allowUserAccess("data_manage.manage")) {
             $result['editable'] = 1;
             $result['data_manage'] = 1;
         } else {
@@ -158,7 +161,7 @@ class DataSharingForm extends EasyForm
         if (!$prtForm) {
             return;
         }
-        $prtFormObj = BizSystem::GetObject($prtForm);
+        $prtFormObj = Openbiz::getObject($prtForm);
         $recId = $this->parentRecordId;
         $dataObj = $prtFormObj->getDataObj();
         $dataRec = $dataObj->fetchById($recId);
@@ -174,9 +177,9 @@ class DataSharingForm extends EasyForm
             $data = $this->fetchData();
             $data['app_index'] = OPENBIZ_APP_INDEX_URL;
             $data['app_url'] = OPENBIZ_APP_URL;
-            $data['operator_name'] = BizSystem::GetProfileName(BizSystem::getUserProfile("Id"));
+            $data['operator_name'] = Openbiz::$app->getProfile()->getProfileName(Openbiz::$app->getUserProfile("Id"));
 
-            $emailSvc = BizSystem::getService(CUBI_USER_EMAIL_SERVICE);
+            $emailSvc = Openbiz::getService(CUBI_USER_EMAIL_SERVICE);
             if ($DataRec['owner_id'] != $recArr['owner_id']) {
                 $emailSvc->DataAssignedEmail($recArr['owner_id'], $data);
             }
@@ -302,7 +305,7 @@ class DataSharingForm extends EasyForm
 
     protected function _getGroupList()
     {
-        $rs = BizSystem::getObject("system.do.GroupDO")->directFetch("");
+        $rs = Openbiz::getObject("system.do.GroupDO")->directFetch("");
         $group_ids = array();
         foreach ($rs as $group) {
             $group_ids[] = $group['Id'];
@@ -312,7 +315,7 @@ class DataSharingForm extends EasyForm
 
     protected function _getGroupUserList($group_id)
     {
-        $rs = BizSystem::getObject("system.do.UserGroupDO")->directFetch("[group_id]='$group_id'");
+        $rs = Openbiz::getObject("system.do.UserGroupDO")->directFetch("[group_id]='$group_id'");
         $user_ids = array();
         foreach ($rs as $user) {
             $user_ids[] = $user['user_id'];
@@ -322,9 +325,9 @@ class DataSharingForm extends EasyForm
 
     private function _casacadeUpdate($obj, $setting)
     {
-        $dataShareSvc = BizSystem::getService(OPENBIZ_DATAPERM_SERVICE);
+        $dataShareSvc = Openbiz::getService(OPENBIZ_DATAPERM_SERVICE);
         foreach ($obj->objReferences as $doRef) {
-            $do = BizSystem::getObject($doRef->objectName);
+            $do = Openbiz::getObject($doRef->objectName);
             $rs = $do->fetch();
             foreach ($rs as $rec) {
                 if ($dataShareSvc->checkDataOwner($rec)) {
@@ -346,21 +349,21 @@ class DataSharingForm extends EasyForm
 
     private function _getGroupName($id)
     {
-        $rec = BizSystem::GetObject("system.do.GroupDO")->fetchById($id);
+        $rec = Openbiz::getObject("system.do.GroupDO")->fetchById($id);
         $result = $rec['name'];
         return $result;
     }
 
     private function _getOwnerName($id)
     {
-        $result = BizSystem::getProfileName($id);
+        $result = Openbiz::$app->getProfile()->getProfileName($id);
         return $result;
     }
 
     private function _hasOwnerField()
     {
         $prtForm = $this->parentFormName;
-        $prtFormObj = BizSystem::GetObject($prtForm);
+        $prtFormObj = Openbiz::getObject($prtForm);
         $field = $prtFormObj->getDataObj()->getField('owner_id');
         if ($field) {
             return true;
@@ -369,18 +372,18 @@ class DataSharingForm extends EasyForm
         }
     }
 
-    public function loadSessionVars($sessionContext)
+    public function loadStatefullVars($sessionContext)
     {
         $sessionContext->loadObjVar("DataSharingForm", "ParentRecordId", $this->parentRecordId);
         $sessionContext->loadObjVar("DataSharingForm", "ParentFormName", $this->parentFormName);
-        return parent::loadSessionVars($sessionContext);
+        return parent::loadStatefullVars($sessionContext);
     }
 
-    public function saveSessionVars($sessionContext)
+    public function saveStatefullVars($sessionContext)
     {
         $sessionContext->saveObjVar("DataSharingForm", "ParentRecordId", $this->parentRecordId);
         $sessionContext->saveObjVar("DataSharingForm", "ParentFormName", $this->parentFormName);
-        return parent::saveSessionVars($sessionContext);
+        return parent::saveStatefullVars($sessionContext);
     }
 
     public function outputAttrs()

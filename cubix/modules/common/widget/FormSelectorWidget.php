@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Openbiz Cubi Application Platform
  *
@@ -10,73 +11,75 @@
  * @link      http://code.google.com/p/openbiz-cubi/
  * @version   $Id: FormSelectorWidget.php 3355 2012-05-31 05:43:33Z rockyswen@gmail.com $
  */
+use Openbiz\Openbiz;
 
 class FormSelectorWidget extends EasyForm
 {
-	public $viewMode;
-	public $lastViewMode;
-	
-	private $_DefaultViewMode;
-	
-	protected function readMetadata(&$xmlArr)
+
+    public $viewMode;
+    public $lastViewMode;
+    private $_DefaultViewMode;
+
+    protected function readMetadata(&$xmlArr)
     {
         parent::readMetaData($xmlArr);
         $this->_DefaultViewMode = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["DEFAULTSELECTEDFORM"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["DEFAULTSELECTEDFORM"] : null;
     }
-	
-	public function getViewMode()
-	{
-		if($this->viewMode){
-			$data = $this->viewMode;
-		}else{
-			$data = $this->_DefaultViewMode;
-		}
-		return $data;
-	}
-	
-	public function fetchData(){
-		$data = array();
-		if($this->viewMode){
-			$data['viewmode'] = $this->viewMode;
-		}else{
-			$data['viewmode'] = $this->_DefaultViewMode;
-		} 
-		return $data;
-	}
-	
-	public function switchViewMode()
-	{
-		if(!$this->lastViewMode)
-		{
-			$this->lastViewMode = $this->getViewMode();
-		}
-		$viewObj = $this->getViewObject();
-		//$viewObj = $this->getView();
-		if($viewObj->lastRenderedForm && 
-			$viewObj->lastRenderedForm!='help.form.HelpWidgetListForm' && 
-			$viewObj->lastRenderedForm!='notification.widget.NotificationWidgetForm'
-			){
-			$this->lastViewMode = $viewObj->lastRenderedForm;
-		}
-		$recArr = $this->readInputRecord();
-		$this->viewMode = $recArr['viewmode'];
-		$targetForm = $recArr['viewmode'];		
-		$formObj = BizSystem::GetObject($targetForm);
-		$formHTML = $formObj->render();
-		BizSystem::clientProxy()->redrawForm($this->lastViewMode, $formHTML);
-		$this->lastViewMode = $this->viewMode;
-	}
-	
-    public function loadSessionVars($sessionContext)
+
+    public function getViewMode()
     {
-        $sessionContext->loadObjVar($this->objectName, "ViewMode", $this->viewMode);
-        parent::loadSessionVars($sessionContext);
+        if ($this->viewMode) {
+            $data = $this->viewMode;
+        } else {
+            $data = $this->_DefaultViewMode;
+        }
+        return $data;
     }
 
-    public function saveSessionVars($sessionContext)
+    public function fetchData()
+    {
+        $data = array();
+        if ($this->viewMode) {
+            $data['viewmode'] = $this->viewMode;
+        } else {
+            $data['viewmode'] = $this->_DefaultViewMode;
+        }
+        return $data;
+    }
+
+    public function switchViewMode()
+    {
+        if (!$this->lastViewMode) {
+            $this->lastViewMode = $this->getViewMode();
+        }
+        $viewObj = $this->getViewObject();
+        //$viewObj = $this->getView();
+        if ($viewObj->lastRenderedForm &&
+                $viewObj->lastRenderedForm != 'help.form.HelpWidgetListForm' &&
+                $viewObj->lastRenderedForm != 'notification.widget.NotificationWidgetForm'
+        ) {
+            $this->lastViewMode = $viewObj->lastRenderedForm;
+        }
+        $recArr = $this->readInputRecord();
+        $this->viewMode = $recArr['viewmode'];
+        $targetForm = $recArr['viewmode'];
+        $formObj = Openbiz::getObject($targetForm);
+        $formHTML = $formObj->render();
+        Openbiz::$app->getClientProxy()->redrawForm($this->lastViewMode, $formHTML);
+        $this->lastViewMode = $this->viewMode;
+    }
+
+    public function loadStatefullVars($sessionContext)
+    {
+        $sessionContext->loadObjVar($this->objectName, "ViewMode", $this->viewMode);
+        parent::loadStatefullVars($sessionContext);
+    }
+
+    public function saveStatefullVars($sessionContext)
     {
         $sessionContext->saveObjVar($this->objectName, "ViewMode", $this->viewMode);
-        parent::saveSessionVars($sessionContext);
-    }	
+        parent::saveStatefullVars($sessionContext);
+    }
+
 }
-?>
+

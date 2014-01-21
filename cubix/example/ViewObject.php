@@ -17,7 +17,7 @@ require_once dirname(dirname(__FILE__)).'/bin/app_init.php';
 $objectName = "system.view.UserListView";
  
 //get the view object instance
-$userView = BizSystem::getViewObject($objectName);
+$userView = Openbiz::getViewObject($objectName);
  
 //render the view to a html string
 $viewHTML = $userView->render();

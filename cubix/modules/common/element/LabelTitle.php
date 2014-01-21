@@ -27,4 +27,3 @@ class LabelTitle extends LabelText
 		return $sHTML;
 	}
 }
-?>

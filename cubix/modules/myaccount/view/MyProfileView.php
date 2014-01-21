@@ -4,12 +4,12 @@ class MyProfileView extends EasyView
 	protected  $forceCompeleteProfile = false;
 	
 
-    public function loadSessionVars($sessionContext)
+    public function loadStatefullVars($sessionContext)
     {
         $sessionContext->loadObjVar($this->objectName, "ForceCompeleteProfile", $this->forceCompeleteProfile);        
     }
 
-    public function saveSessionVars($sessionContext)
+    public function saveStatefullVars($sessionContext)
     {       
         $sessionContext->saveObjVar($this->objectName, "ForceCompeleteProfile", $this->forceCompeleteProfile);
     }	
@@ -43,4 +43,3 @@ class MyProfileView extends EasyView
     	return parent::render();
     }
 }
-?>

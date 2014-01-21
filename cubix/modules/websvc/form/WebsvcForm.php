@@ -42,4 +42,3 @@ class WebSvcForm extends EasyForm
         return $secret;
     }
 }
-?>

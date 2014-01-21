@@ -11,12 +11,13 @@
  * @version   $Id: SmsQueueForm.php 3358 2012-08-15 fsliit@gmail.com $
  */
 
+use Openbiz\Openbiz;
 
 class QueueForm extends EasyForm
 {
 	public function SendAllPendingSms()
 	{
-		BizSystem::getService('sms.lib.SmsService')->SendSmsFromQueue();
+		Openbiz::getService('sms.lib.SmsService')->SendSmsFromQueue();
 		if (strtoupper($this->formType) == "LIST")
             $this->rerender();
 		$this->runEventLog();
@@ -30,7 +31,7 @@ class QueueForm extends EasyForm
 		if(is_array($Record) && $Record['status']!='sent')
 		{
 			$arr[0]=$Record;
-			BizSystem::getService('sms.lib.SmsService')->SendSmsFromQueue($arr);
+			Openbiz::getService('sms.lib.SmsService')->SendSmsFromQueue($arr);
 		} 
 	 if (strtoupper($this->formType) == "LIST")
             $this->rerender();
@@ -43,15 +44,15 @@ class QueueForm extends EasyForm
 	public function DeleteAllSms()
 	{
        if ($this->resource != "" && !$this->allowAccess("sms.Manage"))
-           return BizSystem::clientProxy()->redirectView(OPENBIZ_ACCESS_DENIED_VIEW);
+           return Openbiz::$app->getClientProxy()->redirectView(OPENBIZ_ACCESS_DENIED_VIEW);
 
         try
         {
           $this->getDataObj()->deleteRecords();
         } 
-        catch (BDOException $e)
+        catch (Openbiz\data\Exception $e)
         {
-           $this->processBDOException($e);
+           $this->processDataException($e);
            return;
         }
        
@@ -67,15 +68,15 @@ class QueueForm extends EasyForm
 	public function DeleteSentSms()
 	{ 
        if ($this->resource != "" && !$this->allowAccess("sms.Manage"))
-            return BizSystem::clientProxy()->redirectView(OPENBIZ_ACCESS_DENIED_VIEW);
+            return Openbiz::$app->getClientProxy()->redirectView(OPENBIZ_ACCESS_DENIED_VIEW);
 
         try
         {
           $this->getDataObj()->deleteRecords("[status]='sent'");
         } 
-        catch (BDOException $e)
+        catch (Openbiz\data\Exception $e)
         {
-           $this->processBDOException($e);
+           $this->processDataException($e);
            return;
         }
 		
@@ -89,4 +90,3 @@ class QueueForm extends EasyForm
 	}
 	
 }
-?>

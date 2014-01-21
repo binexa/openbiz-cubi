@@ -11,6 +11,9 @@
  * @version   $Id: ExtendFieldTranslateForm.php 3360 2012-05-31 06:00:17Z rockyswen@gmail.com $
  */
 
+use Openbiz\Openbiz;
+use Openbiz\i18n\I18n;
+
 class ExtendFieldTranslateForm extends PickerForm
 {
 
@@ -23,11 +26,11 @@ class ExtendFieldTranslateForm extends PickerForm
 		$this->activeRecord = null;
 		$result = parent::fetchData();
 		
-		$lang = BizSystem::ClientProxy()->getFormInputs("fld_lang");
+		$lang = Openbiz::$app->getClientProxy()->getFormInputs("fld_lang");
 		$lang?$lang:$lang=I18n::getCurrentLangCode();
 		$setting_id = $result["Id"];
 		
-		$transDO = BizSystem::getObject($this->translateDO,1);
+		$transDO = Openbiz::getObject($this->translateDO,1);
 		$currentRecord = $transDO->fetchOne("[setting_id]='$setting_id' AND [lang]='$lang'");
 		if($currentRecord){
 			$currentRecord = $currentRecord->toArray();
@@ -55,7 +58,7 @@ class ExtendFieldTranslateForm extends PickerForm
 	        {
 	            $this->ValidateForm();
 	        }
-	        catch (ValidationException $e)
+	        catch (Openbiz\validation\Exception $e)
 	        {
 	            $this->processFormObjError($e->errors);
 	            return;
@@ -75,7 +78,7 @@ class ExtendFieldTranslateForm extends PickerForm
 		
 		$lang = $inputRecord['lang'];
 		$setting_id = $currentRecord["Id"];		
-		$transDO = BizSystem::getObject($this->translateDO,1);
+		$transDO = Openbiz::getObject($this->translateDO,1);
 		
 		$newRecord = array(
 						"setting_id"=>$setting_id,
@@ -101,26 +104,26 @@ class ExtendFieldTranslateForm extends PickerForm
            	$dataRec[$k] = $v; // or $dataRec->$k = $v;
         }
 
-        BizSystem::getObject("extend.widget.ExtendSettingDetailForm",1)->processOptions($inputRecord['_options'], $setting_id, $lang);
+        Openbiz::getObject("extend.widget.ExtendSettingDetailForm",1)->processOptions($inputRecord['_options'], $setting_id, $lang);
         
         try
         {
             $dataRec->save();
         }
-        catch (ValidationException $e)
+        catch (Openbiz\validation\Exception $e)
         {
             $errElements = $this->getErrorElements($e->errors);           
         	if(count($e->errors)==count($errElements)){
             	$this->processFormObjError($errElements);
             }else{            	
             	$errmsg = implode("<br />",$e->errors);
-		        BizSystem::clientProxy()->showErrorMessage($errmsg);
+		        Openbiz::$app->getClientProxy()->showErrorMessage($errmsg);
             }
             return false;
         }
-        catch (BDOException $e)
+        catch (Openbiz\data\Exception $e)
         {
-            $this->processBDOException($e);
+            $this->processDataException($e);
             return false;
         }
 		$this->activeRecord = null;
@@ -131,4 +134,3 @@ class ExtendFieldTranslateForm extends PickerForm
     }
     
 }
-?>

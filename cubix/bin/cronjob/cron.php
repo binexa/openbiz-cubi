@@ -22,4 +22,3 @@ if (is_file(dirname(dirname(dirname(__FILE__))) . '/files/install.lock')
 	echo "Openbiz Cubi not installed yet.";
 	exit;
 }
-?>

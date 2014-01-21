@@ -11,6 +11,9 @@
  * @version   $Id: SecurityRuleForm.php 3370 2012-05-31 06:15:35Z rockyswen@gmail.com $
  */
 
+use Openbiz\Openbiz;
+use Openbiz\Resource;
+
 class SecurityRuleForm extends EasyForm
 {
 	public $configFile;
@@ -36,7 +39,7 @@ class SecurityRuleForm extends EasyForm
         }
 
         if ($recId==null || $recId=='')
-            $recId = BizSystem::clientProxy()->getFormInputs('_selectedId');
+            $recId = Openbiz::$app->getClientProxy()->getFormInputs('_selectedId');
         if ($recId==null || $recId=='')
             return null;
         $this->recordId = $recId;
@@ -55,7 +58,7 @@ class SecurityRuleForm extends EasyForm
 		if(!is_file($file)){
 			return;
 		}
-		$configArr=BizSystem::getXmlArray($file);
+		$configArr = Resource::getXmlArray($file);
 		$nodesArr = $configArr["PLUGINSERVICE"]["SECURITY"][strtoupper($this->configNode)]["RULE"];
 		$result = array();
 		
@@ -113,7 +116,7 @@ class SecurityRuleForm extends EasyForm
 		if(!is_file($file)){
 			return;
 		}
-		$configArr=BizSystem::getXmlArray($file);
+		$configArr=Resource::getXmlArray($file);
 		$nodesArr = $configArr["PLUGINSERVICE"]["SECURITY"][strtoupper($this->configNode)]["RULE"];
 		$result = array();				
 		
@@ -146,7 +149,7 @@ class SecurityRuleForm extends EasyForm
 		if(!is_file($file)){
 			return;
 		}
-		$configArr=BizSystem::getXmlArray($file);
+		$configArr=Resource::getXmlArray($file);
    		$this->modeStatus = $configArr["PLUGINSERVICE"]["SECURITY"][strtoupper($this->configNode)]["ATTRIBUTES"]["MODE"];
    		$result['status'] = $this->modeStatus;
    		return $result;   	
@@ -198,10 +201,10 @@ class SecurityRuleForm extends EasyForm
 	        }
 	        if (count($this->validateErrors) > 0)
 	        {
-	            throw new ValidationException($this->validateErrors);
+	            throw new Openbiz\validation\Exception($this->validateErrors);
 	        }
         }
-        catch (ValidationException $e)
+        catch (Openbiz\validation\Exception $e)
         {
             $this->processFormObjError($e->errors);
             return;
@@ -233,7 +236,7 @@ class SecurityRuleForm extends EasyForm
         {
         	$this->ValidateForm();
         }
-        catch (ValidationException $e)
+        catch (Openbiz\validation\Exception $e)
         {
             $this->processFormObjError($e->errors);
             return;
@@ -259,7 +262,7 @@ class SecurityRuleForm extends EasyForm
 		if(!is_file($file)){
 			return;
 		}
-		$configArr=BizSystem::getXmlArray($file);
+		$configArr=Resource::getXmlArray($file);
 		
 		$this->modeStatus = $configArr["PLUGINSERVICE"]["SECURITY"][strtoupper($this->configNode)]["ATTRIBUTES"]["MODE"];		
 		if($this->modeStatus == 'Enabled')
@@ -281,12 +284,12 @@ class SecurityRuleForm extends EasyForm
    public function deleteRecord($id=null)
     {
         if ($this->resource != "" && !$this->allowAccess($this->resource.".delete"))
-            return BizSystem::clientProxy()->redirectView(OPENBIZ_ACCESS_DENIED_VIEW);
+            return Openbiz::$app->getClientProxy()->redirectView(OPENBIZ_ACCESS_DENIED_VIEW);
 
         if ($id==null || $id=='')
-            $id = BizSystem::clientProxy()->getFormInputs('_selectedId');
+            $id = Openbiz::$app->getClientProxy()->getFormInputs('_selectedId');
 
-        $selIds = BizSystem::clientProxy()->getFormInputs('row_selections', false);
+        $selIds = Openbiz::$app->getClientProxy()->getFormInputs('row_selections', false);
         if ($selIds == null)
             $selIds[] = $id;
             
@@ -307,7 +310,7 @@ class SecurityRuleForm extends EasyForm
 		if(!is_file($file)){
 			return;
 		}
-		$configArr=BizSystem::getXmlArray($file);		
+		$configArr=Resource::getXmlArray($file);		
 		$recordName = $configArr["PLUGINSERVICE"]["SECURITY"][strtoupper($this->configNode)]["RULE"]["ATTRIBUTES"]["NAME"];
 		$recordCount = count($configArr["PLUGINSERVICE"]["SECURITY"][strtoupper($this->configNode)]["RULE"]);
 		if(!$recordName && $recordCount){
@@ -330,7 +333,7 @@ class SecurityRuleForm extends EasyForm
 		if(!is_file($file)){
 			return;
 		}
-		$configArr=BizSystem::getXmlArray($file);
+		$configArr=Resource::getXmlArray($file);
 		$recordName = $configArr["PLUGINSERVICE"]["SECURITY"][strtoupper($this->configNode)]["RULE"]["ATTRIBUTES"]["NAME"];
 		if(!$recordName){
 			$nodesArr = $configArr["PLUGINSERVICE"]["SECURITY"][strtoupper($this->configNode)]["RULE"];
@@ -355,7 +358,7 @@ class SecurityRuleForm extends EasyForm
 		if(!is_file($file)){
 			return;
 		}
-		$configArr=BizSystem::getXmlArray($file);
+		$configArr=Resource::getXmlArray($file);
 		$recordName = $configArr["PLUGINSERVICE"]["SECURITY"][strtoupper($this->configNode)]["RULE"]["ATTRIBUTES"]["NAME"];
 		if(!$recordName)
 		{
@@ -380,7 +383,7 @@ class SecurityRuleForm extends EasyForm
 		if(!is_file($file)){
 			return;
 		}
-		$configArr=BizSystem::getXmlArray($file);
+		$configArr=Resource::getXmlArray($file);
 		$recordName = $configArr["PLUGINSERVICE"]["SECURITY"][strtoupper($this->configNode)]["RULE"]["ATTRIBUTES"]["NAME"];
 		if(!$recordName)
 		{
@@ -405,13 +408,13 @@ class SecurityRuleForm extends EasyForm
 	}
 	
 	private function saveToXML($data){
-		$smarty = BizSystem::getSmartyTemplate();
+		$smarty = Resource::getSmartyTemplate();
 		$smarty->assign("data", $data);
-		$xmldata = $smarty->fetch(BizSystem::getTplFileWithPath("serviceTemplate.xml.tpl", $this->package));
+		$xmldata = $smarty->fetch(Resource::getTplFileWithPath("serviceTemplate.xml.tpl", $this->package));
 		$service_dir = OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR."service";
 		$service_file = $service_dir.DIRECTORY_SEPARATOR.$this->configFile;
 		file_put_contents($service_file ,$xmldata);		
 		return true;
 	}
 }
-?>
+

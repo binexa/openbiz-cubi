@@ -11,6 +11,8 @@
  * @version   $Id: DashboardView.php 3365 2012-05-31 06:07:55Z rockyswen@gmail.com $
  */
 
+use Openbiz\Openbiz;
+
 class DashboardView extends EasyView
 {
 	private $userWidgetDO = "myaccount.do.UserWidgetDO";	
@@ -24,9 +26,9 @@ class DashboardView extends EasyView
 	
 	private function getFormReferences()
 	{
-		$user_id = BizSystem::GetUserProfile("Id");
+		$user_id = Openbiz::$app->getUserProfile("Id");
 		$searchRule="[user_id]='$user_id'";
-		$do = BizSystem::GetObject($this->userWidgetDO);
+		$do = Openbiz::getObject($this->userWidgetDO);
 		$formRecs = $do->directfetch($searchRule);
 		$formRefXML = array();
 		foreach($formRecs as $form){
@@ -40,4 +42,3 @@ class DashboardView extends EasyView
 		return $formRefXML;
 	}
 }
-?>

@@ -7,4 +7,3 @@ class PaypalCN extends Paypal
 	protected $type = 'paypalcn';
 	protected $currencyCode = 'CNY';
 }
-?>

@@ -1,6 +1,6 @@
 <?PHP
 /**
- * PHPOpenBiz Framework
+ * Openbiz Framework
  *
  * LICENSE
  *
@@ -28,4 +28,3 @@ class ChartCategory extends ChartElement
 {
 
 }
-?>

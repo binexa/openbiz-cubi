@@ -11,6 +11,8 @@
  * @version   $Id: UserPreferenceForm.php 3814 2012-08-05 07:27:06Z rockyswen@gmail.com $
  */
 
+use Openbiz\Openbiz;
+
 /**
  * UserPreferenceForm class - implement the logic of setting user preferences
  *
@@ -20,13 +22,13 @@ class ProviderForm extends EasyForm
 {
 	public function updateRecord()
 	{		
-		BizSystem::getService("sms.lib.SmsService")->UpdateProviderCounter();
+		Openbiz::getService("sms.lib.SmsService")->UpdateProviderCounter();
 		return parent::updateRecord(); 	
 	}  
 	
 	public function UpdateMessageCounter()
 	{
-		BizSystem::getService("sms.lib.SmsService")->UpdateProviderCounter();
+		Openbiz::getService("sms.lib.SmsService")->UpdateProviderCounter();
 	}
 
 	public function updateFieldValue($id,$fld_name,$value)
@@ -55,4 +57,3 @@ class ProviderForm extends EasyForm
 		parent::updateFieldValue($id,$fld_name,$value);
 	}
 }  
-?>

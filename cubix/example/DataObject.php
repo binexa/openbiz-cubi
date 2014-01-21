@@ -16,7 +16,7 @@ require_once dirname(dirname(__FILE__)).'/bin/app_init.php';
  
 $objectName = "system.do.UserDO";
 //get the data object instance
-$userDO = BizSystem::getDataObject($objectName);
+$userDO = Openbiz::getDataObject($objectName);
  
 //fetch a user record which id=1
 $userRecord = $userDO->fetchById(1);
@@ -29,4 +29,3 @@ $userRecord['last_login'] = date('Y-m-d H:i:s');
  
 //save the record
 $userRecord->save();
-?>

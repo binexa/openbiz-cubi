@@ -11,7 +11,8 @@
  * @version   $Id: DataShareUserList.php 3355 2012-05-31 05:43:33Z rockyswen@gmail.com $
  */
 
-include_once (OPENBIZ_BIN."/easy/element/Listbox.php");
+use Openbiz\Openbiz;
+
 class DataShareUserList extends Listbox
 {
 	public function getFromList(&$list, $selectFrom=null)
@@ -30,11 +31,11 @@ class DataShareUserList extends Listbox
 
     protected function allowDisplay($user_id)
     {
-    	if(BizSystem::allowUserAccess("data_manage.manage")){
+    	if(Openbiz::$app->allowUserAccess("data_manage.manage")){
     		return true;	
     	}
     	//get user acl info
-    	$actionRec = BizSystem::getObject("system.do.AclActionDO")->fetchOne("[module]='common' AND [resource]='data_assign' AND [action]='accept_other_assigned'");
+    	$actionRec = Openbiz::getObject("system.do.AclActionDO")->fetchOne("[module]='common' AND [resource]='data_assign' AND [action]='accept_other_assigned'");
     	$actionId = $actionRec['Id'];
     	if(!$actionId){
     		//the system doesnt support accept_other_assigned feature then return true;
@@ -42,12 +43,12 @@ class DataShareUserList extends Listbox
     	}
     	
     	//get list of all roles which enabled this action
-    	$roleList = BizSystem::getObject("system.do.AclRoleActionDO")->directFetch("[action_id]='$actionId' AND ([access_level]='1' OR [access_level]='2')");
+    	$roleList = Openbiz::getObject("system.do.AclRoleActionDO")->directFetch("[action_id]='$actionId' AND ([access_level]='1' OR [access_level]='2')");
     	foreach ($roleList as $roleRec)
     	{
     		$roleId = $roleRec['role_id'];
     		//check if target user has this role
-    		$AssocRecs = BizSystem::getObject("system.do.UserRoleDO")->directFetch("[role_id]='$roleId' AND [user_id]='$user_id'");
+    		$AssocRecs = Openbiz::getObject("system.do.UserRoleDO")->directFetch("[role_id]='$roleId' AND [user_id]='$user_id'");
     		if($AssocRecs->count()){
     			return true;
     		}	
@@ -56,8 +57,8 @@ class DataShareUserList extends Listbox
     	//if we are in same group return true
     	//get user groups info
     	$user_id = (int)$user_id;
-    	$groups=BizSystem::getUserProfile("groups");
-    	$groupset = BizSystem::getObject("system.do.UserGroupDO")->directFetch("[user_id]='$user_id'");
+    	$groups=Openbiz::$app->getUserProfile("groups");
+    	$groupset = Openbiz::getObject("system.do.UserGroupDO")->directFetch("[user_id]='$user_id'");
     	foreach($groupset as $groupRec){
 	    	$user_group_id = $groupRec['group_id'];
 	    	foreach($groups as $group_id)
@@ -70,4 +71,3 @@ class DataShareUserList extends Listbox
     	return false;
     }
 }
-?>

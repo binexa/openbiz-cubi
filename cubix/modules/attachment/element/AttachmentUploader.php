@@ -58,4 +58,3 @@ class AttachmentUploader extends InputText
         return $sHTML;
     }	
 }
-?>

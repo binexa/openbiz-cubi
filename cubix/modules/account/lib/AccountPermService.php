@@ -1,5 +1,7 @@
 <?php 
 
+use Openbiz\Openbiz;
+
 /**
  * 
  * this file not been used yet
@@ -13,11 +15,11 @@ class AccountPermService
 	
 	public function buildSQLRule($accountId,$type)
 	{
-		if(BizSystem::allowUserAccess("data_manage.manage")){
+		if(Openbiz::$app->allowUserAccess("data_manage.manage")){
 			return " TRUE ";
 		}
 		
-		$accountSvc = BizSystem::getObject("account.lib.AccountService");
+		$accountSvc = Openbiz::getObject("account.lib.AccountService");
 		if(!$accountId)
 		{
 			$accountId = $accountSvc->getDefaultAccountId();
@@ -44,7 +46,7 @@ class AccountPermService
 				break;
 		}
 		
-		$accountUserDO = BizSystem::getObject($this->accountUserDO);
+		$accountUserDO = Openbiz::getObject($this->accountUserDO);
 		$users = $accountUserDO->directfetch("[account_id]='$accountId' AND [access_level]=$perm_limit");
 		
 		$sql_where = " (";

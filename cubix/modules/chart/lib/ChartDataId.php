@@ -1,6 +1,6 @@
 <?PHP
 /**
- * PHPOpenBiz Framework
+ * Openbiz Framework
  *
  * LICENSE
  *
@@ -26,4 +26,3 @@ class ChartDataId extends ChartElement
 {
 
 }
-?>

@@ -11,11 +11,13 @@
  * @version   $Id: UserFindPasswordView.php 3375 2012-05-31 06:23:11Z rockyswen@gmail.com $
  */
 
+use Openbiz\Openbiz;
+
 class UserFindPasswordView extends EasyView
 {
 	public function allowAccess(){
 		$result = parent::allowAccess();
-        $do = BizSystem::getObject("myaccount.do.PreferenceDO");
+        $do = Openbiz::getObject("myaccount.do.PreferenceDO");
         $rs = $do->fetchOne("[user_id]='0' AND  [section]='Register' AND [name]='find_password'");
       
         $value = $rs->value;
@@ -28,4 +30,3 @@ class UserFindPasswordView extends EasyView
     
 
 }
-?>

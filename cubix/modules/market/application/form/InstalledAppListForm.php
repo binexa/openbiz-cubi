@@ -11,6 +11,8 @@
  * @version   $Id: InstalledAppListForm.php 3363 2012-05-31 06:04:56Z rockyswen@gmail.com $
  */
 
+use Openbiz\Openbiz;
+
 include_once 'AppListForm.php';
 class InstalledAppListForm extends AppListForm
 {	
@@ -24,7 +26,7 @@ class InstalledAppListForm extends AppListForm
 		{
 			return ;
 		}
-		$svc = BizSystem::getService("market.lib.PackageService");
+		$svc = Openbiz::getService("market.lib.PackageService");
 		
 		foreach ($resultSet as $record)
 		{
@@ -62,4 +64,3 @@ class InstalledAppListForm extends AppListForm
 		
 	}	
 }
-?>

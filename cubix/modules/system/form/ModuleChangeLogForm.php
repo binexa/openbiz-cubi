@@ -34,4 +34,3 @@ class ModuleChangeLogForm extends EasyFormGrouping
 		$this->updateForm();
 	}
 }
-?>

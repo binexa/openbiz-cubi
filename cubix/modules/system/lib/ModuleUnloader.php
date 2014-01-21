@@ -11,6 +11,8 @@
  * @version   $Id: ModuleUnloader.php 3372 2012-05-31 06:19:06Z rockyswen@gmail.com $
  */
 
+use Openbiz\Openbiz;
+
 require_once 'ModuleLoader.php';
 class ModuleUnloader extends ModuleLoader
 {
@@ -130,7 +132,7 @@ class ModuleUnloader extends ModuleLoader
     {
     	$this->log("Install Module Change Logs.");
     	$module_name = $xml['Name'];    	
-    	$changelogDO = BizSystem::GetObject("system.do.ModuleChangeLogDO");
+    	$changelogDO = Openbiz::getObject("system.do.ModuleChangeLogDO");
     	$changelogDO->deleteRecords("[module]='$module_name'");
     }    
     
@@ -144,19 +146,19 @@ class ModuleUnloader extends ModuleLoader
 	    	$db = $this->DBConnection();
             $sql = "DELETE FROM menu WHERE module='$module'";
 	        try {
-	            //BizSystem::log(LOG_DEBUG, "DATAOBJ", $sql);
+	            //Openbiz::$app->getLog()->log(LOG_DEBUG, "DATAOBJ", $sql);
 	            $db->query($sql);
 	        }
 	        catch (Exception $e) {
 	            $this->errors = $e->getMessage();
-	            //BizSystem::log(LOG_DEBUG, "DATAOBJ", $this->errors." $sql");
+	            //Openbiz::$app->getLog()->log(LOG_DEBUG, "DATAOBJ", $this->errors." $sql");
 	            return false;
 	        }
 	        //clean menu obj cache
-	        $menuTreeObj = BizSystem::getObject("menu.do.MenuTreeDO");
+	        $menuTreeObj = Openbiz::getObject("menu.do.MenuTreeDO");
 			$menuTreeObj->CleanCache();	
 			
-			$menuObj = BizSystem::getObject("menu.do.MenuDO");
+			$menuObj = Openbiz::getObject("menu.do.MenuDO");
 			$menuObj->CleanCache();
 			            
     	}
@@ -180,7 +182,7 @@ class ModuleUnloader extends ModuleLoader
                     $actDesc = $act['Description'];
                     $sql = "SELECT * FROM acl_action WHERE module='$modName' AND resource='$resName' AND action='$actName'";
                     try {
-                        //BizSystem::log(LOG_DEBUG, "DATAOBJ", $sql);
+                        //Openbiz::$app->getLog()->log(LOG_DEBUG, "DATAOBJ", $sql);
                         $rs = $db->fetchAll($sql);
                         
                         if (count($rs)>0) {
@@ -199,17 +201,17 @@ class ModuleUnloader extends ModuleLoader
 	            $actionIdList = implode(",", $actionIds);
 				$sql = "SELECT * FROM acl_action WHERE module='$modName' AND id NOT IN ($actionIdList)";
 	        	try {
-	        	    //BizSystem::log(LOG_DEBUG, "DATAOBJ", $sql);
+	        	    //Openbiz::$app->getLog()->log(LOG_DEBUG, "DATAOBJ", $sql);
 	    			$rs = $db->fetchAll($sql);
 					if (count($rs)>0) {
 						foreach ($rs as $r)
 	                		$delIds[] = $r[0];
 						$delIdList = implode(",",$delIds);
 						$sql = "DELETE FROM acl_role_action WHERE action_id IN ($delIdList)";
-						//BizSystem::log(LOG_DEBUG, "DATAOBJ", $sql);
+						//Openbiz::$app->getLog()->log(LOG_DEBUG, "DATAOBJ", $sql);
 		                $db->query($sql);
 		                $sql = "DELETE FROM acl_action WHERE id IN ($delIdList)";
-						//BizSystem::log(LOG_DEBUG, "DATAOBJ", $sql);
+						//Openbiz::$app->getLog()->log(LOG_DEBUG, "DATAOBJ", $sql);
 		                $db->query($sql);
 					}
 				}
@@ -225,4 +227,3 @@ class ModuleUnloader extends ModuleLoader
     }
         
 }
-?>

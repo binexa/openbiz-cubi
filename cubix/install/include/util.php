@@ -169,7 +169,7 @@ function loadModules()
 
 function giveActionAccess($where, $role_id)
 {
-	$db = BizSystem::dbConnection();
+	$db = Openbiz::$app->getDbConnection();
 	try {
 		$sql = "DELETE FROM acl_role_action WHERE role_id=$role_id";
 		$db->query($sql);
@@ -178,7 +178,7 @@ function giveActionAccess($where, $role_id)
 			$sql = "SELECT * FROM acl_action";
 		else
 			$sql = "SELECT * FROM acl_action WHERE $where";
-	    BizSystem::log(LOG_DEBUG, "DATAOBJ", $sql);
+	    Openbiz::$app->getLog()->log(LOG_DEBUG, "DATAOBJ", $sql);
 	    $stmt = $db->prepare($sql);
 	    $stmt->execute();
 	    $rs = $stmt->fetchAll();
@@ -187,7 +187,7 @@ function giveActionAccess($where, $role_id)
 	    $sql = "";
 		foreach ($rs as $r) {
 			$sql = "INSERT INTO acl_role_action (role_id, action_id, access_level) VALUES ($role_id,$r[0],1)";
-			BizSystem::log(LOG_DEBUG, "DATAOBJ", $sql);
+			Openbiz::$app->getLog()->log(LOG_DEBUG, "DATAOBJ", $sql);
 	    	$db->query($sql);
 		}
 	}

@@ -20,9 +20,9 @@
 		<div id="header_menu">
 			<!-- top menu start -->
 			{php}
-			$temp = Bizsystem::GetObject('menu.widget.MainTabMenu')->render();
+			$temp = Openbiz\Openbiz::getObject('menu.widget.MainTabMenu')->render();
 			unset($temp);
-			echo Bizsystem::GetObject('menu.widget.MainTabMenu')->render();
+			echo Openbiz\Openbiz::getObject('menu.widget.MainTabMenu')->render();
 			{/php}
 			<!-- top menu end -->	
 		</div>

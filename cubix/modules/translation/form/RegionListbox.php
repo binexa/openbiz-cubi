@@ -11,12 +11,13 @@
  * @version   $Id: RegionListbox.php 3374 2012-05-31 06:22:06Z rockyswen@gmail.com $
  */
 
-require_once(OPENBIZ_BIN."easy/element/Listbox.php");
+use Openbiz\i18n\I18n;
+
 class RegionListbox extends Listbox{
 	public function getFromList(&$list)
     {    	
-		require_once('Zend/Locale.php');
-		$locale = new Zend_Locale(I18n::getCurrentLangCode());
+		//require_once('Zend/Locale.php');
+		$locale = new \Zend_Locale(I18n::getCurrentLangCode());
 		$code2name = $locale->getTranslationList('territory',$locale,2);
 		$list = array();
 		$i=0;
@@ -31,4 +32,3 @@ class RegionListbox extends Listbox{
 		return $list;
     }
 }
-?>

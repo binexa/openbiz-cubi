@@ -11,7 +11,8 @@
  * @version   $Id: LanguageSelector.php 3374 2012-05-31 06:22:06Z rockyswen@gmail.com $
  */
 
-require_once(OPENBIZ_BIN."easy/element/DropDownList.php");
+use Openbiz\i18n\I18n;
+
 class LanguageSelector extends DropDownList{
     function getList(){
     	$list=array();
@@ -21,8 +22,8 @@ class LanguageSelector extends DropDownList{
 			return 	$result;
 		}
 		$current_locale = I18n::getCurrentLangCode();		
-		require_once('Zend/Locale.php');
-		$locale = new Zend_Locale($current_locale);
+		//require_once('Zend/Locale.php');
+		$locale = new \Zend_Locale($current_locale);
 		$code2name = $locale->getTranslationList('language',$locale);
     	foreach (glob($lang_dir.DIRECTORY_SEPARATOR."*") as $dir){
     		$lang_code = basename($dir);
@@ -39,4 +40,3 @@ class LanguageSelector extends DropDownList{
     	return $list;
     }
 }
-?>

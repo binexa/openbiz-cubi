@@ -33,4 +33,3 @@ class ProviderForm extends EasyForm
 		parent::updateFieldValue($id,$fld_name,$value);
 	}
 }  
-?>

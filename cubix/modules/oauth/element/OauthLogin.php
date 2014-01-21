@@ -1,17 +1,21 @@
-<?php 
+<?php
+
+use Openbiz\Openbiz;
+use Openbiz\Core\Expression;
+
 /**
  * 
  * {php}
 	
-	$recArr=BizSystem::sessionContext()->getVar("_OauthLogin");
-	if(!$recArr && BizSystem::getService('system.lib.ModuleService')->isModuleInstalled('oauth'))
+	$recArr=Openbiz::$app->getSessionContext()->getVar("_OauthLogin");
+	if(!$recArr && Openbiz::getService('system.lib.ModuleService')->isModuleInstalled('oauth'))
 		 {
 		 
-		 $do=BizSystem::getObject('oauth.do.OauthProviderDO');
+		 $do=Openbiz::getObject('oauth.do.OauthProviderDO');
 		 $sql="SELECT `type` ,  `key` ,  `value`  FROM  `{$do->mainTableName}` where status=1   LIMIT 0 , 15 ";
 		 $db=$do->getDBConnection();
 		 $recArr=$db->fetchAssoc($sql);
-		 BizSystem::sessionContext()->setVar("_OAUTH_{$this->type}",$recArr);
+		 Openbiz::$app->getSessionContext()->setVar("_OAUTH_{$this->type}",$recArr);
 	  }
 $this->assign('_OauthLogin', $recArr);
 {/php}
@@ -40,9 +44,9 @@ class OauthLogin extends InputElement
 	public function render()
 	{
 		$sHTML = "";
-		if(BizSystem::getService('system.lib.ModuleService')->isModuleInstalled('oauth'))
+		if(Openbiz::getService('system.lib.ModuleService')->isModuleInstalled('oauth'))
 		{
-			 $do=BizSystem::getObject('oauth.do.OauthProviderDO');
+			 $do=Openbiz::getObject('oauth.do.OauthProviderDO');
 			 $recArr=$do->directFetch ("[status]=1",30);
 			 $recArr=$recArr->toArray();
 
@@ -73,4 +77,3 @@ class OauthLogin extends InputElement
 		return $sHTML;
 	}
 }
-?>

@@ -5,4 +5,3 @@ class ContactLiteForm extends ContactForm
 {
 
 }
-?>

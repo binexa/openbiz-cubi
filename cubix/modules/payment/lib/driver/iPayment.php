@@ -8,4 +8,3 @@ interface iPayment
     public function GetReturnData();
     
 }
-?>

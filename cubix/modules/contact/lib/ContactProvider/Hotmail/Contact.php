@@ -17,4 +17,3 @@
  * http://www.phpclasses.org/package/5438-PHP-Import-contacts-from-Web-mail-accounts.html
  */
 
-?>

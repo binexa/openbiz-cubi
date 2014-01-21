@@ -11,13 +11,17 @@
  * @version   $Id: SelectorView.php 4734 2012-11-14 14:18:37Z hellojixian@gmail.com $
  */
 
+use Openbiz\Openbiz;
+
 class SelectorView extends EasyView
 {
-	public $formSelector;
+	
+    public $formSelector;
+
 	protected function readMetadata(&$xmlArr)
     {
         parent::readMetaData($xmlArr);
-        unset($this->formRefs);
+        $this->formRefs = null;
         $this->formSelector = isset($xmlArr["EASYVIEW"]["ATTRIBUTES"]["FROMSELECOTR"]) ? $xmlArr["EASYVIEW"]["ATTRIBUTES"]["FROMSELECOTR"] : null;
         $formRefXML = $this->getDefaultMainForm($xmlArr["EASYVIEW"]["FORMREFERENCES"]["REFERENCE"]);
         $this->formRefs = new MetaIterator($formRefXML,"FormReference",$this);
@@ -32,7 +36,7 @@ class SelectorView extends EasyView
 			"VALUE"=>null
 		);
 		$xmlArr = $newForm;
-        $formObj=BizSystem::GetObject($this->formSelector);
+        $formObj=Openbiz::getObject($this->formSelector);
     	if(!$formObj){
 			return;
 		}

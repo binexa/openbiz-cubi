@@ -1,6 +1,6 @@
 <form id='{$form.name}' name='{$form.name}'>
 <span style="display:block;float:right;padding-top:2px;text-align:left;">{php}
-		$profile_display = BizSystem::GetProfileName(BizSystem::getUserProfile("Id"));
+		$profile_display = Openbiz\Openbiz::$app->getProfile()->getProfileName(Openbiz\Openbiz::$app->getUserProfile("Id"));
 		$this->assign('profile', $profile_display);
 		{/php}
 		{if $form.show_widget }

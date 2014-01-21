@@ -19,4 +19,3 @@ class HelpReadForm extends EasyForm
 		return $data;
 	}
 }
-?>

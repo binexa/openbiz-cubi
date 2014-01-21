@@ -1,6 +1,6 @@
 <?PHP
 /**
- * PHPOpenBiz
+ * Openbiz
  *
  * @author     Rocky Swen <rocky@phpopenbiz.org>
  * @version    2.3 2009-06-01
@@ -9,6 +9,8 @@
 define ('OPENBIZ_DENY', 0);
 define ('OPENBIZ_ALLOW', 1);
 define ('OPENBIZ_ALLOW_OWNER', 2);
+
+use Openbiz\Openbiz;
 
 class aclService
 {
@@ -25,13 +27,15 @@ class aclService
     	if (!aclService::$_accessMatrix)
         {
             // get the access matrix from session
-            aclService::$_accessMatrix = BizSystem::sessionContext()->getVar("_ACCESS_MATRIX");
+            aclService::$_accessMatrix = Openbiz::$app->getSessionContext()->getVar("_ACCESS_MATRIX");
             if (!aclService::$_accessMatrix || count(aclService::$_accessMatrix) == 0)
             {
                 // get user profile
-                $profile = BizSystem::getUserProfile();
-                if (!$profile)
-                    return false; // user not login
+                $profile = Openbiz::$app->getUserProfile();
+                
+                if (!$profile) {
+                    return false;
+                } // user not login
 
                 // get the user role id
                 $roleIds = $profile['roles'];
@@ -42,14 +46,14 @@ class aclService
                 // generate the access matrix
                 
                 /* @var $do BizDataObj */
-                $do = BizSystem::getObject(aclService::$role_actionDataObj);
+                $do = Openbiz::getObject(aclService::$role_actionDataObj);
                 $rs = $do->directFetch("[role_id] in ($roleId_query)");
 
                 if (count($rs)==0)
                     return false;
 
                 aclService::$_accessMatrix = aclService::_generateAccessMatrix($rs);
-                BizSystem::sessionContext()->setVar("_ACCESS_MATRIX", aclService::$_accessMatrix);
+                Openbiz::$app->getSessionContext()->setVar("_ACCESS_MATRIX", aclService::$_accessMatrix);
             }
 
             $accessLevel = self::$_defaultAccess;	// default is deny
@@ -91,7 +95,7 @@ class aclService
     public function clearACLCache() 
     {
 		aclService::$_accessMatrix = null;
-    	BizSystem::sessionContext()->setVar("_ACCESS_MATRIX", array());
-    	BizSystem::sessionContext()->clearVar("_ACCESS_MATRIX");
+    	Openbiz::$app->getSessionContext()->setVar("_ACCESS_MATRIX", array());
+    	Openbiz::$app->getSessionContext()->clearVar("_ACCESS_MATRIX");
     }
 }

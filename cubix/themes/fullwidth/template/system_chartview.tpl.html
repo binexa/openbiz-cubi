@@ -10,20 +10,20 @@ $this->assign('system_top_navi', 	'system_top_navi.tpl.html');
 //$this->assign('system_top_menu', 	'system_top_menu.tpl.html');
 
 
-$obj = Bizsystem::GetObject('menu.widget.MainLeftSystemMenu',1);
+$obj = Openbiz\Openbiz::getObject('menu.widget.MainLeftSystemMenu',1);
 $left_menu_content = $obj->render();
 $this->assign('system_left_menu_content', 	$left_menu_content);
 
-$obj = Bizsystem::GetObject('menu.widget.MainTopMenu',1);
+$obj = Openbiz\Openbiz::getObject('menu.widget.MainTopMenu',1);
 $top_menu_content = $obj->render();
 $this->assign('system_top_menu_content', 	$top_menu_content);
 
 
-$obj = Bizsystem::GetObject('menu.widget.MainTopBreadCrumb',1);
+$obj = Openbiz\Openbiz::getObject('menu.widget.MainTopBreadCrumb',1);
 $top_navi_content = $obj->render();
 $this->assign('system_top_navi_content', 	$top_navi_content);
 
-$profile = BizSystem::getUserProfile();
+$profile = Openbiz\Openbiz::$app->getUserProfile();
 $this->assign('profile', $profile);
 
 {/php}

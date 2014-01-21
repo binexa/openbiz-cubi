@@ -1,4 +1,7 @@
-<?php 
+<?php
+
+use Openbiz\Openbiz;
+
 require_once OPENBIZ_APP_MODULE_PATH.'/websvc/lib/WebsvcService.php';
 class callbackService extends  WebsvcService
 {
@@ -7,7 +10,7 @@ class callbackService extends  WebsvcService
 	public function verify()
 	{
 		$this->_logRequest();
-		return BizSystem::getObject($this->svc)->ValidateNotification($_REQUEST['type']);
+		return Openbiz::getObject($this->svc)->ValidateNotification($_REQUEST['type']);
 	}
 	
 	protected function _logRequest()
@@ -24,4 +27,3 @@ class callbackService extends  WebsvcService
         return;
 	}
 }
-?>

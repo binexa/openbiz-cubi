@@ -13,8 +13,8 @@
     <BizField Name="description" Description="Description" Column="description" Type="Text" Required="N"/>
     <BizField Name="owner_id" Description="Owner Id" Column="owner_id" ValueOnCreate="{@profile:Id}" Required="N" Type="Number"/>
     <BizField Name="group_id" Description="Group Id" Column="group_id" ValueOnCreate="{@profile:default_group}" Required="N" Type="Number"/>
-    <BizField Name="group_perm" Description="Group Perm" Column="group_perm" ValueOnCreate="{BizSystem::GetDefaultPerm(group)}" Required="N" Type="Number"/>
-    <BizField Name="other_perm" Description="Other Perm" Column="other_perm" ValueOnCreate="{BizSystem::GetDefaultPerm(other)}" Required="N" Type="Number"/>
+    <BizField Name="group_perm" Description="Group Perm" Column="group_perm" ValueOnCreate="{\Openbiz\Openbiz::$app->getDefaultPerm(group)}" Required="N" Type="Number"/>
+    <BizField Name="other_perm" Description="Other Perm" Column="other_perm" ValueOnCreate="{\Openbiz\Openbiz::$app->getDefaultPerm(other)}" Required="N" Type="Number"/>
     <BizField Name="status" Description="Status" Column="status" Type="Number" Required="N"/>
     <BizField Name="update_by" Description="Update By" Column="update_by" Type="Number" ValueOnCreate="{@profile:Id}" ValueOnUpdate="{@profile:Id}"/>
     <BizField Name="update_time" Description="Update Time" Column="update_time" Type="Datetime" ValueOnCreate="{date('Y-m-d H:i:s')}" ValueOnUpdate="{date('Y-m-d H:i:s')}"/>

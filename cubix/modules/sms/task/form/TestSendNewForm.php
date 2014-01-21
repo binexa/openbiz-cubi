@@ -10,12 +10,14 @@
  * @link      http://code.google.com/p/openbiz-cubi/
  * @version   $Id: TestSendNewForm.php 3814 2012-08-30  fsliit@gmail.com $
  */
- 
+
+use Openbiz\Openbiz;
+
 class TestSendNewForm extends EasyForm
 {
     public function InsertRecord(){
 		$inputRec=$this->readInputRecord();
-		$SmsObj=BizSystem::getService("sms.lib.SmsService");
+		$SmsObj=Openbiz::getService("sms.lib.SmsService");
 		if(!$SmsObj->validateMobile($inputRec['mobile']))
 		{
 			$this->errors = array("fld_mobile"=>$this->getMessage("MOBILE_ERROR"));
@@ -41,4 +43,3 @@ class TestSendNewForm extends EasyForm
 		$this->updateForm();
     }    
 }  
-?>

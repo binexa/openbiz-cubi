@@ -40,7 +40,7 @@
         			FieldName="create_by" 
         			Label="Sender"         			 
         			Sortable="Y" 
-        			Text="{BizSystem::GetProfileName(@:Elem[fld_sender].Value,1)}" 
+        			Text="{\Openbiz\Openbiz::$app->getProfile()->getProfileName(@:Elem[fld_sender].Value,1)}" 
 					/> 
         	
    

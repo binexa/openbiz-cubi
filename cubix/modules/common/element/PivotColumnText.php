@@ -1,6 +1,6 @@
 <?PHP
 
-include_once(OPENBIZ_PATH."/bin/easy/element/ColumnText.php");
+//include_once(OPENBIZ_PATH."/bin/easy/element/ColumnText.php");
 
 /**
  * PivotColumnText class is element for pivot column,
@@ -27,4 +27,3 @@ class PivotColumnText extends ColumnText
         $this->pivotType = isset($xmlArr["ATTRIBUTES"]["PIVOTTYPE"]) ? $xmlArr["ATTRIBUTES"]["PIVOTTYPE"] : null;     
 	}
 }
-?>

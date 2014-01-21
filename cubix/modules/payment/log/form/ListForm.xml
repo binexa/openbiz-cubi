@@ -70,7 +70,7 @@
         			Class="ColumnText" 
         			FieldName="payment_amount" 
         			Label="Amount" 
-        			Text="{BizSystem::getObject('service.currencyService')->getFormatCurrency(@:Elem[fld_amount].Value)}"
+        			Text="{\Openbiz\Openbiz::getObject('service.currencyService')->getFormatCurrency(@:Elem[fld_amount].Value)}"
         			Style="color:#ff0000"
         			MaxLength="30"        			 
         			Sortable="Y"

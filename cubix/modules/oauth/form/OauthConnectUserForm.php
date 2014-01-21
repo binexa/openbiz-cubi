@@ -1,4 +1,6 @@
-<?php 
+<?php
+
+use Openbiz\Openbiz;
 include_once(OPENBIZ_APP_MODULE_PATH."/user/form/RegisterForm.php");
 class OauthConnectUserForm extends RegisterForm
 {
@@ -9,13 +11,13 @@ class OauthConnectUserForm extends RegisterForm
     
     public function CreateUser()
     {
-		$OauthUserInfo=BizSystem::sessionContext()->getVar('_OauthUserInfo');
+		$OauthUserInfo=Openbiz::$app->getSessionContext()->getVar('_OauthUserInfo');
 		if(!$OauthUserInfo)
 		{
 			throw new Exception('Unknown OauthUserInfo');
 			return;
 		}
-		$userObj = BizSystem::getObject('oauth.do.UserTokenDO');
+		$userObj = Openbiz::getObject('oauth.do.UserTokenDO');
 		$OauthUser=$userObj->fetchOne("[oauth_uid]='".$OauthUserInfo['id']."'");
 		if(!$OauthUser)
 		{
@@ -39,16 +41,16 @@ class OauthConnectUserForm extends RegisterForm
 	public function ConnectUser()
 	{
 	  	// get the username and password	
-		$this->username = BizSystem::ClientProxy()->getFormInputs("fld_username");
-		$this->password = BizSystem::ClientProxy()->getFormInputs("fld_password");				
-		$eventlog 	= BizSystem::getService(OPENBIZ_EVENTLOG_SERVICE);
+		$this->username = Openbiz::$app->getClientProxy()->getFormInputs("fld_username");
+		$this->password = Openbiz::$app->getClientProxy()->getFormInputs("fld_password");				
+		$eventlog 	= Openbiz::getService(OPENBIZ_EVENTLOG_SERVICE);
 		
 		try {
     		if ($this->authUser()) 
     		{
 				  // after authenticate user: 1. init profile
-    			$profile = BizSystem::instance()->InitUserProfile($this->username);
-				$OauthUserInfo=BizSystem::sessionContext()->getVar('_OauthUserInfo');
+    			$profile = Openbiz::$app->InitUserProfile($this->username);
+				$OauthUserInfo=Openbiz::$app->getSessionContext()->getVar('_OauthUserInfo');
 				if(!$OauthUserInfo || !$profile['Id'])
 				{
 					$this->errors = array($this->getMessage("TEST_FAILURE"));
@@ -66,19 +68,19 @@ class OauthConnectUserForm extends RegisterForm
 				}
 				else
 				{
-					//BizSystem::ClientProxy()->showClientAlert($this->getMessage("ASSOCIATED_USER_SUCCESS"));
+					//Openbiz::$app->getClientProxy()->showClientAlert($this->getMessage("ASSOCIATED_USER_SUCCESS"));
 				}
 				$this->switchForm("oauth.form.OauthConnectUserFinishedForm");
 /*
     	   	    $redirectPage = OPENBIZ_APP_INDEX_URL.$profile['roleStartpage'][0];
     	   	   	if(!$profile['roleStartpage'][0])
     	   	   	{
-    	   	   		BizSystem::ClientProxy()->showClientAlert($this->getMessage("TEST_FAILURE"));
+    	   	   		Openbiz::$app->getClientProxy()->showClientAlert($this->getMessage("TEST_FAILURE"));
 					return false;
     	   	   	}
     	   	   
 				if($profile['roleStartpage'][0]){
-       	        	BizSystem::clientProxy()->ReDirectPage($redirectPage);	
+       	        	Openbiz::$app->getClientProxy()->ReDirectPage($redirectPage);	
        	        }else{
        	        	parent::processPostAction();       	        	
        	        }       	  
@@ -99,13 +101,13 @@ class OauthConnectUserForm extends RegisterForm
     		}
     	}
     	catch (Exception $e) {    	
-			BizSystem::ClientProxy()->showClientAlert($e->getMessage());
+			Openbiz::$app->getClientProxy()->showClientAlert($e->getMessage());
     	
     	}
 	}
 	
 	public function render(){
-		$oauth_data=BizSystem::sessionContext()->getVar('_OauthUserInfo');
+		$oauth_data=Openbiz::$app->getSessionContext()->getVar('_OauthUserInfo');
 		
 		if(!$oauth_data)
 		{
@@ -119,7 +121,7 @@ class OauthConnectUserForm extends RegisterForm
 	public function fetchData()
 	{
 		//fill in open register status
-		$do = BizSystem::getObject("myaccount.do.PreferenceDO");
+		$do = Openbiz::getObject("myaccount.do.PreferenceDO");
         $rs = $do->fetchOne("[user_id]='0' AND [name]='open_register'");
         if(!$rs || $rs['value']==0){
         	$this->openRegisterStatus = 0;	
@@ -129,7 +131,7 @@ class OauthConnectUserForm extends RegisterForm
         
         if ($this->activeRecord != null)
         {
-        	$oauth_data=BizSystem::sessionContext()->getVar('_OauthUserInfo');
+        	$oauth_data=Openbiz::$app->getSessionContext()->getVar('_OauthUserInfo');
 			$this->activeRecord['oauth_data'] = $oauth_data;
 			$this->activeRecord['oauth_user'] = $oauth_data['uname'];
 			$this->activeRecord['oauth_location'] = $oauth_data['location'];
@@ -140,7 +142,7 @@ class OauthConnectUserForm extends RegisterForm
             return $this->getNewRecord();
             
 		//$record =  parent::fetchData();
-		$oauth_data=BizSystem::sessionContext()->getVar('_OauthUserInfo');
+		$oauth_data=Openbiz::$app->getSessionContext()->getVar('_OauthUserInfo');
 		$record['oauth_data'] = $oauth_data;
 		$record['oauth_user'] = $oauth_data['uname'];
 		$record['oauth_location'] = $oauth_data['location'];
@@ -151,7 +153,7 @@ class OauthConnectUserForm extends RegisterForm
 	
 	public function getNewRecord()
 	{
-		$oauth_data=BizSystem::sessionContext()->getVar('_OauthUserInfo');
+		$oauth_data=Openbiz::$app->getSessionContext()->getVar('_OauthUserInfo');
 		$record= array(
 		"username"=>$oauth_data['uname'],
 		"email" =>$oauth_data['email']
@@ -165,8 +167,7 @@ class OauthConnectUserForm extends RegisterForm
 	
     protected function authUser()
     {
-    	$svcobj 	= BizSystem::getService(AUTH_SERVICE); 
+    	$svcobj 	= Openbiz::getService(AUTH_SERVICE); 
     	return  $svcobj->authenticateUser($this->username,$this->password); 	
     }
 }
-?>

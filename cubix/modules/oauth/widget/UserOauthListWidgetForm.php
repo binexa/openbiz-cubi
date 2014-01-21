@@ -1,4 +1,7 @@
-<?php 
+<?php
+
+use Openbiz\Openbiz;
+
 class UserOauthListWidgetForm extends EasyForm
 {
 	public function fetchDataset()
@@ -22,7 +25,7 @@ class UserOauthListWidgetForm extends EasyForm
 	public function deleteAccount($id=null)
 	{
 		$rec=$this->getDataObj()->fetchById($id);
-		$profile_id = BizSystem::getUserProfile("Id");
+		$profile_id = Openbiz::$app->getUserProfile("Id");
 		if($rec['user_id'] == $profile_id){
 			$result = parent::deleteRecord($id);
 		}
@@ -35,4 +38,3 @@ class UserOauthListWidgetForm extends EasyForm
 		//if cannot read user's info , then delete the association
 	}
 }
-?>

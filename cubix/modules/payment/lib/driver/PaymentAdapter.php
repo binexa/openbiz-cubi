@@ -1,4 +1,7 @@
-<?php 
+<?php
+
+use Openbiz\Openbiz;
+
 require_once 'iPayment.php';
 class PaymentAdapter implements iPayment
 {
@@ -13,7 +16,7 @@ class PaymentAdapter implements iPayment
 	
 	protected function _getProviderInfo()
 	{
-		$ProviderDO = BizSystem::getObject($this->providerDO);
+		$ProviderDO = Openbiz::getObject($this->providerDO);
 		$recObj=$ProviderDO->fetchOne("[Id]={$this->providerId}");
 		$recArr=array();
 		if($recObj)
@@ -66,14 +69,14 @@ class PaymentAdapter implements iPayment
     	$this->_MarkLogProcessed($txn_id);    	
     	$obj 	= $customObj->object;
     	$method = $customObj->method;
-    	$result =  BizSystem::getObject($obj)->$method($data);
+    	$result =  Openbiz::getObject($obj)->$method($data);
     	return $result; 	
 	}
 	
 	protected function _MarkLogProcessed($txn_id)
 	{
 		$searchRule = "[txn_id]='$txn_id' AND [provider_id]='".$this->providerId."' ";
-		$record = BizSystem::getObject($this->logDO)->fetchOne($searchRule);
+		$record = Openbiz::getObject($this->logDO)->fetchOne($searchRule);
 		if($record)
 		{
 			$record['processed']=1;
@@ -87,7 +90,7 @@ class PaymentAdapter implements iPayment
 	public function CheckLogProcessed($txn_id)
 	{
 		$searchRule = "[txn_id]='$txn_id' AND [provider_id]='".$this->providerId."' AND [processed]=1";
-		$record = BizSystem::getObject($this->logDO)->fetchOne($searchRule);
+		$record = Openbiz::getObject($this->logDO)->fetchOne($searchRule);
 		if($record)
 		{
 			return $record['Id'];
@@ -101,7 +104,7 @@ class PaymentAdapter implements iPayment
 	public function CheckLogExists($txn_id)
 	{
 		$searchRule = "[txn_id]='$txn_id' AND [provider_id]='".$this->providerId."' ";
-		$record = BizSystem::getObject($this->logDO)->fetchOne($searchRule);
+		$record = Openbiz::getObject($this->logDO)->fetchOne($searchRule);
 		if($record)
 		{
 			return $record['Id'];
@@ -125,7 +128,7 @@ class PaymentAdapter implements iPayment
     	
     	if(!$this->CheckLogExists($logArr['txn_id']))
     	{
-    		BizSystem::getObject($this->logDO)->insertRecord($logArr);
+    		Openbiz::getObject($this->logDO)->insertRecord($logArr);
     	} 
     	
     	if($logArr['custom'])
@@ -141,4 +144,3 @@ class PaymentAdapter implements iPayment
     }	
     
 }
-?>

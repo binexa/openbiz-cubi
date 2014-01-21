@@ -11,9 +11,12 @@
  * @version   $Id: MenuDataObj.php 3364 2012-05-31 06:06:21Z rockyswen@gmail.com $
  */
 
+use Openbiz\Openbiz;
+use Openbiz\Object\Statefullable;
+
 include_once (dirname(__FILE__).'/MenuItemObj.php');
 
-class MenuDataObj extends MetaObject implements iSessionObject{
+class MenuDataObj extends MetaObject implements Statefullable{
 	public $objectName;
 	public $menuTreeObj;
 	public $cacheLifeTime;	
@@ -41,16 +44,16 @@ class MenuDataObj extends MetaObject implements iSessionObject{
         {
             $cache_id = md5($this->objectName);
             //try to process cache service.
-            $cacheSvc = BizSystem::getService(CACHE_SERVICE,1);
+            $cacheSvc = Openbiz::getService(CACHE_SERVICE,1);
             $cacheSvc->init($this->objectName,$this->cacheLifeTime);
             if($cacheSvc->test($cache_id))
             {
-                BizSystem::log(LOG_DEBUG, "MENU", "Cache Hit. menu dataobj name = ".$this->objectName);
+                Openbiz::$app->getLog()->log(LOG_DEBUG, "MENU", "Cache Hit. menu dataobj name = ".$this->objectName);
                 $output = $cacheSvc->load($cache_id);
             }
             else
             {
-                BizSystem::log(LOG_DEBUG, "MENU", "Set cache. menu dataobj = ".$this->objectName);
+                Openbiz::$app->getLog()->log(LOG_DEBUG, "MENU", "Set cache. menu dataobj = ".$this->objectName);
                 $xmlArr = $this->rootMenuItem;
                 $output = new MenuItemObj($xmlArr);                                
                 $cacheSvc->save($output, $cache_id);
@@ -102,16 +105,16 @@ class MenuDataObj extends MetaObject implements iSessionObject{
         {
             $cache_id = md5($this->objectName."-".$start_id."-".$deep);
             //try to process cache service.
-            $cacheSvc = BizSystem::getService(CACHE_SERVICE,1);
+            $cacheSvc = Openbiz::getService(CACHE_SERVICE,1);
             $cacheSvc->init($this->objectName,$this->cacheLifeTime);
             if($cacheSvc->test($cache_id))
             {
-                BizSystem::log(LOG_DEBUG, "MENU", "Cache Hit. menu fetch tree, name = ".$this->objectName);
+                Openbiz::$app->getLog()->log(LOG_DEBUG, "MENU", "Cache Hit. menu fetch tree, name = ".$this->objectName);
                 $output = $cacheSvc->load($cache_id);
             }
             else
             {
-                BizSystem::log(LOG_DEBUG, "MENU", "Set cache. menu fetch tree, name = ".$this->objectName);
+                Openbiz::$app->getLog()->log(LOG_DEBUG, "MENU", "Set cache. menu fetch tree, name = ".$this->objectName);
                 if($start_id!=""){
                 	//$this->fetchEntireTree();		
 		    		$tree = $this->getTreeByStartID($start_id);
@@ -136,16 +139,16 @@ class MenuDataObj extends MetaObject implements iSessionObject{
         {
             $cache_id = md5($this->objectName."-".$start_item."-".$deep);
             //try to process cache service.
-            $cacheSvc = BizSystem::getService(CACHE_SERVICE,1);
+            $cacheSvc = Openbiz::getService(CACHE_SERVICE,1);
             $cacheSvc->init($this->objectName,$this->cacheLifeTime);
             if($cacheSvc->test($cache_id))
             {
-                BizSystem::log(LOG_DEBUG, "MENU", "Cache Hit. menu fetch tree, name = ".$this->objectName);
+                Openbiz::$app->getLog()->log(LOG_DEBUG, "MENU", "Cache Hit. menu fetch tree, name = ".$this->objectName);
                 $output = $cacheSvc->load($cache_id);
             }
             else
             {
-                BizSystem::log(LOG_DEBUG, "MENU", "Set cache. menu fetch tree, name = ".$this->objectName);
+                Openbiz::$app->getLog()->log(LOG_DEBUG, "MENU", "Set cache. menu fetch tree, name = ".$this->objectName);
                 if($start_item!=""){   
                 	//$this->fetchEntireTree(); 		
 		    		$tree = $this->getTreeByStartItem($start_item);
@@ -233,12 +236,11 @@ class MenuDataObj extends MetaObject implements iSessionObject{
         return $name;
     } 
             
-	public function saveSessionVars($sessCtxt){
+	public function saveStatefullVars($sessCtxt){
 		
 	}
-    public function loadSessionVars($sessCtxt){
+    public function loadStatefullVars($sessCtxt){
     	
     }
 }
 
-?>

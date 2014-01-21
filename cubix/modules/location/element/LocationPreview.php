@@ -26,4 +26,3 @@ class LocationPreview extends Element
 		return $HTML;
 	}
 }
-?>

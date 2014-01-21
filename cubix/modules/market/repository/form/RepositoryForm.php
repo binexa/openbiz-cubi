@@ -11,6 +11,8 @@
  * @version   $Id: RepositoryForm.php 5078 2013-01-07 09:47:00Z hellojixian@gmail.com $
  */
 
+use Openbiz\Openbiz;
+
 class RepositoryForm extends EasyForm
 {
 	public $repoValidated = 'N';
@@ -20,7 +22,7 @@ class RepositoryForm extends EasyForm
 	{
 		$rec= $this->readInputRecord();
 		$repo_uri = $rec['repository_uri'];
-		$svc = BizSystem::getService("market.lib.PackageService");
+		$svc = Openbiz::getService("market.lib.PackageService");
 		$repoInfo = $svc->discoverRepository($repo_uri);
 		if(!count($repoInfo))
 		{
@@ -43,7 +45,7 @@ class RepositoryForm extends EasyForm
 		
 		if(count($this->repoInfo)==0 && $result['repository_uri']!='' && $result['repository_uri']!='http://'){
 			$repo_uri = $result['repository_uri'];
-			$svc = BizSystem::getService("market.lib.PackageService");
+			$svc = Openbiz::getService("market.lib.PackageService");
 			$this->repoInfo = $svc->discoverRepository($repo_uri);
 		}
 		
@@ -59,7 +61,7 @@ class RepositoryForm extends EasyForm
 	public function fetchDataSet()
 	{
 		$resultSet = parent::fetchDataSet();
-		$svc = BizSystem::getService("market.lib.PackageService");
+		$svc = Openbiz::getService("market.lib.PackageService");
 		foreach($resultSet as $key=>$record)
 		{
 			$repo_uri = $record['repository_uri'];
@@ -82,14 +84,14 @@ class RepositoryForm extends EasyForm
         {
             $this->ValidateForm();
         }
-        catch (ValidationException $e)
+        catch (Openbiz\validation\Exception $e)
         {
             $this->processFormObjError($e->errors);
             return;
         }
 
 		$repo_uri = $recArr['repository_uri'];
-		$svc = BizSystem::getService("market.lib.PackageService");
+		$svc = Openbiz::getService("market.lib.PackageService");
 		$repoInfo = $svc->discoverRepository($repo_uri);        
         $recArr['repository_uid'] = $repoInfo['_repo_uid'];
         $recArr['repository_name'] = $repoInfo['_repo_name'];
@@ -109,4 +111,3 @@ class RepositoryForm extends EasyForm
 	
 	}
 }
-?>

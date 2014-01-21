@@ -107,13 +107,13 @@
 		<BizField Name="group_perm"	
 				Description="Group Perm"	
 				Column="group_perm"	
-				ValueOnCreate="{BizSystem::GetDefaultPerm(group)}"	
+				ValueOnCreate="{\Openbiz\Openbiz::$app->getDefaultPerm(group)}"	
 				Required="N"	
 				Type="Number"/>
 		<BizField Name="other_perm"	
 				Description="Other Perm"	
 				Column="other_perm"	
-				ValueOnCreate="{BizSystem::GetDefaultPerm(other)}"	
+				ValueOnCreate="{\Openbiz\Openbiz::$app->getDefaultPerm(other)}"	
 				Required="N"	
 				Type="Number"/>
 	

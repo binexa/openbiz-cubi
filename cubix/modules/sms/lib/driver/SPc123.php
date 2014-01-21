@@ -1,4 +1,7 @@
-<?php 
+<?php
+
+use Openbiz\Openbiz;
+
 require_once 'iSMS.php';
 require_once 'SPDriver.php';
 //SP = Service Provider 18dx
@@ -48,10 +51,10 @@ class SPc123 extends SPDriver implements iSMS
 		{
 			unset($Param['time']);
 		}
-		$recinfo=BizSystem::getService("sms.lib.SmsUtilService")->curl($this->url,$Param);
+		$recinfo=Openbiz::getService("sms.lib.SmsUtilService")->curl($this->url,$Param);
 		if($recinfo!=100)
 		{				
-			BizSystem::getService(LOG_SERVICE)->log(LOG_ERR,"SMS","sendMessage: ". $content." c123：".$mobile.':'.$recinfo);
+			Openbiz::getService(LOG_SERVICE)->log(LOG_ERR,"SMS","sendMessage: ". $content." c123：".$mobile.':'.$recinfo);
 			return false;
 		}
 		else
@@ -76,11 +79,11 @@ class SPc123 extends SPDriver implements iSMS
 					'encode'=>'utf8'
 				);
 		//$url=$this->url_mm.http_build_query($Param);
-		$recinfo=BizSystem::getService("sms.lib.SmsUtilService")->curl($this->url_mm,$Param);
+		$recinfo=Openbiz::getService("sms.lib.SmsUtilService")->curl($this->url_mm,$Param);
 		$recArr=explode('||',$recinfo);
 		if($recArr[0]!=100)
 		{
-			BizSystem::getService(LOG_SERVICE)->log(LOG_ERR,"SMS","getSentMessageCount c123: ".$recinfo);
+			Openbiz::getService(LOG_SERVICE)->log(LOG_ERR,"SMS","getSentMessageCount c123: ".$recinfo);
 			return false;
 		}
 		else
@@ -93,4 +96,3 @@ class SPc123 extends SPDriver implements iSMS
     	
   
 }
-?>

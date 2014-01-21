@@ -26,6 +26,8 @@
  * @version   $Id: ResetPasswordForm.php 5283 2013-01-28 06:05:39Z fsliit@gmail.com $
  */
 
+use Openbiz\Openbiz;
+
 /**
  * ForgetPassForm class - implement the logic of forget password form
  *
@@ -54,7 +56,7 @@ class ResetPasswordForm extends UserForm
     public function allowAccess(){
     	parent::allowAccess();		
     	
-    	if(BizSystem::getUserProfile("Id"))
+    	if(Openbiz::$app->getUserProfile("Id"))
     	{
   	 		return 1;
     	}
@@ -73,20 +75,20 @@ class ResetPasswordForm extends UserForm
         {
             $this->ValidateForm();
         }
-        catch (ValidationException $e)
+        catch (Openbiz\validation\Exception $e)
         {
         	$this->processFormObjError($e->errors);
             return;
         }
         //check old password
-        $old_password = BizSystem::ClientProxy()->GetFormInputs("fld_password_old");
+        $old_password = Openbiz::$app->getClientProxy()->GetFormInputs("fld_password_old");
         if(!$this->checkPassword($old_password)){
         	$error = array("fld_password_old"=>$this->GetMessage("OLD_PASSOWRD_INVAILD"));
         	$this->processFormObjError($error);
         	return;
         }
 
-        $password = BizSystem::ClientProxy()->GetFormInputs("fld_password");            
+        $password = Openbiz::$app->getClientProxy()->GetFormInputs("fld_password");            
         if($password){
         	$recArr['password'] = hash(HASH_ALG, $password);
 		}        
@@ -100,11 +102,10 @@ class ResetPasswordForm extends UserForm
         // ...
 
 		// init profile
-	    global $g_BizSystem;
-	    $profile = $g_BizSystem->InitUserProfile($currentRec['username']);
+	    $profile = Openbiz::$app->InitUserProfile($currentRec['username']);
     				       	
        	//run eventlog
-        $eventlog 	= BizSystem::getService(OPENBIZ_EVENTLOG_SERVICE);
+        $eventlog 	= Openbiz::getService(OPENBIZ_EVENTLOG_SERVICE);
         $logComment=array($currentRec['username']);
     	$eventlog->log("USER_MANAGEMENT", "MSG_RESET_PASSWORD_BY_TOKEN", $logComment);       	
 	    
@@ -113,16 +114,16 @@ class ResetPasswordForm extends UserForm
  
         if( $this->getViewObject()->isForceResetPassword() )
         {
-        	BizSystem::getService(OPENBIZ_PREFERENCE_SERVICE)->setPreference('force_change_passwd',0);
-        	$profileDefaultPageArr = BizSystem::getUserProfile('roleStartpage');
+        	Openbiz::getService(OPENBIZ_PREFERENCE_SERVICE)->setPreference('force_change_passwd',0);
+        	$profileDefaultPageArr = Openbiz::$app->getUserProfile('roleStartpage');
         	$pageURL = OPENBIZ_APP_INDEX_URL.$profileDefaultPageArr[0];
-        	BizSystem::clientProxy()->redirectPage($pageURL);
+        	Openbiz::$app->getClientProxy()->redirectPage($pageURL);
         }        
         
         if($recArr['_logoff']==1)
         {        	
 			$url = OPENBIZ_APP_INDEX_URL."/user/logout";
-			BizSystem::clientProxy()->redirectPage($url);	
+			Openbiz::$app->getClientProxy()->redirectPage($url);	
         }
     }
     
@@ -132,7 +133,7 @@ class ResetPasswordForm extends UserForm
     	}
     	$currentRec = $this->fetchData();
     	$username= $currentRec['username'];
-    	$svcobj 	= BizSystem::getService(AUTH_SERVICE);
+    	$svcobj 	= Openbiz::getService(AUTH_SERVICE);
     	$result = $svcobj->authenticateUser($username,$password);
     	return $result;
     	
@@ -144,7 +145,7 @@ class ResetPasswordForm extends UserForm
     		return false;
     	}
     	
-    	$tokenObj = BizSystem::getObject('system.do.UserPassTokenDO');
+    	$tokenObj = Openbiz::getObject('system.do.UserPassTokenDO');
         $tokenArr = $tokenObj->directFetch("[token]='$token'", 1);
         if(count($tokenArr)==1)
         {
@@ -168,19 +169,19 @@ class ResetPasswordForm extends UserForm
     {	
     
     	//validate password
-    	$password = BizSystem::ClientProxy()->GetFormInputs("fld_password");
-		$validateSvc = BizSystem::getService(VALIDATE_SERVICE);
+    	$password = Openbiz::$app->getClientProxy()->GetFormInputs("fld_password");
+		$validateSvc = Openbiz::getService(VALIDATE_SERVICE);
 		if(!$validateSvc->betweenLength($password,6,50))
 		{
 			$errorMessage = $this->GetMessage("PASSWORD_LENGTH");
 			$this->validateErrors['fld_password'] = $errorMessage;
-			throw new ValidationException($this->validateErrors);
+			throw new Openbiz\validation\Exception($this->validateErrors);
 			return false;
 		}
 		
     	// disable password validation if they are empty
-    	$password = BizSystem::ClientProxy()->GetFormInputs("fld_password");
-		$password_repeat = BizSystem::ClientProxy()->GetFormInputs("fld_password_repeat");
+    	$password = Openbiz::$app->getClientProxy()->GetFormInputs("fld_password");
+		$password_repeat = Openbiz::$app->getClientProxy()->GetFormInputs("fld_password_repeat");
     	if (!$password_repeat)
     	    $this->getElement("fld_password")->validator = null;
     	if (!$password)
@@ -193,7 +194,7 @@ class ResetPasswordForm extends UserForm
 			$passRepeatElem = $this->getElement("fld_password_repeat");
 			$errorMessage = $this->GetMessage("PASSOWRD_REPEAT_NOTSAME",array($passRepeatElem->label));
 			$this->validateErrors['fld_password_repeat'] = $errorMessage;
-			throw new ValidationException($this->validateErrors);
+			throw new Openbiz\validation\Exception($this->validateErrors);
 			return false;
 		}
 	
@@ -209,4 +210,3 @@ class ResetPasswordForm extends UserForm
     	return false;
     }    
 }  
-?>   

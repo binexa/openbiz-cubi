@@ -11,6 +11,8 @@
  * @version   $Id: ChangeLogNoCommentForm.php 3354 2012-05-31 05:39:37Z rockyswen@gmail.com $
  */
 
+use Openbiz\Resource;
+
 include_once dirname(__FILE__).'/ChangeLogForm.php';
 class ChangeLogNoCommentForm extends ChangeLogForm
 {	
@@ -21,4 +23,3 @@ class ChangeLogNoCommentForm extends ChangeLogForm
     	parent::readMetaData($xmlArr);
     }      
 }
-?>

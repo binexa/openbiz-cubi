@@ -11,6 +11,9 @@
  * @link      http://code.google.com/p/openbiz-cubi/
  * @version   $Id: LicenseActiveForm.php 3755 2012-07-29 15:55:04Z hellojixian@gmail.com $
  */
+
+use Openbiz\Openbiz;
+
 require_once "LicenseForm.php";
 
 class LicenseActiveForm extends LicenseForm
@@ -22,7 +25,7 @@ class LicenseActiveForm extends LicenseForm
     public function readMetadata($xmlArr)
     {
         parent::readMetadata($xmlArr);
-        $this->activeModuleName = BizSystem::instance()->getSessionContext()->getVar("LIC_MODULE");
+        $this->activeModuleName = Openbiz::$app->getSessionContext()->getVar("LIC_MODULE");
     }
 
     public function fetchData()
@@ -34,7 +37,7 @@ class LicenseActiveForm extends LicenseForm
 
     protected function getRedirectPage()
     {
-        $view = BizSystem::instance()->getSessionContext()->getVar("LIC_SOURCE_URL");
+        $view = Openbiz::$app->getSessionContext()->getVar("LIC_SOURCE_URL");
         return array($view, "");
     }
 

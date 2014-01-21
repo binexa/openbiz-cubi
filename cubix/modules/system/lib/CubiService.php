@@ -11,6 +11,8 @@
  * @version   $Id: ModuleService.php 4449 2012-10-22 06:21:42Z hellojixian@gmail.com $
  */
 
+use Openbiz\Openbiz;
+
 include_once(OPENBIZ_APP_MODULE_PATH."/common/lib/fileUtil.php");
 include_once(OPENBIZ_APP_MODULE_PATH."/common/lib/httpClient.php");
 
@@ -58,8 +60,8 @@ class CubiService extends  MetaObject
 		$contactRec = array();
 		if($sendContact)
 		{
-			$profileId = BizSystem::getUserProfile("profile_Id");
-	        $recArr = BizSystem::getObject("contact.do.ContactDO")->fetchById($profileId);
+			$profileId = Openbiz::$app->getUserProfile("profile_Id");
+	        $recArr = Openbiz::getObject("contact.do.ContactDO")->fetchById($profileId);
 	        $contactRec['name'] 		= $recArr['display_name'];
 	        $contactRec['company'] 		= $recArr['company'];
 	        $contactRec['email'] 		= $recArr['email'];

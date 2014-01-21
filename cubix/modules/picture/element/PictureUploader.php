@@ -58,4 +58,3 @@ class PictureUploader extends InputText
         return $sHTML;
     }	
 }
-?>

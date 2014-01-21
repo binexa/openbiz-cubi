@@ -11,15 +11,17 @@
  * @version   $Id: UserRolesForm.php 3372 2012-05-31 06:19:06Z rockyswen@gmail.com $
  */
 
+use Openbiz\Openbiz;
+
 class UserRolesForm extends EasyForm{
 	public function SetDefault($role_id=null){
 		if($role_id==null)
 		{
-			$role_id =  (int)BizSystem::clientProxy()->getFormInputs('_selectedId');
+			$role_id =  (int)Openbiz::$app->getClientProxy()->getFormInputs('_selectedId');
 		}
-		$user_id = (int)BizSystem::objectFactory()->getObject('system.form.UserDetailForm')->recordId;
+		$user_id = (int)Openbiz::getObject('system.form.UserDetailForm')->recordId;
 		
-		$roleDo = BizSystem::getObject("system.do.UserRoleDO",1);
+		$roleDo = Openbiz::getObject("system.do.UserRoleDO",1);
 		$roleDo->updateRecords("[default]=0","[user_id]='$user_id'");		
 		$roleDo->updateRecords("[default]=1","[user_id]='$user_id' and [role_id]='$role_id'");
 		
@@ -27,4 +29,3 @@ class UserRolesForm extends EasyForm{
 		$this->UpdateForm();
 	}
 }
-?>

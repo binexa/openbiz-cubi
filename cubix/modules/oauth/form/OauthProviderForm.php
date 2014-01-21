@@ -1,4 +1,6 @@
 <?php
+
+use Openbiz\Openbiz;
 class OauthProviderForm extends EasyForm
 {
 	protected $type;
@@ -7,7 +9,7 @@ class OauthProviderForm extends EasyForm
 
 	public function testAllProvider()
 	{	
-		 $do=BizSystem::getObject('oauth.do.OauthProviderDO');
+		 $do=Openbiz::getObject('oauth.do.OauthProviderDO');
 		 $recArr=$do->directFetch ("[status]=1",30);
 		 $recArr=$recArr->toArray();
 		 if($recArr)
@@ -72,7 +74,7 @@ class OauthProviderForm extends EasyForm
 		else
 		{
 			$this->errors = array("test"=>$this->getMessage("TEST_FAILURE"));
-			$do=BizSystem::getObject('oauth.do.OauthProviderDO');
+			$do=Openbiz::getObject('oauth.do.OauthProviderDO');
 			$do->updateRecords('[status]=0',"[Id] ={$Record['Id']}"); 
 
 		}
@@ -81,7 +83,7 @@ class OauthProviderForm extends EasyForm
 		{
 			if($this->errors)
 			{
-				//BizSystem::ClientProxy()->showClientAlert($this->getMessage("TEST_FAILURE"));
+				//Openbiz::$app->getClientProxy()->showClientAlert($this->getMessage("TEST_FAILURE"));
 				$this->updateForm();
 				return false;
 			}
@@ -99,9 +101,9 @@ class OauthProviderForm extends EasyForm
 	}
 	
 	public function UpdateRecord(){
-		$this->type = BizSystem::ClientProxy()->getFormInputs("fld_type");
-		$this->key= BizSystem::ClientProxy()->getFormInputs("fld_key");	
-		$this->secret = BizSystem::ClientProxy()->getFormInputs("fld_value");	
+		$this->type = Openbiz::$app->getClientProxy()->getFormInputs("fld_type");
+		$this->key= Openbiz::$app->getClientProxy()->getFormInputs("fld_key");	
+		$this->secret = Openbiz::$app->getClientProxy()->getFormInputs("fld_value");	
 		if($this->TestProvider(true))
 		{
 			parent::UpdateRecord();
@@ -118,7 +120,7 @@ class OauthProviderForm extends EasyForm
 		
 		
 		//$whitelist_arr=array('qq','sina','alipay','google','facebook');
-		$whitelist_arr = BizSystem::getService(CUBI_LOV_SERVICE)->getDictionary("oauth.lov.ProviderLOV(Provider)");
+		$whitelist_arr = Openbiz::getService(CUBI_LOV_SERVICE)->getDictionary("oauth.lov.ProviderLOV(Provider)");
 		
 		if(!in_array($this->type,$whitelist_arr)){
 			throw new Exception('Unknown service');
@@ -154,4 +156,3 @@ class OauthProviderForm extends EasyForm
 		parent::updateFieldValue($id,$fld_name,$value);
 	}	
 }
-?>

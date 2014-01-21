@@ -35,7 +35,7 @@ class ContactService{
 			$this->_credential = $credential;
 		}
 		try {	     
-	      	$client = Zend_Gdata_ClientLogin::getHttpClient(	
+	      	$client = \Zend_Gdata_ClientLogin::getHttpClient(	
 	      			$credential['username'], 
 	      			$credential['password'],
 	      			'cp');
@@ -68,13 +68,13 @@ class ContactService{
 		
 		try {
 	      // perform login and set protocol version to 3.0
-	      $client = Zend_Gdata_ClientLogin::getHttpClient(
+	      $client = \Zend_Gdata_ClientLogin::getHttpClient(
 	        $user, $pass, 'cp');
-	      $gdata = new Zend_Gdata($client);
+	      $gdata = new \Zend_Gdata($client);
 	      $gdata->setMajorProtocolVersion(3);
 	      
 	      // perform query and get result feed
-	      $query = new Zend_Gdata_Query(
+	      $query = new \Zend_Gdata_Query(
 	        'http://www.google.com/m8/feeds/contacts/default/full');
 	      $query->setParam("max-results",10000);
 	      $feed = $gdata->getFeed($query);	      
@@ -210,4 +210,3 @@ class ContactService{
 		return $credential_invaild;
 	}	
 }
-?>

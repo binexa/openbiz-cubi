@@ -11,13 +11,15 @@
  * @version   $Id: ModuleService.php 4449 2012-10-22 06:21:42Z hellojixian@gmail.com $
  */
 
+use Openbiz\Openbiz;
+
 class ModuleService
 {
 	protected $moduleDO = "system.do.ModuleCachedDO";
 	
 	public function isModuleInstalled($module)
 	{
-		$do = BizSystem::getObject($this->moduleDO);
+		$do = Openbiz::getObject($this->moduleDO);
 		$modRec = $do->fetchOne("[name]='$module'");
 		if($modRec)
 		{
@@ -29,4 +31,3 @@ class ModuleService
 		}
 	}
 }
-?>

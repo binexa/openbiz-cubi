@@ -16,16 +16,16 @@ class ExtendSettingForm extends EasyForm
 	public $parentFormElementMeta;
 	public $accessSelectFrom;		
 	
-	public function loadSessionVars($sessionContext)
+	public function loadStatefullVars($sessionContext)
     {
         $sessionContext->loadObjVar($this->objectName, "ParentFormElementMeta", $this->parentFormElementMeta);
-        return parent::loadSessionVars($sessionContext);
+        return parent::loadStatefullVars($sessionContext);
     }
 
-    public function saveSessionVars($sessionContext)
+    public function saveStatefullVars($sessionContext)
     {
         $sessionContext->saveObjVar($this->objectName, "ParentFormElementMeta", $this->parentFormElementMeta);
-        return parent::saveSessionVars($sessionContext);       
+        return parent::saveStatefullVars($sessionContext);       
     }
 
     public function fetchDataSet()
@@ -36,4 +36,3 @@ class ExtendSettingForm extends EasyForm
     
    
 }
-?>

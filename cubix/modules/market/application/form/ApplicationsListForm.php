@@ -11,6 +11,8 @@
  * @version   $Id: ApplicationsListForm.php 4708 2012-11-13 05:27:07Z hellojixian@gmail.com $
  */
 
+use Openbiz\Openbiz;
+
 include_once 'AppListForm.php';
 class ApplicationsListForm extends AppListForm
 {
@@ -19,7 +21,7 @@ class ApplicationsListForm extends AppListForm
 	public function fetchDataSet()
 	{
 		parent::fetchDataSet();				
-		$svc = BizSystem::getService("market.lib.PackageService");
+		$svc = Openbiz::getService("market.lib.PackageService");
 		$resultSet = array();
 				
 		$repo_uri = $this->getDefaultRepoURI();	
@@ -49,17 +51,16 @@ class ApplicationsListForm extends AppListForm
 	public function isNeedCleanup()
 	{
 		$searchRule = "[app_id]=0 OR [install_state]!='OK'";
-		return BizSystem::getObject($this->marketInstalledDO)->directFetch($searchRule)->count();		
+		return Openbiz::getObject($this->marketInstalledDO)->directFetch($searchRule)->count();		
 	}
 	
 	public function Cleanup()
 	{
 		$searchRule = "[app_id]=0 OR [install_state]!='OK'";
-		BizSystem::getObject($this->marketInstalledDO)->deleteRecords($searchRule);
+		Openbiz::getObject($this->marketInstalledDO)->deleteRecords($searchRule);
 		$this->notices = array(
 			"cleanup"=>$this->getMessage("MSG_CLEANUP")
 		);
 		$this->rerender();
 	}
 }
-?>

@@ -19,7 +19,7 @@
 	{include file='system_header.tpl.html'}
 
 {php}
-$widget = Bizsystem::GetObject('menu.widget.MainTabMenu');
+$widget = Openbiz\Openbiz::getObject('menu.widget.MainTabMenu');
 if($widget->globalSearchRule && $widget->searchRule){
 	$searchRule = $widget->globalSearchRule ." and ". $widget->searchRule;
 }else{
@@ -65,9 +65,9 @@ var top_menu_play_speed=1000;
 			<div id="top_menu_list" style="width: {php}echo ($menu_count * $menu_item_width);{/php}px; position: relative; left: 0px; padding-left: 0px; top: 0px;" >
 				<!-- top menu start -->
 				{php}
-				$temp = Bizsystem::GetObject('menu.widget.MainTabMenu')->render();
+				$temp = Openbiz\Openbiz::getObject('menu.widget.MainTabMenu')->render();
 				unset($temp);
-				echo Bizsystem::GetObject('menu.widget.MainTabMenu')->render();
+				echo Openbiz\Openbiz::getObject('menu.widget.MainTabMenu')->render();
 				{/php}
 				<!-- top menu end -->	
 			</div>
@@ -96,7 +96,7 @@ var top_menu_play_speed=1000;
 					<td valign="top" id="right_panel">
 						<!-- notification block start -->
 						<div id="notification">
-						{php}echo Bizsystem::GetObject('notification.widget.NotificationWidgetForm')->render();{/php}
+						{php}echo Openbiz\Openbiz::getObject('notification.widget.NotificationWidgetForm')->render();{/php}
 						</div>
 						<!-- notification block start -->
 					

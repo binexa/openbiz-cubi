@@ -1,4 +1,7 @@
 <?php
+
+use Openbiz\Openbiz;
+
 class F_ElementEdit extends EasyForm 
 { 
     protected $metaFile;
@@ -7,9 +10,9 @@ class F_ElementEdit extends EasyForm
     protected $xmlFile;
     protected $doc;
         
-    public function loadSessionVars($sessCtxt) 
+    public function loadStatefullVars($sessCtxt) 
     {
-        parent::loadSessionVars($sessCtxt);
+        parent::loadStatefullVars($sessCtxt);
         
         if (!$_GET['metaName']) 
             $sessCtxt->loadObjVar($this->objectName, "MetaFile", $this->metaFile);
@@ -41,9 +44,9 @@ class F_ElementEdit extends EasyForm
         return implode('/',$list2);
     }
     
-    public function saveSessionVars($sessCtxt) 
+    public function saveStatefullVars($sessCtxt) 
     {
-        parent::saveSessionVars($sessCtxt);
+        parent::saveStatefullVars($sessCtxt);
         $sessCtxt->saveObjVar($this->objectName, "MetaFile", $this->metaFile);
         $sessCtxt->saveObjVar($this->objectName, "ElemPath", $this->elemPath);
         $sessCtxt->saveObjVar($this->objectName, "AttrName", $this->attrName);
@@ -140,7 +143,7 @@ class F_ElementEdit extends EasyForm
         {
             $this->ValidateForm();
         }
-        catch (ValidationException $e)
+        catch (Openbiz\validation\Exception $e)
         {
         	$this->processFormObjError($e->errors);
             return;
@@ -153,8 +156,8 @@ class F_ElementEdit extends EasyForm
         if (!$this->saveElement($recArr))
             return;
         
-        //BizSystem::clientProxy()->showClientAlert ("Changes of ".$this->metaName." are saved");
-        BizSystem::clientProxy()->updateClientElement("html_msg", "Changes of ".$this->elemPath.": ".$this->attrName." are saved");
+        //Openbiz::$app->getClientProxy()->showClientAlert ("Changes of ".$this->metaName." are saved");
+        Openbiz::$app->getClientProxy()->updateClientElement("html_msg", "Changes of ".$this->elemPath.": ".$this->attrName." are saved");
     }
     
     protected function GetDocDocument()
@@ -304,10 +307,9 @@ class F_ElementEdit extends EasyForm
             $script = "<script>";
             $script .= "window.parent.changeElementName('".$this->attrName."','".$recArr['Name']."');";
             $script .= "</script>";
-            BizSystem::clientProxy()->runClientScript($script);
+            Openbiz::$app->getClientProxy()->runClientScript($script);
         }
         
         return true;
     }
 }
-?>

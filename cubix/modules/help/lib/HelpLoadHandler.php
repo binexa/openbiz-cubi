@@ -11,6 +11,8 @@
  * @version   $Id: HelpLoadHandler.php 3783 2012-08-01 12:16:45Z hellojixian@gmail.com $
  */
 
+use Openbiz\Openbiz;
+
 include_once (OPENBIZ_APP_MODULE_PATH."/system/lib/ModuleLoadHandler.php");
 
 class HelpLoadHandler implements ModuleLoadHandler
@@ -22,10 +24,10 @@ class HelpLoadHandler implements ModuleLoadHandler
     public function postLoadingModule($moduelLoader)
     {
     	
-    	$roleRec = BizSystem::getObject("system.do.RoleDO")->fetchOne("[name]='Cubi Member'");
+    	$roleRec = Openbiz::getObject("system.do.RoleDO")->fetchOne("[name]='Cubi Member'");
     	$roleId = $roleRec['Id'];
     	
-    	$actionRec = BizSystem::getObject("system.do.AclActionDO")->fetchOne("[module]='help' AND [resource]='Help' AND [action]='Access_Widget'");
+    	$actionRec = Openbiz::getObject("system.do.AclActionDO")->fetchOne("[module]='help' AND [resource]='Help' AND [action]='Access_Widget'");
     	$actionId = $actionRec["Id"];
     	
     	$aclRecord = array(
@@ -33,8 +35,7 @@ class HelpLoadHandler implements ModuleLoadHandler
     		"action_id" => $actionId,
     		"access_level" => 1
     	);
-    	BizSystem::getObject("system.do.AclRoleActionDO")->insertRecord($aclRecord);
+    	Openbiz::getObject("system.do.AclRoleActionDO")->insertRecord($aclRecord);
     }
 }
 
-?>

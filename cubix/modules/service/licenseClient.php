@@ -53,4 +53,3 @@ class LicenseClient extends MetaObject
     }
 }
 
-?>

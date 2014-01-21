@@ -11,6 +11,8 @@
  * @version   $Id: ApplicationInstallerForm.php 4738 2012-11-14 15:27:42Z hellojixian@gmail.com $
  */
 
+use Openbiz\Openbiz;
+
 class ApplicationInstallerForm extends EasyForm 
 { 
 	
@@ -45,16 +47,16 @@ class ApplicationInstallerForm extends EasyForm
     	$RecordIds = explode(":", $RecordIds);
    		$app_id = $RecordIds[0];
    		$repo_id = $RecordIds[1];
-    	$repoRec = BizSystem::getObject("market.repository.do.RepositoryDO")->fetchOne("[status]=1 AND [Id]='$repo_id'");
+    	$repoRec = Openbiz::getObject("market.repository.do.RepositoryDO")->fetchOne("[status]=1 AND [Id]='$repo_id'");
     	$repo_uri = $repoRec['repository_uri'];
-    	$svc = BizSystem::getService("market.lib.PackageService");
+    	$svc = Openbiz::getService("market.lib.PackageService");
     	$result = $svc->discoverAppInfo($repo_uri,$app_id);    	
     	$this->appIcon = $repo_uri.$result['icon'];
     	$this->appReleaseDate = date('Y-m-d',strtotime($result['pkg_release_time']));
     	 
     	
     	
-    	$installRec = BizSystem::getObject($this->installDO)->fetchOne("[app_id]='$app_id'");
+    	$installRec = Openbiz::getObject($this->installDO)->fetchOne("[app_id]='$app_id'");
     	if($installRec)
     	{
     		foreach($installRec as $key=>$value)
@@ -107,7 +109,7 @@ class ApplicationInstallerForm extends EasyForm
         
     protected function getInstallState($repo_url,$app_id)
     {
-    	$svc = BizSystem::getService("market.lib.InstallerService");
+    	$svc = Openbiz::getService("market.lib.InstallerService");
     	$repo_uid = $svc->getRepoUID($repo_url);
     	$searchRule = " [install_state]='OK' AND 
     					[app_id]='$app_id' AND
@@ -123,7 +125,7 @@ class ApplicationInstallerForm extends EasyForm
     
 	protected function hasUpgrade($repo_url,$app_id)
     {
-    	$svc = BizSystem::getService("market.lib.InstallerService");
+    	$svc = Openbiz::getService("market.lib.InstallerService");
     	$repo_uid = $svc->getRepoUID($repo_url);
     	
     	$releseInfo = $svc->discoverAppLatestRelease($repo_url,$app_id);
@@ -152,16 +154,16 @@ class ApplicationInstallerForm extends EasyForm
     	$RecordIds = explode(":", $RecordIds);
    		$app_id = $RecordIds[0];
    		$repo_id = $RecordIds[1];
-    	$repoRec = BizSystem::getObject("market.repository.do.RepositoryDO")->fetchOne("[status]=1 AND [Id]='$repo_id'");
+    	$repoRec = Openbiz::getObject("market.repository.do.RepositoryDO")->fetchOne("[status]=1 AND [Id]='$repo_id'");
     	$repo_uri = $repoRec['repository_uri'];
-    	$svc = BizSystem::getService("market.lib.PackageService");
+    	$svc = Openbiz::getService("market.lib.PackageService");
     	$result = $svc->discoverAppInfo($repo_uri,$app_id);
     	        
         $this->recordId = $id;
         try {            
             session_write_close();  // close session to unblock other ajax calls
             $packageService = "market.lib.InstallerService";
-            $pkgsvc = BizSystem::GetObject($packageService);
+            $pkgsvc = Openbiz::getObject($packageService);
             $filename = $pkgsvc->downloadPackage($repo_uri,$app_id);
         }
         catch (Exception $e) {
@@ -180,4 +182,3 @@ class ApplicationInstallerForm extends EasyForm
     
 }
 
-?>

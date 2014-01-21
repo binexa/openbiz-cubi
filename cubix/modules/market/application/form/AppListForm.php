@@ -11,6 +11,8 @@
  * @version   $Id: AppListForm.php 4679 2012-11-12 08:46:20Z hellojixian@gmail.com $
  */
 
+use Openbiz\Openbiz;
+
 class AppListForm extends EasyForm
 {
 	public $repoDO = "market.repository.do.RepositoryDO";
@@ -19,7 +21,7 @@ class AppListForm extends EasyForm
 	
 	protected function getRepoInfo($uid)
 	{
-		$repoRec = BizSystem::getObject($this->repoDO,1)->fetchOne("[repository_uid]='$uid'");
+		$repoRec = Openbiz::getObject($this->repoDO,1)->fetchOne("[repository_uid]='$uid'");
 		return $repoRec;
 	}
 	
@@ -27,20 +29,20 @@ class AppListForm extends EasyForm
 	{		
 		if($_POST['fld_repo_id'])
     	{
-    		$repoRec = BizSystem::getObject("market.repository.do.RepositoryDO")->fetchById((int)$_POST['fld_repo_id']);
+    		$repoRec = Openbiz::getObject("market.repository.do.RepositoryDO")->fetchById((int)$_POST['fld_repo_id']);
     	}
     	elseif($_GET['repo'])
     	{
-    		$repoRec = BizSystem::getObject("market.repository.do.RepositoryDO")->fetchById((int)$_GET['repo']);
+    		$repoRec = Openbiz::getObject("market.repository.do.RepositoryDO")->fetchById((int)$_GET['repo']);
     	}
     	else
     	{
-    		$repoRec = BizSystem::getObject("market.repository.do.RepositoryDO")->fetchOne("[status]=1");    	
+    		$repoRec = Openbiz::getObject("market.repository.do.RepositoryDO")->fetchOne("[status]=1");    	
     	}
     	$repo_id = $repoRec['Id'];
     	$repo_uri = $repoRec['repository_uri'];
     	if(!$repo_uri){
-    		$repoRec = BizSystem::getObject("market.repository.do.RepositoryDO")->fetchOne("[status]=1");
+    		$repoRec = Openbiz::getObject("market.repository.do.RepositoryDO")->fetchOne("[status]=1");
     		$repo_uri = $repoRec['repository_uri'];
     	}
 		if(substr($repo_uri,strlen($repo_uri)-1,1)!='/'){
@@ -53,7 +55,7 @@ class AppListForm extends EasyForm
 	
 	protected function fetchRepoList()
 	{
-		$rs = BizSystem::getObject($this->repoDO)->directFetch("[status]='1'");
+		$rs = Openbiz::getObject($this->repoDO)->directFetch("[status]='1'");
 		return $rs;
 	}
 	
@@ -80,7 +82,7 @@ class AppListForm extends EasyForm
         }
        	      	
        	$this->remoteSearchRule = $searchRule;
-       	BizSystem::getService(ACL_SERVICE)->clearACLCache();
+       	Openbiz::getService(ACL_SERVICE)->clearACLCache();
 	}
 	
 	public function _fetchDataSet()
@@ -110,4 +112,3 @@ class AppListForm extends EasyForm
         $this->rerender();
     }	
 }
-?>
