@@ -15,6 +15,7 @@
  */
 
 use Openbiz\Resource;
+use Openbiz\Object\ObjectFactoryHelper;
 
 /**
  * chartService class is the plug-in service of printing bizform to chart
@@ -59,8 +60,8 @@ class chartService
         $bizDataObj = $formObj->getDataObj();
 
         // get chart config xml file
-        $chartXmlFile = Resource::getXmlFileWithPath($objName."_chart");
-        $xmlArr = Resource::getXmlArray($chartXmlFile);
+        $chartXmlFile = ObjectFactoryHelper::getXmlFileWithPath($objName."_chart");
+        $xmlArr = ObjectFactoryHelper::getXmlArray($chartXmlFile);
 
         ob_clean();
         // get the chart section from config xml file

@@ -15,8 +15,8 @@
 
 use Openbiz\Openbiz;
 
-require_once(OPENBIZ_APP_MODULE_PATH . "/pdf/lib/mpdf50/mpdf.php");
-define('_MPDF_PATH', OPENBIZ_APP_MODULE_PATH . "/pdf/lib/mpdf50/");
+require_once(Openbiz::$app->getModulePath() . "/pdf/lib/mpdf50/mpdf.php");
+define('_MPDF_PATH', Openbiz::$app->getModulePath() . "/pdf/lib/mpdf50/");
 
 /**
  * pdfService - 

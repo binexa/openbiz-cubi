@@ -14,7 +14,7 @@
  * @version   $Id: LabelList.php 543 2009-10-03 08:50:00Z mr_a_ton$
  */
 
-use Openbiz\Resource;
+use Openbiz\Openbiz;
 //include_once("LabelText.php");
 
 /**
@@ -67,7 +67,7 @@ class LabelTextarea extends LabelText
         //$value = htmlentities($value);
         
         $value = htmlentities($value, ENT_QUOTES, "UTF-8");
-        $value = str_replace("\n\n","\n<img src=\"".Resource::getImageUrl()."/spacer.gif\" style=\"display:block;height:10px;\">",$value);
+        $value = str_replace("\n\n","\n<img src=\"".Openbiz::$app->getImageUrl()."/spacer.gif\" style=\"display:block;height:10px;\">",$value);
         $value = nl2br($value);
         
         if ($value!=null)

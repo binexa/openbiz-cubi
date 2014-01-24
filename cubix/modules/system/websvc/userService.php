@@ -2,7 +2,7 @@
 
 use Openbiz\Openbiz;
 
-require_once OPENBIZ_APP_MODULE_PATH.'/websvc/lib/WebsvcService.php';
+require_once Openbiz::$app->getModulePath().'/websvc/lib/WebsvcService.php';
 class userService extends  WebsvcService
 {
 	public function getStatus()

@@ -19,7 +19,7 @@ class SPDriver implements iSMS
 	
 	public function updateMsgBalance($balance)
 	{
-		$providerRec=Openbiz::getObject($this->providerDo)->fetchOne("[Id]={$this->providerId}");
+		$providerRec= Openbiz::getObject($this->providerDo)->fetchOne("[Id]={$this->providerId}");
 		$providerRec['msg_balance']=(int)$balance;
 		$providerRec->save();
 		return $this;
@@ -27,7 +27,7 @@ class SPDriver implements iSMS
 	
 	public function HitMessageCounter()
 	{		
-		$providerRec=Openbiz::getObject($this->providerDo)->fetchOne("[Id]={$this->providerId}");
+		$providerRec= Openbiz::getObject($this->providerDo)->fetchOne("[Id]={$this->providerId}");
 		$providerRec['msg_sent_count']=(int)$providerRec['msg_sent_count']+1;
 		$providerRec['msg_last_sendtime']=date("Y-m-d H:i:s");
 		$providerRec->save();
@@ -37,7 +37,7 @@ class SPDriver implements iSMS
 	
 	public function getMessageCounter()
 	{
-		$providerRec=Openbiz::getObject($this->providerDo)->fetchOne("[Id]={$this->providerId}");		
+		$providerRec= Openbiz::getObject($this->providerDo)->fetchOne("[Id]={$this->providerId}");		
 		return $providerRec['msg_send_counter'];
 	}
 	

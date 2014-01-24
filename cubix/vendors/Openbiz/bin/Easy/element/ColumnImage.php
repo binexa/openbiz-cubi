@@ -14,7 +14,7 @@
  * @version   $Id: ColumnImage.php 3742 2011-04-16 07:25:29Z jixian2003 $
  */
 
-use Openbiz\Resource;
+use Openbiz\Openbiz;
 use Openbiz\Core\Expression;
 
 //include_once("ColumnText.php");
@@ -68,8 +68,9 @@ class ColumnImage extends ColumnText
      */
     protected function getAlt()
     {
-        if ($this->alt == null)
+        if ($this->alt == null) {
             return null;
+        }
         $formobj = $this->getFormObj();
         return Expression::evaluateExpression($this->alt, $formobj);
     }
@@ -81,8 +82,9 @@ class ColumnImage extends ColumnText
      */
     protected function getTitle()
     {
-        if ($this->title == null)
+        if ($this->title == null) {
             return null;
+        }
         $formobj = $this->getFormObj();
         return Expression::evaluateExpression($this->title, $formobj);
     }
@@ -101,11 +103,12 @@ class ColumnImage extends ColumnText
     		if(preg_match("/\{OPENBIZ_RESOURCE_URL\}/si",$this->text)){
     			$val = $this->getText();
     		}else{
-    			$val = Resource::getImageUrl()."/".$this->getText();
+    			$val = Openbiz::$app->getImageUrl()."/".$this->getText();
     		}
     	}
-        if ($val == null || $val =="")
+        if ($val == null || $val == "") {
             return "";
+        }
 
         $style = $this->getStyle();
         $func = $this->getFunction();

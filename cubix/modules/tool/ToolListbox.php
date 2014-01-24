@@ -257,7 +257,7 @@ class ToolListbox extends Listbox
         $modulePath = $metaFileInfo['modules_path'];
         $packs = explode(".",$metaFileInfo['package']);
         $moduleName = $packs[0];
-        $modulePath = OPENBIZ_APP_MODULE_PATH.'/'.$moduleName; //substr($modulePath,0,strlen($modulePath)-1);
+        $modulePath = Openbiz::$app->getModulePath().'/'.$moduleName; //substr($modulePath,0,strlen($modulePath)-1);
         global $g_MetaFiles;
         php_grep("<BizDataObj", $modulePath);
         

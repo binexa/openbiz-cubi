@@ -15,16 +15,16 @@ include_once 'bin/app_init.php';
 
 include_once OPENBIZ_PATH."/bin/ErrorHandler.php";
 
-$type=Openbiz::$app->getClientProxy()->getRequestParam("type");  
-$service=Openbiz::$app->getClientProxy()->getRequestParam("service");
+$type= Openbiz::$app->getClientProxy()->getRequestParam("type");  
+$service= Openbiz::$app->getClientProxy()->getRequestParam("service");
 
-$redirectURL=Openbiz::$app->getClientProxy()->getRequestParam("redirect_url");
+$redirectURL= Openbiz::$app->getClientProxy()->getRequestParam("redirect_url");
 if($redirectURL)
 {
 	Openbiz::$app->getSessionContext()->setVar("oauth_redirect_url", $redirectURL);
 }
 
-$assocURL	=Openbiz::$app->getClientProxy()->getRequestParam("assoc_url");
+$assocURL	= Openbiz::$app->getClientProxy()->getRequestParam("assoc_url");
 if($assocURL)
 {
 	Openbiz::$app->getSessionContext()->setVar("oauth_assoc_url", $assocURL);
@@ -38,7 +38,7 @@ if(!in_array($type,$whitelist_arr)){
 	return;
 }
  
-$oatuthType=OPENBIZ_APP_MODULE_PATH."/oauth/libs/{$type}.class.php";
+$oatuthType=Openbiz::$app->getModulePath()."/oauth/libs/{$type}.class.php";
 if(!file_exists($oatuthType))
 {
 	throw new Exception('Unknown type');

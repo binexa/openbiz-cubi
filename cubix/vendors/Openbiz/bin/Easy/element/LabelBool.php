@@ -14,7 +14,7 @@
  * @version   $Id: LabelBool.php 3640 2011-04-11 03:18:17Z jixian2003 $
  */
 
-use Openbiz\Resource;
+use Openbiz\Openbiz;
 use Openbiz\Core\Expression;
 
 //include_once("LabelText.php");
@@ -72,7 +72,7 @@ class LabelBool extends LabelText{
         	$formobj = $this->getFormObj();
         	$image_url =  Expression::evaluateExpression($image_url, $formobj);
         }else{
-        	$image_url = Resource::getImageUrl()."/".$image_url;
+        	$image_url = Openbiz::$app->getImageUrl()."/".$image_url;
         }                   
     	if ($this->link)
         {

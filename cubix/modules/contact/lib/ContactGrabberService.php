@@ -35,7 +35,7 @@ class ContactGrabberService
 	{
 		$dataSource = Openbiz::getObject($provider);
 		$result = $dataSource->FetchContacts($credential);
-		$svcobj=Openbiz::getService("service.chineseService");
+		$svcobj= Openbiz::getService("service.chineseService");
 		
 		for($i=0;$i<count($result);$i++)
 		{	        

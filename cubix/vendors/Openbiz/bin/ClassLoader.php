@@ -174,15 +174,17 @@ class ClassLoader
             return;
         }
 
-        // use class map first
         if (isset(self::$classMap[$packageName . $className])) {
             return self::$classMap[$packageName . $className];
         }
 
         // search it in cache first
         $cacheKey = $className . "_path";
-        if (extension_loaded('apc') && ($filePath = apc_fetch($cacheKey)) != null) {
-            return $filePath;
+        if (extension_loaded('apc') ) {
+            $filePath = apc_fetch($cacheKey);
+            if ( $filePath !== null ) {
+                return $filePath;
+            }
         }
 
         if (strpos($className, ".") > 0) {
@@ -204,7 +206,7 @@ class ClassLoader
             }
 
             // search in apphome/modules directory first, search in apphome/bin directory then
-            $classFiles[0] = OPENBIZ_APP_MODULE_PATH . "/" . $path . "/" . $classFile;
+            $classFiles[0] = Openbiz::$app->getModulePath() . "/" . $path . "/" . $classFile;
             $classFiles[1] = OPENBIZ_APP_PATH . "/bin/" . $path . "/" . $classFile;
             if ($checkExtModule && defined('MODULE_EX_PATH')) {
                 array_unshift($classFiles, MODULE_EX_PATH . "/" . $path . "/" . $classFile);

@@ -219,7 +219,7 @@ class AttachmentForm extends PickerForm
 	}
 	
 	public function FileDownload($id=null){
-		include_once (OPENBIZ_APP_MODULE_PATH.'/attachment/lib/class.httpdownload.php');
+		include_once (Openbiz::$app->getModulePath().'/attachment/lib/class.httpdownload.php');
 		if ($id==null || $id=='')
             $id = Openbiz::$app->getClientProxy()->getFormInputs('_selectedId');
         if(!$id)

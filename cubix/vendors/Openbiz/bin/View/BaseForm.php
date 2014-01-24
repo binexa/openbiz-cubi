@@ -8,7 +8,7 @@
  * @access public
  */
 use Openbiz\Object\Statefullable;
-use Openbiz\Resource;
+use Openbiz\Helpers\MessageHelper;
 use Openbiz\Core\Expression;
 
 include_once "FormHelper.php"; 
@@ -125,7 +125,7 @@ class BaseForm extends MetaObject implements Statefullable
         $this->eventName = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["EVENTNAME"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["EVENTNAME"] : null;
 
         $this->messageFile = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["MESSAGEFILE"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["MESSAGEFILE"] : null;
-        $this->objectMessages = Resource::loadMessage($this->messageFile , $this->package);
+        $this->objectMessages = MessageHelper::loadMessage($this->messageFile , $this->package);
 
         $this->cacheLifeTime = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["CACHELIFETIME"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["CACHELIFETIME"] : "0";
 
@@ -166,7 +166,7 @@ class BaseForm extends MetaObject implements Statefullable
         $this->dataObjName   = $this->dataObjName ? $this->dataObjName : $parentObj->dataObjName;
         $this->eventName   = $this->eventName ? $this->eventName : $parentObj->eventName;
         $this->messageFile   = $this->messageFile ? $this->messageFile : $parentObj->messageFile;
-        $this->objectMessages = Resource::loadMessage($this->messageFile , $this->package);
+        $this->objectMessages = MessageHelper::loadMessage($this->messageFile , $this->package);
 		$this->cacheLifeTime   = $this->cacheLifeTime ? $this->cacheLifeTime : $parentObj->cacheLifeTime;
         
         $this->dataPanel->merge($parentObj->dataPanel);

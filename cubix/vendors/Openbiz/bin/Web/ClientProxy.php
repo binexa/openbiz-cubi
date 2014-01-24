@@ -501,7 +501,7 @@ class ClientProxy
         }
         // add the scripts
         if ($isFile) {
-            $_scripts = "<script type='text/javascript' src=\"" . Resource::getJsUrl() . "/$scripts\"></script>";
+            $_scripts = "<script type='text/javascript' src=\"" . Openbiz::$app->getJsUrl() . "/$scripts\"></script>";
             $this->_extraScripts[$scriptKey] = $_scripts;
         } else {
             $this->_extraScripts[$scriptKey] = $scripts;
@@ -554,7 +554,7 @@ class ClientProxy
         if (isset($this->_extraStyles[$scriptKey]))
             return;
         // add the styles
-        $css = Resource::getCssUrl();
+        $css = Openbiz::$app->getCssUrl();
         if ($isFile) {
             $_styles = "<link rel=\"stylesheet\" href=\"$css/" . $styles . "\" type=\"text/css\">";
             $this->_extraStyles[$scriptKey] = $_styles;
@@ -614,13 +614,13 @@ class ClientProxy
             if (DeviceUtil::$PHONE_TOUCH) {
                 Openbiz::$app->getClientProxy()->appendScripts("openbiz", "openbiz.mobile.js");
                 Openbiz::$app->getClientProxy()->appendScripts("jquery_mobile", "jqm/jquery.mobile-1.0.js");
-                $style = "<link rel=\"stylesheet\" href=\"" . Resource::getJsUrl() . "/jqm/jquery.mobile-1.0.css\" type=\"text/css\">";
+                $style = "<link rel=\"stylesheet\" href=\"" . Openbiz::$app->getJsUrl() . "/jqm/jquery.mobile-1.0.css\" type=\"text/css\">";
                 Openbiz::$app->getClientProxy()->appendStyles("jquery_mobile_css", $style, false);
             } else {
                 Openbiz::$app->getClientProxy()->appendScripts("openbiz", "openbiz.js");
                 Openbiz::$app->getClientProxy()->appendScripts("jquery_ui", "jquery-ui-1.8.16.custom.min.js");
-                $style = "<link rel=\"stylesheet\" href=\"" . Resource::getJsUrl() . "/jquery-ui/ui-lightness/jquery-ui-1.8.16.custom.css\" type=\"text/css\">";
-                $style .= "<link rel=\"stylesheet\" href=\"" . Resource::getJsUrl() . "/jquery-ui/ui-openbiz/jquery.css\" type=\"text/css\">";
+                $style = "<link rel=\"stylesheet\" href=\"" . Openbiz::$app->getJsUrl() . "/jquery-ui/ui-lightness/jquery-ui-1.8.16.custom.css\" type=\"text/css\">";
+                $style .= "<link rel=\"stylesheet\" href=\"" . Openbiz::$app->getJsUrl() . "/jquery-ui/ui-openbiz/jquery.css\" type=\"text/css\">";
                 Openbiz::$app->getClientProxy()->appendStyles("jquery_ui_css", $style, false);
             }
             return;
@@ -648,11 +648,11 @@ class ClientProxy
     {
         if (isset($this->_extraScripts['calendar']))
             return;
-        $style = "<link rel=\"stylesheet\" href=\"" . Resource::getJsUrl() . "/jscalendar/calendar-system.css\" type=\"text/css\">";
-        $script = "<script type='text/javascript' src='" . Resource::getJsUrl() . "/jscalendar/calendar.js'></script>";
-        $script .= "<script type='text/javascript' src='" . Resource::getJsUrl() . "/jscalendar/lang/calendar-en.js'></script>";
-        $script .= "<script type='text/javascript' src='" . Resource::getJsUrl() . "/jscalendar/calendar-setup.js'></script>";
-        $script .= "<script type='text/javascript' src='" . Resource::getJsUrl() . "/calendar.js'></script>";
+        $style = "<link rel=\"stylesheet\" href=\"" . Openbiz::$app->getJsUrl() . "/jscalendar/calendar-system.css\" type=\"text/css\">";
+        $script = "<script type='text/javascript' src='" . Openbiz::$app->getJsUrl() . "/jscalendar/calendar.js'></script>";
+        $script .= "<script type='text/javascript' src='" . Openbiz::$app->getJsUrl() . "/jscalendar/lang/calendar-en.js'></script>";
+        $script .= "<script type='text/javascript' src='" . Openbiz::$app->getJsUrl() . "/jscalendar/calendar-setup.js'></script>";
+        $script .= "<script type='text/javascript' src='" . Openbiz::$app->getJsUrl() . "/calendar.js'></script>";
         $this->appendStyles("calendar", $style, false);
         $this->appendScripts("calendar", $script, false);
     }
@@ -666,13 +666,13 @@ class ClientProxy
     {
         if (isset($this->_extraScripts['colorpicker']))
             return;
-        $style = "<link rel=\"stylesheet\" href=\"" . Resource::getJsUrl() . "/colorpicker/css/colorpicker.css\" type=\"text/css\">";
+        $style = "<link rel=\"stylesheet\" href=\"" . Openbiz::$app->getJsUrl() . "/colorpicker/css/colorpicker.css\" type=\"text/css\">";
         if (OPENBIZ_JSLIB_BASE != 'JQUERY') {
-            $script = "<script type=\"text/javascript\" src=\"" . Resource::getJsUrl() . "/jquery.js\"></script>";
+            $script = "<script type=\"text/javascript\" src=\"" . Openbiz::$app->getJsUrl() . "/jquery.js\"></script>";
         }
-        $script .= "<script type=\"text/javascript\" src=\"" . Resource::getJsUrl() . "/colorpicker/js/eye.js\"></script>";
-        $script .= "<script type=\"text/javascript\" src=\"" . Resource::getJsUrl() . "/colorpicker/js/utils.js\"></script>";
-        $script .= "<script type=\"text/javascript\" src=\"" . Resource::getJsUrl() . "/colorpicker/js/colorpicker.js\"></script>";
+        $script .= "<script type=\"text/javascript\" src=\"" . Openbiz::$app->getJsUrl() . "/colorpicker/js/eye.js\"></script>";
+        $script .= "<script type=\"text/javascript\" src=\"" . Openbiz::$app->getJsUrl() . "/colorpicker/js/utils.js\"></script>";
+        $script .= "<script type=\"text/javascript\" src=\"" . Openbiz::$app->getJsUrl() . "/colorpicker/js/colorpicker.js\"></script>";
         $this->appendStyles("colorpicker", $style, false);
         $this->appendScripts("colorpicker", $script, false);
     }
@@ -686,8 +686,8 @@ class ClientProxy
     {
         if (isset($this->_extraScripts['rte']))
             return;
-        $script = "<script type=\"text/javascript\" src=\"" . Resource::getJsUrl() . "/richtext.js\"></script>";
-        $script .= "<script language=\"JavaScript\">initRTE('" . Resource::getImageUrl() . "/rte/', '../pages/rte/', '', false);</script>";
+        $script = "<script type=\"text/javascript\" src=\"" . Openbiz::$app->getJsUrl() . "/richtext.js\"></script>";
+        $script .= "<script language=\"JavaScript\">initRTE('" . Openbiz::$app->getImageUrl() . "/rte/', '../pages/rte/', '', false);</script>";
         $this->appendScripts("rte", $script, false);
     }
 
@@ -701,7 +701,7 @@ class ClientProxy
         if (isset($this->_extraScripts['ckeditor']))
             return;
 
-        $script = "<script type=\"text/javascript\" src=\"" . Resource::getJsUrl() . "/ckeditor/ckeditor.js\"></script>";
+        $script = "<script type=\"text/javascript\" src=\"" . Openbiz::$app->getJsUrl() . "/ckeditor/ckeditor.js\"></script>";
 
         $this->appendScripts("ckeditor", $script, false);
     }
@@ -715,9 +715,9 @@ class ClientProxy
     {
         $this->appendScripts("scriptaculous", "scriptaculous.js");
         $this->appendScripts("prop_window", "window.js");
-        $style = "<link rel=\"stylesheet\" href=\"" . Resource::getJsUrl() . "/window/default.css\" type=\"text/css\">";
-        //$style .= "<link rel=\"stylesheet\" href=\"".Resource::getJsUrl()."/window/spread.css\" type=\"text/css\">";
-        //$style .= "<link rel=\"stylesheet\" href=\"".Resource::getJsUrl()."/window/lighting.css\" type=\"text/css\">";
+        $style = "<link rel=\"stylesheet\" href=\"" . Openbiz::$app->getJsUrl() . "/window/default.css\" type=\"text/css\">";
+        //$style .= "<link rel=\"stylesheet\" href=\"".Openbiz::$app->getJsUrl()."/window/spread.css\" type=\"text/css\">";
+        //$style .= "<link rel=\"stylesheet\" href=\"".Openbiz::$app->getJsUrl()."/window/lighting.css\" type=\"text/css\">";
         $this->appendStyles("prop_window", $style, false);
     }
 
@@ -731,10 +731,9 @@ class ClientProxy
         $this->appendScripts("yav", "yav/yav.js");
         $this->appendScripts("yav-cfg", "yav/yav-config.js");
         //$this->appendScripts("validator", "validator.js");
-        $style = "<link rel=\"stylesheet\" href=\"" . Resource::getCssUrl() . "/validator.css\" type=\"text/css\">";
+        $style = "<link rel=\"stylesheet\" href=\"" . Openbiz::$app->getCssUrl() . "/validator.css\" type=\"text/css\">";
         $this->appendStyles("yav", $style, false);
     }
 
 }
 
-?>

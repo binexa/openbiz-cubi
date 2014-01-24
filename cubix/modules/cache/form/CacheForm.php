@@ -12,7 +12,7 @@
  */
 
 use Openbiz\Openbiz;
-use Openbiz\Resource;
+use Openbiz\Object\ObjectFactoryHelper;
 
 class CacheForm extends EasyFormGrouping
 {
@@ -66,11 +66,11 @@ class CacheForm extends EasyFormGrouping
 
    public function outputAttrs(){
    		$result = parent::outputAttrs();
-   		$file = OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR."service".DIRECTORY_SEPARATOR."cacheService.xml";
+   		$file = Openbiz::$app->getModulePath().DIRECTORY_SEPARATOR."service".DIRECTORY_SEPARATOR."cacheService.xml";
 		if(!is_file($file)){
 			return;
 		}
-		$configArr=Resource::getXmlArray($file);
+		$configArr=ObjectFactoryHelper::getXmlArray($file);
 		
    		$this->modeStatus = $configArr["PLUGINSERVICE"]["CACHESETTING"]["ATTRIBUTES"]["MODE"];
    		if($this->modeStatus == 'Enabled'){
@@ -84,11 +84,11 @@ class CacheForm extends EasyFormGrouping
    }	
 	
    public function switchMode(){	   	   	 
-   		$file = OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR."service".DIRECTORY_SEPARATOR."cacheService.xml";
+   		$file = Openbiz::$app->getModulePath().DIRECTORY_SEPARATOR."service".DIRECTORY_SEPARATOR."cacheService.xml";
 		if(!is_file($file)){
 			return;
 		}
-		$configArr=Resource::getXmlArray($file);
+		$configArr=ObjectFactoryHelper::getXmlArray($file);
 		
    		$this->modeStatus = $configArr["PLUGINSERVICE"]["CACHESETTING"]["ATTRIBUTES"]["MODE"];
    		if($this->modeStatus == 'Enabled'){   			   		

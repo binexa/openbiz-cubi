@@ -13,7 +13,7 @@
 
 use Openbiz\Openbiz;
 
-include_once OPENBIZ_APP_MODULE_PATH."/system/lib/ModuleLoader.php";
+include_once Openbiz::$app->getModulePath()."/system/lib/ModuleLoader.php";
 
 /**
  * ModuleForm class - implement the logic for manage modules
@@ -31,7 +31,7 @@ class ModuleForm extends EasyForm
     {        
 		Openbiz::getService(ACL_SERVICE)->clearACLCache();
        	$mods = array();
-        $dir = OPENBIZ_APP_MODULE_PATH;
+        $dir = Openbiz::$app->getModulePath();
         if ($dh = opendir($dir)) {
             while (($file = readdir($dh)) !== false) {
                 $filepath = $dir.'/'.$file;
@@ -159,7 +159,7 @@ class ModuleForm extends EasyForm
                 
 	        	if($deleteFiles)
 	        	{
-	        		$modPath = OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR.$dataRec['name']; 
+	        		$modPath = Openbiz::$app->getModulePath().DIRECTORY_SEPARATOR.$dataRec['name']; 
 	        		$this->rrmdir($modPath);
 	        	}
                 

@@ -68,7 +68,7 @@ class alitao extends oauthClass
 
 	//用户资料
 	function userInfo(){
-		$recinfo=Openbiz::$app->getSessionContext()->getVar('alitao_access_token');
+		$recinfo= Openbiz::$app->getSessionContext()->getVar('alitao_access_token');
 	
 		$user['id']          = $recinfo['access_token_json']['taobao_user_id'];
 		$user['type']        = $this->type;

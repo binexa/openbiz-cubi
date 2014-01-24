@@ -85,7 +85,7 @@ class FileUploader extends FileInput
     	}
     	else
     	{
-    		$delete_user_opt=Openbiz::$app->getClientProxy()->getFormInputs($this->objectName."_DELETE");
+    		$delete_user_opt= Openbiz::$app->getClientProxy()->getFormInputs($this->objectName."_DELETE");
     		if($delete_user_opt)
     		{
     			$this->value="";

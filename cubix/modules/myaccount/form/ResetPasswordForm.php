@@ -36,7 +36,7 @@ use Openbiz\Openbiz;
  * @copyright Copyright (c) 2005-2009
  * @access public
  */
-include_once(OPENBIZ_APP_MODULE_PATH."/system/form/UserForm.php");
+include_once(Openbiz::$app->getModulePath()."/system/form/UserForm.php");
 
 class ResetPasswordForm extends UserForm
 {

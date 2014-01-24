@@ -14,7 +14,7 @@
 
 use Openbiz\Openbiz;
 use Openbiz\i18n\I18n;
-use Openbiz\Resource;
+use Openbiz\Helpers\MessageHelper;
 
 class ChangeLogForm extends EasyForm
 {
@@ -27,7 +27,7 @@ class ChangeLogForm extends EasyForm
     {
         $this->isShowComment = $xmlArr["EASYFORM"]["ATTRIBUTES"]["SHOWCOMMENT"] ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["SHOWCOMMENT"] : 'Y';
         //load message file
-        $this->changeLogMessages = Resource::loadMessage("changelog.ini", "changelog");
+        $this->changeLogMessages = MessageHelper::loadMessage("changelog.ini", "changelog");
 
         if (strtolower($xmlArr["EASYFORM"]["ATTRIBUTES"]["FORMTYPE"]) == 'edit' &&
                 $this->isShowComment != 'N'

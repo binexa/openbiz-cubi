@@ -140,11 +140,11 @@ function createDB() {
 
 function loadModules()
 {   
-	include_once (OPENBIZ_APP_MODULE_PATH."/system/lib/ModuleLoader.php");
+	include_once (Openbiz::$app->getModulePath()."/system/lib/ModuleLoader.php");
 
 	$modules = array ('system','menu','help','contact','cronjob');
-	foreach (glob(OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR."*") as $dir){
-		$modName = str_replace(OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR,"",$dir);
+	foreach (glob(Openbiz::$app->getModulePath().DIRECTORY_SEPARATOR."*") as $dir){
+		$modName = str_replace(Openbiz::$app->getModulePath().DIRECTORY_SEPARATOR,"",$dir);
 		if(!in_array($modName, $modules)) {
 			array_push($modules,$modName);		
 		}

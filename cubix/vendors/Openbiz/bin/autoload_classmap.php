@@ -25,9 +25,6 @@ return array(
     'Openbiz\I18n\I18n'         => __DIR__ . '/I18n/I18n.php',
 
     'Openbiz\Openbiz'           => __DIR__ . '/Openbiz.php',
-    
-    'Openbiz\Resource'          => __DIR__ . '/Resource.php',
-
 
     'UserSetting'               => __DIR__ . '/UserSetting.php',
     
@@ -36,6 +33,7 @@ return array(
     'Openbiz\Object\ObjectFactory'  => __DIR__ . '/Object/ObjectFactory.php',
     'Openbiz\Object\Object'         => __DIR__ . '/Object/Object.php',
     'Openbiz\Object\ObjectHelper'   => __DIR__ . '/Object/ObjectHelper.php',
+    'Openbiz\Object\ObjectFactoryHelper'   => __DIR__ . '/Object/ObjectFactoryHelper.php',
     'Openbiz\Object\Statefullable'   => __DIR__ . '/Object/Statefullable.php',
 
     // database library
@@ -187,15 +185,15 @@ return array(
     
     'UIControlInterface'     => __DIR__ . '/Object/UIControlInterface.php',
 
-    'Openbiz\Data\Exception'            => __DIR__ . '/Data/Exception.php',
-
-   
+    'Openbiz\Data\Exception'            => __DIR__ . '/Data/Exception.php',   
     'Openbiz\Validation\Exception'      => __DIR__ . '/Validation/Exception.php',
 
     'Openbiz\Helpers\DeviceUtil'        => __DIR__ . '/Helpers/DeviceUtil.php',
-    'Openbiz\Helpers\XHProf'            => __DIR__ . '/Helpers/XHProf.php',
-   
-    'Openbiz\Helpers\XMLParser'       => __DIR__ . '/Helpers/XMLParser.php',
+    'Openbiz\Helpers\XHProf'            => __DIR__ . '/Helpers/XHProf.php',   
+    'Openbiz\Helpers\XMLParser'         => __DIR__ . '/Helpers/XMLParser.php',
+    'Openbiz\Helpers\MessageHelper'     => __DIR__ . '/Helpers/MessageHelper.php',
+    'Openbiz\Helpers\TemplateHelper'     => __DIR__ . '/Helpers/TemplateHelper.php',
+
     //'XMLParser'                       => __DIR__ . '/Helpers/xmltoarray.src.php',
 
     'BaseForm'              => __DIR__ . '/View/BaseForm.php',

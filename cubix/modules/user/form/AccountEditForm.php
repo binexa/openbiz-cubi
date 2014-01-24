@@ -13,7 +13,7 @@
 
 use Openbiz\Openbiz;
 
-include_once OPENBIZ_APP_MODULE_PATH."/system/form/UserForm.php";
+include_once Openbiz::$app->getModulePath()."/system/form/UserForm.php";
 
 /**
  * AccountEditForm class - implement the logic of edit my account form

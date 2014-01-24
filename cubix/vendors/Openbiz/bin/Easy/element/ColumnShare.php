@@ -16,7 +16,6 @@
  */
 
 use Openbiz\Openbiz;
-use Openbiz\Resource;
 use Openbiz\Core\Expression;
 
 //include_once("ColumnText.php");
@@ -195,7 +194,7 @@ class ColumnShare extends ColumnText
             $formobj = $this->getFormObj();
             $image_url = Expression::evaluateExpression($image_url, $formobj);
         } else {
-            $image_url = Resource::getImageUrl() . "/" . $image_url;
+            $image_url = Openbiz::$app->getImageUrl() . "/" . $image_url;
         }
         if ($this->width) {
             $width = "width=\"$this->width\"";

@@ -1,6 +1,6 @@
 <?php
 
-use Openbiz\Resource;
+use Openbiz\Object\ObjectFactoryHelper;
 
 include_once ("../app_init.php");
 
@@ -54,7 +54,7 @@ function convertFilesInFolder($dir) {
 function xml2ArrayFile($dir, $file) {
     $fileWithPath = $dir . DIRECTORY_SEPARATOR . $file;
     echo $fileWithPath . "\n";
-    $xmlArr = Resource::getXmlArray($fileWithPath);
+    $xmlArr = ObjectFactoryHelper::getXmlArray($fileWithPath);
 
     $baseFile = substr($file, 0, strlen($file) - 4);
     $phpFile = $baseFile . '.conf.php';

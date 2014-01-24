@@ -5,7 +5,7 @@ include_once ("app_init.php");
 
 // scan the /modules 
 $mods = array();
-$dir = OPENBIZ_APP_MODULE_PATH;
+$dir = Openbiz::$app->getModulePath();
 if ($dh = opendir($dir)) {
     while (($file = readdir($dh)) !== false) {
         $filepath = $dir.'/'.$file;

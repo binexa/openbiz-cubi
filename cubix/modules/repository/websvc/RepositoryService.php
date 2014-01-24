@@ -13,7 +13,7 @@
 
 use Openbiz\Openbiz;
 
-include_once OPENBIZ_APP_MODULE_PATH.'/websvc/lib/WebsvcService.php';
+include_once Openbiz::$app->getModulePath().'/websvc/lib/WebsvcService.php';
 class RepositoryService extends WebsvcService
 {
 	protected $categoryDO 		= "repository.category.do.CategoryDO";

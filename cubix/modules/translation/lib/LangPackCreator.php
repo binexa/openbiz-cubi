@@ -13,6 +13,7 @@
 
 use Openbiz\Openbiz;
 use Openbiz\Resource;
+use Openbiz\Object\ObjectFactoryHelper;
 
 class LangPackCreator
 {
@@ -53,9 +54,9 @@ class LangPackCreator
 		if ($this->systemOnly == false && strpos($this->module, 'themes/') === false) {
 	    	//load modules strings
 	    	$module_strings= array();
-	    	foreach (glob(OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR.$this->module,GLOB_ONLYDIR) as $dir)
+	    	foreach (glob(Openbiz::$app->getModulePath().DIRECTORY_SEPARATOR.$this->module,GLOB_ONLYDIR) as $dir)
 	    	{
-	    		$module_name = str_replace(OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR,"",$dir);
+	    		$module_name = str_replace(Openbiz::$app->getModulePath().DIRECTORY_SEPARATOR,"",$dir);
 	    		array_push($result,"Module: ".ucfirst($module_name));
 	    		if(CLI){
 					echo "Module: ".ucfirst($module_name).PHP_EOL;
@@ -573,11 +574,11 @@ class LangPackCreator
     private function getStringsFromXml($module)
     {
     	$strings = array();
-    	$dir = OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR.$module;
+    	$dir = Openbiz::$app->getModulePath().DIRECTORY_SEPARATOR.$module;
     	$filelist = $this->getFileList($dir,".xml");
     	libxml_use_internal_errors(true);
     	foreach($filelist as $file){
-    		$fileArr = explode(DIRECTORY_SEPARATOR,str_replace(OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR,"",$file));
+    		$fileArr = explode(DIRECTORY_SEPARATOR,str_replace(Openbiz::$app->getModulePath().DIRECTORY_SEPARATOR,"",$file));
     		$prefix = "";
     		for($i=1;$i<count($fileArr)-1; $i++)
     		{
@@ -586,7 +587,7 @@ class LangPackCreator
     		
     		$shortFileName = str_replace($dir.DIRECTORY_SEPARATOR,"",$file);
     		if(CLI){
-				echo "   Analyst XML File : ".str_replace(OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR,"",$file)." ".PHP_EOL;
+				echo "   Analyst XML File : ".str_replace(Openbiz::$app->getModulePath().DIRECTORY_SEPARATOR,"",$file)." ".PHP_EOL;
 			}
 			
     		$xml = simplexml_load_file($file);
@@ -595,7 +596,7 @@ class LangPackCreator
     				$this->analyzeModXML($xml, $module);
     			}
     			else {
-					$xmlArr = Resource::getXmlArray($file);
+					$xmlArr = ObjectFactoryHelper::getXmlArray($file);
 		    		$tmp = $this->analystXML($xmlArr);
 		    		$tmpNew = array();
     				if(is_array($tmp))
@@ -682,13 +683,13 @@ class LangPackCreator
     private function getStringsFromMsg($module,$dir=null)
     {
     	if(!$dir){
-    		$dir = OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR.$module;
+    		$dir = Openbiz::$app->getModulePath().DIRECTORY_SEPARATOR.$module;
     	}
     	$filelist = $this->getFileList($dir,"((.msg)|(.ini))"); 
     	$strings=array(); 
     	foreach($filelist as $file){
     		if(CLI){
-				echo "   Analyst Message File: ".str_replace(OPENBIZ_APP_PATH.DIRECTORY_SEPARATOR,"",str_replace(OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR,"",$file))." ".PHP_EOL;
+				echo "   Analyst Message File: ".str_replace(OPENBIZ_APP_PATH.DIRECTORY_SEPARATOR,"",str_replace(Openbiz::$app->getModulePath().DIRECTORY_SEPARATOR,"",$file))." ".PHP_EOL;
 			}			
 			$iniArr = parse_ini_file($file);	    		
     		$strings = array_merge($strings,$iniArr);
@@ -707,13 +708,13 @@ class LangPackCreator
 		// smarty command
 		$cmd = preg_quote('t');
 		if(!$dir){
-     		$dir = OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR.$module;
+     		$dir = Openbiz::$app->getModulePath().DIRECTORY_SEPARATOR.$module;
 		}
     	$filelist = $this->getFileList($dir,"((tpl)|(html)|(htm))");   	
     	$strings=array(); 
     	foreach($filelist as $file){
     		if(CLI){
-				echo "   Analyst Template File: ".str_replace(OPENBIZ_APP_PATH.DIRECTORY_SEPARATOR,"",str_replace(OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR,"",$file))." ".PHP_EOL;
+				echo "   Analyst Template File: ".str_replace(OPENBIZ_APP_PATH.DIRECTORY_SEPARATOR,"",str_replace(Openbiz::$app->getModulePath().DIRECTORY_SEPARATOR,"",$file))." ".PHP_EOL;
 			}			
     			$content = @file_get_contents($file);
 				if (empty($content)) {

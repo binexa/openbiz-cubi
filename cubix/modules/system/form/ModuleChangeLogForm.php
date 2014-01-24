@@ -15,8 +15,8 @@ class ModuleChangeLogForm extends EasyFormGrouping
 {
 	public function LoadAll()
 	{
-		include_once (OPENBIZ_APP_MODULE_PATH."/system/lib/ModuleLoader.php");
-		$_moduleArr = glob(OPENBIZ_APP_MODULE_PATH."/*");
+		include_once (Openbiz::$app->getModulePath()."/system/lib/ModuleLoader.php");
+		$_moduleArr = glob(Openbiz::$app->getModulePath()."/*");
 	    $moduleArr[0] = "system";
 	    $moduleArr[1] = "menu";
 		foreach ($_moduleArr as $_module)

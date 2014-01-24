@@ -13,9 +13,9 @@
 
 use Openbiz\Openbiz;
 use Openbiz\i18n\I18n;
-use Openbiz\Resource;
+use Openbiz\Helpers\TemplateHelper;
 
-include_once OPENBIZ_APP_MODULE_PATH."/translation/lib/LangPackCreator.php";
+include_once Openbiz::$app->getModulePath()."/translation/lib/LangPackCreator.php";
 
 
 class LanguageForm extends EasyForm
@@ -307,7 +307,7 @@ class LanguageForm extends EasyForm
 		}
 		
 		//create lang.xml metainfo
-		$smarty = Resource::getSmartyTemplate();
+		$smarty = TemplateHelper::getSmartyTemplate();
 		$smarty->assign("language", 		$this->Code2Language($lang_code));
 		$smarty->assign("lang_code", 		$lang);
 		$smarty->assign("version", 			$recArr['version']);
@@ -316,7 +316,7 @@ class LanguageForm extends EasyForm
 		$smarty->assign("author_email", 	$recArr['authorEmail']);
 		$smarty->assign("author_url", 		$recArr['authorUrl']);
 		$smarty->assign("description",	 	$recArr['description']);
-		$data = $smarty->fetch(Resource::getTplFileWithPath("lang.xml.tpl", $this->package));
+		$data = $smarty->fetch(TemplateHelper::getTplFileWithPath("lang.xml.tpl", $this->package));
 		file_put_contents($lang_dir.DIRECTORY_SEPARATOR.$lang.".xml" ,$data);
 		
 		
@@ -338,7 +338,7 @@ public function UpdateLangPack($lang,$recArr){
 		}
 		
 		//create lang.xml metainfo
-		$smarty = Resource::getSmartyTemplate();
+		$smarty = TemplateHelper::getSmartyTemplate();
 		$smarty->assign("language", 		$this->Code2Language($lang_code));
 		$smarty->assign("lang_code", 		$lang);
 		$smarty->assign("version", 			$recArr['version']);
@@ -347,7 +347,7 @@ public function UpdateLangPack($lang,$recArr){
 		$smarty->assign("author_email", 	$recArr['authorEmail']);
 		$smarty->assign("author_url", 		$recArr['authorUrl']);
 		$smarty->assign("description",	 	$recArr['description']);
-		$data = $smarty->fetch(Resource::getTplFileWithPath("lang.xml.tpl", $this->package));
+		$data = $smarty->fetch(TemplateHelper::getTplFileWithPath("lang.xml.tpl", $this->package));
 		$lang_dir = OPENBIZ_APP_PATH.DIRECTORY_SEPARATOR."languages".DIRECTORY_SEPARATOR.$lang;
 		$lang_file = $lang_dir.DIRECTORY_SEPARATOR.$lang.".xml";
 		@unlink($lang_file);

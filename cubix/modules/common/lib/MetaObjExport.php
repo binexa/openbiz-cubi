@@ -20,7 +20,7 @@ class MetaObjExport
     {
         if ($this->doc) 
             return $this->doc;
-        $this->xmlFile = OPENBIZ_APP_MODULE_PATH."/".str_replace(".","/",$this->object->objectName).".xml";
+        $this->xmlFile = Openbiz::$app->getModulePath()."/".str_replace(".","/",$this->object->objectName).".xml";
 		$this->relXmlFile = "cubi/modules/".str_replace(".","/",$this->object->objectName).".xml";
 
         //if (!file_exists($this->xmlFile)) 

@@ -11,7 +11,7 @@
  * @version   $Id: mod.php 3345 2012-05-31 05:04:56Z rockyswen@gmail.com $
  */
 
-include_once (OPENBIZ_APP_MODULE_PATH."/system/lib/ModuleLoader.php");
+include_once (Openbiz::$app->getModulePath()."/system/lib/ModuleLoader.php");
 
 class HelpModuleLoader extends ModuleLoader
 {

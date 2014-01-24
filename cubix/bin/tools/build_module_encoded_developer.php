@@ -43,7 +43,7 @@ function execPhing($buildFile, $options)
 function getModuleVersion($moduleName)
 {
     // read mod.xml, get its version as its release name
-    $modfile = OPENBIZ_APP_MODULE_PATH."/".$moduleName."/mod.xml";
+    $modfile = Openbiz::$app->getModulePath()."/".$moduleName."/mod.xml";
         
     $xml = simplexml_load_file($modfile);
     $modVersion = $xml['Version'];

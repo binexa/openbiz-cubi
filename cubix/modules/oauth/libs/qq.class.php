@@ -29,7 +29,7 @@ class qq extends oauthClass{
 	}
 	
 	function callback(){ 
-		$keys=Openbiz::$app->getSessionContext()->getVar('qq_keys');
+		$keys= Openbiz::$app->getSessionContext()->getVar('qq_keys');
 		$this->checkUser($keys['oauth_token'],$keys['oauth_token_secret']);
 		$userInfo=$this->userInfo();
 		$this->check($userInfo);
@@ -76,7 +76,7 @@ class qq extends oauthClass{
 	}
 
 	private function doClient($opt=''){
-		$tokens=Openbiz::$app->getSessionContext()->getVar('qq_access_token');
+		$tokens= Openbiz::$app->getSessionContext()->getVar('qq_access_token');
 		$oauth_token = ( $opt['oauth_token'] )? $opt['oauth_token']:$tokens['oauth_token'];
         $oauth_token_secret = ( $opt['oauth_token_secret'] )? $opt['oauth_token_secret']:$tokens['oauth_token_secret'];
 		return new QqWeiboClient( $this->akey ,$this->skey ,  $oauth_token, $oauth_token_secret  );

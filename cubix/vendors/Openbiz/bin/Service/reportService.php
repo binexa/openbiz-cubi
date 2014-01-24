@@ -13,7 +13,9 @@
  * @link      http://www.phpopenbiz.org/
  * @version   $Id: reportService.php 2553 2010-11-21 08:36:48Z mr_a_ton $
  */
-use Openbiz\Resource;
+
+use Openbiz\Helpers\TemplateHelper;
+
 /**
  * reportService class is the plug-in service of generate report for BizDataobj
  *
@@ -110,7 +112,7 @@ class reportService extends MetaObject
 
         // dataobj.rptdesign.tpl
         // $rpt_data_dir, $rpt_title, $rpt_csv_file, $rpt_fields[](name,type)
-        $smarty = Resource::getSmartyTemplate();
+        $smarty = TemplateHelper::getSmartyTemplate();
         $smarty->assign("rpt_data_dir", $this->targetReportPath);
         $smarty->assign("rpt_title", $bizform->title);
         $smarty->assign("rpt_csv_file", basename($tmpfname));

@@ -10,6 +10,7 @@
  */
 
 use Openbiz\Resource;
+use Openbiz\Object\ObjectFactoryHelper;
 
 class compileService
 {
@@ -52,7 +53,7 @@ class compileService
         $output = str_replace("{\$className}", $objNameNew, $template);
         $output = str_replace("{\$metadata}", $xmlArrCode, $output);
 
-        $xmlFile = Resource::getXmlFileWithPath($objName);
+        $xmlFile = ObjectFactoryHelper::getXmlFileWithPath($objName);
         $xmlCmpFile = $xmlFile . ".php";
         return file_put_contents($xmlCmpFile, $output);
     }
@@ -96,13 +97,13 @@ class compileService
 
     private function getMetadataArray($objName)
     {
-        $xmlFile = Resource::getXmlFileWithPath($objName);
+        $xmlFile = ObjectFactoryHelper::getXmlFileWithPath($objName);
         if (!$xmlFile) {
             $dotPos = strrpos($objName, ".");
             $package = $dotPos > 0 ? substr($objName, 0, $dotPos) : null;
             $class = $dotPos > 0 ? substr($objName, $dotPos + 1) : $objName;
         } else {
-            $xmlArr = Resource::getXmlArray($xmlFile);
+            $xmlArr = ObjectFactoryHelper::getXmlArray($xmlFile);
         }
 
         if ($xmlArr) {

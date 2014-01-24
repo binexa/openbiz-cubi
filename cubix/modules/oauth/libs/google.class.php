@@ -72,7 +72,7 @@ class google extends oauthClass
 
 	//用户资料
 	function userInfo(){
-		$access_token=Openbiz::$app->getSessionContext()->getVar('google_access_token');
+		$access_token= Openbiz::$app->getSessionContext()->getVar('google_access_token');
 		$this->google->setAccessToken($access_token['access_token_json']);
 		
 		if(!$this->oauth2)

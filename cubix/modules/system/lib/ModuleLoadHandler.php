@@ -13,7 +13,7 @@
 
 use Openbiz\Openbiz;
 
-include_once (OPENBIZ_APP_MODULE_PATH."/system/lib/ModuleLoader.php");
+include_once (Openbiz::$app->getModulePath()."/system/lib/ModuleLoader.php");
 
 interface ModuleLoadHandler
 {

@@ -13,7 +13,7 @@
 
 
 use Openbiz\Openbiz;
-use Openbiz\Resource;
+use Openbiz\Helpers\MessageHelper;
 
 include_once 'WebsvcError.php';
 include_once 'WebsvcResponse.php';
@@ -39,7 +39,7 @@ class WebsvcService
         $this->requireAuth = strtoupper($this->requireAuth);
         $this->publicMethods = new MetaIterator($xmlArr["PLUGINSERVICE"]["PUBLICMETHOD"],"PublicMethod",$this);
         $this->messageFile = isset($xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["MESSAGEFILE"]) ? $xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["MESSAGEFILE"] : null;
-        $this->objectMessages = Resource::loadMessage($this->messageFile);
+        $this->objectMessages = MessageHelper::loadMessage($this->messageFile);
     }
 /*
       - authenticate($api_key, $secret)

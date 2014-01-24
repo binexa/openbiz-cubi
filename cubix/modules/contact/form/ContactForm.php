@@ -13,7 +13,7 @@
  */
 use Openbiz\Openbiz;
 
-include_once OPENBIZ_APP_MODULE_PATH . '/changelog/form/ChangeLogNoCommentForm.php';
+include_once Openbiz::$app->getModulePath() . '/changelog/form/ChangeLogNoCommentForm.php';
 
 class ContactForm extends ChangeLogForm
 {

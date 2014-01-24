@@ -16,6 +16,8 @@
 
 use Openbiz\Openbiz;
 use Openbiz\Resource;
+use Openbiz\Object\ObjectFactoryHelper;
+
 /**
  * BizDataObj class is the base class of all data object classes
  *
@@ -218,7 +220,7 @@ class BizDataObj extends BizDataObj_Lite
     {
         $this->events()->trigger(__FUNCTION__ . '.pre', $this, array('record' => $recArr, 'old_record' => $oldRecord));
         if (!$this->canUpdateRecord($oldRecord)) {
-            $this->errorMessage = Resource::getMessage("DATA_NO_PERMISSION_UPDATE", $this->objectName);
+            $this->errorMessage = MessageHelper::getMessage("DATA_NO_PERMISSION_UPDATE", $this->objectName);
             throw new Openbiz\Data\Exception($this->errorMessage);
             return false;
         }
@@ -285,7 +287,7 @@ class BizDataObj extends BizDataObj_Lite
     public function updateRecords($setValue, $condition = null)
     {
         if (!$this->canUpdateRecordCondition()) {
-            $this->errorMessage = Resource::getMessage("DATA_NO_PERMISSION_UPDATE", $this->objectName);
+            $this->errorMessage = MessageHelper::getMessage("DATA_NO_PERMISSION_UPDATE", $this->objectName);
             return false;
         }
         /* 当$setValue是数组时转成[field]=value格式 */
@@ -405,7 +407,7 @@ class BizDataObj extends BizDataObj_Lite
             return null;
 
         if (!$isBeforeInsert && $this->idGeneration != 'Identity') {
-            $this->errorMessage = Resource::getMessage("DATA_UNABLE_GET_ID", $this->objectName);
+            $this->errorMessage = MessageHelper::getMessage("DATA_UNABLE_GET_ID", $this->objectName);
             return false;
         }
 
@@ -507,7 +509,7 @@ class BizDataObj extends BizDataObj_Lite
     {
         $this->events()->trigger(__FUNCTION__ . '.pre', $this, array('record', $recArr));
         if (!$this->canDeleteRecord()) {
-            $this->errorMessage = Resource::getMessage("DATA_NO_PERMISSION_DELETE", $this->objectName);
+            $this->errorMessage = MessageHelper::getMessage("DATA_NO_PERMISSION_DELETE", $this->objectName);
             throw new Openbiz\Data\Exception($this->errorMessage);
             return false;
         }
@@ -554,7 +556,7 @@ class BizDataObj extends BizDataObj_Lite
     public function deleteRecords($condition = null)
     {
         if (!$this->canDeleteRecordCondition()) {
-            throw new Openbiz\Data\Exception(Resource::getMessage("DATA_NO_PERMISSION_DELETE", $this->objectName));
+            throw new Openbiz\Data\Exception(MessageHelper::getMessage("DATA_NO_PERMISSION_DELETE", $this->objectName));
             return false;
         }
 
@@ -723,13 +725,15 @@ class BizDataObj extends BizDataObj_Lite
     {
         // locate the trigger metadata file BOName_Trigger.xml
         $triggerServiceName = $this->objectName . "_Trigger";
-        $xmlFile = Resource::getXmlFileWithPath($triggerServiceName);
-        if (!$xmlFile)
+        $xmlFile = ObjectFactoryHelper::getXmlFileWithPath($triggerServiceName);
+        if (!$xmlFile) {
             return;
+        }
 
         $triggerService = Openbiz::getObject($triggerServiceName);
-        if ($triggerService == null)
+        if ($triggerService == null) {
             return;
+        }
         // invoke trigger service ExecuteTrigger($triggerType, $currentRecord)
 
         $triggerService->execute($this, $triggerType);
@@ -754,8 +758,9 @@ class BizDataObj extends BizDataObj_Lite
                 // get the field mapping to the column, then get the field value
                 $joinFieldName = $joinDataObj->bizRecord->getFieldByColumn($tableJoin->column); // joined-main table
 
-                if (!$joinFieldName)
+                if (!$joinFieldName) {
                     continue;
+                }
 
                 $refFieldName = $this->bizRecord->getFieldByColumn($tableJoin->columnRef); // join table
                 $returnRecord[$refFieldName] = $joinFieldName;

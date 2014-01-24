@@ -19,7 +19,7 @@ use Openbiz\Openbiz;
 use Openbiz\Core\Expression;
 use Openbiz\I18n\I18n;
 use Openbiz\Object\Statefullable;
-use Openbiz\Resource;
+use Openbiz\Helpers\MessageHelper;
 /**
  * EasyView class is the class that contains list of forms.
  * View is same as html page.
@@ -90,7 +90,7 @@ class EasyView extends MetaObject implements Statefullable
             $this->widgets = new MetaIterator($xmlArr["EASYVIEW"]["WIDGETS"]["REFERENCE"], "FormReference", $this);
         }
         $this->messageFile = isset($xmlArr["EASYVIEW"]["ATTRIBUTES"]["MESSAGEFILE"]) ? $xmlArr["EASYVIEW"]["ATTRIBUTES"]["MESSAGEFILE"] : null;
-        $this->objectMessages = Resource::loadMessage($this->messageFile, $this->package);
+        $this->objectMessages = MessageHelper::loadMessage($this->messageFile, $this->package);
         $this->cacheLifeTime = isset($xmlArr["EASYVIEW"]["ATTRIBUTES"]["CACHELIFETIME"]) ? $xmlArr["EASYVIEW"]["ATTRIBUTES"]["CACHELIFETIME"] : "0";
 
         $this->readTile($xmlArr); // TODO: is this needed as title supports expression?

@@ -56,7 +56,7 @@ include_once dirname(__FILE__)."/gen_meta.inc.php";
 if(!defined("CLI")){
 	exit;
 }
-$moduleDir = OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR.str_replace(".",DIRECTORY_SEPARATOR,$module);
+$moduleDir = Openbiz::$app->getModulePath().DIRECTORY_SEPARATOR.str_replace(".",DIRECTORY_SEPARATOR,$module);
 
 // help user to set the metadata namings
 $temp = explode("_",$table);
@@ -69,7 +69,7 @@ for ($i=0;$i<count($temp);$i++){
 echo "---------------------------------------".PHP_EOL;
 echo "Please select metadata naming:".PHP_EOL;
 for ($i=0; $i<count($namings); $i++) {
-	echo ($i+1).". module path: ".str_replace(OPENBIZ_APP_MODULE_PATH,"",$namings[$i][0]).
+	echo ($i+1).". module path: ".str_replace(Openbiz::$app->getModulePath(),"",$namings[$i][0]).
 				", object name: ".$namings[$i][1].
 				", module name: ".$namings[$i][3].
 				PHP_EOL;
@@ -84,7 +84,7 @@ while(1) {
 	if(strtolower($selection)=='s'){
 		echo "Please set a module path: ";
         $module = trim(fgets(STDIN));
-		$custom_opts[0] = OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR.trim($module);
+		$custom_opts[0] = Openbiz::$app->getModulePath().DIRECTORY_SEPARATOR.trim($module);
 		
 		echo "Please set the component name: ";
 		$custom_opts[1] = trim(fgets(STDIN));
@@ -185,7 +185,7 @@ if (strtolower($answer) == 'y'){
 
 //detects if mod.xml exists
 $modFolder = getModuleName(strtolower($opts[3]));
-$modFile = $moduleDir = OPENBIZ_APP_MODULE_PATH . "/" . $modFolder."/mod.xml";
+$modFile = $moduleDir = Openbiz::$app->getModulePath() . "/" . $modFolder."/mod.xml";
 if(file_exists($modFile)){
 echo "---------------------------------------".PHP_EOL;
 	echo "Do you want to modify mod.xml? [y/n] (y) : ";

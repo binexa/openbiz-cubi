@@ -17,7 +17,7 @@ if(!defined("CLI")){
 	exit;
 }
 
-include_once (OPENBIZ_APP_MODULE_PATH."/service/UpgradeService.php");
+include_once (Openbiz::$app->getModulePath()."/service/UpgradeService.php");
 
 // locate the package file
 if (!file_exists($package_file)) {

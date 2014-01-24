@@ -13,7 +13,8 @@
  */
 
 use Openbiz\Openbiz;
-use Openbiz\Resource;
+use Openbiz\Helpers\TemplateHelper;
+use Openbiz\Object\ObjectFactoryHelper;
 
 class EmailSettingForm extends EasyForm
 {
@@ -54,11 +55,11 @@ class EmailSettingForm extends EasyForm
         if (strtoupper($this->formType) == "NEW")
             return $this->getNewRule();
 
-        $file = OPENBIZ_APP_MODULE_PATH . DIRECTORY_SEPARATOR . "service" . DIRECTORY_SEPARATOR . $this->configFile;
+        $file = Openbiz::$app->getModulePath() . DIRECTORY_SEPARATOR . "service" . DIRECTORY_SEPARATOR . $this->configFile;
         if (!is_file($file)) {
             return;
         }
-        $configArr = Resource::getXmlArray($file);
+        $configArr = ObjectFactoryHelper::getXmlArray($file);
         $nodesArr = $configArr["PLUGINSERVICE"]["ACCOUNTS"][strtoupper($this->configNode)];
         $result = array();
 
@@ -95,12 +96,12 @@ class EmailSettingForm extends EasyForm
 
     public function fetchDataSet()
     {
-        $file = OPENBIZ_APP_MODULE_PATH . DIRECTORY_SEPARATOR . "service" . DIRECTORY_SEPARATOR . $this->configFile;
+        $file = Openbiz::$app->getModulePath() . DIRECTORY_SEPARATOR . "service" . DIRECTORY_SEPARATOR . $this->configFile;
         if (!is_file($file)) {
             return;
         }
 
-        $configArr = Resource::getXmlArray($file);
+        $configArr = ObjectFactoryHelper::getXmlArray($file);
         $nodesArr = $configArr["PLUGINSERVICE"]["ACCOUNTS"][strtoupper($this->configNode)];
         $result = array();
 
@@ -127,11 +128,11 @@ class EmailSettingForm extends EasyForm
     public function outputAttrs()
     {
         $result = parent::outputAttrs();
-        $file = OPENBIZ_APP_MODULE_PATH . DIRECTORY_SEPARATOR . "service" . DIRECTORY_SEPARATOR . $this->configFile;
+        $file = Openbiz::$app->getModulePath() . DIRECTORY_SEPARATOR . "service" . DIRECTORY_SEPARATOR . $this->configFile;
         if (!is_file($file)) {
             return;
         }
-        $configArr = Resource::getXmlArray($file);
+        $configArr = ObjectFactoryHelper::getXmlArray($file);
         $this->modeStatus = $configArr["PLUGINSERVICE"]["ACCOUNTS"][strtoupper($this->configNode)]["ATTRIBUTES"]["MODE"];
         $result['status'] = $this->modeStatus;
         return $result;
@@ -229,11 +230,11 @@ class EmailSettingForm extends EasyForm
 
     public function switchMode()
     {
-        $file = OPENBIZ_APP_MODULE_PATH . DIRECTORY_SEPARATOR . "service" . DIRECTORY_SEPARATOR . $this->configFile;
+        $file = Openbiz::$app->getModulePath() . DIRECTORY_SEPARATOR . "service" . DIRECTORY_SEPARATOR . $this->configFile;
         if (!is_file($file)) {
             return;
         }
-        $configArr = Resource::getXmlArray($file);
+        $configArr = ObjectFactoryHelper::getXmlArray($file);
 
         $this->modeStatus = $configArr["PLUGINSERVICE"]["ACCOUNTS"][strtoupper($this->configNode)]["ATTRIBUTES"]["MODE"];
         if ($this->modeStatus == 'Enabled') {
@@ -280,12 +281,12 @@ class EmailSettingForm extends EasyForm
 
     public function checkAccountInUse($id)
     {
-        $file = OPENBIZ_APP_MODULE_PATH . DIRECTORY_SEPARATOR . "service" . DIRECTORY_SEPARATOR . "userEmailService.xml";
+        $file = Openbiz::$app->getModulePath() . DIRECTORY_SEPARATOR . "service" . DIRECTORY_SEPARATOR . "userEmailService.xml";
         if (!is_file($file)) {
             return;
         }
 
-        $configArr = Resource::getXmlArray($file);
+        $configArr = ObjectFactoryHelper::getXmlArray($file);
         $nodesArr = $configArr["PLUGINSERVICE"]["TEMPLATE"];
 
         $list = array();
@@ -307,11 +308,11 @@ class EmailSettingForm extends EasyForm
 
     private function addNode($nodeArr)
     {
-        $file = OPENBIZ_APP_MODULE_PATH . DIRECTORY_SEPARATOR . "service" . DIRECTORY_SEPARATOR . $this->configFile;
+        $file = Openbiz::$app->getModulePath() . DIRECTORY_SEPARATOR . "service" . DIRECTORY_SEPARATOR . $this->configFile;
         if (!is_file($file)) {
             return;
         }
-        $configArr = Resource::getXmlArray($file);
+        $configArr = ObjectFactoryHelper::getXmlArray($file);
         $recordName = $configArr["PLUGINSERVICE"]["ACCOUNTS"][strtoupper($this->configNode)]["ATTRIBUTES"]["NAME"];
         $recordCount = count($configArr["PLUGINSERVICE"]["ACCOUNTS"][strtoupper($this->configNode)]);
         if (!$recordName && $recordCount) {
@@ -329,11 +330,11 @@ class EmailSettingForm extends EasyForm
 
     private function updateNode($name, $nodeArr)
     {
-        $file = OPENBIZ_APP_MODULE_PATH . DIRECTORY_SEPARATOR . "service" . DIRECTORY_SEPARATOR . $this->configFile;
+        $file = Openbiz::$app->getModulePath() . DIRECTORY_SEPARATOR . "service" . DIRECTORY_SEPARATOR . $this->configFile;
         if (!is_file($file)) {
             return;
         }
-        $configArr = Resource::getXmlArray($file);
+        $configArr = ObjectFactoryHelper::getXmlArray($file);
         $recordName = $configArr["PLUGINSERVICE"]["ACCOUNTS"][strtoupper($this->configNode)]["ATTRIBUTES"]["NAME"];
         if (!$recordName) {
             $nodesArr = $configArr["PLUGINSERVICE"]["ACCOUNTS"][strtoupper($this->configNode)];
@@ -353,11 +354,11 @@ class EmailSettingForm extends EasyForm
 
     private function removeNode($name)
     {
-        $file = OPENBIZ_APP_MODULE_PATH . DIRECTORY_SEPARATOR . "service" . DIRECTORY_SEPARATOR . $this->configFile;
+        $file = Openbiz::$app->getModulePath() . DIRECTORY_SEPARATOR . "service" . DIRECTORY_SEPARATOR . $this->configFile;
         if (!is_file($file)) {
             return;
         }
-        $configArr = Resource::getXmlArray($file);
+        $configArr = ObjectFactoryHelper::getXmlArray($file);
         $recordName = $configArr["PLUGINSERVICE"]["ACCOUNTS"][strtoupper($this->configNode)]["ATTRIBUTES"]["NAME"];
         if (!$recordName) {
             $nodesArr = $configArr["PLUGINSERVICE"]["ACCOUNTS"][strtoupper($this->configNode)];
@@ -376,11 +377,11 @@ class EmailSettingForm extends EasyForm
 
     private function checkDupNodeName($nodeName)
     {
-        $file = OPENBIZ_APP_MODULE_PATH . DIRECTORY_SEPARATOR . "service" . DIRECTORY_SEPARATOR . $this->configFile;
+        $file = Openbiz::$app->getModulePath() . DIRECTORY_SEPARATOR . "service" . DIRECTORY_SEPARATOR . $this->configFile;
         if (!is_file($file)) {
             return;
         }
-        $configArr = Resource::getXmlArray($file);
+        $configArr = ObjectFactoryHelper::getXmlArray($file);
         $recordName = $configArr["PLUGINSERVICE"]["ACCOUNTS"][strtoupper($this->configNode)]["ATTRIBUTES"]["NAME"];
         if (!$recordName) {
             $nodesArr = $configArr["PLUGINSERVICE"]["ACCOUNTS"][strtoupper($this->configNode)];
@@ -403,10 +404,10 @@ class EmailSettingForm extends EasyForm
 
     private function saveToXML($data)
     {
-        $smarty = Resource::getSmartyTemplate();
+        $smarty = TemplateHelper::getSmartyTemplate();
         $smarty->assign("data", $data);
-        $xmldata = $smarty->fetch(Resource::getTplFileWithPath("serviceTemplate.xml.tpl", $this->package));
-        $service_dir = OPENBIZ_APP_MODULE_PATH . DIRECTORY_SEPARATOR . "service";
+        $xmldata = $smarty->fetch(TemplateHelper::getTplFileWithPath("serviceTemplate.xml.tpl", $this->package));
+        $service_dir = Openbiz::$app->getModulePath() . DIRECTORY_SEPARATOR . "service";
         $service_file = $service_dir . DIRECTORY_SEPARATOR . $this->configFile;
         file_put_contents($service_file, $xmldata);
         return true;

@@ -8,7 +8,7 @@
 
 namespace Openbiz\Object;
 
-use Openbiz\Object\ObjecttHelper;
+use Openbiz\Object\ObjectHelper;
 
 /**
  * Description of BizObject

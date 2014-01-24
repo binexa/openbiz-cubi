@@ -7,11 +7,11 @@ use Openbiz\Core\Expression;
  * 
  * {php}
 	
-	$recArr=Openbiz::$app->getSessionContext()->getVar("_OauthLogin");
+	$recArr= Openbiz::$app->getSessionContext()->getVar("_OauthLogin");
 	if(!$recArr && Openbiz::getService('system.lib.ModuleService')->isModuleInstalled('oauth'))
 		 {
 		 
-		 $do=Openbiz::getObject('oauth.do.OauthProviderDO');
+		 $do= Openbiz::getObject('oauth.do.OauthProviderDO');
 		 $sql="SELECT `type` ,  `key` ,  `value`  FROM  `{$do->mainTableName}` where status=1   LIMIT 0 , 15 ";
 		 $db=$do->getDBConnection();
 		 $recArr=$db->fetchAssoc($sql);
@@ -46,7 +46,7 @@ class OauthLogin extends InputElement
 		$sHTML = "";
 		if(Openbiz::getService('system.lib.ModuleService')->isModuleInstalled('oauth'))
 		{
-			 $do=Openbiz::getObject('oauth.do.OauthProviderDO');
+			 $do= Openbiz::getObject('oauth.do.OauthProviderDO');
 			 $recArr=$do->directFetch ("[status]=1",30);
 			 $recArr=$recArr->toArray();
 

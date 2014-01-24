@@ -9,7 +9,7 @@ class OauthSelector extends Element
 		$sHTML = "";
 		if(Openbiz::getService('system.lib.ModuleService')->isModuleInstalled('oauth'))
 		{
-			 $do=Openbiz::getObject('oauth.do.OauthProviderDO');
+			 $do= Openbiz::getObject('oauth.do.OauthProviderDO');
 			 $recArr=$do->directFetch ("[status]=1",30);
 			 $recArr=$recArr->toArray();
 			 if(count($recArr))

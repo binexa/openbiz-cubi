@@ -53,7 +53,7 @@ class InputDate extends InputText {
         $sHTML = parent::render();
 
         $showTime = 'false';
-        //$image = "<img src=\"".Resource::getImageUrl()."/calendar.gif\" border=0 title=\"Select date...\" align='top' hspace='2'>";
+        //$image = "<img src=\"".Openbiz::$app->getImageUrl()."/calendar.gif\" border=0 title=\"Select date...\" align='top' hspace='2'>";
         $sHTML .= "<a class=\"date_picker\" href=\"javascript: void(0);\" onclick=\"return showCalendar('$this->objectName','$format',$showTime,true);\"></a>";
         return $sHTML;
     }

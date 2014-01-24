@@ -29,14 +29,16 @@ use Openbiz\Web\ClientProxy;
 use Openbiz\Web\Request;
 use Openbiz\Web\SessionContext;
 use Openbiz\Web\UserAgent;
-
+use Openbiz\Object\ObjectFactoryHelper;
 
 
 // run controller
 //
 //session_cache_limiter('public');
 //ob_start();
+// @todo move to response / clientproxy object
 header('Content-Type: text/html; charset=utf-8');
+
 include_once("sysheader_inc.php");
 
 
@@ -50,17 +52,29 @@ include_once("sysheader_inc.php");
  */
 class Application extends \Openbiz\Object\Object
 {
+
+    const DEFAULT_THEME = 'default';
     /**
      * Request object, initialized when BizApplication created
      * @var Request 
      */
     public $request;
     public $timeZone = 'Asia/jakarta';
+    
     private $_userTimeoutView = OPENBIZ_USER_TIMEOUT_VIEW;
     private $_accessDeniedView = OPENBIZ_ACCESS_DENIED_VIEW;
     private $_securityDeniedView = OPENBIZ_SECURITY_DENIED_VIEW;
     private $_defaultThemeName;
 
+    private $_cssUrl;
+    private $_jsUrl;
+    private $_currentTheme;
+
+
+    private $_modulePath = null;
+
+
+    
     public function __construct()
     {
         Openbiz::$app = $this;
@@ -111,7 +125,6 @@ class Application extends \Openbiz\Object\Object
      *
      * @return \Openbiz\Web\SessionContext the SessionContext object
      */
-
     public function getSessionContext()
     {
         if ($this->_sessionContext) {
@@ -479,7 +492,7 @@ class Application extends \Openbiz\Object\Object
 
         $num_arg = count($rpcParams);
         if ($num_arg < 2) {
-            $errmsg = Resource::getMessage("SYS_ERROR_RPCARG", array($class));
+            $errmsg = MessageHelper::getMessage("SYS_ERROR_RPCARG", array($class));
             trigger_error($errmsg, E_USER_ERROR);
         } else {
             $objName = array_shift($rpcParams);
@@ -497,7 +510,7 @@ class Application extends \Openbiz\Object\Object
         if ($obj) {
             if (method_exists($obj, $methodName)) {
                 if (!$this->validateRequest($obj, $methodName)) {
-                    $errmsg = Resource::getMessage("SYS_ERROR_REQUEST_REJECT", array($obj->objectName, $methodName));
+                    $errmsg = MessageHelper::getMessage("SYS_ERROR_REQUEST_REJECT", array($obj->objectName, $methodName));
                     trigger_error($errmsg, E_USER_ERROR);
                 }
                 switch (count($params)) {
@@ -512,11 +525,11 @@ class Application extends \Openbiz\Object\Object
                     default: $rt_val = call_user_func_array(array($obj, $methodName), $params);
                 }
             } else {
-                $errmsg = Resource::getMessage("SYS_ERROR_METHODNOTFOUND", array($objName, $methodName));
+                $errmsg = MessageHelper::getMessage("SYS_ERROR_METHODNOTFOUND", array($objName, $methodName));
                 trigger_error($errmsg, E_USER_ERROR);
             }
         } else {
-            $errmsg = Resource::getMessage("SYS_ERROR_CLASSNOTFOUND", array($objName));
+            $errmsg = MessageHelper::getMessage("SYS_ERROR_CLASSNOTFOUND", array($objName));
             trigger_error($errmsg, E_USER_ERROR);
         }
 
@@ -564,7 +577,7 @@ class Application extends \Openbiz\Object\Object
     private function _dispatchView()
     {
         $request = $this->request;
-        if (!Resource::getXmlFileWithPath($request->view)) {
+        if (!ObjectFactoryHelper::getXmlFileWithPath($request->view)) {
             $this->_renderNotFoundView();
             exit;
         }
@@ -609,7 +622,7 @@ class Application extends \Openbiz\Object\Object
     public function redirectToDefaultModuleView($module)
     {
         $module = strtolower($module);
-        $modfile = OPENBIZ_APP_MODULE_PATH . DIRECTORY_SEPARATOR . $module . DIRECTORY_SEPARATOR . 'mod.xml';
+        $modfile = Openbiz::$app->getModulePath() . DIRECTORY_SEPARATOR . $module . DIRECTORY_SEPARATOR . 'mod.xml';
         $xml = simplexml_load_file($modfile);
         $defaultURL = OPENBIZ_APP_INDEX_URL . $xml->Menu->MenuItem['URL'];
         header("Location: $defaultURL");
@@ -760,7 +773,7 @@ class Application extends \Openbiz\Object\Object
      */
     public function getUserProfile($attribute = null)
     {
-        if (!Resource::getXmlFileWithPath(PROFILE_SERVICE)) {
+        if (!ObjectFactoryHelper::getXmlFileWithPath(PROFILE_SERVICE)) {
             return null;
         }
 
@@ -784,7 +797,7 @@ class Application extends \Openbiz\Object\Object
      */
     public function getUserPreference($attribute = null)
     {
-        if (!Resource::getXmlFileWithPath(OPENBIZ_PREFERENCE_SERVICE)) {
+        if (!ObjectFactoryHelper::getXmlFileWithPath(OPENBIZ_PREFERENCE_SERVICE)) {
             return null;
         }
         $preferenceService = Openbiz::getService(OPENBIZ_PREFERENCE_SERVICE);
@@ -985,4 +998,114 @@ class Application extends \Openbiz\Object\Object
 	{
 		date_default_timezone_set($value);
 	}
+
+
+    private $_imageUrl;
+
+    /**
+     * Get image URL
+     * @return string
+     */
+    public function getImageUrl()
+    {
+        if (isset($this->_imageUrl)) {
+            return $this->_imageUrl;
+        }
+        $useTheme = !defined('OPENBIZ_USE_THEME') ? 0 : OPENBIZ_USE_THEME;
+        $themeUrl = !defined('OPENBIZ_THEME_URL') ? "../themes" : OPENBIZ_THEME_URL;
+        $themeName = Openbiz::$app->getCurrentTheme();
+        if ($useTheme) {
+            $this->_imageUrl = "$themeUrl/$themeName/images";
+        } else {
+            $this->_imageUrl = "../images";
+        }
+        return $this->_imageUrl;
+    }
+
+    /**
+     * Get CSS URL
+     * @return string
+     */
+    public function getCssUrl()
+    {
+        if (isset($this->_cssUrl)) {
+            return $this->_cssUrl;
+        }
+        $useTheme = !defined('OPENBIZ_USE_THEME') ? 0 : OPENBIZ_USE_THEME;
+        $themeUrl = !defined('OPENBIZ_THEME_URL') ? OPENBIZ_APP_URL . "/themes" : OPENBIZ_THEME_URL;
+        $themeName = Openbiz::$app->getCurrentTheme();
+        if ($useTheme) {
+            $this->_cssUrl = "$themeUrl/$themeName/css";
+        } else {
+            $this->_cssUrl = OPENBIZ_APP_URL . "/css";
+        }
+        return $this->_cssUrl;
+    }
+
+    /**
+     * Get JavaScript(JS) URL
+     * @return string
+     */
+    public function getJsUrl()
+    {
+        if (isset($this->_jsUrl)) {
+            return $this->_jsUrl;
+        }
+        $this->_jsUrl = !defined('OPENBIZ_JS_URL') ? OPENBIZ_APP_URL . "/js" : OPENBIZ_JS_URL;
+        return $this->_jsUrl;
+    }
+
+
+    // theme selection priority: url, session, userpref, system(constant)
+    public function getCurrentTheme()
+    {
+        if ($this->_currentTheme != null) {
+            return $this->_currentTheme;
+        }
+        $currentTheme = "";
+        if (isset($_GET['theme'])) {
+            $currentTheme = $_GET['theme'];
+        }
+        if ($currentTheme == "") {
+            $currentTheme = Openbiz::$app->getSessionContext()->getVar("THEME");
+        }
+        if ($currentTheme == "") {
+            $currentTheme = Openbiz::$app->getUserPreference("theme");
+        }
+        if ($currentTheme == "" && defined('OPENBIZ_THEME_NAME')) {
+            $currentTheme = OPENBIZ_THEME_NAME;
+        }
+        if ($currentTheme == "") {
+            $currentTheme = self::DEFAULT_THEME;
+        }
+
+        // TODO: user pereference has language setting
+
+        Openbiz::$app->getSessionContext()->setVar("THEME", $currentTheme);
+        $this->_currentTheme = $currentTheme;
+
+        return $currentTheme;
+    }
+
+    /**
+     * Get module path of application.
+     * @return string
+     */
+    public function getModulePath()
+    {
+        if ($this->_modulePath === null) {
+            $this->_modulePath = OPENBIZ_APP_PATH . DIRECTORY_SEPARATOR . "modules";
+        }
+        return $this->_modulePath;
+    }
+
+    /**
+     * Set module path of application
+     * @param string $path
+     */
+    public function setModulePath($path)
+    {
+        $this->_modulePath = $path;
+    }
+
 }

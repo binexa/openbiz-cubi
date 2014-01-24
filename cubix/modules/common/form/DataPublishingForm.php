@@ -13,7 +13,7 @@
 
 use Openbiz\Openbiz;
 
-include_once (OPENBIZ_APP_MODULE_PATH.'/common/form/DataSharingForm.php');
+include_once (Openbiz::$app->getModulePath().'/common/form/DataSharingForm.php');
 class DataPublishingForm extends  DataSharingForm
 {
 	public function ShareRecord()

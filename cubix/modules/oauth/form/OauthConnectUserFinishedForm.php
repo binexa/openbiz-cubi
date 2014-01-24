@@ -8,7 +8,7 @@ class OauthConnectUserFinishedForm extends EasyForm
 	
 	public function fetchData()
 	{
-		$oauth_data=Openbiz::$app->getSessionContext()->getVar('_OauthUserInfo');
+		$oauth_data= Openbiz::$app->getSessionContext()->getVar('_OauthUserInfo');
 		$record['oauth_data'] = $oauth_data;
 		$record['oauth_user'] = $oauth_data['uname'];
 		$record['oauth_location'] = $oauth_data['location'];	

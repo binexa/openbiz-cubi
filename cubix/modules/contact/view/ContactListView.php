@@ -25,7 +25,7 @@ class ContactListView extends EasyView
     
     public function getDefaultMainForm(&$xmlArr)
     {
-        $formObj=Openbiz::getObject("contact.widget.ViewSelectorLeftWidget");
+        $formObj= Openbiz::getObject("contact.widget.ViewSelectorLeftWidget");
         $targetForm = $formObj->getViewMode();
         $newForm = array(
 			"ATTRIBUTES"=>array(

@@ -152,7 +152,7 @@ class ChartForm extends EasyForm
     public function draw()
     {
     	ob_clean();
-		$path = OPENBIZ_APP_MODULE_PATH.'/chart/lib';
+		$path = Openbiz::$app->getModulePath().'/chart/lib';
     	set_include_path(get_include_path() . PATH_SEPARATOR . $path);    	
         if(strtolower(CUBI_FUSION_CHART_VERSION)=="pro"){
     		require_once(dirname(dirname(__FILE__)).'/lib/fusionpro/FusionCharts_Gen.php'); 		

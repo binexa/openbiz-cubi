@@ -20,7 +20,7 @@ use Openbiz\Core\ErrorHandler;
 use Openbiz\Core\Expression;
 use Openbiz\I18n\I18n;
 use Openbiz\Object\Statefullable;
-use Openbiz\Resource;
+use Openbiz\Helpers\MessageHelper;
 
 /**
  * EasyForm class - contains form object metadata functions
@@ -206,7 +206,7 @@ class EasyForm extends MetaObject implements Statefullable
         $this->eventName = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["EVENTNAME"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["EVENTNAME"] : null;
 
         $this->messageFile = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["MESSAGEFILE"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["MESSAGEFILE"] : null;
-        $this->objectMessages = Resource::loadMessage($this->messageFile, $this->package);
+        $this->objectMessages = MessageHelper::loadMessage($this->messageFile, $this->package);
 
         $this->cacheLifeTime = isset($xmlArr["EASYFORM"]["ATTRIBUTES"]["CACHELIFETIME"]) ? $xmlArr["EASYFORM"]["ATTRIBUTES"]["CACHELIFETIME"] : "0";
 
@@ -259,7 +259,7 @@ class EasyForm extends MetaObject implements Statefullable
         $this->directMethodList = $this->directMethodList ? $this->directMethodList : $parentObj->directMethodList;
         $this->eventName = $this->eventName ? $this->eventName : $parentObj->eventName;
         $this->messageFile = $this->messageFile ? $this->messageFile : $parentObj->messageFile;
-        $this->objectMessages = Resource::loadMessage($this->messageFile, $this->package);
+        $this->objectMessages = MessageHelper::loadMessage($this->messageFile, $this->package);
         $this->cacheLifeTime = $this->cacheLifeTime ? $this->cacheLifeTime : $parentObj->cacheLifeTime;
         $this->currentPage = $this->currentPage ? $this->currentPage : $parentObj->currentPage;
         $this->startItem = $this->startItem ? $this->startItem : $parentObj->startItem;
@@ -534,7 +534,7 @@ class EasyForm extends MetaObject implements Statefullable
             if (preg_match("/{.*}/si", $output['icon'])) {
                 $output['icon'] = Expression::evaluateExpression($output['icon'], null);
             } else {
-                $output['icon'] = OPENBIZ_THEME_URL . "/" . Resource::getCurrentTheme() . "/images/" . $output['icon'];
+                $output['icon'] = OPENBIZ_THEME_URL . "/" .Openbiz::$app->getCurrentTheme() . "/images/" . $output['icon'];
             }
         }
         return $output;

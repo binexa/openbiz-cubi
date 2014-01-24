@@ -289,7 +289,7 @@ class PickerForm extends EasyForm
 			$do->baseSearchRule = $baseSearchRule;
 			
 			if(!$rec){
-				$rec=Openbiz::getObject($do->objectName,1)->fetchById($recId);
+				$rec= Openbiz::getObject($do->objectName,1)->fetchById($recId);
 			}
 			
 	        // add record to parent form's dataObj who is M-M or M-1/1-1 to its parent dataobj

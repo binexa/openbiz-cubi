@@ -15,7 +15,7 @@
  */
 
 use Openbiz\Resource;
-
+use Openbiz\Openbiz;
 //include_once("InputElement.php");
 
 /**
@@ -62,10 +62,11 @@ class Button extends InputElement
 
         if ($this->image)
         {
-            $imagesPath = Resource::getImageUrl();
+            $imagesPath = Openbiz::$app->getImageUrl();
             $out = "<img src=\"$imagesPath/" . $this->image . "\" border=0 title=\"" . $this->text . "\" />";
-            if ($func != "")
-                $out = "<a href='javascript:void(0);' $this->htmlAttr $style $func>".$out."</a>";
+            if ($func != "") {
+                $out = "<a href='javascript:void(0);' $this->htmlAttr $style $func>" . $out . "</a>";
+            }
         }
         else
         {

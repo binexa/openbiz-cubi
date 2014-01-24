@@ -14,7 +14,7 @@
 use Openbiz\Openbiz;
 use Openbiz\i18n\I18n;
 
-include_once OPENBIZ_APP_MODULE_PATH."/translation/lib/LangPackCreator.php";
+include_once Openbiz::$app->getModulePath()."/translation/lib/LangPackCreator.php";
 
 class TranslationForm extends EasyForm
 {
@@ -157,7 +157,7 @@ class TranslationForm extends EasyForm
 	}
 	
 	public function updateLang(){
-		$lang=Openbiz::$app->getClientProxy()->getFormInputs("selector_lang");
+		$lang= Openbiz::$app->getClientProxy()->getFormInputs("selector_lang");
 		$this->lang=$lang;
 		return $this->UpdateForm();
 	}

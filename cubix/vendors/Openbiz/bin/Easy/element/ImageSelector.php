@@ -1,6 +1,6 @@
 <?PHP
 
-use Openbiz\Resource;
+use Openbiz\Openbiz;
 use Openbiz\Core\Expression;
 //include_once("OptionElement.php");
 
@@ -74,7 +74,7 @@ class ImageSelector extends OptionElement
 	        	$formobj = $this->getFormObj();
 	        	$image_url =  Expression::evaluateExpression($image_url, $formobj);
 	        }else{
-	        	$image_url = Resource::getImageUrl()."/".$image_url;
+	        	$image_url = Openbiz::$app->getImageUrl()."/".$image_url;
 	        }   
             $sHTML .= "<a title=\"" . $option['txt'] . "\" 
             				href=\"javascript:;\"

@@ -106,7 +106,7 @@ class InitializeProfileForm extends EasyForm
 	
     protected function parseName($name)
     {
-    	$svcobj=Openbiz::getService("service.chineseService");
+    	$svcobj= Openbiz::getService("service.chineseService");
     	if($svcobj->isChinese($name)){
         	$fast_index = $svcobj->Chinese2Pinyin($name);
         }else{

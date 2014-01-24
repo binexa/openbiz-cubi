@@ -20,6 +20,7 @@ namespace Openbiz\Object;
 use Openbiz\Openbiz;
 use Openbiz\Resource;
 use Openbiz\ClassLoader;
+use Openbiz\Object\ObjectFactoryHelper;
 
 /**
  * ObjectFactory is factory class to create metadata based objects
@@ -37,8 +38,8 @@ class ObjectFactory
      * Internal array for cache MetaObject
      * @var array
      */
-    protected $_objsRefMap = array();
-
+    private $_objectsMap = array();
+     
     public function __construct()
     {
 
@@ -58,15 +59,15 @@ class ObjectFactory
      */
     public function getObject($objectName, $new = 0)
     {
-        if (isset($this->_objsRefMap[$objectName]) && $new == 0) {
-            return $this->_objsRefMap[$objectName];
+        if (isset($this->_objectsMap[$objectName]) && $new == 0) {
+            return $this->_objectsMap[$objectName];
         }
 
         $obj = $this->constructObject($objectName);
-        if ($obj) {
-            $this->_objsRefMap[$objectName] = $obj;
+        if (!$obj) {
+            return null;
         } // save object to cache
-
+        $this->_objectsMap[$objectName] = $obj;
         if ($new != 1) {
             if (method_exists($obj, "loadStatefullVars")) {
                 $obj->loadStatefullVars(Openbiz::$app->getSessionContext());
@@ -91,7 +92,7 @@ class ObjectFactory
 
     public function setObject($objName, $obj)
     {
-        $this->_objsRefMap[$objName] = $obj;
+        $this->_objectsMap[$objName] = $obj;
     }
 
     /**
@@ -101,7 +102,7 @@ class ObjectFactory
      */
     public function getAllObjects()
     {
-        return $this->_objsRefMap;
+        return $this->_objectsMap;
     }
 
     /**
@@ -114,13 +115,13 @@ class ObjectFactory
     protected function constructObject($objName, &$xmlArr = null)
     {
         if (!$xmlArr) {
-            $xmlFile = Resource::getXmlFileWithPath($objName);
+            $xmlFile = ObjectFactoryHelper::getXmlFileWithPath($objName);
             if (!$xmlFile) {
                 $dotPos = strrpos($objName, ".");
                 $package = $dotPos > 0 ? substr($objName, 0, $dotPos) : null;
                 $class = $dotPos > 0 ? substr($objName, $dotPos + 1) : $objName;
             } else {
-                $xmlArr = Resource::getXmlArray($xmlFile);
+                $xmlArr = ObjectFactoryHelper::getXmlArray($xmlFile);
             }
         }
         if ($xmlArr) {

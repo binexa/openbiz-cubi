@@ -2,12 +2,12 @@
 <?php
 include_once dirname(dirname(__FILE__)).'/app_init.php';
 
-$dir_iterator = new RecursiveDirectoryIterator(OPENBIZ_APP_MODULE_PATH);
+$dir_iterator = new RecursiveDirectoryIterator(Openbiz::$app->getModulePath());
 $iterator = new RecursiveIteratorIterator($dir_iterator, RecursiveIteratorIterator::SELF_FIRST);
 
 foreach ($iterator as $file) {
     if(preg_match("/.*?Copy.*?\.xml$/si",$file)){		    	
-    	echo "Testing file: " .str_replace(OPENBIZ_APP_MODULE_PATH."/","",$file)." ";
+    	echo "Testing file: " .str_replace(Openbiz::$app->getModulePath()."/","",$file)." ";
     	if(test_xml_file($file)){    		
     		echo " [ Found ]"."\n";
     		echo str_repeat("-",70)."\n";

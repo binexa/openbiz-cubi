@@ -17,7 +17,7 @@ class TestSendNewForm extends EasyForm
 {
     public function InsertRecord(){
 		$inputRec=$this->readInputRecord();
-		$SmsObj=Openbiz::getService("sms.lib.SmsService");
+		$SmsObj= Openbiz::getService("sms.lib.SmsService");
 		if(!$SmsObj->validateMobile($inputRec['mobile']))
 		{
 			$this->errors = array("fld_mobile"=>$this->getMessage("MOBILE_ERROR"));

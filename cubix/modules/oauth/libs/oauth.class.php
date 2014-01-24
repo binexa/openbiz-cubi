@@ -57,11 +57,11 @@ class oauthClass extends EasyForm
 	
 	public function getProviderList()
 	{
-	  	 $recArr=Openbiz::$app->getSessionContext()->getVar("_OAUTH_{$this->type}");
+	  	 $recArr= Openbiz::$app->getSessionContext()->getVar("_OAUTH_{$this->type}");
 	  	 $recArr=false;
 		 if(!$recArr)
 			 {
-			 $do=Openbiz::getObject($this->oauthProviderDo);
+			 $do= Openbiz::getObject($this->oauthProviderDo);
 			 $recArr=$do->fetchOne("[status]=1 and [type]='{$this->type}'",1);
 			 if($recArr)
 			 {
@@ -101,7 +101,7 @@ class oauthClass extends EasyForm
 	
 		$UserTokenObj = Openbiz::getObject('oauth.do.UserTokenDO');
 		$UserToken=$UserTokenObj->fetchOne("[oauth_uid]='".$oauth_data['id']."'");
-		$access_token=Openbiz::$app->getSessionContext()->getVar($this->type.'_access_token');
+		$access_token= Openbiz::$app->getSessionContext()->getVar($this->type.'_access_token');
 		$oauth_data['oauth_token']=$access_token['oauth_token'] ; 
 		$oauth_data['oauth_token_secret']=$access_token['oauth_token_secret']; 
 		$oauth_data['access_token_json']=$access_token['access_token_json']; 
@@ -202,7 +202,7 @@ class oauthClass extends EasyForm
 	public function CreateUser()
 	{
 		$userObj = Openbiz::getObject('system.do.UserDO');
-		$oauth_data=Openbiz::$app->getSessionContext()->getVar('_OauthUserInfo');
+		$oauth_data= Openbiz::$app->getSessionContext()->getVar('_OauthUserInfo');
 		
 		$recArr['username']=$oauth_data['uname'];      
 		$recArr['password'] = hash('sha1',$this->userPass);

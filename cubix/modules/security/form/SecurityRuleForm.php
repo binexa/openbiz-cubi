@@ -12,7 +12,8 @@
  */
 
 use Openbiz\Openbiz;
-use Openbiz\Resource;
+use Openbiz\Helpers\TemplateHelper;
+use Openbiz\Object\ObjectFactoryHelper;
 
 class SecurityRuleForm extends EasyForm
 {
@@ -54,11 +55,11 @@ class SecurityRuleForm extends EasyForm
 		if (strtoupper($this->formType) == "NEW")
             return $this->getNewRule();
             
-		$file = OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR."service".DIRECTORY_SEPARATOR.$this->configFile;
+		$file = Openbiz::$app->getModulePath().DIRECTORY_SEPARATOR."service".DIRECTORY_SEPARATOR.$this->configFile;
 		if(!is_file($file)){
 			return;
 		}
-		$configArr = Resource::getXmlArray($file);
+		$configArr = ObjectFactoryHelper::getXmlArray($file);
 		$nodesArr = $configArr["PLUGINSERVICE"]["SECURITY"][strtoupper($this->configNode)]["RULE"];
 		$result = array();
 		
@@ -112,11 +113,11 @@ class SecurityRuleForm extends EasyForm
 	}
 	
 	public function fetchDataSet(){
-		$file = OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR."service".DIRECTORY_SEPARATOR.$this->configFile;
+		$file = Openbiz::$app->getModulePath().DIRECTORY_SEPARATOR."service".DIRECTORY_SEPARATOR.$this->configFile;
 		if(!is_file($file)){
 			return;
 		}
-		$configArr=Resource::getXmlArray($file);
+		$configArr=ObjectFactoryHelper::getXmlArray($file);
 		$nodesArr = $configArr["PLUGINSERVICE"]["SECURITY"][strtoupper($this->configNode)]["RULE"];
 		$result = array();				
 		
@@ -145,11 +146,11 @@ class SecurityRuleForm extends EasyForm
 	
    public function outputAttrs(){
    		$result = parent::outputAttrs();
-   		$file = OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR."service".DIRECTORY_SEPARATOR.$this->configFile;
+   		$file = Openbiz::$app->getModulePath().DIRECTORY_SEPARATOR."service".DIRECTORY_SEPARATOR.$this->configFile;
 		if(!is_file($file)){
 			return;
 		}
-		$configArr=Resource::getXmlArray($file);
+		$configArr=ObjectFactoryHelper::getXmlArray($file);
    		$this->modeStatus = $configArr["PLUGINSERVICE"]["SECURITY"][strtoupper($this->configNode)]["ATTRIBUTES"]["MODE"];
    		$result['status'] = $this->modeStatus;
    		return $result;   	
@@ -258,11 +259,11 @@ class SecurityRuleForm extends EasyForm
 	
 	
    public function switchMode(){	   	   	 
-   		$file = OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR."service".DIRECTORY_SEPARATOR.$this->configFile;
+   		$file = Openbiz::$app->getModulePath().DIRECTORY_SEPARATOR."service".DIRECTORY_SEPARATOR.$this->configFile;
 		if(!is_file($file)){
 			return;
 		}
-		$configArr=Resource::getXmlArray($file);
+		$configArr=ObjectFactoryHelper::getXmlArray($file);
 		
 		$this->modeStatus = $configArr["PLUGINSERVICE"]["SECURITY"][strtoupper($this->configNode)]["ATTRIBUTES"]["MODE"];		
 		if($this->modeStatus == 'Enabled')
@@ -306,11 +307,11 @@ class SecurityRuleForm extends EasyForm
     }	
 	
 	private function addNode($nodeArr){
-		$file = OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR."service".DIRECTORY_SEPARATOR.$this->configFile;
+		$file = Openbiz::$app->getModulePath().DIRECTORY_SEPARATOR."service".DIRECTORY_SEPARATOR.$this->configFile;
 		if(!is_file($file)){
 			return;
 		}
-		$configArr=Resource::getXmlArray($file);		
+		$configArr=ObjectFactoryHelper::getXmlArray($file);		
 		$recordName = $configArr["PLUGINSERVICE"]["SECURITY"][strtoupper($this->configNode)]["RULE"]["ATTRIBUTES"]["NAME"];
 		$recordCount = count($configArr["PLUGINSERVICE"]["SECURITY"][strtoupper($this->configNode)]["RULE"]);
 		if(!$recordName && $recordCount){
@@ -329,11 +330,11 @@ class SecurityRuleForm extends EasyForm
 	}
 	
 	private function updateNode($name, $nodeArr){
-		$file = OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR."service".DIRECTORY_SEPARATOR.$this->configFile;
+		$file = Openbiz::$app->getModulePath().DIRECTORY_SEPARATOR."service".DIRECTORY_SEPARATOR.$this->configFile;
 		if(!is_file($file)){
 			return;
 		}
-		$configArr=Resource::getXmlArray($file);
+		$configArr=ObjectFactoryHelper::getXmlArray($file);
 		$recordName = $configArr["PLUGINSERVICE"]["SECURITY"][strtoupper($this->configNode)]["RULE"]["ATTRIBUTES"]["NAME"];
 		if(!$recordName){
 			$nodesArr = $configArr["PLUGINSERVICE"]["SECURITY"][strtoupper($this->configNode)]["RULE"];
@@ -354,11 +355,11 @@ class SecurityRuleForm extends EasyForm
 	}
 	
 	private function removeNode($name){
-		$file = OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR."service".DIRECTORY_SEPARATOR.$this->configFile;
+		$file = Openbiz::$app->getModulePath().DIRECTORY_SEPARATOR."service".DIRECTORY_SEPARATOR.$this->configFile;
 		if(!is_file($file)){
 			return;
 		}
-		$configArr=Resource::getXmlArray($file);
+		$configArr=ObjectFactoryHelper::getXmlArray($file);
 		$recordName = $configArr["PLUGINSERVICE"]["SECURITY"][strtoupper($this->configNode)]["RULE"]["ATTRIBUTES"]["NAME"];
 		if(!$recordName)
 		{
@@ -379,11 +380,11 @@ class SecurityRuleForm extends EasyForm
 	}
 	
 	private function checkDupNodeName($nodeName){
-		$file = OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR."service".DIRECTORY_SEPARATOR.$this->configFile;
+		$file = Openbiz::$app->getModulePath().DIRECTORY_SEPARATOR."service".DIRECTORY_SEPARATOR.$this->configFile;
 		if(!is_file($file)){
 			return;
 		}
-		$configArr=Resource::getXmlArray($file);
+		$configArr=ObjectFactoryHelper::getXmlArray($file);
 		$recordName = $configArr["PLUGINSERVICE"]["SECURITY"][strtoupper($this->configNode)]["RULE"]["ATTRIBUTES"]["NAME"];
 		if(!$recordName)
 		{
@@ -408,10 +409,10 @@ class SecurityRuleForm extends EasyForm
 	}
 	
 	private function saveToXML($data){
-		$smarty = Resource::getSmartyTemplate();
+		$smarty = TemplateHelper::getSmartyTemplate();
 		$smarty->assign("data", $data);
-		$xmldata = $smarty->fetch(Resource::getTplFileWithPath("serviceTemplate.xml.tpl", $this->package));
-		$service_dir = OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR."service";
+		$xmldata = $smarty->fetch(TemplateHelper::getTplFileWithPath("serviceTemplate.xml.tpl", $this->package));
+		$service_dir = Openbiz::$app->getModulePath().DIRECTORY_SEPARATOR."service";
 		$service_file = $service_dir.DIRECTORY_SEPARATOR.$this->configFile;
 		file_put_contents($service_file ,$xmldata);		
 		return true;

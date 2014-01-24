@@ -16,7 +16,7 @@
  */
 
 use Openbiz\Openbiz;
-use Openbiz\Resource;
+use Openbiz\Helpers\TemplateHelper;
 
 /**
  * FormRenderer class is form helper for rendering form
@@ -118,8 +118,8 @@ class FormRenderer
      */
     static protected function renderSmarty($formObj, $tplAttributes = Array())
     {
-        $smarty = Resource::getSmartyTemplate();
-        $tplFile = Resource::getTplFileWithPath($formObj->templateFile, $formObj->package);
+        $smarty = TemplateHelper::getSmartyTemplate();
+        $tplFile = TemplateHelper::getTplFileWithPath($formObj->templateFile, $formObj->package);
 
         //Translate Array of template variables to \Zend template object
         foreach ($tplAttributes as $key => $value) {
@@ -138,8 +138,8 @@ class FormRenderer
      */
     static protected function renderPHP($formObj, $tplAttributes = Array())
     {
-        $form = Resource::getZendTemplate();
-        $tplFile = Resource::getTplFileWithPath($formObj->templateFile, $formObj->package);
+        $form = TemplateHelper::getZendTemplate();
+        $tplFile = TemplateHelper::getTplFileWithPath($formObj->templateFile, $formObj->package);
         $form->addScriptPath(dirname($tplFile));
 
         /* $formOutput = $formObj->outputAttrs();

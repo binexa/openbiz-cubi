@@ -11,7 +11,7 @@
  * @version   $Id: ChangeLogNoCommentForm.php 3354 2012-05-31 05:39:37Z rockyswen@gmail.com $
  */
 
-use Openbiz\Resource;
+use Openbiz\Helpers\MessageHelper;
 
 include_once dirname(__FILE__).'/ChangeLogForm.php';
 class ChangeLogNoCommentForm extends ChangeLogForm
@@ -19,7 +19,7 @@ class ChangeLogNoCommentForm extends ChangeLogForm
 	protected function readMetadata(&$xmlArr)
     {    						
     	//load message file
-    	$this->changeLogMessages = Resource::loadMessage("changelog.ini" , "changelog");		
+    	$this->changeLogMessages = MessageHelper::loadMessage("changelog.ini" , "changelog");		
     	parent::readMetaData($xmlArr);
     }      
 }

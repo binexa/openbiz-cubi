@@ -63,8 +63,8 @@ class HTMLTree extends MetaObject implements UIControlInterface
     {
         // preload images
         $sHTML = "<script language=\"JavaScript\">\n".
-                " minus = new Image();\n minus.src = \"".Resource::getImageUrl()."/minus.gif\";\n".
-                " plus = new Image();\n plus.src = \"".Resource::getImageUrl()."/plus.gif\";\n".
+                " minus = new Image();\n minus.src = \"".Openbiz::$app->getImageUrl()."/minus.gif\";\n".
+                " plus = new Image();\n plus.src = \"".Openbiz::$app->getImageUrl()."/plus.gif\";\n".
                 "</script>\n";
 
         // list all views and highlight the current view
@@ -108,21 +108,23 @@ class HTMLTree extends MetaObject implements UIControlInterface
         $caption = $this->translate($nodeItem["ATTRIBUTES"]["CAPTION"]);
         $target = $nodeItem["ATTRIBUTES"]["TARGET"];
         //$img = $nodeItem["ATTRIBUTES"]["IMAGE"];
-        if ($nodeItem["NODE"])
-            $image = "<img src='".Resource::getImageUrl()."/plus.gif' class='collapsed' onclick='mouseClickHandler(this)'>";
-        else
-            $image = "<img src='".Resource::getImageUrl()."/topic.gif'>";
+        if ($nodeItem["NODE"]) {
+            $image = "<img src='" . Openbiz::$app->getImageUrl() . "/plus.gif' class='collapsed' onclick='mouseClickHandler(this)'>";
+        } else {
+            $image = "<img src='" . Openbiz::$app->getImageUrl() . "/topic.gif'>";
+        }
 
-        if ($target)
-            if ($url)
-                $sHTML .= "<li class='tree'>$image <a href=\"".$url."\" target='$target'>".$caption."</a>";
-            else
+        if ($target) {
+            if ($url) {
+                $sHTML .= "<li class='tree'>$image <a href=\"" . $url . "\" target='$target'>" . $caption . "</a>";
+            } else {
                 $sHTML .= "<li class='tree'>$image $caption";
-        else
-        if ($url)
-            $sHTML .= "<li class='tree'>$image <a href=\"".$url."\">".$caption."</a>";
-        else
+            }
+        } elseif ($url) {
+            $sHTML .= "<li class='tree'>$image <a href=\"" . $url . "\">" . $caption . "</a>";
+        } else {
             $sHTML .= "<li class='tree'>$image $caption";
+        }
         if ($nodeItem["NODE"])
         {
             $sHTML .= "\n<ul class='collapsed'>\n";
@@ -155,5 +157,3 @@ class HTMLTree extends MetaObject implements UIControlInterface
     	return strtoupper($shortFormName.'_'.$name);
     }
 }
-
-?>

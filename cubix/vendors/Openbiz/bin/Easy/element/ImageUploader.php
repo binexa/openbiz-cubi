@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Openbiz Framework
  *
@@ -14,6 +15,7 @@
  * @version   $Id: ImageUploader.php 2825 2010-12-08 19:22:02Z jixian2003 $
  */
 use Openbiz\Openbiz;
+
 //include_once("FileUploader.php");
 
 /**
@@ -26,12 +28,13 @@ use Openbiz\Openbiz;
  */
 class ImageUploader extends FileUploader
 {
-    public $picWidth ;
-    public $picHeight ;
-    public $thumbWidth ;
-    public $thumbHeight ;
-    public $thumbFolder ;
-    public $preview ;
+
+    public $picWidth;
+    public $picHeight;
+    public $thumbWidth;
+    public $thumbHeight;
+    public $thumbFolder;
+    public $preview;
     public $picQuality;
     public $thumbQuality;
 
@@ -57,14 +60,14 @@ class ImageUploader extends FileUploader
     protected function readMetaData(&$xmlArr)
     {
         parent::readMetaData($xmlArr);
-        $this->picWidth 	= isset($xmlArr["ATTRIBUTES"]["PICWIDTH"]) ? $xmlArr["ATTRIBUTES"]["PICWIDTH"] : null;
-        $this->picHeight 	= isset($xmlArr["ATTRIBUTES"]["PICHEIGHT"]) ? $xmlArr["ATTRIBUTES"]["PICHEIGHT"] : null;
-        $this->picQuality 	= isset($xmlArr["ATTRIBUTES"]["PICQUALITY"]) ? $xmlArr["ATTRIBUTES"]["PICQUALITY"] : 80;
-        $this->thumbWidth 	= isset($xmlArr["ATTRIBUTES"]["THUMBWIDTH"]) ? $xmlArr["ATTRIBUTES"]["THUMBWIDTH"] : null;
-        $this->thumbHeight 	= isset($xmlArr["ATTRIBUTES"]["THUMBHEIGHT"]) ? $xmlArr["ATTRIBUTES"]["THUMBHEIGHT"] : null;
-        $this->thumbQuality	= isset($xmlArr["ATTRIBUTES"]["THUMBQUALITY"]) ? $xmlArr["ATTRIBUTES"]["THUMBQUALITY"] : 50;
-        $this->thumbFolder 	= isset($xmlArr["ATTRIBUTES"]["THUMBFOLDER"]) ? $xmlArr["ATTRIBUTES"]["THUMBFOLDER"] : null;
-        $this->preview 	= isset($xmlArr["ATTRIBUTES"]["PREVIEW"]) ? $xmlArr["ATTRIBUTES"]["PREVIEW"] : false;
+        $this->picWidth = isset($xmlArr["ATTRIBUTES"]["PICWIDTH"]) ? $xmlArr["ATTRIBUTES"]["PICWIDTH"] : null;
+        $this->picHeight = isset($xmlArr["ATTRIBUTES"]["PICHEIGHT"]) ? $xmlArr["ATTRIBUTES"]["PICHEIGHT"] : null;
+        $this->picQuality = isset($xmlArr["ATTRIBUTES"]["PICQUALITY"]) ? $xmlArr["ATTRIBUTES"]["PICQUALITY"] : 80;
+        $this->thumbWidth = isset($xmlArr["ATTRIBUTES"]["THUMBWIDTH"]) ? $xmlArr["ATTRIBUTES"]["THUMBWIDTH"] : null;
+        $this->thumbHeight = isset($xmlArr["ATTRIBUTES"]["THUMBHEIGHT"]) ? $xmlArr["ATTRIBUTES"]["THUMBHEIGHT"] : null;
+        $this->thumbQuality = isset($xmlArr["ATTRIBUTES"]["THUMBQUALITY"]) ? $xmlArr["ATTRIBUTES"]["THUMBQUALITY"] : 50;
+        $this->thumbFolder = isset($xmlArr["ATTRIBUTES"]["THUMBFOLDER"]) ? $xmlArr["ATTRIBUTES"]["THUMBFOLDER"] : null;
+        $this->preview = isset($xmlArr["ATTRIBUTES"]["PREVIEW"]) ? $xmlArr["ATTRIBUTES"]["PREVIEW"] : false;
     }
 
     /**
@@ -75,70 +78,58 @@ class ImageUploader extends FileUploader
      */
     function setValue($value)
     {
-    	if($this->deleteable=='N' )
-    	{
-    	}
-	    else
-    	{
-    		$delete_user_opt=Openbiz::$app->getClientProxy()->getFormInputs($this->objectName."_DELETE"); 
-    		if($delete_user_opt)
-    		{
-    			$this->value="";
-    			return;
-    		}
-    		else
-    		{
-    			if(count($_FILES)>0){
-    				
-    			}else{
-    				$this->value = $value;
-    			}  
-    		} 
-    	}
-    	
-   		if(count($_FILES)>0)
-		{
-			if(!$this->uploaded && $_FILES[$this->objectName]["size"] > 0)
-			{
-				$picFileName = parent::setValue($value);
-				if((int)$this->picWidth>0 || (int)$this->picHeight>0)
-				{
-					//resize picture size
-					$fileName = $this->uploadRoot.$picFileName;
-					$width = $this->picWidth;
-					$height = $this->picHeight;
-					$quality = $this->picQuality;
+        if ($this->deleteable == 'N') {
+            
+        } else {
+            $delete_user_opt = Openbiz::$app->getClientProxy()->getFormInputs($this->objectName . "_DELETE");
+            if ($delete_user_opt) {
+                $this->value = "";
+                return;
+            } else {
+                if (count($_FILES) > 0) {
+                    
+                } else {
+                    $this->value = $value;
+                }
+            }
+        }
 
-					$this->resizeImage($fileName, $fileName, $width, $height, $quality);
-				}
-				if(
-				((int)$this->thumbWidth>0 || (int)$this->thumbHeight>0) &&
-						$this->thumbFolder!=""
-				)
-				{
-					//generate thumbs picture
-					if(!is_dir($this->uploadRoot.$this->thumbFolder))
-					{
-						mkdir($this->uploadRoot.$this->thumbFolder ,0777,true);
-					}
-					$file = $_FILES[$this->objectName];
-					$thumbPath = $this->thumbFolder."/thumbs-".date("YmdHis")."-".urlencode($file['name']);
-					$thumbFileName = $this->uploadRoot.$thumbPath;
-					$width = $this->thumbWidth;
-					$height = $this->thumbHeight;
-					$quality = $this->thumbQuality;
+        if (count($_FILES) > 0) {
+            if (!$this->uploaded && $_FILES[$this->objectName]["size"] > 0) {
+                $picFileName = parent::setValue($value);
+                if ((int) $this->picWidth > 0 || (int) $this->picHeight > 0) {
+                    //resize picture size
+                    $fileName = $this->uploadRoot . $picFileName;
+                    $width = $this->picWidth;
+                    $height = $this->picHeight;
+                    $quality = $this->picQuality;
 
-					$this->resizeImage($fileName, $thumbFileName, $width, $height, $quality);
+                    $this->resizeImage($fileName, $fileName, $width, $height, $quality);
+                }
+                if (
+                        ((int) $this->thumbWidth > 0 || (int) $this->thumbHeight > 0) &&
+                        $this->thumbFolder != ""
+                ) {
+                    //generate thumbs picture
+                    if (!is_dir($this->uploadRoot . $this->thumbFolder)) {
+                        mkdir($this->uploadRoot . $this->thumbFolder, 0777, true);
+                    }
+                    $file = $_FILES[$this->objectName];
+                    $thumbPath = $this->thumbFolder . "/thumbs-" . date("YmdHis") . "-" . urlencode($file['name']);
+                    $thumbFileName = $this->uploadRoot . $thumbPath;
+                    $width = $this->thumbWidth;
+                    $height = $this->thumbHeight;
+                    $quality = $this->thumbQuality;
 
-					$result=array('picture'=>$this->uploadRootURL.$picFileName,'thumbpic'=>$this->uploadRootURL.$thumbPath);	                    
-					$this->value=serialize($result);
-				}
-			}
-		}
-		else
-		{
-			$this->value = $value;        	
-		}    	 
+                    $this->resizeImage($fileName, $thumbFileName, $width, $height, $quality);
+
+                    $result = array('picture' => $this->uploadRootURL . $picFileName, 'thumbpic' => $this->uploadRootURL . $thumbPath);
+                    $this->value = serialize($result);
+                }
+            }
+        } else {
+            $this->value = $value;
+        }
     }
 
     /**
@@ -157,17 +148,14 @@ class ImageUploader extends FileUploader
      */
     protected function resizeImage($sourceFileName, $destFileName, $width, $height, $quality)
     {
-		if(!function_exists("imagejpeg"))
-		{
-			return ;
-		}
-        if($width == 0)
-        {
+        if (!function_exists("imagejpeg")) {
+            return;
+        }
+        if ($width == 0) {
             $width = $height;
         }
 
-        if($height == 0)
-        {
+        if ($height == 0) {
             $height = $width;
         }
 
@@ -175,78 +163,89 @@ class ImageUploader extends FileUploader
 
         $origRatio = $origWidth / $origHeight;
 
-        if ( ($width / $height) > $origRatio)
-        {
+        if (($width / $height) > $origRatio) {
             $width = $height * $origRatio;
-        }
-        else
-        {
+        } else {
             $height = $width / $origRatio;
         }
 
         $image_p = imagecreatetruecolor($width, $height);
-        try{
-        	$image = @imagecreatefromjpeg($sourceFileName);
-        }catch(Exception $e){}
-        try{
-	        if(!$image){
-	        	$image = @imagecreatefrompng($sourceFileName);
-	        }
-        }catch(Exception $e){}
-        try{
-	        if(!$image){
-	        	$image = @imagecreatefromgif($sourceFileName);
-	        }
-     	}catch(Exception $e){}
-    	try{
-	        if(!$image){
-	        	$image = @imagecreatefromwbmp($sourceFileName);
-	        }
-     	}catch(Exception $e){}
-    	
-    	try{
-	        if(!$image){
-	        	$image = @imagecreatefromxbm($sourceFileName);
-	        }
-     	}catch(Exception $e){}
-     	
-    
-    	try{
-	        if(!$image){
-	        	$image = @imagecreatefromxpm($sourceFileName);
-	        }
-     	}catch(Exception $e){}
-     	
-     	if(!$image){
-	    	return ;
-	    }
+        try {
+            $image = @imagecreatefromjpeg($sourceFileName);
+        } catch (Exception $e) {
+
+        }
+        try {
+            if (!$image) {
+                $image = @imagecreatefrompng($sourceFileName);
+            }
+        } catch (Exception $e) {
+
+        }
+        try {
+            if (!$image) {
+                $image = @imagecreatefromgif($sourceFileName);
+            }
+        } catch (Exception $e) {
+
+        }
+        try {
+            if (!$image) {
+                $image = @imagecreatefromwbmp($sourceFileName);
+            }
+        } catch (Exception $e) {
+
+        }
+
+        try {
+            if (!$image) {
+                $image = @imagecreatefromxbm($sourceFileName);
+            }
+        } catch (Exception $e) {
+
+        }
+
+
+        try {
+            if (!$image) {
+                $image = @imagecreatefromxpm($sourceFileName);
+            }
+        } catch (Exception $e) {
+
+        }
+
+        if (!$image) {
+            return;
+        }
         imagecopyresampled($image_p, $image, 0, 0, 0, 0, $width, $height, $origWidth, $origHeight);
 
         return imagejpeg($image_p, $destFileName, $quality);
     }
-    
+
     public function render()
     {
         $disabledStr = ($this->getEnabled() == "N") ? "disabled=\"true\"" : "";
         $style = $this->getStyle();
         $func = $this->getFunction();
         $value = $this->getValue();
-        if($this->preview){
-	        if($value){
-	        	$preview = "<img id=\"" . $this->objectName ."_preview\" src=\"$value\" class=\"image_preview\" />";
-	        }
+        if ($this->preview) {
+            if ($value) {
+                $preview = "<img id=\"" . $this->objectName . "_preview\" src=\"$value\" class=\"image_preview\" />";
+            }
         }
-        if($this->deleteable=="Y"){
-        	$delete_opt="<input type=\"checkbox\" name=\"" . $this->objectName . "_DELETE\" id=\"" . $this->objectName ."_DELETE\" >Delete";
-        } else{
-        	$delete_opt="";
+        if ($this->deleteable == "Y") {
+            $delete_opt = "<input type=\"checkbox\" name=\"" . $this->objectName . "_DELETE\" id=\"" . $this->objectName . "_DELETE\" >Delete";
+        } else {
+            $delete_opt = "";
         }
         $sHTML .= "
         $preview
-        <input type=\"file\" onchange=\"Openbiz.ImageUploader.updatePreview('" . $this->objectName ."')\" name=\"$this->objectName\" id=\"" . $this->objectName ."\" value=\"$this->value\" $disabledStr $this->htmlAttr $style $func>
+        <input type=\"file\" onchange=\"Openbiz.ImageUploader.updatePreview('" . $this->objectName . "')\" name=\"$this->objectName\" id=\"" . $this->objectName . "\" value=\"$this->value\" $disabledStr $this->htmlAttr $style $func>
         $delete_opt
         ";
         return $sHTML;
-    }    
+    }
+
 }
+
 ?>

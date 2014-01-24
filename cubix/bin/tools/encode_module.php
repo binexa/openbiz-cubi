@@ -16,8 +16,8 @@ $ENCODER_PATH = "C:\\Program Files\\ionCube Pro PHP Encoder 7.0";
 $ENCODER_PATH = "C:\\ioncube";
 $module = $argv[1];
 $encoder_cmd = $ENCODER_PATH.DIRECTORY_SEPARATOR."ioncube_encoder5";
-$source_dir = OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR.$module;
-$target_dir = OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR.$module."_ec";
+$source_dir = Openbiz::$app->getModulePath().DIRECTORY_SEPARATOR.$module;
+$target_dir = Openbiz::$app->getModulePath().DIRECTORY_SEPARATOR.$module."_ec";
 $license_file = "../license/license_".$module;
 if($argv[2])
 {

@@ -16,7 +16,7 @@ if(!defined("CLI")){
 
 include_once dirname(__FILE__)."/require_auth.php";
 
-include_once OPENBIZ_APP_MODULE_PATH."/theme/lib/ThemeCreator.php";
+include_once Openbiz::$app->getModulePath()."/theme/lib/ThemeCreator.php";
 $creator = new ThemePackCreator($theme);
 $result = $creator->createNew();
 

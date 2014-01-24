@@ -16,6 +16,7 @@
  */
 
 use Openbiz\Resource;
+use Openbiz\Object\ObjectFactoryHelper;
 
 /**
  * Configuration class
@@ -50,8 +51,8 @@ class Configuration
      */
     public function __construct()
     {
-        $xmlFile = Resource::getXmlFileWithPath("application");
-        $this->_xmlArr = &Resource::getXmlArray($xmlFile);
+        $xmlFile = ObjectFactoryHelper::getXmlFileWithPath("application");
+        $this->_xmlArr = &ObjectFactoryHelper::getXmlArray($xmlFile);
     }
 
     /**
@@ -72,7 +73,7 @@ class Configuration
             return $this->_databaseInfo[$dbName];
         }
         if (!$this->_xmlArr["APPLICATION"]["DATASOURCE"]) {
-            $errMsg = Resource::getMessage("SYS_ERROR_NODBINFO");
+            $errMsg = MessageHelper::getMessage("SYS_ERROR_NODBINFO");
             trigger_error($errMsg, E_USER_ERROR);
         }
         $breakFlag = false;
@@ -100,7 +101,7 @@ class Configuration
             return $this->_databaseInfo[$dbName];
         }
         if ($dbName && !isset($this->_databaseInfo[$dbName])) {
-            $errMsg = Resource::getMessage("DATA_INVALID_DBNAME", array($dbName, $dbName));
+            $errMsg = MessageHelper::getMessage("DATA_INVALID_DBNAME", array($dbName, $dbName));
             trigger_error($errMsg, E_USER_ERROR);
         }
         if (!$dbName) {

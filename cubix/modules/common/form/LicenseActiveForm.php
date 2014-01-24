@@ -52,7 +52,7 @@ class LicenseActiveForm extends LicenseForm
 
     public function getExistingLicenseCode()
     {
-        $lic_file = OPENBIZ_APP_MODULE_PATH . DIRECTORY_SEPARATOR . $this->activeModuleName . DIRECTORY_SEPARATOR . 'license.key';
+        $lic_file = Openbiz::$app->getModulePath() . DIRECTORY_SEPARATOR . $this->activeModuleName . DIRECTORY_SEPARATOR . 'license.key';
         if (file_exists($lic_file)) {
             return file_get_contents($lic_file);
         }
@@ -60,7 +60,7 @@ class LicenseActiveForm extends LicenseForm
 
     public function setLicenseCode($code)
     {
-        $lic_file = OPENBIZ_APP_MODULE_PATH . DIRECTORY_SEPARATOR . $this->activeModuleName . DIRECTORY_SEPARATOR . 'license.key';
+        $lic_file = Openbiz::$app->getModulePath() . DIRECTORY_SEPARATOR . $this->activeModuleName . DIRECTORY_SEPARATOR . 'license.key';
         return file_put_contents($lic_file, $code);
     }
 

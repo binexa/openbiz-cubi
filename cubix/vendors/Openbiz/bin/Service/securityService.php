@@ -326,7 +326,7 @@ class URLFilterRule extends securityRule_Abstract
 	            {
 	                if(strtoupper($this->action)=='OPENBIZ_DENY')
 	                {
-	                    $this->errorMessage=Resource::getMessage('SECURITYSVC_URL_DENIED');
+	                    $this->errorMessage=MessageHelper::getMessage('SECURITYSVC_URL_DENIED');
 	                    return false;
 	                }elseif(strtoupper($this->action)=='OPENBIZ_ALLOW')
 	                {
@@ -373,7 +373,7 @@ class DomainFilterRule extends securityRule_Abstract
 	            {
 	                if(strtoupper($this->action)=='OPENBIZ_DENY')
 	                {
-	                    $this->errorMessage=Resource::getMessage('SECURITYSVC_DOMAIN_DENIED');
+	                    $this->errorMessage=MessageHelper::getMessage('SECURITYSVC_DOMAIN_DENIED');
 	                    return false;
 	                }
 	                elseif(strtoupper($this->action)=='OPENBIZ_ALLOW')
@@ -420,7 +420,7 @@ class AgentFilterRule extends securityRule_Abstract
 	            {
 	                if(strtoupper($this->action)=='OPENBIZ_DENY')
 	                {
-	                    $this->errorMessage=Resource::getMessage('SECURITYSVC_AGENT_DENIED');
+	                    $this->errorMessage=MessageHelper::getMessage('SECURITYSVC_AGENT_DENIED');
 	                    return false;
 	                }
 	                elseif(strtoupper($this->action)=='OPENBIZ_ALLOW')
@@ -467,7 +467,7 @@ class IPFilterRule extends securityRule_Abstract
 	            {
 	                if(strtoupper($this->action)=='OPENBIZ_DENY')
 	                {
-	                    $this->errorMessage = Resource::getMessage('SECURITYSVC_IPADDR_DENIED');
+	                    $this->errorMessage = MessageHelper::getMessage('SECURITYSVC_IPADDR_DENIED');
 	                    return false;
 	                }
 	                elseif(strtoupper($this->action)=='OPENBIZ_ALLOW')
@@ -517,7 +517,7 @@ class PostFilterRule extends securityRule_Abstract
 	                {
 	                    if(strtoupper($this->action)=='OPENBIZ_DENY')
 	                    {
-	                        $this->errorMessage=Resource::getMessage('SECURITYSVC_POST_DENIED');
+	                        $this->errorMessage=MessageHelper::getMessage('SECURITYSVC_POST_DENIED');
 	                        return false;
 	                    }
 	                    elseif(strtoupper($this->action)=='OPENBIZ_ALLOW')
@@ -570,7 +570,7 @@ class GetFilterRule extends securityRule_Abstract
 	            {
 	                if(strtoupper($this->action)=='OPENBIZ_DENY')
 	                {
-	                    $this->errorMessage=Resource::getMessage('SECURITYSVC_GET_DENIED');
+	                    $this->errorMessage=MessageHelper::getMessage('SECURITYSVC_GET_DENIED');
 	                    return false;
 	                }
 	                elseif(strtoupper($this->action)=='OPENBIZ_ALLOW')

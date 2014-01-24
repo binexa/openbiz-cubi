@@ -107,7 +107,7 @@ class excelService
         $filename = $file['name'];
         if (strpos($filename,".csv")===false)
         {
-        	$errorMsg = Resource::getMessage("EXCELSVC_INVALID_FILE",array($filename));
+        	$errorMsg = MessageHelper::getMessage("EXCELSVC_INVALID_FILE",array($filename));
         	Openbiz::$app->getLog()->log(LOG_ERR, "EXCEL SERVICE", "Import error = ".$errorMsg);
             Openbiz::$app->getClientProxy()->showClientAlert($errorMsg);
             return;
@@ -121,7 +121,7 @@ class excelService
         $fields = fgetcsv($handle, 2000, ",");
         if (!$fields || count($fields)<2)
         {
-        	$errorMsg = Resource::getMessage("EXCELSVC_INVALID_FILE",array($filename));
+        	$errorMsg = MessageHelper::getMessage("EXCELSVC_INVALID_FILE",array($filename));
         	Openbiz::$app->getLog()->log(LOG_ERR, "EXCEL SERVICE", "Import error = ".$errorMsg);
             Openbiz::$app->getClientProxy()->showClientAlert($errorMsg);
             return;
@@ -140,7 +140,7 @@ class excelService
             $field = $fields[$i];
             if (!$dataObj->getField($field))
             {
-                $errorMsg = Resource::getMessage("EXCELSVC_INVALID_COLUMN",array($field, $dataObj->objectName));
+                $errorMsg = MessageHelper::getMessage("EXCELSVC_INVALID_COLUMN",array($field, $dataObj->objectName));
                 Openbiz::$app->getLog()->log(LOG_ERR, "EXCEL SERVICE", "Import error = ".$errorMsg);
                 Openbiz::$app->getClientProxy()->showClientAlert($errorMsg);
                 return;

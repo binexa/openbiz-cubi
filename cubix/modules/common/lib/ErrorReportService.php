@@ -14,7 +14,7 @@
 
 use Openbiz\Openbiz;
 
-include_once(OPENBIZ_APP_MODULE_PATH."/common/lib/httpClient.php");
+include_once(Openbiz::$app->getModulePath()."/common/lib/httpClient.php");
 
 class ErrorReportService
 {

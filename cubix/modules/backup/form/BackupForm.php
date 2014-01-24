@@ -458,7 +458,7 @@ class BackupForm extends EasyForm
 			$db->exec("SET NAMES '$charset';");
 		}
 
-        include_once OPENBIZ_APP_MODULE_PATH."/system/lib/MySQLDumpParser.php";
+        include_once Openbiz::$app->getModulePath()."/system/lib/MySQLDumpParser.php";
 	    $queryArr = MySQLDumpParser::parse($query);
         foreach($queryArr as $query){
 			try {

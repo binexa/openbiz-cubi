@@ -17,7 +17,8 @@
 
 use Openbiz\Openbiz;
 use Openbiz\Core\Expression;
-use Openbiz\Resource;
+use Openbiz\Helpers\TemplateHelper;
+
 /**
  * ViewRenderer class is view helper for rendering form
  *
@@ -177,7 +178,7 @@ class ViewRenderer
      */
     static protected function renderSmarty($viewObj, $tplAttributes = Array())
     {
-        $smarty = Resource::getSmartyTemplate();
+        $smarty = TemplateHelper::getSmartyTemplate();
 
         $viewOutput = $viewObj->outputAttrs();
         foreach ($viewOutput as $k => $v) {
@@ -192,9 +193,9 @@ class ViewRenderer
         }
 
         //if ($viewObj->consoleOutput) {
-            $smarty->display(Resource::getTplFileWithPath($viewObj->templateFile, $viewObj->package));
+            $smarty->display(TemplateHelper::getTplFileWithPath($viewObj->templateFile, $viewObj->package));
         //} else {
-        //    return $smarty->fetch(Resource::getTplFileWithPath($viewObj->templateFile, $viewObj->package));
+        //    return $smarty->fetch(TemplateHelper::getTplFileWithPath($viewObj->templateFile, $viewObj->package));
         //}
     }
 
@@ -207,8 +208,8 @@ class ViewRenderer
      */
     static protected function renderPHP($viewObj, $tplAttributes = Array())
     {
-        $view = Resource::getZendTemplate();
-        $tplFile = Resource::getTplFileWithPath($viewObj->templateFile, $viewObj->package);
+        $view = TemplateHelper::getZendTemplate();
+        $tplFile = TemplateHelper::getTplFileWithPath($viewObj->templateFile, $viewObj->package);
         $view->addScriptPath(dirname($tplFile));
 
         //Translate Array of template variables to \Zend template object

@@ -24,9 +24,7 @@ include 'bin/app_init.php';
 //exit;
 $app = new Openbiz\Application();
 
-echo '<pre>';
-echo get_class($app);
-//$app->run();
+$app->run();
 
 
 $end = (float) array_sum(explode(' ',microtime()));

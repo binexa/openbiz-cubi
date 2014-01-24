@@ -19,7 +19,7 @@ use Openbiz\Resource;
 use Openbiz\Core\Expression;
 use Openbiz\I18n\I18n;
 use Openbiz\Data\Helpers\QueryStringParam;
-
+use Openbiz\Object\ObjectFactoryHelper;
 //include_once("InputElement.php");
 
 /**
@@ -126,11 +126,12 @@ class OptionElement extends InputElement
             $xmlFile = substr($selectFrom, 0, $pos0);
             $tag = substr($selectFrom, $pos0 + 1, $pos1 - $pos0 - 1);
             $tag = strtoupper($tag);
-            $xmlFile = Resource::GetXmlFileWithPath($xmlFile);
-            if (!$xmlFile)
+            $xmlFile = ObjectFactoryHelper::getXmlFileWithPath($xmlFile);
+            if (!$xmlFile) {
                 return false;
+            }
 
-            $xmlArr = &Resource::getXmlArray($xmlFile);
+            $xmlArr = &ObjectFactoryHelper::getXmlArray($xmlFile);
             if ($xmlArr) {
                 $i = 0;
                 if (!isset($xmlArr["SELECTION"][$tag])) {
@@ -183,13 +184,15 @@ class OptionElement extends InputElement
                 unset($fieldName_v_mixed);
             }
             $commaPos = strpos($selectFrom, ",", $pos1);
-            if ($commaPos > $pos1)
+            if ($commaPos > $pos1) {
                 $searchRule = trim(substr($selectFrom, $commaPos + 1));
+            }
 
             /* @var $bizObj BizDataObj */
             $bizObj = Openbiz::getObject($bizObjName);
-            if (!$bizObj)
+            if (!$bizObj) {
                 return false;
+            }
 
             $recList = array();
             $oldAssoc = $bizObj->association;
@@ -213,8 +216,9 @@ class OptionElement extends InputElement
     protected function getSimpleFromList(&$list, $selectFrom)
     {
         // in case of a|b|c
-        if (strpos($selectFrom, "[") > 0 || strpos($selectFrom, "(") > 0)
+        if (strpos($selectFrom, "[") > 0 || strpos($selectFrom, "(") > 0) {
             return;
+        }
         $recList = explode('|', $selectFrom);
         foreach ($recList as $rec) {
             $list[$i]['val'] = $rec;

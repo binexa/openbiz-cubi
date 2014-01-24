@@ -1,7 +1,7 @@
 <?php
 
 use Openbiz\Openbiz;
-include_once (OPENBIZ_APP_MODULE_PATH."/system/lib/ModuleLoadHandler.php");
+include_once (Openbiz::$app->getModulePath()."/system/lib/ModuleLoadHandler.php");
 
 class OAuthLoadHandler implements ModuleLoadHandler
 {

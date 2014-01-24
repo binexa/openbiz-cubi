@@ -16,7 +16,7 @@
  *
  * @access public
  */
-include_once(OPENBIZ_APP_MODULE_PATH."/system/form/UserPreferenceForm.php");
+include_once(Openbiz::$app->getModulePath()."/system/form/UserPreferenceForm.php");
 class SettingForm extends UserPreferenceForm
 {
     protected $_userId = null;

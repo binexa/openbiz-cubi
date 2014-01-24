@@ -1,7 +1,7 @@
 <?php
 
 use Openbiz\Openbiz;
-include_once(OPENBIZ_APP_MODULE_PATH."/user/form/RegisterForm.php");
+include_once(Openbiz::$app->getModulePath()."/user/form/RegisterForm.php");
 class OauthConnectUserForm extends RegisterForm
 {
 	protected $username;
@@ -11,7 +11,7 @@ class OauthConnectUserForm extends RegisterForm
     
     public function CreateUser()
     {
-		$OauthUserInfo=Openbiz::$app->getSessionContext()->getVar('_OauthUserInfo');
+		$OauthUserInfo= Openbiz::$app->getSessionContext()->getVar('_OauthUserInfo');
 		if(!$OauthUserInfo)
 		{
 			throw new Exception('Unknown OauthUserInfo');
@@ -25,7 +25,7 @@ class OauthConnectUserForm extends RegisterForm
 			//第三方登录用户关联帐号
 			if($userinfo['Id'])
 			{	
-				include_once(OPENBIZ_APP_MODULE_PATH."/oauth/libs/oauth.class.php");
+				include_once(Openbiz::$app->getModulePath()."/oauth/libs/oauth.class.php");
 				$OauthObj=new oauthClass();
 				if(!$OauthObj->saveUserOAuth($userinfo['Id'],$OauthUserInfo))
 				{
@@ -50,7 +50,7 @@ class OauthConnectUserForm extends RegisterForm
     		{
 				  // after authenticate user: 1. init profile
     			$profile = Openbiz::$app->InitUserProfile($this->username);
-				$OauthUserInfo=Openbiz::$app->getSessionContext()->getVar('_OauthUserInfo');
+				$OauthUserInfo= Openbiz::$app->getSessionContext()->getVar('_OauthUserInfo');
 				if(!$OauthUserInfo || !$profile['Id'])
 				{
 					$this->errors = array($this->getMessage("TEST_FAILURE"));
@@ -58,7 +58,7 @@ class OauthConnectUserForm extends RegisterForm
 					return false;		
 				}
 			
-				include_once(OPENBIZ_APP_MODULE_PATH."/oauth/libs/oauth.class.php");
+				include_once(Openbiz::$app->getModulePath()."/oauth/libs/oauth.class.php");
 				$OauthObj=new oauthClass();
 				if(!$OauthObj->saveUserOAuth($profile['Id'],$OauthUserInfo))
 				{
@@ -107,7 +107,7 @@ class OauthConnectUserForm extends RegisterForm
 	}
 	
 	public function render(){
-		$oauth_data=Openbiz::$app->getSessionContext()->getVar('_OauthUserInfo');
+		$oauth_data= Openbiz::$app->getSessionContext()->getVar('_OauthUserInfo');
 		
 		if(!$oauth_data)
 		{
@@ -131,7 +131,7 @@ class OauthConnectUserForm extends RegisterForm
         
         if ($this->activeRecord != null)
         {
-        	$oauth_data=Openbiz::$app->getSessionContext()->getVar('_OauthUserInfo');
+        	$oauth_data= Openbiz::$app->getSessionContext()->getVar('_OauthUserInfo');
 			$this->activeRecord['oauth_data'] = $oauth_data;
 			$this->activeRecord['oauth_user'] = $oauth_data['uname'];
 			$this->activeRecord['oauth_location'] = $oauth_data['location'];
@@ -142,7 +142,7 @@ class OauthConnectUserForm extends RegisterForm
             return $this->getNewRecord();
             
 		//$record =  parent::fetchData();
-		$oauth_data=Openbiz::$app->getSessionContext()->getVar('_OauthUserInfo');
+		$oauth_data= Openbiz::$app->getSessionContext()->getVar('_OauthUserInfo');
 		$record['oauth_data'] = $oauth_data;
 		$record['oauth_user'] = $oauth_data['uname'];
 		$record['oauth_location'] = $oauth_data['location'];
@@ -153,7 +153,7 @@ class OauthConnectUserForm extends RegisterForm
 	
 	public function getNewRecord()
 	{
-		$oauth_data=Openbiz::$app->getSessionContext()->getVar('_OauthUserInfo');
+		$oauth_data= Openbiz::$app->getSessionContext()->getVar('_OauthUserInfo');
 		$record= array(
 		"username"=>$oauth_data['uname'],
 		"email" =>$oauth_data['email']

@@ -177,8 +177,9 @@ abstract class MetaObject //extends BizObject
             $a_package_name = explode(".", $className);
             $className = array_pop($a_package_name);
             $clsLoaded = ClassLoader::loadMetadataClass($className, implode(".", $a_package_name));
-            if (!$clsLoaded)
+            if (!$clsLoaded) {
                 trigger_error("Cannot find the load class $className", E_USER_ERROR);
+            }
         }
         //echo "classname is $className\n";
         $obj = new $className($xmlArr, $parentObj);

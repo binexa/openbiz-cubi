@@ -15,7 +15,7 @@
 use Openbiz\Openbiz;
 use Openbiz\i18n\I18n;
 
-include_once OPENBIZ_APP_MODULE_PATH . DIRECTORY_SEPARATOR . 'menu' . DIRECTORY_SEPARATOR . 'widget' . DIRECTORY_SEPARATOR . 'MenuRenderer.php';
+include_once Openbiz::$app->getModulePath() . DIRECTORY_SEPARATOR . 'menu' . DIRECTORY_SEPARATOR . 'widget' . DIRECTORY_SEPARATOR . 'MenuRenderer.php';
 
 class MenuWidget extends MetaObject implements UIControlInterface
 {

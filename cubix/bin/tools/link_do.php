@@ -33,12 +33,12 @@ $do1name = $argv[1];
 $do2name = $argv[2];
 
 include_once (dirname(dirname(__FILE__))."/app_init.php");
-include_once (OPENBIZ_APP_MODULE_PATH."/tool/lib/DomMeta.php");
+include_once (Openbiz::$app->getModulePath()."/tool/lib/DomMeta.php");
 if(!defined("CLI")){
 	exit;
 }
 
-$moduleDir = OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR.str_replace(".",DIRECTORY_SEPARATOR,$module);
+$moduleDir = Openbiz::$app->getModulePath().DIRECTORY_SEPARATOR.str_replace(".",DIRECTORY_SEPARATOR,$module);
 
 // read do1 
 $do1 = Openbiz::getObject($do1name);
@@ -187,7 +187,7 @@ function getDoForms($doName) {
     global $g_MetaFiles;
     $name_list = explode(".",$doName);
     $moduleName = $name_list[0];
-    $modulePath = OPENBIZ_APP_MODULE_PATH."/".$moduleName;
+    $modulePath = Openbiz::$app->getModulePath()."/".$moduleName;
     php_grep(array("<EasyForm","DataObj=\"$doName\""), $modulePath);
     
     $forms = $g_MetaFiles;

@@ -17,7 +17,7 @@ include_once (dirname(dirname(__FILE__))."/app_init.php");
 if(!defined("CLI")){
 	exit;
 }
-include_once (OPENBIZ_APP_MODULE_PATH."/system/lib/ModuleLoader.php");
+include_once (Openbiz::$app->getModulePath()."/system/lib/ModuleLoader.php");
 
 $cubiInstallDb = "CubiInstall";
 
@@ -27,8 +27,8 @@ if (!$db) {
 }
 
 $modules = array ('system','menu');
-foreach (glob(OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR."*") as $dir){
-	$modName = str_replace(OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR,"",$dir);
+foreach (glob(Openbiz::$app->getModulePath().DIRECTORY_SEPARATOR."*") as $dir){
+	$modName = str_replace(Openbiz::$app->getModulePath().DIRECTORY_SEPARATOR,"",$dir);
 	if($modName != "system" && $modName !="menu"){
 		array_push($modules,$modName);		
 	}

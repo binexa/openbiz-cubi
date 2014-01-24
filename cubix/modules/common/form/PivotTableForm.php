@@ -1,6 +1,6 @@
 <?php
 
-include_once (OPENBIZ_APP_MODULE_PATH."/common/lib/Pivot.php");
+include_once (Openbiz::$app->getModulePath()."/common/lib/Pivot.php");
 
 class PivotTableForm extends EasyForm
 {

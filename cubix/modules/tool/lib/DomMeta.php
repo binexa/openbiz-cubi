@@ -7,7 +7,7 @@ class DomMeta {
         if (strpos($metaName,".xml")>0)
             $this->xmlFile = $metaName;
         else
-            $this->xmlFile = OPENBIZ_APP_MODULE_PATH."/".str_replace(".","/",$metaName).".xml";
+            $this->xmlFile = Openbiz::$app->getModulePath()."/".str_replace(".","/",$metaName).".xml";
         //echo $this->xmlFile."\n";
     }
     

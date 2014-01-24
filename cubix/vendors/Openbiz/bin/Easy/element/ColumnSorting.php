@@ -1,6 +1,6 @@
 <?php
 
-use Openbiz\Resource;
+use Openbiz\Openbiz;
 
 //include_once("ColumnText.php");
 
@@ -60,9 +60,9 @@ class ColumnSorting extends ColumnText
             }
         }
         
-		$sHTML = "<a $func_up  class=\"arrow_up\" href=\"javascript:;\"><img src=\"".Resource::getImageUrl()."/spacer.gif"."\" style=\"width:12px;height:12px;\" /></a> ".
+		$sHTML = "<a $func_up  class=\"arrow_up\" href=\"javascript:;\"><img src=\"".Openbiz::$app->getImageUrl()."/spacer.gif"."\" style=\"width:12px;height:12px;\" /></a> ".
 				$sHTML.
-				" <a $func_down  class=\"arrow_down\" href=\"javascript:;\"><img src=\"".Resource::getImageUrl()."/spacer.gif"."\" style=\"width:12px;height:12px;\" /></a>";
+				" <a $func_down  class=\"arrow_down\" href=\"javascript:;\"><img src=\"".Openbiz::$app->getImageUrl()."/spacer.gif"."\" style=\"width:12px;height:12px;\" /></a>";
 		
 		return $sHTML;
 	}

@@ -10,7 +10,7 @@ $includedScripts = Openbiz\Openbiz::$app->getClientProxy()->getAppendedScripts()
 $includedScripts .= "
 <script type=\"text/javascript\" src=\"$js_url/cookies.js\"></script>
 <script type=\"text/javascript\" src=\"$js_url/general_ui.js\"></script>
-<script type='text/javascript' src='".Openbiz\Resource::getJsUrl()."/Openbiz.PackageForm.js'></script>
+<script type='text/javascript' src='" . \Openbiz\Openbiz::$app->getJsUrl() . "/Openbiz.PackageForm.js'></script>
 <script type='text/javascript' src='$js_url/uploadify/swfobject.js'></script>
 <script type='text/javascript' src='$js_url/uploadify/jquery.uploadify.v2.1.4.js'></script>
 <style>

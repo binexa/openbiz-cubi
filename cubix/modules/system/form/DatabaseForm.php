@@ -12,7 +12,8 @@
  */
 
 use Openbiz\Openbiz;
-use Openbiz\Resource;
+use Openbiz\Object\ObjectFactoryHelper;
+use Openbiz\Helpers\TemplateHelper;
 
 class DatabaseForm extends EasyForm
 {
@@ -61,7 +62,7 @@ class DatabaseForm extends EasyForm
 		if(!is_file($file)){
 			return;
 		}
-		$configArr=Resource::getXmlArray($file);
+		$configArr=ObjectFactoryHelper::getXmlArray($file);
 		$nodesArr = $configArr["APPLICATION"][strtoupper($this->configNode)]["DATABASE"];
 		$result = array();
 		
@@ -119,7 +120,7 @@ class DatabaseForm extends EasyForm
 		if(!is_file($file)){
 			return;
 		}
-		$configArr=Resource::getXmlArray($file);
+		$configArr=ObjectFactoryHelper::getXmlArray($file);
 		$nodesArr = $configArr["APPLICATION"][strtoupper($this->configNode)]["DATABASE"];
 		$result = array();				
 		
@@ -150,7 +151,7 @@ class DatabaseForm extends EasyForm
 		if(!is_file($file)){
 			return;
 		}
-		$configArr=Resource::getXmlArray($file);
+		$configArr=ObjectFactoryHelper::getXmlArray($file);
    		$this->modeStatus = $configArr["APPLICATION"][strtoupper($this->configNode)]["ATTRIBUTES"]["MODE"];
    		$result['status'] = $this->modeStatus;
    		return $result;   	
@@ -318,7 +319,7 @@ class DatabaseForm extends EasyForm
 		if(!is_file($file)){
 			return;
 		}
-		$configArr=Resource::getXmlArray($file);
+		$configArr=ObjectFactoryHelper::getXmlArray($file);
 		$recordName = $configArr["APPLICATION"][strtoupper($this->configNode)]["DATABASE"]["ATTRIBUTES"]["NAME"];
 		if(!$recordName)
 		{
@@ -385,7 +386,7 @@ class DatabaseForm extends EasyForm
 		if(!is_file($file)){
 			return;
 		}
-		$configArr=Resource::getXmlArray($file);		
+		$configArr=ObjectFactoryHelper::getXmlArray($file);		
 		$recordName = $configArr["APPLICATION"][strtoupper($this->configNode)]["DATABASE"]["ATTRIBUTES"]["NAME"];
 		$recordCount = count($configArr["APPLICATION"][strtoupper($this->configNode)]["DATABASE"]);
 		if(!$recordName && $recordCount){
@@ -409,7 +410,7 @@ class DatabaseForm extends EasyForm
 		if(!is_file($file)){
 			return;
 		}
-		$configArr=Resource::getXmlArray($file);
+		$configArr=ObjectFactoryHelper::getXmlArray($file);
 		$recordName = $configArr["APPLICATION"][strtoupper($this->configNode)]["DATABASE"]["ATTRIBUTES"]["NAME"];
 		if(!$recordName){
 			$nodesArr = $configArr["APPLICATION"][strtoupper($this->configNode)]["DATABASE"];
@@ -435,7 +436,7 @@ class DatabaseForm extends EasyForm
 		if(!is_file($file)){
 			return;
 		}
-		$configArr=Resource::getXmlArray($file);
+		$configArr=ObjectFactoryHelper::getXmlArray($file);
 		$recordName = $configArr["APPLICATION"][strtoupper($this->configNode)]["DATABASE"]["ATTRIBUTES"]["NAME"];
 		if(!$recordName)
 		{
@@ -460,7 +461,7 @@ class DatabaseForm extends EasyForm
 		if(!is_file($file)){
 			return;
 		}
-		$configArr=Resource::getXmlArray($file);
+		$configArr=ObjectFactoryHelper::getXmlArray($file);
 		$recordName = $configArr["APPLICATION"][strtoupper($this->configNode)]["DATABASE"]["ATTRIBUTES"]["NAME"];
 		if(!$recordName)
 		{
@@ -485,9 +486,9 @@ class DatabaseForm extends EasyForm
 	}
 	
 	private function saveToXML($data){
-		$smarty = Resource::getSmartyTemplate();
+		$smarty = TemplateHelper::getSmartyTemplate();
 		$smarty->assign("data", $data);
-		$xmldata = $smarty->fetch(Resource::getTplFileWithPath("applicationTemplate.xml.tpl", $this->package));
+		$xmldata = $smarty->fetch(TemplateHelper::getTplFileWithPath("applicationTemplate.xml.tpl", $this->package));
 		$service_dir = OPENBIZ_APP_PATH;
 		$service_file = $service_dir.DIRECTORY_SEPARATOR.$this->configFile;
 		file_put_contents($service_file ,$xmldata);		

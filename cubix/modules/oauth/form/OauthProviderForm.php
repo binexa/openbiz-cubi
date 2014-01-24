@@ -9,7 +9,7 @@ class OauthProviderForm extends EasyForm
 
 	public function testAllProvider()
 	{	
-		 $do=Openbiz::getObject('oauth.do.OauthProviderDO');
+		 $do= Openbiz::getObject('oauth.do.OauthProviderDO');
 		 $recArr=$do->directFetch ("[status]=1",30);
 		 $recArr=$recArr->toArray();
 		 if($recArr)
@@ -74,7 +74,7 @@ class OauthProviderForm extends EasyForm
 		else
 		{
 			$this->errors = array("test"=>$this->getMessage("TEST_FAILURE"));
-			$do=Openbiz::getObject('oauth.do.OauthProviderDO');
+			$do= Openbiz::getObject('oauth.do.OauthProviderDO');
 			$do->updateRecords('[status]=0',"[Id] ={$Record['Id']}"); 
 
 		}
@@ -112,7 +112,7 @@ class OauthProviderForm extends EasyForm
 	
 	public function GetTestOauth(){
 
-		$oatuthType=OPENBIZ_APP_MODULE_PATH."/oauth/libs/{$this->type}.class.php";
+		$oatuthType=Openbiz::$app->getModulePath()."/oauth/libs/{$this->type}.class.php";
 		if(!file_exists($oatuthType))
 		{
 			return false;

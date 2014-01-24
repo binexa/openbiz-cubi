@@ -20,7 +20,7 @@ class DataShareGroupList extends Listbox
     {
         $formobj = $this->getFormObj();
     	if(!Openbiz::$app->allowUserAccess("data_assign.assign_to_other")){
-    		$groups=Openbiz::$app->getUserProfile("groups");
+    		$groups= Openbiz::$app->getUserProfile("groups");
     		if($groups){
     			$ids = implode(",", $groups);
     			$selectFrom = $this->selectFrom . ",[Id] IN ($ids)";

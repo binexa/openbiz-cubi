@@ -36,7 +36,7 @@ class SelectorView extends EasyView
 			"VALUE"=>null
 		);
 		$xmlArr = $newForm;
-        $formObj=Openbiz::getObject($this->formSelector);
+        $formObj= Openbiz::getObject($this->formSelector);
     	if(!$formObj){
 			return;
 		}

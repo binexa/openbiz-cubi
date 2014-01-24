@@ -79,7 +79,7 @@ class validateService
         }
         if (!$result)
         {
-            $this->errorMessage= Resource::getMessage("VALIDATESVC_SHORTER_THAN",array($this->fieldNameMask,$max));
+            $this->errorMessage= MessageHelper::getMessage("VALIDATESVC_SHORTER_THAN",array($this->fieldNameMask,$max));
         }
         return $result;
     }
@@ -118,7 +118,7 @@ class validateService
         }
         if (!$result)
         {
-            $this->errorMessage= Resource::getMessage("VALIDATESVC_BETWEEN_LENGTH",array($this->fieldNameMask,$min,$max));
+            $this->errorMessage= MessageHelper::getMessage("VALIDATESVC_BETWEEN_LENGTH",array($this->fieldNameMask,$min,$max));
         }
         return $result;
     }
@@ -150,7 +150,7 @@ class validateService
         }
         if (!$result)
         {
-            $this->errorMessage= Resource::getMessage("VALIDATESVC_LONGER_THAN",array($this->fieldNameMask,$min));
+            $this->errorMessage= MessageHelper::getMessage("VALIDATESVC_LONGER_THAN",array($this->fieldNameMask,$min));
         }
         return $result;
     }
@@ -172,7 +172,7 @@ class validateService
         $result = $validator->isValid($value);
         if(!$result)
         {
-            $this->errorMessage= Resource::getMessage("VALIDATESVC_LESS_THAN",array($this->fieldNameMask,$max));
+            $this->errorMessage= MessageHelper::getMessage("VALIDATESVC_LESS_THAN",array($this->fieldNameMask,$max));
         }
         return $result;
     }
@@ -192,7 +192,7 @@ class validateService
         $result = $validator->isValid($value);
         if(!$result)
         {
-            $this->errorMessage= Resource::getMessage("VALIDATESVC_PASSWORD_NOT_STRONG",array($this->fieldNameMask));
+            $this->errorMessage= MessageHelper::getMessage("VALIDATESVC_PASSWORD_NOT_STRONG",array($this->fieldNameMask));
         }
         return $result;
     }
@@ -214,7 +214,7 @@ class validateService
         $result = $validator->isValid($value);
         if(!$result)
         {
-            $this->errorMessage= Resource::getMessage("VALIDATESVC_GREATER_THAN",array($this->fieldNameMask, $min));
+            $this->errorMessage= MessageHelper::getMessage("VALIDATESVC_GREATER_THAN",array($this->fieldNameMask, $min));
         }
         return $result;
     }
@@ -237,7 +237,7 @@ class validateService
         $result = $validator->isValid($value);
         if(!$result)
         {
-            $this->errorMessage= Resource::getMessage("VALIDATESVC_BETWEEN",array($this->fieldNameMask ,$min, $max));
+            $this->errorMessage= MessageHelper::getMessage("VALIDATESVC_BETWEEN",array($this->fieldNameMask ,$min, $max));
         }
         return $result;
     }
@@ -266,7 +266,7 @@ class validateService
 		};
         if(!$result)
         {
-            $this->errorMessage= Resource::getMessage("VALIDATESVC_EMAIL_INVALID",array($this->fieldNameMask));
+            $this->errorMessage= MessageHelper::getMessage("VALIDATESVC_EMAIL_INVALID",array($this->fieldNameMask));
         }
         return $result;
     }
@@ -285,7 +285,7 @@ class validateService
         $result = $validator->isValid($date);
         if(!$result)
         {
-            $this->errorMessage = Resource::getMessage("VALIDATESVC_DATE_INVALID",array($this->fieldNameMask));
+            $this->errorMessage = MessageHelper::getMessage("VALIDATESVC_DATE_INVALID",array($this->fieldNameMask));
         }
         return $result;
     }
@@ -304,7 +304,7 @@ class validateService
         $result = $validator->isValid($phone);
         if(!$result)
         {
-            $this->errorMessage= Resource::getMessage("VALIDATESVC_PHONE_INVALID",array($this->fieldNameMask));
+            $this->errorMessage= MessageHelper::getMessage("VALIDATESVC_PHONE_INVALID",array($this->fieldNameMask));
         }
         return $result;
     }
@@ -323,7 +323,7 @@ class validateService
         $result = $validator->isValid($zip);
         if(!$result)
         {
-            $this->errorMessage= Resource::getMessage("VALIDATESVC_ZIP_INVALID",array($this->fieldNameMask));
+            $this->errorMessage= MessageHelper::getMessage("VALIDATESVC_ZIP_INVALID",array($this->fieldNameMask));
         }
         return $result;
     }
@@ -342,7 +342,7 @@ class validateService
         $result = $validator->isValid($social);
         if(!$result)
         {
-            $this->errorMessage= Resource::getMessage("VALIDATESVC_SOCIAL_INVALID",array($this->fieldNameMask));
+            $this->errorMessage= MessageHelper::getMessage("VALIDATESVC_SOCIAL_INVALID",array($this->fieldNameMask));
         }
         return $result;
     }
@@ -361,7 +361,7 @@ class validateService
         $result = $validator->isValid($credit);
         if(!$result)
         {
-            $this->errorMessage= Resource::getMessage("VALIDATESVC_CREDIT_INVALID",array($this->fieldNameMask));
+            $this->errorMessage= MessageHelper::getMessage("VALIDATESVC_CREDIT_INVALID",array($this->fieldNameMask));
         }
         return $result;
     }
@@ -380,7 +380,7 @@ class validateService
         $result = $validator->isValid($street);
         if(!$result)
         {
-            $this->errorMessage= Resource::getMessage("VALIDATESVC_STREET_INVALID",array($this->fieldNameMask));
+            $this->errorMessage= MessageHelper::getMessage("VALIDATESVC_STREET_INVALID",array($this->fieldNameMask));
         }
         return $result;
     }
@@ -413,31 +413,31 @@ class validateService
             switch ($type)
             {
                 case "date":
-                    return Resource::getMessage("VALIDATESVC_DATE_INVALID",array($fieldName));
+                    return MessageHelper::getMessage("VALIDATESVC_DATE_INVALID",array($fieldName));
                     break;
                 case "email":
-                    return Resource::getMessage("VALIDATESVC_EMAIL_INVALID",array($fieldName));
+                    return MessageHelper::getMessage("VALIDATESVC_EMAIL_INVALID",array($fieldName));
                     break;
                 case "phone":
-                    return Resource::getMessage("VALIDATESVC_PHONE_INVALID",array($fieldName));
+                    return MessageHelper::getMessage("VALIDATESVC_PHONE_INVALID",array($fieldName));
                     break;
                 case "zip":
-                    return Resource::getMessage("VALIDATESVC_ZIP_INVALID",array($fieldName));
+                    return MessageHelper::getMessage("VALIDATESVC_ZIP_INVALID",array($fieldName));
                     break;
                 case "social":
-                    return Resource::getMessage("VALIDATESVC_SOCIAL_INVALID",array($fieldName));
+                    return MessageHelper::getMessage("VALIDATESVC_SOCIAL_INVALID",array($fieldName));
                     break;
                 case "credit":
-                    return Resource::getMessage("VALIDATESVC_CREDIT_INVALID",array($fieldName));
+                    return MessageHelper::getMessage("VALIDATESVC_CREDIT_INVALID",array($fieldName));
                     break;
                 case "street":
-                    return Resource::getMessage("VALIDATESVC_STREET_INVALID",array($fieldName));
+                    return MessageHelper::getMessage("VALIDATESVC_STREET_INVALID",array($fieldName));
                     break;
                 case "strongPassword":
-                    return Resource::getMessage("VALIDATESVC_PASSWORD_NOT_STRONG",array($fieldName));
+                    return MessageHelper::getMessage("VALIDATESVC_PASSWORD_NOT_STRONG",array($fieldName));
                     break;
             }
-            return Resource::getMessage("VALIDATESVC_INVALID",array($fieldName));
+            return MessageHelper::getMessage("VALIDATESVC_INVALID",array($fieldName));
         }
     }
 }

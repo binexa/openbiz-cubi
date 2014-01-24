@@ -13,7 +13,7 @@
 
 use Openbiz\Openbiz;
 
-include_once(OPENBIZ_APP_MODULE_PATH."/contact/form/ContactForm.php");
+include_once(Openbiz::$app->getModulePath()."/contact/form/ContactForm.php");
 
 class ProfileForm extends ContactForm
 {

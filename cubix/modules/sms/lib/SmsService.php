@@ -172,16 +172,16 @@ class SmsService extends MetaObject
 		switch($action)
 		{
 			case 'pending':
-				$return=Openbiz::getObject($this->smsQueueDO)->updateRecords("[status]='pending'","[Id]={$id}");
+				$return= Openbiz::getObject($this->smsQueueDO)->updateRecords("[status]='pending'","[Id]={$id}");
 				 break;
 			case 'sending':
-				$return=Openbiz::getObject($this->smsQueueDO)->updateRecords("[status]='sending'","[Id]={$id}");
+				$return= Openbiz::getObject($this->smsQueueDO)->updateRecords("[status]='sending'","[Id]={$id}");
 				 break;
 			case 'sent':
-				$return=Openbiz::getObject($this->smsQueueDO)->updateRecords("[status]='sent'","[Id]={$id}");
+				$return= Openbiz::getObject($this->smsQueueDO)->updateRecords("[status]='sent'","[Id]={$id}");
 				 break;
 			case 'batch_sending':	 			    
-				$return=Openbiz::getObject($this->smsQueueDO)->updateRecords("[status]='sending'","[Id] ".Openbiz::getService("sms.lib.SmsUtilService")->db_create_in($sms_ids));
+				$return= Openbiz::getObject($this->smsQueueDO)->updateRecords("[status]='sending'","[Id] ".Openbiz::getService("sms.lib.SmsUtilService")->db_create_in($sms_ids));
 				 break;
 		}
 		return $return;
@@ -308,7 +308,7 @@ class SmsService extends MetaObject
 			$driver=$ProvidersInfo['driver'];
 		}
 		
-		$driverrFile=OPENBIZ_APP_MODULE_PATH.'/'.$FileName.'.php';
+		$driverrFile=Openbiz::$app->getModulePath().'/'.$FileName.'.php';
 		if(!file_exists($driverrFile))
 		{
 			Openbiz::getService(LOG_SERVICE)->log(LOG_ERR,"SMS","Cannot load provider driver :".$ProvidersInfo['driver']);			

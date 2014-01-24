@@ -13,7 +13,7 @@
  */
 
 use Openbiz\Openbiz;
-use Openbiz\Resource;
+use Openbiz\Helpers\MessageHelper;
 use Openbiz\i18n\I18n;
 
 class eventlogService
@@ -32,7 +32,7 @@ class eventlogService
     {
         $this->logDataObj = $xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["BIZDATAOBJ"];
         $this->messageFile = isset($xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["MESSAGEFILE"]) ? $xmlArr["PLUGINSERVICE"]["ATTRIBUTES"]["MESSAGEFILE"] : null;
-        $this->objectMessages = Resource::loadMessage($this->messageFile, "eventlog.");
+        $this->objectMessages = MessageHelper::loadMessage($this->messageFile, "eventlog.");
     }
 
     public function Log($eventName, $eventMessage, $eventComment = array())

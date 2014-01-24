@@ -47,7 +47,7 @@ class SP18dx extends SPDriver  implements iSMS
 			unset($Param['time']);
 		}
 		$url=$this->url.http_build_query($Param); 
-		$recinfo=Openbiz::getService("sms.lib.SmsUtilService")->getHttpResponse($url);
+		$recinfo= Openbiz::getService("sms.lib.SmsUtilService")->getHttpResponse($url);
 		parse_str($recinfo,$recArr);
 		if($recArr['errid']!=1)
 		{	
@@ -70,7 +70,7 @@ class SP18dx extends SPDriver  implements iSMS
 					'user'=>$ProviderInfo['username'],
 					'hashcode'=>strtoupper(md5($ProviderInfo['password']))
 				);
-		$recinfo=Openbiz::getService("sms.lib.SmsUtilService")->curl($this->url,$Param);
+		$recinfo= Openbiz::getService("sms.lib.SmsUtilService")->curl($this->url,$Param);
 		$errorInfo=$this->getMsg($recinfo);
 		if($errorInfo)
 		{			

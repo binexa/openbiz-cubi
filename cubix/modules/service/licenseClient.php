@@ -11,8 +11,8 @@
  * @version   $Id: licenseClient.php 3371 2012-05-31 06:17:21Z rockyswen@gmail.com $
  */
 
-include_once(OPENBIZ_APP_MODULE_PATH."/common/lib/fileUtil.php");
-include_once(OPENBIZ_APP_MODULE_PATH."/common/lib/httpClient.php");
+include_once(Openbiz::$app->getModulePath()."/common/lib/fileUtil.php");
+include_once(Openbiz::$app->getModulePath()."/common/lib/httpClient.php");
 
 class LicenseClient extends MetaObject
 {

@@ -12,7 +12,7 @@
  */
 
 use Openbiz\Openbiz;
-use Openbiz\Resource;
+use Openbiz\Helpers\TemplateHelper;
 
 /**
  * User email service 
@@ -67,7 +67,7 @@ class userEmailService extends MetaObject
 		$data['refer_url'] = SITE_URL;
 		       
 		//render the email tempalte
-		$tplFile = Resource::getTplFileWithPath($template, "email");
+		$tplFile = TemplateHelper::getTplFileWithPath($template, "email");
 		$content = $this->renderEmail($data, $tplFile);
 
 		//prepare recipient info
@@ -108,7 +108,7 @@ class userEmailService extends MetaObject
         				"token"=>$data	);
         
 		//render the email tempalte
-		$tplFile = Resource::getTplFileWithPath($template, "email");
+		$tplFile = TemplateHelper::getTplFileWithPath($template, "email");
 		$content = $this->renderEmail($data, $tplFile);
 		
 		//prepare recipient info
@@ -134,7 +134,7 @@ class userEmailService extends MetaObject
 		$sender   = $this->tempaltes["DataSharingEmail"]["EMAILACCOUNT"];
 				        
 		//render the email tempalte
-		$tplFile = Resource::getTplFileWithPath($template, "email");
+		$tplFile = TemplateHelper::getTplFileWithPath($template, "email");
 		$content = $this->renderEmail($data, $tplFile);
 		
 		//prepare recipient info
@@ -160,7 +160,7 @@ class userEmailService extends MetaObject
 		$sender   = $this->tempaltes["TaskUpdateEmail"]["EMAILACCOUNT"];
 				        
 		//render the email tempalte
-		$tplFile = Resource::getTplFileWithPath($template, "email");
+		$tplFile = TemplateHelper::getTplFileWithPath($template, "email");
 		$content = $this->renderEmail($data, $tplFile);
 		
 		//prepare recipient info
@@ -186,7 +186,7 @@ class userEmailService extends MetaObject
 		$sender   = $this->tempaltes["NewMessageEmail"]["EMAILACCOUNT"];
 				        
 		//render the email tempalte
-		$tplFile = Resource::getTplFileWithPath($template, "email");
+		$tplFile = TemplateHelper::getTplFileWithPath($template, "email");
 		$content = $this->renderEmail($data, $tplFile);
 		
 		//prepare recipient info
@@ -212,7 +212,7 @@ class userEmailService extends MetaObject
 		$sender   = $this->tempaltes["DataAssignedEmail"]["EMAILACCOUNT"];
 				        
 		//render the email tempalte
-		$tplFile = Resource::getTplFileWithPath($template, "email");
+		$tplFile = TemplateHelper::getTplFileWithPath($template, "email");
 		$content = $this->renderEmail($data, $tplFile);
 		
 		//prepare recipient info
@@ -238,7 +238,7 @@ class userEmailService extends MetaObject
 		$sender   = $this->tempaltes["DataPublishEmail"]["EMAILACCOUNT"];
 				        
 		//render the email tempalte
-		$tplFile = Resource::getTplFileWithPath($template, "email");
+		$tplFile = TemplateHelper::getTplFileWithPath($template, "email");
 		$content = $this->renderEmail($data, $tplFile);
 		
 		//prepare recipient info
@@ -269,7 +269,7 @@ class userEmailService extends MetaObject
 		$data['operator_name'] = Openbiz::$app->getProfile()->getProfileName(Openbiz::$app->getUserProfile("Id"));
 		$data['refer_url'] = SITE_URL;
 		
-		$tplFile = Resource::getTplFileWithPath($template, "email");
+		$tplFile = TemplateHelper::getTplFileWithPath($template, "email");
 		$content = $this->renderEmail($data, $tplFile);
 		
 		//prepare recipient info
@@ -317,7 +317,7 @@ class userEmailService extends MetaObject
 		$data['contact_display_name'] = $userData['display_name'];
 		
 		
-		$tplFile = Resource::getTplFileWithPath($template, "email");
+		$tplFile = TemplateHelper::getTplFileWithPath($template, "email");
 		$content = $this->renderEmail($data, $tplFile);
 		if($userData['email']==''){
 			//if no email address , then do nothing
@@ -341,7 +341,7 @@ class userEmailService extends MetaObject
 		$data		=  array("system"=>$system);
         
 		//render the email tempalte
-		$tplFile = Resource::getTplFileWithPath($template, "email");
+		$tplFile = TemplateHelper::getTplFileWithPath($template, "email");
 		$content = $this->renderEmail($data, $tplFile);
 				
 		//send it to the queue		
@@ -361,7 +361,7 @@ class userEmailService extends MetaObject
 		$data["job_output"] = $output;
         
 		//render the email tempalte
-		$tplFile = Resource::getTplFileWithPath($template, "email");
+		$tplFile = TemplateHelper::getTplFileWithPath($template, "email");
 		$content = $this->renderEmail($data, $tplFile);
 		
 		//prepare recipient info
@@ -375,7 +375,7 @@ class userEmailService extends MetaObject
 	
 	protected function renderEmail($content, $tplFile)
 	{
-        $smarty  = Resource::getSmartyTemplate();
+        $smarty  = TemplateHelper::getSmartyTemplate();
         foreach ($content as $key=>$value){
         	$smarty->assign($key, $value);
         }

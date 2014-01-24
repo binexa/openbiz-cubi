@@ -16,7 +16,7 @@
  */
 
 use Openbiz\Openbiz;
-use Openbiz\Resource;
+use Openbiz\Helpers\MessageHelper;
 use Openbiz\Object\Statefullable;
 use Openbiz\Event\EventManager;
 
@@ -245,7 +245,7 @@ abstract class BizDataObj_Abstract extends MetaObject implements Statefullable
         $this->parameters = new \MetaIterator($xmlArr["BIZDATAOBJ"]["PARAMETERS"]["PARAMETER"], "Parameter");
 
         $this->messageFile = isset($xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["MESSAGEFILE"]) ? $xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["MESSAGEFILE"] : null;
-        $this->objectMessages = Resource::loadMessage($this->messageFile, $this->package);
+        $this->objectMessages = MessageHelper::loadMessage($this->messageFile, $this->package);
 
         $this->eventManagerName = isset($xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["EVENTMANAGER"]) ? $xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["EVENTMANAGER"] : null;
 

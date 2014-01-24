@@ -2,28 +2,28 @@
 
 use Openbiz\Openbiz;
 
-require_once OPENBIZ_APP_MODULE_PATH.'/websvc/lib/WebsvcService.php';
+require_once Openbiz::$app->getModulePath().'/websvc/lib/WebsvcService.php';
 class callbackService extends  WebsvcService
 {
 	protected $oauthProviderDo='oauth.do.OauthProviderDO';
 	public function __call($method,$arguments=null)
 	{		
-		$type=Openbiz::$app->getClientProxy()->getRequestParam("type");  
+		$type= Openbiz::$app->getClientProxy()->getRequestParam("type");  
 		
-		$redirectURL=Openbiz::$app->getClientProxy()->getRequestParam("redirect_url");
+		$redirectURL= Openbiz::$app->getClientProxy()->getRequestParam("redirect_url");
 		if($redirectURL)
 		{
 			Openbiz::$app->getSessionContext()->setVar("oauth_redirect_url", $redirectURL);
 		}
 		
-		$assocURL	=Openbiz::$app->getClientProxy()->getRequestParam("assoc_url");
+		$assocURL	= Openbiz::$app->getClientProxy()->getRequestParam("assoc_url");
 		if($assocURL)
 		{
 			Openbiz::$app->getSessionContext()->setVar("oauth_assoc_url", $assocURL);
 		}
 		
 		// $whitelist_arr = Openbiz::getService(CUBI_LOV_SERVICE)->getDictionary("oauth.lov.ProviderLOV(Provider)");
-		$whitelist_arr=Openbiz::getObject($this->oauthProviderDo)->fetchOne("[status]=1 and [type]='{$type}'",1);
+		$whitelist_arr= Openbiz::getObject($this->oauthProviderDo)->fetchOne("[status]=1 and [type]='{$type}'",1);
 		if($whitelist_arr)
 		{
 			$whitelist_arr=$whitelist_arr->toArray();
@@ -33,7 +33,7 @@ class callbackService extends  WebsvcService
 			return;
 		}
 		 
-		$oatuthType=OPENBIZ_APP_MODULE_PATH."/oauth/libs/{$type}.class.php";
+		$oatuthType=Openbiz::$app->getModulePath()."/oauth/libs/{$type}.class.php";
 		if(!file_exists($oatuthType))
 		{
 			throw new Exception('Unknown type');

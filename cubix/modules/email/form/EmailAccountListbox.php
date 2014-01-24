@@ -11,7 +11,7 @@
  * @version   $Id: EmailAccountListbox.php 3358 2012-05-31 05:57:58Z rockyswen@gmail.com $
  */
 
-use Openbiz\Resource;
+use Openbiz\Object\ObjectFactoryHelper;
 
 //require_once(OPENBIZ_BIN."easy/element/Listbox.php");
 class EmailAccountListbox extends Listbox{
@@ -22,12 +22,12 @@ class EmailAccountListbox extends Listbox{
 	public function getFromList(&$list)
     {    	
    	    
-    	$file = OPENBIZ_APP_MODULE_PATH.DIRECTORY_SEPARATOR."service".DIRECTORY_SEPARATOR.$this->configFile;
+    	$file = Openbiz::$app->getModulePath().DIRECTORY_SEPARATOR."service".DIRECTORY_SEPARATOR.$this->configFile;
 		if(!is_file($file)){
 			return;
 		}
 		
-		$configArr=Resource::getXmlArray($file);
+		$configArr=ObjectFactoryHelper::getXmlArray($file);
 		$nodesArr = $configArr["PLUGINSERVICE"]["ACCOUNTS"][strtoupper($this->configNode)];
 		
     	

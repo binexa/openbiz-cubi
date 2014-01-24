@@ -11,8 +11,8 @@
  * @link      http://code.google.com/p/openbiz-cubi/
  * @version   $Id: TypeSelector.php 3621 2012-07-13 13:21:30Z hellojixian@gmail.com $
  */
-use Openbiz\Resource;
 
+use Openbiz\Openbiz;
 //include_once (OPENBIZ_BIN."/easy/element/DropDownList.php");
 
 class TypeSelector extends DropDownList
@@ -38,7 +38,7 @@ class TypeSelector extends DropDownList
         $value = $this->value ? $this->value : $this->getText();
         $sHTML = "<div  class=\"dropdownlist\"  id=\"" . $formNameStr . $this->objectName . "_scroll\" style=\"display:none;\">" .
                 $sHTML .= "<ul style=\"display:none;z-index:50\" id=\"" . $formNameStr . $this->objectName . "_list\">";
-        $theme = Resource::getCurrentTheme();
+        $theme = Openbiz::$app->getCurrentTheme();
         $image_url = OPENBIZ_THEME_URL . "/" . $theme . "/images";
 
         foreach ($list as $item) {

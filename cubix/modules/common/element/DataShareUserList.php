@@ -57,7 +57,7 @@ class DataShareUserList extends Listbox
     	//if we are in same group return true
     	//get user groups info
     	$user_id = (int)$user_id;
-    	$groups=Openbiz::$app->getUserProfile("groups");
+    	$groups= Openbiz::$app->getUserProfile("groups");
     	$groupset = Openbiz::getObject("system.do.UserGroupDO")->directFetch("[user_id]='$user_id'");
     	foreach($groupset as $groupRec){
 	    	$user_group_id = $groupRec['group_id'];

@@ -13,7 +13,7 @@
 
 use Openbiz\Openbiz;
 use Openbiz\i18n\I18n;
-use Openbiz\Resource;
+use Openbiz\Helpers\MessageHelper;
 
 class ChangeLogWidgetForm extends EasyForm
 {
@@ -30,7 +30,7 @@ class ChangeLogWidgetForm extends EasyForm
 			
 			if(!$messageFile_loaded)
 			{
-				$this->objectMessages = Resource::loadMessage($form['message_file'] , $form['package']);
+				$this->objectMessages = MessageHelper::loadMessage($form['message_file'] , $form['package']);
 				$formObj = Openbiz::getObject($this->parentFormName);				
 				I18n::AddLangData("common",substr($formObj->package,0,intval(strpos($formObj->package,'.'))));
 				$messageFile_loaded = true;

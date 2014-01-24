@@ -14,9 +14,9 @@
 use Openbiz\Openbiz;
 use Openbiz\i18n\I18n;
 
-include_once(OPENBIZ_APP_MODULE_PATH."/common/lib/fileUtil.php");
-include_once(OPENBIZ_APP_MODULE_PATH."/common/lib/httpClient.php");
-include_once(OPENBIZ_APP_MODULE_PATH."/system/lib/ModuleLoader.php");
+include_once(Openbiz::$app->getModulePath()."/common/lib/fileUtil.php");
+include_once(Openbiz::$app->getModulePath()."/common/lib/httpClient.php");
+include_once(Openbiz::$app->getModulePath()."/system/lib/ModuleLoader.php");
 
 class PackageService extends MetaObject
 {

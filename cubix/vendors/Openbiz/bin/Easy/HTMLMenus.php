@@ -42,7 +42,7 @@ class HTMLMenus extends MetaObject implements UIControlInterface
         $this->readMetadata($xmlArr);
         Openbiz::$app->getClientProxy()->appendStyles("menu", "menu.css");
         Openbiz::$app->getClientProxy()->appendScripts("menu-ie-js", '<!--[if gte IE 5.5]>
-		<script language="JavaScript" src="".Resource::getJsUrl()."/ie_menu.js" type="text/JavaScript"></script>
+		<script language="JavaScript" src="".Openbiz::$app->getJsUrl()."/ie_menu.js" type="text/JavaScript"></script>
 		<![endif]-->', false);
     }
 
@@ -121,7 +121,7 @@ class HTMLMenus extends MetaObject implements UIControlInterface
         $caption = $this->translate($menuItem["ATTRIBUTES"]["CAPTION"]);
         $target = $menuItem["ATTRIBUTES"]["TARGET"];
         $icon = $menuItem["ATTRIBUTES"]["ICON"];
-        $img = $icon ? "<img src='" . Resource::getImageUrl() . "/$icon' class=menu_img> " : "";
+        $img = $icon ? "<img src='" . Openbiz::$app->getImageUrl() . "/$icon' class=menu_img> " : "";
 
         if ($view)
             $url = "javascript:GoToView('" . $view . "')";

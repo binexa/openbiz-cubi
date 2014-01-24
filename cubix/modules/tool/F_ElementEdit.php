@@ -17,7 +17,7 @@ class F_ElementEdit extends EasyForm
         if (!$_GET['metaName']) 
             $sessCtxt->loadObjVar($this->objectName, "MetaFile", $this->metaFile);
         else {
-        	$metaFile = OPENBIZ_APP_MODULE_PATH."/".str_replace(".","/",$_GET['metaName']).".xml";
+        	$metaFile = Openbiz::$app->getModulePath()."/".str_replace(".","/",$_GET['metaName']).".xml";
         	$this->metaFile = $metaFile;
         }
         if (!$_GET['elemPath']) 
@@ -112,7 +112,7 @@ class F_ElementEdit extends EasyForm
         }
                     
         // get the xml element with xpath xpath('//element[@Name="fld_Id"]')
-        //$this->xmlFile = OPENBIZ_APP_MODULE_PATH."/".str_replace(".","/",$this->metaName).".xml";
+        //$this->xmlFile = Openbiz::$app->getModulePath()."/".str_replace(".","/",$this->metaName).".xml";
         $this->xmlFile = $this->metaFile;
         if (!file_exists($this->xmlFile)) 
             return null;
@@ -164,7 +164,7 @@ class F_ElementEdit extends EasyForm
     {
         if ($this->doc) 
             return $this->doc;
-        //$this->xmlFile = OPENBIZ_APP_MODULE_PATH."/".str_replace(".","/",$this->metaName).".xml";
+        //$this->xmlFile = Openbiz::$app->getModulePath()."/".str_replace(".","/",$this->metaName).".xml";
         $this->xmlFile = $this->metaFile;
         
         if (!file_exists($this->xmlFile)) 

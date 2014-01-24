@@ -31,7 +31,7 @@ class PaymentService
 	{
 		$providerRec = Openbiz::getObject($this->providerDO)->fetchOne("[type]='$type'");
 		$driver = $providerRec['driver'];
-		$driverFile = OPENBIZ_APP_MODULE_PATH.'/'.str_replace(".", "/", $driver).'.php';
+		$driverFile = Openbiz::$app->getModulePath().'/'.str_replace(".", "/", $driver).'.php';
 		$driverName = explode(".", $driver);
 		$driverName = $driverName[count($driverName)-1];
 		

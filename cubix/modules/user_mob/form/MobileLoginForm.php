@@ -21,7 +21,7 @@ use Openbiz\Openbiz;
  * @copyright Copyright (c) 2005-2009
  * @access public
  */
-include_once (OPENBIZ_APP_MODULE_PATH."/user/form/LoginForm.php");
+include_once (Openbiz::$app->getModulePath()."/user/form/LoginForm.php");
  
 class MobileLoginForm extends LoginForm
 {

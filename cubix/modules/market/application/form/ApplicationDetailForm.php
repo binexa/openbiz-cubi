@@ -64,7 +64,7 @@ class ApplicationDetailForm extends AppListForm
    		if(preg_match("/com.application/si",strtolower($app_uid))){
    			$moduleName = str_replace("com.application.", "", strtolower($app_uid));	   		
 	   		//unload module
-	   		include_once OPENBIZ_APP_MODULE_PATH."/system/lib/ModuleUnloader.php";
+	   		include_once Openbiz::$app->getModulePath()."/system/lib/ModuleUnloader.php";
 	   		$loader = new ModuleUnloader($moduleName);
 	        $loader->debug = false;
 	        $loader->unLoadModule();   		   		

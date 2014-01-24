@@ -35,7 +35,7 @@ class twitter extends oauthClass
 	}
 	
 	function callback(){ 
-		$oauth_token=Openbiz::$app->getSessionContext()->getVar('twitter_access_token');
+		$oauth_token= Openbiz::$app->getSessionContext()->getVar('twitter_access_token');
 		$Twitter = new TwitterOAuth($this->akey ,$this->skey,$oauth_token['oauth_token'], $oauth_token['oauth_token_secret']);
 		$access_token = $Twitter->getAccessToken($_REQUEST['oauth_verifier']);
 		if(!$access_token)

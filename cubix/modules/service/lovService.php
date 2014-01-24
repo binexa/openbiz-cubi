@@ -17,8 +17,7 @@ use Openbiz\Resource;
 use Openbiz\Core\Expression;
 use Openbiz\Data\Helpers\QueryStringParam;
 use Openbiz\I18n\I18n;
-
-
+use Openbiz\Object\ObjectFactoryHelper;
 
 class lovService extends MetaObject
 {
@@ -94,10 +93,12 @@ class lovService extends MetaObject
             $xmlFile = substr($selectFrom, 0, $pos0);
             $tag = substr($selectFrom, $pos0 + 1, $pos1 - $pos0-1);
             $tag = strtoupper($tag);
-            $xmlFile = Resource::GetXmlFileWithPath($xmlFile);
-            if (!$xmlFile) return false;
+            $xmlFile = ObjectFactoryHelper::getXmlFileWithPath($xmlFile);
+            if (!$xmlFile) {
+                return false;
+            }
 
-            $xmlArr = &Resource::getXmlArray($xmlFile);
+            $xmlArr = &ObjectFactoryHelper::getXmlArray($xmlFile);
             if ($xmlArr)
             {
                 $i = 0;
