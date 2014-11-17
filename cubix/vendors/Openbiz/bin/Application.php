@@ -334,16 +334,8 @@ class Application extends \Openbiz\Object\Object
         Openbiz::$app->getClientProxy()->showClientAlert('not hasView');
 
         if (!$this->request->hasInvocation()) {
-            //DebugLine::show($this->request->view);
-            //DebugLine::show('form' . $this->request->form);
             return $this->_dispatchView();
         } else {
-            //echo 'xxxxxxx';
-            //DebugLine::show($this->request->view);
-            //DebugLine::show('form' . $this->request->form);
-            //DebugLine::show($this->request->getScriptFile());
-            //Openbiz::$app->getClientProxy()->showClientAlert('not hasView');
-
             if ($this->_isSessionTimeout()) {  // show timeout view
                 Openbiz::$app->getSessionContext()->destroy();
                 return Openbiz::$app->getClientProxy()->redirectView($this->_userTimeoutView);
@@ -400,7 +392,6 @@ class Application extends \Openbiz\Object\Object
      */
     private function _canUserAccessView($viewName)
     {
-        // load accessService
         $svcobj = Openbiz::getService(ACCESS_SERVICE);
         return $svcobj->allowViewAccess($viewName);
     }
@@ -414,7 +405,6 @@ class Application extends \Openbiz\Object\Object
      */
     public function renderView($viewName, $form = "", $rule = "", $params = null, $hist = "")
     {
-
         /* @var $viewObj EasyView */
         if ($viewName == "__DynPopup") {
             $viewObj = Openbiz::getObject($viewName);

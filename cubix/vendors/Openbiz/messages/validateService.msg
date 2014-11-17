@@ -14,4 +14,3 @@ define("VALIDATESVC_LONGER_THAN",				"Please enter a valid %s which should be lo
 define("VALIDATESVC_LESS_THAN",					"Please enter a valid %s which should be less than %s .");
 define("VALIDATESVC_GREATER_THAN",				"Please enter a valid %s which should be greater than %s .");
 define("VALIDATESVC_BETWEEN",					"Please enter a valid %s which should be between %s and %s .");
-?>

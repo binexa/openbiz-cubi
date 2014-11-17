@@ -27,5 +27,3 @@ define('BFM_ERROR_INVALID_DISPMODE', "Unable to find a valid display mode for Bi
 define('PLEASE_EDIT_A_RECORD', "Please select a record to edit.");
 define('UNABLE_TO_LOCATE_TEMPLATE_FILE', "Unable to location template file %s.");
 define('FORM_OPERATION_NOT_PERMITTED',"You don't have enough permission to do this operation.");
-
-?>

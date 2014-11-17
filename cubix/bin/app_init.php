@@ -18,7 +18,6 @@ if (!defined("OPENBIZ_USE_CUSTOM_SESSION_HANDLER")) {
 include_once ('device_util.php');
 
 
-
 /* ============== CUBI CONFIG PRE-CORE ============================== */
 
 //{$row.fld_latitude},{$row.fld_longtitude}
@@ -124,7 +123,6 @@ define('OPENBIZ_APP_MODULE_PATH', OPENBIZ_APP_PATH . DIRECTORY_SEPARATOR . "modu
 define('OPENBIZ_APP_MESSAGE_PATH', OPENBIZ_APP_PATH . DIRECTORY_SEPARATOR . "messages");
 
 
-
 /* define themes const */
 define('OPENBIZ_USE_THEME', 1);
 
@@ -223,8 +221,6 @@ define('OPENBIZ_NOTFOUND_VIEW', "common.view.NotfoundView");
 define('OPENBIZ_INTERNAL_ERROR_VIEW', "common.view.ErrorView");
 
 // define service namings
-
-
 define('OPENBIZ_EVENTLOG_SERVICE', "eventlogService");
 define('OPENBIZ_PDF_SERVICE', "pdfService");
 define('OPENBIZ_PREFERENCE_SERVICE', "preferenceService");
@@ -250,9 +246,3 @@ define('CUBI_TEMPFILE_PATH', OPENBIZ_APP_PATH . DIRECTORY_SEPARATOR . "files" . 
 define('CUBI_CACHE_DATA_PATH', OPENBIZ_APP_PATH . DIRECTORY_SEPARATOR . "files" . DIRECTORY_SEPARATOR . "cache" . DIRECTORY_SEPARATOR . "data");
 
 include_once(__DIR__. "/../../cubix/vendors/Openbiz/bin/sysheader_inc.php");
-
-
-
-
-
-
