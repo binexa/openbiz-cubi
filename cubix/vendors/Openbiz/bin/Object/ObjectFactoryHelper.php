@@ -72,7 +72,7 @@ class ObjectFactoryHelper
      * @return array
      **/
     public static function &getXmlArray($xmlFile)
-    {
+    {	
         if (isset(self::$_xmlArrayList[$xmlFile])) {
             return self::$_xmlArrayList[$xmlFile];
         }
@@ -111,6 +111,7 @@ class ObjectFactoryHelper
                 trigger_error("Metadata file parsing error for file $objXmlFileName. Please double check your metadata xml file again.", E_USER_ERROR);
             }
             $xmlArrStr = serialize($xmlArr);
+			
             if (!file_exists(dirname($objCmpFileName))) {
                 mkdir(dirname($objCmpFileName));
             }

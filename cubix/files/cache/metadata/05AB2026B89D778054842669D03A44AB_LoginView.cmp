@@ -1,0 +1,1 @@
+a:1:{s:8:"EASYVIEW";a:2:{s:10:"ATTRIBUTES";a:5:{s:4:"NAME";s:9:"LoginView";s:5:"CLASS";s:8:"EasyView";s:11:"DESCRIPTION";s:28:"Openbiz Cubi  - System Login";s:14:"TEMPLATEENGINE";s:6:"Smarty";s:12:"TEMPLATEFILE";s:18:"user_view.tpl.html";}s:14:"FORMREFERENCES";a:1:{s:9:"REFERENCE";a:2:{s:10:"ATTRIBUTES";a:1:{s:4:"NAME";s:19:"user.form.LoginForm";}s:5:"VALUE";N;}}}}

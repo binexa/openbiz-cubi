@@ -1,0 +1,47 @@
+a:26:{i:0;a:11:{i:0;s:1:"1";i:1;s:1:"7";i:2;s:1:"7";i:3;s:15:"User Management";i:4;s:19:"/system/user_list.*";i:5;s:54:"<p>
+	About how to manage users and system access.</p>
+";i:6;s:1:"5";i:7;s:1:"1";i:8;s:19:"2010-04-19 18:15:18";i:9;s:1:"1";i:10;s:19:"2011-12-16 16:04:43";}i:1;a:11:{i:0;s:2:"11";i:1;s:1:"7";i:2;s:1:"7";i:3;s:18:"Preference setting";i:4;s:25:"/system/user_preference.*";i:5;N;i:6;s:1:"5";i:7;s:1:"1";i:8;s:19:"2011-12-16 16:04:20";i:9;s:1:"1";i:10;s:19:"2011-12-16 16:04:38";}i:2;a:11:{i:0;s:1:"7";i:1;s:1:"0";i:2;s:1:"0";i:3;s:19:"Openbiz Cubi System";i:4;s:0:"";i:5;s:35:"<p>
+	Cubi system help content.</p>
+";i:6;s:2:"10";i:7;s:1:"1";i:8;s:19:"2010-04-21 05:10:29";i:9;s:1:"1";i:10;s:19:"2011-12-25 23:39:14";}i:3;a:11:{i:0;s:2:"12";i:1;s:1:"7";i:2;s:1:"7";i:3;s:17:"Backup Management";i:4;s:9:"/backup.*";i:5;s:51:"<p>
+	Backup or downlaod your Cubi system data.</p>
+";i:6;s:2:"10";i:7;s:1:"1";i:8;s:19:"2011-12-25 18:11:21";i:9;s:1:"1";i:10;s:19:"2011-12-25 20:57:35";}i:4;a:11:{i:0;s:2:"14";i:1;s:1:"7";i:2;s:1:"7";i:3;s:5:"Group";i:4;s:16:"/system/group_.*";i:5;s:48:"<p>
+	About split user into different groups</p>
+";i:6;s:2:"10";i:7;s:1:"1";i:8;s:19:"2011-12-25 23:20:59";i:9;s:1:"1";i:10;s:19:"2011-12-26 01:11:11";}i:5;a:11:{i:0;s:2:"15";i:1;s:1:"7";i:2;s:1:"7";i:3;s:6:"System";i:4;s:23:"/system/database_list.*";i:5;s:37:"<p>
+	Setting database connection</p>
+";i:6;s:2:"10";i:7;s:1:"1";i:8;s:19:"2011-12-26 02:18:37";i:9;s:1:"1";i:10;s:19:"2011-12-26 02:19:46";}i:6;a:11:{i:0;s:2:"16";i:1;s:1:"7";i:2;s:1:"7";i:3;s:5:"Cache";i:4;s:15:"/cache/manage.*";i:5;s:47:"<p>
+	About Cubi Platform cache management.</p>
+";i:6;s:2:"10";i:7;s:1:"1";i:8;s:19:"2011-12-27 02:46:02";i:9;s:1:"1";i:10;s:19:"2011-12-27 02:46:02";}i:7;a:11:{i:0;s:2:"17";i:1;s:1:"7";i:2;s:1:"7";i:3;s:8:"Security";i:4;s:25:"/security/security_rule.*";i:5;s:70:"<p>
+	About internal and external internet access authorication </p>
+";i:6;s:2:"10";i:7;s:1:"1";i:8;s:19:"2011-12-27 06:05:15";i:9;s:1:"1";i:10;s:19:"2011-12-27 06:05:15";}i:8;a:11:{i:0;s:2:"18";i:1;s:1:"7";i:2;s:1:"7";i:3;s:11:"Translation";i:4;s:14:"/translation.*";i:5;s:48:"<p>
+	About Cubi platform language setting</p>
+";i:6;s:2:"10";i:7;s:1:"1";i:8;s:19:"2011-12-27 08:04:04";i:9;s:1:"1";i:10;s:19:"2011-12-27 08:04:04";}i:9;a:11:{i:0;s:2:"19";i:1;s:1:"0";i:2;s:1:"0";i:3;s:13:"Collaboration";i:4;s:17:"/collab/dashboard";i:5;s:37:"<p>
+	Collaboration help content.</p>
+";i:6;s:2:"10";i:7;s:1:"1";i:8;s:19:"2011-12-28 00:43:36";i:9;s:1:"1";i:10;s:19:"2012-01-01 23:39:59";}i:10;a:11:{i:0;s:2:"20";i:1;s:2:"19";i:2;s:2:"19";i:3;s:14:"Contact Manage";i:4;s:18:"/collab/contact_.*";i:5;s:35:"<p>
+	About Contact Management.</p>
+";i:6;s:2:"10";i:7;s:1:"1";i:8;s:19:"2011-12-28 00:49:11";i:9;s:1:"1";i:10;s:19:"2011-12-28 00:49:11";}i:11;a:11:{i:0;s:2:"21";i:1;s:2:"19";i:2;s:2:"19";i:3;s:7:"Message";i:4;s:18:"/collab/message_.*";i:5;s:40:"<p>
+	About internal message module.</p>
+";i:6;s:2:"10";i:7;s:1:"1";i:8;s:19:"2011-12-28 03:36:03";i:9;s:1:"1";i:10;s:19:"2011-12-28 03:36:03";}i:12;a:11:{i:0;s:2:"22";i:1;s:2:"19";i:2;s:2:"19";i:3;s:8:"Calendar";i:4;s:16:"/collab/event_.*";i:5;s:49:"<p>
+	About Collaboration Calendar management</p>
+";i:6;s:2:"10";i:7;s:1:"1";i:8;s:19:"2011-12-28 03:37:36";i:9;s:1:"1";i:10;s:19:"2011-12-28 03:37:36";}i:13;a:11:{i:0;s:2:"23";i:1;s:2:"19";i:2;s:2:"19";i:3;s:4:"Task";i:4;s:15:"/collab/task_.*";i:5;s:45:"<p>
+	About Collaboration Task management</p>
+";i:6;s:2:"10";i:7;s:1:"1";i:8;s:19:"2011-12-28 03:38:35";i:9;s:1:"1";i:10;s:19:"2011-12-28 03:38:35";}i:14;a:11:{i:0;s:2:"24";i:1;s:2:"19";i:2;s:2:"19";i:3;s:8:"Work Log";i:4;s:18:"/collab/worklog_.*";i:5;s:49:"<p>
+	About Collaboration Work Log management</p>
+";i:6;s:2:"10";i:7;s:1:"1";i:8;s:19:"2011-12-28 03:39:34";i:9;s:1:"1";i:10;s:19:"2011-12-28 03:39:34";}i:15;a:11:{i:0;s:2:"25";i:1;s:2:"19";i:2;s:2:"19";i:3;s:4:"Note";i:4;s:15:"/collab/note_.*";i:5;s:45:"<p>
+	About Collaboration Note management</p>
+";i:6;s:2:"10";i:7;s:1:"1";i:8;s:19:"2011-12-28 03:41:18";i:9;s:1:"1";i:10;s:19:"2011-12-28 03:41:18";}i:16;a:11:{i:0;s:2:"26";i:1;s:2:"19";i:2;s:2:"19";i:3;s:12:"Announcement";i:4;s:23:"/collab/announcement_.*";i:5;s:53:"<p>
+	About Collaboration Announcement management</p>
+";i:6;s:2:"10";i:7;s:1:"1";i:8;s:19:"2011-12-28 03:43:01";i:9;s:1:"1";i:10;s:19:"2011-12-28 03:43:01";}i:17;a:11:{i:0;s:2:"27";i:1;s:2:"19";i:2;s:2:"19";i:3;s:8:"Document";i:4;s:19:"/collab/document_.*";i:5;s:49:"<p>
+	About Collaboration Document management</p>
+";i:6;s:2:"10";i:7;s:1:"1";i:8;s:19:"2011-12-28 03:45:05";i:9;s:1:"1";i:10;s:19:"2011-12-28 03:45:05";}i:18;a:11:{i:0;s:2:"28";i:1;s:2:"19";i:2;s:2:"19";i:3;s:8:"Bookmark";i:4;s:19:"/collab/bookmark_.*";i:5;s:49:"<p>
+	About Collaboration Bookmark management</p>
+";i:6;s:2:"10";i:7;s:1:"1";i:8;s:19:"2011-12-28 03:46:10";i:9;s:1:"1";i:10;s:19:"2011-12-28 03:46:31";}i:19;a:11:{i:0;s:1:"2";i:1;s:1:"7";i:2;s:1:"7";i:3;s:15:"Role Management";i:4;s:19:"/system/role_list.*";i:5;s:64:"<p>
+	About how to manage system role and permissions group.</p>
+";i:6;s:2:"20";i:7;s:1:"1";i:8;s:19:"2010-04-19 19:50:23";i:9;s:1:"1";i:10;s:19:"2010-04-21 08:10:48";}i:20;a:11:{i:0;s:1:"3";i:1;s:1:"7";i:2;s:1:"7";i:3;s:17:"Module Management";i:4;s:21:"/system/module_list.*";i:5;s:55:"<p>
+	About how to mount a module into Cubi system.</p>
+";i:6;s:2:"30";i:7;s:1:"1";i:8;s:19:"2010-04-21 03:35:11";i:9;s:1:"1";i:10;s:19:"2010-04-21 05:11:09";}i:21;a:11:{i:0;s:2:"10";i:1;s:1:"7";i:2;s:1:"7";i:3;s:7:"Cronjob";i:4;s:23:"/cronjob/cronjob_list.*";i:5;N;i:6;s:2:"30";i:7;s:1:"1";i:8;s:19:"2011-12-16 15:50:00";i:9;s:1:"1";i:10;s:19:"2011-12-16 16:05:11";}i:22;a:11:{i:0;s:1:"4";i:1;s:1:"7";i:2;s:1:"7";i:3;s:20:"Event Log Management";i:4;s:11:"/eventlog.*";i:5;s:34:"<p>
+	About system event log</p>
+";i:6;s:2:"40";i:7;s:1:"1";i:8;s:19:"2010-04-21 05:01:44";i:9;s:1:"1";i:10;s:19:"2011-12-27 08:52:27";}i:23;a:11:{i:0;s:1:"5";i:1;s:1:"7";i:2;s:1:"7";i:3;s:16:"Email Management";i:4;s:15:"/email/email_.*";i:5;s:51:"<p>
+	About how to manage system email function</p>
+";i:6;s:2:"50";i:7;s:1:"1";i:8;s:19:"2010-04-21 05:03:43";i:9;s:1:"1";i:10;s:19:"2010-05-01 13:19:08";}i:24;a:11:{i:0;s:1:"6";i:1;s:1:"7";i:2;s:1:"7";i:3;s:15:"Help Management";i:4;s:13:"/help/help_.*";i:5;s:70:"<p>
+	About how to manage the online help module of cubi system.</p>
+";i:6;s:2:"60";i:7;s:1:"1";i:8;s:19:"2010-04-21 05:09:50";i:9;s:1:"1";i:10;s:19:"2010-04-24 05:16:02";}i:25;a:11:{i:0;s:1:"8";i:1;s:1:"7";i:2;s:1:"7";i:3;s:16:"Theme Management";i:4;s:19:"/theme/manage_theme";i:5;N;i:6;s:2:"60";i:7;s:1:"1";i:8;s:19:"2011-12-15 19:14:01";i:9;s:1:"1";i:10;s:19:"2011-12-15 19:14:29";}}

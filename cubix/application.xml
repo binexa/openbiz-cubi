@@ -5,7 +5,7 @@
                   Driver="Pdo_Mysql"
                   Server="127.0.0.1"
                   Port="3306"
-                  DBName="cubix"
+                  DBName="cubi"
                   User="root"
                   Password="binexa"
                   Charset="utf8"
