@@ -9,8 +9,10 @@ namespace Openbiz\Object;
  * @author    Rocky Swen
  * @copyright Copyright (c) 2005-2009, Rocky Swen
  * @access    public
+ * 
+ * @todo Remove or empower class.
  */
-class xParameter
+class Parameter
 {
 
     public $objectName;
