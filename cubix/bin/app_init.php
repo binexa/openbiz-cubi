@@ -15,10 +15,12 @@ include_once ('device_util.php');
 
 define('SITE_URL', 'http://local.openbiz.me/');
 
-include_once('openbiz_consts.php');
-include_once('cubi_consts.php');
+// init class 
+include_once(__DIR__ . "/../../cubix/vendor/Openbiz/bin/init_class_loader.php");
 
-include_once(__DIR__ . "/../../cubix/vendors/Openbiz/bin/sysheader_inc.php");
+include_once('openbiz_consts.php');
+include_once(__DIR__ . "/../../cubix/vendor/Openbiz/bin/sysheader_inc.php");
+include_once('cubi_consts.php');
 
 /* OPENBIZ_APP_URL is /a/b in case of http://host/a/b/index.php?... */
 function get_app_url() {    
