@@ -31,3 +31,12 @@ define('CUBI_LOV_SERVICE', "lovService");
 
 define('CUBI_APPBUILDER', '0'); // 0: hidden, 1: show
 
+/* ============== CUBI CONFIG POST-CORE ============================== */
+
+/* temporary files directory */
+/* used by backup module (BackupForm) */
+define('CUBI_TEMPFILE_PATH', OPENBIZ_APP_PATH . DIRECTORY_SEPARATOR . "files" . DIRECTORY_SEPARATOR . "tmp");
+
+/* data cache files directory */
+/* used by cache module (CacheForm) */
+define('CUBI_CACHE_DATA_PATH', OPENBIZ_APP_PATH . DIRECTORY_SEPARATOR . "files" . DIRECTORY_SEPARATOR . "cache" . DIRECTORY_SEPARATOR . "data");

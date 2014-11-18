@@ -18,6 +18,10 @@ use Openbiz\Object\ObjectHelper;
 class Object {
 
     /**
+     * Returns the fully qualified name of this class.
+     *  This method can use as identifier of singleton object. 
+     *  For example object that subtitute MetaObject
+     * 
      * @return string the fully qualified name of this class.
      */
     public static function className() {
@@ -25,7 +29,10 @@ class Object {
     }
 
     public function __construct($config = []) {
-        
+        if (!empty($config)) {
+            ObjecttHelper::configure($this, $config);
+        }
+        $this->init();        
     }
 
     /**

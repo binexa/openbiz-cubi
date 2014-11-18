@@ -15,7 +15,6 @@
  * @version   $Id: Configuration.php 3334 2012-05-30 08:07:05Z agus.suhartono@gmail.com $
  */
 
-use Openbiz\Resource;
 use Openbiz\Object\ObjectFactoryHelper;
 
 /**

@@ -8,7 +8,8 @@
 namespace Openbiz\Object;
 
 /**
- * Description of ComponentHelper
+ * Helper for Object class. 
+ * This helper needed because need only public access of Object class.
  *
  * @author agus
  */
@@ -27,4 +28,19 @@ class ObjecttHelper
 	{
 		return get_object_vars($object);
 	}
+     
+    /**
+     * Configures an object with the initial property values.
+     * @param object $object the object to be configured
+     * @param array $properties the property initial values given in terms of name-value pairs.
+     * @return object the object itself
+     */
+    public static function configure($object, $properties)
+    {
+        foreach ($properties as $name => $value) {
+            $object->$name = $value;
+        }
+        return $object;
+    }
+
 }

@@ -901,14 +901,18 @@ class Application extends \Openbiz\Object\Object
     }
 
 	/**
-	 * @var string the root directory of the module.
+	 * @var string the root directory of the application.
 	 */
 	private $_basePath;
     
 	/**
-	 * Returns the root directory of the module.
-	 * It defaults to the directory containing the module class file.
+	 * Returns the root directory of the application.
+	 * It defaults to the directory containing the application class file.
+      * 
+      * Note: this method will replace OPENBIZ_APP_PATH const.
+      * 
 	 * @return string the root directory of the module.
+      * @see OPENBIZ_APP_PATH
 	 */
 	public function getBasePath()
 	{
