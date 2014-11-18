@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Openbiz;
 
 use Openbiz\Object\ObjectFactory;
@@ -13,7 +12,7 @@ class Openbiz
 {
     /**
      *
-     * @var BizApplication
+     * @var Openbiz\Application
      */
     public static $app;
 

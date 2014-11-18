@@ -12,6 +12,7 @@
  */
 
 use Openbiz\Openbiz;
+use Openbiz\Object\MetaObject;
 
 include_once(Openbiz::$app->getModulePath()."/common/lib/fileUtil.php");
 include_once(Openbiz::$app->getModulePath()."/common/lib/httpClient.php");

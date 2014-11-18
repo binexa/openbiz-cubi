@@ -15,6 +15,8 @@
  * @version   $Id$
  */
 
+namespace Openbiz\Object;
+
 use Openbiz\Openbiz;
 use Openbiz\ClassLoader;
 

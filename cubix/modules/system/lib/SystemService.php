@@ -1,6 +1,7 @@
 <?php
 
 use Openbiz\Openbiz;
+use Openbiz\Object\MetaObject;
 
 class SystemService extends MetaObject
 {

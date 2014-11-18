@@ -12,6 +12,7 @@
  */
 
 use Openbiz\Openbiz;
+use Openbiz\Object\MetaObject;
 
 class NotificationService extends MetaObject
 {

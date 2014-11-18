@@ -14,6 +14,8 @@
 include_once(Openbiz::$app->getModulePath()."/common/lib/fileUtil.php");
 include_once(Openbiz::$app->getModulePath()."/common/lib/httpClient.php");
 
+use Openbiz\Object\MetaObject;
+
 class LicenseClient extends MetaObject
 {
     protected $_installPackage = "";

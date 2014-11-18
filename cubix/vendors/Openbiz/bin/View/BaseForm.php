@@ -10,6 +10,7 @@
 use Openbiz\Object\Statefullable;
 use Openbiz\Helpers\MessageHelper;
 use Openbiz\Core\Expression;
+use Openbiz\Object\MetaObject;
 
 include_once "FormHelper.php"; 
 

@@ -140,7 +140,6 @@ return array(
     'PickerForm'            => __DIR__ . '/Easy/PickerForm.php',
     'ViewRenderer'          => __DIR__ . '/Easy/ViewRenderer.php',
 
-
     // service library
     'accessService'         => __DIR__ . '/Service/accessService.php',
     'RestrictedView'        => __DIR__ . '/Service/accessService.php',
@@ -178,12 +177,12 @@ return array(
     'GetFilterRule'         => __DIR__ . '/Service/securityService.php',
     'validateService'       => __DIR__ . '/Service/validateService.php',
 
-
-    'MetaObject'             => __DIR__ . '/Object/MetaObject.php',
-    'MetaIterator'           => __DIR__ . '/Object/MetaIterator.php',
-    'Parameter'              => __DIR__ . '/Object/Parameter.php',
+    'Openbiz\Object\MetaObject' => __DIR__ . '/Object/MetaObject.php',
+    'MetaObject'                => __DIR__ . '/Object/MetaObject.php',
+    'MetaIterator'              => __DIR__ . '/Object/MetaIterator.php',
+    'Parameter'                 => __DIR__ . '/Object/Parameter.php',
     
-    'UIControlInterface'     => __DIR__ . '/Object/UIControlInterface.php',
+    'UIControlInterface'        => __DIR__ . '/Object/UIControlInterface.php',
 
     'Openbiz\Data\Exception'            => __DIR__ . '/Data/Exception.php',   
     'Openbiz\Validation\Exception'      => __DIR__ . '/Validation/Exception.php',

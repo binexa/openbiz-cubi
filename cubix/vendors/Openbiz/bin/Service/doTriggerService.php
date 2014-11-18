@@ -27,6 +27,8 @@
   </PluginService>
  */
 use Openbiz\Core\Expression;
+use Openbiz\Object\MetaObject;
+
 /**
  * class doTriggerService is the plug-in service of handle DataObject trigger
  *

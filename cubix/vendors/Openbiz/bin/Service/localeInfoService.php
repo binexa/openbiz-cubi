@@ -15,6 +15,8 @@
  * @version   $Id$
  */
 
+use Openbiz\Object\MetaObject;
+
 /**
  * localeInfoService class is the plug-in service of setting localeInfo
  *

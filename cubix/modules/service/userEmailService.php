@@ -12,6 +12,7 @@
  */
 
 use Openbiz\Openbiz;
+use Openbiz\Object\MetaObject;
 use Openbiz\Helpers\TemplateHelper;
 
 /**

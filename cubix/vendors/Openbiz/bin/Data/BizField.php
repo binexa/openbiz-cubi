@@ -17,7 +17,7 @@
 
 use Openbiz\Openbiz;
 use Openbiz\Core\Expression;
-
+use Openbiz\Object\MetaObject;
 /**
  * Class BizField is the class of a logic field which mapps to a table column
  *

@@ -20,12 +20,12 @@ $start = (float) array_sum(explode(' ',microtime()));
 if (!isAppInstalled()) {
     redirectToInstaller();
 }
+
 include 'bin/app_init.php';
-//exit;
+
 $app = new Openbiz\Application();
 
 $app->run();
-
 
 $end = (float) array_sum(explode(' ',microtime()));
 echo "Processing time: ". sprintf("%.4f", ($end-$start))." seconds"; 

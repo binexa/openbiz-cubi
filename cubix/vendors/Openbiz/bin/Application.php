@@ -639,9 +639,6 @@ class Application extends \Openbiz\Object\Object
      */
     public function run()
     {
-        //echo 'asasa asas as';
-        //return;
-
         $this->onBeforeRun();
 
         $profile = Openbiz::$app->getSessionContext()->getVar("_USER_PROFILE");

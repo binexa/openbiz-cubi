@@ -17,6 +17,8 @@
 //require_once 'Zend/Log.php';
 //require_once 'Zend/Log/Writer/Stream.php';
 
+use Openbiz\Object\MetaObject;
+
 /**
  * ioService class is the plug-in service of handling file import/export
  *

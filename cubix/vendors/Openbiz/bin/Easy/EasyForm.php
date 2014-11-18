@@ -19,6 +19,7 @@ use Openbiz\Openbiz;
 use Openbiz\Core\ErrorHandler;
 use Openbiz\Core\Expression;
 use Openbiz\I18n\I18n;
+use Openbiz\Object\MetaObject;
 use Openbiz\Object\Statefullable;
 use Openbiz\Helpers\MessageHelper;
 

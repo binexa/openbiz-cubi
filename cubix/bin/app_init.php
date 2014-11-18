@@ -11,47 +11,9 @@
  * @link      http://code.google.com/p/openbiz-cubi/
  * @version   $Id: app_init.php 3815 2012-08-02 16:07:17Z rockyswen@gmail.com $
  */
-if (!defined("OPENBIZ_USE_CUSTOM_SESSION_HANDLER")) {
-    define("OPENBIZ_USE_CUSTOM_SESSION_HANDLER", true);
-}
-
 include_once ('device_util.php');
 
-
-/* ============== CUBI CONFIG PRE-CORE ============================== */
-
-//{$row.fld_latitude},{$row.fld_longtitude}
-define('CUBI_DEFAULT_LATITUDE', '39.92');
-define('CUBI_DEFAULT_LONGTITUDE', '116.46');
-
-define('CUBI_FUSION_CHART_VERSION', "Pro");
-
-define('CUBI_FORCE_DEFAULT_THEME', 0);
-
-define('CUBI_GROUP_DATA_SHARE', '1');
-define('CUBI_DATA_ACL', '1');
-//I18n
-define('CUBI_DEFAULT_CURRENCY', 'IDR');
-
-
-//session strict
-//0=allow concurrent session
-//1=limited to single session
-define('CUBI_SESSION_STRICT', '0');
-
-// login page
-// define('CUBI_USER_LOGIN_VIEW', "user.view.LoginView");
-
-// cubi services
-define('CUBI_USER_EMAIL_SERVICE', "userEmailService");
-define('CUBI_VISIBILITY_SERVICE', "visService");
-define('CUBI_LOV_SERVICE', "lovService");
-
-define('CUBI_APPBUILDER', '0'); // 0: hidden, 1: show
-
-
-
-
+include('cubi_consts.php');
 
 /* ================== CORE CONFIG =================================== */
 
@@ -61,51 +23,20 @@ define('CUBI_APPBUILDER', '0'); // 0: hidden, 1: show
 //define('OPENBIZ_PATH', 'absolute_dir/Openbiz');
 //define('OPENBIZ_PATH', dirname(dirname(__FILE__)) . "/openbizx");
 
-/* * **************************************************************************
+/****************************************************************************
   application related path
- * ************************************************************************** */
+ *************************************************************************** */
 define('OPENBIZ_APP_PATH', dirname(dirname(__FILE__)));
 
 //echo OPENBIZ_APP_PATH;
-
 //enable minify 
 define('OPENBIZ_PAGE_MINIFY', 0);
 
-/* website url. please change the localhost to real url */
-if (isset($_SERVER["HTTP_HOST"])) {
-    define('SITE_URL', 'http://local.openbiz.me/');
-} else {
-    define('SITE_URL', 'http://local.openbiz.me/');
-}
+define('SITE_URL', 'http://local.openbiz.me/');
 
 define('OPENBIZ_DEFAULT_SYSTEM_NAME', 'Cubi Platform');
 
-/* OPENBIZ_APP_URL is /a/b in case of http://host/a/b/index.php?... */
-$appHome = str_replace('\\', '/', OPENBIZ_APP_PATH);
-if (isset($_SERVER['DOCUMENT_ROOT'])) {
-    $appPath = str_replace($_SERVER['DOCUMENT_ROOT'], '', $appHome);
-} else {
-    $appPath = $appHome;
-}
-if ($appPath == $appHome) {
-    //support for apache alias path
-    //$doc_root = str_replace('\\','/',dirname(OPENBIZ_APP_PATH)); 
-    $doc_root = str_replace('\\', '/', OPENBIZ_APP_PATH);
-    $appPath = str_replace($doc_root, "", $appHome);
-}
-if (substr($appPath, 0, 1) != '/' && strlen($appPath) > 0) {
-    $appPath = '/' . $appPath;
-}
-if ($appPath == '/') {
-    define('OPENBIZ_APP_URL', '');
-} else {
-    if (!isset($_SERVER['HTTP_HOST'])) {
-        define('OPENBIZ_APP_URL', '');
-    } else {
-        define('OPENBIZ_APP_URL', $appPath);
-    }
-}
-
+define('OPENBIZ_APP_URL', get_app_url());
 
 //echo OPENBIZ_APP_URL;
 //exit;
@@ -135,7 +66,7 @@ define('OPENBIZ_SMARTY_CPL_PATH', OPENBIZ_APP_PATH . DIRECTORY_SEPARATOR . "file
 /* js lib base, prototype (old) or jquery (new) */
 if (DeviceUtil::$PHONE_TOUCH) {
     define('OPENBIZ_JSLIB_BASE', "JQUERY");
-} else  {
+} else {
     //define('OPENBIZ_JSLIB_BASE', "JQUERY");
     define('OPENBIZ_JSLIB_BASE', "PROTOTYPE");
 }
@@ -157,6 +88,10 @@ define("OPENBIZ_LOG_PATH", OPENBIZ_APP_PATH . DIRECTORY_SEPARATOR . "log");
 define('OPENBIZ_APP_FILE_PATH', OPENBIZ_APP_PATH . DIRECTORY_SEPARATOR . "files");
 /* not used on openbiz framework, but derived from OPENBIZ_APP_URL */
 define('OPENBIZ_APP_FILE_URL', OPENBIZ_APP_URL . "/files");
+
+if (!defined("OPENBIZ_USE_CUSTOM_SESSION_HANDLER")) {
+    define("OPENBIZ_USE_CUSTOM_SESSION_HANDLER", true);
+}
 
 /* define session save handler */
 if (is_file(OPENBIZ_APP_FILE_PATH . '/install.lock') && defined('OPENBIZ_USE_CUSTOM_SESSION_HANDLER') && OPENBIZ_USE_CUSTOM_SESSION_HANDLER == true) {
@@ -183,14 +118,14 @@ define('OPENBIZ_PUBLIC_UPLOAD_URL', OPENBIZ_APP_FILE_URL . '/upload');
 /* file cache.DIRECTORY_SEPARATOR."rectory */
 define('OPENBIZ_CACHE_PATH', OPENBIZ_APP_PATH . DIRECTORY_SEPARATOR . "files" . DIRECTORY_SEPARATOR . "cache");
 
-
 /* metadata cache files directory */
 define('OPENBIZ_CACHE_METADATA_PATH', OPENBIZ_APP_PATH . DIRECTORY_SEPARATOR . "files" . DIRECTORY_SEPARATOR . "cache" . DIRECTORY_SEPARATOR . "metadata");
 
 
-/* * **************************************************************************
+/****************************************************************************
   application system level constances
- * ************************************************************************** */
+****************************************************************************/
+
 /* whether print debug infomation or not */
 define("OPENBIZ_DEBUG", 0);
 
@@ -204,7 +139,6 @@ define("OPENBIZ_LANGUAGE_PATH", OPENBIZ_APP_PATH . DIRECTORY_SEPARATOR . "langua
 /* define locale to be set in typemanager.php depending on selected language */
 //$local["es"]="es_ES.utf8";
 //$local["en"]="en_EN.utf8";
-
 // session timeout page
 define('OPENBIZ_USER_TIMEOUT_VIEW', "common.view.TimeoutView");
 
@@ -235,7 +169,6 @@ define('OPENBIZ_DEFAULT_OWNER_PERM', '3');
 define('OPENBIZ_DEFAULT_GROUP_PERM', '1');
 define('OPENBIZ_DEFAULT_OTHER_PERM', '0');
 
-/* ============== CUBI CONSTANTS after CORE CONSTANTS======================== */
 /* ============== CUBI CONFIG POST-CORE ============================== */
 
 /* temporary files directory */
@@ -245,4 +178,32 @@ define('CUBI_TEMPFILE_PATH', OPENBIZ_APP_PATH . DIRECTORY_SEPARATOR . "files" . 
 /* data cache files directory */
 define('CUBI_CACHE_DATA_PATH', OPENBIZ_APP_PATH . DIRECTORY_SEPARATOR . "files" . DIRECTORY_SEPARATOR . "cache" . DIRECTORY_SEPARATOR . "data");
 
-include_once(__DIR__. "/../../cubix/vendors/Openbiz/bin/sysheader_inc.php");
+include_once(__DIR__ . "/../../cubix/vendors/Openbiz/bin/sysheader_inc.php");
+
+/* OPENBIZ_APP_URL is /a/b in case of http://host/a/b/index.php?... */
+function get_app_url() {    
+    $appHome = str_replace('\\', '/', OPENBIZ_APP_PATH);
+    if (isset($_SERVER['DOCUMENT_ROOT'])) {
+        $appPath = str_replace($_SERVER['DOCUMENT_ROOT'], '', $appHome);
+    } else {
+        $appPath = $appHome;
+    }
+    if ($appPath == $appHome) {        
+        //$doc_root = str_replace('\\','/',dirname(OPENBIZ_APP_PATH));  //support for apache alias path
+        $doc_root = str_replace('\\', '/', OPENBIZ_APP_PATH);
+        $appPath = str_replace($doc_root, "", $appHome);
+    }
+    if (substr($appPath, 0, 1) != '/' && strlen($appPath) > 0) {
+        $appPath = '/' . $appPath;
+    }
+    if ($appPath == '/') {
+        $app_url = '';
+    } else {
+        if (!isset($_SERVER['HTTP_HOST'])) {
+            $app_url = '';
+        } else {
+            $app_url = $appPath;
+        }
+    }
+    return $app_url;
+}

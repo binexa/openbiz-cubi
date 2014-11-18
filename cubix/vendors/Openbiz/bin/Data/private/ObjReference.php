@@ -14,6 +14,7 @@
  * @version   $Id: ObjReference.php 3858 2011-04-23 01:14:49Z jixian2003 $
  */
 
+use Openbiz\Object\MetaObject;
 
 /**
  * ObjReference class defines the object reference of a BizDataObj

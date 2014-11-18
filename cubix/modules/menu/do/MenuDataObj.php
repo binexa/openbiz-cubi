@@ -13,7 +13,7 @@
 
 use Openbiz\Openbiz;
 use Openbiz\Object\Statefullable;
-
+use Openbiz\Object\MetaObject;
 include_once (dirname(__FILE__).'/MenuItemObj.php');
 
 class MenuDataObj extends MetaObject implements Statefullable{

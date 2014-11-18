@@ -15,6 +15,7 @@ use Openbiz\Openbiz;
 use Openbiz\Resource;
 
 use Openbiz\Core\Expression;
+use Openbiz\Object\MetaObject;
 use Openbiz\Data\Helpers\QueryStringParam;
 use Openbiz\I18n\I18n;
 use Openbiz\Object\ObjectFactoryHelper;

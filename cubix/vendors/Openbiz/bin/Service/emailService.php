@@ -15,6 +15,8 @@
  * @version   $Id: emailService.php 2553 2010-11-21 08:36:48Z mr_a_ton $
  */
 
+use Openbiz\Object\MetaObject;
+
 /**
  * The email service provides access to a \Zend_Mail object in conjunction with a predefined email account.
  * One can simply request the configured email object and work directly with the \Zend_Mail API

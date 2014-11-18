@@ -19,6 +19,7 @@ use Openbiz\Openbiz;
 use Openbiz\Core\Expression;
 use Openbiz\I18n\I18n;
 use Openbiz\Object\Statefullable;
+use Openbiz\Object\MetaObject;
 use Openbiz\Helpers\MessageHelper;
 /**
  * EasyView class is the class that contains list of forms.

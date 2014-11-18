@@ -18,6 +18,7 @@
 use Openbiz\Openbiz;
 use Openbiz\Helpers\MessageHelper;
 use Openbiz\Object\Statefullable;
+use Openbiz\Object\MetaObject;
 use Openbiz\Event\EventManager;
 
 /**

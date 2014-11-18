@@ -35,7 +35,7 @@ class ObjectFactory
 {
 
     /**
-     * Internal array for cache MetaObject
+     * Internal array for cache Openbiz\Object\MetaObject
      * @var array
      */
     private $_objectsMap = array();
