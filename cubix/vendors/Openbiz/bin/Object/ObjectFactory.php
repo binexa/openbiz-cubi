@@ -18,7 +18,6 @@
 namespace Openbiz\Object;
 
 use Openbiz\Openbiz;
-use Openbiz\Resource;
 use Openbiz\ClassLoader;
 use Openbiz\Object\ObjectFactoryHelper;
 

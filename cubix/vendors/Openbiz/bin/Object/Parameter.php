@@ -1,5 +1,7 @@
 <?php
 
+namespace Openbiz\Object;
+
 /**
  * Parameter class
  *
@@ -8,7 +10,7 @@
  * @copyright Copyright (c) 2005-2009, Rocky Swen
  * @access    public
  */
-class Parameter
+class xParameter
 {
 
     public $objectName;

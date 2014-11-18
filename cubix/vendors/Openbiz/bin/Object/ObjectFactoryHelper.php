@@ -6,7 +6,7 @@ use Openbiz\Openbiz;
 use Openbiz\Helpers\XMLParser;
 
 /**
- * Description of ObjectFactoryHelper
+ * Helper class for ObjectFactory
  *
  * @author agus
  */
