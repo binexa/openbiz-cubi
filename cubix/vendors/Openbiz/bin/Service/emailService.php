@@ -16,6 +16,7 @@
  */
 
 use Openbiz\Object\MetaObject;
+use Openbiz\Object\MetaIterator;
 
 /**
  * The email service provides access to a \Zend_Mail object in conjunction with a predefined email account.

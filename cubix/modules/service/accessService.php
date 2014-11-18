@@ -43,6 +43,7 @@
  */
 
 use Openbiz\Openbiz;
+use Openbiz\Object\MetaIterator;
 
 /**
  * accessService class is the plug-in service of handling role based view access control

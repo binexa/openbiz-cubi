@@ -16,6 +16,8 @@
  */
 
 use Openbiz\Openbiz;
+use Openbiz\Object\MetaIterator;
+
 /**
  * BizRecord class implements basic function of handling record
  *

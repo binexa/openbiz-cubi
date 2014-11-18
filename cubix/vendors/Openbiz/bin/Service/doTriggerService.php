@@ -28,6 +28,8 @@
  */
 use Openbiz\Core\Expression;
 use Openbiz\Object\MetaObject;
+use Openbiz\Object\MetaIterator;
+
 
 /**
  * class doTriggerService is the plug-in service of handle DataObject trigger

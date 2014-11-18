@@ -16,6 +16,7 @@
  */
 
 use Openbiz\Openbiz;
+use Openbiz\Object\MetaIterator;
 
 /**
  * Panel class is the base class of Panel that embeded in EasyForm

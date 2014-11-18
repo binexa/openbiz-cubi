@@ -12,6 +12,7 @@
  */
 
 use Openbiz\Openbiz;
+use Openbiz\Object\MetaIterator;
 
 class ContactListView extends EasyView
 {

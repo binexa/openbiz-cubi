@@ -18,6 +18,7 @@ use Openbiz\Openbiz;
 use Openbiz\Core\Expression;
 use Openbiz\I18n\I18n;
 use Openbiz\Object\MetaObject;
+use Openbiz\Object\MetaIterator;
 
 /**
  * Element class is the base class of all HTML Element

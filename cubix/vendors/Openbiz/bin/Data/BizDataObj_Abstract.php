@@ -19,6 +19,7 @@ use Openbiz\Openbiz;
 use Openbiz\Helpers\MessageHelper;
 use Openbiz\Object\Statefullable;
 use Openbiz\Object\MetaObject;
+use Openbiz\Object\MetaIterator;
 use Openbiz\Event\EventManager;
 
 /**
@@ -239,11 +240,11 @@ abstract class BizDataObj_Abstract extends MetaObject implements Statefullable
         // build BizRecord
         $this->bizRecord = new \BizRecord($xmlArr["BIZDATAOBJ"]["BIZFIELDLIST"]["BIZFIELD"], "BizField", $this);
         // build TableJoins
-        $this->tableJoins = new \MetaIterator($xmlArr["BIZDATAOBJ"]["TABLEJOINS"]["JOIN"], "TableJoin", $this);
+        $this->tableJoins = new MetaIterator($xmlArr["BIZDATAOBJ"]["TABLEJOINS"]["JOIN"], "TableJoin", $this);
         // build ObjReferences
-        $this->objReferences = new \MetaIterator($xmlArr["BIZDATAOBJ"]["OBJREFERENCES"]["OBJECT"], "ObjReference", $this);
+        $this->objReferences = new MetaIterator($xmlArr["BIZDATAOBJ"]["OBJREFERENCES"]["OBJECT"], "ObjReference", $this);
         // read in parameters
-        $this->parameters = new \MetaIterator($xmlArr["BIZDATAOBJ"]["PARAMETERS"]["PARAMETER"], "Parameter");
+        $this->parameters = new MetaIterator($xmlArr["BIZDATAOBJ"]["PARAMETERS"]["PARAMETER"], "Parameter");
 
         $this->messageFile = isset($xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["MESSAGEFILE"]) ? $xmlArr["BIZDATAOBJ"]["ATTRIBUTES"]["MESSAGEFILE"] : null;
         $this->objectMessages = MessageHelper::loadMessage($this->messageFile, $this->package);

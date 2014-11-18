@@ -12,6 +12,7 @@
  */
 
 use Openbiz\Openbiz;
+use Openbiz\Object\MetaIterator;
 
 class SelectorView extends EasyView
 {

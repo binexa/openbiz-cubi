@@ -1,4 +1,7 @@
 <?php
+
+use Openbiz\Object\MetaIterator;
+
 class MetaObjExport
 {
 	protected $object;

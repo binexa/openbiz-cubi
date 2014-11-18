@@ -16,6 +16,7 @@
  */
 
 use Openbiz\Openbiz;
+use Openbiz\Object\MetaIterator;
 use Openbiz\Core\Expression;
 use Openbiz\I18n\I18n;
 use Openbiz\Object\Statefullable;

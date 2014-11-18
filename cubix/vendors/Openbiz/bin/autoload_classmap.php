@@ -178,8 +178,8 @@ return array(
     'validateService'       => __DIR__ . '/Service/validateService.php',
 
     'Openbiz\Object\MetaObject' => __DIR__ . '/Object/MetaObject.php',
-    'MetaObject'                => __DIR__ . '/Object/MetaObject.php',
-    'MetaIterator'              => __DIR__ . '/Object/MetaIterator.php',
+    //'MetaObject'                => __DIR__ . '/Object/MetaObject.php',
+    'Openbiz\Object\MetaIterator'              => __DIR__ . '/Object/MetaIterator.php',
     'Parameter'                 => __DIR__ . '/Object/Parameter.php',
     
     'UIControlInterface'        => __DIR__ . '/Object/UIControlInterface.php',

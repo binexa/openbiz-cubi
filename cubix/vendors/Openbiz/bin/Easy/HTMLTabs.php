@@ -16,6 +16,7 @@
  */
 use Openbiz\Helpers\TemplateHelper;
 use Openbiz\Object\MetaObject;
+use Openbiz\Object\MetaIterator;
 
 /**
  * HTMLTabs class is the base class of HTML tabs
