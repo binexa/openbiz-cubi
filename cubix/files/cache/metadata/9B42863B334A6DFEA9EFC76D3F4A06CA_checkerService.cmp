@@ -1,1 +1,0 @@
-a:1:{s:13:"PLUGINSERVICE";a:2:{s:10:"ATTRIBUTES";a:3:{s:4:"NAME";s:14:"checkerService";s:5:"CLASS";s:14:"checkerService";s:13:"CACHELIFETIME";s:1:"0";}s:7:"CHECKER";a:2:{s:10:"ATTRIBUTES";a:4:{s:4:"NAME";s:14:"market_checker";s:11:"MININTERVAL";s:5:"86400";s:10:"SERVICEOBJ";s:30:"market.lib.NotificationService";s:6:"MEHTOD";s:17:"checkNotification";}s:5:"VALUE";N;}}}
