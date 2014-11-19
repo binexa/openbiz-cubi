@@ -18,7 +18,9 @@ What's Different?
 OpenbizX CubiX have new concept that different with original Openbiz Cubi.
 - OpenbizX CubiX fully namespaced
 - OpenbizX CubiX support multiple type of MetaObject
-- Can use singleton object for UI object or database object
+- On OpenbizX CubiX, we can use singleton object to subtitute MetaObject
+ 
+OpenbizX CubiX not have compatibility with Openbiz Cubi :D
 
 Openbiz Specification Request
 -----------------------------
