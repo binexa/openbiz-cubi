@@ -6,4 +6,4 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
 List of Specification
 ---------------------
 * [OSR 001 : MetaObject] (https://github.com/binexa/openbizx-cubix/blob/master/docs/osr/OSR-001-metaobject.md)
-* [OSR 002 : Openbiz MVC] (https://github.com/binexa/openbizx-cubix/tree/master/docs/osr/OSR-002.md)
+* [OSR 002 : Openbiz MVC] (https://github.com/binexa/openbizx-cubix/blob/master/docs/osr/OSR-002.md)
