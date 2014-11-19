@@ -1,7 +1,11 @@
 Project Documents
 ==================
 
-[What's Different?] (https://github.com/binexa/openbizx-cubix/blob/master/docs/whats-different.md)
+What's Different? 
+-----------------
+OpenbizX CubiX have new concept that different with original Openbiz Cubi.
+- OpenbizX CubiX fully namespaced
+- OpenbizX CubiX support multiple type of MetaObject
 
 Openbiz Specification Request
 -----------------------------
