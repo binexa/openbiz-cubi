@@ -1,0 +1,1 @@
+a:1:{s:13:"PLUGINSERVICE";a:2:{s:10:"ATTRIBUTES";a:3:{s:4:"NAME";s:10:"logService";s:7:"PACKAGE";s:7:"service";s:5:"CLASS";s:10:"logService";}s:10:"LOG_CONFIG";a:2:{s:10:"ATTRIBUTES";a:4:{s:6:"FORMAT";s:3:"CSV";s:5:"LEVEL";s:1:"7";s:3:"ORG";s:10:"level-date";s:10:"DAYSTOLIVE";s:1:"7";}s:5:"VALUE";N;}}}
