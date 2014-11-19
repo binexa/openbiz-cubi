@@ -12,15 +12,22 @@ This repo initialized from Openbiz Cubi project, version r5369.
 This project not yet have name as brand, "OpenbizX CubiX" is only as "project code". 
 Maybe this project be created as next version of original Openbiz Cubi.
 
-Specification
--------------
-For keep quality, we create Openbiz Specification Request, please learn [here] (https://github.com/binexa/openbizx-cubix/blob/master/docs/osr/OSR-001-metaobject.md).
 
+What's Different? 
+-----------------
+OpenbizX CubiX have new concept that different with original Openbiz Cubi.
+- OpenbizX CubiX fully namespaced
+- OpenbizX CubiX support multiple type of MetaObject
+- Can use singleton object for UI object or database object
 
+Openbiz Specification Request
+-----------------------------
+For keep quality, we create Openbiz Specification Request.
+* [OSR 001 : MetaObject] (https://github.com/binexa/openbizx-cubix/blob/master/docs/osr/OSR-001-metaobject.md)
+* [OSR 002 : Openbiz MVC] (https://github.com/binexa/openbizx-cubix/tree/master/docs/osr/OSR-002.md)
 
 We are still looking for more good architecture for Openbizx Cubi.
 
 Of course , contributor welcome.
-
 
 Agus Suhartono (initiator).
