@@ -5,7 +5,16 @@
   Copyright (c) 2005-2011, Openbiz Technology LLC
   Version $Id: ModuleCachedDO.xml 3372 2012-05-31 06:19:06Z rockyswen@gmail.com $
 -->
-<BizDataObj Name="ModuleCachedDO" Description="" Class="BizDataObj" DBName="Default" Table="module" SearchRule="" SortRule="" OtherSQLRule="" IdGeneration="Identity" CacheLifeTime="7200">
+<BizDataObj Name="ModuleCachedDO" 
+            Description="" 
+            Class="Opebiz\Data\BizDataObj" 
+            DBName="Default" 
+            Table="module" 
+            SearchRule="" 
+            SortRule="" 
+            OtherSQLRule="" 
+            IdGeneration="Identity" 
+            CacheLifeTime="7200">
 	<BizFieldList>
 	    <BizField Name="Id" Column="id" Type=""/>
         <BizField Name="name" Column="name" Type=""/>

@@ -14,8 +14,9 @@
  * @version   $Id: BizDataObj.php 4108 2011-05-08 06:01:30Z jixian2003 $
  */
 
+namespace Openbiz\Data;
+
 use Openbiz\Openbiz;
-use Openbiz\Resource;
 use Openbiz\Object\ObjectFactoryHelper;
 
 /**
@@ -26,7 +27,7 @@ use Openbiz\Object\ObjectFactoryHelper;
  * @copyright Copyright (c) 2005-2009
  * @access public
  */
-class BizDataObj extends BizDataObj_Lite
+class BizDataObj extends \BizDataObj_Lite
 {
 
     public $useTransaction = true;

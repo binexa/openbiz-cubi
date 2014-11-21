@@ -33,13 +33,15 @@ return array(
     'Openbiz\Object\Statefullable'   => __DIR__ . '/Object/Statefullable.php',
 
     // database library
-    'Openbiz\Data\Helpers\QueryStringParam'      => __DIR__ . '/Data/Helpers/QueryStringParam.php',
+    'Openbiz\Data\Helpers\QueryStringParam'   => __DIR__ . '/Data/Helpers/QueryStringParam.php',
 
-    'BizDataObj'                => __DIR__ . '/Data/BizDataObj.php',
-    'BizDataObj_Abstract'       => __DIR__ . '/Data/BizDataObj_Abstract.php',
+ 
+    'Openbiz\Data\BizDataObj'                => __DIR__ . '/Data/BizDataObj.php',
+    'Openbiz\Data\BizDataObj_Abstract'       => __DIR__ . '/Data/BizDataObj_Abstract.php',
     'BizDataObj_Lite'           => __DIR__ . '/Data/BizDataObj_Lite.php',
     'BizDataSql'                => __DIR__ . '/Data/BizDataSql.php',
     'BizDataTree'               => __DIR__ . '/Data/BizDataTree.php',
+    
     'NodeRecord'                => __DIR__ . '/Data/BizDataTree.php',
     'BizField'                  => __DIR__ . '/Data/BizField.php',
     'DataRecord'                => __DIR__ . '/Data/DataRecord.php',

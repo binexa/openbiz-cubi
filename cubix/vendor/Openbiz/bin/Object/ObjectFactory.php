@@ -58,6 +58,7 @@ class ObjectFactory
      */
     public function getObject($objectName, $new = 0)
     {
+        //echo $objectName . '<br />';
         if (isset($this->_objectsMap[$objectName]) && $new == 0) {
             return $this->_objectsMap[$objectName];
         }
@@ -113,21 +114,30 @@ class ObjectFactory
      */
     protected function constructObject($objName, &$xmlArr = null)
     {
+        
         if (!$xmlArr) {
             $xmlFile = ObjectFactoryHelper::getXmlFileWithPath($objName);
             if (!$xmlFile) {
                 $dotPos = strrpos($objName, ".");
                 if ($dotPos > 0) {
-                    $package =  substr($objName, 0, $dotPos) ;
+                    $objectPackage =  substr($objName, 0, $dotPos) ;
                     $class = substr($objName, $dotPos + 1);
                 } else {
-                    $package = null;
+                    $objectPackage = null;
                     $class = $objName;
                 }
             } else {
                 $xmlArr = ObjectFactoryHelper::getXmlArray($xmlFile);
             }
         }
+        
+        /*
+        if ($objName=='myaccount.do.PreferenceDO') {
+            echo '<pre>';
+            echo var_dump($xmlArr);
+            echo '</pre>';
+        }
+        */
         if ($xmlArr) {
             $keys = array_keys($xmlArr);
             $root = $keys[0];
@@ -145,33 +155,40 @@ class ObjectFactory
 
             //$package = $xmlArr[$root]["ATTRIBUTES"]["PACKAGE"];
             $class = $xmlArr[$root]["ATTRIBUTES"]["CLASS"];
+            
             // if class has package name as prefix, change the package to the prefix
             $dotPos = strrpos($class, ".");
             $classPrefix = $dotPos > 0 ? substr($class, 0, $dotPos) : null;
             $classPackage = $classPrefix ? $classPrefix : null;
+            
             if ($classPrefix) {
-                $class = substr($class, $dotPos + 1);
+                $shortClass = substr($class, $dotPos + 1);
             }
+            
             // set object package
             $dotPos = strrpos($objName, ".");
-            $package = $dotPos > 0 ? substr($objName, 0, $dotPos) : null;
-            if (strpos($package, '@') === 0) {
-                $package = substr($package, 1);
+            $objectPackage = $dotPos > 0 ? substr($objName, 0, $dotPos) : null;
+            if (strpos($objectPackage, '@') === 0) {
+                $objectPackage = substr($objectPackage, 1);
             }
             if (!$classPackage) {
-                $classPackage = $package;
+                $classPackage = $objectPackage;
             }
-            $xmlArr[$root]["ATTRIBUTES"]["PACKAGE"] = $package;
+            $xmlArr[$root]["ATTRIBUTES"]["PACKAGE"] = $objectPackage;
         }
-        if ($class == "BizObj") {  // convert BizObj to BizDataObj, support <1.2 version
-            $class = "BizDataObj";
+        
+        if ($class=='BizDataObj') {
+            echo __METHOD__ . '-' . $objName . '<br />';
+            echo 'class: '.$class .'<br />';
         }
-
+        
         if (!class_exists($class, false)) {
+            echo 'class not exist<br />';
             $classFile = ClassLoader::getLibFileWithPath($class, $classPackage);
+            echo 'classFile: '.$classFile .'<br />';
             if (!$classFile) {
-                if ($package)
-                    trigger_error("Cannot find the class with name as $package.$class", E_USER_ERROR);
+                if ($objectPackage)
+                    trigger_error("Cannot find the class with name as $objectPackage.$class", E_USER_ERROR);
                 else
                     trigger_error("Cannot find the class with name as $class of $objName", E_USER_ERROR);
                 exit();
@@ -179,6 +196,7 @@ class ObjectFactory
             include_once($classFile);
         }
 
+        echo 'class_exists($class, false): '. (class_exists($class, false)? 'true':'false') . '<br />';
         if (class_exists($class, false)) {
             //if ($objName == "collab.calendar.form.EventListForm") { print_r($xmlArr); exit; }
             $obj_ref = new $class($xmlArr);
@@ -186,15 +204,34 @@ class ObjectFactory
                 return $obj_ref;
             }
         } else {
-            if (function_exists("ioncube_read_file")) {
-                $data = ioncube_read_file($classFile);
-                if (!strpos($data, "ionCube Loader")) {
-                    trigger_error("Cannot find the class with name as $class in $classFile", E_USER_ERROR);
-                } else {
-                }
-            }
+            trigger_error("Cannot find the class with name as $class in $classFile", E_USER_ERROR);
         }
         return null;
+    }
+    
+    private $_prefix=[];
+    private $_path=[];
+    private $_ext=[];
+    
+    /**
+     * Register Prefix, location and extension of MetaObject
+     * 
+     * @param string $prefix prefix of metaobject, like "Contact" for "Contact.form.ContactForm"
+     * @param string $path location of metaobject with $prefix
+     * @param array|string $ext array of string, collection of extension that support by prefix
+     * @return null
+     * @since OpenbizX CubiX
+     */
+    public function register($prefix, $path, $ext=null) {        
+        $this->_prefix = $prefix;
+        $this->_path = $path;        
+        if ($ext == null) {
+            $this->_ext[] = array('xml');
+        } else if (is_array($ext)) {
+            $this->_ext[] = $ext;
+        } else if (is_string($ext)) {
+            $ext[] = array($ext);
+        }
     }
 
 }

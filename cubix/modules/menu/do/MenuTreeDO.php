@@ -15,8 +15,8 @@
  */
 
 use Openbiz\Openbiz;
-
-include_once(OPENBIZ_BIN.'data/BizDataObj.php');
+use Openbiz\Data\BizDataObj;
+//include_once(OPENBIZ_BIN.'data/BizDataObj.php');
 include_once('MenuRecord.php');
 
 /**
