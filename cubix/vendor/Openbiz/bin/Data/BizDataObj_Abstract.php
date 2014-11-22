@@ -15,6 +15,8 @@
  * @version   $Id: BizDataObj_Abstract.php 4108 2011-05-08 06:01:30Z jixian2003 $
  */
 
+namespace Openbiz\Data;
+
 use Openbiz\Openbiz;
 use Openbiz\Helpers\MessageHelper;
 use Openbiz\Object\Statefullable;

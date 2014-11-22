@@ -25,6 +25,8 @@ use Openbiz\Openbiz;
 // constant defination
 define('CK_CONNECTOR', "#");  // composite key connector character
 
+use Openbiz\Data\BizDataObj_Abstract;
+
 /**
  * BizDataObj_Lite class - contains data object readonly functions
  *
@@ -35,7 +37,6 @@ define('CK_CONNECTOR', "#");  // composite key connector character
  */
 class BizDataObj_Lite extends BizDataObj_Abstract
 {
-
     /**
      * Record Id
      *
