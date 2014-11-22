@@ -186,6 +186,12 @@ class ClassLoader
                 return $filePath;
             }
         }
+        
+        $filePath = self::_findClassFileOnCache($className);
+        if ( $filePath !== null ) {
+            return $filePath;
+        }
+        
 
         if (strpos($className, ".") > 0) {
             $className = str_replace(".", "/", $className);
@@ -231,6 +237,21 @@ class ClassLoader
           trigger_error("Cannot find the library file of $className", E_USER_ERROR);
           } */
         return $filePath;
+    }
+
+    /**
+     * Find class file location from cache dictionary.
+     * @param type $className
+     * @return string|null full path filename if found or null if not found 
+     */ 
+    private static function _findClassFileOnCache($className) {
+        // search it in cache first
+        $cacheKey = $className . "_path";
+        if (extension_loaded('apc') ) {
+            $filePath = apc_fetch($cacheKey);
+            return $filePath;            
+        }
+        return null;     
     }
 
     public static function registerClassMap($classMap)

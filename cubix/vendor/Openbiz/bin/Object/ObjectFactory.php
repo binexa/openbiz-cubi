@@ -113,31 +113,28 @@ class ObjectFactory
      * @return object the instance of the object
      */
     protected function constructObject($objName, &$xmlArr = null)
-    {
-        
+    {        
         if (!$xmlArr) {
             $xmlFile = ObjectFactoryHelper::getXmlFileWithPath($objName);
-            if (!$xmlFile) {
+            // if has metafile => load metadata from metafile
+            if ($xmlFile) { 
+                $xmlArr = ObjectFactoryHelper::getXmlArray($xmlFile);                
+            } else {
+                $class = str_replace('.', '\\', $objName);
+                /*        
                 $dotPos = strrpos($objName, ".");
-                if ($dotPos > 0) {
+                if ($dotPos > 0) { // if has package/namespace
                     $objectPackage =  substr($objName, 0, $dotPos) ;
                     $class = substr($objName, $dotPos + 1);
                 } else {
                     $objectPackage = null;
                     $class = $objName;
                 }
-            } else {
-                $xmlArr = ObjectFactoryHelper::getXmlArray($xmlFile);
+                 * 
+                 */
             }
-        }
+        }        
         
-        /*
-        if ($objName=='myaccount.do.PreferenceDO') {
-            echo '<pre>';
-            echo var_dump($xmlArr);
-            echo '</pre>';
-        }
-        */
         if ($xmlArr) {
             $keys = array_keys($xmlArr);
             $root = $keys[0];
@@ -152,9 +149,6 @@ class ObjectFactory
                     trigger_error("Metadata file parsing error for object $objName. Name attribut [" . $xmlArr[$root]["ATTRIBUTES"]["NAME"] . "] not same with object name. Please double check your metadata xml file again.", E_USER_ERROR);
                 }
             }
-
-            //$package = $xmlArr[$root]["ATTRIBUTES"]["PACKAGE"];
-            $class = $xmlArr[$root]["ATTRIBUTES"]["CLASS"];
             
             // if class has package name as prefix, change the package to the prefix
             $dotPos = strrpos($class, ".");
@@ -176,16 +170,27 @@ class ObjectFactory
             }
             $xmlArr[$root]["ATTRIBUTES"]["PACKAGE"] = $objectPackage;
         }
-        
-        if ($class=='BizDataObj') {
-            echo __METHOD__ . '-' . $objName . '<br />';
-            echo 'class: '.$class .'<br />';
+
+        //$package = $xmlArr[$root]["ATTRIBUTES"]["PACKAGE"];
+        $class = $xmlArr[$root]["ATTRIBUTES"]["CLASS"];
+        if ($class === 'BizDataObj') {
+             $class = 'Openbiz\\Data\\BizDataObj';
         }
         
+        if (strrpos($class, '\\' ) !== false) {
+            $obj_ref = new $class($xmlArr);
+            return $obj_ref;
+        }
+        
+        //if ($class=='BizDataObj') {
+        //    echo '====> '.__METHOD__ . '-' . $objName . '<br />';
+        //    echo 'class: '.$class .'<br />';
+        //}
+        
         if (!class_exists($class, false)) {
-            echo 'class not exist<br />';
+            //echo 'class not exist<br />';
             $classFile = ClassLoader::getLibFileWithPath($class, $classPackage);
-            echo 'classFile: '.$classFile .'<br />';
+            //echo 'classFile: '.$classFile .'<br />';
             if (!$classFile) {
                 if ($objectPackage)
                     trigger_error("Cannot find the class with name as $objectPackage.$class", E_USER_ERROR);
@@ -196,7 +201,7 @@ class ObjectFactory
             include_once($classFile);
         }
 
-        echo 'class_exists($class, false): '. (class_exists($class, false)? 'true':'false') . '<br />';
+        //echo 'class_exists($class, false): '. (class_exists($class, false)? 'true':'false') . '<br />';
         if (class_exists($class, false)) {
             //if ($objName == "collab.calendar.form.EventListForm") { print_r($xmlArr); exit; }
             $obj_ref = new $class($xmlArr);

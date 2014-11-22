@@ -7,7 +7,7 @@
 -->
 <BizDataObj Name="PreferenceDO" 
             Description="" 
-            Class="BizDataObj" 
+            Class="Openbiz\Data\BizDataObj" 
             DBName="Default" 
             Table="preference" 
             SearchRule="" 

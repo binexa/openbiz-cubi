@@ -7,7 +7,7 @@
 -->
 <BizDataObj Name="ModuleCachedDO" 
             Description="" 
-            Class="Opebiz\Data\BizDataObj" 
+            Class="Openbiz\Data\BizDataObj" 
             DBName="Default" 
             Table="module" 
             SearchRule="" 

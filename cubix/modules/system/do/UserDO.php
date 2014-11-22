@@ -10,6 +10,7 @@
  * @link      http://code.google.com/p/openbiz-cubi/
  */
  
+use Openbiz\Data\BizDataObj;
 class UserDO extends BizDataObj
 {
     
