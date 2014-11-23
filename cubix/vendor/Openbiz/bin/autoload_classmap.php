@@ -37,7 +37,7 @@ return array(
  
     'Openbiz\Data\BizDataObj'                => __DIR__ . '/Data/BizDataObj.php',    
     'Openbiz\Data\BizDataObj_Abstract'       => __DIR__ . '/Data/BizDataObj_Abstract.php',
-    'BizDataObj_Lite'                        => __DIR__ . '/Data/BizDataObj_Lite.php',
+    'Openbiz\Data\BizDataObj_Lite'                        => __DIR__ . '/Data/BizDataObj_Lite.php',
     
     'BizDataSql'                => __DIR__ . '/Data/BizDataSql.php',
     'BizDataTree'               => __DIR__ . '/Data/BizDataTree.php',

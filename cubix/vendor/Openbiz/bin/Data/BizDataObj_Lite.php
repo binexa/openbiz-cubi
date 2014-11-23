@@ -15,6 +15,8 @@
  * @version   $Id: BizDataObj_Lite.php 4108 2011-05-08 06:01:30Z jixian2003 $
  */
 
+namespace Openbiz\Data;
+
 use Openbiz\Openbiz;
 
 //include_once(OPENBIZ_BIN . 'data/BizDataObj_Abstract.php');
@@ -429,7 +431,7 @@ class BizDataObj_Lite extends BizDataObj_Abstract
      */
     protected function getSQLHelper()
     {
-        return BizDataObj_SQLHelper::instance();
+        return \BizDataObj_SQLHelper::instance();
     }
 
     /**

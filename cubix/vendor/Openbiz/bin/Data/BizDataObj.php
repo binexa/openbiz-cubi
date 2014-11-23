@@ -27,7 +27,7 @@ use Openbiz\Object\ObjectFactoryHelper;
  * @copyright Copyright (c) 2005-2009
  * @access public
  */
-class BizDataObj extends \BizDataObj_Lite
+class BizDataObj extends BizDataObj_Lite
 {
 
     public $useTransaction = true;
