@@ -16,6 +16,7 @@
 
 use Openbiz\Openbiz;
 use Openbiz\Data\Helpers\QueryStringParam;
+use Openbiz\Data\BizDataSql;
 use Openbiz\Core\Expression;
 
 /**

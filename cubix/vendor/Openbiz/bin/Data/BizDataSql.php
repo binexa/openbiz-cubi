@@ -14,6 +14,8 @@
  * @version   $Id: BizDataSql.php 3858 2011-04-23 01:14:49Z jixian2003 $
  */
 
+namespace Openbiz\Data;
+
 /**
  * Class << BizDataSql >> is the class to constrcut SQL statement for BizDataObj
  *
