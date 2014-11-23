@@ -51,11 +51,19 @@ class ClassLoader
      */
     public static function autoload($className)
     {
+            
         $filePath = self::getAutoloadLibFileWithPath($className);
 
+        //if ($className==='Openbiz\Data\NodeRecord') {
+        //    echo $className . '-' . $filePath . '<br />';
+        //}
+        
         //var_dump( $filePath);
         if ($filePath) {
             include_once($filePath); // auto_load
+            //if ($className==='Openbiz\Data\NodeRecord') {
+            //    echo (class_exists($className)? 'ada':'tidal-ada');
+            //}
             self::$_classNameCache[$className] = 1; // 
             return true;
         }

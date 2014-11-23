@@ -37,12 +37,13 @@ return array(
  
     'Openbiz\Data\BizDataObj'                => __DIR__ . '/Data/BizDataObj.php',    
     'Openbiz\Data\BizDataObj_Abstract'       => __DIR__ . '/Data/BizDataObj_Abstract.php',
-    'Openbiz\Data\BizDataObj_Lite'                        => __DIR__ . '/Data/BizDataObj_Lite.php',
+    'Openbiz\Data\BizDataObj_Lite'           => __DIR__ . '/Data/BizDataObj_Lite.php',
     
     'Openbiz\Data\BizDataSql'                => __DIR__ . '/Data/BizDataSql.php',
     'Openbiz\Data\BizDataTree'               => __DIR__ . '/Data/BizDataTree.php',
     
-    'NodeRecord'                             => __DIR__ . '/Data/BizDataTree.php',
+    'Openbiz\Data\NodeRecord'                => __DIR__ . '/Data/NodeRecord.php',
+    
     'BizField'                  => __DIR__ . '/Data/BizField.php',
     'DataRecord'                => __DIR__ . '/Data/DataRecord.php',
     'DataSet'                   => __DIR__ . '/Data/DataSet.php',

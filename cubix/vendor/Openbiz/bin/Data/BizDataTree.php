@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Openbiz Framework
  *
@@ -17,6 +18,7 @@
 namespace Openbiz\Data;
 
 use Openbiz\Data\BizDataObj;
+use Openbiz\Data\NodeRecord;
 
 /**
  * BizDataTree class provide query for tree structured records
@@ -26,9 +28,10 @@ use Openbiz\Data\BizDataObj;
  * @copyright Copyright (c) 2005-2009
  * @access public
  */
-class BizDataTree extends BizDataObj
-{
+class BizDataTree extends BizDataObj {
+
     protected $rootNodes;
+
     /**
      * Deep of tree
      * @var int
@@ -46,32 +49,28 @@ class BizDataTree extends BizDataObj
      *
      * @return <type>
      */
-    public function fetchTree($rootSearchRule, $depth, $globalSearchRule="")
-    {
+    public function fetchTree($rootSearchRule, $depth, $globalSearchRule = "") {
         $this->depth = $depth;
         $this->globalSearchRule = $globalSearchRule;
 
         // query on given search rule
         $searchRule = "(" . $rootSearchRule . ")";
-        if ($globalSearchRule!="")
+        if ($globalSearchRule != "")
             $searchRule .= " AND (" . $globalSearchRule . ")";
         $recordList = $this->directFetch($searchRule);
-        if (!$recordList)
-        {
+        if (!$recordList) {
             $this->rootNodes = array();
             return;
         }
-        foreach ($recordList as $rec)
-        {
-            $this->rootNodes[] = new \NodeRecord($rec);
+        foreach ($recordList as $rec) {
+            $this->rootNodes[] = new NodeRecord($rec);
         }
         if ($this->depth <= 1)
             return $this->rootNodes;
-        if(is_array($this->rootNodes)){
-	        foreach ($this->rootNodes as $node)
-	        {
-	            $this->_getChildrenNodes($node, 1);
-	        }
+        if (is_array($this->rootNodes)) {
+            foreach ($this->rootNodes as $node) {
+                $this->_getChildrenNodes($node, 1);
+            }
         }
         return $this->rootNodes;
     }
@@ -83,19 +82,16 @@ class BizDataTree extends BizDataObj
      * @param array $pathArray
      * @return <type>
      */
-    public function fetchNodePath($nodeSearchRule, &$pathArray)
-    {
+    public function fetchNodePath($nodeSearchRule, &$pathArray) {
         $recordList = $this->directFetch($nodeSearchRule);
-        if(count($recordList)>=1)
-        {
+        if (count($recordList) >= 1) {
 
-            if($recordList[0]['PId']!='0')
-            {
-                $searchRule = "[Id]='".$recordList[0]['PId']."'";
+            if ($recordList[0]['PId'] != '0') {
+                $searchRule = "[Id]='" . $recordList[0]['PId'] . "'";
                 $this->fetchNodePath($searchRule, $pathArray);
             }
             $nodes = new \NodeRecord($recordList[0]);
-            array_push($pathArray,$nodes);
+            array_push($pathArray, $nodes);
             return $pathArray;
         }
     }
@@ -105,69 +101,32 @@ class BizDataTree extends BizDataObj
      *
      * @return void
      */
-    private function _getChildrenNodes(&$node, $depth)
-    {
+    private function _getChildrenNodes(&$node, $depth) {
         $pid = $node->recordId;
 
         $searchRule = "[PId]='$pid'";
-        if ($this->globalSearchRule!="")
-                $searchRule .= " AND " . $this->globalSearchRule;
+        if ($this->globalSearchRule != "")
+            $searchRule .= " AND " . $this->globalSearchRule;
         $recordList = $this->directFetch($searchRule);
-        
-        foreach ($recordList as $rec)
-        {
-            $node->childNodes[] = new \NodeRecord($rec);
+
+        foreach ($recordList as $rec) {
+            $node->childNodes[] = new NodeRecord($rec);
         }
-        
+
         // reach leave node
-        if ($node->childNodes == null)
+        if ($node->childNodes == null) {
             return;
+        }
 
         $depth++;
         // reach given depth
-        if ($depth >= $this->depth)
+        if ($depth >= $this->depth) {
             return;
-        else
-        {
-            foreach ($node->childNodes as $node_c)
-            {
+        } else {
+            foreach ($node->childNodes as $node_c) {
                 $this->_getChildrenNodes($node_c, $depth);
             }
         }
     }
+
 }
-
-/**
- * NodeRecord class, for tree structure
- *
- * @package openbiz.bin.data
- * @author Rocky Swen
- * @copyright Copyright (c) 2005-2009
- * @since 1.2
- * @todo need to move to other package (tool, base, etc?)
- * @access public
- *
- */
-class NodeRecord
-{
-    public $recordId = "";
-    public $recordParentId = "";
-    public $childNodes = null;
-    public $record;
-
-    /**
-     * Initialize Node
-     *
-     * @param array $rec
-     * @return void
-     */
-    function __construct($rec)
-    {
-        $this->recordId = $rec['Id'];
-        $this->recordParentId = $rec['PId'];
-        $this->record = $rec;
-    }
-}
-
-
-?>
