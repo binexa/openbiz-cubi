@@ -22,7 +22,7 @@ On Yii, object Application is also as IoC container, and on Symfony or Zend Fram
 
 ### Namespaced IoC ID
 
-Component on IoC container is global, so need IoC ID that namespaced. The easy 'method' is use dot (or other) as sparator. For example :
+Component on IoC container is global, so need namespaced IoC ID. The easy 'method' is use dot (or other) as sparator. For example :
 
 mailSender => mailer.sender
 
