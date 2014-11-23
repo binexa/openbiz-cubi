@@ -5,7 +5,18 @@
   Copyright (c) 2005-2011, Openbiz Technology LLC
   Version $Id: HelpCategoryDO.xml 3345 2012-05-31 05:04:56Z rockyswen@gmail.com $
 -->
-<BizDataObj Name="HelpCategoryDO" Description="" Class="BizDataTree" DBName="Default" Table="help_category" SearchRule="" SortRule="[sort_order] ASC" OtherSQLRule="" Uniqueness="" Stateless="N" IdGeneration="Identity" CacheLifeTime="7200">
+<BizDataObj Name="HelpCategoryDO" 
+            Description="" 
+            Class="Openbiz\Data\BizDataTree" 
+            DBName="Default" 
+            Table="help_category" 
+            SearchRule="" 
+            SortRule="[sort_order] ASC" 
+            OtherSQLRule="" 
+            Uniqueness="" 
+            Stateless="N" 
+            IdGeneration="Identity" 
+            CacheLifeTime="7200">
 	<BizFieldList>
    		<BizField Name="Id" Column="id"     Type="Number"/>
 		<BizField Name="PId" Column="parent_id"    />

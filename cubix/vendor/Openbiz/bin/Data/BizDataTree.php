@@ -1,4 +1,4 @@
-<?PHP
+<?php
 /**
  * Openbiz Framework
  *
@@ -13,6 +13,8 @@
  * @link      http://www.phpopenbiz.org/
  * @version   $Id: BizDataTree.php 2585 2010-11-23 18:58:17Z jixian2003 $
  */
+
+namespace Openbiz\Data;
 
 use Openbiz\Data\BizDataObj;
 

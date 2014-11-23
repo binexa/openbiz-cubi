@@ -40,9 +40,9 @@ return array(
     'Openbiz\Data\BizDataObj_Lite'                        => __DIR__ . '/Data/BizDataObj_Lite.php',
     
     'Openbiz\Data\BizDataSql'                => __DIR__ . '/Data/BizDataSql.php',
-    'BizDataTree'               => __DIR__ . '/Data/BizDataTree.php',
+    'Openbiz\Data\BizDataTree'               => __DIR__ . '/Data/BizDataTree.php',
     
-    'NodeRecord'                => __DIR__ . '/Data/BizDataTree.php',
+    'NodeRecord'                             => __DIR__ . '/Data/BizDataTree.php',
     'BizField'                  => __DIR__ . '/Data/BizField.php',
     'DataRecord'                => __DIR__ . '/Data/DataRecord.php',
     'DataSet'                   => __DIR__ . '/Data/DataSet.php',
