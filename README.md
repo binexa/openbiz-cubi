@@ -10,7 +10,6 @@ This repo initialized from Openbiz Cubi project, version r5369.
 
 **Note:**
 This project not yet have name as brand, "OpenbizX CubiX" is only as "project code". 
-Maybe this project be created as next version of original Openbiz Cubi.
 
 
 What's Different? 
