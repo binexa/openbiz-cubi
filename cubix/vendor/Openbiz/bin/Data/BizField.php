@@ -15,6 +15,8 @@
  * @version   $Id: BizField.php 2553 2010-11-21 08:36:48Z mr_a_ton $
  */
 
+namespace Openbiz\Data;
+
 use Openbiz\Openbiz;
 use Openbiz\Core\Expression;
 use Openbiz\Object\MetaObject;

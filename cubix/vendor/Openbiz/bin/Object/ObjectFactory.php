@@ -176,6 +176,10 @@ class ObjectFactory
         if ($class === 'BizDataObj') {
              $class = 'Openbiz\\Data\\BizDataObj';
         }
+
+        if ($class === 'BizField') {
+             $class = 'Openbiz\\Data\\BizField';
+        }       
         
         if (strrpos($class, '\\' ) !== false) {
             $obj_ref = new $class($xmlArr);

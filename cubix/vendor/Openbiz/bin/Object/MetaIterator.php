@@ -17,6 +17,7 @@
 namespace Openbiz\Object;
 
 use Openbiz\ClassLoader;
+
 /**
  * MetaIterator class
  * MetaIterator is the base class of all derived metadata-driven classes who support iteration
@@ -86,6 +87,17 @@ class MetaIterator implements \Iterator
                         $clsLoaded = ClassLoader::loadMetadataClass($className, $parentObj->package);
                     }
                     //if (!$clsLoaded) trigger_error("Cannot find the load class $className", E_USER_ERROR);
+         
+                    /*
+                    if ($className === 'BizDataObj') {
+                        $className = 'Openbiz\\Data\\BizDataObj';
+                    }
+
+                    if ($className === 'BizField') {
+                        $className = 'Openbiz\\Data\\BizField';
+                    }
+                    */
+                    
                     $obj = new $className($child, $parentObj);
                     $this->varValue[$obj->objectName] = $obj;
                 }

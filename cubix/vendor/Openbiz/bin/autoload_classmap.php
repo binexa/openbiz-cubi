@@ -44,7 +44,8 @@ return array(
     
     'Openbiz\Data\NodeRecord'                => __DIR__ . '/Data/NodeRecord.php',
     
-    'BizField'                  => __DIR__ . '/Data/BizField.php',
+    'Openbiz\Data\BizField'                  => __DIR__ . '/Data/BizField.php',
+    
     'DataRecord'                => __DIR__ . '/Data/DataRecord.php',
     'DataSet'                   => __DIR__ . '/Data/DataSet.php',
     'BizDataObj_Assoc'          => __DIR__ . '/Data/private/BizDataObj_Assoc.php',

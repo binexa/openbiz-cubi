@@ -240,7 +240,7 @@ abstract class BizDataObj_Abstract extends MetaObject implements Statefullable
         }
 
         // build BizRecord
-        $this->bizRecord = new \BizRecord($xmlArr["BIZDATAOBJ"]["BIZFIELDLIST"]["BIZFIELD"], "BizField", $this);
+        $this->bizRecord = new \BizRecord($xmlArr["BIZDATAOBJ"]["BIZFIELDLIST"]["BIZFIELD"], "Openbiz\Data\BizField", $this);
         // build TableJoins
         $this->tableJoins = new MetaIterator($xmlArr["BIZDATAOBJ"]["TABLEJOINS"]["JOIN"], "TableJoin", $this);
         // build ObjReferences
