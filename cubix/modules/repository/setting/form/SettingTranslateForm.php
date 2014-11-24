@@ -2,6 +2,7 @@
 
 use Openbiz\Openbiz;
 use Openbiz\i18n\I18n;
+use Openbiz\Data\DataRecord;
 
 require_once "SettingForm.php";
 class SettingTranslateForm extends SettingForm

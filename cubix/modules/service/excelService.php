@@ -11,6 +11,8 @@
  * @version   $Id: excelService.php 3371 2012-05-31 06:17:21Z rockyswen@gmail.com $
  */
 
+use Openbiz\Data\DataRecord;
+
 /**
  * Openbiz Framework
  *

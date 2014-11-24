@@ -8,6 +8,8 @@
  * @access public
  */
  
+use Openbiz\Data\DataRecord;
+
 include_once "InputForm.php";
  /*
   * public methods: fetchData, updateRecord, 

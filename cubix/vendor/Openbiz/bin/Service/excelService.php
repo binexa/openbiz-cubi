@@ -14,7 +14,7 @@
  * @version   $Id: excelService.php 2792 2010-12-06 01:17:09Z rockys $
  */
 
-use Openbiz\Resource;
+use Openbiz\Data\DataRecord;
 
 include_once (OPENBIZ_PATH."/messages/excelService.msg");
 

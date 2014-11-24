@@ -15,6 +15,8 @@
  * @version   $Id: BizDataObj_Assoc.php 3975 2011-04-27 15:51:18Z jixian2003 $
  */
 
+namespace Openbiz\Data\Tools;
+
 /**
  * BizDataObj_Assoc class takes care of add and remove record according to
  * data object association

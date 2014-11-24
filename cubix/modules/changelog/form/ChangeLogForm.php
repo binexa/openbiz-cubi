@@ -15,6 +15,7 @@
 use Openbiz\Openbiz;
 use Openbiz\i18n\I18n;
 use Openbiz\Helpers\MessageHelper;
+use Openbiz\Data\DataRecord;
 
 class ChangeLogForm extends EasyForm
 {

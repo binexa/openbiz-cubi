@@ -18,11 +18,12 @@
 namespace Openbiz\Data;
 
 use Openbiz\Openbiz;
+use Openbiz\Data\DataRecord;
+use Openbiz\Data\DataSet;
+use Openbiz\Data\Tools\BizDataObj_SQLHelper;
 
 //include_once(OPENBIZ_BIN . 'data/BizDataObj_Abstract.php');
-//include_once(OPENBIZ_BIN . 'data/BizDataSql.php');
 //include_once(OPENBIZ_BIN."util/QueryStringParam.php");
-//include_once(OPENBIZ_BIN . "data/DataSet.php");
 
 // constant defination
 define('CK_CONNECTOR', "#");  // composite key connector character
@@ -259,7 +260,7 @@ class BizDataObj_Lite extends BizDataObj_Abstract
      */
     public function fetch()
     {
-        $dataSet = new \DataSet($this);
+        $dataSet = new DataSet($this);
         $this->_fetch4countQuery = null;
         $resultSet = $this->_run_search($this->queryLimit);  // regular search or page search
         if ($resultSet !== null) {
@@ -301,7 +302,7 @@ class BizDataObj_Lite extends BizDataObj_Abstract
 
         $limit = ($count == -1) ? null : array('count' => $count, 'offset' => $offset);
 
-        $dataSet = new \DataSet($this);
+        $dataSet = new DataSet($this);
         $resultSet = $this->_run_search($limit);
         if ($resultSet !== null) {
             $i = 0;
@@ -316,7 +317,7 @@ class BizDataObj_Lite extends BizDataObj_Abstract
         $this->recordId = $recId;
 
         if (count($dataSet) == 0) {
-            return new \DataSet(null);
+            return new DataSet(null);
         }
         return $dataSet;
     }
@@ -359,7 +360,7 @@ class BizDataObj_Lite extends BizDataObj_Abstract
     {
         $recordList = $this->directFetch($searchRule, 1, 0, $sortRule);
         if (count($recordList) >= 1) {
-            return new \DataRecord($recordList[0], $this);
+            return new DataRecord($recordList[0], $this);
         } else {
             return null;
         }
@@ -431,7 +432,7 @@ class BizDataObj_Lite extends BizDataObj_Abstract
      */
     protected function getSQLHelper()
     {
-        return \BizDataObj_SQLHelper::instance();
+        return BizDataObj_SQLHelper::instance();
     }
 
     /**

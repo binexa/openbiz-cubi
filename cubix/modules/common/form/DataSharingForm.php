@@ -13,6 +13,7 @@
  */
 
 use Openbiz\Openbiz;
+use Openbiz\Data\DataRecord;
 
 class DataSharingForm extends EasyForm
 {

@@ -8,6 +8,9 @@
  * @copyright Copyright (c) 2005-2009
  * @access public
  */
+
+use Openbiz\Data\DataRecord;
+
 include_once "InputForm.php";
 /*
  * public methods: fetchData, insertRecord, 

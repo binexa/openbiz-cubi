@@ -69,17 +69,17 @@ class MetaObjExport
 		$className = get_class($obj);
 		$elemName = $className;	// element use class name by default
 		$vars = get_object_vars($obj);
-		if ($className == "TableJoin") {
+		if ($className == "Openbiz\Data\Tools\TableJoin") {
 			$elemName = "Join";
 		}
-		if ($className == "BizRecord") {
+		if ($className == "Openbiz\Data\Tools\BizRecord") {
 			$vars = $obj;
 			$elemName = "BizFieldList";
 		}
-		if ($className == "MetaIterator") {
+		if ($className == "Openbiz\Object\MetaIterator") {
 			$vars = $obj;
 		}
-		if (is_subclass_of($obj, "BizDataObj")) {
+		if (is_subclass_of($obj, "Openbiz\Data\BizDataObj")) {
 			$elemName = "BizDataObj";
 		}
 		if ($clz!='') {

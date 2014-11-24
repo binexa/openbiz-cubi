@@ -14,6 +14,8 @@
  * @version   $Id: DataRecord.php 4086 2011-05-03 06:00:35Z rockys $
  */
 
+namespace Openbiz\Data;
+
 /**
  * DataRecord class  is the wrapper class of record array.
  * It is recommmended to be used in data update and deletion.
@@ -23,7 +25,7 @@
  * @copyright Copyright (c) 2007-2009
  * @access public
  **/
-class DataRecord implements Iterator, ArrayAccess
+class DataRecord implements \Iterator, \ArrayAccess
 {
     /**
      * Record in array format

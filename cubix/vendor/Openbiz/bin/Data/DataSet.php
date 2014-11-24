@@ -14,6 +14,10 @@
  * @version   $Id: DataSet.php 2553 2010-11-21 08:36:48Z mr_a_ton $
  */
 
+namespace Openbiz\Data;
+
+use Openbiz\Data\DataRecord;
+
 /**
  * DataSet class is the wrapper class of record array.
  * It is recommmended to be used in data update and deletion.
@@ -23,7 +27,7 @@
  * @copyright Copyright (c) 2007-2009
  * @access public
  **/
-class DataSet implements Iterator, ArrayAccess, Countable 
+class DataSet implements \Iterator, \ArrayAccess, \Countable 
 {
     /**
      * Record in array format

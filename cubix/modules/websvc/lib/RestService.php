@@ -12,6 +12,7 @@
  */
 
 use Openbiz\Openbiz;
+use Openbiz\Data\DataRecord;
 
 include_once 'Array2Xml.php';
 

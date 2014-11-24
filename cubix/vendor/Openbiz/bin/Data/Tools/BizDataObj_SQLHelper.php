@@ -14,6 +14,8 @@
  * @version   $Id: BizDataObj_SQLHelper.php 3994 2011-04-28 12:39:54Z jixian2003 $
  */
 
+namespace Openbiz\Data\Tools;
+
 use Openbiz\Openbiz;
 use Openbiz\Data\BizDataSql;
 use Openbiz\Core\Expression;

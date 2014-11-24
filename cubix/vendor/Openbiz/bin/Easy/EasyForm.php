@@ -22,6 +22,7 @@ use Openbiz\I18n\I18n;
 use Openbiz\Object\MetaObject;
 use Openbiz\Object\Statefullable;
 use Openbiz\Helpers\MessageHelper;
+use Openbiz\Data\DataRecord;
 
 /**
  * EasyForm class - contains form object metadata functions

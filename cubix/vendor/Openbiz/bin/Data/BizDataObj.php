@@ -18,6 +18,7 @@ namespace Openbiz\Data;
 
 use Openbiz\Openbiz;
 use Openbiz\Object\ObjectFactoryHelper;
+use Openbiz\Data\Tools\BizDataObj_Assoc;
 
 /**
  * BizDataObj class is the base class of all data object classes

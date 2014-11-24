@@ -40,22 +40,22 @@ return array(
     'Openbiz\Data\BizDataObj_Lite'           => __DIR__ . '/Data/BizDataObj_Lite.php',
     
     'Openbiz\Data\BizDataSql'                => __DIR__ . '/Data/BizDataSql.php',
-    'Openbiz\Data\BizDataTree'               => __DIR__ . '/Data/BizDataTree.php',
+    'Openbiz\Data\BizDataTree'               => __DIR__ . '/Data/BizDataTree.php',    
+    'Openbiz\Data\NodeRecord'                => __DIR__ . '/Data/NodeRecord.php',    
+    'Openbiz\Data\BizField'                  => __DIR__ . '/Data/BizField.php',    
     
-    'Openbiz\Data\NodeRecord'                => __DIR__ . '/Data/NodeRecord.php',
+    'Openbiz\Data\DataRecord'                => __DIR__ . '/Data/DataRecord.php',    
+    'Openbiz\Data\DataSet'                   => __DIR__ . '/Data/DataSet.php',
     
-    'Openbiz\Data\BizField'                  => __DIR__ . '/Data/BizField.php',
+    'Openbiz\Data\Tools\BizDataObj_Assoc'  => __DIR__ . '/Data/Tools/BizDataObj_Assoc.php',
     
-    'DataRecord'                => __DIR__ . '/Data/DataRecord.php',
-    'DataSet'                   => __DIR__ . '/Data/DataSet.php',
-    'BizDataObj_Assoc'          => __DIR__ . '/Data/private/BizDataObj_Assoc.php',
-    'BizDataObj_SQLHelper'      => __DIR__ . '/Data/private/BizDataObj_SQLHelper.php',
-    'BizRecord'                 => __DIR__ . '/Data/private/BizRecord.php',
-    'ObjReference'              => __DIR__ . '/Data/private/ObjReference.php',
-    'TableJoin'                 => __DIR__ . '/Data/private/TableJoin.php',
+    'Openbiz\Data\Tools\BizDataObj_SQLHelper'      => __DIR__ . '/Data/Tools/BizDataObj_SQLHelper.php',
+    'Openbiz\Data\Tools\BizRecord'                 => __DIR__ . '/Data/Tools/BizRecord.php',
+    'Openbiz\Data\Tools\ObjReference'              => __DIR__ . '/Data/Tools/ObjReference.php',
+    'Openbiz\Data\Tools\TableJoin'                 => __DIR__ . '/Data/Tools/TableJoin.php',
 
     // UI library
-    'DynaView'              => __DIR__ . '/Easy/DynaView.php',
+    'Openbiz\Easy\DynaView'              => __DIR__ . '/Easy/DynaView.php',
     'EasyForm'              => __DIR__ . '/Easy/EasyForm.php',
     'EasyFormGrouping'      => __DIR__ . '/Easy/EasyFormGrouping.php',
     'EasyFormORM'           => __DIR__ . '/Easy/EasyFormORM.php',

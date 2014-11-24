@@ -13,6 +13,7 @@
 
 use Openbiz\Openbiz;
 use Openbiz\i18n\I18n;
+use Openbiz\Data\DataRecord;
 
 class ExtendFieldTranslateForm extends PickerForm
 {

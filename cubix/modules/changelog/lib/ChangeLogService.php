@@ -11,6 +11,8 @@
  * @version   $Id: ChangeLogService.php 3872 2012-08-09 11:30:28Z hellojixian@gmail.com $
  */
 
+use Openbiz\Data\DataRecord;
+
 class ChangeLogService
 {
 	protected  $logDO = "changelog.do.ChangeLogDO";

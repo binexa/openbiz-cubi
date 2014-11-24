@@ -13,6 +13,7 @@
  */
 
 use Openbiz\Openbiz;
+use Openbiz\Data\DataRecord;
 
 /**
  * LoginForm class - implement the logic of login form

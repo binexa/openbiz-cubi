@@ -14,6 +14,8 @@
  * @version   $Id: EasyFormWizard.php 3037 2010-12-30 04:00:30Z iceve $
  */
 
+use Openbiz\Data\DataRecord;
+
 /**
  * EasyFormWizard class, extension of EasyForm to support wizard form
  *
