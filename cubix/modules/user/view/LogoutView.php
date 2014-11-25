@@ -13,6 +13,7 @@
  */
 
 use Openbiz\Openbiz;
+use Openbiz\Easy\EasyView;
 
 class LogoutView extends EasyView
 {

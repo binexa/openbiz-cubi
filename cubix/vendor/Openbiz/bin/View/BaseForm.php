@@ -12,6 +12,8 @@ use Openbiz\Helpers\MessageHelper;
 use Openbiz\Core\Expression;
 use Openbiz\Object\MetaObject;
 
+use Openbiz\Easy\FormRenderer;
+
 include_once "FormHelper.php"; 
 
 class BaseForm extends MetaObject implements Statefullable

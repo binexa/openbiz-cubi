@@ -26,11 +26,11 @@ return array(
     
     // core library
 
-    'Openbiz\Object\ObjectFactory'  => __DIR__ . '/Object/ObjectFactory.php',
-    'Openbiz\Object\Object'         => __DIR__ . '/Object/Object.php',
-    'Openbiz\Object\ObjectHelper'   => __DIR__ . '/Object/ObjectHelper.php',
-    'Openbiz\Object\ObjectFactoryHelper'   => __DIR__ . '/Object/ObjectFactoryHelper.php',
-    'Openbiz\Object\Statefullable'   => __DIR__ . '/Object/Statefullable.php',
+    'Openbiz\Object\ObjectFactory'          => __DIR__ . '/Object/ObjectFactory.php',
+    'Openbiz\Object\Object'                 => __DIR__ . '/Object/Object.php',
+    'Openbiz\Object\ObjectHelper'           => __DIR__ . '/Object/ObjectHelper.php',
+    'Openbiz\Object\ObjectFactoryHelper'    => __DIR__ . '/Object/ObjectFactoryHelper.php',
+    'Openbiz\Object\Statefullable'          => __DIR__ . '/Object/Statefullable.php',
 
     // database library
     'Openbiz\Data\Helpers\QueryStringParam'  => __DIR__ . '/Data/Helpers/QueryStringParam.php',
@@ -56,14 +56,19 @@ return array(
 
     // UI library
     'Openbiz\Easy\DynaView'              => __DIR__ . '/Easy/DynaView.php',
-    'EasyForm'              => __DIR__ . '/Easy/EasyForm.php',
-    'EasyFormGrouping'      => __DIR__ . '/Easy/EasyFormGrouping.php',
-    'EasyFormORM'           => __DIR__ . '/Easy/EasyFormORM.php',
-    'EasyFormTree'          => __DIR__ . '/Easy/EasyFormTree.php',
-    'EasyFormWizard'        => __DIR__ . '/Easy/EasyFormWizard.php',
-    'EasyView'              => __DIR__ . '/Easy/EasyView.php',
-    'FormReference'         => __DIR__ . '/Easy/EasyView.php',
+    'Openbiz\Easy\EasyForm'              => __DIR__ . '/Easy/EasyForm.php',
+    'Openbiz\Easy\EasyFormGrouping'      => __DIR__ . '/Easy/EasyFormGrouping.php',
+    'Openbiz\Easy\EasyFormORM'           => __DIR__ . '/Easy/EasyFormORM.php',
+    'Openbiz\Easy\EasyFormTree'          => __DIR__ . '/Easy/EasyFormTree.php',
+    
+    'Openbiz\Easy\EasyFormWizard'        => __DIR__ . '/Easy/EasyFormWizard.php',
+    
+    'Openbiz\Easy\EasyView'              => __DIR__ . '/Easy/EasyView.php',
+    'Openbiz\Easy\ViewRenderer'          => __DIR__ . '/Easy/ViewRenderer.php',
+    'Openbiz\Easy\FormReference'         => __DIR__ . '/Easy/FormReference.php',
+    
     'EasyViewWizard'        => __DIR__ . '/Easy/EasyViewWizard.php',
+    
     'AutoSuggest'           => __DIR__ . '/Easy/element/AutoSuggest.php',
     'BarcodeScanner'        => __DIR__ . '/Easy/element/BarcodeScanner.php',
     'Button'                => __DIR__ . '/Easy/element/Button.php',
@@ -131,14 +136,17 @@ return array(
     'Textarea'              => __DIR__ . '/Easy/element/Textarea.php',
     'TreeLabelText'         => __DIR__ . '/Easy/element/TreeLabelText.php',
     'TreeListbox'           => __DIR__ . '/Easy/element/TreeListbox.php',
-    'FormRenderer'          => __DIR__ . '/Easy/FormRenderer.php',
+    
+    'Openbiz\Easy\FormRenderer'          => __DIR__ . '/Easy/FormRenderer.php',
     'HTMLMenus'             => __DIR__ . '/Easy/HTMLMenus.php',
     'HTMLTabs'              => __DIR__ . '/Easy/HTMLTabs.php',
     'TabView'               => __DIR__ . '/Easy/HTMLTabs.php',
     'HTMLTree'              => __DIR__ . '/Easy/HTMLTree.php',
-    'Panel'                 => __DIR__ . '/Easy/Panel.php',
+    
+    'Openbiz\Easy\Panel'    => __DIR__ . '/Easy/Panel.php',
+    
     'PickerForm'            => __DIR__ . '/Easy/PickerForm.php',
-    'ViewRenderer'          => __DIR__ . '/Easy/ViewRenderer.php',
+
 
     // service library
     'accessService'         => __DIR__ . '/Service/accessService.php',
@@ -182,7 +190,7 @@ return array(
     'Openbiz\Object\MetaIterator'       => __DIR__ . '/Object/MetaIterator.php',    
     //'Openbiz\Object\Parameter'          => __DIR__ . '/Object/Parameter.php',
     
-    'UIControlInterface'                => __DIR__ . '/Object/UIControlInterface.php',
+    'Openbiz\Object\UIControlInterface'   => __DIR__ . '/Object/UIControlInterface.php',
 
     'Openbiz\Data\Exception'            => __DIR__ . '/Data/Exception.php',   
     'Openbiz\Validation\Exception'      => __DIR__ . '/Validation/Exception.php',

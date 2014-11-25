@@ -12,6 +12,7 @@
  */
 
 use Openbiz\Data\Helpers\QueryStringParam;
+use Openbiz\Easy\EasyForm;
 
 class GeneralSettingForm extends EasyForm
 {        

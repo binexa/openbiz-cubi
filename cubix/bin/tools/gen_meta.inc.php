@@ -659,7 +659,7 @@ class FormGenerator
      * Form object class name, default is EasyForm
      * @var string
      */
-    public $form_obj_class = "EasyForm";
+    public $form_obj_class = "Openbiz\Easy\EasyForm";
     /**
      * ACL name
      * @var string

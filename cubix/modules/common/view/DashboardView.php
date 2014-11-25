@@ -26,6 +26,7 @@
 
 use Openbiz\Openbiz;
 use Openbiz\Object\MetaIterator;
+use Openbiz\Easy\EasyView;
 
 class DashboardView extends EasyView
 {

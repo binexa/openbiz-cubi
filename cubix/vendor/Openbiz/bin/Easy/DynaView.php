@@ -14,6 +14,9 @@
  * @version   $Id: DynaView.php 3284 2011-02-22 06:56:33Z rockys $
  */
 
+namespace Openbiz\Easy;
+
+use Openbiz\Easy\EasyView;
 /**
  * DynaView class is the class that contains list of forms dinamicaly.
  * View is same as html page.

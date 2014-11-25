@@ -11,6 +11,8 @@
  * @version   $Id: SessionListForm.php 3372 2012-05-31 06:19:06Z rockyswen@gmail.com $
  */
 
+use Openbiz\Easy\EasyForm;
+
 class SessionListForm extends EasyForm
 {
 	public function fetchDataSet()

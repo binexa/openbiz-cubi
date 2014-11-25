@@ -14,6 +14,8 @@
 
 use Openbiz\Openbiz;
 
+use Openbiz\Easy\EasyForm;
+
 class ArrayListForm extends EasyForm {
 
     public $totalRecords;

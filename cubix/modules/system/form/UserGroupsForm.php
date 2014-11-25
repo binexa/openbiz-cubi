@@ -12,6 +12,7 @@
  */
 
 use Openbiz\Openbiz;
+use Openbiz\Easy\EasyForm;
 
 class UserGroupsForm extends EasyForm{
 	public function SetDefault($group_id=null){

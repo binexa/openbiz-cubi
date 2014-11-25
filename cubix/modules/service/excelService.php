@@ -29,7 +29,7 @@ use Openbiz\Data\DataRecord;
  */
 
 use Openbiz\Openbiz;
-use Openbiz\Resource;
+use Openbiz\Easy\EasyForm;
 
 include_once (OPENBIZ_PATH."/messages/excelService.msg");
 

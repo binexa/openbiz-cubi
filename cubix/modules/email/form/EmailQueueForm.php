@@ -12,6 +12,7 @@
  * @version   $Id: EmailQueueForm.php 3358 2012-05-31 05:57:58Z rockyswen@gmail.com $
  */
 use Openbiz\Openbiz;
+use Openbiz\Easy\EasyForm;
 
 class EmailQueueForm extends EasyForm
 {

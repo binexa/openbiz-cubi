@@ -550,7 +550,7 @@ class Application extends \Openbiz\Object\Object
      */
     protected function validateRequest($obj, $methodName)
     {
-        if (is_a($obj, "EasyForm") || is_a($obj, "BaseForm")) {
+        if (is_a($obj, "Openbiz\Easy\EasyForm") || is_a($obj, "BaseForm")) {
             if (!$obj->validateRequest($methodName)) {
                 return false;
             }
@@ -565,6 +565,7 @@ class Application extends \Openbiz\Object\Object
     private function _dispatchView()
     {
         $request = $this->request;
+                
         if (!ObjectFactoryHelper::getXmlFileWithPath($request->view)) {
             $this->_renderNotFoundView();
             exit;

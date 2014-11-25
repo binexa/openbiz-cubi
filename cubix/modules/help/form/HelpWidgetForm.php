@@ -12,6 +12,7 @@
  * @version   $Id: HelpWidgetForm.php 4608 2012-11-05 10:08:31Z hellojixian@gmail.com $
  */
 use Openbiz\Openbiz;
+use Openbiz\Easy\EasyForm;
 
 class HelpWidgetForm extends EasyForm
 {

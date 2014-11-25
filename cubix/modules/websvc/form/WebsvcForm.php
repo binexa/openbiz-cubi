@@ -11,6 +11,8 @@
  * @version   $Id: WebsvcForm.php 3376 2012-05-31 06:23:51Z rockyswen@gmail.com $
  */
 
+use Openbiz\Easy\EasyForm;
+
 class WebSvcForm extends EasyForm 
 { 
 

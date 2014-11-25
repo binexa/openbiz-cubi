@@ -27,7 +27,7 @@
  * @copyright 2004-2005 Sagi Bashari
  */
 
-use Openbiz\i18n\I18n;
+use Openbiz\I18n\I18n;
 
 /**
  * Replaces arguments in a string with their values.

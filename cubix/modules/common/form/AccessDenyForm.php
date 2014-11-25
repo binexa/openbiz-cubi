@@ -13,6 +13,8 @@
 
 use Openbiz\Openbiz;
 
+use Openbiz\Easy\EasyForm;
+
 class AccessDenyForm extends EasyForm
 {
 	public $isDefaultPage = 0;

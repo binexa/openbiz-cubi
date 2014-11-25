@@ -13,7 +13,7 @@
  */
 
 use Openbiz\Openbiz;
-
+use Openbiz\Easy\EasyForm;
 
 class WidgetForm extends EasyForm
 {

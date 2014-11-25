@@ -15,6 +15,7 @@
 use Openbiz\Openbiz;
 use Openbiz\Helpers\TemplateHelper;
 use Openbiz\Object\ObjectFactoryHelper;
+use Openbiz\Easy\EasyForm;
 
 class EmailTemplateForm extends EasyForm
 {

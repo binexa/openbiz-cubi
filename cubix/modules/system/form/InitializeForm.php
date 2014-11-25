@@ -2,7 +2,7 @@
 
 use Openbiz\Openbiz;
 use Openbiz\Data\Helpers\QueryStringParam;
-
+use Openbiz\Easy\EasyForm;
 
 require_once dirname(__FILE__)."/UserForm.php";
 

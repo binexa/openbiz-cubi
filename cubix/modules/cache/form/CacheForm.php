@@ -13,6 +13,7 @@
 
 use Openbiz\Openbiz;
 use Openbiz\Object\ObjectFactoryHelper;
+use Openbiz\Easy\EasyFormGrouping;
 
 class CacheForm extends EasyFormGrouping
 {

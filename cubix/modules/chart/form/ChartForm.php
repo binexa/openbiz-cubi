@@ -3,6 +3,8 @@
 use Openbiz\Openbiz;
 use Openbiz\Data\Helpers\QueryStringParam;
 
+use Openbiz\Easy\EasyForm;
+
 class ChartForm extends EasyForm
 {
 	public $chartCategory;

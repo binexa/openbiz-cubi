@@ -1,4 +1,7 @@
 <?php 
+
+use Openbiz\Easy\EasyView;
+
 class LoaderNotInstalledView extends EasyView
 {
 	public function render()

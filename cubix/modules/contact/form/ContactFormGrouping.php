@@ -12,6 +12,7 @@
  * @version   $Id: ContactFormGrouping.php 3356 2012-05-31 05:47:51Z rockyswen@gmail.com $
  */
 use Openbiz\Openbiz;
+use Openbiz\Easy\EasyFormGrouping;
 
 class ContactFormGrouping extends EasyFormGrouping
 {

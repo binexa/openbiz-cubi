@@ -13,7 +13,7 @@
 
 use Openbiz\Openbiz;
 use Openbiz\Object\MetaObject;
-use Openbiz\i18n\I18n;
+use Openbiz\I18n\I18n;
 
 include_once(Openbiz::$app->getModulePath()."/common/lib/fileUtil.php");
 include_once(Openbiz::$app->getModulePath()."/common/lib/httpClient.php");

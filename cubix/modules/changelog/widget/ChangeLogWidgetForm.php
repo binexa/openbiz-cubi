@@ -12,8 +12,10 @@
  */
 
 use Openbiz\Openbiz;
-use Openbiz\i18n\I18n;
+use Openbiz\I18n\I18n;
 use Openbiz\Helpers\MessageHelper;
+
+use Openbiz\Easy\EasyForm;
 
 class ChangeLogWidgetForm extends EasyForm
 {

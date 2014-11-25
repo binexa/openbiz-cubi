@@ -87,7 +87,7 @@ class Openbiz
     public static function getFormObject($objectName)
     {
         $obj = Openbiz::getObject($objectName, 0);
-        if (is_a($obj, 'EasyForm')) {
+        if (is_a($obj, 'Openbiz\Easy\EasyForm')) {
             return $obj;
         }
     }

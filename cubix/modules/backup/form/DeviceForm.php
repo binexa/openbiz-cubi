@@ -11,6 +11,8 @@
  * @version   $Id: DeviceForm.php 3351 2012-05-31 05:33:35Z rockyswen@gmail.com $
  */
 
+use Openbiz\Easy\EasyForm;
+
 class DeviceForm extends EasyForm
 {
 	public function canDeleteRecord($dataRec)

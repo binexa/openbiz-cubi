@@ -12,6 +12,7 @@
  * @version   $Id: LocationForm.php 4224 2012-09-16 14:16:02Z rockyswen@gmail.com $
  */
 use Openbiz\Openbiz;
+use Openbiz\Easy\EasyForm;
 
 class LocationForm extends EasyForm
 {

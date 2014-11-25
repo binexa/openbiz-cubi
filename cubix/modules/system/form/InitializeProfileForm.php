@@ -1,6 +1,7 @@
 <?php
 
 use Openbiz\Openbiz;
+use Openbiz\Easy\EasyForm;
 
 require_once dirname(__FILE__)."/UserForm.php";
 

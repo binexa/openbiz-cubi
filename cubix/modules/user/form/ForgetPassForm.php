@@ -13,6 +13,7 @@
  */
 
 use Openbiz\Openbiz;
+use Openbiz\Easy\EasyForm;
 
 /**
  * ForgetPassForm class - implement the logic of forget password form

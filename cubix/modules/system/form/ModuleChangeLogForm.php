@@ -11,6 +11,8 @@
  * @version   $Id: ModuleChangeLogForm.php 3372 2012-05-31 06:19:06Z rockyswen@gmail.com $
  */
 
+use Openbiz\Easy\EasyFormGrouping;
+
 class ModuleChangeLogForm extends EasyFormGrouping
 {
 	public function LoadAll()

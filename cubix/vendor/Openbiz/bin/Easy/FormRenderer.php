@@ -10,10 +10,12 @@
  *
  * @package   openbiz.bin.easy
  * @copyright Copyright (c) 2005-2011, Rocky Swen
- * @license   http://www.opensource.org/licenses/bsd-license.php
+ * @licennse   http://www.opensource.org/licenses/bsd-license.php
  * @link      http://www.phpopenbiz.org/
  * @version   $Id: FormRenderer.php 4075 2011-05-02 13:43:39Z jixian2003 $
  */
+
+namespace Openbiz\Easy;
 
 use Openbiz\Openbiz;
 use Openbiz\Helpers\TemplateHelper;

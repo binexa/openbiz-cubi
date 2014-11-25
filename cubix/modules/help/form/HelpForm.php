@@ -11,6 +11,8 @@
  * @version   $Id: HelpForm.php 3344 2012-05-31 05:00:48Z rockyswen@gmail.com $
  */
 
+use Openbiz\Easy\EasyForm;
+
 class HelpForm extends EasyForm
 {
 

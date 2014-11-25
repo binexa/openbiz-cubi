@@ -12,7 +12,8 @@
  */
 
 use Openbiz\Openbiz;
-use Openbiz\i18n\I18n;
+use Openbiz\I18n\I18n;
+use Openbiz\Easy\EasyForm;
 
 /**
  * UserForm class - implement the login of login form

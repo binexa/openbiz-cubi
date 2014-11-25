@@ -11,7 +11,7 @@
  * @version   $Id: LanguageSelector.php 3374 2012-05-31 06:22:06Z rockyswen@gmail.com $
  */
 
-use Openbiz\i18n\I18n;
+use Openbiz\I18n\I18n;
 
 class LanguageSelector extends DropDownList{
     function getList(){

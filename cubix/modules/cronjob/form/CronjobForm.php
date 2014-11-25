@@ -10,6 +10,7 @@
  * @link      http://code.google.com/p/openbiz-cubi/
  * @version   $Id: CronjobForm.php 3357 2012-05-31 05:56:18Z rockyswen@gmail.com $
  */
+use Openbiz\Easy\EasyForm;
 
 class CronjobForm extends EasyForm
 {

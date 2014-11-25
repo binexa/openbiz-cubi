@@ -26,6 +26,7 @@
  * @version   $Id: PreferenceForm.php 3362 2012-05-31 06:03:29Z rockyswen@gmail.com $
  */
 
+use Openbiz\Easy\EasyForm;
 
 /**
  * PreferenceForm class 

@@ -1,6 +1,7 @@
 <?php
 
 use Openbiz\Openbiz;
+use Openbiz\Easy\EasyForm;
 
 class FinishedForm extends EasyForm
 {

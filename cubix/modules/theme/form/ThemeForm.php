@@ -15,6 +15,7 @@
 
 use Openbiz\Openbiz;
 use Openbiz\Helpers\TemplateHelper;
+use Openbiz\Easy\EasyForm;
 
 include_once Openbiz::$app->getModulePath() . "/theme/lib/ThemeCreator.php";
 

@@ -13,7 +13,7 @@
 
 use Openbiz\Openbiz;
 use Openbiz\Core\Expression;
-
+use Openbiz\Easy\EasyForm;
 
 class BackupForm extends EasyForm
 {

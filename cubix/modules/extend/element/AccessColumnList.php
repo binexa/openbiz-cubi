@@ -11,7 +11,7 @@
  * @version   $Id: AccessColumnList.php 3360 2012-05-31 06:00:17Z rockyswen@gmail.com $
  */
 
-use Openbiz\i18n\I18n;
+use Openbiz\I18n\I18n;
 
 class AccessColumnList extends ColumnList
 {

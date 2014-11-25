@@ -12,6 +12,7 @@
  */
 
 use Openbiz\Openbiz;
+use Openbiz\Easy\EasyForm;
 
 /**
  * UserPreferenceForm class - implement the logic of setting user preferences

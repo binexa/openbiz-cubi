@@ -11,6 +11,8 @@
  * @version   $Id: ExtendSettingForm.php 3360 2012-05-31 06:00:17Z rockyswen@gmail.com $
  */
 
+use Openbiz\Easy\EasyForm;
+
 class ExtendSettingForm extends EasyForm
 {
 	public $parentFormElementMeta;

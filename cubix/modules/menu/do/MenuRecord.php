@@ -16,7 +16,7 @@
 
 use Openbiz\Openbiz;
 use Openbiz\Core\Expression;
-use Openbiz\i18n\I18n;
+use Openbiz\I18n\I18n;
 /**
  * MenuRecord class, for tree structure
  *

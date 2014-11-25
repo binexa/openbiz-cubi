@@ -14,6 +14,7 @@
 
 use Openbiz\Openbiz;
 use Openbiz\Data\DataRecord;
+use Openbiz\Easy\EasyForm;
 
 /**
  * LoginForm class - implement the logic of login form

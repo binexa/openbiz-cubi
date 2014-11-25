@@ -12,6 +12,7 @@
  * @version   $Id: ContactGrabberFinishForm.php 3356 2012-05-31 05:47:51Z rockyswen@gmail.com $
  */
 use Openbiz\Openbiz;
+use Openbiz\Easy\EasyForm;
 
 class ContactGrabberFinishForm extends EasyForm
 {

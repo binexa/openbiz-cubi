@@ -12,6 +12,7 @@
  */
 
 use Openbiz\Openbiz;
+use Openbiz\Easy\EasyForm;
 
 include_once Openbiz::$app->getModulePath()."/system/lib/ModuleLoader.php";
 

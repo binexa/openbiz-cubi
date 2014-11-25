@@ -14,7 +14,10 @@
  * @version   $Id: EasyFormWizard.php 3037 2010-12-30 04:00:30Z iceve $
  */
 
+namespace Openbiz\Easy;
+
 use Openbiz\Data\DataRecord;
+use Openbiz\Easy\EasyForm;
 
 /**
  * EasyFormWizard class, extension of EasyForm to support wizard form

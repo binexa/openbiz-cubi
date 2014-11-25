@@ -14,6 +14,8 @@
  * @version   $Id: PickerForm.php 4016 2011-04-29 12:25:27Z jixian2003 $
  */
 
+use Openbiz\Easy\EasyForm;
+
 /**
  * PickerForm class - contains form object metadata functions for picker
  *

@@ -14,7 +14,8 @@
 
 use Openbiz\Openbiz;
 use Openbiz\Object\MetaObject;
-use Openbiz\i18n\I18n;
+use Openbiz\Object\UIControlInterface;
+use Openbiz\I18n\I18n;
 
 include_once Openbiz::$app->getModulePath() . DIRECTORY_SEPARATOR . 'menu' . DIRECTORY_SEPARATOR . 'widget' . DIRECTORY_SEPARATOR . 'MenuRenderer.php';
 

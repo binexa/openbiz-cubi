@@ -356,11 +356,11 @@ class Expression
                     $section = Expression::replaceVarExpr($section, $object);  // replace variable expr;
                     //Openbiz::$app->getLog()->log(LOG_DEBUG, "EXPRESSION", "###expression 2: ".$section.""); 
                     if ($_section == $section) {
-                        if ((is_subclass_of($object, "BizDataObj") || get_class($object) == "BizDataObj") AND strstr($section, '[')) {
+                        if ((is_subclass_of($object, "Openbiz\Data\BizDataObj") || get_class($object) == "Openbiz\Data\BizDataObj") AND strstr($section, '[')) {
                             $section = Expression::replaceFieldsExpr($section, $object);
                         }  // replace [field] with its value
 
-                        if ((is_subclass_of($object, "EasyForm") || get_class($object) == "EasyForm") AND strstr($section, '[')) {
+                        if ((is_subclass_of($object, "Openbiz\Easy\EasyForm") || get_class($object) == "Openbiz\Easy\EasyForm") AND strstr($section, '[')) {
                             $section = Expression::replaceElementsExpr($section, $object);
                         }  // replace [field] with its value
                     }

@@ -5,7 +5,20 @@
   Copyright (c) 2005-2011, Openbiz Technology LLC
   Version $Id: TypeListForm.xml 3356 2012-05-31 05:47:51Z rockyswen@gmail.com $
 -->
-<EasyForm Name="TypeListForm" Class="EasyFormGrouping" GroupBy="[type_name:type_id]" FormType="List" jsClass="jbForm" Title="View by Contact Type" Description="Telephone directory (also called a telephone book and phone book) is a listing of telephone subscribers in a geographical area or subscribers to services provided by the organization that publishes the directory" BizDataObj="contact.do.ContactDO" PageSize="5" DefaultForm="Y" TemplateEngine="Smarty" TemplateFile="contact_list_grouping.tpl.html" EventName="CONTACT" MessageFile="Contact.msg">
+<EasyForm Name="TypeListForm" 
+          Class="Openbiz\Easy\EasyFormGrouping" 
+          GroupBy="[type_name:type_id]" 
+          FormType="List" 
+          jsClass="jbForm" 
+          Title="View by Contact Type" 
+          Description="Telephone directory (also called a telephone book and phone book) is a listing of telephone subscribers in a geographical area or subscribers to services provided by the organization that publishes the directory" 
+          BizDataObj="contact.do.ContactDO" 
+          PageSize="5" 
+          DefaultForm="Y" 
+          TemplateEngine="Smarty" 
+          TemplateFile="contact_list_grouping.tpl.html" 
+          EventName="CONTACT" 
+          MessageFile="Contact.msg">
     <DataPanel>
         
         <Element Name="row_selections" Class="RowCheckbox"  Label="" FieldName="ID"/>

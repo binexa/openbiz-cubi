@@ -12,6 +12,7 @@
  * @version   $Id: ErrorForm.php 5017 2013-01-01 11:28:44Z hellojixian@gmail.com $
  */
 use Openbiz\Openbiz;
+use Openbiz\Easy\EasyForm;
 
 class ErrorForm extends EasyForm
 {

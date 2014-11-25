@@ -15,7 +15,7 @@
  * @version   $Id$
  */
 
-use Openbiz\i18n\I18n;
+use Openbiz\I18n\I18n;
 
 /**
  * ChartBase class is base class of all charts

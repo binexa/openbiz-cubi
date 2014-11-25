@@ -15,6 +15,8 @@
  * @version   $Id: EasyForm.php 4203 2011-06-01 07:33:23Z rockys $
  */
 
+namespace Openbiz\Easy;
+
 use Openbiz\Openbiz;
 use Openbiz\Core\ErrorHandler;
 use Openbiz\Core\Expression;
@@ -23,6 +25,10 @@ use Openbiz\Object\MetaObject;
 use Openbiz\Object\Statefullable;
 use Openbiz\Helpers\MessageHelper;
 use Openbiz\Data\DataRecord;
+
+use Openbiz\Easy\Panel;
+use Openbiz\Easy\FormRenderer;
+
 
 /**
  * EasyForm class - contains form object metadata functions

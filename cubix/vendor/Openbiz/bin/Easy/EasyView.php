@@ -15,6 +15,8 @@
  * @version   $Id: EasyView.php 3614 2011-04-07 05:34:25Z jixian2003 $
  */
 
+namespace Openbiz\Easy;
+
 use Openbiz\Openbiz;
 use Openbiz\Object\MetaIterator;
 use Openbiz\Core\Expression;
@@ -83,13 +85,13 @@ class EasyView extends MetaObject implements Statefullable
         $this->viewSet = isset($xmlArr["EASYVIEW"]["ATTRIBUTES"]["VIEWSET"]) ? $xmlArr["EASYVIEW"]["ATTRIBUTES"]["VIEWSET"] : null;
         $this->tab = isset($xmlArr["EASYVIEW"]["ATTRIBUTES"]["TAB"]) ? $xmlArr["EASYVIEW"]["ATTRIBUTES"]["TAB"] : null;
 
-        $this->formRefs = new MetaIterator($xmlArr["EASYVIEW"]["FORMREFERENCES"]["REFERENCE"], "FormReference", $this);
+        $this->formRefs = new MetaIterator($xmlArr["EASYVIEW"]["FORMREFERENCES"]["REFERENCE"], "Openbiz\Easy\FormReference", $this);
         
         if ($xmlArr["EASYVIEW"]["FORMREFERENCELIBS"]) {
-            $this->formRefLibs = new MetaIterator($xmlArr["EASYVIEW"]["FORMREFERENCELIBS"]["REFERENCE"], "FormReference", $this);
+            $this->formRefLibs = new MetaIterator($xmlArr["EASYVIEW"]["FORMREFERENCELIBS"]["REFERENCE"], "Openbiz\Easy\FormReference", $this);
         }
         if ($xmlArr["EASYVIEW"]["WIDGETS"]) {
-            $this->widgets = new MetaIterator($xmlArr["EASYVIEW"]["WIDGETS"]["REFERENCE"], "FormReference", $this);
+            $this->widgets = new MetaIterator($xmlArr["EASYVIEW"]["WIDGETS"]["REFERENCE"], "Openbiz\Easy\FormReference", $this);
         }
         $this->messageFile = isset($xmlArr["EASYVIEW"]["ATTRIBUTES"]["MESSAGEFILE"]) ? $xmlArr["EASYVIEW"]["ATTRIBUTES"]["MESSAGEFILE"] : null;
         $this->objectMessages = MessageHelper::loadMessage($this->messageFile, $this->package);
@@ -108,11 +110,11 @@ class EasyView extends MetaObject implements Statefullable
             $this->formRefs = array();
             if (isset($xmlArr["EASYVIEW"]["TILE"]["ATTRIBUTES"])) {
                 $tileName = $xmlArr["EASYVIEW"]["TILE"]["ATTRIBUTES"]["NAME"];
-                $this->tiles[$tileName] = new MetaIterator($xmlArr["EASYVIEW"]["TILE"]["REFERENCE"], "FormReference", $this);
+                $this->tiles[$tileName] = new MetaIterator($xmlArr["EASYVIEW"]["TILE"]["REFERENCE"], "Openbiz\Easy\FormReference", $this);
             } else {
                 foreach ($xmlArr["EASYVIEW"]["TILE"] as $child) {
                     $tileName = $child["ATTRIBUTES"]["NAME"];
-                    $this->tiles[$tileName] = new MetaIterator($child["REFERENCE"], "FormReference", $this);
+                    $this->tiles[$tileName] = new MetaIterator($child["REFERENCE"], "Openbiz\Easy\FormReference", $this);
                 }
             }
             //echo "<pre>"; print_r($this->tiles); echo "</pre>";
@@ -432,70 +434,3 @@ class EasyView extends MetaObject implements Statefullable
 
 }
 
-/**
- * FormReference class is the class that contain form reference.
- *
- * @package openbiz.bin.easy
- * @author rocky swen
- * @copyright Copyright (c) 2005-2009
- * @access public
- */
-class FormReference
-{
-
-    public $objectName;
-    public $subForms;
-    public $objectDescription;
-    private $_parentForm;
-    public $display = true;
-    protected $viewName;
-
-    /**
-     * Contructor, store form info from array to variable of class
-     *
-     * @param array $xmlArr array of form information
-     */
-    public function __construct($xmlArr)
-    {
-        foreach ($xmlArr["ATTRIBUTES"] as $name => $value) {
-            $name = 'm_' . ucfirst(strtolower($name));
-            $this->$name = $value;
-        }
-        $this->objectName = $xmlArr["ATTRIBUTES"]["NAME"];
-        $this->subForms = $xmlArr["ATTRIBUTES"]["SUBFORMS"];
-        $this->objectDescription = $xmlArr["ATTRIBUTES"]["DESCRIPTION"];
-    }
-
-    /**
-     * Set parent form
-     * 
-     * @param string $formName form name
-     * @@return void
-     */
-    public function setParentForm($formName)
-    {
-        $this->_parentForm = $formName;
-    }
-
-    public function setViewName($viewName)
-    {
-        $this->viewName = $viewName;
-        $this->translate();
-    }
-
-    protected function translate()
-    {
-        $module = substr($this->viewName, 0, intval(strpos($this->viewName, '.')));
-        //echo $this->getTransKey('Description');
-        $this->objectDescription = I18n::t($this->objectDescription, $this->getTransKey('Description'), $module);
-    }
-
-    protected function getTransKey($name)
-    {
-        $shortViewName = substr($this->viewName, intval(strrpos($this->viewName, '.') + 1));
-        return strtoupper($shortViewName . '_' . $this->objectName . '_' . $name);
-    }
-
-}
-
-?>

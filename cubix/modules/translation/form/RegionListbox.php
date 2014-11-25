@@ -11,7 +11,7 @@
  * @version   $Id: RegionListbox.php 3374 2012-05-31 06:22:06Z rockyswen@gmail.com $
  */
 
-use Openbiz\i18n\I18n;
+use Openbiz\I18n\I18n;
 
 class RegionListbox extends Listbox{
 	public function getFromList(&$list)

@@ -12,6 +12,7 @@
  */
 
 use Openbiz\Openbiz;
+use Openbiz\Easy\EasyView;
 
 class UserFindPasswordView extends EasyView
 {

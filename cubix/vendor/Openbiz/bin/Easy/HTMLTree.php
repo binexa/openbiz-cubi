@@ -16,6 +16,8 @@
 
 //use Openbiz\Resource;
 use Openbiz\Object\MetaObject; 
+use Openbiz\Object\UIControlInterface;
+
 /**
  * HTMLTree class is the base class of HTML tree
  *

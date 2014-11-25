@@ -15,8 +15,11 @@
  * @version   $Id: Panel.php 4049 2011-05-01 12:56:06Z jixian2003 $
  */
 
+namespace Openbiz\Easy;
+
 use Openbiz\Openbiz;
 use Openbiz\Object\MetaIterator;
+use Openbiz\Object\UIControlInterface;
 
 /**
  * Panel class is the base class of Panel that embeded in EasyForm

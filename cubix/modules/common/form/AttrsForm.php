@@ -11,6 +11,8 @@
  * @version   $Id: AttrsForm.php 3355 2012-05-31 05:43:33Z rockyswen@gmail.com $
  */
 
+use Openbiz\Easy\EasyForm;
+
 class AttrsForm extends EasyForm
 {
 	

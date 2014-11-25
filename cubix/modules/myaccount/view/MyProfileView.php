@@ -1,6 +1,7 @@
 <?php
 
 use Openbiz\Object\MetaIterator;
+use Openbiz\Easy\EasyView;
 
 class MyProfileView extends EasyView {
 

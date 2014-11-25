@@ -10,6 +10,7 @@
  * @link      http://code.google.com/p/openbiz-cubi/
  * @version   $Id: ContactTypeForm.php 3356 2012-05-31 05:47:51Z rockyswen@gmail.com $
  */
+use Openbiz\Easy\EasyForm;
 
 class ContactTypeForm extends EasyForm
 {

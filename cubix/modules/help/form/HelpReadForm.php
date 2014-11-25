@@ -11,6 +11,8 @@
  * @version   $Id: HelpReadForm.php 3345 2012-05-31 05:04:56Z rockyswen@gmail.com $
  */
 
+use Openbiz\Easy\EasyForm;
+
 class HelpReadForm extends EasyForm
 {
 	public function fetchData(){

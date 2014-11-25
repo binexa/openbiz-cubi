@@ -13,6 +13,7 @@
  */
 
 use Openbiz\Openbiz;
+use Openbiz\Easy\EasyForm;
 
 class SwitchUserWidget extends EasyForm
 {

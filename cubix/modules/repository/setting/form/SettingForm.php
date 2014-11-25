@@ -37,6 +37,9 @@ use Openbiz\Data\Helpers\QueryStringParam;
  * @copyright Copyright (c) 2005-2009
  * @access public
  */
+
+use Openbiz\Easy\EasyForm;
+
 class SettingForm extends EasyForm
 {
     protected $_userId = null;

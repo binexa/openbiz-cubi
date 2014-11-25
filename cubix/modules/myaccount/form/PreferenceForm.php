@@ -29,6 +29,7 @@
 
 use Openbiz\Openbiz;
 use Openbiz\Data\Helpers\QueryStringParam;
+use Openbiz\Easy\EasyForm;
 
 /**
  * AccountEditForm class - implement the logic of edit my account form

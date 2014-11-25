@@ -14,6 +14,7 @@
 use Openbiz\Openbiz;
 use Openbiz\Object\ObjectFactoryHelper;
 use Openbiz\Helpers\TemplateHelper;
+use Openbiz\Easy\EasyForm;
 
 class DatabaseForm extends EasyForm
 {

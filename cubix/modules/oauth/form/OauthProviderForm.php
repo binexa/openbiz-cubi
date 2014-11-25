@@ -1,6 +1,11 @@
 <?php
 
 use Openbiz\Openbiz;
+use Openbiz\Easy\EasyForm;
+
+/**
+ * 
+ */
 class OauthProviderForm extends EasyForm
 {
 	protected $type;

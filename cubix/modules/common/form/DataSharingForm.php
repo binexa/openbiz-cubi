@@ -15,6 +15,8 @@
 use Openbiz\Openbiz;
 use Openbiz\Data\DataRecord;
 
+use Openbiz\Easy\EasyForm;
+
 class DataSharingForm extends EasyForm
 {
 

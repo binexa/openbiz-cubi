@@ -11,6 +11,8 @@
  * @version   $Id: UserPreferenceForm.php 3814 2012-08-05 07:27:06Z rockyswen@gmail.com $
  */
 
+use Openbiz\Easy\EasyForm;
+
 class ProviderForm extends EasyForm
 {
 	public function updateFieldValue($id,$fld_name,$value)

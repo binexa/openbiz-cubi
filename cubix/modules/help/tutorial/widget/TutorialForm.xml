@@ -41,7 +41,7 @@
                  SCROLLING="no"
                  Width="{@:Elem[fld_width].Value}"
                  Height="{@:Elem[fld_height].Value}"
-                 Link="{@:Elem[fld_url_value].Value}?lang={Openbiz\i18n\I18n::getCurrentLangCode()}"
+                 Link="{@:Elem[fld_url_value].Value}?lang={Openbiz\I18n\I18n::getCurrentLangCode()}"
                  FieldName="content_url"
                  Label="Content"
                  AllowURLParam="N"/>

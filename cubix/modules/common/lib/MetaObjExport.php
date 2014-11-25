@@ -39,15 +39,15 @@ class MetaObjExport
 	
 	public function MetaObj2XML()
 	{
-		if (is_a($this->object, "EasyForm")) {
+		if (is_a($this->object, "Openbiz\Easy\EasyForm")) {
 			$this->objType = "Form";
 			return $this->Form2XML();
 		}
-		else if (is_a($this->object, "EasyView")) {
+		else if (is_a($this->object, "Openbiz\Easy\EasyView")) {
 			$this->objType = "View";
 			return $this->View2XML();
 		}
-		else if (is_a($this->object, "BizDataObj")) {
+		else if (is_a($this->object, "Openbiz\Data\BizDataObj")) {
 			$this->objType = "DataObject";
 			return $this->DataObj2XML();
 		}
@@ -241,7 +241,7 @@ class MetaObjExport
 		else if ($className == "FormReference") {
 			$elemName = "Reference";
 		}
-		if (is_subclass_of($obj, "EasyView")) {
+		if (is_subclass_of($obj, "Openbiz\Easy\EasyView")) {
 			$elemName = "EasyView";
 		}
 		

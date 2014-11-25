@@ -181,6 +181,14 @@ class ObjectFactory
              $class = 'Openbiz\\Data\\BizField';
         }       
         
+        if ($class === 'EasyForm') {
+             $class = 'Openbiz\\Easy\\EasyForm';
+        }        
+        
+        if ($class === 'EasyView') {
+             $class = 'Openbiz\\Easy\\EasyView';
+        }
+        
         if (strrpos($class, '\\' ) !== false) {
             $obj_ref = new $class($xmlArr);
             return $obj_ref;

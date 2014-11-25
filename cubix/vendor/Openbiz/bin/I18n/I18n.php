@@ -15,7 +15,7 @@
  * @version   $Id: I18n.php 5154 2013-01-16 09:48:03Z rockyswen@gmail.com $
  */
 
-namespace Openbiz\i18n;
+namespace Openbiz\I18n;
 
 use Openbiz\Openbiz;
 

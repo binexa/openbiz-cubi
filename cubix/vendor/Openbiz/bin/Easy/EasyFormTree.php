@@ -13,7 +13,9 @@
  * @link      http://www.phpopenbiz.org/
  * @version   $Id: EasyFormTree.php 2606 2010-11-25 07:51:59Z mr_a_ton $
  */
+
 use Openbiz\Data\Helpers\QueryStringParam;
+use Openbiz\Easy\EasyForm;
 
 /**
  * EasyFormTree class - contains formtree object metadata functions

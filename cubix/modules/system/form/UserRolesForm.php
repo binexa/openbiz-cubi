@@ -12,6 +12,7 @@
  */
 
 use Openbiz\Openbiz;
+use Openbiz\Easy\EasyForm;
 
 class UserRolesForm extends EasyForm{
 	public function SetDefault($role_id=null){

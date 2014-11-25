@@ -1,4 +1,7 @@
 <?php 
+
+use Openbiz\Easy\EasyForm;
+
 class CustomLogoForm extends EasyForm
 {
 	public function UpdateLogo()

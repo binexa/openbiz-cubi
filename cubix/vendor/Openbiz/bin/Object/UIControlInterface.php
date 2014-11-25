@@ -1,5 +1,7 @@
 <?php
 
+namespace Openbiz\Object;
+
 /**
  * UIControlInterface, all UI classes need to implement Render method
  *

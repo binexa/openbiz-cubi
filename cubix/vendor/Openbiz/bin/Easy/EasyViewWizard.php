@@ -14,6 +14,8 @@
  * @version   $Id: EasyViewWizard.php 2553 2010-11-21 08:36:48Z mr_a_ton $
  */
 
+use Openbiz\Easy\EasyView;
+
 /**
  * EasyViewWizard is the class that controls the wizard forms
  *

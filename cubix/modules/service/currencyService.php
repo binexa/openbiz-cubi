@@ -11,7 +11,7 @@
  * @version   $Id: currencyService.php 4579 2012-11-03 13:22:25Z hellojixian@gmail.com $
  */
 
-use Openbiz\i18n\I18n;
+use Openbiz\I18n\I18n;
 
 class currencyService 
 {
