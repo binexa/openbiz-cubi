@@ -173,21 +173,17 @@ class ObjectFactory
 
         //$package = $xmlArr[$root]["ATTRIBUTES"]["PACKAGE"];
         $class = $xmlArr[$root]["ATTRIBUTES"]["CLASS"];
-        if ($class === 'BizDataObj') {
-             $class = 'Openbiz\\Data\\BizDataObj';
+        
+        
+        if ( isset($this->_classAlias[$class])) {
+            $class = $this->_classAlias[$class];
+        }
+                
+
+        if ($class === 'PickerForm') {
+             $class = 'Openbiz\\Easy\\PickerForm';
         }
 
-        if ($class === 'BizField') {
-             $class = 'Openbiz\\Data\\BizField';
-        }       
-        
-        if ($class === 'EasyForm') {
-             $class = 'Openbiz\\Easy\\EasyForm';
-        }        
-        
-        if ($class === 'EasyView') {
-             $class = 'Openbiz\\Easy\\EasyView';
-        }
         
         if (strrpos($class, '\\' ) !== false) {
             $obj_ref = new $class($xmlArr);
@@ -204,10 +200,11 @@ class ObjectFactory
             $classFile = ClassLoader::getLibFileWithPath($class, $classPackage);
             //echo 'classFile: '.$classFile .'<br />';
             if (!$classFile) {
-                if ($objectPackage)
+                if ($objectPackage) {
                     trigger_error("Cannot find the class with name as $objectPackage.$class", E_USER_ERROR);
-                else
+                } else {
                     trigger_error("Cannot find the class with name as $class of $objName", E_USER_ERROR);
+                }
                 exit();
             }
             include_once($classFile);
@@ -239,7 +236,7 @@ class ObjectFactory
      * @return null
      * @since OpenbizX CubiX
      */
-    public function register($prefix, $path, $ext=null) {        
+    public function register($prefix, $path, $ext=null) {
         $this->_prefix = $prefix;
         $this->_path = $path;        
         if ($ext == null) {
@@ -250,5 +247,17 @@ class ObjectFactory
             $ext[] = array($ext);
         }
     }
+    
+    private $_classAlias = [];
+    
+    public function setClassAlias($classAlias, $className)
+    {
+        $this->_classAlias[$classAlias] = $className;
+    }    
 
+    public function setClassAliases($classAliases)
+    {
+        $this->_classAlias = $classAliases ;
+    }    
+    
 }

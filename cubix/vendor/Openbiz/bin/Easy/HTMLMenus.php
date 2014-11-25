@@ -16,7 +16,10 @@
  */
 
 //use Openbiz\Resource;
+namespace Openbiz\Easy;
+
 use Openbiz\Object\MetaObject;
+
 /**
  * HTMLMenus class is the base class of HTML menus
  *

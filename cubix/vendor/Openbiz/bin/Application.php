@@ -30,7 +30,6 @@ use Openbiz\Web\SessionContext;
 use Openbiz\Web\UserAgent;
 use Openbiz\Object\ObjectFactoryHelper;
 
-
 // run controller
 //
 //session_cache_limiter('public');
@@ -39,7 +38,6 @@ use Openbiz\Object\ObjectFactoryHelper;
 header('Content-Type: text/html; charset=utf-8');
 
 include_once("sysheader_inc.php");
-
 
 /**
  * BizApplication is the class that dispatches client requests to proper objects
@@ -53,27 +51,22 @@ class Application extends \Openbiz\Object\Object
 {
 
     const DEFAULT_THEME = 'default';
+
     /**
      * Request object, initialized when BizApplication created
      * @var Request 
      */
     public $request;
     public $timeZone = 'Asia/jakarta';
-    
     private $_userTimeoutView = OPENBIZ_USER_TIMEOUT_VIEW;
     private $_accessDeniedView = OPENBIZ_ACCESS_DENIED_VIEW;
     private $_securityDeniedView = OPENBIZ_SECURITY_DENIED_VIEW;
     private $_defaultThemeName;
-
     private $_cssUrl;
     private $_jsUrl;
     private $_currentTheme;
-
-
     private $_modulePath = null;
 
-
-    
     public function __construct()
     {
         Openbiz::$app = $this;
@@ -85,6 +78,88 @@ class Application extends \Openbiz\Object\Object
 
         $this->request = new Request($this);
         $this->initSystemDefaultTimezone();
+
+        // define default class alias
+        $classAliases = [
+            'BizDataObj' => 'Openbiz\\Data\\BizDataObj',
+            'BizField' => 'Openbiz\\Data\\BizField',
+            'EasyForm'      =>  'Openbiz\\Easy\\EasyForm',
+            'EasyView' => 'Openbiz\\Easy\\EasyView',
+            'PickerForm' => 'Openbiz\\Easy\\PickerForm',
+            /*
+            'AutoSuggest' => 'AutoSuggest',
+            'BarcodeScanner' => 'BarcodeScanner',
+            'Button' => 'Button',
+            'Checkbox' => 'Checkbox',
+            'CheckListbox' => 'CheckListbox',
+            'CKEditor' => 'CKEditor',
+            'ColorPicker' => 'ColorPicker',
+            'ColumnBar' => 'ColumnBar',
+            'ColumnBool' => 'ColumnBool',
+            'ColumnHidden' => 'ColumnHidden',
+            'ColumnImage' => 'ColumnImage',
+            
+            'ColumnInputText' => 'ColumnInputText',
+            'ColumnList' => 'ColumnList',
+            'ColumnListbox' => 'ColumnListbox',
+            'ColumnPassword' => 'ColumnPassword',
+            'ColumnShare' => 'ColumnShare',
+            'ColumnSorting' => 'ColumnSorting',
+            'ColumnStyle' => 'ColumnStyle',
+            'ColumnText' => 'ColumnText',
+            'ColumnValue' => 'ColumnValue',
+            'DropDownList' => 'DropDownList',
+            'EditCombobox' => 'EditCombobox',
+            'Element' => 'Element',
+            'EventHandler' => 'EventHandler',
+            'File' => 'File',
+            'FileInput' => 'FileInput',
+            'FileUploader' => 'FileUploader',
+            'FormElement' => 'FormElement',
+            'Hidden' => 'Hidden',
+            'HTMLBlock' => 'HTMLBlock',
+            'HTMLButton' => 'HTMLButton',
+            'HTMLPreview' => 'HTMLPreview',
+            'IDCardReader' => 'IDCardReader',
+            'IFrameBox' => 'IFrameBox',
+            'ImageSelector' => 'ImageUploader',
+            'ImageUploader' => 'ImageUploader',
+            'InputDate' => 'InputDate',
+            'InputDateRangePicker' => 'InputDateRangePicker',
+            'InputDatetime' => 'InputDatetime',
+            'InputElement' => 'InputElement',
+            'InputPassword' => 'InputPassword',
+            'InputPicker' => 'InputPicker',
+            'InputText' => 'InputText',
+            'LabelBack' => 'LabelBack',
+            'LabelBar' => 'LabelBar',
+            'LabelBool' => 'LabelBool',
+            'LabelImage' => 'LabelImage',
+            'LabelList' => 'LabelList',
+            'LabelPassword' => 'LabelPassword',
+            'LabelText' => 'LabelText',
+            'LabelTextarea' => 'LabelTextarea',
+            'LabelTextPaging' => 'LabelTextPaging',
+            'Listbox' => 'Listbox',
+            'OptionElement' => 'OptionElement',
+            'PageSelector' => 'PageSelector',
+            'PagesizeSelector' => 'PagesizeSelector',
+            'Password' => 'Password',
+            'Radio' => 'Radio',
+            'RawData' => 'RawData',
+            'ResetButton' => 'ResetButton',
+            'RichText' => 'RichText',
+            'RowCheckbox' => 'RowCheckbox',
+            'Spacer' => 'Spacer',
+            'SubmitButton' => 'SubmitButton',
+            'Textarea' => 'Textarea',
+            'TreeLabelText' => 'TreeLabelText',
+            'TreeListbox' => 'TreeListbox',
+             * 
+             */
+        ];
+
+        Openbiz::objectFactory()->setClassAliases($classAliases);
     }
 
     private $_confgiuration = null;
@@ -124,6 +199,7 @@ class Application extends \Openbiz\Object\Object
      *
      * @return \Openbiz\Web\SessionContext the SessionContext object
      */
+
     public function getSessionContext()
     {
         if ($this->_sessionContext) {
@@ -234,7 +310,6 @@ class Application extends \Openbiz\Object\Object
         }
         return $this->getDBConnection($rDBName);
     }
-
 
 //=========================================
 
@@ -565,7 +640,7 @@ class Application extends \Openbiz\Object\Object
     private function _dispatchView()
     {
         $request = $this->request;
-                
+
         if (!ObjectFactoryHelper::getXmlFileWithPath($request->view)) {
             $this->_renderNotFoundView();
             exit;
@@ -750,7 +825,6 @@ class Application extends \Openbiz\Object\Object
         return $profile;
     }
 
-
     /**
      * Get user profile
      *
@@ -773,7 +847,6 @@ class Application extends \Openbiz\Object\Object
             return isset($profile[$attribute]) ? $profile[$attribute] : "";
         }
     }
-
 
     /**
      * Get user preference
@@ -899,96 +972,94 @@ class Application extends \Openbiz\Object\Object
         return Openbiz::getService(PROFILE_SERVICE);
     }
 
-	/**
-	 * @var string the root directory of the application.
-	 */
-	private $_basePath;
-    
-	/**
-	 * Returns the root directory of the application.
-	 * It defaults to the directory containing the application class file.
-      * 
-      * Note: this method will replace OPENBIZ_APP_PATH const.
-      * 
-	 * @return string the root directory of the module.
-      * @see OPENBIZ_APP_PATH
-	 */
-	public function getBasePath()
-	{
-		if ($this->_basePath === null) {
-			$class = new \ReflectionClass($this);
-			$this->_basePath = dirname($class->getFileName());
-		}
-		return $this->_basePath;
-	}
+    /**
+     * @var string the root directory of the application.
+     */
+    private $_basePath;
 
-	/**
-	 * Sets the root directory of the module.
-	 * This method can only be invoked at the beginning of the constructor.
-	 * @param string $path the root directory of the module. This can be either a directory name or a path alias.
-	 * @throws InvalidParamException if the directory does not exist.
-	 */
-	public function setBasePath($path)
-	{
-		//$path = Yii::getAlias($path);
-		$p = realpath($path);
-		if ($p !== false && is_dir($p)) {
-			$this->_basePath = $p;
-		} else {
-			throw new InvalidParamException("The directory does not exist: $path");
-		}
-	}
+    /**
+     * Returns the root directory of the application.
+     * It defaults to the directory containing the application class file.
+     * 
+     * Note: this method will replace OPENBIZ_APP_PATH const.
+     * 
+     * @return string the root directory of the module.
+     * @see OPENBIZ_APP_PATH
+     */
+    public function getBasePath()
+    {
+        if ($this->_basePath === null) {
+            $class = new \ReflectionClass($this);
+            $this->_basePath = dirname($class->getFileName());
+        }
+        return $this->_basePath;
+    }
 
+    /**
+     * Sets the root directory of the module.
+     * This method can only be invoked at the beginning of the constructor.
+     * @param string $path the root directory of the module. This can be either a directory name or a path alias.
+     * @throws InvalidParamException if the directory does not exist.
+     */
+    public function setBasePath($path)
+    {
+        //$path = Yii::getAlias($path);
+        $p = realpath($path);
+        if ($p !== false && is_dir($p)) {
+            $this->_basePath = $p;
+        } else {
+            throw new InvalidParamException("The directory does not exist: $path");
+        }
+    }
 
-	private $_vendorPath;
+    private $_vendorPath;
 
-	/**
-	 * Returns the directory that stores vendor files.
-	 * @return string the directory that stores vendor files.
-	 * Defaults to "vendor" directory under [[basePath]].
-	 */
-	public function getVendorPath()
-	{
-		if ($this->_vendorPath === null) {
-			$this->setVendorPath($this->getBasePath() . DIRECTORY_SEPARATOR . 'vendor');
-		}
-		return $this->_vendorPath;
-	}
+    /**
+     * Returns the directory that stores vendor files.
+     * @return string the directory that stores vendor files.
+     * Defaults to "vendor" directory under [[basePath]].
+     */
+    public function getVendorPath()
+    {
+        if ($this->_vendorPath === null) {
+            $this->setVendorPath($this->getBasePath() . DIRECTORY_SEPARATOR . 'vendor');
+        }
+        return $this->_vendorPath;
+    }
 
-	/**
-	 * Sets the directory that stores vendor files.
-	 * @param string $path the directory that stores vendor files.
-	 */
-	public function setVendorPath($path)
-	{
-		$this->_vendorPath = Yii::getAlias($path);
-		Yii::setAlias('@vendor', $this->_vendorPath);
-	}
+    /**
+     * Sets the directory that stores vendor files.
+     * @param string $path the directory that stores vendor files.
+     */
+    public function setVendorPath($path)
+    {
+        $this->_vendorPath = Yii::getAlias($path);
+        Yii::setAlias('@vendor', $this->_vendorPath);
+    }
 
-	/**
-	 * Returns the time zone used by this application.
-	 * This is a simple wrapper of PHP function date_default_timezone_get().
-	 * If time zone is not configured in php.ini or application config,
-	 * it will be set to UTC by default.
-	 * @return string the time zone used by this application.
-	 * @see http://php.net/manual/en/function.date-default-timezone-get.php
-	 */
-	public function getTimeZone()
-	{
-		return date_default_timezone_get();
-	}
+    /**
+     * Returns the time zone used by this application.
+     * This is a simple wrapper of PHP function date_default_timezone_get().
+     * If time zone is not configured in php.ini or application config,
+     * it will be set to UTC by default.
+     * @return string the time zone used by this application.
+     * @see http://php.net/manual/en/function.date-default-timezone-get.php
+     */
+    public function getTimeZone()
+    {
+        return date_default_timezone_get();
+    }
 
-	/**
-	 * Sets the time zone used by this application.
-	 * This is a simple wrapper of PHP function date_default_timezone_set().
-	 * @param string $value the time zone used by this application.
-	 * @see http://php.net/manual/en/function.date-default-timezone-set.php
-	 */
-	public function setTimeZone($value)
-	{
-		date_default_timezone_set($value);
-	}
-
+    /**
+     * Sets the time zone used by this application.
+     * This is a simple wrapper of PHP function date_default_timezone_set().
+     * @param string $value the time zone used by this application.
+     * @see http://php.net/manual/en/function.date-default-timezone-set.php
+     */
+    public function setTimeZone($value)
+    {
+        date_default_timezone_set($value);
+    }
 
     private $_imageUrl;
 
@@ -1044,7 +1115,6 @@ class Application extends \Openbiz\Object\Object
         $this->_jsUrl = !defined('OPENBIZ_JS_URL') ? OPENBIZ_APP_URL . "/js" : OPENBIZ_JS_URL;
         return $this->_jsUrl;
     }
-
 
     // theme selection priority: url, session, userpref, system(constant)
     public function getCurrentTheme()

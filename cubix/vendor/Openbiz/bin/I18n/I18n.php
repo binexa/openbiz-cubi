@@ -32,121 +32,133 @@ use Openbiz\Openbiz;
  */
 class I18n
 {
+
     const LANGUAGE_PATH_1 = "languages";
     const LANGUAGE_PATH_2 = "LC_MESSAGES";
     const DEFAULT_LANGUAGE = OPENBIZ_DEFAULT_LANGUAGE;
-    
+
     protected static $_langData;
     protected static $_langCode;
-    
-    public static function t($text, $key=null, $module, $prefix=null)
-    {
-    	// TODO: use cache, apc cache? special handling for menu?
-    	
-    	//echo "to translate $text, $key, $module".nl;
-    	if (!I18n::loadLangData($module))	// cannot load lang data, return orig text
-			return $text;
-					
-		if ($key && isset(I18n::$_langData[$module][$prefix.$key]) && I18n::$_langData[$module][$prefix.$key]!=$text)
-    		return I18n::$_langData[$module][$prefix.$key];	
-			    	    	
-    	$str_key = strtoupper('STRING_'.md5($text));
-    	if ($key && isset(I18n::$_langData[$module][$str_key])  && I18n::$_langData[$module][$str_key]!=$text)
-    		return I18n::$_langData[$module][$str_key];
-    	
-    	if ($key && isset(I18n::$_langData[$module][$key]))
-    		return I18n::$_langData[$module][$key];	
-    		
-		// try to load theme.OPENBIZ_THEME_NAME.ini
-		$module = '_theme';
-		if (!I18n::loadLangData($module))
-			return $text;
-		
-    	if ($key && isset(I18n::$_langData[$module][$key]))
-    		return I18n::$_langData[$module][$key];
-		
-    	// try to load system.ini if previous steps can't find match
-    	$module != '_system';
-    	if (!I18n::loadLangData($module))
-			return $text;
-		
-    	if ($key && isset(I18n::$_langData[$module][$key]))
-    		return I18n::$_langData[$module][$key];
 
-    	return $text;
+    public static function t($text, $key = null, $module, $prefix = null)
+    {
+        // TODO: use cache, apc cache? special handling for menu?
+        //echo "to translate $text, $key, $module".nl;
+        if (!I18n::loadLangData($module)) { // cannot load lang data, return orig text  
+            return $text;
+        }
+
+        if ($key && isset(I18n::$_langData[$module][$prefix . $key]) && I18n::$_langData[$module][$prefix . $key] != $text) {
+            return I18n::$_langData[$module][$prefix . $key];
+        }
+        $str_key = strtoupper('STRING_' . md5($text));
+        if ($key && isset(I18n::$_langData[$module][$str_key]) && I18n::$_langData[$module][$str_key] != $text) {
+            return I18n::$_langData[$module][$str_key];
+        }
+
+        if ($key && isset(I18n::$_langData[$module][$key])) {
+            return I18n::$_langData[$module][$key];
+        }
+
+        // try to load theme.OPENBIZ_THEME_NAME.ini
+        $module = '_theme';
+        if (!I18n::loadLangData($module)) {
+            return $text;
+        }
+
+        if ($key && isset(I18n::$_langData[$module][$key])) {
+            return I18n::$_langData[$module][$key];
+        }
+
+        // try to load system.ini if previous steps can't find match
+        $module != '_system';
+        if (!I18n::loadLangData($module)) {
+            return $text;
+        }
+
+        if ($key && isset(I18n::$_langData[$module][$key])) {
+            return I18n::$_langData[$module][$key];
+        }
+
+        return $text;
     }
-    
+
     protected static function loadLangData($module)
     {
-    	if (isset(I18n::$_langData[$module])) {
-    		return true;
-    	}
-    	
-    	// get language code
-    	$langCode = I18n::getCurrentLangCode();
-    	
-    	// load language file
-    	if ($module == '_system') $filename = 'system.ini';
-		else if ($module == '_theme') { $filename = 'theme.'.OPENBIZ_THEME_NAME.'.ini'; }
-    	else $filename = "mod.$module.ini";
-    	$langFile = OPENBIZ_LANGUAGE_PATH."/$langCode/$filename";
-    	//echo "check ini file $langFile".nl;
-    	if (!file_exists($langFile)) {
-			I18n::$_langData[$module] = array();
-			return false;
-    	}
-    	//echo "parse ini file $langFile".nl;
-    	$inidata = parse_ini_file($langFile, false);
-    	
-    	I18n::$_langData[$module] = $inidata;
-    	//print_r(I18n::$_langData[$module]);
-
-    	return true;
-    } 
-    
-	public static function addLangData($from_module,$to_module=null)
-    {    	        	
-    	if($to_module==null){
-    		$to_module = $from_module;
-    	}
-    	$langCode = I18n::getCurrentLangCode();    	    	    
-    	$filename = "mod.$from_module.ini";
-    	$langFile = OPENBIZ_LANGUAGE_PATH."/$langCode/$filename";    	
-    	if (!file_exists($langFile)) return false;    	    	
-    	$inidata = parse_ini_file($langFile, false);
-    	if(is_array(I18n::$_langData[$to_module])){
-    		I18n::$_langData[$to_module] = array_merge(I18n::$_langData[$to_module],$inidata);
-    	}else{
-    		I18n::$_langData[$to_module] = $inidata;
-    	}
-    	return true;
-    }     
-    
-	public static function getCurrentLangCode ()
-    {
-    	if (I18n::$_langCode != null)
-            return I18n::$_langCode;
-        $currentLanguage = Openbiz::$app->getSessionContext()->getVar("LANG");        
-        // default language
-        if ($currentLanguage == ""){
-        	$currentLanguage = Openbiz::$app->getUserPreference("language");
-        	
+        if (isset(I18n::$_langData[$module])) {
+            return true;
         }
-        if($currentLanguage == ""){
+
+        // get language code
+        $langCode = I18n::getCurrentLangCode();
+
+        // load language file
+        if ($module == '_system')
+            $filename = 'system.ini';
+        else if ($module == '_theme') {
+            $filename = 'theme.' . OPENBIZ_THEME_NAME . '.ini';
+        } else
+            $filename = "mod.$module.ini";
+        $langFile = OPENBIZ_LANGUAGE_PATH . "/$langCode/$filename";
+        //echo "check ini file $langFile".nl;
+        if (!file_exists($langFile)) {
+            I18n::$_langData[$module] = array();
+            return false;
+        }
+        //echo "parse ini file $langFile".nl;
+        $inidata = parse_ini_file($langFile, false);
+
+        I18n::$_langData[$module] = $inidata;
+        //print_r(I18n::$_langData[$module]);
+
+        return true;
+    }
+
+    public static function addLangData($from_module, $to_module = null)
+    {
+        if ($to_module == null) {
+            $to_module = $from_module;
+        }
+        $langCode = I18n::getCurrentLangCode();
+        $filename = "mod.$from_module.ini";
+        $langFile = OPENBIZ_LANGUAGE_PATH . "/$langCode/$filename";
+        if (!file_exists($langFile))
+            return false;
+        $inidata = parse_ini_file($langFile, false);
+        if (is_array(I18n::$_langData[$to_module])) {
+            I18n::$_langData[$to_module] = array_merge(I18n::$_langData[$to_module], $inidata);
+        } else {
+            I18n::$_langData[$to_module] = $inidata;
+        }
+        return true;
+    }
+
+    public static function getCurrentLangCode()
+    {
+        if (I18n::$_langCode != null)
+            return I18n::$_langCode;
+        $currentLanguage = Openbiz::$app->getSessionContext()->getVar("LANG");
+        // default language
+        if ($currentLanguage == "") {
+            $currentLanguage = Openbiz::$app->getUserPreference("language");
+        }
+        if ($currentLanguage == "") {
             $currentLanguage = I18n::DEFAULT_LANGUAGE;
         }
         // language from url
-        if (isset($_GET['lang'])){
+        if (isset($_GET['lang'])) {
             $currentLanguage = $_GET['lang'];
-            Openbiz::$app->getSessionContext()->setVar("LANG",$currentLanguage );
+            Openbiz::$app->getSessionContext()->setVar("LANG", $currentLanguage);
         }
 
         // TODO: user pereference has language setting
-        
+
         Openbiz::$app->getSessionContext()->setVar("LANG", $currentLanguage);
         I18n::$_langCode = $currentLanguage;
-        
+
         return $currentLanguage;
     }
+
 }
+
 ?>
