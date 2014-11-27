@@ -35,13 +35,13 @@ class eventlogService
         $this->objectMessages = MessageHelper::loadMessage($this->messageFile, "eventlog.");
     }
 
-    public function Log($eventName, $eventMessage, $eventComment = array())
-    {
+    public function log($eventName, $eventMessage, $eventComment = array())
+    {        
         $logDataObj = Openbiz::getObject($this->logDataObj);
         if (!$logDataObj) {
             return false;
         }
-
+       
         $profile = Openbiz::$app->getUserProfile();
         $recArr['user_id'] = $profile["Id"];
         $recArr['ipaddr'] = $_SERVER['REMOTE_ADDR'];
@@ -50,10 +50,15 @@ class eventlogService
         $recArr['comment'] = serialize($eventComment);
         $recArr['timestamp'] = date("Y-m-d H:i:s");
 
+        
         $ok = $logDataObj->insertRecord($recArr);
+        
+        //echo __METHOD__ . ' - ' . $ok;
         if ($ok == false) {
             Openbiz::$app->getLog()->log(LOG_ERR, "EVENTLOG", $logDataObj->getErrorMessage());
             return false;
+        } else {
+            
         }
     }
 

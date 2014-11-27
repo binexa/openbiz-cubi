@@ -56,7 +56,7 @@ class HelpCategoryForm extends EasyFormTree
              */
 
             if (count($this->validateErrors) > 0) {
-                throw new Openbiz\validation\Exception($this->validateErrors);
+                throw new Openbiz\Validation\Exception($this->validateErrors);
                 return false;
             }
         }

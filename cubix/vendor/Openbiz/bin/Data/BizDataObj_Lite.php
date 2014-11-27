@@ -284,6 +284,9 @@ class BizDataObj_Lite extends BizDataObj_Abstract
      */
     public function directFetch($searchRule = "", $count = -1, $offset = 0, $sortRule = "")
     {
+     
+        //Openbiz::$app->getClientProxy()->showClientAlert(__METHOD__ .'-'. __LINE__ . ' msg: $searchRule : '.$searchRule);
+        
         $curRecord = $this->currentRecord;
         $recId = $this->recordId;
         $this->currentRecord = null;

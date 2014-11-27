@@ -64,12 +64,12 @@ class DataSet implements \Iterator, \ArrayAccess, \Countable
      * @return mixed
      */
     public function get($key)
-    {
+    {       
         if (isset($this->varValue[$key])) {
             return new DataRecord($this->varValue[$key], $this->bizDataObj);
         } else {
             return NULL;
-        }
+        }        
     }
 
     /**

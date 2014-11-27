@@ -53,7 +53,7 @@ class SettingTranslateForm extends SettingForm
 	        {
 	            $this->ValidateForm();
 	        }
-	        catch (Openbiz\validation\Exception $e)
+	        catch (Openbiz\Validation\Exception $e)
 	        {
 	            $this->processFormObjError($e->errors);
 	            return;
@@ -105,7 +105,7 @@ class SettingTranslateForm extends SettingForm
         	//var_dump($dataRec->toArray());exit;
             $dataRec->save();
         }
-        catch (Openbiz\validation\Exception $e)
+        catch (Openbiz\Validation\Exception $e)
         {
             $errElements = $this->getErrorElements($e->errors);           
         	if(count($e->errors)==count($errElements)){

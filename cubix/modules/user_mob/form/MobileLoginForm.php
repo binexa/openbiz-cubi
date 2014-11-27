@@ -39,7 +39,7 @@ class MobileLoginForm extends LoginForm
         {
             $this->ValidateForm();
         }
-        catch (Openbiz\validation\Exception $e)
+        catch (Openbiz\Validation\Exception $e)
         {        	
             $this->processFormObjError($e->errors);
             return;
@@ -69,7 +69,7 @@ class MobileLoginForm extends LoginForm
     			$eventlog->log("LOGIN", "MSG_LOGIN_SUCCESSFUL", $logComment);
     			
     			// after authenticate user: 3. update login time in user record
-    	   	    if (!$this->UpdateloginTime())
+    	   	    if (!$this->UpdateLoginTime())
     	   	        return false;
     	   	            	   	        
     	   	    // after authenticate user: 3. update current theme and language

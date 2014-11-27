@@ -58,7 +58,7 @@ class CategoryTranslateForm extends PickerForm
 	        {
 	            $this->ValidateForm();
 	        }
-	        catch (Openbiz\validation\Exception $e)
+	        catch (Openbiz\Validation\Exception $e)
 	        {
 	            $this->processFormObjError($e->errors);
 	            return;
@@ -111,7 +111,7 @@ class CategoryTranslateForm extends PickerForm
         	//var_dump($dataRec->toArray());exit;
             $dataRec->save();
         }
-        catch (Openbiz\validation\Exception $e)
+        catch (Openbiz\Validation\Exception $e)
         {
             $errElements = $this->getErrorElements($e->errors);           
         	if(count($e->errors)==count($errElements)){

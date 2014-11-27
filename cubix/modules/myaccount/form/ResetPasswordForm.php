@@ -75,7 +75,7 @@ class ResetPasswordForm extends UserForm
         {
             $this->ValidateForm();
         }
-        catch (Openbiz\validation\Exception $e)
+        catch (Openbiz\Validation\Exception $e)
         {
         	$this->processFormObjError($e->errors);
             return;
@@ -175,7 +175,7 @@ class ResetPasswordForm extends UserForm
 		{
 			$errorMessage = $this->GetMessage("PASSWORD_LENGTH");
 			$this->validateErrors['fld_password'] = $errorMessage;
-			throw new Openbiz\validation\Exception($this->validateErrors);
+			throw new Openbiz\Validation\Exception($this->validateErrors);
 			return false;
 		}
 		
@@ -194,7 +194,7 @@ class ResetPasswordForm extends UserForm
 			$passRepeatElem = $this->getElement("fld_password_repeat");
 			$errorMessage = $this->GetMessage("PASSOWRD_REPEAT_NOTSAME",array($passRepeatElem->label));
 			$this->validateErrors['fld_password_repeat'] = $errorMessage;
-			throw new Openbiz\validation\Exception($this->validateErrors);
+			throw new Openbiz\Validation\Exception($this->validateErrors);
 			return false;
 		}
 	

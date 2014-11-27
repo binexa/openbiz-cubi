@@ -51,7 +51,7 @@ class UserForm extends EasyForm
         {
             $this->ValidateForm();
         }
-        catch (Openbiz\validation\Exception $e)
+        catch (Openbiz\Validation\Exception $e)
         {
             $this->processFormObjError($e->errors);
             return;
@@ -292,7 +292,7 @@ class UserForm extends EasyForm
         {
             $this->ValidateForm();
         }
-        catch (Openbiz\validation\Exception $e)
+        catch (Openbiz\Validation\Exception $e)
         {
             $this->processFormObjError($e->errors);
             return;
@@ -369,7 +369,7 @@ class UserForm extends EasyForm
 		{
 			$errorMessage = $this->GetMessage("USERNAME_LENGTH");
 			$this->validateErrors['fld_username'] = $errorMessage;
-			throw new Openbiz\validation\Exception($this->validateErrors);
+			throw new Openbiz\Validation\Exception($this->validateErrors);
 			return false;
 		}
 		
@@ -380,7 +380,7 @@ class UserForm extends EasyForm
 		{
 			$errorMessage = $this->GetMessage("PASSWORD_LENGTH");
 			$this->validateErrors['fld_password'] = $errorMessage;
-			throw new Openbiz\validation\Exception($this->validateErrors);
+			throw new Openbiz\Validation\Exception($this->validateErrors);
 			return false;
 		}
 		
@@ -399,7 +399,7 @@ class UserForm extends EasyForm
 		{
 			$errorMessage = $this->GetMessage("EMAIL_INVALID");
 			$this->validateErrors['fld_email'] = $errorMessage;
-			throw new Openbiz\validation\Exception($this->validateErrors);
+			throw new Openbiz\Validation\Exception($this->validateErrors);
 			return false;
 		}    
     	    
@@ -410,7 +410,7 @@ class UserForm extends EasyForm
         {
             $errorMessage = $this->GetMessage("USERNAME_USED");
 			$this->validateErrors['fld_username'] = $errorMessage;
-			throw new Openbiz\validation\Exception($this->validateErrors);
+			throw new Openbiz\Validation\Exception($this->validateErrors);
 			return false;
 			
         }
@@ -419,7 +419,7 @@ class UserForm extends EasyForm
         {
             $errorMessage = $this->GetMessage("EMAIL_USED");
 			$this->validateErrors['fld_email'] = $errorMessage;
-			throw new Openbiz\validation\Exception($this->validateErrors);
+			throw new Openbiz\Validation\Exception($this->validateErrors);
 			return false;
         }  
         
@@ -428,7 +428,7 @@ class UserForm extends EasyForm
 			$passRepeatElem = $this->getElement("fld_password_repeat");
 			$errorMessage = $this->GetMessage("PASSOWRD_REPEAT_NOTSAME",array($passRepeatElem->label));
 			$this->validateErrors['fld_password_repeat'] = $errorMessage;
-			throw new Openbiz\validation\Exception($this->validateErrors);
+			throw new Openbiz\Validation\Exception($this->validateErrors);
 			return false;
 		}
 	

@@ -204,10 +204,10 @@ class DatabaseForm extends EasyForm
 	        }
 	        if (count($this->validateErrors) > 0)
 	        {
-	            throw new Openbiz\validation\Exception($this->validateErrors);
+	            throw new Openbiz\Validation\Exception($this->validateErrors);
 	        }
         }
-        catch (Openbiz\validation\Exception $e)
+        catch (Openbiz\Validation\Exception $e)
         {
             $this->processFormObjError($e->errors);
             return;
@@ -245,7 +245,7 @@ class DatabaseForm extends EasyForm
         {
         	$this->ValidateForm();
         }
-        catch (Openbiz\validation\Exception $e)
+        catch (Openbiz\Validation\Exception $e)
         {
             $this->processFormObjError($e->errors);
             return;

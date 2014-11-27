@@ -1,6 +1,6 @@
 <?php
 
-namespace Openbiz\validation;
+namespace Openbiz\Validation;
 
 /**
  * Openbiz\Validation\Exception

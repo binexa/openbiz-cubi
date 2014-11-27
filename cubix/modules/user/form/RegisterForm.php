@@ -55,7 +55,7 @@ class RegisterForm extends UserForm
         {
             $this->ValidateForm();
         }
-        catch (Openbiz\validation\Exception $e)
+        catch (Openbiz\Validation\Exception $e)
         {
             $this->processFormObjError($e->errors);
             return;

@@ -158,7 +158,7 @@ class RestService
         try {
            $dataRec->save();
         }
-        catch (Openbiz\validation\Exception $e) {
+        catch (Openbiz\Validation\Exception $e) {
             $response->status(400);
 			$errmsg = implode("\n",$e->errors);
 			$response->body($errmsg);
@@ -218,7 +218,7 @@ class RestService
         try {
            $dataRec->save();
         }
-        catch (Openbiz\validation\Exception $e) {
+        catch (Openbiz\Validation\Exception $e) {
             $response->status(400);
 			$errmsg = implode("\n",$e->errors);
 			$response->body($errmsg);

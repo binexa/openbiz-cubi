@@ -77,7 +77,7 @@ class LocationForm extends EasyForm
     protected function validateForm($cleanError = true)
     {
         if (count($this->validateErrors) > 0) {
-            throw new Openbiz\validation\Exception($this->validateErrors);
+            throw new Openbiz\Validation\Exception($this->validateErrors);
             return false;
         }
         parent::validateForm($cleanError);
@@ -109,7 +109,7 @@ class LocationForm extends EasyForm
 
         try {
             $this->ValidateForm();
-        } catch (Openbiz\validation\Exception $e) {
+        } catch (Openbiz\Validation\Exception $e) {
             $this->processFormObjError($e->errors);
             return;
         }

@@ -66,7 +66,7 @@ class ForgetPassForm extends EasyForm
                 //goto URL
                 $this->processPostAction();
             }
-        } catch (Openbiz\validation\Exception $e) {
+        } catch (Openbiz\Validation\Exception $e) {
             $this->processFormObjError($e->errors);
             return;
         }
@@ -119,10 +119,10 @@ class ForgetPassForm extends EasyForm
             if ($userProfile['email'] != $email) {
                 $errorMessage = $this->getMessage("EMAIL_INVALID");
                 $this->validateErrors['email'] = $errorMessage;
-                throw new Openbiz\validation\Exception($this->validateErrors);
+                throw new Openbiz\Validation\Exception($this->validateErrors);
                 return false;
             }
-        } catch (Openbiz\validation\Exception $e) {
+        } catch (Openbiz\Validation\Exception $e) {
             $this->processFormObjError($e->errors);
             return;
         }

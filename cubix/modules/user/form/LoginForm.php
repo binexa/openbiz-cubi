@@ -114,7 +114,7 @@ class LoginForm extends EasyForm
                 $eventlog->log("LOGIN", "MSG_LOGIN_SUCCESSFUL", $logComment);
 
                 // after authenticate user: 3. update login time in user record
-                if (!$this->UpdateloginTime()) {
+                if (!$this->UpdateLoginTime()) {
                     return false;
                 }
                 if ($profile['roleStartpage'][0]) {
@@ -150,24 +150,20 @@ class LoginForm extends EasyForm
      */
     public function Login()
     {
+        //echo __METHOD__ .'-'. __LINE__ .' : BEGIN ===============<br />';
         $this->readInputRecord();
         try {
             $this->validateForm();
-        } catch (Openbiz\validation\Exception $e) {
-            DebugLine::show(__METHOD__ . __LINE__);
+        } catch (Openbiz\Validation\Exception $e) {
             $this->processFormObjError($e->errors);
             return;
         }
-
-        
 
         // get the username and password
         $this->username = Openbiz::$app->getClientProxy()->getFormInputs("username");
         $this->password = Openbiz::$app->getClientProxy()->getFormInputs("password");
         $this->smartcard = Openbiz::$app->getClientProxy()->getFormInputs("smartcard");
-
-        
-        
+       
         if ($this->username == $this->getElement("username")->hint) {
             $this->username = null;
         }
@@ -175,31 +171,31 @@ class LoginForm extends EasyForm
             $this->password = null;
         }
 
-        $eventlog = Openbiz::getService(OPENBIZ_EVENTLOG_SERVICE);
-
+        $eventlog = Openbiz::getService(OPENBIZ_EVENTLOG_SERVICE);        
+        
         try {
-
+            //echo __METHOD__ .'-'. __LINE__ .' : before authUser <br />';
             $authUser = $this->authUser();
             if ($authUser) {
-                
+
                 // after authenticate user: 1. init profile
                 $profile = Openbiz::$app->initUserProfile($this->username);
-                                
-                //DebugLine::show(var_dump($profile));
+                
                 // after authenticate user: 2. insert login event
                 $logComment = array($this->username, $_SERVER['REMOTE_ADDR']);
+                
                 $eventlog->log("LOGIN", "MSG_LOGIN_SUCCESSFUL", $logComment);
-
-                // after authenticate user: 3. update login time in user record
-                if (!$this->updateloginTime()) {
+                
+                // after authenticate user: 3. update login time in user record                
+                $updateLoginTimeStatus = $this->updateLoginTime();
+               
+                if (!$updateLoginTimeStatus) {
                     return false;
                 }
-
+                
                 // after authenticate user: 3. update current theme and language
                 $this->updateLanguage();
-
                 $this->updateTheme();
-
                
                 $redirectPage = OPENBIZ_APP_INDEX_URL . $profile['roleStartpage'][0];
 
@@ -210,8 +206,6 @@ class LoginForm extends EasyForm
                     return;
                 }
 
-                
-                
                 $cookies = Openbiz::$app->getClientProxy()->getFormInputs("session_timeout");
                 if ($cookies) {
                     $password = $this->password;
@@ -228,6 +222,7 @@ class LoginForm extends EasyForm
                     return true;
                 }
 
+                
                 //if admin is not init profile yet
                 $initLock = OPENBIZ_APP_PATH . '/files/initialize_profile.lock';
                 if ($profile['Id'] == 1 && !is_file($initLock)) {
@@ -247,7 +242,6 @@ class LoginForm extends EasyForm
                 }
                 return true;
             } else {
-
                 switch ($this->auth_method) {
                     case "smartcard":
                         $logComment = array($this->smartcard);
@@ -295,24 +289,29 @@ class LoginForm extends EasyForm
      *
      * @return void
      */
-    protected function UpdateloginTime()
+    protected function updateLoginTime()
     {
+        //echo __METHOD__ .'-'. __LINE__ .' : BEGIN ===============<br />';
+        /* @var $userObj Openbiz\Data\BizDataObj */
         $userObj = Openbiz::getObject('system.do.UserDO');
+
         try {
-            $curRecs = $userObj->directFetch("[username]='" . $this->username . "'", 1);
+            $curRecs = $userObj->directFetch("[username]='" . $this->username . "'",1);
             if (count($curRecs) == 0) {
                 return false;
-            }
-            $dataRec = new DataRecord($curRecs[0], $userObj);
-            $dataRec['lastlogin'] = date("Y-m-d H:i:s");
-            $ok = $dataRec->save();
+            }            
+            $curRec = $curRecs[0];
+            //$dataRec = $curRec;
+            $dataRec = new DataRecord($curRec, $userObj);
+            $dataRec['lastlogin'] = date("Y-m-d H:i:s");            
+            $ok = $dataRec->save();            
             if (!$ok) {
                 $errorMsg = $userObj->getErrorMessage();
                 Openbiz::$app->getLog()->log(LOG_ERR, "DATAOBJ", "DataObj error = " . $errorMsg);
                 Openbiz::$app->getClientProxy()->showErrorMessage($errorMsg);
                 return false;
             }
-        } catch (Openbiz\data\Exception $e) {
+        } catch (Openbiz\Data\Exception $e) {            
             $errorMsg = $e->getMessage();
             Openbiz::$app->getLog()->log(LOG_ERR, "DATAOBJ", "DataObj error = " . $errorMsg);
             Openbiz::$app->getClientProxy()->showErrorMessage($errorMsg);

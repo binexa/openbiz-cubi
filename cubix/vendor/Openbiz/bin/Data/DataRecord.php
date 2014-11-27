@@ -56,16 +56,20 @@ class DataRecord implements \Iterator, \ArrayAccess
      * @param array $recArray record array.
      * @param BizDataObj $bizObj BizDataObj instance
      * @return void
+     * @todo fix for non array and non DataRecord condition
      */
     public function __construct($recArray, $bizObj)
     {
+        //echo __METHOD__ . '-' . __LINE__ . 'B EGIN ==========<br />';
         if ($recArray != null) {
             if (is_array($recArray)) {
                 $this->varValue = $recArray;
                 $this->oldVarValue = $recArray;
-            } else if (is_a($recArray, "DataRecord")) {
+            } else if (is_a($recArray, "Openbiz\Data\DataRecord")) {
                 $this->varValue = $recArray->toArray();
                 $this->oldVarValue = $this->varValue;
+            } else {
+                // please fix here
             }
         } else {
             $this->varValue = $bizObj->newRecord();
@@ -248,6 +252,7 @@ class DataRecord implements \Iterator, \ArrayAccess
         } else {
             $ok = $this->bizDataObj->insertRecord($this->varValue);
         }
+        
         // repopulate current record with bizdataobj activerecord
         if ($ok) {
             $this->varValue = $this->bizDataObj->getActiveRecord();
