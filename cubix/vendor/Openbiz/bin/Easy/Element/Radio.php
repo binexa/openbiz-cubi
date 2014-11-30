@@ -14,8 +14,10 @@
  * @version   $Id: Radio.php 3671 2011-04-12 06:30:49Z jixian2003 $
  */
 
+namespace Openbiz\Easy\Element;
+
 use Openbiz\Core\Expression;
-//include_once("OptionElement.php");
+
 
 /**
  * Radio class is element that show RadioBox with data from Selection.xml

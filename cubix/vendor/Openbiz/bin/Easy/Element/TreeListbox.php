@@ -1,6 +1,10 @@
 <?php
+
+namespace Openbiz\Easy\Element;
+
 use Openbiz\Openbiz;
 use Openbiz\Core\Expression;
+
 //include_once ("Listbox.php");
 class TreeListbox extends Listbox
 {
@@ -106,5 +110,3 @@ class TreeListbox extends Listbox
     }
 
 }
-
-?>

@@ -13,8 +13,10 @@
  * @link      http://www.phpopenbiz.org/
  * @version   $Id: FileUploader.php 3086 2011-01-22 20:06:43Z jixian2003 $
  */
+
+namespace Openbiz\Easy\Element;
+
 use Openbiz\Openbiz;
-//include_once("FileInput.php");
 
 /**
  * File class is the element for Upload File

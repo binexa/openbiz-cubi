@@ -14,6 +14,8 @@
  * @version   $Id: Listbox.php 3660 2011-04-11 10:16:41Z jixian2003 $
  */
 
+namespace Openbiz\Easy\Element;
+
 use Openbiz\Openbiz;
 //include_once("OptionElement.php");
 

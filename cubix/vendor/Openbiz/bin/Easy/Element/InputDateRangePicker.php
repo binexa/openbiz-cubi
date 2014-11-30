@@ -13,8 +13,10 @@
  * @link      http://www.phpopenbiz.org/
  * @version   $Id: InputDate.php 2553 2010-11-21 08:36:48Z mr_a_ton $
  */
+
+namespace Openbiz\Easy\Element;
+
 use Openbiz\Openbiz;
-//include_once("InputElement.php");
 
 /**
  * InputDate class is element for input date with date picker

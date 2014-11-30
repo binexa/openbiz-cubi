@@ -14,8 +14,10 @@
  * @link      http://www.phpopenbiz.org/
  * @version   $Id: OptionElement.php 3561 2011-03-30 06:15:47Z jixian2003 $
  */
+
+namespace Openbiz\Easy\Element;
+
 use Openbiz\Openbiz;
-use Openbiz\Resource;
 use Openbiz\Core\Expression;
 use Openbiz\I18n\I18n;
 use Openbiz\Data\Helpers\QueryStringParam;

@@ -12,6 +12,7 @@
  */
 
 use Openbiz\Openbiz;
+use Openbiz\Easy\Element\DropDownList;
 
 class ShareDataFilter extends DropDownList
 {

@@ -14,6 +14,8 @@
  * @version   $Id: ColumnImage.php 3742 2011-04-16 07:25:29Z jixian2003 $
  */
 
+namespace Openbiz\Easy\Element;
+
 use Openbiz\Openbiz;
 use Openbiz\Core\Expression;
 

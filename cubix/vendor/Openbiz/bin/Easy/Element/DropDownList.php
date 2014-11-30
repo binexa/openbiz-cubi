@@ -14,8 +14,9 @@
  * @version   $Id: DropDownList.php 3856 2011-04-21 18:10:41Z jixian2003 $
  */
 
+namespace Openbiz\Easy\Element;
+
 use Openbiz\Openbiz;
-use Openbiz\Resource;
 use Openbiz\Core\Expression;
 use Openbiz\I18n\I18n;
 use Openbiz\Data\Helpers\QueryStringParam;

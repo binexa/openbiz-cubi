@@ -1,5 +1,7 @@
 <?php 
-//include_once ("TreeListbox.php");
+
+namespace Openbiz\Easy\Element;
+
 class TreeLabelText extends TreeListbox
 {
     /**

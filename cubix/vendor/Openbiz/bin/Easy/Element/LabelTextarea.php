@@ -14,8 +14,10 @@
  * @version   $Id: LabelList.php 543 2009-10-03 08:50:00Z mr_a_ton$
  */
 
+namespace Openbiz\Easy\Element;
+
 use Openbiz\Openbiz;
-//include_once("LabelText.php");
+
 
 /**
  * LebelText - class LabelText is element that view value who binds

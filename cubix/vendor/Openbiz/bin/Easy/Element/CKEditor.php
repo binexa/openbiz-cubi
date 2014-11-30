@@ -14,6 +14,8 @@
  * @version   $Id: CKEditor.php 3486 2011-03-11 17:30:28Z jixian2003 $
  */
 
+namespace Openbiz\Easy\Element;
+
 use Openbiz\Openbiz;
 //include_once("InputElement.php");
 

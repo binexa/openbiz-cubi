@@ -11,6 +11,8 @@
  * @version   $Id: LabelTitle.php 3355 2012-05-31 05:43:33Z rockyswen@gmail.com $
  */
 
+use Openbiz\Easy\Element\LabelText;
+
 class LabelTitle extends LabelText
 {
 	public function getIDPrefix()

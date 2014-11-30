@@ -1,5 +1,6 @@
 <?php 
-//include_once("RawData.php");
+
+namespace Openbiz\Easy\Element;
 
 class ColumnStyle extends RawData{
 

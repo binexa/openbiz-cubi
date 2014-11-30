@@ -14,6 +14,8 @@
  * @version   $Id: ColumnList.php 3347 2011-02-27 18:46:26Z jixian2003 $
  */
 
+namespace Openbiz\Easy\Element;
+
 use Openbiz\Core\Expression;
 
 //include_once("OptionElement.php");

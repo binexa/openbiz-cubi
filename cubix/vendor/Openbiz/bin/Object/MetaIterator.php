@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Openbiz Framework
  *
@@ -53,10 +54,12 @@ class MetaIterator implements \Iterator
      */
     public function __construct(&$xmlArr, $childClassName, $parentObj = null)
     {
-         $this->parentObj = $parentObj;
+        $this->parentObj = $parentObj;
+
         if (!$xmlArr) {
             return;
         }
+
         if (isset($xmlArr["ATTRIBUTES"])) {
             $className = isset($xmlArr["ATTRIBUTES"]['CLASS']) ? $xmlArr["ATTRIBUTES"]['CLASS'] : $childClassName;
             if ((bool) strpos($className, ".")) {
@@ -86,18 +89,23 @@ class MetaIterator implements \Iterator
                     } elseif ($parentObj->package) {
                         $clsLoaded = ClassLoader::loadMetadataClass($className, $parentObj->package);
                     }
-                    //if (!$clsLoaded) trigger_error("Cannot find the load class $className", E_USER_ERROR);
-         
-                    /*
-                    if ($className === 'BizDataObj') {
-                        $className = 'Openbiz\\Data\\BizDataObj';
-                    }
 
-                    if ($className === 'BizField') {
-                        $className = 'Openbiz\\Data\\BizField';
+                    if (!$clsLoaded) {
+                        trigger_error("Cannot find the load class $className", E_USER_ERROR);
                     }
-                    */
-                    
+                    /*
+                      if ($className === 'BizDataObj') {
+                      $className = 'Openbiz\\Data\\BizDataObj';
+                      }
+
+                      if ($className === 'BizField') {
+                      $className = 'Openbiz\\Data\\BizField';
+                      }
+                     */
+
+                    //if (!class_exists($className)) {
+                    //    throw new \Exception;
+                    //}
                     $obj = new $className($child, $parentObj);
                     $this->varValue[$obj->objectName] = $obj;
                 }

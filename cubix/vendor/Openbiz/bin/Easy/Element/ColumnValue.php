@@ -19,10 +19,7 @@
  * @version    $Id: LabelText.php 501 2009-08-30 20:36
  */
 
-/**
- * Base class for Element.
- */
-//include_once("Element.php");
+namespace Openbiz\Easy\Element;
 
 /**
  * ColumnValue - class ColumnValue is element that view value in column

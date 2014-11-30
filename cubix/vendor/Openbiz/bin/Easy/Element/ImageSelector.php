@@ -1,8 +1,10 @@
 <?PHP
 
+namespace Openbiz\Easy\Element;
+
 use Openbiz\Openbiz;
 use Openbiz\Core\Expression;
-//include_once("OptionElement.php");
+
 
 class ImageSelector extends OptionElement
 {

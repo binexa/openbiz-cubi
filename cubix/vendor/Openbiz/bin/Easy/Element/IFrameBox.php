@@ -1,7 +1,8 @@
 <?php
 
+namespace Openbiz\Easy\Element;
+
 use Openbiz\Core\Expression;
-//include_once("Element.php");
 
 class IFrameBox extends Element
 {

@@ -115,8 +115,7 @@ class ObjectFactory
     protected function constructObject($objName, &$xmlArr = null)
     {        
         if (!$xmlArr) {
-            $xmlFile = ObjectFactoryHelper::getXmlFileWithPath($objName);
-            // if has metafile => load metadata from metafile
+            $xmlFile = ObjectFactoryHelper::getXmlFileWithPath($objName);            
             if ($xmlFile) { 
                 $xmlArr = ObjectFactoryHelper::getXmlArray($xmlFile);                
             } else {

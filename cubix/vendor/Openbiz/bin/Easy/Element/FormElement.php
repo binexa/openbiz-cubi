@@ -1,4 +1,7 @@
-<?PHP
+<?php
+
+namespace Openbiz\Easy\Element;
+
 use Openbiz\Openbiz;
 class FormElement extends InputElement
 {
@@ -122,5 +125,3 @@ class FormElement extends InputElement
     	}
     }    
 }
-
-?>

@@ -1,5 +1,7 @@
 <?php
-//include_once OPENBIZ_BIN.'/easy/element/Radio.php';
+
+use Openbiz\Easy\Element\Radio;
+
 class ActiveLogicRadio extends Radio
 {
     public function getFromList(&$list, $selectFrom=null)

@@ -12,6 +12,8 @@
  * @version   $Id: RecordFuzzySearchList.php 3355 2012-05-31 05:43:33Z rockyswen@gmail.com $
  */
 
+use Openbiz\Easy\Element\AutoSuggest;
+
 use Openbiz\Openbiz;
 
 class RecordFuzzySearchList extends AutoSuggest

@@ -1,5 +1,7 @@
 <?php
 
+namespace Openbiz\Easy\Element;
+
 use Openbiz\Core\Expression;
 
 //include_once("ColumnText.php");

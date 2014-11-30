@@ -15,8 +15,9 @@
  * @version   $Id: RawData.php 3437 2011-03-08 16:40:19Z jixian2003 $
  */
 
+namespace Openbiz\Easy\Element;
+
 use Openbiz\Core\Expression;
-//include_once("Element.php");
 
 /**
  * RawData class is element for render raw data

@@ -14,6 +14,8 @@
  * @version   $Id: InputText.php 3313 2011-02-24 04:32:17Z jixian2003 $
  */
 
+namespace Openbiz\Easy\Element;
+
 //include_once(OPENBIZ_BIN."/Easy/element/InputElement.php");
 
 /**

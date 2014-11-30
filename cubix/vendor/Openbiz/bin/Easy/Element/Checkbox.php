@@ -15,6 +15,8 @@
  * @version   $Id: Checkbox.php 3780 2011-04-18 18:26:11Z jixian2003 $
  */
 
+namespace Openbiz\Easy\Element;
+
 use Openbiz\Core\Expression;
 
 //include_once("OptionElement.php");

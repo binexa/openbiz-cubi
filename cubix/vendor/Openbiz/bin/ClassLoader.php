@@ -115,6 +115,13 @@ class ClassLoader
         return $classFile;
     }
 
+    /**
+     * Load class of MetaObject
+     * 
+     * @param type $className
+     * @param type $packageName
+     * @return boolean
+     */
     public static function loadMetadataClass($className, $packageName = '')
     {
         if (class_exists($className, false)) {

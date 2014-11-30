@@ -15,6 +15,8 @@
  * @version   $Id: ColumnBool.php 3687 2011-04-12 19:58:36Z jixian2003 $
  */
 
+namespace Openbiz\Easy\Element;
+
 use Openbiz\Openbiz;
 use Openbiz\Core\Expression;
 

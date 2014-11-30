@@ -14,7 +14,8 @@
  * @link      http://www.phpopenbiz.org/
  * @version   $Id: InputPicker.php 3984 2011-04-28 02:54:31Z jixian2003 $
  */
-//include_once("InputElement.php");
+
+namespace Openbiz\Easy\Element;
 
 /**
  * InputPicker class is element for input picker

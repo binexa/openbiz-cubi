@@ -14,7 +14,7 @@
  * @version   $Id: Hidden.php 2912 2010-12-17 18:30:31Z jixian2003 $
  */
 
-//include_once("Element.php");
+namespace Openbiz\Easy\Element;
 
 /**
  * Button class is hidden element

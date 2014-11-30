@@ -14,6 +14,8 @@
  * @version   $Id: ColorPicker.php 2912 2010-12-17 18:30:31Z jixian2003 $
  */
 
+namespace Openbiz\Easy\Element;
+
 use Openbiz\Openbiz;
 
 //include_once("InputElement.php");

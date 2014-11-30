@@ -14,6 +14,8 @@
  * @version   $Id: InputElement.php 3536 2011-03-28 19:13:05Z jixian2003 $
  */
 
+namespace Openbiz\Easy\Element;
+
 use Openbiz\Openbiz;
 use Openbiz\Core\Expression;
 

@@ -1,5 +1,7 @@
 <?php
-//include_once OPENBIZ_BIN.'/easy/element/Checkbox.php';
+
+use Openbiz\Easy\Element\Checkbox;
+
 class LicenseCheckbox extends Checkbox
 {
     protected function getText()

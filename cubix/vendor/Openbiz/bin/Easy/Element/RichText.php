@@ -13,8 +13,9 @@
  * @link      http://www.phpopenbiz.org/
  * @version   $Id: RichText.php 2553 2010-11-21 08:36:48Z mr_a_ton $
  */
+
+namespace Openbiz\Easy\Element;
 use Openbiz\Openbiz;
-//include_once("InputElement.php");
 
 /**
  * RichText class is input element for render RichText editor

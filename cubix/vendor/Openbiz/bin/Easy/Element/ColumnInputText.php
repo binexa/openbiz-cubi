@@ -13,8 +13,10 @@
  * @link      http://www.phpopenbiz.org/
  * @version   $Id: InputText.php 3313 2011-02-24 04:32:17Z jixian2003 $
  */
+
+namespace Openbiz\Easy\Element;
+
 use Openbiz\Openbiz;
-//include_once("InputElement.php");
 
 /**
  * InputText class is element for input text

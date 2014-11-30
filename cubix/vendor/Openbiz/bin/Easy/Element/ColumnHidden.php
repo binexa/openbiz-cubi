@@ -14,6 +14,8 @@
  * @version   $Id: ColumnHidden.php 2553 2010-11-21 08:36:48Z mr_a_ton $
  */
 
+namespace Openbiz\Easy\Element;
+
 //include_once("LabelText.php");
 
 /**

@@ -12,6 +12,7 @@
  */
 
 use Openbiz\Openbiz;
+use Openbiz\Easy\Element\Listbox;
 
 class DataShareUserList extends Listbox
 {

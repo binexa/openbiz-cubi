@@ -14,9 +14,10 @@
  * @link      http://www.phpopenbiz.org/
  * @version   $Id: ImageUploader.php 2825 2010-12-08 19:22:02Z jixian2003 $
  */
-use Openbiz\Openbiz;
 
-//include_once("FileUploader.php");
+namespace Openbiz\Easy\Element;
+
+use Openbiz\Openbiz;
 
 /**
  * File class is the element for Upload Image

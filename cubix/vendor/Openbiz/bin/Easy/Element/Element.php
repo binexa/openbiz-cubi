@@ -14,6 +14,8 @@
  * @version   $Id: Element.php 4049 2011-05-01 12:56:06Z jixian2003 $
  */
 
+namespace Openbiz\Easy\Element;
+
 use Openbiz\Openbiz;
 use Openbiz\Core\Expression;
 use Openbiz\I18n\I18n;

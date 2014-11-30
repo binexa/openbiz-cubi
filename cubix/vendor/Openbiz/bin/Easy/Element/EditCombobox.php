@@ -15,8 +15,9 @@
  * @version   $Id: EditCombobox.php 2871 2010-12-16 08:21:22Z rockys $
  */
 
+namespace Openbiz\Easy\Element;
+
 use Openbiz\Core\Expression;
-//include_once("OptionElement.php");
 
 /**
  * EditCombobox class is element for EditCombobox

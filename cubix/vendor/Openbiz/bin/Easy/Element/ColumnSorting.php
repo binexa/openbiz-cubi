@@ -1,8 +1,11 @@
 <?php
 
+namespace Openbiz\Easy\Element;
+
 use Openbiz\Openbiz;
 
 //include_once("ColumnText.php");
+
 
 class ColumnSorting extends ColumnText
 {

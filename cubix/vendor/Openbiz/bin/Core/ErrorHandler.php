@@ -46,22 +46,23 @@ class ErrorHandler
     public static function errorHandler($errNo, $errMsg, $fileName, $lineNum, $vars)
     {
         // don't respond to the error if it
-        // was suppressed with a '@'
-        if (error_reporting() == 0)
+        // was suppressed with a '@'        
+        if (error_reporting() == 0) {
             return;
+        }
+
         if ($errNo == E_NOTICE || $errNo == E_STRICT) { // || $errno == E_WARNING)
-            //echo "errorHandler ($errNo, $errMsg, $fileName, $lineNum, $vars)\n";
             return; // ignore notice error
         }
+        
         $debug_array = debug_backtrace();
         $back_trace = self::_errorBacktrace($debug_array);
         $err = self::_getOutputErrorMsg($errNo, $errMsg, $fileName, $lineNum, $back_trace);
-        //Send Error to Log Service;
-        //BizSystem::logError ($errNo, "ErrorHandler", $errMsg, null, $back_trace);
+        
         Openbiz::$app->getLog()->logError($errNo, "ErrorHandler", $errMsg, null, $back_trace);
 
         if ((defined('CLI') && CLI) || self::$errorMode == 'text') {
-            echo $err;
+            // echo $err;
         } else {
             Openbiz::$app->getClientProxy()->showErrorMessage($err, true);
         }

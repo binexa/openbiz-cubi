@@ -11,8 +11,10 @@
  * @version   $Id: DataShareGroupList.php 3355 2012-05-31 05:43:33Z rockyswen@gmail.com $
  */
 
+
 use Openbiz\Openbiz;
 use Openbiz\Core\Expression;
+use Openbiz\Easy\Element\Listbox;
 
 class DataShareGroupList extends Listbox
 {
