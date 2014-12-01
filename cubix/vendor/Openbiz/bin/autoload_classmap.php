@@ -101,7 +101,9 @@ return array(
     'Openbiz\Easy\Element\DropDownList'          => __DIR__ . '/Easy/Element/DropDownList.php',
     'Openbiz\Easy\Element\EditCombobox'          => __DIR__ . '/Easy/Element/EditCombobox.php',
     'Openbiz\Easy\Element\Element'               => __DIR__ . '/Easy/Element/Element.php',
+    
     'Openbiz\Easy\Element\EventHandler'          => __DIR__ . '/Easy/Element/Element.php',
+    
     'Openbiz\Easy\Element\File'                  => __DIR__ . '/Easy/Element/File.php',
     'Openbiz\Easy\Element\FileInput'             => __DIR__ . '/Easy/Element/FileInput.php',
     'Openbiz\Easy\Element\FileUploader'          => __DIR__ . '/Easy/Element/FileUploader.php',
@@ -123,7 +125,9 @@ return array(
     'Openbiz\Easy\Element\InputText'             => __DIR__ . '/Easy/Element/InputText.php',
     'Openbiz\Easy\Element\LabelBack'             => __DIR__ . '/Easy/Element/LabelBack.php',
     'Openbiz\Easy\Element\LabelBar'              => __DIR__ . '/Easy/Element/LabelBar.php',
+    
     'Openbiz\Easy\Element\LabelBool'             => __DIR__ . '/Easy/Element/LabelBool.php',
+    
     'Openbiz\Easy\Element\LabelImage'            => __DIR__ . '/Easy/Element/LabelImage.php',
     'Openbiz\Easy\Element\LabelList'             => __DIR__ . '/Easy/Element/LabelList.php',
     'Openbiz\Easy\Element\LabelPassword'         => __DIR__ . '/Easy/Element/LabelPassword.php',

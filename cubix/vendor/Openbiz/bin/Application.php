@@ -111,7 +111,9 @@ class Application extends \Openbiz\Object\Object
             'DropDownList' => 'Openbiz\\Easy\\Element\\DropDownList',
             'EditCombobox' => 'Openbiz\\Easy\\Element\\EditCombobox',
             'Element' => 'Openbiz\\Easy\\Element\\Element',
+            
             'EventHandler' => 'Openbiz\\Easy\\Element\\EventHandler',
+            
             'File' => 'Openbiz\\Easy\\Element\\File',
             'FileInput' => 'Openbiz\\Easy\\Element\\FileInput',
             'FileUploader' => 'Openbiz\\Easy\\Element\\FileUploader',

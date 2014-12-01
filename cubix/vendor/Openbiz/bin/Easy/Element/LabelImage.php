@@ -1,5 +1,7 @@
 <?PHP
 
+namespace Openbiz\Easy\Element;
+
 use Openbiz\Core\Expression;
 
 //include_once("LabelText.php");

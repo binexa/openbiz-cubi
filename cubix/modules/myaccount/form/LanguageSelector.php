@@ -13,6 +13,7 @@
  */
 
 use Openbiz\I18n\I18n;
+use Openbiz\Easy\Element\DropDownList;
 
 class LanguageSelector extends DropDownList
 {

@@ -17,6 +17,7 @@
 
 namespace Openbiz\Object;
 
+use Openbiz\Openbiz;
 use Openbiz\ClassLoader;
 
 /**
@@ -68,6 +69,9 @@ class MetaIterator implements \Iterator
                 $clsLoaded = ClassLoader::loadMetadataClass($className, implode(".", $a_package_name));
             }
             //if (!$clsLoaded) trigger_error("Cannot find the load class $className", E_USER_ERROR);
+            
+            $className = Openbiz::objectFactory()->getClassNameFromAlias($className);
+            
             $obj = new $className($xmlArr, $parentObj);
             $this->varValue[$obj->objectName] = $obj;
         } else {
@@ -90,22 +94,8 @@ class MetaIterator implements \Iterator
                         $clsLoaded = ClassLoader::loadMetadataClass($className, $parentObj->package);
                     }
 
-                    if (!$clsLoaded) {
-                        trigger_error("Cannot find the load class $className", E_USER_ERROR);
-                    }
-                    /*
-                      if ($className === 'BizDataObj') {
-                      $className = 'Openbiz\\Data\\BizDataObj';
-                      }
-
-                      if ($className === 'BizField') {
-                      $className = 'Openbiz\\Data\\BizField';
-                      }
-                     */
-
-                    //if (!class_exists($className)) {
-                    //    throw new \Exception;
-                    //}
+                    $className = Openbiz::objectFactory()->getClassNameFromAlias($className);
+                    
                     $obj = new $className($child, $parentObj);
                     $this->varValue[$obj->objectName] = $obj;
                 }

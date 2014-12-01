@@ -1,6 +1,7 @@
 <?php
 
 use Openbiz\Openbiz;
+use Openbiz\Easy\Element\Element;
 
 class OauthSelector extends Element
 {

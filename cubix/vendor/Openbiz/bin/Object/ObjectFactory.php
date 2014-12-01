@@ -119,8 +119,16 @@ class ObjectFactory
             if ($xmlFile) { 
                 $xmlArr = ObjectFactoryHelper::getXmlArray($xmlFile);                
             } else {
+                
+                //$this->_createObjectFromClass($objName);
+                /* 
+                 * if not have metadata, create object from class directly
+                 * metadata is on the class it self.                 * 
+                 */
+                
                 $class = str_replace('.', '\\', $objName);
-                /*        
+                
+                /*
                 $dotPos = strrpos($objName, ".");
                 if ($dotPos > 0) { // if has package/namespace
                     $objectPackage =  substr($objName, 0, $dotPos) ;
@@ -129,8 +137,9 @@ class ObjectFactory
                     $objectPackage = null;
                     $class = $objName;
                 }
-                 * 
-                 */
+                * 
+                */
+                
             }
         }        
         
@@ -171,28 +180,14 @@ class ObjectFactory
         }
 
         //$package = $xmlArr[$root]["ATTRIBUTES"]["PACKAGE"];
-        $class = $xmlArr[$root]["ATTRIBUTES"]["CLASS"];
-        
-        
-        if ( isset($this->_classAlias[$class])) {
-            $class = $this->_classAlias[$class];
-        }
-                
+        $class = $xmlArr[$root]["ATTRIBUTES"]["CLASS"];        
 
-        if ($class === 'PickerForm') {
-             $class = 'Openbiz\\Easy\\PickerForm';
-        }
-
+        $class = $this->getClassNameFromAlias($class);        
         
         if (strrpos($class, '\\' ) !== false) {
             $obj_ref = new $class($xmlArr);
             return $obj_ref;
         }
-        
-        //if ($class=='BizDataObj') {
-        //    echo '====> '.__METHOD__ . '-' . $objName . '<br />';
-        //    echo 'class: '.$class .'<br />';
-        //}
         
         if (!class_exists($class, false)) {
             //echo 'class not exist<br />';
@@ -221,6 +216,17 @@ class ObjectFactory
         }
         return null;
     }
+    
+    
+    private function _createObjectFromMetadata() {
+        
+    }
+    
+    private function _createObjectFromClass($param)
+    {
+        
+    }
+    
     
     private $_prefix=[];
     private $_path=[];
@@ -252,7 +258,16 @@ class ObjectFactory
     public function setClassAlias($classAlias, $className)
     {
         $this->_classAlias[$classAlias] = $className;
-    }    
+    }
+    
+    
+    public function getClassNameFromAlias($className) {
+        if ( isset($this->_classAlias[$className])) {
+            return $this->_classAlias[$className];
+        } else {
+            return $className;
+        }
+    }
 
     public function setClassAliases($classAliases)
     {

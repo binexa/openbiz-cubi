@@ -14,8 +14,11 @@
  * @version   $Id: LabelBool.php 3640 2011-04-11 03:18:17Z jixian2003 $
  */
 
+namespace Openbiz\Easy\Element;
+
 use Openbiz\Openbiz;
 use Openbiz\Core\Expression;
+use Openbiz\Easy\Element\LabelText;
 
 //include_once("LabelText.php");
 

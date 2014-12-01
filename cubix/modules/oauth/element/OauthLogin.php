@@ -2,7 +2,7 @@
 
 use Openbiz\Openbiz;
 use Openbiz\Core\Expression;
-
+use Openbiz\Easy\Element\InputElement;
 /**
  * 
  * {php}
