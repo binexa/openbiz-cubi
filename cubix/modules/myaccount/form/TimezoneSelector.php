@@ -12,8 +12,7 @@
  */
 
 use Openbiz\Core\Expression;
-
-//require_once(OPENBIZ_BIN."easy/element/Listbox.php");
+use Openbiz\Easy\Element\Listbox;
 
 class TimezoneSelector extends Listbox{
 	public $continent;

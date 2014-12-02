@@ -3,9 +3,7 @@
 namespace Openbiz\Easy\Element;
 
 use Openbiz\Core\Expression;
-
-//include_once("LabelText.php");
-
+use Openbiz\Easy\Element\LabelText;
 
 class LabelImage extends LabelText
 {

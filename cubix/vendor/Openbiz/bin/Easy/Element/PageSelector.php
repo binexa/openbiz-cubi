@@ -16,6 +16,8 @@
 
 namespace Openbiz\Easy\Element;
 
+use Openbiz\Easy\Element\DropDownList;
+
 /**
  * InputText class is element for input text
  *

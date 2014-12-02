@@ -13,6 +13,7 @@
 
 use Openbiz\Openbiz;
 use Openbiz\Easy\EasyForm;
+use Openbiz\Validation\Exception as ValidationException; 
 
 define ('HASH_ALG','sha1');
 
@@ -369,8 +370,7 @@ class UserForm extends EasyForm
 		{
 			$errorMessage = $this->GetMessage("USERNAME_LENGTH");
 			$this->validateErrors['fld_username'] = $errorMessage;
-			throw new Openbiz\Validation\Exception($this->validateErrors);
-			return false;
+			throw new ValidationException($this->validateErrors);
 		}
 		
     	//validate password

@@ -22,7 +22,7 @@ use Openbiz\Core\Expression;
 use Openbiz\I18n\I18n;
 use Openbiz\Data\Helpers\QueryStringParam;
 use Openbiz\Object\ObjectFactoryHelper;
-//include_once("InputElement.php");
+use Openbiz\Easy\Element\InputElement;
 
 /**
  * OptionElement is the base class of element that render list (from Selection.xml)

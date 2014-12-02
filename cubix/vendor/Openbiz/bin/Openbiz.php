@@ -118,5 +118,4 @@ class Openbiz
         }
         return self::$_objectFactory;
     }
-
 }

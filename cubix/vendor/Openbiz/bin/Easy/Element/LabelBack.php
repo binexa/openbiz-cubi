@@ -1,5 +1,8 @@
-<?PHP
-//include_once("LabelText.php");
+<?php
+
+namespace Openbiz\Easy\Element;
+
+use Openbiz\Easy\Element\LabelText;
 
 class LabelBack extends LabelText
 {
@@ -9,5 +12,3 @@ class LabelBack extends LabelText
     }
 
 }
-
-?>

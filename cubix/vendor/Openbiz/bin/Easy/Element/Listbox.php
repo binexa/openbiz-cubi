@@ -16,6 +16,8 @@
 
 namespace Openbiz\Easy\Element;
 
+use Openbiz\Easy\Element\OptionElement;
+
 /**
  * Listbox class is element that show ListBox with data from Selection.xml
  *

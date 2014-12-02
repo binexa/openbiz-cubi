@@ -11,6 +11,8 @@
  * @version   $Id: AccessListbox.php 3812 2012-08-05 07:14:11Z rockyswen@gmail.com $
  */
 
+use Openbiz\Easy\Element\Listbox;
+
 class AccessListbox extends Listbox
 {
     public function render()

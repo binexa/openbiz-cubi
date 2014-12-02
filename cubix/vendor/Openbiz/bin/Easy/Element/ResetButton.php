@@ -16,6 +16,8 @@
 
 namespace Openbiz\Easy\Element;
 
+use Openbiz\Easy\Element\InputElement;
+
 /**
  * ResetButton class is element for render html reset button
  *

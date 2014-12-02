@@ -17,8 +17,7 @@
 namespace Openbiz\Easy\Element;
 
 use Openbiz\Openbiz;
-
-//include_once("InputElement.php");
+use Openbiz\Easy\Element\InputText;
 
 /**
  * InputDate class is element for input date with date picker
@@ -61,5 +60,3 @@ class InputDate extends InputText {
     }
 
 }
-
-?>

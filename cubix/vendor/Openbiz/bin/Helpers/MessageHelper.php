@@ -9,6 +9,8 @@
 namespace Openbiz\Helpers;
 
 use Openbiz\Openbiz;
+use Openbiz\I18n\I18n;
+
 /**
  * Description of MessageHelper
  *

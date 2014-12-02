@@ -14,8 +14,10 @@
  * @version   $Id: LabelList.php 543 2009-10-03 08:50:00Z mr_a_ton$
  */
 
+namespace Openbiz\Easy\Element;
+
 use Openbiz\Core\Expression;
-//include_once("OptionElement.php");
+use Openbiz\Easy\Element\OptionElement;
 
 /**
  * LabelList class is element that show description (read only) from Selection.xml

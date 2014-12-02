@@ -16,6 +16,8 @@
 
 namespace Openbiz\Easy\Element;
 
+use Openbiz\Easy\Element\InputElement;
+
 /**
  * Button class is element for Button
  *

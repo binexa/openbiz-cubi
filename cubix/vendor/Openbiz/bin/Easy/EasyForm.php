@@ -28,7 +28,7 @@ use Openbiz\Data\DataRecord;
 
 use Openbiz\Easy\Panel;
 use Openbiz\Easy\FormRenderer;
-
+use Openbiz\Validation\Exception as ValidationException;
 
 /**
  * EasyForm class - contains form object metadata functions
@@ -1725,8 +1725,7 @@ class EasyForm extends MetaObject implements Statefullable
             $this->dataPanel->next();
         }
         if (count($this->validateErrors) > 0) {
-            throw new Openbiz\Validation\Exception($this->validateErrors);
-            return false;
+            throw new ValidationException($this->validateErrors);
         }
         return true;
     }

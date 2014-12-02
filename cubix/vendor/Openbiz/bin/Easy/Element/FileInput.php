@@ -1,4 +1,4 @@
-<?PHP
+<?php
 /**
  * Openbiz Framework
  *
@@ -15,6 +15,8 @@
  */
 
 namespace Openbiz\Easy\Element;
+
+use Openbiz\Easy\Element\InputElement;
 
 /**
  * File class is the element for File

@@ -12,6 +12,7 @@
  */
 
 use Openbiz\Openbiz;
+use Openbiz\Easy\Element\InputElement;
 
 class DBListbox extends InputElement{
     public $blankOption;

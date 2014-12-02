@@ -1,4 +1,4 @@
-<?PHP
+<?php
 /**
  * Openbiz Framework
  *
@@ -17,6 +17,7 @@
 namespace Openbiz\Easy\Element;
 
 use Openbiz\Openbiz;
+use Openbiz\Easy\Element\LabelText;
 
 
 /**
@@ -101,5 +102,3 @@ class LabelTextarea extends LabelText
 
 
 }
-
-?>

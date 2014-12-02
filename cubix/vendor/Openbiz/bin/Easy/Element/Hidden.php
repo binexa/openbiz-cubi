@@ -16,6 +16,7 @@
 
 namespace Openbiz\Easy\Element;
 
+use Openbiz\Easy\Element\Element;
 /**
  * Button class is hidden element
  *

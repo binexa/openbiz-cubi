@@ -18,6 +18,7 @@
 namespace Openbiz\Easy\Element;
 
 use Openbiz\Openbiz;
+use Openbiz\Easy\Element\FileUploader;
 
 /**
  * File class is the element for Upload Image

@@ -13,7 +13,7 @@
  */
 include_once ('device_util.php');
 
-define('SITE_URL', 'http://local.openbiz.me/');
+define('SITE_URL','http://localhost/cubi');
 
 // init class 
 include_once(__DIR__ . "/../../cubix/vendor/Openbiz/bin/init_class_loader.php");

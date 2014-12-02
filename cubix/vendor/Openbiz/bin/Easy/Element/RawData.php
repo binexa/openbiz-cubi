@@ -18,6 +18,7 @@
 namespace Openbiz\Easy\Element;
 
 use Openbiz\Core\Expression;
+use Openbiz\Easy\Element\Element;
 
 /**
  * RawData class is element for render raw data

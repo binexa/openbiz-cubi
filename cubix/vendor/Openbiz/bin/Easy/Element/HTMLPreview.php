@@ -17,6 +17,7 @@
 namespace Openbiz\Easy\Element;
 
 use Openbiz\Core\Expression;
+use Openbiz\Easy\Element\Element;
 
 /**
  * LebelText - class LabelText is element that view value who binds

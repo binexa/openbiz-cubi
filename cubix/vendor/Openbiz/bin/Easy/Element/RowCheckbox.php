@@ -15,7 +15,9 @@
  */
 
 namespace Openbiz\Easy\Element;
+
 use Openbiz\Core\Expression;
+use Openbiz\Easy\Element\InputElement;
 
 /**
  * RowCheckbox class is input element for render RowCheckbox

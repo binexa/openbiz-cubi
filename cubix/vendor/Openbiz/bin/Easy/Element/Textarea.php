@@ -16,6 +16,8 @@
 
 namespace Openbiz\Easy\Element;
 
+use Openbiz\Easy\Element\OptionElement;
+
 /**
  * Textarea class is element for render html Textarea
  *

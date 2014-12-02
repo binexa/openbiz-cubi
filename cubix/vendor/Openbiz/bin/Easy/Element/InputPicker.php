@@ -1,4 +1,4 @@
-<?PHP
+<?php
 
 /**
  * Openbiz Framework
@@ -16,6 +16,8 @@
  */
 
 namespace Openbiz\Easy\Element;
+
+use Openbiz\Easy\Element\InputText;
 
 /**
  * InputPicker class is element for input picker

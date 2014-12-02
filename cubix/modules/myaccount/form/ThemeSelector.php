@@ -11,7 +11,8 @@
  * @version   $Id: ThemeSelector.php 3365 2012-05-31 06:07:55Z rockyswen@gmail.com $
  */
 
-//require_once(OPENBIZ_BIN."easy/element/DropDownList.php");
+use Openbiz\Easy\Element\DropDownList;
+
 class ThemeSelector extends DropDownList{
     function getList(){
     	$list=array();

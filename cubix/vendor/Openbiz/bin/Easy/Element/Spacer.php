@@ -2,6 +2,8 @@
 
 namespace Openbiz\Easy\Element;
 
+use Openbiz\Easy\Element\LabelText;
+
 class Spacer extends LabelText
 {
 

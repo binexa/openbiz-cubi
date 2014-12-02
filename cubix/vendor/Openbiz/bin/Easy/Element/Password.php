@@ -16,6 +16,9 @@
 
 namespace Openbiz\Easy\Element;
 
+use Openbiz\Easy\Element\InputElement;
+
+
 /**
  * Password class is element for input password
  *

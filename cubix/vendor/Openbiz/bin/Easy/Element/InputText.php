@@ -16,6 +16,8 @@
 
 namespace Openbiz\Easy\Element;
 
+use Openbiz\Easy\Element\InputElement;
+
 /**
  * InputText class is element for input text
  *

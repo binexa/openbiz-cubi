@@ -4,6 +4,7 @@ namespace Openbiz\Easy\Element;
 
 use Openbiz\Openbiz;
 use Openbiz\Core\Expression;
+use Openbiz\Easy\Element\Listbox;
 
 //include_once ("Listbox.php");
 class TreeListbox extends Listbox

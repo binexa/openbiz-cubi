@@ -3,6 +3,9 @@
 namespace Openbiz\Easy\Element;
 
 use Openbiz\Openbiz;
+use Openbiz\Easy\Element\InputElement;
+
+
 class FormElement extends InputElement
 {
     protected $formReference;

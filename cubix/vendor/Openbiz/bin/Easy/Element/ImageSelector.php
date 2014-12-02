@@ -4,7 +4,7 @@ namespace Openbiz\Easy\Element;
 
 use Openbiz\Openbiz;
 use Openbiz\Core\Expression;
-
+use Openbiz\Easy\Element\OptionElement;
 
 class ImageSelector extends OptionElement
 {

@@ -17,6 +17,7 @@
 namespace Openbiz\Easy\Element;
 
 use Openbiz\Openbiz;
+use Openbiz\Easy\Element\InputText;
 
 /**
  * InputDatetime class is element for input date and time with datetime picker

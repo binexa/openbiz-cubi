@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Openbiz Cubi Application Platform
  *
@@ -10,29 +11,28 @@
  * @link      http://code.google.com/p/openbiz-cubi/
  * @version   $Id: ModuleChangeLogForm.php 3372 2012-05-31 06:19:06Z rockyswen@gmail.com $
  */
-
 use Openbiz\Easy\EasyFormGrouping;
 
 class ModuleChangeLogForm extends EasyFormGrouping
 {
-	public function LoadAll()
-	{
-		include_once (Openbiz::$app->getModulePath()."/system/lib/ModuleLoader.php");
-		$_moduleArr = glob(Openbiz::$app->getModulePath()."/*");
-	    $moduleArr[0] = "system";
-	    $moduleArr[1] = "menu";
-		foreach ($_moduleArr as $_module)
-		{
-			$_module = basename($_module);	      
-	        $moduleArr[] = $_module;	
-		}
-		
-		foreach ($moduleArr as $moduleName)
-		{
-			$loader = new ModuleLoader($moduleName);
-			$loader->loadChangeLog();
-		}
-		
-		$this->updateForm();
-	}
+
+    public function loadAll()
+    {
+        include_once (Openbiz::$app->getModulePath() . "/system/lib/ModuleLoader.php");
+        $_moduleArr = glob(Openbiz::$app->getModulePath() . "/*");
+        $moduleArr[0] = "system";
+        $moduleArr[1] = "menu";
+        foreach ($_moduleArr as $_module) {
+            $_module = basename($_module);
+            $moduleArr[] = $_module;
+        }
+
+        foreach ($moduleArr as $moduleName) {
+            $loader = new ModuleLoader($moduleName);
+            $loader->loadChangeLog();
+        }
+
+        $this->updateForm();
+    }
+
 }

@@ -15,7 +15,9 @@
  */
 
 namespace Openbiz\Easy\Element;
+
 use Openbiz\Openbiz;
+use Openbiz\Easy\Element\InputElement;
 
 /**
  * RichText class is input element for render RichText editor

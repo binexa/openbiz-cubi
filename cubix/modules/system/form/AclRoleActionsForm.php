@@ -37,10 +37,11 @@ class AclRoleActionsForm extends EasyForm
         // turn off the OnSort flag of the old onsort field
         $element->setSortFlag(null);
         // turn on the OnSort flag of the new onsort field
-        if ($order == "ASC")
+        if ($order == "ASC") {
             $order = "DESC";
-        else
+        } else {
             $order = "ASC";
+        }
         $element->setSortFlag($order);
 
         // change the sort rule and issue the query

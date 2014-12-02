@@ -12,6 +12,9 @@
  */
 
 //require_once(OPENBIZ_BIN."easy/element/Listbox.php");
+
+use Openbiz\Easy\Element\Listbox;
+
 class ContinentSelector extends Listbox{
     function getFromList(&$list){
     	$list = array();

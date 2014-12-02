@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Openbiz Framework
  *
@@ -18,6 +19,7 @@ namespace Openbiz\Easy\Element;
 
 use Openbiz\Openbiz;
 use Openbiz\Core\Expression;
+use Openbiz\Easy\Element\Element;
 
 /**
  * InputElement class is based element for all input element
@@ -29,6 +31,7 @@ use Openbiz\Core\Expression;
  */
 class InputElement extends Element
 {
+
     public $fieldName;
     public $label;
     public $objectDescription;
@@ -39,7 +42,6 @@ class InputElement extends Element
     public $text;
     public $hint;
     public $link;
-
 
     /**
      * Read array meta data, and store to meta object
@@ -60,13 +62,11 @@ class InputElement extends Element
         $this->text = isset($xmlArr["ATTRIBUTES"]["TEXT"]) ? $xmlArr["ATTRIBUTES"]["TEXT"] : null;
 
         $this->hint = isset($xmlArr["ATTRIBUTES"]["HINT"]) ? $xmlArr["ATTRIBUTES"]["HINT"] : null;
-        
+
         // if no class name, add default class name. i.e. NewRecord => ObjName.NewRecord
         // tmp_remark
         //$this->valuePicker = $this->prefixPackage($this->valuePicker);
     }
-
-
 
     /**
      * Get enable status
@@ -78,23 +78,23 @@ class InputElement extends Element
         $formObj = $this->getFormObj();
         return Expression::evaluateExpression($this->enabled, $formObj);
     }
-    
+
     protected function getRequired()
     {
         $formObj = $this->getFormObj();
         return Expression::evaluateExpression($this->required, $formObj);
-    }    
-	
+    }
+
     public function getValue()
     {
-    	$value=parent::getValue();
-    	if($value==$this->hint)
-    	{
-    		$this->value = null;
-    		return null;
-    	}
-    	return $value;
+        $value = parent::getValue();
+        if ($value == $this->hint) {
+            $this->value = null;
+            return null;
+        }
+        return $value;
     }
+
     /**
      * Render label, just return label value
      *
@@ -102,7 +102,7 @@ class InputElement extends Element
      */
     public function renderLabel()
     {
-        $sHTML = $this->translateString($this->label);       
+        $sHTML = $this->translateString($this->label);
         return $sHTML;
     }
 
@@ -145,6 +145,7 @@ class InputElement extends Element
         $str .= "</script>\n";
         return $str;
     }
+
 }
 
 ?>

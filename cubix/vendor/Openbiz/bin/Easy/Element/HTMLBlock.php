@@ -16,6 +16,8 @@
 
 namespace Openbiz\Easy\Element;
 
+use Openbiz\Easy\Element\Element;
+
 /**
  * HTMLBlock class is element that write HTML block borderd by <div> tag
  * 

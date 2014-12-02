@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Openbiz Cubi Application Platform
  *
@@ -12,32 +13,36 @@
  */
 
 use Openbiz\I18n\I18n;
+use Openbiz\Easy\Element\Listbox;
 
-class CurrencySelector extends Listbox{
-    function getFromList(&$list){
+class CurrencySelector extends Listbox
+{
 
-		$current_locale = I18n::getCurrentLangCode();
-		//require_once('Zend/Locale.php');
-		$locale = new \Zend_Locale($current_locale);
-			
-		$current_currency = CUBI_DEFAULT_CURRENCY;		
-		if(!$current_currency){
-			$current_currency = "USD";
-		}
-		//require_once('Zend/Currency.php');
-		
-		$currency = new \Zend_Currency($current_currency,$current_locale);
-		$currencyList = $currency->getCurrencyList();
-    	foreach ($currencyList as $currency_code => $country){
-    		
-    				$display_name = $currency->getName($currency_code,$current_locale);
-    				if($display_name){    					
-			    		array_push($list,array("val"=>$currency_code,
-			    								"txt"=>"$currency_code - $display_name"
-			    		));
-    				}
-    		
-    	}
-    	return $list;
+    function getFromList(&$list)
+    {
+
+        $current_locale = I18n::getCurrentLangCode();
+        //require_once('Zend/Locale.php');
+        $locale = new \Zend_Locale($current_locale);
+
+        $current_currency = CUBI_DEFAULT_CURRENCY;
+        if (!$current_currency) {
+            $current_currency = "USD";
+        }
+        //require_once('Zend/Currency.php');
+
+        $currency = new \Zend_Currency($current_currency, $current_locale);
+        $currencyList = $currency->getCurrencyList();
+        foreach ($currencyList as $currency_code => $country) {
+
+            $display_name = $currency->getName($currency_code, $current_locale);
+            if ($display_name) {
+                array_push($list, array("val" => $currency_code,
+                    "txt" => "$currency_code - $display_name"
+                ));
+            }
+        }
+        return $list;
     }
+
 }
