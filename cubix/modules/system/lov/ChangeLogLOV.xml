@@ -12,6 +12,5 @@
    
    <Type Value="Bug_Fixed" text="Bug Fixed"/>
    <Type Value="New_Feature" text="New Feature"/>
-   <Type Value="Security" text="Security"/>
-   
+   <Type Value="Security" text="Security"/>   
 </Selection>

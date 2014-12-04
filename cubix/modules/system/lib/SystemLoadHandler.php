@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Openbiz Cubi Application Platform
  *
@@ -10,17 +11,18 @@
  * @link      http://code.google.com/p/openbiz-cubi/
  * @version   $Id: SystemLoadHandler.php 3372 2012-05-31 06:19:06Z rockyswen@gmail.com $
  */
-
-include_once (Openbiz::$app->getModulePath()."/system/lib/ModuleLoadHandler.php");
+include_once (Openbiz::$app->getModulePath() . "/system/lib/ModuleLoadHandler.php");
 
 class SystemLoadHandler implements ModuleLoadHandler
 {
+
     public function beforeLoadingModule($moduelLoader)
     {
+        
     }
-    
+
     public function postLoadingModule($moduelLoader)
     {
+        
     }
 }
-

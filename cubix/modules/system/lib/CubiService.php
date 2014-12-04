@@ -71,7 +71,7 @@ class CubiService extends MetaObject
             $contactRec['mobile'] = $recArr['mobile'];
             $contactRec['phone'] = $recArr['phone'];
         }
-        $system_uuid = $this->getSystemUUID();
+        $system_uuid = $this->getSystemUuid();
         $system_name = OPENBIZ_DEFAULT_SYSTEM_NAME;
         $system_language = OPENBIZ_DEFAULT_LANGUAGE;
         $system_url = SITE_URL;
@@ -108,7 +108,7 @@ class CubiService extends MetaObject
         return $params;
     }
 
-    public function getSystemUUIDfromRemote()
+    public function getSystemUuidFromRemote()
     {
         $method = "CetSystemUUID";
         if (function_exists("ioncube_server_data")) {
