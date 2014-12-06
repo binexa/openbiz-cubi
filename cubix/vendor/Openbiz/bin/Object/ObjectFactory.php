@@ -113,11 +113,16 @@ class ObjectFactory
      * @return object the instance of the object
      */
     protected function constructObject($objName, &$xmlArr = null)
-    {        
+    {               
+        //echo '<pre>';
+        //echo __METHOD__.'-'.__LINE__ . ' : BEGIN ========================<br />';
+        //echo 'par: objName : ' . $objName . '<br />';
+        
         if (!$xmlArr) {
             $xmlFile = ObjectFactoryHelper::getXmlFileWithPath($objName);            
             if ($xmlFile) { 
                 $xmlArr = ObjectFactoryHelper::getXmlArray($xmlFile);                
+                //echo __METHOD__.'-'.__LINE__ . '<br />';
             } else {
                 
                 //$this->_createObjectFromClass($objName);
@@ -143,7 +148,12 @@ class ObjectFactory
             }
         }        
         
-        if ($xmlArr) {
+        if ($xmlArr) {       
+            
+            //echo __METHOD__.'-'.__LINE__ . ' <br />';
+            
+            //echo var_dump($xmlArr);
+            
             $keys = array_keys($xmlArr);
             $root = $keys[0];
 
@@ -158,15 +168,23 @@ class ObjectFactory
                 }
             }
             
+            $class = $xmlArr[$root]["ATTRIBUTES"]["CLASS"];
+            
+            //echo __METHOD__.'-'.__LINE__ . ' class : ' . $class . ' <br />';
+            
             // if class has package name as prefix, change the package to the prefix
             $dotPos = strrpos($class, ".");
-            $classPrefix = $dotPos > 0 ? substr($class, 0, $dotPos) : null;
-            $classPackage = $classPrefix ? $classPrefix : null;
-            
-            if ($classPrefix) {
+            if ($dotPos > 0) {
+                $classPrefix = substr($class, 0, $dotPos);
+                $classPackage = $classPrefix;
                 $shortClass = substr($class, $dotPos + 1);
-            }
-            
+            } else {
+                $classPrefix = null;
+                $classPackage = null;                
+                $shortClass = $class;
+            }            
+           
+            //echo 'shortclass : ' . $shortClass .'<br />' ;
             // set object package
             $dotPos = strrpos($objName, ".");
             $objectPackage = $dotPos > 0 ? substr($objName, 0, $dotPos) : null;
@@ -179,15 +197,18 @@ class ObjectFactory
             $xmlArr[$root]["ATTRIBUTES"]["PACKAGE"] = $objectPackage;
         }
 
-        //$package = $xmlArr[$root]["ATTRIBUTES"]["PACKAGE"];
-        $class = $xmlArr[$root]["ATTRIBUTES"]["CLASS"];        
 
-        $class = $this->getClassNameFromAlias($class);        
+        //$package = $xmlArr[$root]["ATTRIBUTES"]["PACKAGE"];
+        //$class = $xmlArr[$root]["ATTRIBUTES"]["CLASS"];
+        $class = $shortClass;
+        //echo $class . '<br />';
         
         if (strrpos($class, '\\' ) !== false) {
             $obj_ref = new $class($xmlArr);
             return $obj_ref;
-        }
+        }        
+
+        $class = $this->getClassNameFromAlias($class);
         
         if (!class_exists($class, false)) {
             //echo 'class not exist<br />';
