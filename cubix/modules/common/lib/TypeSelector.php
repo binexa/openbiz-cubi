@@ -13,6 +13,7 @@
  */
 
 use Openbiz\Openbiz;
+use Openbiz\Easy\Element\DropDownList;
 //include_once (OPENBIZ_BIN."/easy/element/DropDownList.php");
 
 class TypeSelector extends DropDownList

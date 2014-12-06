@@ -5,9 +5,18 @@
   Copyright (c) 2005-2011, Openbiz Technology LLC
   Version $Id: ExtendDataEditForm.xml 3360 2012-05-31 06:00:17Z rockyswen@gmail.com $
 -->
-<EasyForm Name="ExtendDataEditForm" Class="ExtendDataEditForm"  FormType="Edit" jsClass="jbForm"  BizDataObj="extend.do.ExtendDataDO" PageSize="10" DefaultForm="Y" TemplateEngine="Smarty" TemplateFile="form_data_edit.tpl.html"  Access="extend.access">
+<EasyForm Name="ExtendDataEditForm" 
+          Class="ExtendDataEditForm"  
+          FormType="Edit" 
+          jsClass="jbForm"  
+          BizDataObj="extend.do.ExtendDataDO" 
+          PageSize="10" 
+          DefaultForm="Y" 
+          TemplateEngine="Smarty" 
+          TemplateFile="form_data_edit.tpl.html"  
+          Access="extend.access">
     <DataPanel>        
-	</DataPanel>
+    </DataPanel>
     <ActionPanel>         
     </ActionPanel> 
     <NavPanel>

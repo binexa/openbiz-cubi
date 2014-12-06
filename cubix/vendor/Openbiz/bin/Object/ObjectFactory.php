@@ -201,14 +201,18 @@ class ObjectFactory
         //$package = $xmlArr[$root]["ATTRIBUTES"]["PACKAGE"];
         //$class = $xmlArr[$root]["ATTRIBUTES"]["CLASS"];
         $class = $shortClass;
+        
         //echo $class . '<br />';
+        
+        $class = $this->getClassNameFromAlias($class);
         
         if (strrpos($class, '\\' ) !== false) {
             $obj_ref = new $class($xmlArr);
             return $obj_ref;
         }        
 
-        $class = $this->getClassNameFromAlias($class);
+        //echo $class . '<br />';
+        //echo $classPackage . '<br />';
         
         if (!class_exists($class, false)) {
             //echo 'class not exist<br />';

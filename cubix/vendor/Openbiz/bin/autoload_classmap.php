@@ -60,6 +60,7 @@ return array(
     'Openbiz\Easy\EasyFormGrouping'      => __DIR__ . '/Easy/EasyFormGrouping.php',
     'Openbiz\Easy\EasyFormORM'           => __DIR__ . '/Easy/EasyFormORM.php',
     'Openbiz\Easy\EasyFormTree'          => __DIR__ . '/Easy/EasyFormTree.php',
+    'Openbiz\Easy\Panel'          => __DIR__ . '/Easy/Panel.php',
     
     'Openbiz\Easy\EasyFormWizard'        => __DIR__ . '/Easy/EasyFormWizard.php',
     
@@ -75,7 +76,7 @@ return array(
     'Openbiz\Easy\HTMLTabs'              => __DIR__ . '/Easy/HTMLTabs.php',
     'Openbiz\Easy\TabView'               => __DIR__ . '/Easy/TabView.php',
     'Openbiz\Easy\HTMLTree'              => __DIR__ . '/Easy/HTMLTree.php',    
-    'Openbiz\Easy\Panel'    => __DIR__ . '/Easy/Panel.php',    
+    'Openbiz\Easy\Panel'                 => __DIR__ . '/Easy/Panel.php',    
     'Openbiz\Easy\PickerForm'            => __DIR__ . '/Easy/PickerForm.php',    
     
     'Openbiz\Easy\Element\AutoSuggest'  => __DIR__ . '/Easy/Element/AutoSuggest.php',

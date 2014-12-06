@@ -84,8 +84,10 @@ class Application extends \Openbiz\Object\Object
             'BizDataObj' => 'Openbiz\\Data\\BizDataObj',
             'BizField' => 'Openbiz\\Data\\BizField',
             'EasyForm'      =>  'Openbiz\\Easy\\EasyForm',
+            
             'EasyView' => 'Openbiz\\Easy\\EasyView',
             'PickerForm' => 'Openbiz\\Easy\\PickerForm',            
+            'FormReference' => 'Openbiz\\Easy\\FormReference',
             
             'AutoSuggest' => 'Openbiz\\Easy\\Element\\AutoSuggest',
             'BarcodeScanner' => 'Openbiz\\Easy\\Element\\BarcodeScanner',

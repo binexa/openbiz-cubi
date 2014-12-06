@@ -13,6 +13,7 @@
 
 use Openbiz\Openbiz;
 use Openbiz\Easy\EasyForm;
+//use Openbiz\Easy\Panel;
 
 class ExtendDataEditForm extends EasyForm
 {
