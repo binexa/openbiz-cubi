@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 /**
  * Openbiz Cubi Application Platform
  *
@@ -9,10 +10,9 @@
  * @license   http://code.google.com/p/openbiz-cubi/wiki/CubiLicense
  * @link      http://code.google.com/p/openbiz-cubi/
  */
- 
 use Openbiz\Data\BizDataObj;
+
 class UserDO extends BizDataObj
 {
     
-}  
-
+}

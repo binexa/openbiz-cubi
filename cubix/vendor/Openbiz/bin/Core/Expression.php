@@ -33,10 +33,10 @@ class Expression
 
     static protected $services = array(
         'validate' => 'service.validateService',
-        'query' => 'service.validateService',
-        'vis' => 'visibilityService',
-        'preference' => 'preferenceService',
-        'util' => 'utilService',
+        'query' => 'service.queryService',
+        'vis' => 'service.visibilityService',
+        'preference' => 'service.preferenceService',
+        'util' => 'service.utilService',
     );
     static protected $expContainers = array(
         '{fx}' => '{/fx}',
@@ -46,7 +46,6 @@ class Expression
 
     function __construct(&$xmlArr)
     {
-
     }
 
     /**
@@ -317,7 +316,7 @@ class Expression
      * @param string $expression - simple expression supported by the openbiz
      * @param object $object
      * @return mixed
-     * */
+     **/
     public static function evaluateExpression($expression, $object)
     {
         // TODO: check if it's "\[", "\]", "\{" or "\}"
@@ -489,5 +488,4 @@ class Expression
     {
         return ($expression == "{@}");
     }
-
 }

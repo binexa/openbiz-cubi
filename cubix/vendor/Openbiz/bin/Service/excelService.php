@@ -14,6 +14,8 @@
  * @version   $Id: excelService.php 2792 2010-12-06 01:17:09Z rockys $
  */
 
+namespace Openbiz\Service;
+
 use Openbiz\Data\DataRecord;
 use Openbiz\Easy\EasyForm;
 

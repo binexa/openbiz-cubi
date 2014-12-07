@@ -200,9 +200,10 @@ class ObjectFactory
 
         //$package = $xmlArr[$root]["ATTRIBUTES"]["PACKAGE"];
         //$class = $xmlArr[$root]["ATTRIBUTES"]["CLASS"];
+
         $class = $shortClass;
         
-        //echo $class . '<br />';
+        // echo $class . '<br />';
         
         $class = $this->getClassNameFromAlias($class);
         

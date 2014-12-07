@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Openbiz Framework
  *
@@ -14,6 +15,9 @@
  * @version   $Id: queryService.php 2553 2010-11-21 08:36:48Z mr_a_ton $
  */
 
+namespace Openbiz\Service;
+
+use Openbiz\Openbiz;
 /**
  * queryService class is the plug-in service of fetching query results
  *
@@ -32,7 +36,7 @@ class queryService
      */
     public function __construct()
     {
-
+        
     }
 
     /**
@@ -45,10 +49,8 @@ class queryService
     public function fetchAll($doName, $searchRule)
     {
         $do = Openbiz::getObject($doName);
-        if (!$do)
-        {
+        if (!$do) {
             throw new Exception("System cannot get object of $doName.");
-            return;
         }
         return $do->directFetch($searchRule);
     }
@@ -63,13 +65,12 @@ class queryService
     public function fetchRecord($doName, $searchRule)
     {
         $do = Openbiz::getObject($doName);
-        if (!$do)
-        {
+        if (!$do) {
             throw new Exception("System cannot get object of $doName.");
             return;
         }
         $r = $do->directFetch($searchRule, 1);
-        if (count($r)>0)
+        if (count($r) > 0)
             return $r[0];
         return null;
     }
@@ -89,6 +90,7 @@ class queryService
             return $rec[$fieldName];
         return null;
     }
+
 }
 
 ?>

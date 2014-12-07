@@ -12,6 +12,7 @@
  * @version   $Id: CategoryListbox.php 3363 2012-05-31 06:04:56Z rockyswen@gmail.com $
  */
 use Openbiz\Openbiz;
+use Openbiz\Easy\Element\Listbox;
 
 class CategoryListbox extends Listbox
 {

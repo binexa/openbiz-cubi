@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Openbiz Cubi Application Platform
  *
@@ -10,13 +11,14 @@
  * @link      http://code.google.com/p/openbiz-cubi/
  * @version   $Id: DBListbox.php 3372 2012-05-31 06:19:06Z rockyswen@gmail.com $
  */
-
 use Openbiz\Openbiz;
 use Openbiz\Easy\Element\InputElement;
 
-class DBListbox extends InputElement{
+class DBListbox extends InputElement
+{
+
     public $blankOption;
-   
+
     /**
      * Read metadata info from metadata array and store to class variable
      *
@@ -26,7 +28,7 @@ class DBListbox extends InputElement{
     protected function readMetaData(&$xmlArr)
     {
         parent::readMetaData($xmlArr);
-        $this->blankOption = isset($xmlArr["ATTRIBUTES"]["BLANKOPTION"]) ? $xmlArr["ATTRIBUTES"]["BLANKOPTION"] : null;        
+        $this->blankOption = isset($xmlArr["ATTRIBUTES"]["BLANKOPTION"]) ? $xmlArr["ATTRIBUTES"]["BLANKOPTION"] : null;
     }
 
     /**
@@ -44,91 +46,83 @@ class DBListbox extends InputElement{
         $func = $this->getFunction();
 
         //$sHTML = "<SELECT NAME=\"" . $this->objectName . "[]\" ID=\"" . $this->objectName ."\" $disabledStr $this->htmlAttr $style $func>";
-        $sHTML = "<SELECT NAME=\"" . $this->objectName . "\" ID=\"" . $this->objectName ."\" $disabledStr $this->htmlAttr $style $func>";
+        $sHTML = "<SELECT NAME=\"" . $this->objectName . "\" ID=\"" . $this->objectName . "\" $disabledStr $this->htmlAttr $style $func>";
 
-        if ($this->blankOption) // ADD a blank option
-        {
-            $entry = explode(",",$this->blankOption);
+        if ($this->blankOption) { // ADD a blank option
+            $entry = explode(",", $this->blankOption);
             $text = $entry[0];
-            $value = ($entry[1]!= "") ? $entry[1] : null;
-            $entryList = array(array("val" => $value, "txt" => $text ));
+            $value = ($entry[1] != "") ? $entry[1] : null;
+            $entryList = array(array("val" => $value, "txt" => $text));
             $fromList = array_merge($entryList, $fromList);
         }
 
-        foreach ($fromList as $option)
-        {
+        foreach ($fromList as $option) {
             $test = array_search($option['val'], $valueArray);
-            if ($test === false)
-            {
+            if ($test === false) {
                 $selectedStr = '';
-            }
-            else
-            {
+            } else {
                 $selectedStr = "SELECTED";
             }
             $sHTML .= "<OPTION VALUE=\"" . $option['val'] . "\" $selectedStr>" . $option['txt'] . "</OPTION>";
         }
         $sHTML .= "</SELECT>";
         /* editable combobox
-        <div style="position: relative;">
-        <select style="position: absolute; width: 146px; height: 18px; z-index: 1; clip: rect(auto, auto, auto, 127px);">
-        <option value="" selected="selected"/>
-        <option value="Homer">Homer</option>
-        <option value="Marge">Marge</option>
-        <option value="Bart">Bart</option>
-        <option value="Lisa">Lisa</option>
-        <option value="Maggie">Maggie</option>
-        </select>
-        <div>
-        <input type="text" style="width: 128px; height: 20px;"/>
-        </div>
-        </div>
-        */
+          <div style="position: relative;">
+          <select style="position: absolute; width: 146px; height: 18px; z-index: 1; clip: rect(auto, auto, auto, 127px);">
+          <option value="" selected="selected"/>
+          <option value="Homer">Homer</option>
+          <option value="Marge">Marge</option>
+          <option value="Bart">Bart</option>
+          <option value="Lisa">Lisa</option>
+          <option value="Maggie">Maggie</option>
+          </select>
+          <div>
+          <input type="text" style="width: 128px; height: 20px;"/>
+          </div>
+          </div>
+         */
         return $sHTML;
     }
 
- 	public function getFromList(&$list)
+    public function getFromList(&$list)
     {
-    	//get DB list from setting
-    	$formobj = $this->getFormObj();
-    	$rec = $formobj->getActiveRecord();    	
-    	$server = Openbiz::$app->getClientProxy()->getFormInputs('fld_server')?Openbiz::$app->getClientProxy()->getFormInputs('fld_server'):$rec['server'];
-    	$port = Openbiz::$app->getClientProxy()->getFormInputs('fld_port')?Openbiz::$app->getClientProxy()->getFormInputs('fld_port'):$rec['port'];
-    	$driver = Openbiz::$app->getClientProxy()->getFormInputs('fld_driver')?Openbiz::$app->getClientProxy()->getFormInputs('fld_driver'):$rec['driver'];
-    	$username = Openbiz::$app->getClientProxy()->getFormInputs('fld_username')?Openbiz::$app->getClientProxy()->getFormInputs('fld_username'):$rec['username'];
-    	$password = Openbiz::$app->getClientProxy()->getFormInputs('fld_password')?Openbiz::$app->getClientProxy()->getFormInputs('fld_password'):$rec['password'];
-    	$charset = 'UTF8';
-    	
-    	if(!$server)
-    	{
-    		$server = $rec['SERVER'];	
-    		$port 	= $rec['PORT'];
-    		$driver	= $rec['DRIVER'];
-    		$username= $rec['USER'];
-    		$password 	= $rec['PASSWORD'];
-    		$charset 	= $rec['CHARSET'];
-    	}
+        //get DB list from setting
+        $formobj = $this->getFormObj();
+        $rec = $formobj->getActiveRecord();
+        $server = Openbiz::$app->getClientProxy()->getFormInputs('fld_server') ? Openbiz::$app->getClientProxy()->getFormInputs('fld_server') : $rec['server'];
+        $port = Openbiz::$app->getClientProxy()->getFormInputs('fld_port') ? Openbiz::$app->getClientProxy()->getFormInputs('fld_port') : $rec['port'];
+        $driver = Openbiz::$app->getClientProxy()->getFormInputs('fld_driver') ? Openbiz::$app->getClientProxy()->getFormInputs('fld_driver') : $rec['driver'];
+        $username = Openbiz::$app->getClientProxy()->getFormInputs('fld_username') ? Openbiz::$app->getClientProxy()->getFormInputs('fld_username') : $rec['username'];
+        $password = Openbiz::$app->getClientProxy()->getFormInputs('fld_password') ? Openbiz::$app->getClientProxy()->getFormInputs('fld_password') : $rec['password'];
+        $charset = 'UTF8';
 
-    	if(!$driver)
-        	return;
-        
-
-        switch(strtoupper($driver)){
-        	case "PDO_MYSQL":
-        		$dbconn = @mysql_connect($server.":".$port,$username,$password);
-        		$dblist = @mysql_list_dbs($dbconn);  
-        		$i = 0 ;
-        		while ($row = @mysql_fetch_array($dblist)){
-        			if($row['Database']!='information_schema' && 
-        				$row['Database']!='performance_schema'){
-	        			$list[$i] = array('val'=>$row['Database'],'txt'=>$row['Database']);
-	        			$i++;
-        			}
-        		}      		
-        		break;        	
+        if (!$server) {
+            $server = $rec['SERVER'];
+            $port = $rec['PORT'];
+            $driver = $rec['DRIVER'];
+            $username = $rec['USER'];
+            $password = $rec['PASSWORD'];
+            $charset = $rec['CHARSET'];
         }
 
-    }    
-    
-  
+        if (!$driver)
+            return;
+
+
+        switch (strtoupper($driver)) {
+            case "PDO_MYSQL":
+                $dbconn = @mysql_connect($server . ":" . $port, $username, $password);
+                $dblist = @mysql_list_dbs($dbconn);
+                $i = 0;
+                while ($row = @mysql_fetch_array($dblist)) {
+                    if ($row['Database'] != 'information_schema' &&
+                            $row['Database'] != 'performance_schema') {
+                        $list[$i] = array('val' => $row['Database'], 'txt' => $row['Database']);
+                        $i++;
+                    }
+                }
+                break;
+        }
+    }
+
 }

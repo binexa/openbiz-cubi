@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Openbiz Cubi Application Platform
  *
@@ -10,10 +11,7 @@
  * @link      http://code.google.com/p/openbiz-cubi/
  * @version   $Id: lovService.php 4761 2012-11-16 10:12:30Z hellojixian@gmail.com $
  */
-
 use Openbiz\Openbiz;
-use Openbiz\Resource;
-
 use Openbiz\Core\Expression;
 use Openbiz\Object\MetaObject;
 use Openbiz\Data\Helpers\QueryStringParam;
@@ -22,40 +20,39 @@ use Openbiz\Object\ObjectFactoryHelper;
 
 class lovService extends MetaObject
 {
-	
-	public function getDict($selectFrom)
-	{
-		return $this->getDictionary($selectFrom);
-	}
-	
+
+    public function getDict($selectFrom)
+    {
+        return $this->getDictionary($selectFrom);
+    }
+
     public function getDictionary($selectFrom)
     {
-    	$this->selectFrom=$selectFrom;
-    	$dict = array();
-    	$list = $this->getList($selectFrom);
-		if ($list) {
-			foreach ($list as $item)
-			{
-				$dict[$item['val']] = $item['txt'];
-			}
-		}
-    	return $dict;
+        $this->selectFrom = $selectFrom;
+        $dict = array();
+        $list = $this->getList($selectFrom);
+        if ($list) {
+            foreach ($list as $item) {
+                $dict[$item['val']] = $item['txt'];
+            }
+        }
+        return $dict;
     }
-	
-    public function getTextByValue($selectFrom,$value)
+
+    public function getTextByValue($selectFrom, $value)
     {
-    	$dict = $this->getDictionary($selectFrom);
-    	return $dict[$value];
+        $dict = $this->getDictionary($selectFrom);
+        return $dict[$value];
     }
-    
+
     public function getList($selectFrom)
     {
-    	$list = array();
+        $list = array();
         if (!$selectFrom) {
             $selectFrom = $this->getSelectFrom();
         }
         if (!$selectFrom) {
-        	return $this->getSQLFromList();
+            return $this->getSQLFromList();
         }
         $list = $this->getXMLFromList($selectFrom);
         if ($list != null)
@@ -65,34 +62,32 @@ class lovService extends MetaObject
             return $list;
         $list = $this->getSimpleFromList($selectFrom);
         if ($list != null)
-            return $list;        
+            return $list;
         return;
     }
-    	
+
     protected function getSelectFrom($selectFrom)
-    {     
+    {
         return Expression::evaluateExpression($selectFrom, null);
     }
 
     protected function getSelectedList($selectFrom)
-    {        
-        return Expression::evaluateExpression($selectFrom, null);
-    }
-    
-	protected function getSelectFromSQL($selectFrom)
     {
         return Expression::evaluateExpression($selectFrom, null);
-    }	
+    }
 
-    
+    protected function getSelectFromSQL($selectFrom)
+    {
+        return Expression::evaluateExpression($selectFrom, null);
+    }
+
     protected function getXMLFromList($selectFrom)
     {
         $pos0 = strpos($selectFrom, "(");
         $pos1 = strpos($selectFrom, ")");
-        if ($pos0>0 && $pos1 > $pos0)
-        {  // select from xml file
+        if ($pos0 > 0 && $pos1 > $pos0) {  // select from xml file
             $xmlFile = substr($selectFrom, 0, $pos0);
-            $tag = substr($selectFrom, $pos0 + 1, $pos1 - $pos0-1);
+            $tag = substr($selectFrom, $pos0 + 1, $pos1 - $pos0 - 1);
             $tag = strtoupper($tag);
             $xmlFile = ObjectFactoryHelper::getXmlFileWithPath($xmlFile);
             if (!$xmlFile) {
@@ -100,65 +95,55 @@ class lovService extends MetaObject
             }
 
             $xmlArr = &ObjectFactoryHelper::getXmlArray($xmlFile);
-            if ($xmlArr)
-            {
+            if ($xmlArr) {
                 $i = 0;
                 if (!key_exists($tag, $xmlArr["SELECTION"]))
                     return false;
-                foreach($xmlArr["SELECTION"][$tag] as $node)
-                {
+                foreach ($xmlArr["SELECTION"][$tag] as $node) {
                     $list[$i]['val'] = $node["ATTRIBUTES"]["VALUE"];
                     $list[$i]['pic'] = $node["ATTRIBUTES"]["PICTURE"];
-                    if ($node["ATTRIBUTES"]["TEXT"])
-                    {
-                        $list[$i]['txt'] = $node["ATTRIBUTES"]["TEXT"];                        
-                    }
-                    else
-                    {
+                    if ($node["ATTRIBUTES"]["TEXT"]) {
+                        $list[$i]['txt'] = $node["ATTRIBUTES"]["TEXT"];
+                    } else {
                         $list[$i]['txt'] = $list[$i]['val'];
                     }
                     $i++;
-                    
                 }
-                $list = $this->translateList($list, $tag);	// supprot multi-language
+                $list = $this->translateList($list, $tag); // supprot multi-language
             }
             return $list;
         }
         return false;
     }
-    
+
     protected function getDOFromList($selectFrom)
     {
         $pos0 = strpos($selectFrom, "[");
         $pos1 = strpos($selectFrom, "]");
-        if ($pos0 > 0 && $pos1 > $pos0)
-        {  // select from bizObj
+        if ($pos0 > 0 && $pos1 > $pos0) {  // select from bizObj
             // support BizObjName[BizFieldName] or 
             // BizObjName[BizFieldName4Text:BizFieldName4Value] or 
             // BizObjName[BizFieldName4Text:BizFieldName4Value:BizFieldName4Pic]
             $bizObjName = substr($selectFrom, 0, $pos0);
             $pos3 = strpos($selectFrom, ":");
-            if($pos3 > $pos0 && $pos3 < $pos1)
-            {
+            if ($pos3 > $pos0 && $pos3 < $pos1) {
                 $fieldName = substr($selectFrom, $pos0 + 1, $pos3 - $pos0 - 1);
                 $fieldName_v = substr($selectFrom, $pos3 + 1, $pos1 - $pos3 - 1);
-            }
-            else
-            {
+            } else {
                 $fieldName = substr($selectFrom, $pos0 + 1, $pos1 - $pos0 - 1);
                 $fieldName_v = $fieldName;
             }
             $pos4 = strpos($fieldName_v, ":");
-            if($pos4){
-            	$fieldName_v_mixed = $fieldName_v;
-            	$fieldName_v = substr($fieldName_v_mixed,0,$pos4);
-            	$fieldName_p = substr($fieldName_v_mixed, $pos4+1, strlen($fieldName_v_mixed)-$pos4-1);
-            	unset($fieldName_v_mixed);
+            if ($pos4) {
+                $fieldName_v_mixed = $fieldName_v;
+                $fieldName_v = substr($fieldName_v_mixed, 0, $pos4);
+                $fieldName_p = substr($fieldName_v_mixed, $pos4 + 1, strlen($fieldName_v_mixed) - $pos4 - 1);
+                unset($fieldName_v_mixed);
             }
             $commaPos = strpos($selectFrom, ",", $pos1);
             if ($commaPos > $pos1)
                 $searchRule = trim(substr($selectFrom, $commaPos + 1));
-            
+
             /* @var $bizObj BizDataObj */
             $bizObj = Openbiz::getObject($bizObjName);
             if (!$bizObj)
@@ -171,27 +156,25 @@ class lovService extends MetaObject
             $recList = $bizObj->directFetch($searchRule);
             $bizObj->association = $oldAssoc;
 
-            foreach ($recList as $rec)
-            {
+            foreach ($recList as $rec) {
                 $list[$i]['val'] = $rec[$fieldName_v];
                 $list[$i]['txt'] = $rec[$fieldName];
                 $list[$i]['pic'] = $rec[$fieldName_p];
                 $i++;
             }
-           
+
             return $list;
         }
         return false;
     }
-    
+
     protected function getSimpleFromList($selectFrom)
     {
         // in case of a|b|c
         if (strpos($selectFrom, "[") > 0 || strpos($selectFrom, "(") > 0)
             return;
-        $recList = explode('|',$selectFrom);
-        foreach ($recList as $rec)
-        {
+        $recList = explode('|', $selectFrom);
+        foreach ($recList as $rec) {
             $list[$i]['val'] = $rec;
             $list[$i]['txt'] = $rec;
             $list[$i]['pic'] = $rec;
@@ -199,56 +182,51 @@ class lovService extends MetaObject
         }
         return $list;
     }
-    
+
     public function getSQLFromList()
     {
-    	$sql = $this->getSelectFromSQL();
-    	if (!$sql) return;
-    	$formObj = $this->getFormObj();
-    	$do = $formObj->getDataObj();
-    	$db = $do->getDBConnection();
-    	try {
-    		$resultSet = $db->query($sql);
-    		$recList = $resultSet->fetchAll();
-	    	foreach ($recList as $rec)
-	        {
-	            $list[$i]['val'] = $rec[0];
-	            $list[$i]['txt'] = isset($rec[1]) ? $rec[1] : $rec[0];
-	            $i++;
-	        }
-    	}
-    	catch (Exception $e)
-        {
-            Openbiz::$app->getLog()->log(LOG_ERR, "DATAOBJ", "Query Error: ".$e->getMessage());
-            $this->errorMessage = "Error in SQL query: ".$sql.". ".$e->getMessage();
+        $sql = $this->getSelectFromSQL();
+        if (!$sql)
+            return;
+        $formObj = $this->getFormObj();
+        $do = $formObj->getDataObj();
+        $db = $do->getDBConnection();
+        try {
+            $resultSet = $db->query($sql);
+            $recList = $resultSet->fetchAll();
+            foreach ($recList as $rec) {
+                $list[$i]['val'] = $rec[0];
+                $list[$i]['txt'] = isset($rec[1]) ? $rec[1] : $rec[0];
+                $i++;
+            }
+        } catch (Exception $e) {
+            Openbiz::$app->getLog()->log(LOG_ERR, "DATAOBJ", "Query Error: " . $e->getMessage());
+            $this->errorMessage = "Error in SQL query: " . $sql . ". " . $e->getMessage();
             throw new Openbiz\data\Exception($this->errorMessage);
             return null;
         }
         return $list;
     }
-    
+
     protected function translateList($list, $tag)
     {
-    	$module = $this->getModuleName($this->selectFrom);
+        $module = $this->getModuleName($this->selectFrom);
         if (empty($module))
             $module = $this->getModuleName($this->formName);
-    	for ($i=0; $i<count($list); $i++)
-    	{
-    		$key = 'SELECTION_'.strtoupper($tag).'_'.$i.'_TEXT';
-    		$list[$i]['txt'] = I18n::t($list[$i]['txt'], $key, $module, $this->getTransLOVPrefix());
-    	}
-    	return $list;
+        for ($i = 0; $i < count($list); $i++) {
+            $key = 'SELECTION_' . strtoupper($tag) . '_' . $i . '_TEXT';
+            $list[$i]['txt'] = I18n::t($list[$i]['txt'], $key, $module, $this->getTransLOVPrefix());
+        }
+        return $list;
     }
-    
 
     protected function getTransLOVPrefix()
-    {    	
-    	$nameArr = explode(".",$this->selectFrom);
-    	for($i=1;$i<count($nameArr)-1;$i++)
-    	{
-    		$prefix .= strtoupper($nameArr[$i])."_";
-    	}    	
-    	return $prefix;
-    }       
+    {
+        $nameArr = explode(".", $this->selectFrom);
+        for ($i = 1; $i < count($nameArr) - 1; $i++) {
+            $prefix .= strtoupper($nameArr[$i]) . "_";
+        }
+        return $prefix;
+    }
 
 }

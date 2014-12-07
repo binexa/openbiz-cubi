@@ -1,3 +1,5 @@
 <?xml version="1.0" standalone="no"?>
-<PluginService Name="localeInfoService" Package="service" Class="localeInfoService" >
+<PluginService Name="localeInfoService" 
+               xPackage="service" 
+               Class="Openbiz\Service\localeInfoService" >
 </PluginService>

@@ -14,7 +14,8 @@
  * @version   $Id: chartService.php 2553 2010-11-21 08:36:48Z mr_a_ton $
  */
 
-use Openbiz\Resource;
+namespace Openbiz\Service;
+
 use Openbiz\Object\ObjectFactoryHelper;
 
 /**

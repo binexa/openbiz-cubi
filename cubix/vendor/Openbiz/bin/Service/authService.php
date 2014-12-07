@@ -59,6 +59,8 @@
   38.  md2 * 
 */
 
+namespace Openbiz\Service;
+
 /**
  * auditService class is the plug-in service of handling user authentication
  *

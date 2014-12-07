@@ -16,7 +16,7 @@
  */
 
 use Openbiz\I18n\I18n;
-
+use Openbiz\Easy\Element\Element;
 /**
  * ChartBase class is base class of all charts
  *

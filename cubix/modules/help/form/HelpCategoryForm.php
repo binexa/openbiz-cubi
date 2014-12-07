@@ -13,7 +13,7 @@
  */
 
 use Openbiz\Openbiz;
-use Openbiz\Easy\EasyForm;
+use Openbiz\Easy\EasyFormTree;
 
 class HelpCategoryForm extends EasyFormTree
 {

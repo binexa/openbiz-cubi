@@ -11,6 +11,8 @@
  * @version   $Id: PictureUploader.php 3367 2012-05-31 06:10:21Z rockyswen@gmail.com $
  */
 
+use Openbiz\Easy\Element\InputText;
+
 class PictureUploader extends InputText
 {
  public function render() {      

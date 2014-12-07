@@ -13,6 +13,7 @@
 
 
 use Openbiz\Openbiz;
+use Openbiz\Easy\PickerForm;
 
 class WidgetPickForm extends PickerForm
 {

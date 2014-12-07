@@ -1,5 +1,7 @@
 <?xml version="1.0" standalone="no"?>
-<PluginService Name="compileService" Package="service" Class="compileService">
+<PluginService Name="compileService" 
+               Package="service" 
+               Class="Openbiz\Service\compileService" >
 	<ObjLoaderTemplate>
 		<![CDATA[<?php
         use Openbiz\ClassLoader;

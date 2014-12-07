@@ -18,6 +18,8 @@ define ('OPENBIZ_DENY', 0);
 define ('OPENBIZ_ALLOW', 1);
 define ('OPENBIZ_ALLOW_OWNER', 2);
 
+namespace Openbiz\Service;
+
 /**
  * aclService class is the plug-in service to manage ACL
  *

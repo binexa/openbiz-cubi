@@ -103,4 +103,3 @@ class baiduapp extends oauthClass
     }
 
 }
-

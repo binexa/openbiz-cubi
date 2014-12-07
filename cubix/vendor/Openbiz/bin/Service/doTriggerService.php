@@ -26,6 +26,9 @@
   </DOTrigger>
   </PluginService>
  */
+
+namespace Openbiz\Service;
+
 use Openbiz\Core\Expression;
 use Openbiz\Object\MetaObject;
 use Openbiz\Object\MetaIterator;

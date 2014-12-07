@@ -15,6 +15,8 @@
  * @version   $Id: ioService.php 2553 2010-11-21 08:36:48Z mr_a_ton $
  */
 
+namespace Openbiz\Service;
+
 /**
  * ioService class is the plug-in service of handling file import/export
  *

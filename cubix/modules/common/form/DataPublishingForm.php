@@ -14,7 +14,7 @@
 use Openbiz\Openbiz;
 
 include_once (Openbiz::$app->getModulePath().'/common/form/DataSharingForm.php');
-class DataPublishingForm extends  DataSharingForm
+class DataPublishingForm extends DataSharingForm
 {
 	public function ShareRecord()
 	{

@@ -9,7 +9,8 @@
 
  */
 
-use Openbiz\Resource;
+namespace Openbiz\Service;
+
 use Openbiz\Object\ObjectFactoryHelper;
 
 class compileService

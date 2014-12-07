@@ -14,6 +14,8 @@
  * @version   $Id: EasyFormTree.php 2606 2010-11-25 07:51:59Z mr_a_ton $
  */
 
+namespace Openbiz\Easy;
+
 use Openbiz\Data\Helpers\QueryStringParam;
 use Openbiz\Easy\EasyForm;
 

@@ -1,5 +1,7 @@
 <?PHP
 
+use Openbiz\Easy\Element\InputText;
+
 /**
  * FieldControl - class FieldControl is the base class of field control who binds with a bizfield
  *

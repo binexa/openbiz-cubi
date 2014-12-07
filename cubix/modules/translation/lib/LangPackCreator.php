@@ -12,7 +12,6 @@
  */
 
 use Openbiz\Openbiz;
-use Openbiz\Resource;
 use Openbiz\Object\ObjectFactoryHelper;
 
 class LangPackCreator

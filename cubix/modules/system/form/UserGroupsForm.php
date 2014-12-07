@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Openbiz Cubi Application Platform
  *
@@ -10,22 +11,25 @@
  * @link      http://code.google.com/p/openbiz-cubi/
  * @version   $Id: UserGroupsForm.php 3372 2012-05-31 06:19:06Z rockyswen@gmail.com $
  */
-
 use Openbiz\Openbiz;
 use Openbiz\Easy\EasyForm;
 
-class UserGroupsForm extends EasyForm{
-	public function SetDefault($group_id=null){
-		if($group_id==null){
-			$group_id =  (int)Openbiz::$app->getClientProxy()->getFormInputs('_selectedId');
-		}
-		$user_id = (int)Openbiz::getObject('system.form.UserDetailForm')->recordId;
-		
-		$groupDo = Openbiz::getObject("system.do.UserGroupDO",1);
-		$groupDo->updateRecords("[default]=0","[user_id]='$user_id'");		
-		$groupDo->updateRecords("[default]=1","[user_id]='$user_id' and [group_id]='$group_id'");
-		
-		$this->recordId = $group_id;
-		$this->UpdateForm();
-	}
+class UserGroupsForm extends EasyForm
+{
+
+    public function SetDefault($group_id = null)
+    {
+        if ($group_id == null) {
+            $group_id = (int) Openbiz::$app->getClientProxy()->getFormInputs('_selectedId');
+        }
+        $user_id = (int) Openbiz::getObject('system.form.UserDetailForm')->recordId;
+
+        $groupDo = Openbiz::getObject("system.do.UserGroupDO", 1);
+        $groupDo->updateRecords("[default]=0", "[user_id]='$user_id'");
+        $groupDo->updateRecords("[default]=1", "[user_id]='$user_id' and [group_id]='$group_id'");
+
+        $this->recordId = $group_id;
+        $this->UpdateForm();
+    }
+
 }

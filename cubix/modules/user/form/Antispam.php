@@ -12,7 +12,7 @@
  */
 
 use Openbiz\Openbiz;
-use Openbiz\Data\Helpers\QueryStringParam;
+use Openbiz\Easy\Element\InputElement;
 
 // include_once (OPENBIZ_BIN."/easy/element/InputElement.php");
 

@@ -15,7 +15,7 @@
  * @version   $Id: HTMLMenus.php 2553 2010-11-21 08:36:48Z mr_a_ton $
  */
 
-//use Openbiz\Resource;
+
 namespace Openbiz\Easy;
 
 use Openbiz\Object\MetaObject;

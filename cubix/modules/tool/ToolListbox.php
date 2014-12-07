@@ -1,6 +1,7 @@
 <?PHP
 
 use Openbiz\Openbiz;
+use Openbiz\Easy\Element\Listbox;
 
 /**
  * FieldControl - class FieldControl is the base class of field control who binds with a bizfield
@@ -25,16 +26,15 @@ class ToolListbox extends Listbox
         forms()
     */
     public function getFromList(&$list)
-    {
-        $selFrom = $this->getSelectFrom();
-        
-        $selFrom = $this->evalSelectFrom($selFrom);
+    {       
+        $selFrom = $this->evalSelectFrom($this->getSelectFrom());
         list($func,$body) = explode("(",$selFrom);
         $body = str_replace(")","",$body);
-        if (strpos($body,",")>0)
+        if (strpos($body,",")>0) {
             $args = explode(",",$body);
-        else
+        } else {
             $args[0] = $body;
+        }
 
         if (method_exists($this, $func))
            $list = call_user_func_array(array($this, $func),$args);

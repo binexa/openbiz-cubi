@@ -1,4 +1,6 @@
 <?xml version="1.0" standalone="no"?>
-<PluginService Name="profileService" Package="service" Class="profileService">
+<PluginService Name="profileService" 
+               Package="service" 
+               Class="Openbiz\Service\profileService">
 
 </PluginService>

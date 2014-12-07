@@ -28,6 +28,8 @@
 </PluginService ...>
 */
 
+namespace Openbiz\Service;
+
 use Openbiz\Object\MetaIterator;
 
 /**

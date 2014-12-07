@@ -1,4 +1,6 @@
 <?xml version="1.0" standalone="no"?>
-<PluginService Name="chartService" Package="service" Class="chartService">
+<PluginService Name="chartService" 
+               Package="service" 
+               Class="Openbiz\Service\chartService" >
 
 </PluginService>

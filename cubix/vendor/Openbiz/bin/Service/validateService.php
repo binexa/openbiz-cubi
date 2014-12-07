@@ -14,6 +14,9 @@
  * @link      http://www.phpopenbiz.org/
  * @version   $Id: validateService.php 2553 2010-11-21 08:36:48Z mr_a_ton $
  */
+
+namespace Openbiz\Service;
+
 use Openbiz\Helpers\MessageHelper;
 
 include_once (OPENBIZ_PATH . "/messages/validateService.msg");

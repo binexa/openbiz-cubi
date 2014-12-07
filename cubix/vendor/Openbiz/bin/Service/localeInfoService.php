@@ -15,6 +15,8 @@
  * @version   $Id$
  */
 
+namespace Openbiz\Service;
+
 use Openbiz\Object\MetaObject;
 
 /**

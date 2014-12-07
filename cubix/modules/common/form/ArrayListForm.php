@@ -11,16 +11,16 @@
  * @link      http://code.google.com/p/openbiz-cubi/
  * @version   $Id: ArrayListForm.php 5327 2013-03-25 05:09:15Z agus.suhartono@gmail.com $
  */
-
 use Openbiz\Openbiz;
-
 use Openbiz\Easy\EasyForm;
 
-class ArrayListForm extends EasyForm {
+class ArrayListForm extends EasyForm
+{
 
     public $totalRecords;
 
-    public function runSearch() {
+    public function runSearch()
+    {
         //include_once(OPENBIZ_BIN . "/easy/SearchHelper.php");
         $searchRule = "";
         foreach ($this->searchPanel as $element) {
@@ -65,7 +65,8 @@ class ArrayListForm extends EasyForm {
         $this->rerender();
     }
 
-    public function fetchDataSet() {
+    public function fetchDataSet()
+    {
         $resultRaw = $this->getRecordList();
         if (!is_array($resultRaw)) {
             return array();
@@ -124,9 +125,9 @@ class ArrayListForm extends EasyForm {
         return $result;
     }
 
-    public function getRecordList() {
+    public function getRecordList()
+    {
         return array();
     }
 
 }
-

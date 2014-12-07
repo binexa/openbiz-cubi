@@ -1,5 +1,6 @@
 <?php
-//require_once OPENBIZ_BIN.'/easy/element/LabelText.php';
+
+use Openbiz\Easy\Element\LabelText;
  
 class RawDataDisplay extends LabelText
 {

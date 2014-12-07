@@ -11,7 +11,7 @@
  * @version   $Id: UpgradeService.php 3485 2012-06-18 23:41:37Z agus.suhartono@gmail.com $
  */
 
-class UpgradeService
+class upgradeService
 {
     protected $_upgradeModules = array();
 /*

@@ -1,6 +1,5 @@
 <?php
 
-
 /**
  * Openbiz Cubi Application Platform
  *
@@ -12,7 +11,6 @@
  * @link      http://code.google.com/p/openbiz-cubi/
  * @version   $Id: ThemeForm.php 3373 2012-05-31 06:21:21Z rockyswen@gmail.com $
  */
-
 use Openbiz\Openbiz;
 use Openbiz\Helpers\TemplateHelper;
 use Openbiz\Easy\EasyForm;
@@ -332,5 +330,3 @@ class ThemeForm extends EasyForm
     }
 
 }
-
-

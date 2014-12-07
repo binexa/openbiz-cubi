@@ -11,6 +11,8 @@
  * @version   $Id: AttachmentUploader.php 3350 2012-05-31 05:29:38Z rockyswen@gmail.com $
  */
 
+use Openbiz\Easy\Element\InputText;
+
 class AttachmentUploader extends InputText
 {
  public function render() {      

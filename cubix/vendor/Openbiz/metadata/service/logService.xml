@@ -2,7 +2,7 @@
 <PluginService 
     Name="logService" 
     Package="service" 
-    Class="logService">
+    Class="Openbiz\Service\logService">
 
 <!--
 Logging format options include CSV, XML and HTML

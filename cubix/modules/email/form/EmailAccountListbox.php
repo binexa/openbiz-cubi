@@ -12,8 +12,8 @@
  */
 
 use Openbiz\Object\ObjectFactoryHelper;
+use Openbiz\Easy\Element\Listbox;
 
-//require_once(OPENBIZ_BIN."easy/element/Listbox.php");
 class EmailAccountListbox extends Listbox{
 	
 	public $configFile = "emailService.xml";

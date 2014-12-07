@@ -18,7 +18,6 @@
 namespace Openbiz\web;
 
 use Openbiz\Openbiz;
-use Openbiz\Resource;
 use Openbiz\Helpers\DeviceUtil;
 use Openbiz\I18n\I18n;
 

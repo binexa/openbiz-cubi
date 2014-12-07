@@ -12,6 +12,7 @@
  */
 
 use Openbiz\Openbiz;
+use Openbiz\Easy\PickerForm;
 
 class ReleaseForm extends PickerForm
 {

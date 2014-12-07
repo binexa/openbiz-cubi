@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Openbiz Cubi Application Platform
  *
@@ -10,105 +11,97 @@
  * @link      http://code.google.com/p/openbiz-cubi/
  * @version   $Id: ExtendFieldForm.php 3360 2012-05-31 06:00:17Z rockyswen@gmail.com $
  */
-
 use Openbiz\Openbiz;
+use Openbiz\Easy\PickerForm;
 
 class ExtendFieldForm extends PickerForm
 {
-	protected $settingOptionDO = "extend.do.ExtendSettingOptionDO";
- 	
-	protected function _doUpdate($inputRecord, $currentRecord)
+
+    protected $settingOptionDO = "extend.do.ExtendSettingOptionDO";
+
+    protected function _doUpdate($inputRecord, $currentRecord)
     {
-    	$this->processOptions($inputRecord['options'], $currentRecord['Id']);
-    	return parent::_doUpdate($inputRecord, $currentRecord);
+        $this->processOptions($inputRecord['options'], $currentRecord['Id']);
+        return parent::_doUpdate($inputRecord, $currentRecord);
     }
-	
-    
+
     public function insertToParent()
-    {	
-    	    	
-    	$recArr = $this->readInputRecord();
+    {
+
+        $recArr = $this->readInputRecord();
         $this->setActiveRecord($recArr);
         if (count($recArr) == 0)
             return;
 
-        try
-        {
+        try {
             $this->ValidateForm();
-        }
-        catch (Openbiz\Validation\Exception $e)
-        {
+        } catch (Openbiz\Validation\Exception $e) {
             $this->processFormObjError($e->errors);
             return;
         }
-        
 
-        if (!$this->parentFormElemName)
-        {
-        	//its only supports 1-m assoc now	        	        
-	        $parentForm = Openbiz::getObject($this->parentFormName);
-        	//$parentForm->getDataObj()->clearSearchRule();
-	        $parentDo = $parentForm->getDataObj();
-	        
-	        $column = $parentDo->association['Column'];
-	    	$field = $parentDo->getFieldNameByColumn($column);	    	    	
-	    	$parentRefVal = $parentDo->association["FieldRefVal"];
-	    	
-			$recArr[$field] = $parentRefVal;
-	    	if($parentDo->association['Relationship']=='1-M'){	    			    	
-		    	$cond_column = $parentDo->association['CondColumn'];
-		    	$cond_value = $parentDo->association['CondValue'];
-		    	if($cond_column)
-		    	{
-		    		$cond_field = $parentDo->getFieldNameByColumn($cond_column);
-		    		$recArr[$cond_field] = $cond_value;
-		    	}    
-		    	$recId = $parentDo->InsertRecord($recArr);	
-	    	}else{
-	    		$recId = $this->getDataObj()->InsertRecord($recArr);	    			    		
-	    		$this->addToParent($recId);
-	    	}
-	    	
-	    	$this->processOptions($recArr['options'], $recId);
-        }                
 
-        if ($this->parentFormElemName && $this->pickerMap)
-        {
-            return ; //not supported yet
+        if (!$this->parentFormElemName) {
+            //its only supports 1-m assoc now	        	        
+            $parentForm = Openbiz::getObject($this->parentFormName);
+            //$parentForm->getDataObj()->clearSearchRule();
+            $parentDo = $parentForm->getDataObj();
+
+            $column = $parentDo->association['Column'];
+            $field = $parentDo->getFieldNameByColumn($column);
+            $parentRefVal = $parentDo->association["FieldRefVal"];
+
+            $recArr[$field] = $parentRefVal;
+            if ($parentDo->association['Relationship'] == '1-M') {
+                $cond_column = $parentDo->association['CondColumn'];
+                $cond_value = $parentDo->association['CondValue'];
+                if ($cond_column) {
+                    $cond_field = $parentDo->getFieldNameByColumn($cond_column);
+                    $recArr[$cond_field] = $cond_value;
+                }
+                $recId = $parentDo->InsertRecord($recArr);
+            } else {
+                $recId = $this->getDataObj()->InsertRecord($recArr);
+                $this->addToParent($recId);
+            }
+
+            $this->processOptions($recArr['options'], $recId);
         }
-       
-        
+
+        if ($this->parentFormElemName && $this->pickerMap) {
+            return; //not supported yet
+        }
+
+
         $selIds[] = $recId;
-        
-        $this->close();	      
-        if($parentForm->parentFormName){
-        	$parentParentForm = Openbiz::getObject($parentForm->parentFormName);
-        	$parentParentForm->rerender();
+
+        $this->close();
+        if ($parentForm->parentFormName) {
+            $parentParentForm = Openbiz::getObject($parentForm->parentFormName);
+            $parentParentForm->rerender();
+        } else {
+            $parentForm->rerender();
         }
-        else
-        {       
-        	$parentForm->rerender();
-        }
-    	return $recordId;
+        return $recordId;
     }
-    
-    public function processOptions($option_str,$setting_id,$lang=null)
+
+    public function processOptions($option_str, $setting_id, $lang = null)
     {
-    	$optDO = Openbiz::getObject($this->settingOptionDO);
-    	$optionArr = explode(";", $option_str);
-    	$i=1;
-    	$setting_id = (int)$setting_id;
-    	$optDO->deleteRecords("[setting_id]='$setting_id' AND lang='$lang'");
-    	foreach ($optionArr as $option)
-    	{
-    		$optRec = array(
-    			"setting_id" => (int)$setting_id,
-    			"lang" => $lang,
-    			"text" => $option,
-    			"value" => $i
-    		);
-    		$optDO->insertRecord($optRec);
-    		$i++;
-    	}
-    } 	
+        $optDO = Openbiz::getObject($this->settingOptionDO);
+        $optionArr = explode(";", $option_str);
+        $i = 1;
+        $setting_id = (int) $setting_id;
+        $optDO->deleteRecords("[setting_id]='$setting_id' AND lang='$lang'");
+        foreach ($optionArr as $option) {
+            $optRec = array(
+                "setting_id" => (int) $setting_id,
+                "lang" => $lang,
+                "text" => $option,
+                "value" => $i
+            );
+            $optDO->insertRecord($optRec);
+            $i++;
+        }
+    }
+
 }

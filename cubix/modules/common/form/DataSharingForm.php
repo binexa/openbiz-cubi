@@ -11,10 +11,8 @@
  * @link      http://code.google.com/p/openbiz-cubi/
  * @version   $Id: DataSharingForm.php 4612 2012-11-06 04:34:26Z hellojixian@gmail.com $
  */
-
 use Openbiz\Openbiz;
 use Openbiz\Data\DataRecord;
-
 use Openbiz\Easy\EasyForm;
 
 class DataSharingForm extends EasyForm
@@ -399,4 +397,3 @@ class DataSharingForm extends EasyForm
     }
 
 }
-
