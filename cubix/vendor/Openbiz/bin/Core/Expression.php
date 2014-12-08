@@ -475,9 +475,9 @@ class Expression
      * Check if the expression is expression.
      * @param type $expression
      */
-    protected static function isExpression($expression)
+    public static function isExpression($expression)
     {
-        return !(strpos($expression, "{", $start) === false);
+        return !(strpos($expression, "{") === false);
     }
 
     /**

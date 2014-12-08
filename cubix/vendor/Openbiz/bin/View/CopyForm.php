@@ -7,8 +7,11 @@
  * @copyright Copyright (c) 2005-2009
  * @access public
  */
- 
-include_once "NewForm.php";
+
+namespace Openbiz\View;
+
+use Openbiz\View\NewForm;
+
  /*
   * public methods: fetchData, insertRecord, 
   */

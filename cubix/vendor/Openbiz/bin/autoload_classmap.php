@@ -206,14 +206,14 @@ return array(
 
     //'XMLParser'                       => __DIR__ . '/Helpers/xmltoarray.src.php',
 
-    'BaseForm'              => __DIR__ . '/View/BaseForm.php',
-    'CopyForm'              => __DIR__ . '/View/CopyForm.php',
-    'DetailForm'            => __DIR__ . '/View/DetailForm.php',
-    'EditForm'              => __DIR__ . '/View/EditForm.php',
-    'FormHelper'            => __DIR__ . '/View/FormHelper.php',
-    'InputForm'             => __DIR__ . '/View/InputForm.php',
-    'ListForm'              => __DIR__ . '/View/ListForm.php',
-    'NewForm'               => __DIR__ . '/View/NewForm.php',
+    'Openbiz\View\BaseForm'              => __DIR__ . '/View/BaseForm.php',
+    'Openbiz\View\CopyForm'              => __DIR__ . '/View/CopyForm.php',
+    'Openbiz\View\DetailForm'            => __DIR__ . '/View/DetailForm.php',
+    'Openbiz\View\EditForm'              => __DIR__ . '/View/EditForm.php',
+    'Openbiz\View\FormHelper'            => __DIR__ . '/View/FormHelper.php',
+    'Openbiz\View\InputForm'             => __DIR__ . '/View/InputForm.php',
+    'Openbiz\View\ListForm'              => __DIR__ . '/View/ListForm.php',
+    'Openbiz\View\NewForm'               => __DIR__ . '/View/NewForm.php',
 
     'Openbiz\Web\ClientProxy'     => __DIR__ . '/Web/ClientProxy.php',
     'Openbiz\Web\Request'         => __DIR__ . '/Web/Request.php',    

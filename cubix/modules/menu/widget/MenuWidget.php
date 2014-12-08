@@ -63,8 +63,9 @@ class MenuWidget extends MetaObject implements UIControlInterface
 
     public function render()
     {
-        if (!$this->allowAccess())
+        if (!$this->allowAccess()) {
             return "";
+        }
         if ($this->cacheLifeTime > 0) {
             $cache_id = md5($this->objectName);
             //try to process cache service.
@@ -87,7 +88,6 @@ class MenuWidget extends MetaObject implements UIControlInterface
 
     protected function renderHTML()
     {
-        //include_once(dirname(__FILE__)."/MenuRenderer.php");   
         $sHTML = MenuRenderer::render($this);
         return $sHTML;
     }
@@ -120,9 +120,10 @@ class MenuWidget extends MetaObject implements UIControlInterface
 
     protected function prefixPackage($name)
     {
-        if ($name && !strpos($name, ".") && ($this->package)) // no package prefix as package.object, add it
+        // no package prefix as package.object, add it
+        if ($name && !strpos($name, ".") && ($this->package)) {
             $name = $this->package . "." . $name;
-
+        }
         return $name;
     }
 

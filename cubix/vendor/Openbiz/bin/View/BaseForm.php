@@ -8,6 +8,9 @@
  * @copyright Copyright (c) 2005-2009
  * @access public
  */
+
+namespace Openbiz\View;
+
 use Openbiz\Object\Statefullable;
 use Openbiz\Helpers\MessageHelper;
 use Openbiz\Core\Expression;

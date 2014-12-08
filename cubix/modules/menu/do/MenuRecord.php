@@ -1,4 +1,5 @@
 <?PHP
+
 /**
  * Openbiz Framework
  *
@@ -13,10 +14,10 @@
  * @link      http://www.phpopenbiz.org/
  * @version   $Id: MenuRecord.php 3364 2012-05-31 06:06:21Z rockyswen@gmail.com $
  */
-
 use Openbiz\Openbiz;
 use Openbiz\Core\Expression;
 use Openbiz\I18n\I18n;
+
 /**
  * MenuRecord class, for tree structure
  *
@@ -30,21 +31,22 @@ use Openbiz\I18n\I18n;
  */
 class MenuRecord
 {
- 	public $recordId;
- 	public $recordParentId; 
- 	public $key;  
+
+    public $recordId;
+    public $recordParentId;
+    public $key;
     public $objectName;
     public $module;
     public $objectDescription;
     public $url;
     public $url_Match;
-	public $target;
-	public $cssClass;
-	public $iconImage;
-	public $iconCSSClass;
+    public $target;
+    public $cssClass;
+    public $iconImage;
+    public $iconCSSClass;
     public $access;
-	public $current = 0;
-	public $childNodes = null;
+    public $current = 0;
+    public $childNodes = null;
 
     /**
      * Initialize Node
@@ -60,45 +62,50 @@ class MenuRecord
         $this->module = $rec['module'];
         $this->objectDescription = $rec['description'];
         $this->url = $rec['link'];
-        if (strpos($this->url,'{')===0)
-        	$this->url = Expression::evaluateExpression($this->url, $this);
-        else if (!empty($this->url)) {
-        	if (strpos($this->url,'/')===0)
-        		$this->url = OPENBIZ_APP_INDEX_URL.$this->url;
-        	else
-        		$this->url = OPENBIZ_APP_INDEX_URL.'/'.$this->url;
+        if (Expression::isExpression( $this->url ) ) {
+            $this->url = Expression::evaluateExpression($this->url, $this);
+        } else if (!empty($this->url)) {
+            if (strpos($this->url, '/') === 0) {
+                $this->url = OPENBIZ_APP_INDEX_URL . $this->url;
+            } else {
+                $this->url = OPENBIZ_APP_INDEX_URL . '/' . $this->url;
+            }
         }
         $this->url_Match = $rec['alias'];
         //$this->cssClass = $rec['Id'];
         $this->iconImage = $rec['icon'];
         $this->iconCSSClass = $rec['icon_css'];
         $this->access = $rec['access'];
-        
-        $this->translate();	// translate for multi-language support
+
+        $this->translate(); // translate for multi-language support
     }
-    
+
     public function allowAccess()
     {
-    	$access = $this->access;
-        if (!$access) $access = $this->access;
-        if ($access)
-        	return Openbiz::$app->allowUserAccess($access);
+        $access = $this->access;
+        if (!$access) {
+            $access = $this->access;
+        }
+        if ($access) {
+            return Openbiz::$app->allowUserAccess($access);
+        }
         return OPENBIZ_ALLOW;
     }
-    
+
     protected function translate()
     {
-    	$module = $this->module;
-    	if (!empty($this->objectName))
-    		$this->objectName = I18n::t($this->objectName, $this->getTransKey('Title'), $module);
-    	if (!empty($this->objectDescription))
-    		$this->objectDescription = I18n::t($this->objectDescription, $this->getTransKey('Description'), $module);
+        $module = $this->module;
+        if (!empty($this->objectName)) {
+            $this->objectName = I18n::t($this->objectName, $this->getTransKey('Title'), $module);
+        }
+        if (!empty($this->objectDescription)) {
+            $this->objectDescription = I18n::t($this->objectDescription, $this->getTransKey('Description'), $module);
+        }
     }
 
     protected function getTransKey($name)
     {
-    	//return strtoupper('MENU_'.$this->recordId.'_'.$name);
-        $k = '_MENU_'.$this->recordId.'_'.$name;
+        $k = '_MENU_' . $this->recordId . '_' . $name;
         return strtoupper($k);
     }
 }

@@ -8,11 +8,13 @@
  * @copyright Copyright (c) 2005-2009
  * @access public
  */
-include_once "BaseForm.php";
+
+namespace Openbiz\View;
+
+use Openbiz\View\BaseForm;
 /*
  * public methods: fetchDataSet, deleteRecord, selectRecord, removeRecord, runSearch, sortRecord, gotoPage
  */
-
 class ListForm extends BaseForm
 {
 

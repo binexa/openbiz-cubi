@@ -7,10 +7,11 @@
  * @copyright Copyright (c) 2005-2009
  * @access public
  */
- 
-use Openbiz\Data\DataRecord;
 
-include_once "InputForm.php";
+namespace Openbiz\View;
+
+use Openbiz\View\InputForm;
+use Openbiz\Data\DataRecord;
  /*
   * public methods: fetchData, updateRecord, 
   */

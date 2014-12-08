@@ -1,4 +1,6 @@
 {php}
+
+/*
 $widget = Openbiz\Openbiz::getObject('menu.widget.MainTabMenu');
 if($widget->globalSearchRule && $widget->searchRule){
 	$searchRule = $widget->globalSearchRule ." and ". $widget->searchRule;
@@ -6,6 +8,9 @@ if($widget->globalSearchRule && $widget->searchRule){
 	$searchRule = $widget->searchRule;
 }
 $menu_count = $widget->getDataObj()->recordCount($searchRule);
+*/
+
+$menu_count = 5;
 $menu_item_width = 115;
 $menu_width = ($menu_count * $menu_item_width)."px";
 $this->assign('menu_count', $menu_count);
@@ -14,13 +19,11 @@ $header_background_image = $this->_tpl_vars['header_background_image'];
 $custom_header_background_image = OPENBIZ_APP_PATH.'/images/cubi_top_header.png';
 if(file_exists($custom_header_background_image))
 {
-	$header_background_image_url = OPENBIZ_APP_URL.'/images/cubi_top_header.png';
-	$this->assign('header_background_image_url', $header_background_image_url);
-}
-elseif($header_background_image)
-{
-	$header_background_image_url = OPENBIZ_RESOURCE_URL.$header_background_image;
-	$this->assign('header_background_image_url', $header_background_image_url);
+    $header_background_image_url = OPENBIZ_APP_URL.'/images/cubi_top_header.png';
+    $this->assign('header_background_image_url', $header_background_image_url);
+} elseif ($header_background_image) {
+    $header_background_image_url = OPENBIZ_RESOURCE_URL.$header_background_image;
+    $this->assign('header_background_image_url', $header_background_image_url);
 }
 {/php}
 <script>
@@ -61,9 +64,9 @@ var top_menu_play_speed=1000;
 				<div id="top_menu_list" style="width:{php}echo $menu_width;{/php};">
 				<!-- top menu start -->
 				{php}
-				$temp = Openbiz\Openbiz::getObject('menu.widget.MainTabMenu')->render();
-				unset($temp);
-				echo Openbiz\Openbiz::getObject('menu.widget.MainTabMenu')->render();
+				//$temp = Openbiz\Openbiz::getObject('menu.widget.MainTabMenu')->render();
+				//unset($temp);
+				//echo Openbiz\Openbiz::getObject('menu.widget.MainTabMenu')->render();
 				{/php}
 				<!-- top menu end -->	
 				</div>
@@ -81,13 +84,13 @@ var top_menu_play_speed=1000;
 </div>	
 	<div id="header_navi">
 		<div id="navi">
-		{php}echo Openbiz\Openbiz::getObject('menu.widget.BreadcrumbMenu')->render();{/php}
+		{php} // echo Openbiz\Openbiz::getObject('menu.widget.BreadcrumbMenu')->render();{/php}
 		</div>
 		<div id="current_user_info">
 		<a class="screen_switch_max_btn" title="{t}Switch Theme{/t}"  href="javascript:;" onclick="Openbiz.switchTheme('fullwidth')" style="float:right;margin-left:5px; margin-top:4px;  " ></a>
 			{include file="system_appbuilder_btn.tpl.html"}		
 			<div>
-			{php}echo Openbiz\Openbiz::getObject('system.widget.SwitchUserWidget')->render();{/php}
+			{php}  //echo Openbiz\Openbiz::getObject('system.widget.SwitchUserWidget')->render();{/php}
 			</div>
 		</div>			
 	</div>

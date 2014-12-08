@@ -1,8 +1,10 @@
-<?php /* Smarty version 2.6.10, created on 2014-11-19 10:03:50
+<?php /* Smarty version 2.6.10, created on 2014-12-08 06:42:34
          compiled from system_header.tpl.html */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
-smarty_core_load_plugins(array('plugins' => array(array('block', 't', 'system_header.tpl.html', 44, false),)), $this); ?>
+smarty_core_load_plugins(array('plugins' => array(array('block', 't', 'system_header.tpl.html', 47, false),)), $this); ?>
 <?php 
+
+/*
 $widget = Openbiz\Openbiz::getObject('menu.widget.MainTabMenu');
 if($widget->globalSearchRule && $widget->searchRule){
 	$searchRule = $widget->globalSearchRule ." and ". $widget->searchRule;
@@ -10,6 +12,9 @@ if($widget->globalSearchRule && $widget->searchRule){
 	$searchRule = $widget->searchRule;
 }
 $menu_count = $widget->getDataObj()->recordCount($searchRule);
+*/
+
+$menu_count = 5;
 $menu_item_width = 115;
 $menu_width = ($menu_count * $menu_item_width)."px";
 $this->assign('menu_count', $menu_count);
@@ -18,13 +23,11 @@ $header_background_image = $this->_tpl_vars['header_background_image'];
 $custom_header_background_image = OPENBIZ_APP_PATH.'/images/cubi_top_header.png';
 if(file_exists($custom_header_background_image))
 {
-	$header_background_image_url = OPENBIZ_APP_URL.'/images/cubi_top_header.png';
-	$this->assign('header_background_image_url', $header_background_image_url);
-}
-elseif($header_background_image)
-{
-	$header_background_image_url = OPENBIZ_RESOURCE_URL.$header_background_image;
-	$this->assign('header_background_image_url', $header_background_image_url);
+    $header_background_image_url = OPENBIZ_APP_URL.'/images/cubi_top_header.png';
+    $this->assign('header_background_image_url', $header_background_image_url);
+} elseif ($header_background_image) {
+    $header_background_image_url = OPENBIZ_RESOURCE_URL.$header_background_image;
+    $this->assign('header_background_image_url', $header_background_image_url);
 }
  ?>
 <script>
@@ -70,9 +73,9 @@ var top_menu_play_speed=1000;
 				<div id="top_menu_list" style="width:<?php echo $menu_width; ?>;">
 				<!-- top menu start -->
 				<?php 
-				$temp = Openbiz\Openbiz::getObject('menu.widget.MainTabMenu')->render();
-				unset($temp);
-				echo Openbiz\Openbiz::getObject('menu.widget.MainTabMenu')->render();
+				//$temp = Openbiz\Openbiz::getObject('menu.widget.MainTabMenu')->render();
+				//unset($temp);
+				//echo Openbiz\Openbiz::getObject('menu.widget.MainTabMenu')->render();
 				 ?>
 				<!-- top menu end -->	
 				</div>
@@ -91,7 +94,7 @@ var top_menu_play_speed=1000;
 </div>	
 	<div id="header_navi">
 		<div id="navi">
-		<?php echo Openbiz\Openbiz::getObject('menu.widget.BreadcrumbMenu')->render(); ?>
+		<?php  // echo Openbiz\Openbiz::getObject('menu.widget.BreadcrumbMenu')->render(); ?>
 		</div>
 		<div id="current_user_info">
 		<a class="screen_switch_max_btn" title="<?php $this->_tag_stack[] = array('t', array()); smarty_block_t($this->_tag_stack[count($this->_tag_stack)-1][1], null, $this, $_block_repeat=true);while ($_block_repeat) { ob_start(); ?>Switch Theme<?php $_block_content = ob_get_contents(); ob_end_clean(); echo smarty_block_t($this->_tag_stack[count($this->_tag_stack)-1][1], $_block_content, $this, $_block_repeat=false); }  array_pop($this->_tag_stack); ?>"  href="javascript:;" onclick="Openbiz.switchTheme('fullwidth')" style="float:right;margin-left:5px; margin-top:4px;  " ></a>
@@ -101,7 +104,7 @@ $this->_tpl_vars = $_smarty_tpl_vars;
 unset($_smarty_tpl_vars);
  ?>		
 			<div>
-			<?php echo Openbiz\Openbiz::getObject('system.widget.SwitchUserWidget')->render(); ?>
+			<?php   //echo Openbiz\Openbiz::getObject('system.widget.SwitchUserWidget')->render(); ?>
 			</div>
 		</div>			
 	</div>

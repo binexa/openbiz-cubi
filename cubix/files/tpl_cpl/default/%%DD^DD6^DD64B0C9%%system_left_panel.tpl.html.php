@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.10, created on 2014-11-19 10:03:51
+<?php /* Smarty version 2.6.10, created on 2014-12-08 09:50:01
          compiled from system_left_panel.tpl.html */ ?>
 <?php 
 if($this->_tpl_vars['left_menu']){
@@ -6,8 +6,11 @@ if($this->_tpl_vars['left_menu']){
 }else{
 	$left_menu = "menu.widget.ApplicationMenu";
 }
+
 $obj = Openbiz\Openbiz::getObject($left_menu);
 $left_menu_content = $obj->render();
+//$left_menu_content = $left_menu;
+
 $this->assign('system_left_menu_content', 	$left_menu_content);
  ?>
 
@@ -67,7 +70,7 @@ $this->assign('system_left_menu_content', 	$left_menu_content);
 											
 	<!-- left help block start -->
 <div>
-		<?php  echo Openbiz\Openbiz::getObject('help.form.HelpWidgetListForm',1)->render(); ?>
+		<?php   // echo Openbiz\Openbiz::getObject('help.form.HelpWidgetListForm',1)->render(); ?>
 </div>				
 
 	<div class="v_spacer"></div>

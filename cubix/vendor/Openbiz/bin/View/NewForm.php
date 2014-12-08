@@ -9,9 +9,11 @@
  * @access public
  */
 
-use Openbiz\Data\DataRecord;
+namespace Openbiz\View;
 
-include_once "InputForm.php";
+use Openbiz\Data\DataRecord;
+use Openbiz\View\InputForm;
+
 /*
  * public methods: fetchData, insertRecord, 
  */

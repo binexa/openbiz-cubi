@@ -8,6 +8,8 @@
  * @access public
  */
 
+namespace Openbiz\View;
+
 use Openbiz\Core\ErrorHandler;
 
  /*

@@ -8,7 +8,10 @@
  * @access public
  */
  
-include_once "BaseForm.php";
+namespace Openbiz\View;
+
+use Openbiz\View\BaseForm;
+
  /*
   * protected methods: validateForm, readInputRecord, readInputs
   */
