@@ -1,6 +1,6 @@
 {php}
 
-/*
+
 $widget = Openbiz\Openbiz::getObject('menu.widget.MainTabMenu');
 if($widget->globalSearchRule && $widget->searchRule){
 	$searchRule = $widget->globalSearchRule ." and ". $widget->searchRule;
@@ -8,9 +8,8 @@ if($widget->globalSearchRule && $widget->searchRule){
 	$searchRule = $widget->searchRule;
 }
 $menu_count = $widget->getDataObj()->recordCount($searchRule);
-*/
 
-$menu_count = 5;
+//$menu_count = 5;
 $menu_item_width = 115;
 $menu_width = ($menu_count * $menu_item_width)."px";
 $this->assign('menu_count', $menu_count);
@@ -66,7 +65,7 @@ var top_menu_play_speed=1000;
 				{php}
 				//$temp = Openbiz\Openbiz::getObject('menu.widget.MainTabMenu')->render();
 				//unset($temp);
-				//echo Openbiz\Openbiz::getObject('menu.widget.MainTabMenu')->render();
+				echo Openbiz\Openbiz::getObject('menu.widget.MainTabMenu')->render();
 				{/php}
 				<!-- top menu end -->	
 				</div>

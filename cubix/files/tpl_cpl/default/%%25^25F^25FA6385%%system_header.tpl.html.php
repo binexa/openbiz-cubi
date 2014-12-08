@@ -1,10 +1,10 @@
-<?php /* Smarty version 2.6.10, created on 2014-12-08 06:42:34
+<?php /* Smarty version 2.6.10, created on 2014-12-08 20:01:19
          compiled from system_header.tpl.html */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
-smarty_core_load_plugins(array('plugins' => array(array('block', 't', 'system_header.tpl.html', 47, false),)), $this); ?>
+smarty_core_load_plugins(array('plugins' => array(array('block', 't', 'system_header.tpl.html', 46, false),)), $this); ?>
 <?php 
 
-/*
+
 $widget = Openbiz\Openbiz::getObject('menu.widget.MainTabMenu');
 if($widget->globalSearchRule && $widget->searchRule){
 	$searchRule = $widget->globalSearchRule ." and ". $widget->searchRule;
@@ -12,9 +12,8 @@ if($widget->globalSearchRule && $widget->searchRule){
 	$searchRule = $widget->searchRule;
 }
 $menu_count = $widget->getDataObj()->recordCount($searchRule);
-*/
 
-$menu_count = 5;
+//$menu_count = 5;
 $menu_item_width = 115;
 $menu_width = ($menu_count * $menu_item_width)."px";
 $this->assign('menu_count', $menu_count);
@@ -75,7 +74,7 @@ var top_menu_play_speed=1000;
 				<?php 
 				//$temp = Openbiz\Openbiz::getObject('menu.widget.MainTabMenu')->render();
 				//unset($temp);
-				//echo Openbiz\Openbiz::getObject('menu.widget.MainTabMenu')->render();
+				echo Openbiz\Openbiz::getObject('menu.widget.MainTabMenu')->render();
 				 ?>
 				<!-- top menu end -->	
 				</div>

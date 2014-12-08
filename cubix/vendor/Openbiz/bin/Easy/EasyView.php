@@ -336,8 +336,9 @@ class EasyView extends MetaObject implements Statefullable
             $formRef->setViewName($this->objectName);
             $formName = $formRef->objectName;
             $formObj = Openbiz::getObject($formName);
-            if ($formRef->subForms && method_exists($formObj, "SetSubForms"))
+            if ($formRef->subForms && method_exists($formObj, "SetSubForms")) {
                 $formObj->setSubForms($formRef->subForms);
+            }
         }
     }
 
@@ -363,8 +364,9 @@ class EasyView extends MetaObject implements Statefullable
             }
         }
 
-        if (!$paramFields && !$pageid)
+        if (!$paramFields && !$pageid) {
             return;
+        }
 
         // get the form object
         if (!$paramForm) { // get the first form name if no form is given
@@ -373,8 +375,9 @@ class EasyView extends MetaObject implements Statefullable
                 break;
             }
         }
-        if (!$paramForm)
+        if (!$paramForm) {
             return;
+        }
         $paramForm = $this->prefixPackage($paramForm);
         $formObj = Openbiz::getObject($paramForm);
         $formObj->setRequestParams($paramFields);

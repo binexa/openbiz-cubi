@@ -49,10 +49,11 @@ class MenuRenderer
         $tplEngine = $widgetObj->templateEngine;
         $tplFile = TemplateHelper::getTplFileWithPath($widgetObj->templateFile, $widgetObj->package);
 
-        if ($tplEngine == "Smarty" || $tplEngine == null)
+        if ($tplEngine == "Smarty" || $tplEngine == null) {
             return MenuRenderer::renderSmarty($widgetObj, $tplFile);
-        else
+        } else {
             return MenuRenderer::renderPHP($widgetObj, $tplFile);
+        }
     }
 
     /**
@@ -88,11 +89,14 @@ class MenuRenderer
         $view = TemplateHelper::getZendTemplate();
         $view->addScriptPath(dirname($tplFile));
         $view->widget = $widgetObj->OutputAttrs();
+        /*
         $smarty->assign("formname", $widgetObj->objectName);
         $smarty->assign("module", $view->getModuleName($view->objectName));
         $smarty->assign("title", $view->title);
         $smarty->assign("errors", ( isset($view->errors) ? $view->errors : null ) );
         $smarty->assign("notices", $view->notices);
+         * 
+         */
         return $view->render($view->templateFile);
     }
 }
