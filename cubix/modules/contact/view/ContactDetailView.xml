@@ -1,6 +1,12 @@
 <?xml version="1.0" standalone="no"?>
-<EasyView Name="ContactDetailView" Description="Contact Detail"  Class="EasyView"  Tab="" TemplateEngine="Smarty" TemplateFile="view_contact.tpl" access="contact.access">
-	<FormReferences>
+<EasyView Name="ContactDetailView" 
+          Class="EasyView"
+          Description="Contact Detail"          
+          Tab=""
+          TemplateEngine="Smarty"
+          TemplateFile="view_contact.tpl"
+          access="contact.access">
+    <FormReferences>
         <Reference Name="contact.form.ContactDetailForm"/>        
     </FormReferences>
 </EasyView>
