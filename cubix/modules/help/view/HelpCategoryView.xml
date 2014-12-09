@@ -5,7 +5,7 @@
   Copyright (c) 2005-2011, Openbiz Technology LLC
   Version $Id: HelpCategoryView.xml 3345 2012-05-31 05:04:56Z rockyswen@gmail.com $
 -->
-<EasyView Name="HelpCategoryView" Description="Help Category Management" Class="EasyView" Tab="" TemplateEngine="Smarty" TemplateFile="view.tpl" Access="Help.Administer_Help">
+<WebPage Name="HelpCategoryView" Description="Help Category Management" Class="WebPage" Tab="" TemplateEngine="Smarty" TemplateFile="view.tpl" Access="Help.Administer_Help">
    <FormReferences>
    		<Reference Name="help.form.HelpCategoryListForm"/>
    </FormReferences>
@@ -16,4 +16,4 @@
    		<Reference Name="help.form.HelpCategoryNewForm"/>
    		<Reference Name="help.form.HelpCategoryDetailForm"/>
    </FormReferenceLibs>    
-</EasyView>
+</WebPage>

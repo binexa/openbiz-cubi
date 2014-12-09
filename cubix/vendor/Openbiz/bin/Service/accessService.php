@@ -97,11 +97,11 @@ class accessService
      * Get match view
      *
      * @param string $viewName
-     * @return EasyView|null
+     * @return WebPage|null
      */
     protected function getMatchView($viewName)
     {
-        /* @var $viewObj EasyView */
+        /* @var $viewObj WebPage */
         $viewObj = $this->_restrictedViewList->get($viewName);
         if ($viewObj)
             return $viewObj;

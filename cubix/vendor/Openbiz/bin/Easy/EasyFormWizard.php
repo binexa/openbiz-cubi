@@ -110,7 +110,7 @@ class EasyFormWizard extends EasyForm
             $step=1;
 
         // redirect the prev step
-        /* @var $viewObj EasyViewWizard */
+        /* @var $viewObj WebPageWizard */
         
         $viewObj->renderStep($step+1);
     }
@@ -158,7 +158,7 @@ class EasyFormWizard extends EasyForm
         }
 
         // redirect the prev step
-        /* @var $viewObj EasyViewWizard */
+        /* @var $viewObj WebPageWizard */
         
         $viewObj->renderStep($step-1);
     }
@@ -189,7 +189,7 @@ class EasyFormWizard extends EasyForm
 
         $this->activeRecord = $this->readInputRecord();
 		
-        /* @var $viewObj EasyViewWizard */
+        /* @var $viewObj WebPageWizard */
         $viewObj = $this->getViewObject();
         
         $r = $viewObj->commit();        
@@ -208,7 +208,7 @@ class EasyFormWizard extends EasyForm
     public function doCancel() //- call CancelWizard() by default
 
     {
-        /* @var $viewObj EasyViewWizard */
+        /* @var $viewObj WebPageWizard */
         $viewObj = $this->getViewObject();
         $viewObj->cancel();
 

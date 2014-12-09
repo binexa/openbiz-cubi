@@ -73,7 +73,7 @@ class Request
         $this->hist = isset($_GET['hist']) ? $_GET['hist'] : "";
 
         $this->_convertPostUrl2GetVars();
-        //echo __METHOD__.__LINE__;
+        //echo __METHOD__.__LINE__ . ' view : ' . $this->view . '<br />';
         //DebugLine::show(var_dump($_REQUEST));
         //DebugLine::show(var_dump($_GET));
     }

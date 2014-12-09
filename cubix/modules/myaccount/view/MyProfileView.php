@@ -1,9 +1,9 @@
 <?php
 
 use Openbiz\Object\MetaIterator;
-use Openbiz\Easy\EasyView;
+use Openbiz\Easy\WebPage;
 
-class MyProfileView extends EasyView {
+class MyProfileView extends WebPage {
 
     protected $forceCompeleteProfile = false;
 

@@ -43,7 +43,7 @@ class MetaObjExport
 			$this->objType = "Form";
 			return $this->Form2XML();
 		}
-		else if (is_a($this->object, "Openbiz\Easy\EasyView")) {
+		else if (is_a($this->object, "Openbiz\Easy\WebPage")) {
 			$this->objType = "View";
 			return $this->View2XML();
 		}
@@ -241,8 +241,8 @@ class MetaObjExport
 		else if ($className == "FormReference") {
 			$elemName = "Reference";
 		}
-		if (is_subclass_of($obj, "Openbiz\Easy\EasyView")) {
-			$elemName = "EasyView";
+		if (is_subclass_of($obj, "Openbiz\Easy\WebPage")) {
+			$elemName = "WebPage";
 		}
 		
 		// create an element
@@ -261,7 +261,7 @@ class MetaObjExport
 				//echo "set attr ($name, $value)\n";
 				$attrName = str_replace('m_','',$name);
 				$attrList[$attrName] = $value;
-				if ($elemName == "EasyView" && $attrName == "Name") $attrList[$attrName] = $this->getShortName($value);
+				if ($elemName == "WebPage" && $attrName == "Name") $attrList[$attrName] = $this->getShortName($value);
 			}
         }
 		$this->setElemAttrs($attrList, $elem);

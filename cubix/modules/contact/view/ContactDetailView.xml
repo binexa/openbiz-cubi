@@ -1,6 +1,6 @@
 <?xml version="1.0" standalone="no"?>
-<EasyView Name="ContactDetailView" 
-          Class="EasyView"
+<WebPage Name="ContactDetailView" 
+          Class="WebPage"
           Description="Contact Detail"          
           Tab=""
           TemplateEngine="Smarty"
@@ -9,4 +9,4 @@
     <FormReferences>
         <Reference Name="contact.form.ContactDetailForm"/>        
     </FormReferences>
-</EasyView>
+</WebPage>

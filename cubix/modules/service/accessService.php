@@ -122,7 +122,7 @@ class accessService
      * Get match view
      *
      * @param string $viewName
-     * @return EasyView|null
+     * @return WebPage|null
      */
     protected function getMatchView($viewName)
     {

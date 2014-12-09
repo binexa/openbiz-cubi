@@ -46,13 +46,20 @@ class MenuTreeDO extends BizDataObj
     }
 
     /**
-     * Fetch records in tree structure
-     *
-     * @return <type>
+     * Fetch table as Tree structure
+     * 
+     * @param type $rootSearchRule
+     * @param type $depth
+     * @param type $globalSearchRule
+     * @return type
      */
     public function fetchTreeBySearchRule($rootSearchRule, $depth, $globalSearchRule = null)
     {
+       
+        /* @todo need to move to outer, database not access user respond directly */ 
+        /* @var $url string */
         $url = $_SERVER['REQUEST_URI'];
+        
         $this->depth = $depth;
         // query on given search rule
         if ($globalSearchRule) {

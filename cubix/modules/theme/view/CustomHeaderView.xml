@@ -5,9 +5,9 @@
   Copyright (c) 2005-2011, Openbiz Technology LLC
   Version $Id: ManageThemeView.xml 3373 2012-05-31 06:21:21Z rockyswen@gmail.com $
 -->
-<EasyView Name="CustomHeaderView" Description="Custom System Header Image" Class="EasyView" Tab="" TemplateEngine="Smarty" TemplateFile="view.tpl" Access="Theme.Administer_Theme">
+<WebPage Name="CustomHeaderView" Description="Custom System Header Image" Class="WebPage" Tab="" TemplateEngine="Smarty" TemplateFile="view.tpl" Access="Theme.Administer_Theme">
    <FormReferences>
    		<Reference Name="theme.form.CustomHeaderForm"/>
    </FormReferences>
    
-</EasyView>
+</WebPage>

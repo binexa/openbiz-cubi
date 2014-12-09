@@ -11,22 +11,22 @@
  * @copyright Copyright (c) 2005-2011, Rocky Swen
  * @license   http://www.opensource.org/licenses/bsd-license.php
  * @link      http://www.phpopenbiz.org/
- * @version   $Id: EasyViewWizard.php 2553 2010-11-21 08:36:48Z mr_a_ton $
+ * @version   $Id: WebPageWizard.php 2553 2010-11-21 08:36:48Z mr_a_ton $
  */
 
 namespace Openbiz\Easy;
 
-use Openbiz\Easy\EasyView;
+use Openbiz\Easy\WebPage;
 
 /**
- * EasyViewWizard is the class that controls the wizard forms
+ * WebPageWizard is the class that controls the wizard forms
  *
  * @package openbiz.bin.easy
  * @author rocky swen
  * @copyright Copyright (c) 2005-2009
  * @access public
  */
-class EasyViewWizard extends EasyView
+class WebPageWizard extends WebPage
 {
     protected $currentStep;
     protected $formStates;    // (formname, visited, committed)
@@ -36,7 +36,7 @@ class EasyViewWizard extends EasyView
     protected function readMetadata(&$xmlArr)
     {
         parent::readMetaData($xmlArr);
-        $this->naviMethod = isset($xmlArr["EASYVIEW"]["ATTRIBUTES"]["NAVIMETHOD"]) ? $xmlArr["EASYVIEW"]["ATTRIBUTES"]["NAVIMETHOD"] :'SwitchPage';
+        $this->naviMethod = isset($xmlArr["WEBPAGE"]["ATTRIBUTES"]["NAVIMETHOD"]) ? $xmlArr["WEBPAGE"]["ATTRIBUTES"]["NAVIMETHOD"] :'SwitchPage';
     }
     /**
      * Get/Retrieve Session data of this object

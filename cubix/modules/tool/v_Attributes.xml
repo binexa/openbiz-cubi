@@ -1,5 +1,5 @@
 <?xml version="1.0" standalone="no"?>
-<EasyView Name="v_Attributes" 
+<WebPage Name="v_Attributes" 
           Description="Attributes Edit View" 
           class="Openbiz\Easy\DynaView" 
           Tab="" 
@@ -7,4 +7,4 @@
           TemplateFile="view_attr.tpl">
    <FormReferences>
    </FormReferences>
-</EasyView>
+</WebPage>

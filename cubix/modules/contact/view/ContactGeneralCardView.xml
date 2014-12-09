@@ -5,8 +5,8 @@
   Copyright (c) 2005-2011, Openbiz Technology LLC
   Version $Id: ContactGeneralCardView.xml 3356 2012-05-31 05:47:51Z rockyswen@gmail.com $
 -->
-<EasyView Name="ContactGeneralCardView" 
-          Class="EasyView" 
+<WebPage Name="ContactGeneralCardView" 
+          Class="WebPage" 
           Description="General Name Cards"           
           Tab="" 
           TemplateEngine="Smarty" 
@@ -14,4 +14,4 @@
     <FormReferences>
         <Reference Name="contact.form.ContactGeneralCardForm"/>
     </FormReferences>   
-</EasyView>
+</WebPage>

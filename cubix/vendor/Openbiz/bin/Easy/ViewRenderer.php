@@ -34,22 +34,22 @@ class ViewRenderer
     /**
      * Render view object
      *
-     * @param EasyView $viewObj
+     * @param WebPage $webpage
      * @return string result of rendering process
      */
-    static public function render($viewObj)
+    static public function render($webpage)
     {
-        $tplEngine = $viewObj->templateEngine;
-        $tplAttributes = ViewRenderer::buildTemplateAttributes($viewObj);
+        $tplEngine = $webpage->templateEngine;
+        $tplAttributes = ViewRenderer::buildTemplateAttributes($webpage);
 
         if (defined("OPENBIZ_PAGE_MINIFY") && OPENBIZ_PAGE_MINIFY == 1) {
             ob_start();
         }
 
         if ($tplEngine == "Smarty" || $tplEngine == null) {
-            ViewRenderer::renderSmarty($viewObj, $tplAttributes);
+            ViewRenderer::renderSmarty($webpage, $tplAttributes);
         } else {
-            ViewRenderer::renderPHP($viewObj, $tplAttributes);
+            ViewRenderer::renderPHP($webpage, $tplAttributes);
         }
 
         if (defined("OPENBIZ_PAGE_MINIFY") && OPENBIZ_PAGE_MINIFY == 1) {
@@ -102,7 +102,7 @@ class ViewRenderer
     /**
      * Gather all template variables needed. Should play well with Smarty or \Zend templates
      *
-     * @param EasyView $viewObj
+     * @param WebPage $viewObj
      * @return array associative array holding all needed VIEW based template variables
      */
     static public function buildTemplateAttributes($viewObj)
@@ -173,15 +173,15 @@ class ViewRenderer
     /**
      * Render smarty template for view object
      *
-     * @param EasyView $viewObj
+     * @param WebPage $webpage
      * @param string $tplFile
      * @return string result of rendering process
      */
-    static protected function renderSmarty($viewObj, $tplAttributes = Array())
+    static protected function renderSmarty($webpage, $tplAttributes = Array())
     {
         $smarty = TemplateHelper::getSmartyTemplate();
 
-        $viewOutput = $viewObj->outputAttrs();
+        $viewOutput = $webpage->outputAttrs();
         foreach ($viewOutput as $k => $v) {
             $smarty->assign($k, $v);
         }
@@ -192,9 +192,12 @@ class ViewRenderer
         foreach ($tplAttributes as $key => $value) {
             $smarty->assign($key, $value);
         }
+        
+        //echo __METHOD__ . __LINE__. ' - ' . $webpage->templateFile . '<br />';
+        //echo __METHOD__ . __LINE__. ' - ' . TemplateHelper::getTplFileWithPath($webpage->templateFile, $webpage->package) . '<br />';
 
         //if ($viewObj->consoleOutput) {
-            $smarty->display(TemplateHelper::getTplFileWithPath($viewObj->templateFile, $viewObj->package));
+            $smarty->display(TemplateHelper::getTplFileWithPath($webpage->templateFile, $webpage->package));
         //} else {
         //    return $smarty->fetch(TemplateHelper::getTplFileWithPath($viewObj->templateFile, $viewObj->package));
         //}
@@ -230,7 +233,7 @@ class ViewRenderer
     /**
      * Set headers of view
      * 
-     * @param EasyView $viewObj
+     * @param WebPage $viewObj
      * @return void
      */
     static protected function setHeaders($viewObj)

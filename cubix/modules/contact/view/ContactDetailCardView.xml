@@ -5,8 +5,8 @@
   Copyright (c) 2005-2011, Openbiz Technology LLC
   Version $Id: ContactDetailCardView.xml 3356 2012-05-31 05:47:51Z rockyswen@gmail.com $
 -->
-<EasyView Name="ContactDetailCardView" Description="Detailed Name Cards" Class="EasyView" Tab="" TemplateEngine="Smarty" TemplateFile="view.tpl">
+<WebPage Name="ContactDetailCardView" Description="Detailed Name Cards" Class="WebPage" Tab="" TemplateEngine="Smarty" TemplateFile="view.tpl">
    <FormReferences>
    		<Reference Name="contact.form.ContactDetailCardForm"/>
    </FormReferences>   
-</EasyView>
+</WebPage>

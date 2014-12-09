@@ -16,7 +16,7 @@
 
 namespace Openbiz\Easy;
 
-use Openbiz\Easy\EasyView;
+use Openbiz\Easy\WebPage;
 /**
  * DynaView class is the class that contains list of forms dinamicaly.
  * View is same as html page.
@@ -26,7 +26,7 @@ use Openbiz\Easy\EasyView;
  * @copyright Copyright (c) 2005-2009
  * @access public
  */
-class DynaView extends EasyView
+class DynaView extends WebPage
 {
     /**
      * Initialize DynaView with xml array

@@ -216,7 +216,7 @@ class ToolListbox extends Listbox
     
     protected function references()
     {
-        $xpathStr = "/EasyView/FormReferences/Reference";
+        $xpathStr = "/WebPage/FormReferences/Reference";
         $refElems = $this->getFormObj()->QueryXpath($xpathStr, false); // return multiple
         $i = 0;
         $list[$i]['val'] = "";

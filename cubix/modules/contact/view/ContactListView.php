@@ -13,15 +13,15 @@
 
 use Openbiz\Openbiz;
 use Openbiz\Object\MetaIterator;
-use Openbiz\Easy\EasyView;
+use Openbiz\Easy\WebPage;
 
-class ContactListView extends EasyView
+class ContactListView extends WebPage
 {
 	protected function readMetadata(&$xmlArr)
     {
         parent::readMetaData($xmlArr);
         unset($this->formRefs);
-        $formRefXML = $this->getDefaultMainForm($xmlArr["EASYVIEW"]["FORMREFERENCES"]["REFERENCE"]);
+        $formRefXML = $this->getDefaultMainForm($xmlArr["WEBPAGE"]["FORMREFERENCES"]["REFERENCE"]);
         $this->formRefs = new MetaIterator($formRefXML,"FormReference",$this);
     }
     

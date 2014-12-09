@@ -1,8 +1,8 @@
 <?php 
 
-use Openbiz\Easy\EasyView;
+use Openbiz\Easy\WebPage;
 
-class LoaderNotInstalledView extends EasyView
+class LoaderNotInstalledView extends WebPage
 {
 	public function render()
 	{

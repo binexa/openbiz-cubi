@@ -5,8 +5,8 @@
   Copyright (c) 2005-2011, Openbiz Technology LLC
   Version $Id: LocationSettingView.xml 3362 2012-05-31 06:03:29Z rockyswen@gmail.com $
 -->
-<EasyView Name="LocationSettingView" Description="System Default Location Setting" Class="EasyView" Tab="" TemplateEngine="Smarty" TemplateFile="view.tpl" Access="location.setting">
+<WebPage Name="LocationSettingView" Description="System Default Location Setting" Class="WebPage" Tab="" TemplateEngine="Smarty" TemplateFile="view.tpl" Access="location.setting">
    <FormReferences>
    		<Reference Name="location.form.DefaultLocationDetailForm"/>
    </FormReferences>    
-</EasyView>
+</WebPage>

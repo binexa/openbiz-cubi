@@ -5,9 +5,9 @@
   Copyright (c) 2005-2011, Openbiz Technology LLC
   Version $Id: ManageThemeView.xml 3373 2012-05-31 06:21:21Z rockyswen@gmail.com $
 -->
-<EasyView Name="ManageThemeView" Description="Theme Management" Class="EasyView" Tab="" TemplateEngine="Smarty" TemplateFile="view.tpl" Access="Theme.Administer_Theme">
+<WebPage Name="ManageThemeView" Description="Theme Management" Class="WebPage" Tab="" TemplateEngine="Smarty" TemplateFile="view.tpl" Access="Theme.Administer_Theme">
    <FormReferences>
    		<Reference Name="theme.form.ThemeListForm"/>
    </FormReferences>
    
-</EasyView>
+</WebPage>

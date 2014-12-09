@@ -13,9 +13,9 @@
 
 use Openbiz\Openbiz;
 use Openbiz\Object\MetaIterator;
-use Openbiz\Easy\EasyView;
+use Openbiz\Easy\WebPage;
 
-class SelectorView extends EasyView
+class SelectorView extends WebPage
 {
 	
     public $formSelector;
@@ -24,8 +24,8 @@ class SelectorView extends EasyView
     {
         parent::readMetaData($xmlArr);
         $this->formRefs = null;
-        $this->formSelector = isset($xmlArr["EASYVIEW"]["ATTRIBUTES"]["FROMSELECOTR"]) ? $xmlArr["EASYVIEW"]["ATTRIBUTES"]["FROMSELECOTR"] : null;
-        $formRefXML = $this->getDefaultMainForm($xmlArr["EASYVIEW"]["FORMREFERENCES"]["REFERENCE"]);
+        $this->formSelector = isset($xmlArr["WEBPAGE"]["ATTRIBUTES"]["FROMSELECOTR"]) ? $xmlArr["WEBPAGE"]["ATTRIBUTES"]["FROMSELECOTR"] : null;
+        $formRefXML = $this->getDefaultMainForm($xmlArr["WEBPAGE"]["FORMREFERENCES"]["REFERENCE"]);
         $this->formRefs = new MetaIterator($formRefXML,"FormReference",$this);
     }
     

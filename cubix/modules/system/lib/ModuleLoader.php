@@ -1029,7 +1029,7 @@ class ModuleLoader
         $modulePath = Openbiz::$app->getModulePath() . "/$module";
         global $g_MetaFiles;
         $g_MetaFiles = array();
-        php_grep("<EasyView", $modulePath);
+        php_grep("<WebPage", $modulePath);
         if (empty($g_MetaFiles)) {
             return;
         }

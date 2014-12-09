@@ -5,8 +5,8 @@
   Copyright (c) 2005-2011, Openbiz Technology LLC
   Version $Id: BackupDeviceListView.xml 3351 2012-05-31 05:33:35Z rockyswen@gmail.com $
 -->
-<EasyView Name="BackupDeviceListView" Description="Backup Device Management" Class="EasyView" Tab="" TemplateEngine="Smarty" TemplateFile="view.tpl" Access="backup.Access_Backup">
+<WebPage Name="BackupDeviceListView" Description="Backup Device Management" Class="WebPage" Tab="" TemplateEngine="Smarty" TemplateFile="view.tpl" Access="backup.Access_Backup">
    <FormReferences>
    		<Reference Name="backup.form.BackupDeviceListForm"/>
    </FormReferences>
-</EasyView>
+</WebPage>

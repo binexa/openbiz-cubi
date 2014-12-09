@@ -12,7 +12,7 @@
  * @copyright Copyright (c) 2005-2011, Rocky Swen
  * @license   http://www.opensource.org/licenses/bsd-license.php
  * @link      http://www.phpopenbiz.org/
- * @version   $Id: EasyView.php 3614 2011-04-07 05:34:25Z jixian2003 $
+ * @version   $Id: WebPage.php 3614 2011-04-07 05:34:25Z jixian2003 $
  */
 
 namespace Openbiz\Easy;
@@ -25,7 +25,7 @@ use Openbiz\Object\Statefullable;
 use Openbiz\Object\MetaObject;
 use Openbiz\Helpers\MessageHelper;
 /**
- * EasyView class is the class that contains list of forms.
+ * WebPage class is the class that contains list of forms.
  * View is same as html page.
  *
  * @package openbiz.bin.easy
@@ -33,7 +33,7 @@ use Openbiz\Helpers\MessageHelper;
  * @copyright Copyright (c) 2005-2009
  * @access public
  */
-class EasyView extends MetaObject implements Statefullable
+class WebPage extends MetaObject implements Statefullable
 {
 
     public $title;
@@ -58,7 +58,7 @@ class EasyView extends MetaObject implements Statefullable
     private $_app;
 
     /**
-     * Initialize EasyView with xml array
+     * Initialize WebPage with xml array
      *
      * @param array $xmlArr
      * @return void
@@ -78,24 +78,25 @@ class EasyView extends MetaObject implements Statefullable
     {
         parent::readMetaData($xmlArr);
         $this->objectName = $this->prefixPackage($this->objectName);
-        $this->title = isset($xmlArr["EASYVIEW"]["ATTRIBUTES"]["TITLE"]) ? $xmlArr["EASYVIEW"]["ATTRIBUTES"]["TITLE"] : null;
-        $this->keywords = isset($xmlArr["EASYVIEW"]["ATTRIBUTES"]["KEYWORDS"]) ? $xmlArr["EASYVIEW"]["ATTRIBUTES"]["KEYWORDS"] : null;
-        $this->templateEngine = isset($xmlArr["EASYVIEW"]["ATTRIBUTES"]["TEMPLATEENGINE"]) ? $xmlArr["EASYVIEW"]["ATTRIBUTES"]["TEMPLATEENGINE"] : null;
-        $this->templateFile = isset($xmlArr["EASYVIEW"]["ATTRIBUTES"]["TEMPLATEFILE"]) ? $xmlArr["EASYVIEW"]["ATTRIBUTES"]["TEMPLATEFILE"] : null;
-        $this->viewSet = isset($xmlArr["EASYVIEW"]["ATTRIBUTES"]["VIEWSET"]) ? $xmlArr["EASYVIEW"]["ATTRIBUTES"]["VIEWSET"] : null;
-        $this->tab = isset($xmlArr["EASYVIEW"]["ATTRIBUTES"]["TAB"]) ? $xmlArr["EASYVIEW"]["ATTRIBUTES"]["TAB"] : null;
+        $this->title = isset($xmlArr["WEBPAGE"]["ATTRIBUTES"]["TITLE"]) ? $xmlArr["WEBPAGE"]["ATTRIBUTES"]["TITLE"] : null;
+        $this->keywords = isset($xmlArr["WEBPAGE"]["ATTRIBUTES"]["KEYWORDS"]) ? $xmlArr["WEBPAGE"]["ATTRIBUTES"]["KEYWORDS"] : null;
+        $this->templateEngine = isset($xmlArr["WEBPAGE"]["ATTRIBUTES"]["TEMPLATEENGINE"]) ? $xmlArr["WEBPAGE"]["ATTRIBUTES"]["TEMPLATEENGINE"] : null;
+        $this->templateFile = isset($xmlArr["WEBPAGE"]["ATTRIBUTES"]["TEMPLATEFILE"]) ? $xmlArr["WEBPAGE"]["ATTRIBUTES"]["TEMPLATEFILE"] : null;
+        //echo __METHOD__. '-' . __LINE__ . ' templateFile : ' . $this->templateFile . '<br />';
+        $this->viewSet = isset($xmlArr["WEBPAGE"]["ATTRIBUTES"]["VIEWSET"]) ? $xmlArr["WEBPAGE"]["ATTRIBUTES"]["VIEWSET"] : null;
+        $this->tab = isset($xmlArr["WEBPAGE"]["ATTRIBUTES"]["TAB"]) ? $xmlArr["WEBPAGE"]["ATTRIBUTES"]["TAB"] : null;
 
-        $this->formRefs = new MetaIterator($xmlArr["EASYVIEW"]["FORMREFERENCES"]["REFERENCE"], "Openbiz\Easy\FormReference", $this);
+        $this->formRefs = new MetaIterator($xmlArr["WEBPAGE"]["FORMREFERENCES"]["REFERENCE"], "Openbiz\Easy\FormReference", $this);
         
-        if ($xmlArr["EASYVIEW"]["FORMREFERENCELIBS"]) {
-            $this->formRefLibs = new MetaIterator($xmlArr["EASYVIEW"]["FORMREFERENCELIBS"]["REFERENCE"], "Openbiz\Easy\FormReference", $this);
+        if ($xmlArr["WEBPAGE"]["FORMREFERENCELIBS"]) {
+            $this->formRefLibs = new MetaIterator($xmlArr["WEBPAGE"]["FORMREFERENCELIBS"]["REFERENCE"], "Openbiz\Easy\FormReference", $this);
         }
-        if ($xmlArr["EASYVIEW"]["WIDGETS"]) {
-            $this->widgets = new MetaIterator($xmlArr["EASYVIEW"]["WIDGETS"]["REFERENCE"], "Openbiz\Easy\FormReference", $this);
+        if ($xmlArr["WEBPAGE"]["WIDGETS"]) {
+            $this->widgets = new MetaIterator($xmlArr["WEBPAGE"]["WIDGETS"]["REFERENCE"], "Openbiz\Easy\FormReference", $this);
         }
-        $this->messageFile = isset($xmlArr["EASYVIEW"]["ATTRIBUTES"]["MESSAGEFILE"]) ? $xmlArr["EASYVIEW"]["ATTRIBUTES"]["MESSAGEFILE"] : null;
+        $this->messageFile = isset($xmlArr["WEBPAGE"]["ATTRIBUTES"]["MESSAGEFILE"]) ? $xmlArr["WEBPAGE"]["ATTRIBUTES"]["MESSAGEFILE"] : null;
         $this->objectMessages = MessageHelper::loadMessage($this->messageFile, $this->package);
-        $this->cacheLifeTime = isset($xmlArr["EASYVIEW"]["ATTRIBUTES"]["CACHELIFETIME"]) ? $xmlArr["EASYVIEW"]["ATTRIBUTES"]["CACHELIFETIME"] : "0";
+        $this->cacheLifeTime = isset($xmlArr["WEBPAGE"]["ATTRIBUTES"]["CACHELIFETIME"]) ? $xmlArr["WEBPAGE"]["ATTRIBUTES"]["CACHELIFETIME"] : "0";
 
         $this->readTile($xmlArr); // TODO: is this needed as title supports expression?
 
@@ -106,13 +107,13 @@ class EasyView extends MetaObject implements Statefullable
 
     protected function readTile(&$xmlArr)
     {
-        if (isset($xmlArr["EASYVIEW"]["TILE"])) {
+        if (isset($xmlArr["WEBPAGE"]["TILE"])) {
             $this->formRefs = array();
-            if (isset($xmlArr["EASYVIEW"]["TILE"]["ATTRIBUTES"])) {
-                $tileName = $xmlArr["EASYVIEW"]["TILE"]["ATTRIBUTES"]["NAME"];
-                $this->tiles[$tileName] = new MetaIterator($xmlArr["EASYVIEW"]["TILE"]["REFERENCE"], "Openbiz\Easy\FormReference", $this);
+            if (isset($xmlArr["WEBPAGE"]["TILE"]["ATTRIBUTES"])) {
+                $tileName = $xmlArr["WEBPAGE"]["TILE"]["ATTRIBUTES"]["NAME"];
+                $this->tiles[$tileName] = new MetaIterator($xmlArr["WEBPAGE"]["TILE"]["REFERENCE"], "Openbiz\Easy\FormReference", $this);
             } else {
-                foreach ($xmlArr["EASYVIEW"]["TILE"] as $child) {
+                foreach ($xmlArr["WEBPAGE"]["TILE"] as $child) {
                     $tileName = $child["ATTRIBUTES"]["NAME"];
                     $this->tiles[$tileName] = new MetaIterator($child["REFERENCE"], "Openbiz\Easy\FormReference", $this);
                 }

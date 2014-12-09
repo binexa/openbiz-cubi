@@ -5,8 +5,8 @@
   Copyright (c) 2005-2011, Openbiz Technology LLC
   Version $Id: GroupDataSharingView.xml 5095 2013-01-09 06:10:26Z hellojixian@gmail.com $
 -->
-<EasyView Name="GroupDataSharingView" Description="Group Data Sharing" Class="GroupView" Tab="" TemplateEngine="Smarty" TemplateFile="view.tpl" Access="Group.Administer_Groups">
+<WebPage Name="GroupDataSharingView" Description="Group Data Sharing" Class="GroupView" Tab="" TemplateEngine="Smarty" TemplateFile="view.tpl" Access="Group.Administer_Groups">
    <FormReferences>
    		<Reference Name="system.form.GroupDataShareDetailForm"/>
    </FormReferences>
-</EasyView>
+</WebPage>

@@ -120,9 +120,11 @@ class ObjectFactory
         
         if (!$xmlArr) {
             $xmlFile = ObjectFactoryHelper::getXmlFileWithPath($objName);            
+            //echo __METHOD__.'-'.__LINE__ . ' $xmlFile : ' . $xmlFile . '<br>';
             if ($xmlFile) { 
                 $xmlArr = ObjectFactoryHelper::getXmlArray($xmlFile);                
                 //echo __METHOD__.'-'.__LINE__ . '<br />';
+                //echo var_dump($xmlArr);
             } else {
                 
                 //$this->_createObjectFromClass($objName);
@@ -152,7 +154,8 @@ class ObjectFactory
             
             //echo __METHOD__.'-'.__LINE__ . ' <br />';
             
-            //echo var_dump($xmlArr);
+            //if ($objName == 'system.view.UserListView')
+              //  echo var_dump($xmlArr);
             
             $keys = array_keys($xmlArr);
             $root = $keys[0];

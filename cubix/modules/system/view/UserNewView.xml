@@ -5,8 +5,8 @@
   Copyright (c) 2005-2011, Openbiz Technology LLC
   Version $Id: UserNewView.xml 3372 2012-05-31 06:19:06Z rockyswen@gmail.com $
 -->
-<EasyView Name="UserNewView" Description="User Management" Class="EasyView" Tab="" TemplateEngine="Smarty" TemplateFile="view_map.tpl.html" Access="User.Administer_Users">
+<WebPage Name="UserNewView" Description="User Management" Class="WebPage" Tab="" TemplateEngine="Smarty" TemplateFile="view_map.tpl.html" Access="User.Administer_Users">
     <FormReferences>
         <Reference Name="system.form.UserNewForm"/>
     </FormReferences>
-</EasyView>
+</WebPage>

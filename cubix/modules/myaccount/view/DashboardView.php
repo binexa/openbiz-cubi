@@ -13,9 +13,9 @@
 
 use Openbiz\Openbiz;
 use Openbiz\Object\MetaIterator;
-use Openbiz\Easy\EasyView;
+use Openbiz\Easy\WebPage;
 
-class DashboardView extends EasyView
+class DashboardView extends WebPage
 {
 	private $userWidgetDO = "myaccount.do.UserWidgetDO";	
 	

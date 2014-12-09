@@ -1,8 +1,8 @@
 <?php
 
-use Openbiz\Easy\EasyView;
+use Openbiz\Easy\WebPage;
 
-class ResetPasswordView extends EasyView {
+class ResetPasswordView extends WebPage {
 
     protected $forceResetPassword = false;
 

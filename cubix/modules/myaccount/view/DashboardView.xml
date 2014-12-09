@@ -5,8 +5,8 @@
   Copyright (c) 2005-2011, Openbiz Technology LLC
   Version $Id: DashboardView.xml 5306 2013-03-06 11:13:59Z hellojixian@gmail.com $
 -->
-<EasyView Name="DashboardView" Description="Account Dashboard" class="MyProfileView" Tab="" TemplateEngine="Smarty" TemplateFile="view.tpl" Access="myaccount.access">
+<WebPage Name="DashboardView" Description="Account Dashboard" class="MyProfileView" Tab="" TemplateEngine="Smarty" TemplateFile="view.tpl" Access="myaccount.access">
     <FormReferences>
         <Reference Name="myaccount.form.ProfileDetailForm"/>
     </FormReferences>
-</EasyView>
+</WebPage>

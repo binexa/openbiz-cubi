@@ -64,10 +64,10 @@ return array(
     
     'Openbiz\Easy\EasyFormWizard'        => __DIR__ . '/Easy/EasyFormWizard.php',
     
-    'Openbiz\Easy\EasyView'              => __DIR__ . '/Easy/EasyView.php',
+    'Openbiz\Easy\WebPage'              => __DIR__ . '/Easy/WebPage.php',
     'Openbiz\Easy\ViewRenderer'          => __DIR__ . '/Easy/ViewRenderer.php',
     'Openbiz\Easy\FormReference'         => __DIR__ . '/Easy/FormReference.php',    
-    'Openbiz\Easy\EasyViewWizard'        => __DIR__ . '/Easy/EasyViewWizard.php',    
+    'Openbiz\Easy\WebPageWizard'        => __DIR__ . '/Easy/WebPageWizard.php',    
     'Openbiz\Easy\FormRenderer'          => __DIR__ . '/Easy/FormRenderer.php',
     
     // not yet use

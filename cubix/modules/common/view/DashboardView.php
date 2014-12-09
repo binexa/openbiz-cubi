@@ -26,9 +26,9 @@
 
 use Openbiz\Openbiz;
 use Openbiz\Object\MetaIterator;
-use Openbiz\Easy\EasyView;
+use Openbiz\Easy\WebPage;
 
-class DashboardView extends EasyView
+class DashboardView extends WebPage
 {
 	protected $userWidgetDO = "common.do.UserWidgetDO";	
 	protected $columns;

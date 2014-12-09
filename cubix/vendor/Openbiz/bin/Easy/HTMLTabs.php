@@ -124,7 +124,7 @@ class HTMLTabs extends MetaObject implements UIControlInterface
      * Ask if the $this tab object is the current tab
      *
      * @param TabView $tabView
-     * @param EasyView $curViewObj current View Object
+     * @param WebPage $curViewObj current View Object
      * @param string $curViewName name of the current view
      * @return boolean TRUE if on the current tab, otherwise FALSE
      */
@@ -149,7 +149,7 @@ class HTMLTabs extends MetaObject implements UIControlInterface
      * Save the current tab in the session object
      *
      * @param TabView $tview
-     * @param EasyView $curViewObj current View Object
+     * @param WebPage $curViewObj current View Object
      * @param string $curViewName name of the current view
      * @return void
      */

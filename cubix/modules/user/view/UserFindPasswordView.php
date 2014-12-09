@@ -12,9 +12,9 @@
  */
 
 use Openbiz\Openbiz;
-use Openbiz\Easy\EasyView;
+use Openbiz\Easy\WebPage;
 
-class UserFindPasswordView extends EasyView
+class UserFindPasswordView extends WebPage
 {
 	public function allowAccess(){
 		$result = parent::allowAccess();

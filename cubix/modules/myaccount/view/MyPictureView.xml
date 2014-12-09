@@ -5,8 +5,8 @@
   Copyright (c) 2005-2011, Openbiz Technology LLC
   Version $Id: MyPictureView.xml 5302 2013-03-05 02:16:49Z hellojixian@gmail.com $
 -->
-<EasyView Name="MyPictureView" Description="My Pictures" class="MyProfileView" Tab="" TemplateEngine="Smarty" TemplateFile="view_pics.tpl" Access="myaccount.access">
+<WebPage Name="MyPictureView" Description="My Pictures" class="MyProfileView" Tab="" TemplateEngine="Smarty" TemplateFile="view_pics.tpl" Access="myaccount.access">
     <FormReferences>
         <Reference Name="myaccount.form.PictureDetailForm"/>
     </FormReferences>
-</EasyView>
+</WebPage>

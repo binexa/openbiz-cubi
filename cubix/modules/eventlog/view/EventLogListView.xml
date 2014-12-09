@@ -5,8 +5,8 @@
   Copyright (c) 2005-2011, Openbiz Technology LLC
   Version $Id: EventLogListView.xml 3359 2012-05-31 05:59:28Z rockyswen@gmail.com $
 -->
-<EasyView Name="EventLogListView" Description="Event Log View" class="EasyView" Tab="" TemplateEngine="Smarty" TemplateFile="view.tpl" Access="EventLog.Access_EventLog">
+<WebPage Name="EventLogListView" Description="Event Log View" class="WebPage" Tab="" TemplateEngine="Smarty" TemplateFile="view.tpl" Access="EventLog.Access_EventLog">
     <FormReferences>
         <Reference Name="eventlog.form.EventLogListForm"/>
     </FormReferences>
-</EasyView>
+</WebPage>

@@ -61,7 +61,7 @@ class FormRenderer
     /**
      * Gather all template variables needed. Should play well with Smarty or \Zend templates
      *
-     * @param EasyView $formObj
+     * @param WebPage $formObj
      * @return array associative array holding all needed VIEW based template variables
      */
     static public function buildTemplateAttributes($formObj)

@@ -5,7 +5,7 @@
   Copyright (c) 2005-2011, Openbiz Technology LLC
   Version $Id: HelpNewView.xml 3345 2012-05-31 05:04:56Z rockyswen@gmail.com $
 -->
-<EasyView Name="HelpNewView" Description="help" Class="EasyView" Tab="" TemplateEngine="Smarty" TemplateFile="view.tpl" Access="Help.Administer_Help">
+<WebPage Name="HelpNewView" Description="help" Class="WebPage" Tab="" TemplateEngine="Smarty" TemplateFile="view.tpl" Access="Help.Administer_Help">
    <FormReferences>
    		<Reference Name="help.form.HelpNewForm"/>
    </FormReferences>
@@ -16,4 +16,4 @@
    		<Reference Name="help.form.HelpNewForm"/>
    		<Reference Name="help.form.HelpDetailForm"/>
    </FormReferenceLibs>    
-</EasyView>
+</WebPage>

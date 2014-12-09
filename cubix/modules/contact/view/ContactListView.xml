@@ -1,5 +1,5 @@
 <?xml version="1.0" standalone="no"?>
-<EasyView Name="ContactListView" 
+<WebPage Name="ContactListView" 
           Description="Contact Phone Book"  
           Class="common.view.SelectorView" 
           FromSelecotr="contact.widget.ViewSelectorLeftWidget"  
@@ -7,4 +7,4 @@
           TemplateEngine="Smarty" 
           TemplateFile="view_contact.tpl" 
           Access="contact.access">
-</EasyView>
+</WebPage>

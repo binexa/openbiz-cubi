@@ -5,8 +5,8 @@
   Copyright (c) 2005-2011, Openbiz Technology LLC
   Version $Id: TypeManageView.xml 3356 2012-05-31 05:47:51Z rockyswen@gmail.com $
 -->
-<EasyView Name="TypeManageView" Description="Contact Type Manage" Class="EasyView" Tab="" TemplateEngine="Smarty" TemplateFile="view.tpl" access="contact.access">
+<WebPage Name="TypeManageView" Description="Contact Type Manage" Class="WebPage" Tab="" TemplateEngine="Smarty" TemplateFile="view.tpl" access="contact.access">
    <FormReferences>
    		<Reference Name="contact.form.ContactTypeListForm"/>
    </FormReferences>  
-</EasyView>
+</WebPage>

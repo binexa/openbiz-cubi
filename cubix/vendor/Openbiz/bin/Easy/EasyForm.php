@@ -616,7 +616,7 @@ class EasyForm extends MetaObject implements Statefullable
      * Get view object
      *
      * @global BizSystem $g_BizSystem
-     * @return EasyView
+     * @return WebPage
      */
     public function getViewObject()
     {
@@ -746,7 +746,7 @@ class EasyForm extends MetaObject implements Statefullable
     }
 
     /**
-     * Popup a selection EasyForm in a dynamically generated EasyView
+     * Popup a selection EasyForm in a dynamically generated WebPage
      *
      * @param string $viewName
      * @param string $formName
@@ -1836,7 +1836,7 @@ class EasyForm extends MetaObject implements Statefullable
 
     /**
      * Render this form (return html content),
-     * called by EasyView's render method (called when form is loaded).
+     * called by WebPage's render method (called when form is loaded).
      * Query is issued before returning the html content.
      *
      * @return string - HTML text of this form's read mode

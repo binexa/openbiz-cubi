@@ -5,7 +5,7 @@
   Copyright (c) 2005-2011, Openbiz Technology LLC
   Version $Id: WebsvcListView.xml 3376 2012-05-31 06:23:51Z rockyswen@gmail.com $
 -->
-<EasyView Name="WebsvcListView" Description="Web Service Account Management" Class="EasyView" Tab="" TemplateEngine="Smarty" TemplateFile="view.tpl" Access="websvc.websvc.Access">
+<WebPage Name="WebsvcListView" Description="Web Service Account Management" Class="WebPage" Tab="" TemplateEngine="Smarty" TemplateFile="view.tpl" Access="websvc.websvc.Access">
    <FormReferences>
    		<Reference Name="websvc.form.WebsvcListForm"/>
    </FormReferences>
@@ -16,4 +16,4 @@
    		<Reference Name="websvc.form.WebsvcNewForm"/>
    		<Reference Name="websvc.form.WebsvcDetailForm"/>
    </FormReferenceLibs>    
-</EasyView>
+</WebPage>

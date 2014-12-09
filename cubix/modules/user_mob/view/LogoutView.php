@@ -12,9 +12,9 @@
  */
 
 use Openbiz\Openbiz;
-use Openbiz\Easy\EasyView;
+use Openbiz\Easy\WebPage;
 
-class LogoutView extends EasyView
+class LogoutView extends WebPage
 {
     public function __construct(&$xmlArr)
     {

@@ -85,7 +85,7 @@ class Application extends \Openbiz\Object\Object
             'BizField' => 'Openbiz\\Data\\BizField',
             'EasyForm'      =>  'Openbiz\\Easy\\EasyForm',
             
-            'EasyView' => 'Openbiz\\Easy\\EasyView',
+            'WebPage' => 'Openbiz\\Easy\\WebPage',
             'PickerForm' => 'Openbiz\\Easy\\PickerForm',            
             'FormReference' => 'Openbiz\\Easy\\FormReference',
             
@@ -408,10 +408,10 @@ class Application extends \Openbiz\Object\Object
      */
     public function dispatchRequest()
     {
-        Openbiz::$app->getClientProxy()->showClientAlert('not hasView');
+        //Openbiz::$app->getClientProxy()->showClientAlert('not hasView');
 
         if (!$this->request->hasInvocation()) {
-            return $this->_dispatchView();
+            return $this->dispatchView();
         } else {
             if ($this->_isSessionTimeout()) {  // show timeout view
                 Openbiz::$app->getSessionContext()->destroy();
@@ -482,26 +482,27 @@ class Application extends \Openbiz\Object\Object
      */
     public function renderView($viewName, $form = "", $rule = "", $params = null, $hist = "")
     {
-        /* @var $viewObj EasyView */
+        /* @var $webpage \Openbiz\Easy\WebPage */
         if ($viewName == "__DynPopup") {
-            $viewObj = Openbiz::getViewObject($viewName);
-            $viewObj->render();
+            $webpage = Openbiz::getViewObject($viewName);
+            $webpage->render();
             return;
         }
 
         // if previous view is different with the to-be-loaded view,
         // clear the previous session objects
-        $prevViewName = $this->getCurrentViewName();
-        $prevViewSet = $this->getCurrentViewSet();
+        // 
+        //$prevViewName = $this->getCurrentViewName(); // unused
+        //$prevViewSet = $this->getCurrentViewSet(); // unused
 
         // need to set current view before get view object
         $this->setCurrentViewName($viewName);
 
-        $viewObj = Openbiz::getViewObject($viewName);
-        if (!$viewObj) {
+        $webpage = Openbiz::getViewObject($viewName);
+        if (!$webpage) {
             return;
         }
-        $viewSet = $viewObj->getViewSet();
+        $viewSet = $webpage->getViewSet();
         $this->setCurrentViewSet($viewSet);
 
         /*
@@ -514,19 +515,19 @@ class Application extends \Openbiz\Object\Object
 
 
         if ($hist == "N") { // clean view history
-            $viewObj->cleanViewHistory();
+            $webpage->cleanViewHistory();
         }
         if ($form != "" && $rule != "") {
-            $viewObj->processRule($form, $rule, TRUE);
+            $webpage->processRule($form, $rule, TRUE);
         }
         if ($params) {
-            $viewObj->setParameters($params);
+            $webpage->setParameters($params);
         }
         if (isset($_GET['mode'])) {   // can specify mode of form
-            $viewObj->setFormMode($form, $_GET['mode']);
+            $webpage->setFormMode($form, $_GET['mode']);
         }
         //DebugLine::show(__METHOD__.__LINE__);
-        $viewObj->render();
+        $webpage->render();
         //BizApplication::hidePageLoading();
     }
 
@@ -639,21 +640,22 @@ class Application extends \Openbiz\Object\Object
     /**
      * Dispatch request to view
      */
-    private function _dispatchView()
+    private function dispatchView()
     {
         $request = $this->request;
 
         if (!ObjectFactoryHelper::getXmlFileWithPath($request->view)) {
-            $this->_renderNotFoundView();
+            $this->renderNotFoundView();
             exit;
         }
         if (!$this->_canUserAccessView($request->view)) {  //access denied error
             $this->renderView($this->_accessDeniedView);
         }
+        //echo __METHOD__.__LINE__ . ' view : ' . $request->view . '<br />';
         $this->renderView($request->view, $request->form, $request->rule, $request->params, $request->hist);
     }
 
-    private function _renderNotFoundView()
+    private function renderNotFoundView()
     {
         if (defined('OPENBIZ_NOTFOUND_VIEW')) {
             $request = $this->request;
@@ -717,7 +719,7 @@ class Application extends \Openbiz\Object\Object
     {
         $this->onBeforeRun();
 
-        $profile = $this->getSessionContext()->getVar("_USER_PROFILE");
+        //$profile = $this->getSessionContext()->getVar("_USER_PROFILE"); // unused
         Openbiz::$app->getSessionContext();
 
         $eventlog = Openbiz::getService(OPENBIZ_EVENTLOG_SERVICE);

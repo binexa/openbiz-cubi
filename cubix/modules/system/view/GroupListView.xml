@@ -5,7 +5,7 @@
   Copyright (c) 2005-2011, Openbiz Technology LLC
   Version $Id: GroupListView.xml 5095 2013-01-09 06:10:26Z hellojixian@gmail.com $
 -->
-<EasyView Name="GroupListView" Description="Group Management" Class="GroupView" Tab="" TemplateEngine="Smarty" TemplateFile="view.tpl" Access="Group.Administer_Groups">
+<WebPage Name="GroupListView" Description="Group Management" Class="GroupView" Tab="" TemplateEngine="Smarty" TemplateFile="view.tpl" Access="Group.Administer_Groups">
    <FormReferences>
    		<Reference Name="system.form.GroupListForm"/>
    </FormReferences>
@@ -16,4 +16,4 @@
    		<Reference Name="system.form.GroupNewForm"/>
    		<Reference Name="system.form.GroupDetailForm"/>
    </FormReferenceLibs>    
-</EasyView>
+</WebPage>

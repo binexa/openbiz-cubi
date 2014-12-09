@@ -5,8 +5,8 @@
   Copyright (c) 2005-2011, Openbiz Technology LLC
   Version $Id: RepositoryApplicationDetailView.xml 3369 2012-05-31 06:13:56Z rockyswen@gmail.com $
 -->
-<EasyView Name="RepositoryApplicationDetailView" Description="Repository Application Detail" Class="EasyView" Tab="" TemplateEngine="Smarty" TemplateFile="view.tpl" Access="Repository.Manage">
+<WebPage Name="RepositoryApplicationDetailView" Description="Repository Application Detail" Class="WebPage" Tab="" TemplateEngine="Smarty" TemplateFile="view.tpl" Access="Repository.Manage">
    <FormReferences>
    		<Reference Name="repository.application.form.ApplicationDetailForm"/>
    </FormReferences>    
-</EasyView>
+</WebPage>

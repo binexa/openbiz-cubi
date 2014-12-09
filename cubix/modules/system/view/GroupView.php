@@ -1,9 +1,9 @@
 <?php
 
 use Openbiz\Openbiz;
-use Openbiz\Easy\EasyView;
+use Openbiz\Easy\WebPage;
 
-class GroupView extends EasyView
+class GroupView extends WebPage
 {
 
     const MIN_GROUP_COUNT = 3;

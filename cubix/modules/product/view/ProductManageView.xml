@@ -5,13 +5,13 @@
   Copyright (c) 2005-2011, Openbiz Technology LLC
   Version $Id: ProductManageView.xml 3480 2012-06-17 02:51:42Z hellojixian@gmail.com $
 -->
-<EasyView Name="ProductManageView" 
+<WebPage Name="ProductManageView" 
 	Description="Product Description Management" 
-	Class="EasyView" 
+	Class="WebPage" 
 	Access="product.Access" 
 	TemplateEngine="Smarty" 
 	TemplateFile="view.tpl">
    <FormReferences>
    		<Reference Name="product.form.ProductListForm"/>
    </FormReferences>       
-</EasyView>
+</WebPage>

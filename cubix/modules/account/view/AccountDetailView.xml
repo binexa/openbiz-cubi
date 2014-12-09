@@ -1,11 +1,11 @@
 <?xml version="1.0" standalone="no"?>
-<EasyView Name="AccountDetailView" 
+<WebPage Name="AccountDetailView" 
 	Description="Detail View of Account Description" 
-	Class="EasyView" 	
+	Class="WebPage" 	
 	Access="account.Access" 
 	TemplateEngine="Smarty" 
 	TemplateFile="view.tpl">
    <FormReferences>
    		<Reference Name="account.form.AccountDetailForm"/>
    </FormReferences>       
-</EasyView>
+</WebPage>

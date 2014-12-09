@@ -12,9 +12,9 @@
  */
 
 use Openbiz\Openbiz;
-use Openbiz\Easy\EasyView;
+use Openbiz\Easy\WebPage;
 
-class UserRegisterView extends EasyView
+class UserRegisterView extends WebPage
 {
 	public function allowAccess(){
 		$result = parent::allowAccess();

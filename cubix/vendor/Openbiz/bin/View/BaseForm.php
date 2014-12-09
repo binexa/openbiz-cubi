@@ -294,7 +294,7 @@ class BaseForm extends MetaObject implements Statefullable
      * Get view object
      *
      * @global BizSystem $g_BizSystem
-     * @return EasyView
+     * @return WebPage
      */
     public function getViewObject()
     {
@@ -389,7 +389,7 @@ class BaseForm extends MetaObject implements Statefullable
 // -------------------------- Render Methods ---------------------- //
     /**
      * Render this form (return html content),
-     * called by EasyView's render method (called when form is loaded).
+     * called by WebPage's render method (called when form is loaded).
      * Query is issued before returning the html content.
      *
      * @return string - HTML text of this form's read mode

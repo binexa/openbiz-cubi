@@ -98,7 +98,7 @@ class Openbiz
      * it can support IDE's code auto completaion.
      *
      * @param string $objectName object name
-     * @return EasyView  if the return object is a EasyView then return, or return null
+     * @return WebPage  if the return object is a WebPage then return, or return null
      * @example ../../example/ViewObject.php
      */
     public static function getViewObject($objectName)

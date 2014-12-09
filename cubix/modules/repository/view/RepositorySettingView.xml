@@ -5,8 +5,8 @@
   Copyright (c) 2005-2011, Openbiz Technology LLC
   Version $Id: RepositorySettingView.xml 3369 2012-05-31 06:13:56Z rockyswen@gmail.com $
 -->
-<EasyView Name="RepositorySettingView" Description="Repository Setting" Class="EasyView" Tab="" TemplateEngine="Smarty" TemplateFile="view.tpl" Access="Repository.Manage">
+<WebPage Name="RepositorySettingView" Description="Repository Setting" Class="WebPage" Tab="" TemplateEngine="Smarty" TemplateFile="view.tpl" Access="Repository.Manage">
    <FormReferences>
    		<Reference Name="repository.setting.form.SettingDetailForm"/>
    </FormReferences>    
-</EasyView>
+</WebPage>
