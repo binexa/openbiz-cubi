@@ -35,7 +35,6 @@ namespace Openbiz\Helpers;
  */
 class XMLParser
 {
-
     var $data;  // Input XML data buffer
     var $vals;  // Struct created by xml_parse_into_struct
     var $collapse_dups; // If there is only one tag of a given name,
@@ -57,13 +56,10 @@ class XMLParser
             while (!feof($data_source)) {
                 $this->data .= fread($data_source, 1000);
             }
-
-            // try filename, then if that fails...
+        // try filename, then if that fails...
         } elseif (file_exists($data_source)) {
             $this->data = implode('', file($data_source));
-        }
-        // try url
-        else {
+        } else { // try url
             $fp = fopen($data_source, 'r');
             while (!feof($fp)) {
                 $this->data .= fread($fp, 1000);

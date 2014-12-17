@@ -8,7 +8,7 @@ return array(
     'Openbiz\Core\Expression'       => __DIR__ . '/Core/Expression.php',
     'Openbiz\Core\TypeManager'      => __DIR__ . '/Core/TypeManager.php',
     
-    'Openbiz\Configuration'         => __DIR__ . '/Configuration.php',
+    'Openbiz\ApplicationConfiguration'         => __DIR__ . '/ApplicationConfiguration.php',
     'Openbiz\DebugLine'             => __DIR__ . '/DebugLine.php',
 
     'Openbiz\Event\EventManagerInterface'     => __DIR__ . '/Event/EventManagerInterface.php',

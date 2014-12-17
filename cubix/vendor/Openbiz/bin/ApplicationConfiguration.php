@@ -29,7 +29,7 @@ use Openbiz\Object\ObjectFactoryHelper;
  * @access    public
  * @version	  $Id: Configuration.php 3334 2012-05-30 08:07:05Z agus.suhartono@gmail.com $
  */
-class Configuration
+class ApplicationConfiguration
 {
 
     /**
@@ -92,6 +92,7 @@ class Configuration
             $tmp["Port"] = isset($db["ATTRIBUTES"]["PORT"]) ? $db["ATTRIBUTES"]["PORT"] : null;
             $tmp["Charset"] = isset($db["ATTRIBUTES"]["CHARSET"]) ? $db["ATTRIBUTES"]["CHARSET"] : null;
             $tmp["Options"] = isset($db["ATTRIBUTES"]["OPTIONS"]) ? $db["ATTRIBUTES"]["OPTIONS"] : null;
+            
             $this->_databaseInfo[$tmp["Name"]] = $tmp;
             if ($breakFlag) {
                 break;

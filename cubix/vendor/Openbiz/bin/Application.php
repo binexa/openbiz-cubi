@@ -174,7 +174,7 @@ class Application extends \Openbiz\Object\Object
     public function getConfiguration()
     {
         if (!$this->_confgiuration) {
-            $this->_confgiuration = new Configuration();
+            $this->_confgiuration = new ApplicationConfiguration();
         }
         return $this->_confgiuration;
     }
