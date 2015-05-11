@@ -29,6 +29,7 @@ use Openbiz\Web\Request;
 use Openbiz\Web\SessionContext;
 use Openbiz\Web\UserAgent;
 use Openbiz\Object\ObjectFactoryHelper;
+use Openbiz\Helpers\MessageHelper;
 
 // run controller
 //
@@ -71,7 +72,7 @@ class Application extends \Openbiz\Object\Object
     {
         Openbiz::$app = $this;
 
-        //Openbiz::$app->isInitialized = true;
+        //$this->isInitialized = true;
         // preInit
         // registerErrorHandlers
         // registerCoreComponent
@@ -83,12 +84,10 @@ class Application extends \Openbiz\Object\Object
         $classAliases = [
             'BizDataObj' => 'Openbiz\\Data\\BizDataObj',
             'BizField' => 'Openbiz\\Data\\BizField',
-            'EasyForm'      =>  'Openbiz\\Easy\\EasyForm',
-            
+            'EasyForm' => 'Openbiz\\Easy\\EasyForm',
             'WebPage' => 'Openbiz\\Easy\\WebPage',
-            'PickerForm' => 'Openbiz\\Easy\\PickerForm',            
+            'PickerForm' => 'Openbiz\\Easy\\PickerForm',
             'FormReference' => 'Openbiz\\Easy\\FormReference',
-            
             'AutoSuggest' => 'Openbiz\\Easy\\Element\\AutoSuggest',
             'BarcodeScanner' => 'Openbiz\\Easy\\Element\\BarcodeScanner',
             'Button' => 'Openbiz\\Easy\\Element\\Button',
@@ -100,7 +99,6 @@ class Application extends \Openbiz\Object\Object
             'ColumnBool' => 'Openbiz\\Easy\\Element\\ColumnBool',
             'ColumnHidden' => 'Openbiz\\Easy\\Element\\ColumnHidden',
             'ColumnImage' => 'Openbiz\\Easy\\Element\\ColumnImage',
-            
             'ColumnInputText' => 'Openbiz\\Easy\\Element\\ColumnInputText',
             'ColumnList' => 'Openbiz\\Easy\\Element\\ColumnList',
             'ColumnListbox' => 'Openbiz\\Easy\\Element\\ColumnListbox',
@@ -113,9 +111,7 @@ class Application extends \Openbiz\Object\Object
             'DropDownList' => 'Openbiz\\Easy\\Element\\DropDownList',
             'EditCombobox' => 'Openbiz\\Easy\\Element\\EditCombobox',
             'Element' => 'Openbiz\\Easy\\Element\\Element',
-            
             'EventHandler' => 'Openbiz\\Easy\\Element\\EventHandler',
-            
             'File' => 'Openbiz\\Easy\\Element\\File',
             'FileInput' => 'Openbiz\\Easy\\Element\\FileInput',
             'FileUploader' => 'Openbiz\\Easy\\Element\\FileUploader',
@@ -204,12 +200,10 @@ class Application extends \Openbiz\Object\Object
 
     public function getSessionContext()
     {
-        if ($this->_sessionContext) {
-            return $this->_sessionContext;
+        if (!$this->_sessionContext) {
+            $this->_sessionContext = new SessionContext();
+            $this->_sessionContext->retrieveSessionObjects();
         }
-        $this->_sessionContext = new SessionContext();
-        // retrieve object session vars
-        $this->_sessionContext->retrieveSessionObjects();
         return $this->_sessionContext;
     }
 
@@ -254,7 +248,7 @@ class Application extends \Openbiz\Object\Object
             }
         }
 
-        $dbInfo = Openbiz::$app->getConfiguration()->getDatabaseInfo($rDBName);
+        $dbInfo = $this->getConfiguration()->getDatabaseInfo($rDBName);
 
         //require_once 'Zend/Db.php';
 
@@ -284,33 +278,30 @@ class Application extends \Openbiz\Object\Object
             );
             $params["driver_options"] = $pdoParams;
         }
-        $db = \Zend_Db::factory($dbInfo["Driver"], $params);
 
+        $db = \Zend_Db::factory($dbInfo["Driver"], $params);
         $db->setFetchMode(\PDO::FETCH_NUM);
 
         if (strtoupper($dbInfo["Driver"]) == "PDO_MYSQL" &&
                 $dbInfo["Charset"] != "") {
             $db->query("SET NAMES '" . $params['charset'] . "'");
         }
-
         $this->_dbConnection[$rDBName] = $db;
-
         return $db;
     }
 
     /**
-     *
-     * @param type $dbName
+     * Remove database connection by name
+     * @param string $dbName
      * @return \Zend_Db_Adapter_Abstract
      */
-    public function removeDBConnection($dbName = null)
+    public function removeDBConnection($dbName = "Default")
     {
-        $rDBName = (!$dbName) ? "Default" : $dbName;
-        if (isset($this->_dbConnection[$rDBName])) {
-            $this->_dbConnection[$rDBName]->closeConnection();
-            unset($this->_dbConnection[$rDBName]);
+        if (isset($this->_dbConnection[$dbName])) {
+            $this->_dbConnection[$dbName]->closeConnection();
+            unset($this->_dbConnection[$dbName]);
         }
-        return $this->getDBConnection($rDBName);
+        return $this->getDBConnection($dbName);
     }
 
 //=========================================
@@ -408,16 +399,14 @@ class Application extends \Openbiz\Object\Object
      */
     public function dispatchRequest()
     {
-        //Openbiz::$app->getClientProxy()->showClientAlert('not hasView');
-
-        if (!$this->request->hasInvocation()) {
-            return $this->dispatchView();
-        } else {
-            if ($this->_isSessionTimeout()) {  // show timeout view
-                Openbiz::$app->getSessionContext()->destroy();
-                return Openbiz::$app->getClientProxy()->redirectView($this->_userTimeoutView);
+        if ($this->request->hasInvocation()) {
+            if ($this->isSessionTimeout()) {
+                $this->getSessionContext()->destroy();
+                $this->getClientProxy()->redirectView($this->_userTimeoutView);
             }
-            $this->_dispatchRPC();
+            $this->dispatchRPC();
+        } else {
+            $this->dispatchView();
         }
     }
 
@@ -426,7 +415,7 @@ class Application extends \Openbiz\Object\Object
      *
      * @return array parameter array
      */
-    private function _getParameters()
+    private function getParameters()
     {
         $getKeys = array_keys($_GET);
         $params = null;
@@ -442,23 +431,13 @@ class Application extends \Openbiz\Object\Object
     }
 
     /**
-     * Get user profile array. Profile is provided by profileService
-     *
-     * @return array profile array
-     */
-    private function _getUserProfile()
-    {
-        return Openbiz::$app->getUserProfile();
-    }
-
-    /**
      * Check if session timed out.
      *
      * @return boolean true - session timed out, false - session alive
      */
-    private function _isSessionTimeout()
+    private function isSessionTimeout()
     {
-        return Openbiz::$app->getSessionContext()->isTimeout();
+        return $this->getSessionContext()->isTimeout();
     }
 
     /**
@@ -467,7 +446,7 @@ class Application extends \Openbiz\Object\Object
      * @param string $viewName view name
      * @return boolean true= allow, false not allow
      */
-    private function _canUserAccessView($viewName)
+    private function canUserAccessView($viewName)
     {
         $svcobj = Openbiz::getService(ACCESS_SERVICE);
         return $svcobj->allowViewAccess($viewName);
@@ -487,32 +466,17 @@ class Application extends \Openbiz\Object\Object
             $webpage = Openbiz::getViewObject($viewName);
             $webpage->render();
             return;
-        }
-
-        // if previous view is different with the to-be-loaded view,
-        // clear the previous session objects
-        // 
-        //$prevViewName = $this->getCurrentViewName(); // unused
-        //$prevViewSet = $this->getCurrentViewSet(); // unused
-
-        // need to set current view before get view object
+        }        
         $this->setCurrentViewName($viewName);
-
         $webpage = Openbiz::getViewObject($viewName);
         if (!$webpage) {
             return;
         }
+        
         $viewSet = $webpage->getViewSet();
         $this->setCurrentViewSet($viewSet);
-
-        /*
-          if ($prevViewSet && $viewSet && $prevViewSet == $viewSet)   // keep prev view session objects if they have same viewset
-          Openbiz::$app->getSessionContext()->clearSessionObjects(true);
-          else
-          Openbiz::$app->getSessionContext()->clearSessionObjects(false);
-         */
+        
         $this->getSessionContext()->clearSessionObjects(true);
-
 
         if ($hist == "N") { // clean view history
             $webpage->cleanViewHistory();
@@ -526,9 +490,7 @@ class Application extends \Openbiz\Object\Object
         if (isset($_GET['mode'])) {   // can specify mode of form
             $webpage->setFormMode($form, $_GET['mode']);
         }
-        //DebugLine::show(__METHOD__.__LINE__);
         $webpage->render();
-        //BizApplication::hidePageLoading();
     }
 
     /**
@@ -542,37 +504,31 @@ class Application extends \Openbiz\Object\Object
         if (!$request->hasInvocation()) {
             return null;
         }
-
         if (!$request->isValidInvocation()) {
             $invocationType = $request->getInvocationType();
             trigger_error("$invocationType is not a valid invocation", E_USER_ERROR);
             return;
         }
-        if ($this->request->isRPCInvokeInvocation()) {
-            Openbiz::$app->getClientProxy()->setRpcFlag(true);
+        if ($request->isRPCInvokeInvocation()) {
+            $this->getClientProxy()->setRpcFlag(true);
         }
-
-        //DebugLine::show(__METHOD__ . __LINE__);
-        //return;
         $rpcParams = $this->request->getRpcParameters();
 
         $num_arg = count($rpcParams);
         if ($num_arg < 2) {
-            $errmsg = MessageHelper::getMessage("SYS_ERROR_RPCARG", array($class));
+            //$errmsg = MessageHelper::getMessage("SYS_ERROR_RPCARG", array($class));
+            $errmsg = MessageHelper::getMessage("SYS_ERROR_RPCARG");
             trigger_error($errmsg, E_USER_ERROR);
         } else {
             $objName = array_shift($rpcParams);
             $methodName = array_shift($rpcParams);
-            return $this->_execRpcMethod($objName, $methodName, $rpcParams);
+            return $this->executeRpcMethod($objName, $methodName, $rpcParams);
         }
     }
 
-    private function _execRpcMethod($objName, $methodName, $params)
+    private function executeRpcMethod($objName, $methodName, $params)
     {
-        //DebugLine::show(__METHOD__ . __LINE__);
-        //return;
         $obj = Openbiz::getObject($objName);
-
         if ($obj) {
             if (method_exists($obj, $methodName)) {
                 if (!$this->validateRequest($obj, $methodName)) {
@@ -601,15 +557,15 @@ class Application extends \Openbiz\Object\Object
 
         $invocationType = $this->request->getInvocationType();
         if ($invocationType == "Invoke") {  // no RPC invoke, page reloaded -> rerender view
-            if (Openbiz::$app->getClientProxy()->hasOutput()) {
-                Openbiz::$app->getClientProxy()->printOutput();
+            if ($this->getClientProxy()->hasOutput()) {
+                $this->getClientProxy()->printOutput();
             }
         } else if ($invocationType == "RPCInvoke") {  // RPC invoke
-            if (Openbiz::$app->getClientProxy()->hasOutput()) {
+            if ($this->getClientProxy()->hasOutput()) {
                 if ($_REQUEST['jsrs'] == 1) {
                     echo "<html><body><form name=\"jsrs_Form\"><textarea name=\"jsrs_Payload\" id=\"jsrs_Payload\">";
                 }
-                Openbiz::$app->getClientProxy()->printOutput();
+                $this->getClientProxy()->printOutput();
                 if ($_REQUEST['jsrs'] == 1) {
                     echo "</textarea></form></body></html>";
                 }
@@ -629,10 +585,9 @@ class Application extends \Openbiz\Object\Object
     protected function validateRequest($obj, $methodName)
     {
         if (is_a($obj, "Openbiz\Easy\EasyForm") || is_a($obj, "BaseForm")) {
-            if (!$obj->validateRequest($methodName)) {
-                return false;
+            if ($obj->validateRequest($methodName)) {
+                return true;
             }
-            return true;
         }
         return false;
     }
@@ -648,10 +603,9 @@ class Application extends \Openbiz\Object\Object
             $this->renderNotFoundView();
             exit;
         }
-        if (!$this->_canUserAccessView($request->view)) {  //access denied error
+        if (!$this->canUserAccessView($request->view)) {  //access denied error
             $this->renderView($this->_accessDeniedView);
         }
-        //echo __METHOD__.__LINE__ . ' view : ' . $request->view . '<br />';
         $this->renderView($request->view, $request->form, $request->rule, $request->params, $request->hist);
     }
 
@@ -661,20 +615,17 @@ class Application extends \Openbiz\Object\Object
             $request = $this->request;
             $this->renderView(OPENBIZ_NOTFOUND_VIEW, $request->form, $request->rule, $request->params, $request->hist);
         } else {
-            /*
-             * @todo : throw exception
-             */
+            throw new Exception("'Not Found View' not defined.");
         }
     }
 
     /**
      * Dispatch request as RPC (remote procedure call)
      */
-    private function _dispatchRPC()
+    private function dispatchRPC()
     {
         if ($this->request->hasContainerView()) {
-            //DebugLine::show(__METHOD__ . 'hasContainrView : ' . $this->request->getContainerViewName());
-            Openbiz::$app->setCurrentViewName($this->request->getContainerViewName());
+            $this->setCurrentViewName($this->request->getContainerViewName());
         }
         $retval = $this->invokeRPC();
         print($retval . " "); // why use space on end of data?
@@ -684,13 +635,13 @@ class Application extends \Openbiz\Object\Object
     /**
      * Goto default view of module
      *
-     * @param string $module
+     * @param string $pmodule
      * @todo need to move to front controller
      */
-    public function redirectToDefaultModuleView($module)
+    public function redirectToDefaultModuleView($pmodule)
     {
-        $module = strtolower($module);
-        $modfile = Openbiz::$app->getModulePath() . DIRECTORY_SEPARATOR . $module . DIRECTORY_SEPARATOR . 'mod.xml';
+        $module = strtolower($pmodule);
+        $modfile = $this->getModulePath() . DIRECTORY_SEPARATOR . $module . DIRECTORY_SEPARATOR . 'mod.xml';
         $xml = simplexml_load_file($modfile);
         $defaultURL = OPENBIZ_APP_INDEX_URL . $xml->Menu->MenuItem['URL'];
         header("Location: $defaultURL");
@@ -704,7 +655,7 @@ class Application extends \Openbiz\Object\Object
      */
     public function redirectToDefaultUserView($module)
     {
-        $profile = Openbiz::$app->getUserProfile();
+        $profile = $this->getUserProfile();
         if ($profile['roleStartpage'][0]) {
             $DEFAULT_URL = OPENBIZ_APP_INDEX_URL . $profile['roleStartpage'][0];
         }
@@ -718,15 +669,11 @@ class Application extends \Openbiz\Object\Object
     public function run()
     {
         $this->onBeforeRun();
-
-        //$profile = $this->getSessionContext()->getVar("_USER_PROFILE"); // unused
-        Openbiz::$app->getSessionContext();
-
+        $this->getSessionContext();
         $eventlog = Openbiz::getService(OPENBIZ_EVENTLOG_SERVICE);
         $logComment = array('sdsdds', $_SERVER['REMOTE_ADDR']);
         $eventlog->log("LOGIN", "MSG_LOGIN_SUCCESSFUL", $logComment);
-
-        if ($this->processSecurityFilters() === true) {
+        if ($this->processSecurityFilters()) {
             $this->dispatchRequest();
         }
         $this->onAfterRun();
@@ -767,10 +714,10 @@ class Application extends \Openbiz\Object\Object
             if ($this->isForceDefaultTheme) {
                 $this->_themeName = $this->getDefaultThemeName();
             } else {
-                if (@isset($_GET['theme'])) {
+                if (isset($_GET['theme'])) {
                     $this->_themeName = $_GET['theme'];
                     setcookie("OPENBIZ_THEME_NAME", $_GET['theme'], time() + 86400 * 365, "/");
-                } elseif (@isset($_COOKIE['OPENBIZ_THEME_NAME'])) {
+                } elseif (isset($_COOKIE['OPENBIZ_THEME_NAME'])) {
                     $this->_themeName = $_COOKIE['OPENBIZ_THEME_NAME'];
                 } else {
                     $this->_themeName = $this->getDefaultThemeName();
@@ -782,17 +729,11 @@ class Application extends \Openbiz\Object\Object
 
     protected function initSystemDefaultTimezone()
     {
-        //please keep below code , the DEFAULT timezone sett could be change in your admin's preference setting panel,
-        //if remove below may cause error, which break entire system, php will generate a warning level error and our handler will end up the script.
-        // it's platform level
-        $DefaultTimezone = Openbiz::$app->getSessionContext()->getVar("TIMEZONE");
-
-        // default language
-        if ($DefaultTimezone == "") {
-            $DefaultTimezone = $this->timeZone;
+        $defaultTimezone = $this->getSessionContext()->getVar("TIMEZONE");
+        if ($defaultTimezone == "") {
+            $defaultTimezone = $this->timeZone;
         }
-
-        date_default_timezone_set($DefaultTimezone);
+        date_default_timezone_set($defaultTimezone);
     }
 
     //=========== USER MANAGEMENT
@@ -825,7 +766,7 @@ class Application extends \Openbiz\Object\Object
         } else {
             $profile = $profileService->getProfile($username);
         }
-        Openbiz::$app->getSessionContext()->setVar("_USER_PROFILE", $profile);
+        $this->getSessionContext()->setVar("_USER_PROFILE", $profile);
         return $profile;
     }
 
@@ -840,14 +781,12 @@ class Application extends \Openbiz\Object\Object
         if (!ObjectFactoryHelper::getXmlFileWithPath(PROFILE_SERVICE)) {
             return null;
         }
-
         $profileService = Openbiz::getService(PROFILE_SERVICE);
-        $profile = Openbiz::$app->getSessionContext()->getVar("_USER_PROFILE");
-
+        $profile = $this->getSessionContext()->getVar("_USER_PROFILE");
         if (method_exists($profileService, 'getProfile')) {
             return $profileService->getProfile($attribute);
         } else {
-            $profile = Openbiz::$app->getSessionContext()->getVar("_USER_PROFILE");
+            $profile = $this->getSessionContext()->getVar("_USER_PROFILE");
             return isset($profile[$attribute]) ? $profile[$attribute] : "";
         }
     }
@@ -867,23 +806,23 @@ class Application extends \Openbiz\Object\Object
         if (method_exists($preferenceService, 'getPreference')) {
             return $preferenceService->getPreference($attribute);
         } else {
-            $preference = Openbiz::$app->getSessionContext()->getVar("_USER_PREFERENCE");
+            $preference = $this->getSessionContext()->getVar("_USER_PREFERENCE");
             return isset($preference[$attribute]) ? $preference[$attribute] : "";
         }
     }
 
     /**
      * Get default user perm
-     * @param type $group
+     * @param type $pgroup
      * @return string
      */
-    public function getDefaultPerm($group)
+    public function getDefaultPerm($pgroup)
     {
-        $group = strtolower($group);
+        $group = strtolower($pgroup);
         switch ($group) {
             default:
             case 'owner':
-                $setting = Openbiz::$app->getUserPreference('owner_perm');
+                $setting = $this->getUserPreference('owner_perm');
                 if ($setting != '') {
                     $perm_code = $setting;
                 } else {
@@ -891,7 +830,7 @@ class Application extends \Openbiz\Object\Object
                 }
                 break;
             case 'group':
-                $setting = Openbiz::$app->getUserPreference('owner_group');
+                $setting = $this->getUserPreference('owner_group');
                 if ($setting != '') {
                     $perm_code = $setting;
                 } else {
@@ -899,7 +838,7 @@ class Application extends \Openbiz\Object\Object
                 }
                 break;
             case 'other':
-                $setting = Openbiz::$app->getUserPreference('owner_other');
+                $setting = $this->getUserPreference('owner_other');
                 if ($setting != '') {
                     $perm_code = $setting;
                 } else {
@@ -920,8 +859,8 @@ class Application extends \Openbiz\Object\Object
     public function getCurrentViewName()
     {
         if ($this->_currentViewName == "") {
-            $this->_currentViewName = Openbiz::$app->getSessionContext()->getVar("CVN");
-        }   // CVN stands for CurrentViewName
+            $this->_currentViewName = $this->getSessionContext()->getVar("CVN"); // CVN stands for CurrentViewName
+        }   
         return $this->_currentViewName;
     }
 
@@ -933,7 +872,7 @@ class Application extends \Openbiz\Object\Object
     public function setCurrentViewName($viewname)
     {
         $this->_currentViewName = $viewname;
-        Openbiz::$app->getSessionContext()->setVar("CVN", $this->_currentViewName);   // CVN stands for CurrentViewName
+        $this->getSessionContext()->setVar("CVN", $this->_currentViewName);   // CVN stands for CurrentViewName
     }
 
     private $_currentViewSet = "";
@@ -946,7 +885,7 @@ class Application extends \Openbiz\Object\Object
     public function getCurrentViewSet()
     {
         if ($this->_currentViewSet == "") {
-            $this->_currentViewSet = Openbiz::$app->getSessionContext()->getVar("CVS");
+            $this->_currentViewSet = $this->getSessionContext()->getVar("CVS");
         }   // CVS stands for CurrentViewSet
         return $this->_currentViewSet;
     }
@@ -959,7 +898,7 @@ class Application extends \Openbiz\Object\Object
     public function setCurrentViewSet($viewSet)
     {
         $this->_currentViewSet = $viewSet;
-        Openbiz::$app->getSessionContext()->setVar("CVS", $this->_currentViewSet);   // CVS stands for CurrentViewSet
+        $this->getSessionContext()->setVar("CVS", $this->_currentViewSet);   // CVS stands for CurrentViewSet
     }
 
     /**
@@ -1078,7 +1017,7 @@ class Application extends \Openbiz\Object\Object
         }
         $useTheme = !defined('OPENBIZ_USE_THEME') ? 0 : OPENBIZ_USE_THEME;
         $themeUrl = !defined('OPENBIZ_THEME_URL') ? "../themes" : OPENBIZ_THEME_URL;
-        $themeName = Openbiz::$app->getCurrentTheme();
+        $themeName = $this->getCurrentTheme();
         if ($useTheme) {
             $this->_imageUrl = "$themeUrl/$themeName/images";
         } else {
@@ -1098,7 +1037,7 @@ class Application extends \Openbiz\Object\Object
         }
         $useTheme = !defined('OPENBIZ_USE_THEME') ? 0 : OPENBIZ_USE_THEME;
         $themeUrl = !defined('OPENBIZ_THEME_URL') ? OPENBIZ_APP_URL . "/themes" : OPENBIZ_THEME_URL;
-        $themeName = Openbiz::$app->getCurrentTheme();
+        $themeName = $this->getCurrentTheme();
         if ($useTheme) {
             $this->_cssUrl = "$themeUrl/$themeName/css";
         } else {
@@ -1120,7 +1059,11 @@ class Application extends \Openbiz\Object\Object
         return $this->_jsUrl;
     }
 
-    // theme selection priority: url, session, userpref, system(constant)
+    /**
+     * theme selection priority: url, session, userpref, system(constant)
+     * @todo user pereference has language setting
+     * @return type
+     */
     public function getCurrentTheme()
     {
         if ($this->_currentTheme != null) {
@@ -1131,10 +1074,10 @@ class Application extends \Openbiz\Object\Object
             $currentTheme = $_GET['theme'];
         }
         if ($currentTheme == "") {
-            $currentTheme = Openbiz::$app->getSessionContext()->getVar("THEME");
+            $currentTheme = $this->getSessionContext()->getVar("THEME");
         }
         if ($currentTheme == "") {
-            $currentTheme = Openbiz::$app->getUserPreference("theme");
+            $currentTheme = $this->getUserPreference("theme");
         }
         if ($currentTheme == "" && defined('OPENBIZ_THEME_NAME')) {
             $currentTheme = OPENBIZ_THEME_NAME;
@@ -1142,12 +1085,8 @@ class Application extends \Openbiz\Object\Object
         if ($currentTheme == "") {
             $currentTheme = self::DEFAULT_THEME;
         }
-
-        // TODO: user pereference has language setting
-
-        Openbiz::$app->getSessionContext()->setVar("THEME", $currentTheme);
+        $this->getSessionContext()->setVar("THEME", $currentTheme);
         $this->_currentTheme = $currentTheme;
-
         return $currentTheme;
     }
 

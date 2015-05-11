@@ -297,7 +297,8 @@ class ModuleLoader
     static public function isModuleInstalled($module, $dbName = null)
     {
 
-        $db = BizSystem::DBConnection($dbName);
+        //$db = BizSystem::DBConnection($dbName);
+        $db = Openbiz::$app->getDBConnection($dbName);
         $sql = "SELECT * from module where name='$module'";
         try {
             //Openbiz::$app->getLog()->log(LOG_DEBUG, "DATAOBJ", $sql);
@@ -315,7 +316,9 @@ class ModuleLoader
 
     static public function isModuleOld($module, $dbName = null)
     {
-        $db = BizSystem::DBConnection($dbName);
+        
+        $db = Openbiz::$app->getDBConnection($dbName);
+        //$db = BizSystem::DBConnection($dbName);
         $sql = "SELECT * from module where name='$module'";
         try {
             //Openbiz::$app->getLog()->log(LOG_DEBUG, "DATAOBJ", $sql);

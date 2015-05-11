@@ -50,11 +50,10 @@ class ClassLoader
      * @return boolean
      */
     public static function autoload($className)
-    {
-            
+    {        
         $filePath = self::getAutoloadLibFileWithPath($className);
 
-        //if ($className==='Openbiz\Data\NodeRecord') {
+        //if ($className==='Zend_Cache') {
         //    echo $className . '-' . $filePath . '<br />';
         //}
         

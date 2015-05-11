@@ -12,7 +12,7 @@ class Openbiz
 {
     /**
      *
-     * @var Openbiz\Application
+     * @var \Openbiz\Application
      */
     public static $app;
 

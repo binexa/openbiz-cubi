@@ -114,26 +114,30 @@ class ClientProxy
      */
     public function printOutput()
     {
-        if ($this->isRpc == true)
+        if ($this->isRpc == true) {
             return $this->printJSONOuput();
-
-        foreach ($this->_otherOutput as $output)
+        }
+        foreach ($this->_otherOutput as $output) {
             print $output;
-        foreach ($this->_formsOutput as $output)
+        }
+        foreach ($this->_formsOutput as $output) {
             print $output;
+        }
     }
 
     protected function printJSONOuput()
     {
         $outs = array();
         // output JSON
-        foreach ($this->_otherOutput as $output)
+        foreach ($this->_otherOutput as $output) {
             $outs[] = $output;
-        foreach ($this->_formsOutput as $output)
+        }
+        foreach ($this->_formsOutput as $output) {
             $outs[] = $output;
-        if (function_exists("json_encode"))
+        }
+        if (function_exists("json_encode")) {
             echo json_encode($outs);
-        else {
+        } else {
             require_once 'Zend/Json.php';
             echo \Zend_Json::encode($outs);
         }
@@ -193,8 +197,7 @@ class ClientProxy
                     }
                 }
                 return $result;
-            }
-            else {
+            } else {
                 if (isset($_FILES[$controlName])) {
                     $result = true;
                     return $result;
@@ -220,11 +223,12 @@ class ClientProxy
         if ($this->isRpc) {
             if ($rawData) {
                 $fieldsOutput = $recArr;
-                $this->_otherOutput[] = $this->_buildTargetContent($formName, $fieldsOutput);
+                $this->_otherOutput[] = $this->buildTargetContent($formName, $fieldsOutput);
             } else {
-                foreach ($recArr as $fld => $val)
-                    $fieldsOutput[] = $this->_buildTargetContent($fld, $val);
-                $this->_otherOutput[] = $this->_buildTargetContent($formName, $fieldsOutput);
+                foreach ($recArr as $fld => $val) {
+                    $fieldsOutput[] = $this->buildTargetContent($fld, $val);
+                }
+                $this->_otherOutput[] = $this->buildTargetContent($formName, $fieldsOutput);
             }
         }
     }
@@ -240,10 +244,11 @@ class ClientProxy
      */
     public function redrawForm($formName, $sHTML)
     {
-        if ($this->isRpc)
-            $this->_formsOutput[$formName] = $this->_buildTargetContent($formName, $sHTML);
-        else
+        if ($this->isRpc) {
+            $this->_formsOutput[$formName] = $this->buildTargetContent($formName, $sHTML);
+        } else {
             $this->_formsOutput[$formName] = $sHTML;
+        }
     }
 
     /**
@@ -254,10 +259,11 @@ class ClientProxy
      * @return void
      */
     public function showClientAlert($alertText)
-    {
-        $msg = addslashes($alertText);
-        if ($this->isRpc)
-            $this->_otherOutput[] = $this->_callClientFunction("alert('" . $msg . "')");
+    {        
+        if ($this->isRpc) {
+            $msg = addslashes($alertText);
+            $this->_otherOutput[] = $this->callClientFunction("alert('" . $msg . "')");
+        }
     }
 
     /**
@@ -265,29 +271,25 @@ class ClientProxy
      *
      * If its a remote call, it uses javascript
      * If it is not a remote call, it outputs to the page's html
+     * 
+     * @todo Hard code for error form : "common.form.ErrorPopupForm"
+     *       change to flexible ErrorPopupForm, save in Class variable and maybe also in configuration
      *
      * @param char $errMsg
      * @return void
-     */
-    public function showErrorMessage($errMsg, $flush = false)
+     * 
+     */    
+    public function showErrorMessage($errMsg)
     {
-        echo $errMsg;
-        return;
         if (!$errMsg) {
             return;
         }
         if ($this->isRpc) {
-            /*
-              $this->_otherOutput[] = $this->_buildTargetContent("ERROR", $errMsg);
-              if ($flush) {
-              $this->printOutput();
-              exit;
-              } */
             $_GET['ob_err_msg'] = $errMsg;
             ob_end_clean();
             $form = "common.form.ErrorPopupForm";
             $html = Openbiz::getObject($form)->render();
-            $html = $this->_buildTargetContent("DIALOG", $html);
+            $html = $this->buildTargetContent("DIALOG", $html);
             $this->_formsOutput[] = $html;
         } else {
             $this->_errorOutput($errMsg);
@@ -306,7 +308,7 @@ class ClientProxy
     {
         if ($this->isRpc) {
             $function = $baseForm . ".ShowPopup(" . $popupForm . "," . $ctrlName . ")";
-            $this->_otherOutput[] = $this->_callClientFunction("CallFunction('$function','Popup')");
+            $this->_otherOutput[] = $this->callClientFunction("CallFunction('$function','Popup')");
         }
     }
 
@@ -315,9 +317,9 @@ class ClientProxy
       {
       if ($this->isRPC) {
       if ($type == 'Form') {
-      $this->formsOutput[] = $this->_callClientFunction($script);
+      $this->formsOutput[] = $this->callClientFunction($script);
       } elseif ($type == 'Other') {
-      $this->otherOutput[] = $this->_callClientFunction($script);
+      $this->otherOutput[] = $this->callClientFunction($script);
       }
       } else {
       echo $script;
@@ -356,8 +358,8 @@ class ClientProxy
     public function closePopup()
     {
         if ($this->isRpc) {
-            $this->_formsOutput[] = $this->_callClientFunction("Openbiz.Window.closePopup()");
-            $this->_otherOutput[] = $this->_callClientFunction("Openbiz.Window.closePopup()");
+            $this->_formsOutput[] = $this->callClientFunction("Openbiz.Window.closePopup()");
+            $this->_otherOutput[] = $this->callClientFunction("Openbiz.Window.closePopup()");
         }
     }
 
@@ -371,8 +373,9 @@ class ClientProxy
      */
     public function showPopupWindow($content, $w, $h)
     {
-        if ($this->isRpc)
-            $this->_formsOutput[] = $this->_callClientFunction("popupWindow(\"$content\", $w, $h)");
+        if ($this->isRpc) {
+            $this->_formsOutput[] = $this->callClientFunction("popupWindow(\"$content\", $w, $h)");
+        }
     }
 
     /**
@@ -396,18 +399,18 @@ class ClientProxy
      */
     public function runClientScript($scriptStr)
     {
-        if ($this->isRpc)
-            $this->_otherOutput[] = $this->_buildTargetContent("SCRIPT", $scriptStr);
-        else {
-            echo $script;
+        if ($this->isRpc) {
+            $this->_otherOutput[] = $this->buildTargetContent("SCRIPT", $scriptStr);
+        } else {
+            echo $scriptStr;
         }
     }
 
     public function runClientFunction($scriptStr)
     {
-        $msg = addslashes($alertText);
-        if ($this->isRpc)
-            $this->_otherOutput[] = $this->_callClientFunction($scriptStr);
+        if ($this->isRpc) {
+            $this->_otherOutput[] = $this->callClientFunction($scriptStr);
+        }
     }
 
     /**
@@ -416,10 +419,11 @@ class ClientProxy
      * @param string $funcStr
      * @return string target content
      */
-    private function _callClientFunction($funcStr)
+    private function callClientFunction($funcStr)
     {
-        if ($this->isRpc)
-            return $this->_buildTargetContent("FUNCTION", $funcStr);
+        if ($this->isRpc) {
+            return $this->buildTargetContent("FUNCTION", $funcStr);
+        }
     }
 
     /**
@@ -430,9 +434,12 @@ class ClientProxy
      * @param string $content the HTML text to be set as the content of the HTML element referred with the id
      * @return array
      * */
-    private function _buildTargetContent($target, &$content)
+    private function buildTargetContent($target, &$content)
     {
-        return array('target' => $target, 'content' => $content);
+        return array(
+            'target' => $target,
+            'content' => $content
+        );
     }
 
     /**
@@ -447,19 +454,20 @@ class ClientProxy
     {
         if (!$this->isRpc) {
             $func = (isset($_REQUEST['F']) ? $_REQUEST['F'] : "");
-            if ($func == "RPCInvoke")
+            if ($func == "RPCInvoke") {
                 $this->isRpc = true;
+            }
         }
         if (!$this->isRpc) {
             ob_clean();
             header("Location: $pageURL");
             return;
         }
-        if ($pageURL == "#back")
-            $this->_otherOutput[] = $this->_callClientFunction("history.go(-1)");
-        else {
+        if ($pageURL == "#back") {
+            $this->_otherOutput[] = $this->callClientFunction("history.go(-1)");
+        } else {
             $pageURL = str_replace("&", "&amp;", $pageURL);
-            $this->_otherOutput[] = $this->_callClientFunction("Openbiz.Net.redirectPage('$pageURL')");
+            $this->_otherOutput[] = $this->callClientFunction("Openbiz.Net.redirectPage('$pageURL')");
         }
     }
 
@@ -481,7 +489,8 @@ class ClientProxy
         $url = OPENBIZ_APP_INDEX_URL . "/$viewMod/$viewName";
         //echo "$view page url is $url. $this->isRPC";
         $this->redirectPage($url);
-        Openbiz::$app->getClientProxy()->printOutput();
+        $this->printOutput();
+        //Openbiz::$app->getClientProxy()->printOutput();
     }
 
     /**
@@ -533,8 +542,9 @@ class ClientProxy
           } */
         $cleanScript_array = array();
         foreach ($extraScript_array as $script) {
-            if (in_array($script . "</script>", $cleanScript_array) == FALSE and strlen($script) != 0)
+            if (in_array($script . "</script>", $cleanScript_array) == FALSE and strlen($script) != 0) {
                 $cleanScript_array[] = $script . "</script>";
+            }
         }
         return $initScripts . implode("\n", $cleanScript_array);
     }
@@ -550,15 +560,17 @@ class ClientProxy
     public function appendStyles($scriptKey, $styles, $isFile = true)
     {
         // if has the script key already, ignore
-        if (isset($this->_extraStyles[$scriptKey]))
+        if (isset($this->_extraStyles[$scriptKey])) {
             return;
+        }
         // add the styles
         $css = Openbiz::$app->getCssUrl();
         if ($isFile) {
             $_styles = "<link rel=\"stylesheet\" href=\"$css/" . $styles . "\" type=\"text/css\">";
             $this->_extraStyles[$scriptKey] = $_styles;
-        } else
+        } else {
             $this->_extraStyles[$scriptKey] = $styles;
+        }
     }
 
     /**
@@ -572,26 +584,29 @@ class ClientProxy
         $extraStyle_array = explode("type=\"text/css\">", $extraStyles);
         if (defined("OPENBIZ_RESOURCE_PHP") && $comb) {
             $css_scripts = OPENBIZ_RESOURCE_PHP . "?f=";
+            $matches = array();
             foreach ($extraStyle_array as $style) {
                 // extract href part from each line
                 if (preg_match('/.+href="([^"]+)".+/', $style, $matches) > 0 && !empty($matches[1])) {
-                    if (substr($css_scripts, -2) == 'f=')
+                    if (substr($css_scripts, -2) == 'f=') {
                         $css_scripts .= $matches[1];
-                    else
+                    } else {
                         $css_scripts .= ',' . $matches[1];
+                    }
                 }
             }
             return "<link rel=\"stylesheet\" href=\"" . $css_scripts . "\" type=\"text/css\"/>";
         }
         $cleanStyle_array = array();
         foreach ($extraStyle_array as $style) {
-            if (in_array($style . "type=\"text/css\">", $cleanStyle_array) == FALSE and strlen($style) != 0)
+            if (in_array($style . "type=\"text/css\">", $cleanStyle_array) == FALSE and strlen($style) != 0) {
                 $cleanStyle_array[] = $style . "type=\"text/css\">";
+            }
         }
-        //added by Jixian for supports localization display styles 
-        // eg.: override button width for specified languages
         $lang = I18n::getCurrentLangCode();
-        $localization_css_file = OPENBIZ_APP_PATH . DIRECTORY_SEPARATOR . "languages" . DIRECTORY_SEPARATOR . $lang . DIRECTORY_SEPARATOR . "localization.css";
+        $localization_css_file = OPENBIZ_APP_PATH . DIRECTORY_SEPARATOR 
+                . "languages" . DIRECTORY_SEPARATOR 
+                . $lang . DIRECTORY_SEPARATOR . "localization.css";
         if (is_file($localization_css_file)) {
             $cleanStyle_array[] = "<link rel=\"stylesheet\" href=\"" . OPENBIZ_APP_URL . "/languages/$lang/localization.css\" type=\"text/css\">";
         }
@@ -645,8 +660,9 @@ class ClientProxy
      */
     public function includeCalendarScripts()
     {
-        if (isset($this->_extraScripts['calendar']))
+        if (isset($this->_extraScripts['calendar'])) {
             return;
+        }
         $style = "<link rel=\"stylesheet\" href=\"" . Openbiz::$app->getJsUrl() . "/jscalendar/calendar-system.css\" type=\"text/css\">";
         $script = "<script type='text/javascript' src='" . Openbiz::$app->getJsUrl() . "/jscalendar/calendar.js'></script>";
         $script .= "<script type='text/javascript' src='" . Openbiz::$app->getJsUrl() . "/jscalendar/lang/calendar-en.js'></script>";
@@ -663,8 +679,9 @@ class ClientProxy
      */
     public function includeColorPickerScripts()
     {
-        if (isset($this->_extraScripts['colorpicker']))
+        if (isset($this->_extraScripts['colorpicker'])) {
             return;
+        }
         $style = "<link rel=\"stylesheet\" href=\"" . Openbiz::$app->getJsUrl() . "/colorpicker/css/colorpicker.css\" type=\"text/css\">";
         if (OPENBIZ_JSLIB_BASE != 'JQUERY') {
             $script = "<script type=\"text/javascript\" src=\"" . Openbiz::$app->getJsUrl() . "/jquery.js\"></script>";
@@ -683,8 +700,9 @@ class ClientProxy
      */
     public function includeRTEScripts()
     {
-        if (isset($this->_extraScripts['rte']))
+        if (isset($this->_extraScripts['rte'])) {
             return;
+        }
         $script = "<script type=\"text/javascript\" src=\"" . Openbiz::$app->getJsUrl() . "/richtext.js\"></script>";
         $script .= "<script language=\"JavaScript\">initRTE('" . Openbiz::$app->getImageUrl() . "/rte/', '../pages/rte/', '', false);</script>";
         $this->appendScripts("rte", $script, false);
@@ -697,8 +715,9 @@ class ClientProxy
      */
     public function includeCKEditorScripts()
     {
-        if (isset($this->_extraScripts['ckeditor']))
+        if (isset($this->_extraScripts['ckeditor'])) {
             return;
+        }
 
         $script = "<script type=\"text/javascript\" src=\"" . Openbiz::$app->getJsUrl() . "/ckeditor/ckeditor.js\"></script>";
 
@@ -735,4 +754,3 @@ class ClientProxy
     }
 
 }
-

@@ -129,7 +129,7 @@ class cacheService
      *
      * @param string $objName
      * @param number $lifeTime
-     * @return boolean|Zend_Cache
+     * @return boolean|\Zend_Cache
      */
     public function init($objName = "", $lifeTime = 0)
     {
@@ -243,7 +243,7 @@ class cacheService
     public function cleanAll()
     {
         if ($this->cacheObj && strtoupper($this->cache) == "ENABLED") {
-            return $this->cacheObj->clean(Zend_Cache::CLEANING_MODE_ALL);
+            return $this->cacheObj->clean(\Zend_Cache::CLEANING_MODE_ALL);
         } else {
             return false;
         }
@@ -257,7 +257,7 @@ class cacheService
     public function cleanExpired()
     {
         if ($this->cacheObj && strtoupper($this->cache) == "ENABLED") {
-            return $this->cacheObj->clean(Zend_Cache::CLEANING_MODE_OLD);
+            return $this->cacheObj->clean(\Zend_Cache::CLEANING_MODE_OLD);
         } else {
             return false;
         }

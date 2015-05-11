@@ -128,8 +128,8 @@ class LoginForm extends EasyForm
         } elseif (Openbiz::$app->getUserProfile("Id")) {
             $profile = Openbiz::$app->getUserProfile();
             $redirectPage = OPENBIZ_APP_INDEX_URL . $profile['roleStartpage'][0];
-            echo __METHOD__ . '--' . __LINE__ . '--' . $redirectPage;
-            exit;
+            //echo __METHOD__ . '--' . __LINE__ . '--' . $redirectPage;
+            //exit;
             Openbiz::$app->getClientProxy()->ReDirectPage($redirectPage);
         }
     }

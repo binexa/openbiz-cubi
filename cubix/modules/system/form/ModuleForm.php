@@ -135,21 +135,29 @@ class ModuleForm extends EasyForm
     public function DeleteRecord($id = null, $deleteFiles = false)
     {
         //delete menu items
-        if ($this->resource != "" && !$this->allowAccess($this->resource . ".delete"))
+        if ($this->resource != "" && !$this->allowAccess($this->resource . ".delete")) {
             return Openbiz::$app->getClientProxy()->redirectView(OPENBIZ_ACCESS_DENIED_VIEW);
+        }
 
-        if ($id == null || $id == '')
+        if ($id == null || $id == '') {
             $id = Openbiz::$app->getClientProxy()->getFormInputs('_selectedId');
+        }
 
         $selIds = Openbiz::$app->getClientProxy()->getFormInputs('row_selections', false);
-        if ($selIds == null)
+        if ($selIds == null) {
             $selIds[] = $id;
+        }
         foreach ($selIds as $id) {
             $dataRec = $this->getDataObj()->fetchById($id);
+            
+            //echo var_dump($dataRec);
+            
             // take care of exception
             try {
                 //also delete menu items                
-                Openbiz::getObject("menu.do.MenuDO", 1)->deleteRecords("[module]='" . $dataRec->objectName . "'");
+                Openbiz::getObject("menu.do.MenuDO", 1)
+                        ->deleteRecords("[module]='" . $dataRec->objectName . "'");
+                
                 $dataRec->delete();
 
                 //unload module      	                
@@ -166,8 +174,9 @@ class ModuleForm extends EasyForm
                 return;
             }
         }
-        if (strtoupper($this->formType) == "LIST")
+        if (strtoupper($this->formType) == "LIST") {
             $this->rerender();
+        }
 
         $this->runEventLog();
         $this->processPostAction();
